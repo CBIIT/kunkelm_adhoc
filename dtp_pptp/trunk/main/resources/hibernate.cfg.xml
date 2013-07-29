@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <mapping resource="AffyData.hbm.xml"/>
+    <mapping resource="AffyIdentifierType.hbm.xml"/>
+    <mapping resource="CellLineGroup.hbm.xml"/>
+    <mapping resource="CellLineMaster.hbm.xml"/>
+    <mapping resource="CellLineType.hbm.xml"/>
+    <mapping resource="CellType.hbm.xml"/>
+    <mapping resource="CompoundMaster.hbm.xml"/>
+    <mapping resource="CompoundType.hbm.xml"/>
+    <mapping resource="ConcentrationUnitType.hbm.xml"/>
+    <mapping resource="GroupRoleType.hbm.xml"/>
+    <mapping resource="ImplantSiteType.hbm.xml"/>
+    <mapping resource="MouseCrosstab.hbm.xml"/>
+    <mapping resource="MouseGroup.hbm.xml"/>
+    <mapping resource="Mouse.hbm.xml"/>
+    <mapping resource="MouseType.hbm.xml"/>
+    <mapping resource="MtdStudy.hbm.xml"/>
+    <mapping resource="PanelType.hbm.xml"/>
+    <mapping resource="RetestType.hbm.xml"/>
+    <mapping resource="ScheduleType.hbm.xml"/>
+    <mapping resource="Summary.hbm.xml"/>
+    <mapping resource="TreatmentRouteType.hbm.xml"/>
+    <mapping resource="VehicleType.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
