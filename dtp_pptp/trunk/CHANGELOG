@@ -1,0 +1,2 @@
+Implemented charts for mouse data, rtv and times to event
+Charts on tab-view tabs are still problematic, but they will display if at the top level of a tab with no encompassing component

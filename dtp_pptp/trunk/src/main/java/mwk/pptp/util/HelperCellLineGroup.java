@@ -97,10 +97,10 @@ public class HelperCellLineGroup {
 
       if (!cellNameList.isEmpty() && !cellTypeList.isEmpty()) {
         crit.add(Restrictions.disjunction()
-                .add(Restrictions.in("clt.pptpIdentifier", cellNameList))
+                .add(Restrictions.in("clt.name", cellNameList))
                 .add(Restrictions.in("ct.displayName", cellTypeList)));
       } else if (!cellNameList.isEmpty()) {
-        crit.add(Restrictions.in("clt.pptpIdentifier", cellNameList));
+        crit.add(Restrictions.in("clt.name", cellNameList));
       } else if (!cellTypeList.isEmpty()) {
         crit.add(Restrictions.in("ct.displayName", cellTypeList));
       }

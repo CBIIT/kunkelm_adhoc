@@ -49,6 +49,8 @@ dtp_pptp/trunk/src/main/java/mwk/pptp/androdomain/VehicleTypeImpl.java -text
 dtp_pptp/trunk/src/main/java/mwk/pptp/controller/ApplicationScopeBean.java -text
 dtp_pptp/trunk/src/main/java/mwk/pptp/controller/PptpController.java -text
 dtp_pptp/trunk/src/main/java/mwk/pptp/main/Main.java -text
+dtp_pptp/trunk/src/main/java/mwk/pptp/util/Comparators.java -text
+dtp_pptp/trunk/src/main/java/mwk/pptp/util/ExtendedCartesianChartModel.java -text
 dtp_pptp/trunk/src/main/java/mwk/pptp/util/HelperCellLineGroup.java -text
 dtp_pptp/trunk/src/main/java/mwk/pptp/util/HibernateUtil.java -text
 dtp_pptp/trunk/src/main/java/mwk/pptp/util/TransformEntityToVO.java -text
@@ -149,5 +151,6 @@ dtp_pptp/trunk/uml/pptp/mda/src/main/uml/andromda-xml.profile.uml -text
 dtp_pptp/trunk/uml/pptp/mda/src/main/uml/pptp.uml -text
 dtp_pptp/trunk/uml/pptp/mda/src/main/uml/pptp.uml.vsl2 -text
 dtp_pptp/trunk/uml/pptp/mda/src/main/uml/pptp.xml -text
+dtp_pptp/trunk/uml/pptp/mda/src/main/uml/pptp.xml.bak -text
 dtp_pptp/trunk/uml/pptp/pom.xml -text
 dtp_pptp/trunk/uml/pptp/readme.txt -text
