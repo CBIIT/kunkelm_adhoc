@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+  <p:dialog header="Current Search Criteria" 
+            showEffect="fade" 
+            hideEffect="fade" 
+            widgetVar="searchcriteriadlg">  
+    
+        <p:outputPanel id="SearchCriteriaDialog">
+          
+          <h:panelGrid columns="2">  
+            <h:outputText value="Query results: " />              
+            #{fn:length(cmpdController.cmpds)}
+            <h:outputText value="agents: " />              
+            <p:dataList value="#{cmpdController.agents}" var="agent">  
+              #{agent}  
+            </p:dataList>
+            <h:outputText value="aliases: " />  
+            <p:dataList value="#{cmpdController.aliases}" var="alias">  
+              #{alias}  
+            </p:dataList>
+            <h:outputText value="CASes: " />  
+            <p:dataList value="#{cmpdController.cases}" var="cas">  
+              #{cas} 
+            </p:dataList>
+            <h:outputText value="NSCs; " />  
+            <p:dataList value="#{cmpdController.nscs}"
+                        var="nsc" 
+                        >  
+              #{nsc}
+            </p:dataList> 
+            <h:outputText value="Originators; " />  
+            <p:dataList value="#{cmpdController.originators}" var="originator">  
+              #{originator}  
+            </p:dataList> 
+            <h:outputText value="Plates; " />  
+            <p:dataList value="#{cmpdController.plates}" var="plate">  
+              #{plate}  
+            </p:dataList>
+            <h:outputText value="Targets; " />  
+            <p:dataList value="#{cmpdController.targets}" var="target">  
+              #{target}  
+            </p:dataList>
+          </h:panelGrid>
+          
+        </p:outputPanel>
+    
+      </p:dialog>
+  
+</ui:composition>
