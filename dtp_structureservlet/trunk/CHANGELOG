@@ -1,0 +1,14 @@
+Tue 10Sep2013
+
+RETIRED StructureServlet ant project
+created dtp_structureservlet maven project, stripped out all indigo code
+replaced JPA with hibernate access using Structure .hbm.xml and classes from COMPARE
+
+minor fixes to query matching
+added TITLE to molecules
+
+db connectivity now managed from mvn command line
+
+mvn install -Ddeploy.db.url=jdbc:postgresql://cbdb-d2001:5473/compare -Ddeploy.db.user=comparedev -Ddeploy.db.pass=com29040869202dev  -Ddeploy.structure.servlet.url=http://ncias-d963-v.nci.nih.gov:8080/structureservlet-0.1/StructureServlet
+
+
