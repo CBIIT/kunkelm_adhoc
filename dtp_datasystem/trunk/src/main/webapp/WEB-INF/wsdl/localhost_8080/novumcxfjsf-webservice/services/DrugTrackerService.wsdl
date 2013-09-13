@@ -1,0 +1,710 @@
+<?xml version="1.0" ?><wsdl:definitions name="DrugTrackerService" targetNamespace="http://services.novumcxfjsf.mwk/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.novumcxfjsf.mwk/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://vo.novumcxfjsf.mwk/" version="1.0" xmlns:ns1="http://nci60.vo.novumcxfjsf.mwk/" xmlns:tns="http://vo.novumcxfjsf.mwk/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://nci60.vo.novumcxfjsf.mwk/"></xs:import>
+<xs:element name="AcquisitionVO" type="tns:AcquisitionVO"></xs:element>
+<xs:element name="CmpdFragmentVO" type="tns:CmpdFragmentVO"></xs:element>
+<xs:element name="CmpdVO" type="tns:CmpdVO"></xs:element>
+<xs:element name="DrugTrackerCriteriaVO" type="tns:DrugTrackerCriteriaVO"></xs:element>
+<xs:element name="DrugTrackerGridRowVO" type="tns:DrugTrackerGridRowVO"></xs:element>
+<xs:element name="DrugTrackerVO" type="tns:DrugTrackerVO"></xs:element>
+<xs:element name="NovumListMemberVO" type="tns:NovumListMemberVO"></xs:element>
+<xs:element name="NovumListVO" type="tns:NovumListVO"></xs:element>
+<xs:element name="RegistrationFragmentVO" type="tns:RegistrationFragmentVO"></xs:element>
+<xs:element name="RegistrationVO" type="tns:RegistrationVO"></xs:element>
+<xs:element name="RelatedCompoundVO" type="tns:RelatedCompoundVO"></xs:element>
+<xs:element name="StandardizedSmilesVO" type="tns:StandardizedSmilesVO"></xs:element>
+<xs:element name="StructureVO" type="tns:StructureVO"></xs:element>
+<xs:complexType name="DrugTrackerVO">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="cas" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="originator" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="agent" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="structureSource" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="smilesFromProd" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="prodCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="removedSalts" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="parentCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="tautCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="tautNostereoCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="xeno" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hf" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="nci60" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="distribution" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="conf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inventory" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="drugStatus" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="prefix" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mdl_mol" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="plate" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="acquisitions" type="tns:AcquisitionVO"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="cellLineDataSets" type="ns1:CellLineDataSetVO"></xs:element>
+<xs:element minOccurs="0" name="id" type="xs:long"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AcquisitionVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="acqStatus" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="purchOrSynth" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="contractor" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="acqType" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="acqAmount" type="xs:double"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CmpdFragmentVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="canonicalSmiles" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nostereoCanonicalSmiles" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mdlMol" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="DrugTrackerGridRowVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="first" type="tns:DrugTrackerVO"></xs:element>
+<xs:element minOccurs="0" name="second" type="tns:DrugTrackerVO"></xs:element>
+<xs:element minOccurs="0" name="third" type="tns:DrugTrackerVO"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="RelatedCompoundVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="relatedNsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="relation" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="RegistrationVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="agent" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="structureSource" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="cas" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mdl_mol" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="originator" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="removedSalts" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="smiles" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inchi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inchiAuxInfo" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="registrationFragments" type="tns:RegistrationFragmentVO"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="RegistrationFragmentVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="agent" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="structureSource" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="cas" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="mdl_mol" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="originator" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="removedSalts" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="smiles" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inchi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inchiAuxInfo" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StructureVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="smiles" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CmpdVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="name" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="smiles" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inchi" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="removedSalts" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="xeno" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hf" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="nci60" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="distribution" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="conf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inventory" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="cas" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="prefix" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NovumListMemberVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="name" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="smiles" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inchi" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="removedSalts" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="xeno" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hf" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="nci60" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="distribution" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="conf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inventory" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="cas" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="prefix" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="DrugTrackerCriteriaVO">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nscs" type="xs:long"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="cases" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="originators" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="drugStatuses" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="plates" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="agents" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NovumListVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="listName" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="listOwner" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="shareWith" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="id" type="xs:long"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="listMembers" type="tns:NovumListMemberVO"></xs:element>
+</xs:sequence>
+<xs:attribute name="dateCreated" type="xs:dateTime" use="required"></xs:attribute>
+</xs:complexType>
+<xs:complexType name="StandardizedSmilesVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="name" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="structureSource" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="smilesFromProd" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="prodCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="removedSalts" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="parentCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="tautCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="tautNostereoCanSmi" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="xeno" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hf" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="nci60" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="distribution" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="conf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="inventory" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mw" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mf" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="alogp" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="logd" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="hba" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="hbd" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="sa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="psa" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="prefix" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.novumcxfjsf.mwk/" version="1.0" xmlns:ns1="http://vo.novumcxfjsf.mwk/" xmlns:ns2="http://nci60.vo.novumcxfjsf.mwk/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://vo.novumcxfjsf.mwk/"></xs:import>
+<xs:import namespace="http://nci60.vo.novumcxfjsf.mwk/"></xs:import>
+<xs:element name="getAgentBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAgentBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="agentBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAliasBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getAliasBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliasBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCasBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCasBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="casBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getDrugStatusBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getDrugStatusBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="drugStatusBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getNscBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getNscBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nscBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getOriginatorBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getOriginatorBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="originatorBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getPlatesBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getPlatesBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="plateBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTargetBackingList">
+<xs:complexType>
+<xs:sequence></xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTargetBackingListResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targetBacks" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="searchByCriteria">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nscs" type="xs:long"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="cases" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="originators" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="aliases" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="targets" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="drugStatuses" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="agents" type="xs:string"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="plates" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="searchByCriteriaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="drugTrackers" type="ns1:DrugTrackerVO"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://nci60.vo.novumcxfjsf.mwk/" version="1.0" xmlns:tns="http://nci60.vo.novumcxfjsf.mwk/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="CellLineDataSetVO" type="tns:CellLineDataSetVO"></xs:element>
+<xs:element name="CellLineVO" type="tns:CellLineVO"></xs:element>
+<xs:element name="MolTargIdentVO" type="tns:MolTargIdentVO"></xs:element>
+<xs:element name="NatProdIdentVO" type="tns:NatProdIdentVO"></xs:element>
+<xs:element name="NscIdentVO" type="tns:NscIdentVO"></xs:element>
+<xs:element name="TestResultVO" type="tns:TestResultVO"></xs:element>
+<xs:element name="UploadedIdentVO" type="tns:UploadedIdentVO"></xs:element>
+<xs:complexType name="CellLineDataSetVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="countExperiments" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="countCellLines" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="standardDeviation" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="mean" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="cellLineDataSetId" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="direction" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="id" type="xs:long"></xs:element>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="testResults" type="tns:TestResultVO"></xs:element>
+<xs:element minOccurs="0" name="minVal" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="maxVal" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="maxDelta" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="minDelta" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="nscIdent" type="tns:NscIdentVO"></xs:element>
+<xs:element minOccurs="0" name="molTargIdent" type="tns:MolTargIdentVO"></xs:element>
+<xs:element minOccurs="0" name="natProdIdent" type="tns:NatProdIdentVO"></xs:element>
+<xs:element minOccurs="0" name="identifierType" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="descriptorForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identString" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="uploadedIdent" type="tns:UploadedIdentVO"></xs:element>
+<xs:element minOccurs="0" name="selected" type="xs:boolean"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TestResultVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="value" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="countExperiments" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="standardDeviation" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="id" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="delta" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="unitDelta" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="cellLine" type="tns:CellLineVO"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CellLineVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="cellId" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="panelName" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="lineName" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="id" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="panelSortOrder" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="lineSortOrder" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="panelNumber" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="lineNumber" type="xs:long"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NscIdentVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="prefix" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="logHiConc" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="assayTime" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="endpoint" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="concUnit" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="expId" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="cellLineDataSetId" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="identForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="descriptorForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identifierType" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="namecode" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="discreet" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identString" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="MolTargIdentVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="targetSet" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="namecode" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="moltId" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identifierType" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="genecard" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="descriptorForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identString" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="discreet" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="expId" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NatProdIdentVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="prefix" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="nsc" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="logHiConc" type="xs:double"></xs:element>
+<xs:element minOccurs="0" name="assayTime" type="xs:long"></xs:element>
+<xs:element minOccurs="0" name="endpoint" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="concUnit" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="expId" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="descriptorForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identifierType" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="namecode" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="discreet" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="taxonomy" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="globalArea" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identString" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="UploadedIdentVO">
+<xs:sequence>
+<xs:element minOccurs="0" name="identForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="descriptorForDisplay" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identifierType" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="namecode" type="xs:string"></xs:element>
+<xs:element minOccurs="0" name="identString" type="xs:string"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCasBackingList">
+    <wsdl:part element="tns:getCasBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getNscBackingList">
+    <wsdl:part element="tns:getNscBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchByCriteria">
+    <wsdl:part element="tns:searchByCriteria" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAgentBackingList">
+    <wsdl:part element="tns:getAgentBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPlatesBackingListResponse">
+    <wsdl:part element="tns:getPlatesBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAliasBackingListResponse">
+    <wsdl:part element="tns:getAliasBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDrugStatusBackingListResponse">
+    <wsdl:part element="tns:getDrugStatusBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTargetBackingList">
+    <wsdl:part element="tns:getTargetBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAliasBackingList">
+    <wsdl:part element="tns:getAliasBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTargetBackingListResponse">
+    <wsdl:part element="tns:getTargetBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="searchByCriteriaResponse">
+    <wsdl:part element="tns:searchByCriteriaResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOriginatorBackingList">
+    <wsdl:part element="tns:getOriginatorBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCasBackingListResponse">
+    <wsdl:part element="tns:getCasBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPlatesBackingList">
+    <wsdl:part element="tns:getPlatesBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDrugStatusBackingList">
+    <wsdl:part element="tns:getDrugStatusBackingList" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAgentBackingListResponse">
+    <wsdl:part element="tns:getAgentBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getNscBackingListResponse">
+    <wsdl:part element="tns:getNscBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOriginatorBackingListResponse">
+    <wsdl:part element="tns:getOriginatorBackingListResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DrugTrackerService">
+    <wsdl:operation name="getOriginatorBackingList">
+      <wsdl:input message="tns:getOriginatorBackingList" name="getOriginatorBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getOriginatorBackingListResponse" name="getOriginatorBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNscBackingList">
+      <wsdl:input message="tns:getNscBackingList" name="getNscBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getNscBackingListResponse" name="getNscBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAliasBackingList">
+      <wsdl:input message="tns:getAliasBackingList" name="getAliasBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getAliasBackingListResponse" name="getAliasBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCasBackingList">
+      <wsdl:input message="tns:getCasBackingList" name="getCasBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getCasBackingListResponse" name="getCasBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchByCriteria">
+      <wsdl:input message="tns:searchByCriteria" name="searchByCriteria">
+    </wsdl:input>
+      <wsdl:output message="tns:searchByCriteriaResponse" name="searchByCriteriaResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlatesBackingList">
+      <wsdl:input message="tns:getPlatesBackingList" name="getPlatesBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getPlatesBackingListResponse" name="getPlatesBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDrugStatusBackingList">
+      <wsdl:input message="tns:getDrugStatusBackingList" name="getDrugStatusBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getDrugStatusBackingListResponse" name="getDrugStatusBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTargetBackingList">
+      <wsdl:input message="tns:getTargetBackingList" name="getTargetBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getTargetBackingListResponse" name="getTargetBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAgentBackingList">
+      <wsdl:input message="tns:getAgentBackingList" name="getAgentBackingList">
+    </wsdl:input>
+      <wsdl:output message="tns:getAgentBackingListResponse" name="getAgentBackingListResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DrugTrackerServiceSoapBinding" type="tns:DrugTrackerService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="getOriginatorBackingList">
+      <soap:operation soapAction="getOriginatorBackingList" style="document"></soap:operation>
+      <wsdl:input name="getOriginatorBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getOriginatorBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAliasBackingList">
+      <soap:operation soapAction="getAliasBackingList" style="document"></soap:operation>
+      <wsdl:input name="getAliasBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getAliasBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNscBackingList">
+      <soap:operation soapAction="getNscBackingList" style="document"></soap:operation>
+      <wsdl:input name="getNscBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getNscBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCasBackingList">
+      <soap:operation soapAction="getCasBackingList" style="document"></soap:operation>
+      <wsdl:input name="getCasBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getCasBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPlatesBackingList">
+      <soap:operation soapAction="getPlatesBackingList" style="document"></soap:operation>
+      <wsdl:input name="getPlatesBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getPlatesBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchByCriteria">
+      <soap:operation soapAction="searchByCriteria" style="document"></soap:operation>
+      <wsdl:input name="searchByCriteria">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="searchByCriteriaResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDrugStatusBackingList">
+      <soap:operation soapAction="getDrugStatusBackingList" style="document"></soap:operation>
+      <wsdl:input name="getDrugStatusBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getDrugStatusBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAgentBackingList">
+      <soap:operation soapAction="getAgentBackingList" style="document"></soap:operation>
+      <wsdl:input name="getAgentBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getAgentBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTargetBackingList">
+      <soap:operation soapAction="getTargetBackingList" style="document"></soap:operation>
+      <wsdl:input name="getTargetBackingList">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getTargetBackingListResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DrugTrackerService">
+    <wsdl:port binding="tns:DrugTrackerServiceSoapBinding" name="DrugTrackerService">
+      <soap:address location="http://itbport.nci.nih.gov:8080/novumcxfjsf-webservice/services/DrugTrackerService"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC 
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- androMDA-generated mappings -->
+        <mapping resource="AdHocCmpdFragment.hbm.xml"/>
+        <mapping resource="AdHocCmpdFragmentPChem.hbm.xml"/>
+        <mapping resource="AdHocCmpdFragmentStructure.hbm.xml"/>
+        <mapping resource="CmpdAlias.hbm.xml"/>
+        <mapping resource="CmpdAliasType.hbm.xml"/>
+        <mapping resource="CmpdBioAssay.hbm.xml"/>
+        <mapping resource="CmpdFragment.hbm.xml"/>
+        <mapping resource="CmpdFragmentPChem.hbm.xml"/>
+        <mapping resource="CmpdFragmentStructure.hbm.xml"/>
+        <mapping resource="Cmpd.hbm.xml"/>
+        <mapping resource="CmpdInventory.hbm.xml"/>
+        <mapping resource="CmpdKnownSalt.hbm.xml"/>
+        <mapping resource="CmpdList.hbm.xml"/>
+        <mapping resource="CmpdListMember.hbm.xml"/>
+        <mapping resource="CmpdPlate.hbm.xml"/>
+        <mapping resource="CmpdProject.hbm.xml"/>
+        <mapping resource="CmpdPubChemSid.hbm.xml"/>
+        <mapping resource="CmpdRelated.hbm.xml"/>
+        <mapping resource="CmpdRelationType.hbm.xml"/>
+        <mapping resource="CmpdSet.hbm.xml"/>
+        <mapping resource="CmpdTarget.hbm.xml"/>
+        <mapping resource="RdkitMol.hbm.xml"/>
+        <mapping resource="StandardizedSmiles.hbm.xml"/>
+        <mapping resource="CmpdView.hbm.xml"/>    
+    </session-factory>
+</hibernate-configuration>

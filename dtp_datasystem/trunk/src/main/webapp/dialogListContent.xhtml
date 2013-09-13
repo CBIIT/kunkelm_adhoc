@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+  <p:dialog  header="List Content"
+             modal="true"
+             showEffect="fade" 
+             hideEffect="fade"                
+             widgetVar="listcontentdlg"
+             minimizable="false"
+             maximizable="false"
+             resizable="true"
+             draggable="true"
+             height="800"
+             width="1000">  
+
+    <p:outputPanel id="ListContentDialog">
+
+      <p:panel>
+
+        THIS IS THE ListContentDialog with #{fn:length(listManagerController.selectedList.cmpdListMembers)} Members
+
+        <p:commandButton value="HISTOGRAM"
+                         icon="ui-icon-image"
+                         action="#{listManagerController.renderListHistograms()}"
+                         update=":myform:HistogramsDialog"
+                         oncomplete="histogramsdlg.show();">      
+        </p:commandButton>
+
+        <p:tabView dynamic="true"
+                   cache="false"
+                   effect="fade">
+
+          <p:tab title="List View">
+
+            <p:dataTable  var="listMember" 
+                          value="#{listManagerController.selectedList.cmpdListMembers}" 
+                          rows="10" 
+                          paginator="true"
+                          resizableColumns="true"
+                          paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
+                          rowsPerPageTemplate="50,100,250"
+                          selectionMode="multiple" 
+                          selection="#{listManagerController.selectedListMembers}"
+                          rowKey="#{listMember.id}">  
+
+              <f:facet name="header">                
+                <h:outputText value="List with #{fn:length(listManagerController.selectedList.cmpdListMembers)} Members"/>                
+              </f:facet>
+
+              <p:column resizable="true">  
+                <f:facet name="header">                
+                  <h:outputText value="Parent Fragment"/>                
+                </f:facet>                              
+
+                <!--
+                <h:graphicImage rendered="#{!empty listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
+                                alt="png-structure-image"
+                                width="150" height="150"
+                                url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                </h:graphicImage> 
+                -->
+                <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
+                  <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                  <f:setPropertyActionListener value="#{listMember.cmpd}"   
+                                               target="#{listManagerController.selectedCmpd}" />  
+                </p:commandLink>  
+
+              </p:column>
+
+              <p:column resizable="true">                
+                <f:facet name="header">                
+                  <h:outputText value="id"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.id}"/>
+              </p:column>             
+
+              <p:column resizable="true">                
+                <f:facet name="header">                
+                  <h:outputText value="nscCmpdId"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.nscCmpdId}"/>
+              </p:column>             
+
+              <p:column resizable="true">                
+                <f:facet name="header">                
+                  <h:outputText value="adHocCmpdId"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.adHocCmpdId}"/>
+              </p:column>                      
+
+              <p:column resizable="true">                
+                <f:facet name="header">                
+                  <h:outputText value="name"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.name}"/>
+              </p:column>        
+
+              <!--
+                <p:column sortBy="#{fn:length(listMember.cmpd.cmpdFragments)}">                
+                    <f:facet name="header">                
+                        <h:outputText value="Count Fragments"/>                
+                    </f:facet>
+                    <h:outputText value="#{listMember.cmpd.countCmpdFragments}"/>
+                </p:column>   
+              -->
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mf}">                
+                <f:facet name="header">                
+                  <h:outputText value="MF"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mf}"/>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mw}">                
+                <f:facet name="header">                
+                  <h:outputText value="MW"/>                                    
+                </f:facet>                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mw}">
+                  <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.alogp}">                
+                <f:facet name="header">                
+                  <h:outputText value="aLogP"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.alogp}">
+                  <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hba}">                
+                <f:facet name="header">                
+                  <h:outputText value="HBA"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hba}"/>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hbd}">                
+                <f:facet name="header">                
+                  <h:outputText value="HBD"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hbd}"/>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.logd}">                
+                <f:facet name="header">                
+                  <h:outputText value="logD"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.logd}">
+                  <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.sa}">                
+                <f:facet name="header">                
+                  <h:outputText value="SA"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.sa}">
+                  <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+              </p:column>
+
+              <p:column sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.psa}">                
+                <f:facet name="header">                
+                  <h:outputText value="PSA"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.psa}">
+                  <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+              </p:column>
+
+              <!--
+              <p:column resizable="true">                
+                <f:facet name="header">                
+                  <h:outputText value="SMILES"/>                
+                </f:facet>
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}">
+                </h:outputText>
+              </p:column>
+              -->
+
+            </p:dataTable>
+
+          </p:tab>
+
+          <p:tab title="Compact Grid View">
+
+            <p:dataGrid var="listMember" 
+                        value="#{listManagerController.selectedList.cmpdListMembers}" 
+                        columns="6"  
+                        rows="6" 
+                        paginator="true"  
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                        rowsPerPageTemplate="36,72,108">  
+
+              <f:facet name="header">  
+                <h:outputText value="List with #{fn:length(listManagerController.selectedList.cmpdListMembers)} Members"/>
+              </f:facet>
+
+              <p:panelGrid columns="1">
+
+                <f:facet name="header"> 
+                  <h:outputText value="#{listMember.cmpd.name}"/>
+                </f:facet> 
+
+                <h:graphicImage rendered="#{!empty listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
+                                alt="png-structure-image"
+                                width="150" height="150"
+                                url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                </h:graphicImage> 
+
+                <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
+                  <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                  <f:setPropertyActionListener value="#{listMember.cmpd}"   
+                                               target="#{listManagerController.selectedCmpd}" />  
+                </p:commandLink>  
+
+
+              </p:panelGrid>
+
+            </p:dataGrid>
+
+          </p:tab>
+
+          <p:tab title="Grid View">
+
+            <p:dataGrid var="listMember" 
+                        value="#{listManagerController.selectedList.cmpdListMembers}"                                     
+                        columns="7"  
+                        rows="24" 
+                        paginator="true"  
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                        rowsPerPageTemplate="24,48,72">  
+
+              <f:facet name="header">  
+                <p:row>  
+                  <p:column>List Contains: #{fn:length(listManagerController.selectedList.cmpdListMembers)} Cmpds</p:column>  
+                </p:row>                                              
+              </f:facet>
+
+              <ui:include src="listMemberContentLayout.xhtml"/>
+
+            </p:dataGrid>
+
+          </p:tab>
+
+        </p:tabView>
+
+      </p:panel>
+
+    </p:outputPanel>
+
+  </p:dialog>
+
+</ui:composition>
