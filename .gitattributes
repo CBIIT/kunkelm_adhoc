@@ -86,8 +86,6 @@ dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerControl
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/hibernate.cfg.xml -text
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/hibernate.reveng.xml -text
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/AndroHibMain.java -text
-dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkhisto/Histogram.java -text
-dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkhisto/HistogramBin.java -text
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Comparators.java -text
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ExtendedCartesianChartModel.java -text
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperCmpd.java -text
