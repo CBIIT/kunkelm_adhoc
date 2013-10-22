@@ -267,3 +267,14 @@ $('table[summary="forum"] td.particular.class img').attr({
 mvn install -Ddeploy.db.url=jdbc:postgresql://localhost:5432/dctddb -Ddeploy.db.user=dctd_user -Ddeploy.db.pass=dctd_pass -Ddeploy.structure.servlet.url=http://localhost:8080/structureservlet-0.1/StructureServlet
 
 mvn install -Ddeploy.db.url=jdbc:postgresql://ncidb-d080-v.nci.nih.gov:5473/dctddatasystem -Ddeploy.db.user=dctddatasystem -Ddeploy.db.pass=Data2982Dtcd002sys -Ddeploy.structure.servlet.url=http://ncias-d963-v.nci.nih.gov:8080/structureservlet-0.1/StructureServlet
+
+Fri 04Oct2013 7PM
+
+outerTabViewActiveIndex
+listManagerTabViewActiveIndex
+disabled AvalibleAsActiveListDialog
+
+Sat 05Oct2013 430PM 
+
+allSelectedStructures as single image grid
+removing obsoleted dialogs (dialogListContent, 

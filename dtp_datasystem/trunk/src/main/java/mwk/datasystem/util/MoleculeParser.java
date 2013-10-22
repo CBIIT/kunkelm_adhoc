@@ -13,12 +13,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -33,8 +37,10 @@ import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -214,17 +220,17 @@ public class MoleculeParser {
 
                 for (IMolecule iMol : cdkFragList) {
 
-                    System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-                    System.out.println("At start: " + sg.createSMILES(iMol));
+                    //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
+                    //System.out.println("At start: " + sg.createSMILES(iMol));
 
                     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
                     AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
 
                     sc.saturate(iMol);
 
-                    System.out.println("At end: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-                    System.out.println("At end: " + sg.createSMILES(iMol));
-                    System.out.println();
+                    //System.out.println("At end: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
+                    //System.out.println("At end: " + sg.createSMILES(iMol));
+                    //System.out.println();
 
 //                    CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(iMol.getBuilder());
 //                    Iterator<IAtom> atoms = iMol.atoms().iterator();

@@ -14,8 +14,7 @@ function histogramExtender() {
 }
 
 function scatterPlotExtender(){
-    this.cfg.seriesColors = ["red","blue"];  
-    
+    this.cfg.seriesColors = ["blue","red"];      
     this.cfg.seriesDefaults = {
         showLine: false,
         showMarker: true

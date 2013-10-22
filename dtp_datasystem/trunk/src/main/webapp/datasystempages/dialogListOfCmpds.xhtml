@@ -52,7 +52,7 @@
                 <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                 alt="png-structure-image"
                                 width="150" height="150"
-                                  url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                  url='http://localhost:8080/structureservlet-0.1/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                 </h:graphicImage> 
                 -->
                 <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
@@ -208,7 +208,7 @@
                       <p:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                       alt="png-structure-image"
                                       width="150" height="150"                                                                                    
-                                      url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                      url='http://localhost:8080/structureservlet-0.1/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                       </p:graphicImage> 
 
                       <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  

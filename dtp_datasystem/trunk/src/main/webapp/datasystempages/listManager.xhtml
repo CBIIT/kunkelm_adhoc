@@ -30,7 +30,7 @@
 
     </p:confirmDialog>  
 
-    <p:tabView id="listManagerTabView" dynamic="true">
+    <p:tabView id="listManagerTabView" activeIndex="#{listManagerController.listManagerTabViewActiveIndex}" dynamic="true">
 
       <p:tab title="Available Lists">
 
@@ -64,9 +64,9 @@
               <p:commandButton value="VIEW"
                                icon="ui-icon-image"
                                action="#{listManagerController.performLoadSelectedList()}"
-                               update=":myform:growl,:myform:outerTabView:ActiveListContentPanel,:myform:outerTabView:activeListTabView,:myform:AvailableAsActiveListDialog"
-                               onstart="loadingListDlg.show();"
-                               oncomplete="loadingListDlg.hide();availableAsActiveListDlg.show();">      
+                               update=":myform:growl,:myform:outerTabView,:myform:outerTabView:ActiveListContentPanel,:myform:outerTabView:activeListTabView"
+                               onstart="bui_loadinglist_block.show();"
+                               oncomplete="bui_loadinglist_block.hide();">      
 
                 <f:setPropertyActionListener value="#{list}"   
                                              target="#{listManagerController.selectedList}"/>  
@@ -80,7 +80,7 @@
               <p:commandButton disabled="#{list.listOwner!='kunkelm'}"                
                                value="DELETE" 
                                style="background-color: red;"
-                               onclick="setListForDelete#{list.cmpdListId}();confirmation.show()"                                
+                               onclick="setListForDelete#{list.cmpdListId}();confirmation.show();"                                
                                type="button"/> 
 
               <p:remoteCommand name="setListForDelete#{list.cmpdListId}">    
@@ -114,7 +114,7 @@
             </p:column> 
 
             <p:column headerText="ListName" resizable="true" sortBy="#{list.listName}">              
-                  <h:outputText value="#{list.listName}" />                  
+              <h:outputText value="#{list.listName}" />                  
             </p:column> 
 
             <p:column  headerText="List Size" resizable="true" sortBy="#{list.countListMembers}">              
@@ -132,6 +132,12 @@
           </p:dataTable>
 
         </p:outputPanel>
+
+        <p:blockUI block=":myform:outerTabView:listManagerTabView" 
+                   widgetVar="bui_loadinglist_block">
+          <h:outputText style="color: green; font-size: 40px" value="LOADING LIST to ACTIVE LIST tab"/>  
+          <p:graphicImage name="images/ajax-loader.gif"/>  
+        </p:blockUI>
 
       </p:tab>
 
@@ -166,7 +172,7 @@
 
         <p:blockUI block=":myform:outerTabView:listManagerTabView" 
                    widgetVar="bui_createlist_block">
-          CREATING LIST<br />  
+          <h:outputText style="color: green; font-size: 40px" value="CREATING LIST"/>  
           <p:graphicImage name="images/ajax-loader.gif"/>  
         </p:blockUI>
 
@@ -185,19 +191,19 @@
             mode="advanced" 
             allowTypes="/(\.|\/)(sdf|mol)$/"
             fileUploadListener="#{listManagerController.handleFileUpload}"                          
-            update=":myform:growl,:myform:ListContentDialog,:myform:ListOfCmpdsDialog,:myform:outerTabView:listManagerTabView"
+            update=":myform:growl,:myform:outerTabView:listManagerTabView"
             onstart="bui_upload_block.show();"
-            oncomplete="bui_upload_block.hide();listofcmpdsdlg.show();">
+            oncomplete="bui_upload_block.hide();">
 
           </p:fileUpload>
-          
-          
+
+
 
         </p:panel>
 
         <p:blockUI block=":myform:outerTabView:listManagerTabView" 
                    widgetVar="bui_upload_block">
-          UPLOADING AND PROCESSING<br />  
+          <h:outputText style="color: green; font-size: 40px" value="UPLOADING AND PROCESSING" />  
           <p:graphicImage name="images/ajax-loader.gif"/>  
         </p:blockUI>
 
@@ -205,6 +211,12 @@
       </p:tab>
 
       <p:tab title="Logical Operations on Lists">
+
+        <p:blockUI block=":myform:outerTabView:listManagerTabView" 
+                   widgetVar="bui_listlogic_block">
+          <h:outputText style="color: green; font-size: 40px" value="RESOLVING LISTS"/>
+          <p:graphicImage name="images/ajax-loader.gif"/>  
+        </p:blockUI>
 
         <p:outputPanel id="listLogicPanel">
 
@@ -303,11 +315,6 @@
 
     </p:tabView>
 
-    <p:blockUI block=":myform:outerTabView:listManagerTabView" 
-               widgetVar="bui_listlogic_block">
-      RESOLVING LISTS
-      <p:graphicImage name="images/ajax-loader.gif"/>  
-    </p:blockUI>
 
   </f:view>
 

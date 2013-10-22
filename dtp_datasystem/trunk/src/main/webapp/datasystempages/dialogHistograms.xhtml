@@ -23,10 +23,21 @@
 
         <p:outputPanel id="HistogramsDialog">
 
-            <p:lineChart value="#{listManagerController.doScatterPlot()}" 
-                         title="Scatter Plot Test"
-                         style="height:400px; width:400px"
-                         extender="scatterPlotExtender"/>
+            <p:dataGrid rendered="#{listManagerController.scatterplotModel != null}" 
+                        value="#{listManagerController.scatterplotModel}" 
+                        var="scat" 
+                        columns="3">      
+
+                <p:lineChart value="#{scat}" 
+                             title="#{scat.title}"
+                             xaxisLabel="#{scat.labelAxisX}"
+                             yaxisLabel="#{scat.labelAxisY}"
+                             xaxisAngle="-90"            
+                             zoom="true"
+                             style="height:400px; width:400px"
+                             extender="scatterPlotExtender"/>
+
+            </p:dataGrid>
 
             <p:dataGrid rendered="#{listManagerController.histoModel != null}"
                         value="#{listManagerController.histoModel}" 

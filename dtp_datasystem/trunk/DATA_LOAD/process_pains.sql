@@ -22,7 +22,7 @@ where mol @>
 (
 select mol 
 from pains 
-where descriptor = '<regId="diazox_sulfon_B(5)">'
+where descriptor = '<regId="azo_A(324)">'
 );
 
 drop table if exists pains_survey;
@@ -40,3 +40,24 @@ as
 select p.descriptor, p.smarts, count(id)
 from pains_survey p
 group by p.descriptor, p.smarts;
+
+
+
+drop table if exists temp_positive_for_pains; 
+
+create table temp_positive_for_pains 
+as 
+select s.id, s.mol 
+from cmpd_fragment_structure s
+where id in(
+select distinct id from pains_survey
+)
+limit 10000;
+
+drop table if exists temp_timer_test_10000;
+
+create table temp_timer_test_10000 
+as
+select p.descriptor, p.smarts, s.id
+from pains p, temp_positive_for_pains s
+where s.mol @> p.mol;

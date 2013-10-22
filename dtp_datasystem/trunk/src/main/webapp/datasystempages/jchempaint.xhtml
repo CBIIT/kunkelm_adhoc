@@ -116,23 +116,29 @@ makeHydrogensExplicit()
             </applet>
 
           </f:verbatim>
+          
+          <p:blockUI block=":myform:outerTabView:jChemPaintTabView" 
+                   widgetVar="bui_seaarchingcompounds_block">
+          <h:outputText style="color: green; font-size: 40px" value="SEARCHING COMPOUNDS"/>  
+          <p:graphicImage name="images/ajax-loader.gif"/>  
+        </p:blockUI>
 
           <p:panelGrid columns="3">
 
-            <p:commandButton onclick="showSmiles();showMolFile();searchingCompoundsDlg.show();runExactMatchSearch();"
+            <p:commandButton onclick="showSmiles();showMolFile();bui_seaarchingcompounds_block.show();runExactMatchSearch();"
                              update=":myform:growl,:myform:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog"
                              value="Exact Match Search"
-                             oncomplete="searchingCompoundsDlg.hide();"/>
+                             oncomplete="bui_seaarchingcompounds_block.hide();"/>
 
-            <p:commandButton onclick="showSmiles();showMolFile();searchingCompoundsDlg.show();runSubstructureSearch();"
+            <p:commandButton onclick="showSmiles();showMolFile();bui_seaarchingcompounds_block.show();runSubstructureSearch();"
                              update=":myform:growl,:myform:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog,:myform:outerTabView:listManagerTabView"
                              value="Substructure Search"
-                             oncomplete="searchingCompoundsDlg.hide();"/>
+                             oncomplete="bui_seaarchingcompounds_block.hide();"/>
 
-            <p:commandButton onclick="showSmiles();showMolFile();searchingCompoundsDlg.show();runSmartsSearch();"
+            <p:commandButton onclick="showSmiles();showMolFile();bui_seaarchingcompounds_block.show();runSmartsSearch();"
                              update=":myform:growl,:myform:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog"
                              value="Fuzzy Substructure Search"
-                             oncomplete="searchingCompoundsDlg.hide();"/>
+                             oncomplete="bui_seaarchingcompounds_block.hide();"/>
 
             <p:outputLabel for="ssSearchListName" value="Save results to list named:" />
             <p:inputText id="ssSearchListName" value="#{cmpdController.substructureResultsListName}"/>

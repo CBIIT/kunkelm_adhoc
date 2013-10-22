@@ -17,11 +17,13 @@
             maximizable="false"
             resizable="true"
             draggable="true"
-            height="800"
-            width="1000"
+            height="400"
+            width="400"
             appendToBody="true">  
 
     <p:outputPanel id="SelectedListMembersDialog">
+      
+      <p:commandButton onclick="allSelectedStructures();" value="All structures as image grid" /> 
 
       <h:outputText value="Selected List Members with #{fn:length(listManagerController.selectedListMembers)} selected"/>
 
@@ -37,8 +39,10 @@
 
           <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                           alt="png-structure-image"
-                          width="100" height="100"
-                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                          width="200" height="200"
+                          id="selStrucImg"
+                          class="selectedListMemberStructureImage"
+                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
           </h:graphicImage> 
 
           <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" 
