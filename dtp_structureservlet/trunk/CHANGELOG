@@ -9,6 +9,17 @@ added TITLE to molecules
 
 db connectivity now managed from mvn command line
 
-mvn install -Ddeploy.db.url=jdbc:postgresql://cbdb-d2001:5473/compare -Ddeploy.db.user=comparedev -Ddeploy.db.pass=com29040869202dev  -Ddeploy.structure.servlet.url=http://ncias-d963-v.nci.nih.gov:8080/structureservlet-0.1/StructureServlet
+mvn install -Ddeploy.db.url=jdbc:postgresql://localhost:5432/comparedb -Ddeploy.db.user=compare_user -Ddeploy.db.pass=compare_pass
+mvn install -Ddeploy.db.url=jdbc:postgresql://cbdb-d2001:5473/compare -Ddeploy.db.user=comparedev -Ddeploy.db.pass=com29040869202dev
 
 
+Thu 19Sep2013
+
+added logic to try to deduce bonds in ring systems and set CDK generator to RingGenerator ONLY if unsuccessful
+
+Tue 24Sep2013 homework
+
+return image with shadow summary details
+return image with surrounding details
+
+grid of structures

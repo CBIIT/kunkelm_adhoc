@@ -126,20 +126,14 @@
 
     </build>
     <repositories>
-        
-        <repository>  
-            <id>prime-repo</id>  
-            <name>PrimeFaces Maven Repository</name>  
-            <url>http://repository.primefaces.org</url>  
-            <layout>default</layout>  
-        </repository>  
-        
-        <repository>  
+       <!--
+       <repository>  
             <id>maven-central</id>  
             <name>Maven Central Repository</name>  
             <url>http://repo.maven.apache.org/maven2/</url>  
             <layout>default</layout>  
         </repository>  
-
+        -->
+       
     </repositories>
 </project>
