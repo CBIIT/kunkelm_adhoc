@@ -23,7 +23,7 @@
 
     <p:outputPanel id="SelectedListMembersDialog">
       
-      <p:commandButton onclick="allSelectedStructures();" value="All structures as image grid" /> 
+      <p:commandButton onclick="imageGridFromAllSelectedStructures();" value="All structures as image grid" /> 
 
       <h:outputText value="Selected List Members with #{fn:length(listManagerController.selectedListMembers)} selected"/>
 
@@ -40,12 +40,12 @@
           <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                           alt="png-structure-image"
                           width="200" height="200"
-                          id="selStrucImg"
+                          id="selectedStructureImg"
                           class="selectedListMemberStructureImage"
                           url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
           </h:graphicImage> 
 
-          <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" 
+          <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" 
                          process="@this"
                          oncomplete="listmanagercmpddetailsdlg.show()" 
                          title="View Detail">  

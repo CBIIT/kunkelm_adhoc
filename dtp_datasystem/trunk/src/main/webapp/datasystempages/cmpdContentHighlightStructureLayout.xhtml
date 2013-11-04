@@ -113,9 +113,11 @@
 
       <p:column colspan="2" rowspan="8">
         <p:panel>
+          
           <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
-                          alt="png-structure-image"
-                          width="200" height="200"                          
+                          alt="png-structure-with-highlighted-substructure-image"
+                          width="200" height="200"                         
+                          id="substructureImg"
                           url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>              
               
           </h:graphicImage> 

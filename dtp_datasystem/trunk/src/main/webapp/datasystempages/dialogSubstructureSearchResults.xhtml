@@ -54,7 +54,7 @@
           </p:tab>
 
           <p:tab title="Compact Grid View">
-
+            
             <p:dataGrid  var="cmpd" 
                          value="#{cmpdController.substructureSearchResults}" 
                          columns="7"  
@@ -88,7 +88,7 @@
                                       url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
                       </h:graphicImage> 
 
-                      <p:commandLink update=":myform:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
+                      <p:commandLink update=":dataSystemForm:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
                         <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
                         <f:setPropertyActionListener value="#{cmpd}"   
                                                      target="#{cmpdController.selectedCmpd}" />  

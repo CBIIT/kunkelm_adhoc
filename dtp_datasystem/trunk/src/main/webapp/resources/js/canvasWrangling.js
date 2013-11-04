@@ -1,8 +1,8 @@
 //http://www.javascriptkit.com/javatutors/preloadimagesplus.shtml
 
-function allSelectedStructures(){
+function imageGridFromAllSelectedStructures(){
   
-  var images = $("[id$='selStrucImg']");
+  var images = $("[id$='selectedStructureImg']");
   
   var theCanvas = document.createElement('canvas');
 
@@ -60,8 +60,77 @@ function allSelectedStructures(){
 
   imag.onload=function(){
   
-    $("[id='myform:exportableImageOutputPanel']").empty();
-    $("[id='myform:exportableImageOutputPanel']").append(imag);
+    $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+    $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+    
+  }
+     
+  exportImageDlg.show();
+  
+}
+
+function imageGridFromSubstructures(){
+  
+  var images = $("[id$='substructureImg']");
+  
+  var theCanvas = document.createElement('canvas');
+
+  var xDim = 10;
+  var yDim = 0;
+
+  var maxWidth = 0; 
+  var maxHeight = 0;
+
+  for (i = 0; i < images.length; i++){  
+    if (images[i].width > maxWidth) maxWidth = images[i].width
+    if (images[i].height > maxHeight) maxHeight = images[i].height  
+  }
+    
+  var tileWidth = maxWidth
+  var tileHeight = maxHeight
+
+  // calculate the yDim
+
+  yDim = Math.ceil(images.length / xDim);
+
+  theCanvas.width = tileWidth * xDim;
+  theCanvas.height = tileHeight * yDim;
+
+  var ctx = theCanvas.getContext("2d");
+  
+  var xCnt = -1;
+  var yCnt = -1;
+
+  for (var i = 0; i < images.length; i++) {
+
+    if (i % xDim == 0) {
+      xCnt = -1;
+      yCnt++;
+    }
+
+    xCnt++;
+
+    ctx.drawImage(images[i], xCnt * tileWidth, yCnt * tileHeight);
+
+  }
+
+  //      console.log('Writing text to canvas');
+  //      ctx.fillStyle = "blue";
+  //      ctx.font = "bold 40px sans-serif";
+  //      ctx.fillText("Test of bold 40px sans-serif", 100, 100);
+
+  var imag = document.createElement("img");
+  
+  //imag.id = 'panelPlotImage'
+  //imag.width = tileWidth * xDim;
+  //imag.height = tileHeight * yDim;
+
+  imag.src = theCanvas.toDataURL();
+
+  imag.onload=function(){
+  
+    $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+    $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
     
   }
      
@@ -179,8 +248,8 @@ function addAllPanels() {
 
       imag.onload=function(){
   
-        $("[id='myform:exportableImageOutputPanel']").empty();
-        $("[id='myform:exportableImageOutputPanel']").append(imag);
+        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
     
       }
   
@@ -278,8 +347,8 @@ MaxVal	-5
 
       imag.onload=function(){
   
-        $("[id='myform:exportableImageOutputPanel']").empty();
-        $("[id='myform:exportableImageOutputPanel']").append(imag);
+        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
     
       }
     
@@ -342,8 +411,8 @@ function addAllNanoStringMeanGraphs(arrayOfArray) {
 
       imag.onload=function(){
   
-        $("[id='myform:exportableImageOutputPanel']").empty();
-        $("[id='myform:exportableImageOutputPanel']").append(imag);
+        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
     
       }
     
@@ -430,8 +499,8 @@ MaxVal	-5
 
       imag.onload=function(){
   
-        $("[id='myform:exportableImageOutputPanel']").empty();
-        $("[id='myform:exportableImageOutputPanel']").append(imag);
+        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
     
       }
     
@@ -546,8 +615,8 @@ function exportHeatMapImage(rowArray){
   imag.src = theCanvas.toDataURL();
 
   imag.onload=function(){  
-    $("[id='myform:exportableImageOutputPanel']").empty();
-    $("[id='myform:exportableImageOutputPanel']").append(imag);    
+    $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+    $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);    
   }
  
   exportImageDlg.show();
@@ -649,8 +718,8 @@ function exportHeatMapImageLabelsBelow(rowArray){
   imag.src = theCanvas.toDataURL();
 
   imag.onload=function(){  
-    $("[id='myform:exportableImageOutputPanel']").empty();
-    $("[id='myform:exportableImageOutputPanel']").append(imag);    
+    $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
+    $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);    
   }
  
   exportImageDlg.show();

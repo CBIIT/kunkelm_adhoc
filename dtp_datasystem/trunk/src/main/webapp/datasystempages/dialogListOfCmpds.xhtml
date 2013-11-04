@@ -55,7 +55,7 @@
                                   url='http://localhost:8080/structureservlet-0.1/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                 </h:graphicImage> 
                 -->
-                <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
+                <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
                   <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
                   <f:setPropertyActionListener value="#{cmpd}"   
                                                target="#{listManagerController.selectedCmpd}" />  
@@ -211,7 +211,7 @@
                                       url='http://localhost:8080/structureservlet-0.1/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                       </p:graphicImage> 
 
-                      <p:commandLink update=":myform:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
+                      <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
                         <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
                         <f:setPropertyActionListener value="#{cmpd}"   
                                                      target="#{listManagerController.selectedCmpd}" />  

@@ -226,7 +226,7 @@ histogram grid with containers based on hist4j
 implemented stand-along ketcher -> BROKEN, case of SMILES string C/c is WRONG! NUKE THIS!
 
 "ActiveList" tab added to outerTabView, "Substructure Searches" moved from outerTabView to listManager
-had to RENAME all of the form elements :myform:outerTabView -> :myform:outerTabView:
+had to RENAME all of the form elements :dataSystemForm:outerTabView -> :dataSystemForm:outerTabView:
 
 this is BROKEN, some aspect of js/AJAX doesn't work if Substructure Searches isn't directly underneate outerTabView
 
@@ -276,5 +276,5 @@ disabled AvalibleAsActiveListDialog
 
 Sat 05Oct2013 430PM 
 
-allSelectedStructures as single image grid
+imageGridFromAllSelectedStructures as single image grid
 removing obsoleted dialogs (dialogListContent, 

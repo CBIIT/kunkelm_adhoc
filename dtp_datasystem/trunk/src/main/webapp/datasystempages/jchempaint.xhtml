@@ -13,19 +13,19 @@
     function showMolFile(){            	
       var jcped = document.JChemPaintEditor;            	
       var molFile = jcped.getMolFile();            	
-      document.getElementById('myform:outerTabView:jChemPaintTabView:molfile').value=molFile;
+      document.getElementById('dataSystemForm:outerTabView:jChemPaintTabView:molfile').value=molFile;
     }
      
     function showSmilesChiral(){            	
       var jcped = document.JChemPaintEditor;            	
       var smiles = jcped.getSmilesChiral();            	
-      document.getElementById('myform:outerTabView:jChemPaintTabView:chiralsmilesstring').value=smiles;
+      document.getElementById('dataSystemForm:outerTabView:jChemPaintTabView:chiralsmilesstring').value=smiles;
     }
      
     function showSmiles(){            	
       var jcped = document.JChemPaintEditor;            	
       var smiles = jcped.getSmiles();            	
-      document.getElementById('myform:outerTabView:jChemPaintTabView:smilesstring').value=smiles;
+      document.getElementById('dataSystemForm:outerTabView:jChemPaintTabView:smilesstring').value=smiles;
     }
         
     /*     
@@ -55,7 +55,7 @@ makeHydrogensExplicit()
     function loadFromSmiles(){      
       var jcped = document.JChemPaintEditor;                   
       
-      var smiles = document.getElementById('myform:outerTabView:jChemPaintTabView:smilesforload').value;      
+      var smiles = document.getElementById('dataSystemForm:outerTabView:jChemPaintTabView:smilesforload').value;      
       jcped.clear();
       if (smiles){        
         jcped.loadModelFromSmiles(smiles);          
@@ -78,7 +78,7 @@ makeHydrogensExplicit()
         <h:inputHidden id="smilesforload" value="#{cmpdController.smilesForJChemPaintLoad}"/>
         -->
 
-        <p:remoteCommand name="runLoadByNsc" action="#{cmpdController.performLoadJChemPaintByNsc()}" update=":myform:outerTabView:jChemPaintTabView:smilesforload"/>
+        <p:remoteCommand name="runLoadByNsc" action="#{cmpdController.performLoadJChemPaintByNsc()}" update=":dataSystemForm:outerTabView:jChemPaintTabView:smilesforload"/>
 
         <p:remoteCommand name="runExactMatchSearch" action="#{cmpdController.performExactMatchSearch()}" />
 
@@ -117,7 +117,7 @@ makeHydrogensExplicit()
 
           </f:verbatim>
           
-          <p:blockUI block=":myform:outerTabView:jChemPaintTabView" 
+          <p:blockUI block=":dataSystemForm:outerTabView:jChemPaintTabView" 
                    widgetVar="bui_seaarchingcompounds_block">
           <h:outputText style="color: green; font-size: 40px" value="SEARCHING COMPOUNDS"/>  
           <p:graphicImage name="images/ajax-loader.gif"/>  
@@ -126,17 +126,17 @@ makeHydrogensExplicit()
           <p:panelGrid columns="3">
 
             <p:commandButton onclick="showSmiles();showMolFile();bui_seaarchingcompounds_block.show();runExactMatchSearch();"
-                             update=":myform:growl,:myform:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog"
+                             update=":dataSystemForm:growl,:dataSystemForm:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog"
                              value="Exact Match Search"
                              oncomplete="bui_seaarchingcompounds_block.hide();"/>
 
             <p:commandButton onclick="showSmiles();showMolFile();bui_seaarchingcompounds_block.show();runSubstructureSearch();"
-                             update=":myform:growl,:myform:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog,:myform:outerTabView:listManagerTabView"
+                             update=":dataSystemForm:growl,:dataSystemForm:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog,:dataSystemForm:outerTabView:listManagerTabView"
                              value="Substructure Search"
                              oncomplete="bui_seaarchingcompounds_block.hide();"/>
 
             <p:commandButton onclick="showSmiles();showMolFile();bui_seaarchingcompounds_block.show();runSmartsSearch();"
-                             update=":myform:growl,:myform:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog"
+                             update=":dataSystemForm:growl,:dataSystemForm:outerTabView:jChemPaintTabView:SubstructureSearchResultsDialog"
                              value="Fuzzy Substructure Search"
                              oncomplete="bui_seaarchingcompounds_block.hide();"/>
 
@@ -194,6 +194,8 @@ makeHydrogensExplicit()
 
               <p:tab title="Compact Grid View">
 
+                 <p:commandButton onclick="imageGridFromSubstructures();" value="All structures as image grid" /> 
+
                 <p:dataGrid  var="cmpd" 
                              value="#{cmpdController.substructureSearchResults}" 
                              columns="8"  
@@ -224,10 +226,11 @@ makeHydrogensExplicit()
                           <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                           alt="png-structure-image"
                                           width="150" height="150"
-                                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
+                                          id="substructureImg"
+                                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;title=#{cmpd.nsc}&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
                           </h:graphicImage> 
 
-                          <p:commandLink update=":myform:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
+                          <p:commandLink update=":dataSystemForm:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
                             <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
                             <f:setPropertyActionListener value="#{cmpd}"   
                                                          target="#{cmpdController.selectedCmpd}" />  

@@ -21,7 +21,7 @@
                        style="background-color: red;"
                        oncomplete="confirmation.hide()" 
                        actionListener="#{listManagerController.handleDeleteList}"                               
-                       update=":myform:outerTabView:listManagerTabView"/>      
+                       update=":dataSystemForm:outerTabView:listManagerTabView"/>      
 
       <p:commandButton id="decline" 
                        value="NO" 
@@ -43,7 +43,7 @@
 
           <p:commandButton value="Update Lists"
                            action="#{listManagerController.performUpdateAvailableLists()}"
-                           update=":myform:outerTabView:listManagerTabView"/>
+                           update=":dataSystemForm:outerTabView:listManagerTabView"/>
 
           <p:spacer height="10"/>
 
@@ -64,7 +64,7 @@
               <p:commandButton value="VIEW"
                                icon="ui-icon-image"
                                action="#{listManagerController.performLoadSelectedList()}"
-                               update=":myform:growl,:myform:outerTabView,:myform:outerTabView:ActiveListContentPanel,:myform:outerTabView:activeListTabView"
+                               update=":dataSystemForm:growl,:dataSystemForm:outerTabView,:dataSystemForm:outerTabView:ActiveListContentPanel,:dataSystemForm:outerTabView:activeListTabView"
                                onstart="bui_loadinglist_block.show();"
                                oncomplete="bui_loadinglist_block.hide();">      
 
@@ -96,7 +96,7 @@
                                 value="SHARE"
                                 style="background-color: green;"
                                 action="#{listManagerController.performMakeListPublic()}"                               
-                                update=":myform:outerTabView:listManagerTabView">      
+                                update=":dataSystemForm:outerTabView:listManagerTabView">      
 
                 <f:setPropertyActionListener value="#{list}"   
                                              target="#{listManagerController.selectedList}"/>  
@@ -133,7 +133,7 @@
 
         </p:outputPanel>
 
-        <p:blockUI block=":myform:outerTabView:listManagerTabView" 
+        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
                    widgetVar="bui_loadinglist_block">
           <h:outputText style="color: green; font-size: 40px" value="LOADING LIST to ACTIVE LIST tab"/>  
           <p:graphicImage name="images/ajax-loader.gif"/>  
@@ -165,12 +165,12 @@
           <p:commandButton value="Create List"
                            id="createListButton"
                            action="#{listManagerController.performCreateListBySearch()}"
-                           update=":myform:outerTabView:listManagerTabView"
+                           update=":dataSystemForm:outerTabView:listManagerTabView"
                            onstart="bui_createlist_block.show();"
                            oncomplete="bui_createlist_block.hide();"/>
         </p:panel>
 
-        <p:blockUI block=":myform:outerTabView:listManagerTabView" 
+        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
                    widgetVar="bui_createlist_block">
           <h:outputText style="color: green; font-size: 40px" value="CREATING LIST"/>  
           <p:graphicImage name="images/ajax-loader.gif"/>  
@@ -191,7 +191,7 @@
             mode="advanced" 
             allowTypes="/(\.|\/)(sdf|mol)$/"
             fileUploadListener="#{listManagerController.handleFileUpload}"                          
-            update=":myform:growl,:myform:outerTabView:listManagerTabView"
+            update=":dataSystemForm:growl,:dataSystemForm:outerTabView:listManagerTabView"
             onstart="bui_upload_block.show();"
             oncomplete="bui_upload_block.hide();">
 
@@ -201,7 +201,7 @@
 
         </p:panel>
 
-        <p:blockUI block=":myform:outerTabView:listManagerTabView" 
+        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
                    widgetVar="bui_upload_block">
           <h:outputText style="color: green; font-size: 40px" value="UPLOADING AND PROCESSING" />  
           <p:graphicImage name="images/ajax-loader.gif"/>  
@@ -212,7 +212,7 @@
 
       <p:tab title="Logical Operations on Lists">
 
-        <p:blockUI block=":myform:outerTabView:listManagerTabView" 
+        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
                    widgetVar="bui_listlogic_block">
           <h:outputText style="color: green; font-size: 40px" value="RESOLVING LISTS"/>
           <p:graphicImage name="images/ajax-loader.gif"/>  
@@ -241,7 +241,7 @@
           <p:commandButton value="DO LOGIC"
                            action="#{listManagerController.performListLogic()}"                               
                            onstart="bui_listlogic_block.show();"
-                           update=":myform:outerTabView:listManagerTabView:listLogicPanel"
+                           update=":dataSystemForm:outerTabView:listManagerTabView:listLogicPanel"
                            oncomplete="bui_listlogic_block.hide();"/>      
 
           <p:spacer height="10"/>
@@ -253,7 +253,7 @@
 
             <p:commandButton value="VIEW List A OR List B"
                              icon="ui-icon-image"
-                             update=":myform:growl,:myform:ListOfCmpdsDialog"
+                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
                              oncomplete="listofcmpdsdlg.show()">      
 
               <f:setPropertyActionListener value="#{listManagerController.cmpdsListAorListB}"   
@@ -268,7 +268,7 @@
 
             <p:commandButton value="VIEW List A AND List B"
                              icon="ui-icon-image"
-                             update=":myform:growl,:myform:ListOfCmpdsDialog"
+                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
                              oncomplete="listofcmpdsdlg.show()">      
 
               <f:setPropertyActionListener value="#{listManagerController.cmpdsListAandListB}"   
@@ -283,7 +283,7 @@
 
             <p:commandButton value="VIEW List A NOT List B"
                              icon="ui-icon-image"
-                             update=":myform:growl,:myform:ListOfCmpdsDialog"
+                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
                              oncomplete="listofcmpdsdlg.show()">      
 
               <f:setPropertyActionListener value="#{listManagerController.cmpdsListAnotListB}"   
@@ -294,7 +294,7 @@
             <p:commandButton value="SAVE THIS LIST"
                              icon="ui-icon-image"
                              action="#{listManagerController.performSaveListLogicCmpds()}"
-                             update=":myform:growl,:myform:ListOfCmpdsDialog"
+                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
                              oncomplete="listofcmpdsdlg.show()">      
 
               <f:setPropertyActionListener value="#{listManagerController.cmpdsListAnotListB}"   
