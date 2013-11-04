@@ -26,6 +26,7 @@ dtp_datasystem/trunk/PAINS/combo.csv -text
 dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/trunk/PAINS/p_m150.txt -text
+dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/3.5.18/primefaces-3.5.18.jar -text
 dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/trunk/src/main/java/HibernateStringClobType.java -text
 dtp_datasystem/trunk/src/main/java/mwk/datasystem/androdomain/AdHocCmpd.java -text
