@@ -1,0 +1,57 @@
+#!/usr/local/bin/python     
+
+from rdkit import Chem
+from rdkit.Chem import AllChem
+
+def InitiateNeutralisationReactions():
+    return {
+        # Imidazoles
+        Chem.MolFromSmarts('[n+;H]'):                   Chem.MolFromSmarts('n'),
+        # Amines
+        Chem.MolFromSmarts('[N+;H]'):                   Chem.MolFromSmarts('N'),
+        # Carboxylic acids
+        Chem.MolFromSmarts('[$([O-]);!$([O-][#7])]'):   Chem.MolFromSmarts('O'),
+        # Thiols
+        Chem.MolFromSmarts('[S-;X1]'):                  Chem.MolFromSmarts('S'),
+        # Sulfonamides
+        Chem.MolFromSmarts('[N-;X2]S(=O)=O'):           Chem.MolFromSmarts('N'),
+        # Enamines
+        Chem.MolFromSmarts('[N-;X2][C,N]=C'):           Chem.MolFromSmarts('N'),
+        # Tetrazoles
+        Chem.MolFromSmarts('[n-]'):                     Chem.MolFromSmarts('n'),
+        # Sulfoxides
+        Chem.MolFromSmarts('[S-]=O'):                   Chem.MolFromSmarts('S'),
+        # Amides
+        Chem.MolFromSmarts('[N-]C=O'):                  Chem.MolFromSmarts('N'),
+    }
+
+
+def NeutraliseCharges(smiles, reaction):
+        mol = Chem.MolFromSmiles(smiles)
+        replaced = False
+        for reactant, product in reaction.iteritems():
+                while mol.HasSubstructMatch(reactant):
+                        replaced = True
+                        rms = AllChem.ReplaceSubstructs(mol, reactant, product)
+                        mol = rms[0]
+        if replaced:
+                return (Chem.MolToSmiles(mol), True)
+        else:
+                return (smiles, False)
+
+
+def main(): 
+        
+        # Initiating neutralisation reactions
+        reactions = InitiateNeutralisationReactions()
+                
+        # Processing the compounds
+        supplier = Chem.SDMolSupplier("mifile")
+        for mol in supplier:
+                smiles = Chem.MolToSmiles(mol)
+                (molSmiles, neutralised) = NeutraliseCharges(smiles, reactions)
+                
+
+
+if __name__ == "__main__":
+        main()

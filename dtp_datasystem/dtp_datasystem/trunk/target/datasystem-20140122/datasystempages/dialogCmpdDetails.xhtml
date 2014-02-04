@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+  <p:dialog  header="Cmpd Details" 
+             showEffect="fade" 
+             hideEffect="fade" 
+             widgetVar="cmpddetailsdlg"> 
+
+    <p:outputPanel id="CmpdDetailsDialog">
+
+      <p:panelGrid style="margin-top:20px">  
+        <f:facet name="header">  
+          <p:row>  
+            <p:column colspan="4">#{cmpdController.selectedCmpd.name}</p:column>  
+          </p:row>  
+        </f:facet>  
+
+        <p:row>  
+          <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">Biological Data (Count Experiments)</p:column>                  
+        </p:row>
+
+        <p:row>
+          <p:column>NCI60</p:column>
+          <p:column>#{cmpdController.selectedCmpd.cmpdBioAssay.nci60}</p:column>
+
+          <p:column>XENO</p:column>
+          <p:column>#{cmpdController.selectedCmpd.cmpdBioAssay.xeno}</p:column>
+        </p:row>
+
+        <p:row>
+          <p:column>HF</p:column>
+          <p:column>#{cmpdController.selectedCmpd.cmpdBioAssay.hf}</p:column>
+
+          <p:column></p:column>
+          <p:column></p:column>
+        </p:row>
+
+        <p:row>  
+          <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Status</p:column>  
+          <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Identifiers</p:column>  
+        </p:row>
+        <p:row>
+          <p:column>Drug Status</p:column>
+          <p:column></p:column>
+          <p:column>Agent</p:column>
+          <p:column></p:column>
+        </p:row>
+        <p:row>
+          <p:column>Plated Set</p:column>
+          <p:column></p:column>
+          <p:column>NSC</p:column>
+          <p:column>#{cmpdController.selectedCmpd.nsc}</p:column>
+        </p:row>
+        <p:row>
+          <p:column>Originator</p:column>
+          <p:column></p:column>
+          <p:column>CAS</p:column>
+          <p:column>#{cmpdController.selectedCmpd.cas}</p:column>
+        </p:row>  
+        <p:row>  
+          <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">PChem</p:column>  
+          <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Structure</p:column>                                          
+        </p:row>
+        <p:row>
+          <p:column colspan="2">   
+            
+            <p:panelGrid columns="2">
+
+              <h:outputText value="mw" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.mw}" >                                            
+                <f:convertNumber pattern="#0.00" />
+              </h:outputText>
+
+              <h:outputText value="mf" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.mf}" />                                            
+
+              <h:outputText value="alogp" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.alogp}" >                                            
+                <f:convertNumber pattern="#0.00" />
+              </h:outputText>
+
+              <h:outputText value="logd" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.logd}" >                                            
+                <f:convertNumber pattern="#0.00" />
+              </h:outputText>
+
+              <h:outputText value="sa" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.sa}" >                                            
+                <f:convertNumber pattern="#0.00" />
+              </h:outputText>
+
+              <h:outputText value="psa" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.psa}" >                                            
+                <f:convertNumber pattern="#0.00" />
+              </h:outputText>
+
+              <h:outputText value="hba" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.hba}" />                                            
+
+              <h:outputText value="hbd" />
+              <h:outputText value="#{cmpdController.selectedCmpd.parentFragment.cmpdFragmentPChem.hbd}" />                                            
+
+            </p:panelGrid>
+
+          </p:column>
+
+          <p:column colspan="2" rowspan="8">
+            <p:panel>
+              <h:graphicImage rendered="#{!empty cmpdController.selectedCmpd.parentFragment.cmpdFragmentStructure.smiles}"
+                              alt="png-structure-image"
+                              width="400" height="400"
+                              url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpdController.selectedCmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+              </h:graphicImage> 
+            </p:panel>
+          </p:column>
+        </p:row>
+      </p:panelGrid>
+    </p:outputPanel>
+  </p:dialog>
+
+</ui:composition>
