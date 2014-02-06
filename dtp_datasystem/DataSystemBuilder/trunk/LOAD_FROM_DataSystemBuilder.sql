@@ -69,6 +69,16 @@ create index cmpd_fragment_structure_mol on cmpd_fragment_structure using gist(m
 
 vacuum analyze verbose cmpd_fragment_structure;
 
+create table prod_bio_counts(
+nsc int,
+prod_count_nci60 int,
+prod_count_hf int,
+prod_count_xeno int
+);
+
+\copy prod_bio_counts from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/prod_bio_counts.csv csv header
+
+
 insert into cmpd_bio_assay(id, nci60, hf, xeno)
 select nsc, prod_count_nci60, prod_count_hf, prod_count_xeno 
 from prod_bio_counts 
@@ -114,7 +124,7 @@ primary key (id)
 );
 
 -- use intermediate (temp) table
--- for fast joins
+-- joins MUCH FASTER here than updating
 
 drop table if exists temp;
 
@@ -255,6 +265,25 @@ id   |   nsc   |                             mol
 (6 rows)
 
 time: 171.444 ms
+
+select nsc_cmpd.nsc, rdkit.mol
+from rdkit_mol rdkit, nsc_cmpd
+where rdkit.nsc = nsc_cmpd.nsc
+and rdkit.mol @= (
+select mol from rdkit_mol where nsc = 50917
+)
+order by nsc;
+
+  nsc   |                             mol                              
+--------+--------------------------------------------------------------
+   9700 | CC12CCC3C(CCC4=CC(=O)CCC43C)C1CCC2O
+  26499 | C[C@]12CC[C@H]3[C@@H](CCC4=CC(=O)CC[C@@]43C)[C@@H]1CC[C@H]2O
+  50917 | C[C@@]12CC[C@@H]3[C@H](CCC4=CC(=O)CC[C@]43C)[C@H]1CC[C@H]2O
+ 523833 | CC12CCC3C(CCC4=CC(=O)CCC43C)C1CCC2O
+ 755838 | C[C@]12CCC3C(CCC4=CC(=O)CC[C@@]43C)C1CC[C@H]2O
+(5 rows)
+
+Time: 81.926 ms
 
 -- any nsc
 
