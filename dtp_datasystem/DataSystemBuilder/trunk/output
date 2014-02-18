@@ -1,0 +1,2788 @@
+-- after the data build from prod
+-- and running RDKit.sql
+-- from dtp_datasystem/uml/datasystem/web/target
+-- schema-drop.sql
+-- schema-create.sql
+drop table if exists rdkit_mol;
+DROP TABLE
+create table rdkit_mol
+as
+select frag_id as id, nsc, frag_mol as mol
+from parent_with_salt;
+SELECT 657707
+create index rdkit_mol_mol on rdkit_mol using gist(mol);
+CREATE INDEX
+vacuum analyze verbose rdkit_mol;
+INFO:  vacuuming "public.rdkit_mol"
+INFO:  index "rdkit_mol_mol" now contains 657707 row versions in 33932 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.04s/0.00u sec elapsed 0.04 sec.
+INFO:  "rdkit_mol": found 0 removable, 657707 nonremovable row versions in 29938 out of 29938 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.15s/0.06u sec elapsed 0.21 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132819"
+INFO:  index "pg_toast_132819_index" now contains 2 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132819": found 0 removable, 2 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.rdkit_mol"
+INFO:  "rdkit_mol": scanned 29938 of 29938 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+VACUUM
+-- set id = nsc
+--            table "public.parent_with_salt"
+--     column      |          type           | modifiers 
+-------------------+-------------------------+-----------
+-- nsc             | integer                 | 
+-- frag_id         | integer                 | 
+-- frag_mol        | mol                     | 
+-- mf              | character varying(1024) | 
+-- ctab            | text                    | 
+-- smiles          | character varying(2048) | 
+-- mw              | real                    | 
+-- hba             | integer                 | 
+-- hbd             | integer                 | 
+-- count_atoms     | integer                 | 
+-- count_heavy     | integer                 | 
+-- count_rings     | integer                 | 
+-- tpsa            | real                    | 
+-- inchi           | text                    | 
+-- known_salt      | boolean                 | 
+-- known_salt_name | character varying(1024) | 
+-- matched_salt    | character varying       | 
+--indexes:
+--    "parent_with_salt_inchi" btree (inchi)
+--    "parent_with_salt_matched_salt" btree (matched_salt)
+--
+insert into cmpd_fragment_p_chem(id, mw, mf, hba, hbd, psa)
+select nsc, mw, mf, hba, hbd, tpsa
+from parent_with_salt;
+INSERT 0 657707
+-- have to bump up the field size to 2048
+-- change uml model to use text datatype
+drop table cmpd_fragment_structure cascade;
+NOTICE:  drop cascades to constraint cmpd_fragment_cmpd_fragment_sc on table cmpd_fragment
+DROP TABLE
+create table cmpd_fragment_structure(
+id bigint, 
+smiles varchar(2048), 
+inchi varchar(2048), 
+mol mol, 
+inchi_aux varchar(2048), 
+ctab text, 
+primary key (id));
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "cmpd_fragment_structure_pkey" for table "cmpd_fragment_structure"
+CREATE TABLE
+insert into cmpd_fragment_structure(id, smiles, inchi, mol, ctab)
+select nsc, smiles, inchi, frag_mol, ctab
+from parent_with_salt;
+INSERT 0 657707
+--index for substructure searches
+create index cmpd_fragment_structure_mol on cmpd_fragment_structure using gist(mol);
+CREATE INDEX
+vacuum analyze verbose cmpd_fragment_structure;
+INFO:  vacuuming "public.cmpd_fragment_structure"
+INFO:  index "cmpd_fragment_structure_pkey" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_fragment_structure_mol" now contains 657707 row versions in 33859 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.01s/0.02u sec elapsed 0.04 sec.
+INFO:  "cmpd_fragment_structure": found 0 removable, 657707 nonremovable row versions in 98182 out of 98182 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.36s/0.16u sec elapsed 0.53 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132829"
+INFO:  index "pg_toast_132829_index" now contains 12775 row versions in 37 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132829": found 0 removable, 12775 nonremovable row versions in 2494 out of 2494 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "public.cmpd_fragment_structure"
+INFO:  "cmpd_fragment_structure": scanned 30000 of 98182 pages, containing 200765 live rows and 0 dead rows; 30000 rows in sample, 657506 estimated total rows
+VACUUM
+create table prod_bio_counts(
+nsc int,
+prod_count_nci60 int,
+prod_count_hf int,
+prod_count_xeno int
+);
+ERROR:  relation "prod_bio_counts" already exists
+\copy prod_bio_counts from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/prod_bio_counts.csv csv header
+insert into cmpd_bio_assay(id, nci60, hf, xeno)
+select nsc, prod_count_nci60, prod_count_hf, prod_count_xeno 
+from prod_bio_counts 
+where nsc in (select nsc from parent_with_salt);
+ERROR:  duplicate key value violates unique constraint "cmpd_bio_assay_pkey"
+DETAIL:  Key (id)=(191549) already exists.
+-- cmpd is an abstract class => single attribute id
+insert into cmpd(id)
+select nsc
+from parent_with_salt;
+INSERT 0 657707
+-- drop and recreate nsc_cmpd and cmpd_fragment so that constraints are not in the way during inserts
+drop table nsc_cmpd cascade;
+NOTICE:  drop cascades to 9 other objects
+DETAIL:  drop cascades to constraint cmpd_alias_nsc_cmpds_fkc on table cmpd_aliases2nsc_cmpds
+drop cascades to constraint cmpd_fragment_nsc_cmpd_fkc on table cmpd_fragment
+drop cascades to constraint cmpd_inventory_nsc_cmpd_fkc on table cmpd_inventory
+drop cascades to constraint cmpd_plate_nsc_cmpds_fkc on table cmpd_plates2nsc_cmpds
+drop cascades to constraint cmpd_project_nsc_cmpds_fkc on table cmpd_projects2nsc_cmpds
+drop cascades to constraint cmpd_pub_chem_sid_nsc_cmpds_fc on table cmpd_pub_chem_sids2nsc_cmpds
+drop cascades to constraint cmpd_related_nsc_cmpd_fkm on table cmpd_related
+drop cascades to constraint cmpd_set_nsc_cmpds_fkc on table cmpd_sets2nsc_cmpds
+drop cascades to constraint cmpd_target_nsc_cmpds_fkc on table cmpd_targets2nsc_cmpds
+DROP TABLE
+ create table nsc_cmpd (
+        id bigint not null,
+        name character varying(1024),
+        nsc_cmpd_id bigint unique,
+        prefix character varying(1024) not null,
+        nsc integer unique,
+        conf character varying(1024) not null,
+        distribution character varying(1024) not null,
+        cas character varying(1024),
+        pseudo_atoms character varying(1024),
+        salt_name character varying(1024),
+        salt_smiles character varying(1024),
+        salt_id bigint,
+        cmpd_parent_fragment_fk bigint unique,
+        cmpd_bio_assay_fk bigint unique,
+        primary key (id)
+    );
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "nsc_cmpd_pkey" for table "nsc_cmpd"
+NOTICE:  CREATE TABLE / UNIQUE will create implicit index "nsc_cmpd_nsc_cmpd_id_key" for table "nsc_cmpd"
+NOTICE:  CREATE TABLE / UNIQUE will create implicit index "nsc_cmpd_nsc_key" for table "nsc_cmpd"
+NOTICE:  CREATE TABLE / UNIQUE will create implicit index "nsc_cmpd_cmpd_parent_fragment_fk_key" for table "nsc_cmpd"
+NOTICE:  CREATE TABLE / UNIQUE will create implicit index "nsc_cmpd_cmpd_bio_assay_fk_key" for table "nsc_cmpd"
+CREATE TABLE
+drop table cmpd_fragment cascade;
+DROP TABLE
+create table cmpd_fragment (
+id bigint not null,
+cmpd_fragment_structure_fk bigint unique,
+cmpd_known_salt_fk bigint,
+cmpd_fragment_p_chem_fk bigint unique,
+nsc_cmpd_fk bigint,
+primary key (id)
+);
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "cmpd_fragment_pkey" for table "cmpd_fragment"
+NOTICE:  CREATE TABLE / UNIQUE will create implicit index "cmpd_fragment_cmpd_fragment_structure_fk_key" for table "cmpd_fragment"
+NOTICE:  CREATE TABLE / UNIQUE will create implicit index "cmpd_fragment_cmpd_fragment_p_chem_fk_key" for table "cmpd_fragment"
+CREATE TABLE
+-- use intermediate (temp) table
+-- joins MUCH FASTER here than updating
+drop table if exists temp;
+DROP TABLE
+create table temp as 
+select pws.nsc as id, 'NSC'||pws.nsc as name, pws.nsc as nsc_cmpd_id, 's'::varchar(4) as prefix, pws.nsc, src.conf, src.cas, src.distribution_code as distribution, pws.nsc as cmpd_parent_fragment_fk, bio.id as cmpd_bio_assay_fk, matched_salt as salt_name, salt_smiles 
+from parent_with_salt pws 
+left outer join cmpd_bio_assay bio on pws.nsc = bio.id
+left outer join prod_src src on pws.nsc = src.nsc;
+SELECT 657707
+insert into nsc_cmpd(id, name, nsc_cmpd_id, prefix, nsc, conf, cas, distribution, cmpd_parent_fragment_fk, cmpd_bio_assay_fk, salt_name, salt_smiles)
+select id, name, nsc_cmpd_id, prefix, nsc, conf, cas, distribution, cmpd_parent_fragment_fk, cmpd_bio_assay_fk, salt_name, salt_smiles 
+from temp;
+INSERT 0 657707
+insert into cmpd_fragment(id, nsc_cmpd_fk, cmpd_fragment_p_chem_fk, cmpd_fragment_structure_fk) 
+select nsc, nsc, nsc, nsc 
+from parent_with_salt;
+INSERT 0 657707
+--recreate constraints
+alter table NSC_CMPD 
+add constraint NSC_CMPDIFKC 
+foreign key (ID) 
+references CMPD;
+ALTER TABLE
+alter table NSC_CMPD 
+add constraint NSC_CMPD_CMPD_PARENT_FRAGMENTC 
+foreign key (CMPD_PARENT_FRAGMENT_FK) 
+references CMPD_FRAGMENT;
+ALTER TABLE
+alter table NSC_CMPD 
+add constraint NSC_CMPD_CMPD_BIO_ASSAY_FKC 
+foreign key (CMPD_BIO_ASSAY_FK) 
+references CMPD_BIO_ASSAY;
+ALTER TABLE
+alter table CMPD_FRAGMENT 
+add constraint CMPD_FRAGMENT_NSC_CMPD_FKC 
+foreign key (NSC_CMPD_FK) 
+references NSC_CMPD;
+ALTER TABLE
+alter table CMPD_FRAGMENT 
+add constraint CMPD_FRAGMENT_CMPD_KNOWN_SALTC 
+foreign key (CMPD_KNOWN_SALT_FK) 
+references CMPD_KNOWN_SALT;
+ALTER TABLE
+alter table CMPD_FRAGMENT 
+add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_SC 
+foreign key (CMPD_FRAGMENT_STRUCTURE_FK) 
+references CMPD_FRAGMENT_STRUCTURE;
+ALTER TABLE
+alter table CMPD_FRAGMENT 
+add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_PC 
+foreign key (CMPD_FRAGMENT_P_CHEM_FK) 
+references CMPD_FRAGMENT_P_CHEM;
+ALTER TABLE
+vacuum analyze verbose;
+INFO:  vacuuming "pg_catalog.pg_statistic"
+INFO:  scanned index "pg_statistic_relid_att_inh_index" to remove 949 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_statistic": removed 949 row versions in 156 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.04 sec.
+INFO:  index "pg_statistic_relid_att_inh_index" now contains 640 row versions in 8 pages
+DETAIL:  949 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_statistic": found 930 removable, 640 nonremovable row versions in 179 out of 179 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 222 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.22 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2619"
+INFO:  scanned index "pg_toast_2619_index" to remove 751 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2619": removed 751 row versions in 165 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  index "pg_toast_2619_index" now contains 203 row versions in 5 pages
+DETAIL:  751 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2619": found 732 removable, 203 nonremovable row versions in 201 out of 201 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 1 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.23 sec.
+INFO:  vacuuming "pg_catalog.pg_type"
+INFO:  scanned index "pg_type_oid_index" to remove 27 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_type_typname_nsp_index" to remove 27 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_type": removed 27 row versions in 4 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_type_oid_index" now contains 520 row versions in 4 pages
+DETAIL:  27 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_type_typname_nsp_index" now contains 520 row versions in 6 pages
+DETAIL:  23 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_type": found 6 removable, 520 nonremovable row versions in 13 out of 13 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 6 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_type"
+INFO:  "pg_type": scanned 13 of 13 pages, containing 520 live rows and 0 dead rows; 520 rows in sample, 520 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_attribute"
+INFO:  scanned index "pg_attribute_relid_attnam_index" to remove 184 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.02 sec.
+INFO:  scanned index "pg_attribute_relid_attnum_index" to remove 184 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_attribute": removed 184 row versions in 7 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_attribute_relid_attnam_index" now contains 3859 row versions in 20 pages
+DETAIL:  184 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_attribute_relid_attnum_index" now contains 3859 row versions in 14 pages
+DETAIL:  184 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_attribute": found 103 removable, 1714 nonremovable row versions in 35 out of 74 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 30 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.03 sec.
+INFO:  analyzing "pg_catalog.pg_attribute"
+INFO:  "pg_attribute": scanned 74 of 74 pages, containing 3859 live rows and 0 dead rows; 3859 rows in sample, 3859 estimated total rows
+INFO:  vacuuming "public.known_salt"
+INFO:  index "known_salt_mol_idx" now contains 403 row versions in 23 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "known_salt_smiles" now contains 403 row versions in 4 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "known_salt": found 0 removable, 403 nonremovable row versions in 30 out of 30 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 787 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65498"
+INFO:  index "pg_toast_65498_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65498": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.known_salt"
+INFO:  "known_salt": scanned 30 of 30 pages, containing 403 live rows and 0 dead rows; 403 rows in sample, 403 estimated total rows
+INFO:  vacuuming "public.mol_cannot_parse"
+INFO:  "mol_cannot_parse": found 0 removable, 1024 nonremovable row versions in 71 out of 71 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.08 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65506"
+INFO:  index "pg_toast_65506_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65506": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.mol_cannot_parse"
+INFO:  "mol_cannot_parse": scanned 71 of 71 pages, containing 1024 live rows and 0 dead rows; 1024 rows in sample, 1024 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_authid"
+INFO:  index "pg_authid_rolname_index" now contains 5 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_authid_oid_index" now contains 5 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_authid": found 0 removable, 5 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_authid"
+INFO:  "pg_authid": scanned 1 of 1 pages, containing 5 live rows and 0 dead rows; 5 rows in sample, 5 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_proc"
+INFO:  index "pg_proc_oid_index" now contains 2479 row versions in 9 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_proc_proname_args_nsp_index" now contains 2479 row versions in 27 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_proc": found 0 removable, 0 nonremovable row versions in 0 out of 60 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_1255"
+INFO:  index "pg_toast_1255_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_1255": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_proc"
+INFO:  "pg_proc": scanned 60 of 60 pages, containing 2479 live rows and 0 dead rows; 2479 rows in sample, 2479 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_class"
+INFO:  scanned index "pg_class_oid_index" to remove 48 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_class_relname_nsp_index" to remove 48 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_class": removed 48 row versions in 8 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_class_oid_index" now contains 542 row versions in 4 pages
+DETAIL:  46 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_class_relname_nsp_index" now contains 542 row versions in 8 pages
+DETAIL:  41 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_class": found 21 removable, 542 nonremovable row versions in 13 out of 13 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 82 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_class"
+INFO:  "pg_class": scanned 13 of 13 pages, containing 542 live rows and 0 dead rows; 542 rows in sample, 542 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_database"
+INFO:  index "pg_database_datname_index" now contains 6 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_database_oid_index" now contains 6 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_database": found 0 removable, 6 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 3 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_1262"
+INFO:  index "pg_toast_1262_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_1262": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_database"
+INFO:  "pg_database": scanned 1 of 1 pages, containing 6 live rows and 0 dead rows; 6 rows in sample, 6 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_user_mapping"
+INFO:  index "pg_user_mapping_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_user_mapping_user_server_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_user_mapping": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_user_mapping"
+INFO:  "pg_user_mapping": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_constraint"
+INFO:  scanned index "pg_constraint_conname_nsp_index" to remove 25 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_constraint_conrelid_index" to remove 25 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_constraint_contypid_index" to remove 25 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_constraint_oid_index" to remove 25 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_constraint": removed 25 row versions in 3 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_constraint_conname_nsp_index" now contains 74 row versions in 2 pages
+DETAIL:  25 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_constraint_conrelid_index" now contains 74 row versions in 2 pages
+DETAIL:  25 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_constraint_contypid_index" now contains 74 row versions in 2 pages
+DETAIL:  25 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_constraint_oid_index" now contains 74 row versions in 2 pages
+DETAIL:  25 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_constraint": found 8 removable, 74 nonremovable row versions in 3 out of 3 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2606"
+INFO:  index "pg_toast_2606_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2606": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_constraint"
+INFO:  "pg_constraint": scanned 3 of 3 pages, containing 74 live rows and 0 dead rows; 74 rows in sample, 74 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_inherits"
+INFO:  index "pg_inherits_parent_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_inherits_relid_seqno_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_inherits": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_inherits"
+INFO:  "pg_inherits": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_index"
+INFO:  scanned index "pg_index_indrelid_index" to remove 18 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_index_indexrelid_index" to remove 18 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_index": removed 18 row versions in 3 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_index_indrelid_index" now contains 237 row versions in 2 pages
+DETAIL:  18 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_index_indexrelid_index" now contains 237 row versions in 2 pages
+DETAIL:  18 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_index": found 9 removable, 237 nonremovable row versions in 6 out of 6 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_index"
+INFO:  "pg_index": scanned 6 of 6 pages, containing 237 live rows and 0 dead rows; 237 rows in sample, 237 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_operator"
+INFO:  index "pg_operator_oid_index" now contains 735 row versions in 4 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_operator_oprname_l_r_n_index" now contains 735 row versions in 5 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_operator": found 0 removable, 735 nonremovable row versions in 15 out of 15 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 17 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_operator"
+INFO:  "pg_operator": scanned 15 of 15 pages, containing 735 live rows and 0 dead rows; 735 rows in sample, 735 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_opfamily"
+INFO:  index "pg_opfamily_am_name_nsp_index" now contains 80 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_opfamily_oid_index" now contains 80 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_opfamily": found 0 removable, 80 nonremovable row versions in 2 out of 2 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_opfamily"
+INFO:  "pg_opfamily": scanned 2 of 2 pages, containing 80 live rows and 0 dead rows; 80 rows in sample, 80 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_opclass"
+INFO:  index "pg_opclass_am_name_nsp_index" now contains 123 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_opclass_oid_index" now contains 123 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_opclass": found 0 removable, 123 nonremovable row versions in 3 out of 3 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_opclass"
+INFO:  "pg_opclass": scanned 3 of 3 pages, containing 123 live rows and 0 dead rows; 123 rows in sample, 123 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_amop"
+INFO:  index "pg_amop_fam_strat_index" now contains 390 row versions in 4 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_amop_opr_fam_index" now contains 390 row versions in 4 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_amop_oid_index" now contains 390 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_amop": found 0 removable, 390 nonremovable row versions in 4 out of 4 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_amop"
+INFO:  "pg_amop": scanned 4 of 4 pages, containing 390 live rows and 0 dead rows; 390 rows in sample, 390 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_amproc"
+INFO:  index "pg_amproc_fam_proc_index" now contains 287 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_amproc_oid_index" now contains 287 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_amproc": found 0 removable, 287 nonremovable row versions in 3 out of 3 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_amproc"
+INFO:  "pg_amproc": scanned 3 of 3 pages, containing 287 live rows and 0 dead rows; 287 rows in sample, 287 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_language"
+INFO:  index "pg_language_name_index" now contains 4 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_language_oid_index" now contains 4 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_language": found 0 removable, 4 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_language"
+INFO:  "pg_language": scanned 1 of 1 pages, containing 4 live rows and 0 dead rows; 4 rows in sample, 4 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_largeobject_metadata"
+INFO:  index "pg_largeobject_metadata_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_largeobject_metadata": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_largeobject_metadata"
+INFO:  "pg_largeobject_metadata": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_aggregate"
+INFO:  index "pg_aggregate_fnoid_index" now contains 119 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_aggregate": found 0 removable, 119 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_aggregate"
+INFO:  "pg_aggregate": scanned 1 of 1 pages, containing 119 live rows and 0 dead rows; 119 rows in sample, 119 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_rewrite"
+INFO:  index "pg_rewrite_oid_index" now contains 101 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_rewrite_rel_rulename_index" now contains 101 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_rewrite": found 0 removable, 101 nonremovable row versions in 11 out of 11 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2618"
+INFO:  index "pg_toast_2618_index" now contains 145 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2618": found 0 removable, 0 nonremovable row versions in 0 out of 33 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_rewrite"
+INFO:  "pg_rewrite": scanned 11 of 11 pages, containing 101 live rows and 0 dead rows; 101 rows in sample, 101 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_trigger"
+INFO:  scanned index "pg_trigger_tgconstraint_index" to remove 60 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_trigger_tgrelid_tgname_index" to remove 60 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  scanned index "pg_trigger_oid_index" to remove 60 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_trigger": removed 60 row versions in 3 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_trigger_tgconstraint_index" now contains 88 row versions in 2 pages
+DETAIL:  60 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_trigger_tgrelid_tgname_index" now contains 88 row versions in 2 pages
+DETAIL:  60 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_trigger_oid_index" now contains 88 row versions in 2 pages
+DETAIL:  60 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_trigger": found 20 removable, 88 nonremovable row versions in 3 out of 3 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2620"
+INFO:  index "pg_toast_2620_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2620": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_trigger"
+INFO:  "pg_trigger": scanned 3 of 3 pages, containing 88 live rows and 0 dead rows; 88 rows in sample, 88 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_description"
+INFO:  index "pg_description_o_c_o_index" now contains 3277 row versions in 15 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  "pg_description": found 0 removable, 3277 nonremovable row versions in 29 out of 29 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2609"
+INFO:  index "pg_toast_2609_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2609": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_description"
+INFO:  "pg_description": scanned 29 of 29 pages, containing 3277 live rows and 0 dead rows; 3277 rows in sample, 3277 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_cast"
+INFO:  index "pg_cast_oid_index" now contains 196 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_cast_source_target_index" now contains 196 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_cast": found 0 removable, 196 nonremovable row versions in 2 out of 2 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_cast"
+INFO:  "pg_cast": scanned 2 of 2 pages, containing 196 live rows and 0 dead rows; 196 rows in sample, 196 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_enum"
+INFO:  index "pg_enum_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_enum_typid_label_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_enum_typid_sortorder_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_enum": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_enum"
+INFO:  "pg_enum": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_namespace"
+INFO:  index "pg_namespace_nspname_index" now contains 6 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_namespace_oid_index" now contains 6 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_namespace": found 0 removable, 6 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_namespace"
+INFO:  "pg_namespace": scanned 1 of 1 pages, containing 6 live rows and 0 dead rows; 6 rows in sample, 6 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_conversion"
+INFO:  index "pg_conversion_default_index" now contains 132 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_conversion_name_nsp_index" now contains 132 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_conversion_oid_index" now contains 132 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_conversion": found 0 removable, 132 nonremovable row versions in 3 out of 3 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_conversion"
+INFO:  "pg_conversion": scanned 3 of 3 pages, containing 132 live rows and 0 dead rows; 132 rows in sample, 132 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_depend"
+INFO:  scanned index "pg_depend_depender_index" to remove 178 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  scanned index "pg_depend_reference_index" to remove 178 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.03 sec.
+INFO:  "pg_depend": removed 178 row versions in 5 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_depend_depender_index" now contains 7371 row versions in 37 pages
+DETAIL:  178 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_depend_reference_index" now contains 7371 row versions in 38 pages
+DETAIL:  177 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_depend": found 38 removable, 1659 nonremovable row versions in 14 out of 56 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 6 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  analyzing "pg_catalog.pg_depend"
+INFO:  "pg_depend": scanned 56 of 56 pages, containing 7371 live rows and 0 dead rows; 7371 rows in sample, 7371 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_largeobject"
+INFO:  index "pg_largeobject_loid_pn_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_largeobject": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_largeobject"
+INFO:  "pg_largeobject": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.mol_frag"
+INFO:  index "mol_frag_nsc" now contains 837705 row versions in 2300 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "mol_frag_frag_id" now contains 837705 row versions in 2300 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "mol_frag": found 0 removable, 0 nonremovable row versions in 0 out of 121833 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65512"
+INFO:  index "pg_toast_65512_index" now contains 25525 row versions in 72 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  "pg_toast_65512": found 0 removable, 0 nonremovable row versions in 0 out of 4487 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  analyzing "public.mol_frag"
+INFO:  "mol_frag": scanned 30000 of 121833 pages, containing 206672 live rows and 0 dead rows; 30000 rows in sample, 838337 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_tablespace"
+INFO:  index "pg_tablespace_oid_index" now contains 2 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_tablespace_spcname_index" now contains 2 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_tablespace": found 0 removable, 2 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_tablespace"
+INFO:  "pg_tablespace": scanned 1 of 1 pages, containing 2 live rows and 0 dead rows; 2 rows in sample, 2 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_pltemplate"
+INFO:  index "pg_pltemplate_name_index" now contains 8 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_pltemplate": found 0 removable, 8 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_pltemplate"
+INFO:  "pg_pltemplate": scanned 1 of 1 pages, containing 8 live rows and 0 dead rows; 8 rows in sample, 8 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_auth_members"
+INFO:  index "pg_auth_members_role_member_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_auth_members_member_role_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_auth_members": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_auth_members"
+INFO:  "pg_auth_members": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_shdepend"
+INFO:  scanned index "pg_shdepend_depender_index" to remove 8 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  scanned index "pg_shdepend_reference_index" to remove 8 row versions
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_shdepend": removed 8 row versions in 2 pages
+DETAIL:  CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_shdepend_depender_index" now contains 583 row versions in 8 pages
+DETAIL:  8 index row versions were removed.
+3 index pages have been deleted, 3 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_shdepend_reference_index" now contains 583 row versions in 6 pages
+DETAIL:  8 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_shdepend": found 5 removable, 583 nonremovable row versions in 5 out of 5 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 242 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.02 sec.
+INFO:  analyzing "pg_catalog.pg_shdepend"
+INFO:  "pg_shdepend": scanned 5 of 5 pages, containing 583 live rows and 0 dead rows; 583 rows in sample, 583 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_shdescription"
+INFO:  index "pg_shdescription_o_c_index" now contains 3 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_shdescription": found 0 removable, 3 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2396"
+INFO:  index "pg_toast_2396_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2396": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_shdescription"
+INFO:  "pg_shdescription": scanned 1 of 1 pages, containing 3 live rows and 0 dead rows; 3 rows in sample, 3 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_ts_config"
+INFO:  index "pg_ts_config_cfgname_index" now contains 16 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_ts_config_oid_index" now contains 16 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_ts_config": found 0 removable, 16 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.02 sec.
+INFO:  analyzing "pg_catalog.pg_ts_config"
+INFO:  "pg_ts_config": scanned 1 of 1 pages, containing 16 live rows and 0 dead rows; 16 rows in sample, 16 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_ts_config_map"
+INFO:  index "pg_ts_config_map_index" now contains 304 row versions in 4 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_ts_config_map": found 0 removable, 304 nonremovable row versions in 2 out of 2 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.02 sec.
+INFO:  analyzing "pg_catalog.pg_ts_config_map"
+INFO:  "pg_ts_config_map": scanned 2 of 2 pages, containing 304 live rows and 0 dead rows; 304 rows in sample, 304 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_ts_dict"
+INFO:  index "pg_ts_dict_dictname_index" now contains 16 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_ts_dict_oid_index" now contains 16 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_ts_dict": found 0 removable, 16 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_ts_dict"
+INFO:  "pg_ts_dict": scanned 1 of 1 pages, containing 16 live rows and 0 dead rows; 16 rows in sample, 16 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_ts_parser"
+INFO:  index "pg_ts_parser_prsname_index" now contains 1 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_ts_parser_oid_index" now contains 1 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_ts_parser": found 0 removable, 1 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_ts_parser"
+INFO:  "pg_ts_parser": scanned 1 of 1 pages, containing 1 live rows and 0 dead rows; 1 rows in sample, 1 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_ts_template"
+INFO:  index "pg_ts_template_tmplname_index" now contains 5 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_ts_template_oid_index" now contains 5 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_ts_template": found 0 removable, 5 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_ts_template"
+INFO:  "pg_ts_template": scanned 1 of 1 pages, containing 5 live rows and 0 dead rows; 5 rows in sample, 5 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_extension"
+INFO:  index "pg_extension_oid_index" now contains 2 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  index "pg_extension_name_index" now contains 2 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_extension": found 0 removable, 2 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "pg_catalog.pg_extension"
+INFO:  "pg_extension": scanned 1 of 1 pages, containing 2 live rows and 0 dead rows; 2 rows in sample, 2 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_foreign_data_wrapper"
+INFO:  index "pg_foreign_data_wrapper_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_foreign_data_wrapper_name_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_foreign_data_wrapper": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_foreign_data_wrapper"
+INFO:  "pg_foreign_data_wrapper": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_foreign_server"
+INFO:  index "pg_foreign_server_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_foreign_server_name_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_foreign_server": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_foreign_server"
+INFO:  "pg_foreign_server": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_foreign_table"
+INFO:  index "pg_foreign_table_relid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_foreign_table": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_foreign_table"
+INFO:  "pg_foreign_table": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_default_acl"
+INFO:  index "pg_default_acl_role_nsp_obj_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_default_acl_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_default_acl": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_default_acl"
+INFO:  "pg_default_acl": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_seclabel"
+INFO:  index "pg_seclabel_object_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_seclabel": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_3596"
+INFO:  index "pg_toast_3596_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_3596": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_seclabel"
+INFO:  "pg_seclabel": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_collation"
+INFO:  index "pg_collation_oid_index" now contains 7 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_collation_name_enc_nsp_index" now contains 7 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_collation": found 0 removable, 7 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_collation"
+INFO:  "pg_collation": scanned 1 of 1 pages, containing 7 live rows and 0 dead rows; 7 rows in sample, 7 estimated total rows
+INFO:  vacuuming "information_schema.sql_implementation_info"
+INFO:  "sql_implementation_info": found 0 removable, 12 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11522"
+INFO:  index "pg_toast_11522_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11522": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_implementation_info"
+INFO:  "sql_implementation_info": scanned 1 of 1 pages, containing 12 live rows and 0 dead rows; 12 rows in sample, 12 estimated total rows
+INFO:  vacuuming "information_schema.sql_languages"
+INFO:  "sql_languages": found 0 removable, 4 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11527"
+INFO:  index "pg_toast_11527_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11527": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_languages"
+INFO:  "sql_languages": scanned 1 of 1 pages, containing 4 live rows and 0 dead rows; 4 rows in sample, 4 estimated total rows
+INFO:  vacuuming "information_schema.sql_packages"
+INFO:  "sql_packages": found 0 removable, 10 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11532"
+INFO:  index "pg_toast_11532_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11532": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_packages"
+INFO:  "sql_packages": scanned 1 of 1 pages, containing 10 live rows and 0 dead rows; 10 rows in sample, 10 estimated total rows
+INFO:  vacuuming "information_schema.sql_parts"
+INFO:  "sql_parts": found 0 removable, 9 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11537"
+INFO:  index "pg_toast_11537_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11537": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_parts"
+INFO:  "sql_parts": scanned 1 of 1 pages, containing 9 live rows and 0 dead rows; 9 rows in sample, 9 estimated total rows
+INFO:  vacuuming "information_schema.sql_sizing"
+INFO:  "sql_sizing": found 0 removable, 23 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11542"
+INFO:  index "pg_toast_11542_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11542": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_sizing"
+INFO:  "sql_sizing": scanned 1 of 1 pages, containing 23 live rows and 0 dead rows; 23 rows in sample, 23 estimated total rows
+INFO:  vacuuming "information_schema.sql_sizing_profiles"
+INFO:  "sql_sizing_profiles": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11547"
+INFO:  index "pg_toast_11547_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11547": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_sizing_profiles"
+INFO:  "sql_sizing_profiles": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.prod_cmpd"
+INFO:  index "prod_cmpd_cmpd_id" now contains 723686 row versions in 1987 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_cmpd": found 0 removable, 0 nonremovable row versions in 0 out of 6298 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_60701"
+INFO:  index "pg_toast_60701_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_60701": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_cmpd"
+INFO:  "prod_cmpd": scanned 6298 of 6298 pages, containing 723686 live rows and 0 dead rows; 30000 rows in sample, 723686 estimated total rows
+INFO:  vacuuming "public.prod_strc"
+INFO:  index "prod_strc_strc_id" now contains 823726 row versions in 2261 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_strc": found 0 removable, 0 nonremovable row versions in 0 out of 104940 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_60707"
+INFO:  index "pg_toast_60707_index" now contains 5047 row versions in 16 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_60707": found 0 removable, 0 nonremovable row versions in 0 out of 911 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_strc"
+INFO:  "prod_strc": scanned 30000 of 104940 pages, containing 236240 live rows and 0 dead rows; 30000 rows in sample, 824360 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_attrdef"
+INFO:  index "pg_attrdef_adrelid_adnum_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_attrdef_oid_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_attrdef": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2604"
+INFO:  index "pg_toast_2604_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2604": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_attrdef"
+INFO:  "pg_attrdef": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_am"
+INFO:  index "pg_am_name_index" now contains 4 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "pg_am_oid_index" now contains 4 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_am": found 0 removable, 4 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_am"
+INFO:  "pg_am": scanned 1 of 1 pages, containing 4 live rows and 0 dead rows; 4 rows in sample, 4 estimated total rows
+INFO:  vacuuming "pg_catalog.pg_db_role_setting"
+INFO:  index "pg_db_role_setting_databaseid_rol_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_db_role_setting": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_2964"
+INFO:  index "pg_toast_2964_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_2964": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "pg_catalog.pg_db_role_setting"
+INFO:  "pg_db_role_setting": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.prod_src"
+INFO:  index "prod_src_nsc" now contains 723686 row versions in 1987 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_src": found 0 removable, 0 nonremovable row versions in 0 out of 100018 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_63134"
+INFO:  index "pg_toast_63134_index" now contains 4608 row versions in 15 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_63134": found 0 removable, 0 nonremovable row versions in 0 out of 880 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_src"
+INFO:  "prod_src": scanned 30000 of 100018 pages, containing 216641 live rows and 0 dead rows; 30000 rows in sample, 723297 estimated total rows
+INFO:  vacuuming "public.prod_inventory"
+INFO:  index "prod_inventory_nsc" now contains 724069 row versions in 1988 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_inventory": found 0 removable, 0 nonremovable row versions in 0 out of 3914 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_inventory"
+INFO:  "prod_inventory": scanned 3914 of 3914 pages, containing 724069 live rows and 0 dead rows; 30000 rows in sample, 724069 estimated total rows
+INFO:  vacuuming "information_schema.sql_features"
+INFO:  "sql_features": found 0 removable, 650 nonremovable row versions in 7 out of 7 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_11517"
+INFO:  index "pg_toast_11517_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_11517": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "information_schema.sql_features"
+INFO:  "sql_features": scanned 7 of 7 pages, containing 650 live rows and 0 dead rows; 650 rows in sample, 650 estimated total rows
+INFO:  vacuuming "public.prod_chem_name"
+INFO:  index "prod_chem_name_nsc" now contains 478870 row versions in 1316 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_chem_name": found 0 removable, 0 nonremovable row versions in 0 out of 4881 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65448"
+INFO:  index "pg_toast_65448_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65448": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_chem_name"
+INFO:  "prod_chem_name": scanned 4881 of 4881 pages, containing 478870 live rows and 0 dead rows; 30000 rows in sample, 478870 estimated total rows
+INFO:  vacuuming "public.prod_projects"
+INFO:  index "prod_projects_nsc" now contains 123132 row versions in 341 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_projects": found 0 removable, 0 nonremovable row versions in 0 out of 678 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65454"
+INFO:  index "pg_toast_65454_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65454": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_projects"
+INFO:  "prod_projects": scanned 678 of 678 pages, containing 123132 live rows and 0 dead rows; 30000 rows in sample, 123132 estimated total rows
+INFO:  vacuuming "public.prod_plated_sets"
+INFO:  index "prod_plated_sets_nsc" now contains 432278 row versions in 1189 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_plated_sets": found 0 removable, 0 nonremovable row versions in 0 out of 1916 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65460"
+INFO:  index "pg_toast_65460_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65460": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_plated_sets"
+INFO:  "prod_plated_sets": scanned 1916 of 1916 pages, containing 432278 live rows and 0 dead rows; 30000 rows in sample, 432278 estimated total rows
+INFO:  vacuuming "public.prod_count_nci60"
+INFO:  index "prod_count_nci60_nsc" now contains 102151 row versions in 282 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_count_nci60": found 0 removable, 0 nonremovable row versions in 0 out of 452 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_count_nci60"
+INFO:  "prod_count_nci60": scanned 452 of 452 pages, containing 102151 live rows and 0 dead rows; 30000 rows in sample, 102151 estimated total rows
+INFO:  vacuuming "public.prod_count_hf"
+INFO:  index "prod_count_hf_nsc" now contains 4152 row versions in 14 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_count_hf": found 0 removable, 4152 nonremovable row versions in 19 out of 19 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_count_hf"
+INFO:  "prod_count_hf": scanned 19 of 19 pages, containing 4152 live rows and 0 dead rows; 4152 rows in sample, 4152 estimated total rows
+INFO:  vacuuming "public.prod_count_xeno"
+INFO:  index "prod_count_xeno_nsc" now contains 1773 row versions in 7 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "prod_count_xeno": found 0 removable, 1773 nonremovable row versions in 8 out of 8 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.prod_count_xeno"
+INFO:  "prod_count_xeno": scanned 8 of 8 pages, containing 1773 live rows and 0 dead rows; 1773 rows in sample, 1773 estimated total rows
+INFO:  vacuuming "public.prod_bio_counts"
+INFO:  "prod_bio_counts": found 0 removable, 724711 nonremovable row versions in 3207 out of 6407 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.02s/0.02u sec elapsed 0.04 sec.
+INFO:  analyzing "public.prod_bio_counts"
+INFO:  "prod_bio_counts": scanned 6407 of 6407 pages, containing 1447374 live rows and 0 dead rows; 30000 rows in sample, 1447374 estimated total rows
+INFO:  vacuuming "public.mol_no_frag"
+INFO:  "mol_no_frag": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65518"
+INFO:  index "pg_toast_65518_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65518": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.mol_no_frag"
+INFO:  "mol_no_frag": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.mol_frag_r_group"
+INFO:  "mol_frag_r_group": found 0 removable, 72464 nonremovable row versions in 424 out of 424 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.15 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65524"
+INFO:  index "pg_toast_65524_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65524": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.mol_frag_r_group"
+INFO:  "mol_frag_r_group": scanned 424 of 424 pages, containing 72464 live rows and 0 dead rows; 30000 rows in sample, 72464 estimated total rows
+INFO:  vacuuming "public.mol_frag_pseudo_atom"
+INFO:  "mol_frag_pseudo_atom": found 0 removable, 73939 nonremovable row versions in 607 out of 607 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.01s/0.00u sec elapsed 0.12 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65530"
+INFO:  index "pg_toast_65530_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65530": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.mol_frag_pseudo_atom"
+INFO:  "mol_frag_pseudo_atom": scanned 607 of 607 pages, containing 73939 live rows and 0 dead rows; 30000 rows in sample, 73939 estimated total rows
+INFO:  vacuuming "public.mol_frag_null_atom_type"
+INFO:  "mol_frag_null_atom_type": found 0 removable, 35280 nonremovable row versions in 244 out of 244 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.09 sec.
+INFO:  vacuuming "pg_toast.pg_toast_65536"
+INFO:  index "pg_toast_65536_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_65536": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.mol_frag_null_atom_type"
+INFO:  "mol_frag_null_atom_type": scanned 244 of 244 pages, containing 35280 live rows and 0 dead rows; 30000 rows in sample, 35280 estimated total rows
+INFO:  vacuuming "public.rdkit_mol_frag_validity"
+INFO:  index "rdkit_mol_frag_validity_frag_id" now contains 837705 row versions in 2300 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "rdkit_mol_frag_validity_nsc" now contains 837705 row versions in 2300 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "rdkit_mol_frag_validity": found 0 removable, 640765 nonremovable row versions in 4278 out of 5343 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 166445 unused item pointers.
+0 pages are entirely empty.
+CPU 0.01s/0.04u sec elapsed 0.05 sec.
+INFO:  analyzing "public.rdkit_mol_frag_validity"
+INFO:  "rdkit_mol_frag_validity": scanned 5343 of 5343 pages, containing 837705 live rows and 0 dead rows; 30000 rows in sample, 837705 estimated total rows
+INFO:  vacuuming "public.rdkit_mol_frag_fail"
+INFO:  index "rdkmff_frag_id" now contains 84057 row versions in 232 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.03 sec.
+INFO:  "rdkit_mol_frag_fail": found 0 removable, 84057 nonremovable row versions in 483 out of 483 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.04 sec.
+INFO:  vacuuming "pg_toast.pg_toast_89087"
+INFO:  index "pg_toast_89087_index" now contains 88 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_89087": found 0 removable, 88 nonremovable row versions in 16 out of 16 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.rdkit_mol_frag_fail"
+INFO:  "rdkit_mol_frag_fail": scanned 483 of 483 pages, containing 84057 live rows and 0 dead rows; 30000 rows in sample, 84057 estimated total rows
+INFO:  vacuuming "public.mol_frag_validity"
+INFO:  index "mfv_nsc" now contains 837705 row versions in 2300 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.01s/0.00u sec elapsed 0.29 sec.
+INFO:  index "mfv_frag_id" now contains 837705 row versions in 2300 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.01u sec elapsed 1.74 sec.
+INFO:  "mol_frag_validity": found 0 removable, 0 nonremovable row versions in 0 out of 4529 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.01s/0.01u sec elapsed 2.05 sec.
+INFO:  analyzing "public.mol_frag_validity"
+INFO:  "mol_frag_validity": scanned 4529 of 4529 pages, containing 837705 live rows and 0 dead rows; 30000 rows in sample, 837705 estimated total rows
+INFO:  vacuuming "public.resolved_validity"
+INFO:  "resolved_validity": found 0 removable, 837705 nonremovable row versions in 14004 out of 14004 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.11s/0.07u sec elapsed 1.82 sec.
+INFO:  vacuuming "pg_toast.pg_toast_94879"
+INFO:  index "pg_toast_94879_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_94879": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.resolved_validity"
+INFO:  "resolved_validity": scanned 14004 of 14004 pages, containing 837705 live rows and 0 dead rows; 30000 rows in sample, 837705 estimated total rows
+INFO:  vacuuming "public.rdkit_mol_frag_backup"
+INFO:  index "rdkmf_frag_id" now contains 753648 row versions in 2070 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.01s/0.00u sec elapsed 0.87 sec.
+INFO:  "rdkit_mol_frag_backup": found 0 removable, 0 nonremovable row versions in 0 out of 96745 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.01s/0.00u sec elapsed 0.88 sec.
+INFO:  vacuuming "pg_toast.pg_toast_89138"
+INFO:  index "pg_toast_89138_index" now contains 7945 row versions in 24 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_89138": found 0 removable, 0 nonremovable row versions in 0 out of 1682 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.rdkit_mol_frag_backup"
+INFO:  "rdkit_mol_frag_backup": scanned 30000 of 96745 pages, containing 233362 live rows and 0 dead rows; 30000 rows in sample, 753229 estimated total rows
+INFO:  vacuuming "public.rdkit_mol_frag"
+INFO:  scanned index "rdkit_mol_frag_nsc" to remove 54750 row versions
+DETAIL:  CPU 0.02s/0.25u sec elapsed 19.72 sec.
+INFO:  scanned index "rdkit_mol_frag_smiles" to remove 54750 row versions
+DETAIL:  CPU 0.02s/0.16u sec elapsed 21.95 sec.
+INFO:  scanned index "rdkit_mol_frag_inchi" to remove 54750 row versions
+DETAIL:  CPU 0.02s/0.19u sec elapsed 0.63 sec.
+INFO:  "rdkit_mol_frag": removed 54750 row versions in 28734 pages
+DETAIL:  CPU 0.48s/1.38u sec elapsed 33.79 sec.
+INFO:  index "rdkit_mol_frag_nsc" now contains 753648 row versions in 2489 pages
+DETAIL:  54750 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "rdkit_mol_frag_smiles" now contains 753648 row versions in 5689 pages
+DETAIL:  54750 index row versions were removed.
+14 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "rdkit_mol_frag_inchi" now contains 753648 row versions in 13170 pages
+DETAIL:  54750 index row versions were removed.
+38 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "rdkit_mol_frag": found 535 removable, 734313 nonremovable row versions in 110529 out of 114104 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.88s/2.23u sec elapsed 80.08 sec.
+INFO:  vacuuming "pg_toast.pg_toast_94885"
+INFO:  index "pg_toast_94885_index" now contains 14028 row versions in 41 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_94885": found 0 removable, 0 nonremovable row versions in 0 out of 2834 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.rdkit_mol_frag"
+INFO:  "rdkit_mol_frag": scanned 30000 of 114104 pages, containing 197879 live rows and 0 dead rows; 30000 rows in sample, 756580 estimated total rows
+INFO:  vacuuming "public.nsc_one_frag"
+INFO:  index "nof_nsc" now contains 585506 row versions in 1608 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.12 sec.
+INFO:  "nsc_one_frag": found 0 removable, 585506 nonremovable row versions in 2591 out of 2591 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.04u sec elapsed 0.17 sec.
+INFO:  analyzing "public.nsc_one_frag"
+INFO:  "nsc_one_frag": scanned 2591 of 2591 pages, containing 585506 live rows and 0 dead rows; 30000 rows in sample, 585506 estimated total rows
+INFO:  vacuuming "public.nsc_one_frag_not_salt"
+INFO:  index "nofns_nsc" now contains 583062 row versions in 1602 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.15 sec.
+INFO:  "nsc_one_frag_not_salt": found 0 removable, 583062 nonremovable row versions in 2580 out of 2580 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.04u sec elapsed 0.19 sec.
+INFO:  analyzing "public.nsc_one_frag_not_salt"
+INFO:  "nsc_one_frag_not_salt": scanned 2580 of 2580 pages, containing 583062 live rows and 0 dead rows; 30000 rows in sample, 583062 estimated total rows
+INFO:  vacuuming "public.one_frag"
+INFO:  "one_frag": found 0 removable, 583062 nonremovable row versions in 95095 out of 95095 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.28s/0.19u sec elapsed 0.48 sec.
+INFO:  vacuuming "pg_toast.pg_toast_106724"
+INFO:  index "pg_toast_106724_index" now contains 12252 row versions in 36 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_106724": found 0 removable, 12252 nonremovable row versions in 2475 out of 2475 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.01u sec elapsed 0.01 sec.
+INFO:  analyzing "public.one_frag"
+INFO:  "one_frag": scanned 30000 of 95095 pages, containing 184154 live rows and 0 dead rows; 30000 rows in sample, 583275 estimated total rows
+INFO:  vacuuming "public.nsc_two_frag"
+INFO:  index "ntf_nsc" now contains 81749 row versions in 226 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.03 sec.
+INFO:  "nsc_two_frag": found 0 removable, 81749 nonremovable row versions in 362 out of 362 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.04 sec.
+INFO:  analyzing "public.nsc_two_frag"
+INFO:  "nsc_two_frag": scanned 362 of 362 pages, containing 81749 live rows and 0 dead rows; 30000 rows in sample, 81749 estimated total rows
+INFO:  vacuuming "public.two_frag"
+INFO:  index "tf_nsc" now contains 163498 row versions in 451 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  "two_frag": found 0 removable, 163498 nonremovable row versions in 18589 out of 18589 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.08s/0.02u sec elapsed 0.15 sec.
+INFO:  vacuuming "pg_toast.pg_toast_116986"
+INFO:  index "pg_toast_116986_index" now contains 1896 row versions in 8 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_116986": found 0 removable, 1896 nonremovable row versions in 374 out of 374 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.two_frag"
+INFO:  "two_frag": scanned 18589 of 18589 pages, containing 163498 live rows and 0 dead rows; 30000 rows in sample, 163498 estimated total rows
+INFO:  vacuuming "public.nsc_two_frag_one_salt"
+INFO:  index "ntfos_nsc" now contains 74645 row versions in 206 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  "nsc_two_frag_one_salt": found 0 removable, 74645 nonremovable row versions in 331 out of 331 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.06 sec.
+INFO:  analyzing "public.nsc_two_frag_one_salt"
+INFO:  "nsc_two_frag_one_salt": scanned 331 of 331 pages, containing 74645 live rows and 0 dead rows; 30000 rows in sample, 74645 estimated total rows
+INFO:  vacuuming "public.two_frag_one_salt"
+INFO:  index "tfos_nsc" now contains 149290 row versions in 412 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.05 sec.
+INFO:  "two_frag_one_salt": found 0 removable, 149290 nonremovable row versions in 16445 out of 16445 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.08s/0.01u sec elapsed 0.15 sec.
+INFO:  vacuuming "pg_toast.pg_toast_118682"
+INFO:  index "pg_toast_118682_index" now contains 1729 row versions in 7 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_118682": found 0 removable, 1729 nonremovable row versions in 340 out of 340 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.two_frag_one_salt"
+INFO:  "two_frag_one_salt": scanned 16445 of 16445 pages, containing 149290 live rows and 0 dead rows; 30000 rows in sample, 149290 estimated total rows
+INFO:  vacuuming "public.nsc_two_frag_both_salts"
+INFO:  index "ntfbs_nsc" now contains 299 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  "nsc_two_frag_both_salts": found 0 removable, 299 nonremovable row versions in 2 out of 2 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  analyzing "public.nsc_two_frag_both_salts"
+INFO:  "nsc_two_frag_both_salts": scanned 2 of 2 pages, containing 299 live rows and 0 dead rows; 299 rows in sample, 299 estimated total rows
+INFO:  vacuuming "public.two_frag_both_salts"
+INFO:  index "tfbs_nsc" now contains 598 row versions in 4 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "two_frag_both_salts": found 0 removable, 598 nonremovable row versions in 66 out of 66 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_120229"
+INFO:  index "pg_toast_120229_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_120229": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.two_frag_both_salts"
+INFO:  "two_frag_both_salts": scanned 66 of 66 pages, containing 598 live rows and 0 dead rows; 598 rows in sample, 598 estimated total rows
+INFO:  vacuuming "public.parent_with_salt"
+INFO:  index "parent_with_salt_inchi" now contains 657707 row versions in 12071 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.01s/0.01u sec elapsed 0.02 sec.
+INFO:  index "parent_with_salt_matched_salt" now contains 657707 row versions in 2477 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "parent_with_salt_nsc" now contains 657707 row versions in 1807 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "parent_with_salt": found 0 removable, 0 nonremovable row versions in 0 out of 107971 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.02s/0.02u sec elapsed 0.04 sec.
+INFO:  vacuuming "pg_toast.pg_toast_120236"
+INFO:  index "pg_toast_120236_index" now contains 14273 row versions in 41 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_120236": found 0 removable, 0 nonremovable row versions in 0 out of 2868 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.parent_with_salt"
+INFO:  "parent_with_salt": scanned 30000 of 107971 pages, containing 182597 live rows and 0 dead rows; 30000 rows in sample, 657579 estimated total rows
+INFO:  vacuuming "public.related"
+INFO:  "related": found 0 removable, 112544 nonremovable row versions in 1017 out of 1017 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.01 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132334"
+INFO:  index "pg_toast_132334_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132334": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.related"
+INFO:  "related": scanned 1017 of 1017 pages, containing 112544 live rows and 0 dead rows; 30000 rows in sample, 112544 estimated total rows
+INFO:  vacuuming "public.count_identical_by_nsc"
+INFO:  "count_identical_by_nsc": found 0 removable, 47102 nonremovable row versions in 255 out of 255 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.count_identical_by_nsc"
+INFO:  "count_identical_by_nsc": scanned 255 of 255 pages, containing 47102 live rows and 0 dead rows; 30000 rows in sample, 47102 estimated total rows
+INFO:  vacuuming "public.count_salt_by_nsc"
+INFO:  "count_salt_by_nsc": found 0 removable, 19201 nonremovable row versions in 104 out of 104 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.count_salt_by_nsc"
+INFO:  "count_salt_by_nsc": scanned 104 of 104 pages, containing 19201 live rows and 0 dead rows; 19201 rows in sample, 19201 estimated total rows
+INFO:  vacuuming "public.count_relation_summary"
+INFO:  "count_relation_summary": found 0 removable, 61398 nonremovable row versions in 323 out of 323 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.count_relation_summary"
+INFO:  "count_relation_summary": scanned 323 of 323 pages, containing 61398 live rows and 0 dead rows; 30000 rows in sample, 61398 estimated total rows
+INFO:  vacuuming "public.cmpd_bio_assay"
+INFO:  index "cmpd_bio_assay_pkey" now contains 0 row versions in 59 pages
+DETAIL:  0 index row versions were removed.
+56 index pages have been deleted, 56 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_bio_assay": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_bio_assay"
+INFO:  "cmpd_bio_assay": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_alias_type"
+INFO:  index "cmpd_alias_type_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_alias_type_alias_type_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_alias_type": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132431"
+INFO:  index "pg_toast_132431_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132431": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_alias_type"
+INFO:  "cmpd_alias_type": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.ad_hoc_cmpd_fragment_p_chem"
+INFO:  index "ad_hoc_cmpd_fragment_p_chem_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "ad_hoc_cmpd_fragment_p_chem": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132397"
+INFO:  index "pg_toast_132397_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132397": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.ad_hoc_cmpd_fragment_p_chem"
+INFO:  "ad_hoc_cmpd_fragment_p_chem": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_alias"
+INFO:  index "cmpd_alias_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_alias": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132418"
+INFO:  index "pg_toast_132418_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132418": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_alias"
+INFO:  "cmpd_alias": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.ad_hoc_cmpd_fragment_structure"
+INFO:  index "ad_hoc_cmpd_fragment_structure_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "ad_hoc_cmpd_fragment_structure": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132405"
+INFO:  index "pg_toast_132405_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132405": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.ad_hoc_cmpd_fragment_structure"
+INFO:  "ad_hoc_cmpd_fragment_structure": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_aliases2nsc_cmpds"
+INFO:  index "cmpd_aliases2nsc_cmpds_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_aliases2nsc_cmpds": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_aliases2nsc_cmpds"
+INFO:  "cmpd_aliases2nsc_cmpds": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_fragment_p_chem"
+INFO:  index "cmpd_fragment_p_chem_pkey" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_fragment_p_chem": found 0 removable, 657707 nonremovable row versions in 6753 out of 6753 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.03s/0.02u sec elapsed 0.05 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132455"
+INFO:  index "pg_toast_132455_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132455": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_fragment_p_chem"
+INFO:  "cmpd_fragment_p_chem": scanned 6753 of 6753 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+INFO:  vacuuming "public.cmpd_project"
+INFO:  index "cmpd_project_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_project_project_code_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_project_project_name_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_project": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132512"
+INFO:  index "pg_toast_132512_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132512": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_project"
+INFO:  "cmpd_project": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_pub_chem_sid"
+INFO:  index "cmpd_pub_chem_sid_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_pub_chem_sid": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_pub_chem_sid"
+INFO:  "cmpd_pub_chem_sid": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_inventory"
+INFO:  index "cmpd_inventory_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_inventory": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_inventory"
+INFO:  "cmpd_inventory": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_list"
+INFO:  index "cmpd_list_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_list_cmpd_list_id_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_list": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132484"
+INFO:  index "pg_toast_132484_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132484": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_list"
+INFO:  "cmpd_list": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_plate"
+INFO:  index "cmpd_plate_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_plate": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132499"
+INFO:  index "pg_toast_132499_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132499": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_plate"
+INFO:  "cmpd_plate": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_relation_type"
+INFO:  index "cmpd_relation_type_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_relation_type_relation_type_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_relation_type": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132548"
+INFO:  index "pg_toast_132548_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132548": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_relation_type"
+INFO:  "cmpd_relation_type": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_projects2nsc_cmpds"
+INFO:  index "cmpd_projects2nsc_cmpds_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_projects2nsc_cmpds": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_projects2nsc_cmpds"
+INFO:  "cmpd_projects2nsc_cmpds": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_pub_chem_sids2nsc_cmpds"
+INFO:  index "cmpd_pub_chem_sids2nsc_cmpds_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_pub_chem_sids2nsc_cmpds": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_pub_chem_sids2nsc_cmpds"
+INFO:  "cmpd_pub_chem_sids2nsc_cmpds": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_related"
+INFO:  index "cmpd_related_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_related_nsc_cmpd_fk_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_related_cmpd_relation_type_fk_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_related": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_related"
+INFO:  "cmpd_related": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_view"
+INFO:  index "cmpd_view_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_view_nsc_cmpd_id_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_view_nsc_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_view_ad_hoc_cmpd_id_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_view": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132584"
+INFO:  index "pg_toast_132584_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132584": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_view"
+INFO:  "cmpd_view": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.ad_hoc_cmpd_fragment"
+INFO:  index "ad_hoc_cmpd_fragment_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "ad_hoc_cmpd_fragment_ad_hoc_cmpd_fragment_p_chem_fk_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "ad_hoc_cmpd_fragment_ad_hoc_cmpd_fragment_struct_fk_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "ad_hoc_cmpd_fragment": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.ad_hoc_cmpd_fragment"
+INFO:  "ad_hoc_cmpd_fragment": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_set"
+INFO:  index "cmpd_set_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_set": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132558"
+INFO:  index "pg_toast_132558_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132558": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_set"
+INFO:  "cmpd_set": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_list_member"
+INFO:  index "cmpd_list_member_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_list_member": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_list_member"
+INFO:  "cmpd_list_member": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.ad_hoc_cmpd"
+INFO:  index "ad_hoc_cmpd_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "ad_hoc_cmpd_ad_hoc_cmpd_id_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "ad_hoc_cmpd_ad_hoc_cmpd_parent_fragment_fk_key" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "ad_hoc_cmpd": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132376"
+INFO:  index "pg_toast_132376_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132376": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.ad_hoc_cmpd"
+INFO:  "ad_hoc_cmpd": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_plates2nsc_cmpds"
+INFO:  index "cmpd_plates2nsc_cmpds_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_plates2nsc_cmpds": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_plates2nsc_cmpds"
+INFO:  "cmpd_plates2nsc_cmpds": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_sets2nsc_cmpds"
+INFO:  index "cmpd_sets2nsc_cmpds_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_sets2nsc_cmpds": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_sets2nsc_cmpds"
+INFO:  "cmpd_sets2nsc_cmpds": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_target"
+INFO:  index "cmpd_target_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_target_target_idx" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_target": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132571"
+INFO:  index "pg_toast_132571_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132571": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_target"
+INFO:  "cmpd_target": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd"
+INFO:  index "cmpd_pkey" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd": found 0 removable, 657707 nonremovable row versions in 2911 out of 2911 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.01s/0.02u sec elapsed 0.03 sec.
+INFO:  analyzing "public.cmpd"
+INFO:  "cmpd": scanned 2911 of 2911 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+INFO:  vacuuming "public.cmpd_targets2nsc_cmpds"
+INFO:  index "cmpd_targets2nsc_cmpds_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_targets2nsc_cmpds": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_targets2nsc_cmpds"
+INFO:  "cmpd_targets2nsc_cmpds": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.cmpd_known_salt"
+INFO:  index "cmpd_known_salt_pkey" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_known_salt": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132476"
+INFO:  index "pg_toast_132476_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132476": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_known_salt"
+INFO:  "cmpd_known_salt": scanned 0 of 0 pages, containing 0 live rows and 0 dead rows; 0 rows in sample, 0 estimated total rows
+INFO:  vacuuming "public.rdkit_mol"
+INFO:  index "rdkit_mol_mol" now contains 657707 row versions in 33932 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.02s/0.02u sec elapsed 0.04 sec.
+INFO:  "rdkit_mol": found 0 removable, 0 nonremovable row versions in 0 out of 29938 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.02s/0.02u sec elapsed 0.04 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132819"
+INFO:  index "pg_toast_132819_index" now contains 2 row versions in 2 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132819": found 0 removable, 2 nonremovable row versions in 1 out of 1 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.rdkit_mol"
+INFO:  "rdkit_mol": scanned 29938 of 29938 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+INFO:  vacuuming "public.temp"
+INFO:  "temp": found 0 removable, 657707 nonremovable row versions in 7496 out of 7496 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.04s/0.01u sec elapsed 0.05 sec.
+INFO:  vacuuming "pg_toast.pg_toast_143444"
+INFO:  index "pg_toast_143444_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_143444": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.temp"
+INFO:  "temp": scanned 7496 of 7496 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+INFO:  vacuuming "public.cmpd_fragment"
+INFO:  index "cmpd_fragment_pkey" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_fragment_cmpd_fragment_structure_fk_key" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_fragment_cmpd_fragment_p_chem_fk_key" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "cmpd_fragment": found 0 removable, 657707 nonremovable row versions in 4837 out of 4837 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.03s/0.02u sec elapsed 0.05 sec.
+INFO:  analyzing "public.cmpd_fragment"
+INFO:  "cmpd_fragment": scanned 4837 of 4837 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+INFO:  vacuuming "public.cmpd_fragment_structure"
+INFO:  index "cmpd_fragment_structure_pkey" now contains 657707 row versions in 1805 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "cmpd_fragment_structure_mol" now contains 657506 row versions in 33859 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.03s/0.01u sec elapsed 0.04 sec.
+INFO:  "cmpd_fragment_structure": found 0 removable, 0 nonremovable row versions in 0 out of 98182 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.03s/0.02u sec elapsed 0.05 sec.
+INFO:  vacuuming "pg_toast.pg_toast_132829"
+INFO:  index "pg_toast_132829_index" now contains 12775 row versions in 37 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_132829": found 0 removable, 0 nonremovable row versions in 0 out of 2494 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.cmpd_fragment_structure"
+INFO:  "cmpd_fragment_structure": scanned 30000 of 98182 pages, containing 200736 live rows and 0 dead rows; 30000 rows in sample, 657338 estimated total rows
+INFO:  vacuuming "public.nsc_cmpd"
+INFO:  index "nsc_cmpd_pkey" now contains 657707 row versions in 2351 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "nsc_cmpd_nsc_cmpd_id_key" now contains 657707 row versions in 2351 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "nsc_cmpd_nsc_key" now contains 657707 row versions in 2351 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "nsc_cmpd_cmpd_parent_fragment_fk_key" now contains 657707 row versions in 2351 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  index "nsc_cmpd_cmpd_bio_assay_fk_key" now contains 657707 row versions in 2286 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "nsc_cmpd": found 0 removable, 657707 nonremovable row versions in 8867 out of 8867 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.04s/0.04u sec elapsed 0.08 sec.
+INFO:  vacuuming "pg_toast.pg_toast_143419"
+INFO:  index "pg_toast_143419_index" now contains 0 row versions in 1 pages
+DETAIL:  0 index row versions were removed.
+0 index pages have been deleted, 0 are currently reusable.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  "pg_toast_143419": found 0 removable, 0 nonremovable row versions in 0 out of 0 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+There were 0 unused item pointers.
+0 pages are entirely empty.
+CPU 0.00s/0.00u sec elapsed 0.00 sec.
+INFO:  analyzing "public.nsc_cmpd"
+INFO:  "nsc_cmpd": scanned 8867 of 8867 pages, containing 657707 live rows and 0 dead rows; 30000 rows in sample, 657707 estimated total rows
+VACUUM
+alter table ad_hoc_cmpd owner to dctd_user;
+ALTER TABLE
+alter table ad_hoc_cmpd_fragment owner to dctd_user;
+ALTER TABLE
+alter table ad_hoc_cmpd_fragment_p_chem owner to dctd_user;
+ALTER TABLE
+alter table ad_hoc_cmpd_fragment_structure owner to dctd_user;
+ALTER TABLE
+alter table cmpd owner to dctd_user;
+ALTER TABLE
+alter table cmpd_alias owner to dctd_user;
+ALTER TABLE
+alter table cmpd_aliases2nsc_cmpds owner to dctd_user;
+ALTER TABLE
+alter table cmpd_alias_type owner to dctd_user;
+ALTER TABLE
+alter table cmpd_bio_assay owner to dctd_user;
+ALTER TABLE
+alter table cmpd_fragment owner to dctd_user;
+ALTER TABLE
+alter table cmpd_fragment_p_chem owner to dctd_user;
+ALTER TABLE
+alter table cmpd_fragment_structure owner to dctd_user;
+ALTER TABLE
+alter table cmpd_inventory owner to dctd_user;
+ALTER TABLE
+alter table cmpd_known_salt owner to dctd_user;
+ALTER TABLE
+alter table cmpd_list owner to dctd_user;
+ALTER TABLE
+alter table cmpd_list_member owner to dctd_user;
+ALTER TABLE
+alter table cmpd_plate owner to dctd_user;
+ALTER TABLE
+alter table cmpd_plates2nsc_cmpds owner to dctd_user;
+ALTER TABLE
+alter table cmpd_project owner to dctd_user;
+ALTER TABLE
+alter table cmpd_projects2nsc_cmpds owner to dctd_user;
+ALTER TABLE
+alter table cmpd_pub_chem_sid owner to dctd_user;
+ALTER TABLE
+alter table cmpd_pub_chem_sids2nsc_cmpds owner to dctd_user;
+ALTER TABLE
+alter table cmpd_related owner to dctd_user;
+ALTER TABLE
+alter table cmpd_relation_type owner to dctd_user;
+ALTER TABLE
+alter table cmpd_set owner to dctd_user;
+ALTER TABLE
+alter table cmpd_sets2nsc_cmpds owner to dctd_user;
+ALTER TABLE
+alter table cmpd_target owner to dctd_user;
+ALTER TABLE
+alter table cmpd_targets2nsc_cmpds owner to dctd_user;
+ALTER TABLE
+alter table cmpd_view owner to dctd_user;
+ALTER TABLE
+alter table nsc_cmpd owner to dctd_user;
+ALTER TABLE
+alter table rdkit_mol owner to dctd_user;
+ALTER TABLE
+alter sequence ad_hoc_cmpd_fragment_p_che_seq owner to dctd_user; 
+ALTER SEQUENCE
+alter sequence ad_hoc_cmpd_fragment_seq owner to dctd_user;       
+ALTER SEQUENCE
+alter sequence ad_hoc_cmpd_fragment_struc_seq owner to dctd_user; 
+ALTER SEQUENCE
+alter sequence cmpd_alias_seq owner to dctd_user;                 
+ALTER SEQUENCE
+alter sequence cmpd_alias_type_seq owner to dctd_user;            
+ALTER SEQUENCE
+alter sequence cmpd_bio_assay_seq owner to dctd_user;             
+ALTER SEQUENCE
+alter sequence cmpd_fragment_p_chem_seq owner to dctd_user;       
+ALTER SEQUENCE
+alter sequence cmpd_fragment_seq owner to dctd_user;              
+ALTER SEQUENCE
+alter sequence cmpd_fragment_structure_seq owner to dctd_user;    
+ALTER SEQUENCE
+alter sequence cmpd_inventory_seq owner to dctd_user;             
+ALTER SEQUENCE
+alter sequence cmpd_known_salt_seq owner to dctd_user;            
+ALTER SEQUENCE
+alter sequence cmpd_list_member_seq owner to dctd_user;           
+ALTER SEQUENCE
+alter sequence cmpd_list_seq owner to dctd_user;                  
+ALTER SEQUENCE
+alter sequence cmpd_plate_seq owner to dctd_user;                 
+ALTER SEQUENCE
+alter sequence cmpd_project_seq owner to dctd_user;               
+ALTER SEQUENCE
+alter sequence cmpd_pub_chem_sid_seq owner to dctd_user;          
+ALTER SEQUENCE
+alter sequence cmpd_related_seq owner to dctd_user;               
+ALTER SEQUENCE
+alter sequence cmpd_relation_type_seq owner to dctd_user;         
+ALTER SEQUENCE
+alter sequence cmpd_seq owner to dctd_user;                       
+ALTER SEQUENCE
+alter sequence cmpd_set_seq owner to dctd_user;                   
+ALTER SEQUENCE
+alter sequence cmpd_target_seq owner to dctd_user;                
+ALTER SEQUENCE
+alter sequence hibernate_sequence owner to dctd_user;             
+ALTER SEQUENCE
+--test
+--
+----743380 occ1cn(cc2cc(cl)ccc2)c2c1cccc2
+--
+----testosterone tests
+--
+--select nsc_cmpd.id, nsc_cmpd.nsc, strc.mol
+--from cmpd_fragment_structure strc, nsc_cmpd
+--where strc.id = nsc_cmpd.id
+--and strc.mol @= (
+--select mol from cmpd_fragment_structure where id in (
+--select id from nsc_cmpd where nsc = 50917
+--)
+--);
+--
+--id   |   nsc   |                             mol                              
+----------+---------+--------------------------------------------------------------
+--576217 |  755838 | c[c@]12ccc3c(ccc4=cc(=o)cc[c@@]43c)c1cc[c@@h]2o
+--603557 |   50917 | c[c@@]12cc[c@@h]3[c@h](ccc4=cc(=o)cc[c@]43c)[c@h]1cc[c@h]2o
+--273801 |   26499 | c[c@]12cc[c@h]3[c@@h](ccc4=cc(=o)cc[c@@]43c)[c@@h]1cc[c@h]2o
+--459296 | 2509410 | cc12ccc3c(ccc4=cc(=o)ccc43c)c1ccc2o
+--98449 |  523833 | cc12ccc3c(ccc4=cc(=o)ccc43c)c1ccc2o
+--34297 |    9700 | cc12ccc3c(ccc4=cc(=o)ccc43c)c1ccc2o
+--(6 rows)
+--
+--time: 171.444 ms
+--
+--select nsc_cmpd.nsc, rdkit.mol
+--from rdkit_mol rdkit, nsc_cmpd
+--where rdkit.nsc = nsc_cmpd.nsc
+--and rdkit.mol @= (
+--select mol from rdkit_mol where nsc = 50917
+--)
+--order by nsc;
+--
+--  nsc   |                             mol                              
+----------+--------------------------------------------------------------
+--   9700 | CC12CCC3C(CCC4=CC(=O)CCC43C)C1CCC2O
+--  26499 | C[C@]12CC[C@H]3[C@@H](CCC4=CC(=O)CC[C@@]43C)[C@@H]1CC[C@H]2O
+--  50917 | C[C@@]12CC[C@@H]3[C@H](CCC4=CC(=O)CC[C@]43C)[C@H]1CC[C@H]2O
+-- 523833 | CC12CCC3C(CCC4=CC(=O)CCC43C)C1CCC2O
+-- 755838 | C[C@]12CCC3C(CCC4=CC(=O)CC[C@@]43C)C1CC[C@H]2O
+--(5 rows)
+--
+--Time: 81.926 ms
+--
+---- any nsc
+--
+--select nsc_cmpd.id, nsc_cmpd.nsc, strc.mol 
+--from cmpd_fragment_structure strc, nsc_cmpd
+--where strc.id = nsc_cmpd.id
+--and strc.mol @> (
+--select mol from cmpd_fragment_structure where id in (
+--select id from nsc_cmpd where nsc = 743380
+--)
+--);
+--
+--id   |  nsc   |                   mol                    
+----------+--------+------------------------------------------
+--372100 | 372811 | o=c(o)c1c(cl)n(cc2cc(cl)ccc2cl)c2ccccc21
+--415455 | 743380 | occ1cn(cc2cccc(cl)c2)c2ccccc12
+--433386 | 745858 | o=c(o)c1cn(cc2ccc(cl)c(cl)c2)c2ccccc12
+--444078 | 756864 | occ1c(cl)n(cc2cccc(cl)c2)c2ccccc12
+--444218 | 751172 | o=c(o)c1cn(cc2cccc(cl)c2)c2ccccc12
+--450764 | 756850 | cc1c(co)c2ccccc2n1cc1cccc(cl)c1
+--(6 rows)
+--
+--time: 51.256 ms
+--
+--
