@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+        <p:panelGrid  id="drugTrackerDetailPopUp" style="margin-top:20px">  
+
+            <f:facet name="header">  
+                <p:row>  
+                    <p:column colspan="4">id: #{drugTrackerController.selectedDrugTracker.id} #{drugTrackerController.selectedDrugTracker.agent} #{drugTrackerController.selectedDrugTracker.nsc}</p:column>  
+                </p:row>  
+            </f:facet>  
+
+            <p:row>  
+                <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Status</p:column>  
+                <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Identifiers</p:column>  
+            </p:row>
+
+            <p:row>
+                <p:column>Drug Status</p:column>
+                <p:column>#{drugTrackerController.selectedDrugTracker.drugTrackerSet}</p:column>
+
+                <p:column>Agent</p:column>
+                <p:column>#{drugTrackerController.selectedDrugTracker.agent}</p:column>
+            </p:row>
+
+            <p:row>
+                <p:column>Plated Set</p:column>
+                <p:column>#{drugTrackerController.selectedDrugTracker.plate}</p:column>
+
+                <p:column>NSC</p:column>
+                <p:column>#{drugTrackerController.selectedDrugTracker.nsc}</p:column>
+            </p:row>
+
+            <p:row>
+                <p:column>Originator</p:column>
+                <p:column>#{drugTrackerController.selectedDrugTracker.originator}</p:column>
+
+                <p:column>CAS</p:column>
+                <p:column>#{drugTrackerController.selectedDrugTracker.cas}</p:column>
+            </p:row>  
+
+            <p:row>  
+                <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">PChem</p:column>  
+                <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Structure</p:column>                                          
+            </p:row>
+
+            <p:row>
+                <p:column colspan="2">                                 
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column>mw</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.mw}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>mf</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.mf}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>alogp</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.alogp}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>logd</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.logd}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>sa</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.sa}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>psa</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.psa}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>hba</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.hba}</p:column>                                            
+                        </p:row>                                        
+                        <p:row>
+                            <p:column>hbd</p:column>
+                            <p:column>#{drugTrackerController.selectedDrugTracker.hbd}</p:column>                                            
+                        </p:row>                                        
+                    </p:panelGrid>
+                </p:column>
+
+                <p:column colspan="2" rowspan="8">
+                    <p:panel>
+                        <h:graphicImage rendered="#{!empty drugTrackerController.selectedDrugTracker.parentCanSmi}"
+                                        alt="png-structure-image"
+                                        width="200" height="200"
+                                        url='http://localhost:8080/StructureServlet/StructureServlet?format=png&amp;smiles=#{drugTrackerController.selectedDrugTracker.parentCanSmi.replaceAll("\\+","%2B").replaceAll("#","%23")}'>
+                        </h:graphicImage> 
+                    </p:panel>
+                </p:column>
+            </p:row>
+
+        </p:panelGrid>
+
+    </ui:composition>

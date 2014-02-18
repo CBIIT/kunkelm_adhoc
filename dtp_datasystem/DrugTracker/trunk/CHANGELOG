@@ -1,0 +1,93 @@
+14Jan2013
+ketcher
+ketcher + indigo jars
+python server insanity
+
+16Feb2013
+
+drugTrackerList.xhtml 
+selectionMode to multiple
+action showSelectedDrugTrackers in Controller; dialogSelectedDrugTrackers
+
+all dialogs moved to dialogXXX.xhtml
+
+TODO! experiment with js for highlight cells in dataGrid 
+
+18Feb2013
+
+Translate methods to Util class
+substructureSearch: StandardizedSmiles returns translated to DrugTrackerVO
+
+HeapSpace errors?   BRAIN DEAD!   If searches return nothing, don't run Criteria search on empty nscList
+
+02Mar2013
+
+switch structure searches to Cmpd model
+
+03Mar2013
+
+implement ListManager as WebService
+
+blockUI during structure searches
+
+07Mar2013
+
+fileUpload, start work on parsing SDFile (modify CDK so that skip returns an empty molecule)
+
+08Mar2013
+
+fix .xhtml pages to accomodate refactoring of CmpdVO in novumservices
+
+refactored ServiceTranslators to use dozer
+
+09Mar2013
+
+DrugTracker to internal tab
+
+TODO! dialogs to tabs when possible
+
+10Mar2013
+
+added load structure by NSC to jchempaint
+refactored smiles and mol fields to hidden fields
+
+13Mar2013
+
+dozer failing translate AdHocCmpd -> createAdHocList
+List->Set or dynamicList causing problem?
+
+14Mar2013
+
+cmpdFragmentLayout
+
+15Mar2013 
+
+persistence of adHocCmpd WORKS! (need to do final check create with ONLY entities
+
+DeleteList - had to REFACTOR association from NSC_NOVUM_LIST_MEMBER to CMPD to cascade="none"
+
+adHocCmpds are deleted with their list, for nsc_cmpds only the reference to the cmpd is deleted
+
+16Mar2013
+
+refactor to separate owner and PUBLIC lists
+
+22Mar2013
+
+DrugTrackerWebApplication to JPA!
+
+DrugTrackerWebApplication->DrugTracker
+
+Clone DrugTracker->DCTDDataSystem
+
+Create new androMDA project inside DrugTracker
+
+Strip out any "novum" stuff from DrugTracker => TOTALLY purpose built
+
+23Mar2013
+
+Work out uploading of new files from Joel:  add approved_nononcology plates, refactor
+data model for compounds on multiple plates or in multiple sets, refactor to remove
+any named-ends on associations
+
+

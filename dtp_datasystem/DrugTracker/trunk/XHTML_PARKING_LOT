@@ -1,0 +1,39 @@
+                <p:panel id="display" header="Selected Criteria" style="margin-top:10px;">  
+
+                    <h:outputText value="Selected agents: " />              
+                    <p:dataList value="#{drugTrackerController.agents}" var="agent" type="ordered">  
+                        #{agent}  
+                    </p:dataList> 
+
+                    <h:outputText value="Selected aliases: " />  
+                    <p:dataList value="#{drugTrackerController.aliases}" var="alias" type="ordered">  
+                        #{alias}  
+                    </p:dataList> 
+
+                    <h:outputText value="Selected CASes: " />  
+                    <p:dataList value="#{drugTrackerController.cases}" var="cas" type="ordered">  
+                        #{cas}  
+                    </p:dataList> 
+
+                    <h:outputText value="Selected NSCs; " />  
+                    <p:dataList value="#{drugTrackerController.nscs}" var="nsc" type="ordered">  
+                        #{nsc}  
+                    </p:dataList> 
+
+                    <h:outputText value="Selected Originators; " />  
+                    <p:dataList value="#{drugTrackerController.originators}" var="originator" type="ordered">  
+                        #{originator}  
+                    </p:dataList> 
+
+                    <h:outputText value="Selected Plates; " />  
+                    <p:dataList value="#{drugTrackerController.plates}" var="plate" type="ordered">  
+                        #{plate}  
+                    </p:dataList> 
+
+                    <h:outputText value="Selected Targets; " />  
+                    <p:dataList value="#{drugTrackerController.targets}" var="target" type="ordered">  
+                        #{target}  
+                    </p:dataList> 
+
+                </p:panel>  
+
