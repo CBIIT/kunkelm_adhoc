@@ -1,0 +1,15 @@
+.borderlessPanelGrid tr, .borderlessPanelGrid td {
+  border: none;
+}
+
+.grayPanelGrid, .grayPanelGrid td {
+font-weight: bold !important;
+color: white !important;
+background-color: lightgray !important;
+}
+
+.whitePanelGrid, .whitePanelGrid td {
+font-weight: normal !important;
+color: black !important;
+background-color: white !important;
+}
