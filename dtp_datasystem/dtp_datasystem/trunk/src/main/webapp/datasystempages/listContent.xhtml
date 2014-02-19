@@ -333,8 +333,7 @@
                             <h:outputText value="List with #{fn:length(listManagerController.selectedList.cmpdListMembers)} Members"/>
                         </f:facet>
 
-                        <p:panelGrid columns="1"
-                                     styleClass="#{listMember.isSelected ? 'grayPanelGrid' : 'whitePanelGrid'}">
+                        <p:panelGrid columns="1"><!--styleClass="#{listMember.isSelected ? 'grayPanelGrid' : 'whitePanelGrid'}">-->
 
                             <f:facet name="header"> 
                                 <h:outputText value="#{listMember.cmpd.name}"/>
@@ -345,12 +344,14 @@
                                             width="200" height="200"
                                             url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                             </h:graphicImage> 
-
+                            
+                            <f:facet name="footer">
                             <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
                                 <f:setPropertyActionListener value="#{listMember.cmpd}"   
                                                              target="#{listManagerController.selectedCmpd}" />  
-                            </p:commandLink>  
+                            </p:commandLink>
+                            </f:facet> 
 
 
                         </p:panelGrid>
