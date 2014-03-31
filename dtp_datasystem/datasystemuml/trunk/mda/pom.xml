@@ -5,11 +5,11 @@
     compiling or testing or packaging, run mvn install from /mda instead of from the root directory. -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>mwk.dctddata</groupId>
-        <artifactId>dctddata</artifactId>
+        <groupId>mwk.datasystem</groupId>
+        <artifactId>datasystem</artifactId>
         <version>0.1</version>
     </parent>
-    <artifactId>dctddata-mda</artifactId>
+    <artifactId>datasystem-mda</artifactId>
     <packaging>pom</packaging>
     <name>DCTD Data MDA</name>
     <dependencies>
@@ -101,7 +101,7 @@
         </plugins>
     </build>
     <properties>
-        <model.uri>file:${project.basedir}/src/main/uml/dctddata.uml</model.uri>
+        <model.uri>file:${project.basedir}/src/main/uml/datasystem.uml</model.uri>
         <javaVersion>${java.version}</javaVersion>
         <filter></filter>
         <validation>true</validation>
