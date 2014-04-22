@@ -8,316 +8,331 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-  <f:view contentType="text/html">
+    <f:view contentType="text/html">
+
+        <p:confirmDialog id="confirmDialog" 
+                         message="DELETE cannot be undone"  
+                         header="Confirm DELETE" 
+                         severity="alert" 
+                         widgetVar="confirmation">  
+
+            <p:commandButton id="confirm" 
+                             value="Yes, DELETE"
+                             style="background-color: red;"
+                             oncomplete="confirmation.hide()" 
+                             actionListener="#{listManagerController.handleDeleteList}"                               
+                             update=":dataSystemForm:outerTabView:listManagerTabView"/>      
+
+            <p:commandButton id="decline" 
+                             value="NO" 
+                             onclick="confirmation.hide()" 
+                             type="button" />   
+
+        </p:confirmDialog>  
+
+        <p:tabView id="listManagerTabView" activeIndex="#{listManagerController.listManagerTabViewActiveIndex}" dynamic="true">
+
+            <p:tab title="Available Lists">
+
+                <p:outputPanel id="availableListsPanel">
+
+                    <p:commandButton value="Invalidate Session"                           
+                                     actionListener="#{listManagerController.logout}"
+                                     action="/faces/login.xhtml?faces-redirect=true"/>
+
+                    <p:commandButton value="Update Lists"
+                                     action="#{listManagerController.performUpdateAvailableLists()}"
+                                     update=":dataSystemForm:outerTabView:listManagerTabView"/>
+
+                    <p:spacer height="10"/>
+
+                    <p:dataTable id="availableListsTbl"
+                                 var="list"
+                                 value="#{listManagerController.availableLists}"
+                                 paginator="true" 
+                                 rows="10"   
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="10,25,50">
+
+                        <f:facet name="header">  
+                            Available Lists With #{fn:length(listManagerController.availableLists)} Lists
+                        </f:facet>
+
+                        <p:column>
+                            
+                            <p:remoteCommand name="setListForDelete#{list.cmpdListId}">    
+                                <f:setPropertyActionListener value="#{list}"   
+                                                             target="#{listManagerController.listForDelete}"/>  
+                            </p:remoteCommand>  
+
+                            <p:commandButton value="VIEW"                                             
+                                             action="#{listManagerController.performLoadSelectedList()}"
+                                             update=":dataSystemForm:growl,:dataSystemForm:outerTabView,:dataSystemForm:outerTabView:ActiveListContentPanel,:dataSystemForm:outerTabView:activeListTabView"
+                                             onstart="bui_loadinglist_block.show();"
+                                             oncomplete="bui_loadinglist_block.hide();">      
+                                <f:setPropertyActionListener value="#{list}"   
+                                                             target="#{listManagerController.selectedList}"/>  
+                            </p:commandButton>
+
+                            <br/>
+
+                            <p:commandButton  disabled="#{list.listOwner != listManagerController.loggedUser || list.shareWith == 'PUBLIC'}"
+                                              value="SHARE"
+                                              style="background-color: green;"
+                                              action="#{listManagerController.performMakeListPublic()}"                               
+                                              update=":dataSystemForm:outerTabView:listManagerTabView">      
+                                <f:setPropertyActionListener value="#{list}"   
+                                                             target="#{listManagerController.selectedList}"/>
+                            </p:commandButton>
+
+                            <br/>
+
+                            <p:commandButton disabled="#{list.listOwner != listManagerController.loggedUser || list.shareWith == 'PUBLIC'}"                
+                                             value="DELETE" 
+                                             style="background-color: red;"
+                                             onclick="setListForDelete#{list.cmpdListId}();confirmation.show();"                                
+                                             type="button"/> 
+                            
+                            
+                        </p:column>
+
+                        
+                        <p:column resizable="true" sortBy="#{list.dateCreated}">
+                            
+                            <f:facet name="header">
+                                Date Created <br/> CmpdListId
+                            </f:facet>
+                            
+                            <h:outputText value="#{list.dateCreated}" /> 
+                            <br/>
+                            <h:outputText value="#{list.cmpdListId}" />  
+                            
+                        </p:column> 
+
+                        <p:column headerText="ListName" resizable="true" sortBy="#{list.listName}">              
+                            <h:outputText value="#{list.listName}" />                  
+                        </p:column> 
 
-    <p:confirmDialog id="confirmDialog" 
-                     message="DELETE cannot be undone"  
-                     header="Confirm DELETE" 
-                     severity="alert" 
-                     widgetVar="confirmation">  
+                        <p:column  headerText="List Size" resizable="true" sortBy="#{list.countListMembers}">              
+                            <h:outputText value="#{list.countListMembers}" />  
+                        </p:column> 
 
-      <p:commandButton id="confirm" 
-                       value="Yes, DELETE"
-                       style="background-color: red;"
-                       oncomplete="confirmation.hide()" 
-                       actionListener="#{listManagerController.handleDeleteList}"                               
-                       update=":dataSystemForm:outerTabView:listManagerTabView"/>      
+                        <p:column headerText="Owner" resizable="true" sortBy="#{list.listOwner}">              
+                            <h:outputText value="#{list.listOwner}" />  
+                        </p:column> 
 
-      <p:commandButton id="decline" 
-                       value="NO" 
-                       onclick="confirmation.hide()" 
-                       type="button" />   
+                        <p:column headerText="Share With" resizable="true" sortBy="#{list.shareWith}">              
+                            <h:outputText value="#{list.shareWith}" />  
+                        </p:column> 
 
-    </p:confirmDialog>  
+                        <p:column headerText="List Comment" resizable="true">              
+                            <h:outputText value="#{list.listComment}" />  
+                        </p:column> 
 
-    <p:tabView id="listManagerTabView" activeIndex="#{listManagerController.listManagerTabViewActiveIndex}" dynamic="true">
+                        <p:column headerText="Anchor Comment" resizable="true">              
+                            <h:outputText value="#{list.anchorComment}" />  
+                        </p:column> 
 
-      <p:tab title="Available Lists">
+                        <p:column headerText="Anchor Structure" resizable="true">   
+                            <p:panel>
+                                <h:graphicImage rendered="#{!empty list.anchorSmiles}"
+                                                alt="png-structure-image"
+                                                width="200" height="200"
+                                                url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(list.anchorSmiles)}'>
+                                </h:graphicImage> 
+                            </p:panel>
+                            <h:outputText value="#{list.anchorSmiles}" />  
+                        </p:column> 
 
-        <p:outputPanel id="availableListsPanel">
+                    </p:dataTable>
 
-          <h:outputText value="#{listManagerController.loggedUser}"></h:outputText>
+                </p:outputPanel>
 
-          <p:commandButton value="Invalidate Session"                           
-                           actionListener="#{listManagerController.logout}"/>
+                <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
+                           widgetVar="bui_loadinglist_block">
+                    <h:outputText style="color: green; font-size: 40px" value="LOADING LIST to ACTIVE LIST tab"/>  
+                    <p:graphicImage name="images/ajax-loader.gif"/>  
+                </p:blockUI>
 
-          <p:commandButton value="Update Lists"
-                           action="#{listManagerController.performUpdateAvailableLists()}"
-                           update=":dataSystemForm:outerTabView:listManagerTabView"/>
+            </p:tab>
 
-          <p:spacer height="10"/>
+            <p:tab title="Create List by Search of DTP Compounds">
 
-          <p:dataTable id="availableListsTbl"
-                       var="list"
-                       value="#{listManagerController.availableLists}"
-                       paginator="true" 
-                       rows="10"   
-                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                       rowsPerPageTemplate="10,25,50">
+                <p:panel>
 
-            <f:facet name="header">  
-              Available Lists With #{fn:length(listManagerController.availableLists)} Lists
-            </f:facet>
+                    <f:facet name="header">  
+                        Create list by combination of NSC numbers and/or Project Codes
+                    </f:facet>
 
-            <p:column>
+                    <p:panelGrid columns="2">
 
-              <p:commandButton value="VIEW"
-                               icon="ui-icon-image"
-                               action="#{listManagerController.performLoadSelectedList()}"
-                               update=":dataSystemForm:growl,:dataSystemForm:outerTabView,:dataSystemForm:outerTabView:ActiveListContentPanel,:dataSystemForm:outerTabView:activeListTabView"
-                               onstart="bui_loadinglist_block.show();"
-                               oncomplete="bui_loadinglist_block.hide();">      
+                        <h:outputLabel for="listnametext" value="List Name"/>
+                        <h:inputText value="#{listManagerController.listName}" id="listnametext" cols="15" rows="5"/>
 
-                <f:setPropertyActionListener value="#{list}"   
-                                             target="#{listManagerController.selectedList}"/>  
+                        <h:outputLabel for="nsctextarea" value="NSCs"/>
+                        <h:inputTextarea  value="#{listManagerController.nscTextArea}" id="nsctextarea" cols="15" rows="5"/>
 
-              </p:commandButton>
+                        <h:outputLabel for="projectcodetextarea" value="Project Codes"/>
+                        <h:inputTextarea  value="#{listManagerController.projectCodeTextArea}" id="projectcodetextarea" cols="15" rows="5"/>
 
-            </p:column>
+                    </p:panelGrid>
 
-            <p:column>
+                    <p:commandButton value="Create List"
+                                     id="createListButton"
+                                     action="#{listManagerController.performCreateListBySearch()}"
+                                     update=":dataSystemForm:outerTabView:listManagerTabView,:dataSystemForm:outerTabView,:dataSystemForm:outerTabView:ActiveListContentPanel,:dataSystemForm:outerTabView:activeListTabView"
 
-              <p:commandButton disabled="#{list.listOwner!='kunkelm'}"                
-                               value="DELETE" 
-                               style="background-color: red;"
-                               onclick="setListForDelete#{list.cmpdListId}();confirmation.show();"                                
-                               type="button"/> 
 
-              <p:remoteCommand name="setListForDelete#{list.cmpdListId}">    
-                <f:setPropertyActionListener value="#{list}"   
-                                             target="#{listManagerController.listForDelete}"/>  
-              </p:remoteCommand>  
+                                     onstart="bui_createlist_block.show();"
+                                     oncomplete="bui_createlist_block.hide();"/>
+                </p:panel>
 
-            </p:column>
+                <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
+                           widgetVar="bui_createlist_block">
+                    <h:outputText style="color: green; font-size: 40px" value="CREATING LIST"/>  
+                    <p:graphicImage name="images/ajax-loader.gif"/>  
+                </p:blockUI>
 
-            <p:column>
 
-              <p:commandButton  disabled="#{list.listOwner!='kunkelm'}"
-                                value="SHARE"
-                                style="background-color: green;"
-                                action="#{listManagerController.performMakeListPublic()}"                               
-                                update=":dataSystemForm:outerTabView:listManagerTabView">      
+            </p:tab>
 
-                <f:setPropertyActionListener value="#{list}"   
-                                             target="#{listManagerController.selectedList}"/>  
+            <p:tab title="Create List from Uploaded File">
+                <p:panel>
 
-              </p:commandButton>
+                    <f:facet name="header">
+                        <h:outputText value="Create a list with structures from SDF or MOL files (.sdf or .mol extension)"/>
+                    </f:facet>
 
-            </p:column>
+                    <p:fileUpload
+                        style="width: 700px;"
+                        mode="advanced" 
+                        allowTypes="/(\.|\/)(sdf|mol)$/"
+                        fileUploadListener="#{listManagerController.handleFileUpload}"                          
+                        update=":dataSystemForm:growl,:dataSystemForm:outerTabView:listManagerTabView"
+                        onstart="bui_upload_block.show();"
+                        oncomplete="bui_upload_block.hide();">
 
-            <p:column headerText="CmpdListId" resizable="true" sortBy="#{list.cmpdListId}">              
-              <h:outputText value="#{list.cmpdListId}" />  
-            </p:column> 
+                    </p:fileUpload>
 
-            <p:column headerText="Date Created" resizable="true" sortBy="#{list.dateCreated}">
-              <h:outputText value="#{list.dateCreated}" />  
-            </p:column> 
 
-            <p:column headerText="ListName" resizable="true" sortBy="#{list.listName}">              
-              <h:outputText value="#{list.listName}" />                  
-            </p:column> 
 
-            <p:column  headerText="List Size" resizable="true" sortBy="#{list.countListMembers}">              
-              <h:outputText value="#{list.countListMembers}" />  
-            </p:column> 
+                </p:panel>
 
-            <p:column headerText="Owner" resizable="true" sortBy="#{list.listOwner}">              
-              <h:outputText value="#{list.listOwner}" />  
-            </p:column> 
+                <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
+                           widgetVar="bui_upload_block">
+                    <h:outputText style="color: green; font-size: 40px" value="UPLOADING AND PROCESSING" />  
+                    <p:graphicImage name="images/ajax-loader.gif"/>  
+                </p:blockUI>
 
-            <p:column headerText="Share With" resizable="true" sortBy="#{list.shareWith}">              
-              <h:outputText value="#{list.shareWith}" />  
-            </p:column> 
 
-          </p:dataTable>
+            </p:tab>
 
-        </p:outputPanel>
+            <p:tab title="Logical Operations on Lists">
 
-        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
-                   widgetVar="bui_loadinglist_block">
-          <h:outputText style="color: green; font-size: 40px" value="LOADING LIST to ACTIVE LIST tab"/>  
-          <p:graphicImage name="images/ajax-loader.gif"/>  
-        </p:blockUI>
+                <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
+                           widgetVar="bui_listlogic_block">
+                    <h:outputText style="color: green; font-size: 40px" value="RESOLVING LISTS"/>
+                    <p:graphicImage name="images/ajax-loader.gif"/>  
+                </p:blockUI>
 
-      </p:tab>
+                <p:outputPanel id="listLogicPanel">
 
-      <p:tab title="Create List by Search of DTP Compounds">
+                    <p:panelGrid columns="2">
 
-        <p:panel>
+                        <h:outputText value="List A" />          
+                        <p:selectOneMenu value="#{listManagerController.listAid}">  
+                            <f:selectItem itemLabel="Select One" itemValue="" />  
+                            <f:selectItems value="#{listManagerController.availableListSelectItems}" />  
+                        </p:selectOneMenu>  
 
-          <f:facet name="header">  
-            Create list by combination of NSC numbers and/or Project Codes
-          </f:facet>
+                        <h:outputText value="List B" />                  
+                        <p:selectOneMenu value="#{listManagerController.listBid}">  
+                            <f:selectItem itemLabel="Select One" itemValue="" />  
+                            <f:selectItems value="#{listManagerController.availableListSelectItems}" />  
+                        </p:selectOneMenu>  
 
-          <p:panelGrid columns="2">
+                    </p:panelGrid>
 
-            <h:outputLabel for="listnametext" value="List Name"/>
-            <h:inputText value="#{listManagerController.listName}" id="listnametext" cols="15" rows="5"/>
+                    <p:spacer height="10"/>
 
-            <h:outputLabel for="nsctextarea" value="NSCs"/>
-            <h:inputTextarea  value="#{listManagerController.nscTextArea}" id="nsctextarea" cols="15" rows="5"/>
+                    <p:commandButton value="DO LOGIC"
+                                     action="#{listManagerController.performListLogic()}"                               
+                                     onstart="bui_listlogic_block.show();"
+                                     update=":dataSystemForm:outerTabView:listManagerTabView:listLogicPanel"
+                                     oncomplete="bui_listlogic_block.hide();"/>      
 
-            <h:outputLabel for="projectcodetextarea" value="Project Codes"/>
-            <h:inputTextarea  value="#{listManagerController.projectCodeTextArea}" id="projectcodetextarea" cols="15" rows="5"/>
+                    <p:spacer height="10"/>
 
-          </p:panelGrid>
+                    <p:panelGrid columns="4">
 
-          <p:commandButton value="Create List"
-                           id="createListButton"
-                           action="#{listManagerController.performCreateListBySearch()}"
-                           update=":dataSystemForm:outerTabView:listManagerTabView,:dataSystemForm:outerTabView,:dataSystemForm:outerTabView:ActiveListContentPanel,:dataSystemForm:outerTabView:activeListTabView"
-                           
-                           
-                           onstart="bui_createlist_block.show();"
-                           oncomplete="bui_createlist_block.hide();"/>
-        </p:panel>
+                        <h:outputText value="List A OR List B"/>
+                        <h:outputText value="#{fn:length(listManagerController.cmpdsListAorListB)}"/>
 
-        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
-                   widgetVar="bui_createlist_block">
-          <h:outputText style="color: green; font-size: 40px" value="CREATING LIST"/>  
-          <p:graphicImage name="images/ajax-loader.gif"/>  
-        </p:blockUI>
+                        <p:commandButton value="VIEW List A OR List B"
+                                         icon="ui-icon-image"
+                                         update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
+                                         oncomplete="listofcmpdsdlg.show()">      
 
+                            <f:setPropertyActionListener value="#{listManagerController.cmpdsListAorListB}"   
+                                                         target="#{listManagerController.listOfCmpds}"/>  
 
-      </p:tab>
+                        </p:commandButton>
 
-      <p:tab title="Create List from Uploaded File">
-        <p:panel>
+                        <h:outputText value="SAVE button goes here"/>
 
-          <f:facet name="header">
-            <h:outputText value="Create a list with structures from SDF or MOL files (.sdf or .mol extension)"/>
-          </f:facet>
+                        <h:outputText value="List A AND List B"/>
+                        <h:outputText value="#{fn:length(listManagerController.cmpdsListAandListB)}"/>
 
-          <p:fileUpload
-            style="width: 700px;"
-            mode="advanced" 
-            allowTypes="/(\.|\/)(sdf|mol)$/"
-            fileUploadListener="#{listManagerController.handleFileUpload}"                          
-            update=":dataSystemForm:growl,:dataSystemForm:outerTabView:listManagerTabView"
-            onstart="bui_upload_block.show();"
-            oncomplete="bui_upload_block.hide();">
+                        <p:commandButton value="VIEW List A AND List B"
+                                         icon="ui-icon-image"
+                                         update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
+                                         oncomplete="listofcmpdsdlg.show()">      
 
-          </p:fileUpload>
+                            <f:setPropertyActionListener value="#{listManagerController.cmpdsListAandListB}"   
+                                                         target="#{listManagerController.listOfCmpds}"/>  
 
+                        </p:commandButton>
 
+                        <h:outputText value="SAVE button goes here"/>
 
-        </p:panel>
+                        <h:outputText value="List A NOT List B"/>
+                        <h:outputText value="#{fn:length(listManagerController.cmpdsListAnotListB)}"/>
 
-        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
-                   widgetVar="bui_upload_block">
-          <h:outputText style="color: green; font-size: 40px" value="UPLOADING AND PROCESSING" />  
-          <p:graphicImage name="images/ajax-loader.gif"/>  
-        </p:blockUI>
+                        <p:commandButton value="VIEW List A NOT List B"
+                                         icon="ui-icon-image"
+                                         update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
+                                         oncomplete="listofcmpdsdlg.show()">      
 
+                            <f:setPropertyActionListener value="#{listManagerController.cmpdsListAnotListB}"   
+                                                         target="#{listManagerController.listOfCmpds}"/>  
 
-      </p:tab>
+                        </p:commandButton>
 
-      <p:tab title="Logical Operations on Lists">
+                        <p:commandButton value="SAVE THIS LIST"
+                                         icon="ui-icon-image"
+                                         action="#{listManagerController.performSaveListLogicCmpds()}"
+                                         update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
+                                         oncomplete="listofcmpdsdlg.show()">      
 
-        <p:blockUI block=":dataSystemForm:outerTabView:listManagerTabView" 
-                   widgetVar="bui_listlogic_block">
-          <h:outputText style="color: green; font-size: 40px" value="RESOLVING LISTS"/>
-          <p:graphicImage name="images/ajax-loader.gif"/>  
-        </p:blockUI>
+                            <f:setPropertyActionListener value="#{listManagerController.cmpdsListAnotListB}"   
+                                                         target="#{listManagerController.listOfCmpds}"/>  
 
-        <p:outputPanel id="listLogicPanel">
+                        </p:commandButton>
 
-          <p:panelGrid columns="2">
 
-            <h:outputText value="List A" />          
-            <p:selectOneMenu value="#{listManagerController.listAid}">  
-              <f:selectItem itemLabel="Select One" itemValue="" />  
-              <f:selectItems value="#{listManagerController.availableListSelectItems}" />  
-            </p:selectOneMenu>  
+                        <h:outputText value="SAVE button goes here"/>
 
-            <h:outputText value="List B" />                  
-            <p:selectOneMenu value="#{listManagerController.listBid}">  
-              <f:selectItem itemLabel="Select One" itemValue="" />  
-              <f:selectItems value="#{listManagerController.availableListSelectItems}" />  
-            </p:selectOneMenu>  
+                    </p:panelGrid>
 
-          </p:panelGrid>
 
-          <p:spacer height="10"/>
 
-          <p:commandButton value="DO LOGIC"
-                           action="#{listManagerController.performListLogic()}"                               
-                           onstart="bui_listlogic_block.show();"
-                           update=":dataSystemForm:outerTabView:listManagerTabView:listLogicPanel"
-                           oncomplete="bui_listlogic_block.hide();"/>      
+                </p:outputPanel>
 
-          <p:spacer height="10"/>
+            </p:tab>
 
-          <p:panelGrid columns="4">
+        </p:tabView>
 
-            <h:outputText value="List A OR List B"/>
-            <h:outputText value="#{fn:length(listManagerController.cmpdsListAorListB)}"/>
 
-            <p:commandButton value="VIEW List A OR List B"
-                             icon="ui-icon-image"
-                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
-                             oncomplete="listofcmpdsdlg.show()">      
-
-              <f:setPropertyActionListener value="#{listManagerController.cmpdsListAorListB}"   
-                                           target="#{listManagerController.listOfCmpds}"/>  
-
-            </p:commandButton>
-
-            <h:outputText value="SAVE button goes here"/>
-
-            <h:outputText value="List A AND List B"/>
-            <h:outputText value="#{fn:length(listManagerController.cmpdsListAandListB)}"/>
-
-            <p:commandButton value="VIEW List A AND List B"
-                             icon="ui-icon-image"
-                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
-                             oncomplete="listofcmpdsdlg.show()">      
-
-              <f:setPropertyActionListener value="#{listManagerController.cmpdsListAandListB}"   
-                                           target="#{listManagerController.listOfCmpds}"/>  
-
-            </p:commandButton>
-
-            <h:outputText value="SAVE button goes here"/>
-
-            <h:outputText value="List A NOT List B"/>
-            <h:outputText value="#{fn:length(listManagerController.cmpdsListAnotListB)}"/>
-
-            <p:commandButton value="VIEW List A NOT List B"
-                             icon="ui-icon-image"
-                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
-                             oncomplete="listofcmpdsdlg.show()">      
-
-              <f:setPropertyActionListener value="#{listManagerController.cmpdsListAnotListB}"   
-                                           target="#{listManagerController.listOfCmpds}"/>  
-
-            </p:commandButton>
-
-            <p:commandButton value="SAVE THIS LIST"
-                             icon="ui-icon-image"
-                             action="#{listManagerController.performSaveListLogicCmpds()}"
-                             update=":dataSystemForm:growl,:dataSystemForm:ListOfCmpdsDialog"
-                             oncomplete="listofcmpdsdlg.show()">      
-
-              <f:setPropertyActionListener value="#{listManagerController.cmpdsListAnotListB}"   
-                                           target="#{listManagerController.listOfCmpds}"/>  
-
-            </p:commandButton>
-
-
-            <h:outputText value="SAVE button goes here"/>
-
-          </p:panelGrid>
-
-
-
-        </p:outputPanel>
-
-      </p:tab>
-
-    </p:tabView>
-
-
-  </f:view>
+    </f:view>
 
 </ui:composition>

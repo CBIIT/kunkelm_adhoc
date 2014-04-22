@@ -425,7 +425,7 @@
                                                                     alt="png-structure-image"
                                                                     width="200" height="200"
                                                                     id="substructureImg"
-                                                                    url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;title=#{cmpd.nsc}&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
+                                                                    url='/StructureServlet?structureDim=200&amp;title=#{cmpd.nsc}&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
                                                     </h:graphicImage> 
 
                                                     <p:commandLink update=":dataSystemForm:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  

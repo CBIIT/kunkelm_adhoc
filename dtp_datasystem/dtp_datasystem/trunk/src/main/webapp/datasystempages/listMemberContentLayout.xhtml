@@ -151,7 +151,7 @@
                 <h:graphicImage rendered="#{!empty listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                 alt="png-structure-image"
                                 width="200" height="200"
-                                url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                 </h:graphicImage> 
             </p:column>
         </p:row>

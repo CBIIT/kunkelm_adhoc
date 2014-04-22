@@ -39,16 +39,21 @@
                            activeIndex="#{listManagerController.outerTabViewActiveIndex}"
                            dynamic="true"
                            cache="true">
+                    
+                    <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
 
                     <p:tab title="List Manager">
+                        <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
                         <ui:include src="datasystempages/listManager.xhtml"/>
                     </p:tab>
 
                     <p:tab title="Active List">          
+                        <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
                         <ui:include src="datasystempages/listContent.xhtml"/>
                     </p:tab>
 
                     <p:tab title="Substructure Searches">
+                        <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
                         <ui:include src="datasystempages/jchempaint.xhtml"/>
                     </p:tab>
 

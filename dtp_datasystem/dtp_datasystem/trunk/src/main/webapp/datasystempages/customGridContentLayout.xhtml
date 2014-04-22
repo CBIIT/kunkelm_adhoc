@@ -118,7 +118,7 @@
           <h:graphicImage rendered="#{!empty drug.parentCanSmi}"
                           alt="png-structure-image"
                           width="200" height="200"
-                          url="#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(drug.parentCanSmi)}">
+                          url="/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(drug.parentCanSmi)}">
           </h:graphicImage> 
         </p:panel>
       </p:column>

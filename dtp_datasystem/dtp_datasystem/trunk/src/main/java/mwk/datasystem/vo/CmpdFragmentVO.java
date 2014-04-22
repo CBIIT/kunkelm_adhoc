@@ -1,10 +1,10 @@
 // license-header java merge-point
 //
 /**
- * @author Generated on 09/01/2013 19:57:04-0400 Do not modify by hand!
+ * @author Generated on 04/15/2014 17:22:57-0400 Do not modify by hand!
  *
  * TEMPLATE:     ValueObject.vsl in andromda-java-cartridge.
- * MODEL CLASS:  AndroMDAModel::DCTDDataModel::mwk.dctddata::vo::CmpdFragmentVO
+ * MODEL CLASS:  AndroMDAModel::DataSystemModel::mwk.datasystem::vo::CmpdFragmentVO
  * STEREOTYPE:   ValueObject
  */
 package mwk.datasystem.vo;
@@ -23,7 +23,7 @@ public class CmpdFragmentVO
     implements Serializable, Comparable<CmpdFragmentVO>
 {
     /** The serial version UID of this class. Needed for serialization. */
-    private static final long serialVersionUID = -3631833082557776743L;
+    private static final long serialVersionUID = 3692801032399960213L;
 
     // Class attributes
     /** TODO: Model Documentation for attribute id */
@@ -32,6 +32,12 @@ public class CmpdFragmentVO
     protected CmpdFragmentStructureVO cmpdFragmentStructure;
     /** TODO: Model Documentation for attribute cmpdFragmentPChem */
     protected CmpdFragmentPChemVO cmpdFragmentPChem;
+    /** TODO: Model Documentation for attribute saltName */
+    protected String saltName;
+    /** TODO: Model Documentation for attribute saltSmiles */
+    protected String saltSmiles;
+    /** TODO: Model Documentation for attribute saltId */
+    protected Long saltId;
 
     /** Default Constructor with no properties */
     public CmpdFragmentVO()
@@ -43,11 +49,15 @@ public class CmpdFragmentVO
      * Constructor taking only required properties
      * @param cmpdFragmentStructureIn CmpdFragmentStructureVO
      * @param cmpdFragmentPChemIn CmpdFragmentPChemVO
+     * @param saltNameIn String
+     * @param saltSmilesIn String
      */
-    public CmpdFragmentVO(final CmpdFragmentStructureVO cmpdFragmentStructureIn, final CmpdFragmentPChemVO cmpdFragmentPChemIn)
+    public CmpdFragmentVO(final CmpdFragmentStructureVO cmpdFragmentStructureIn, final CmpdFragmentPChemVO cmpdFragmentPChemIn, final String saltNameIn, final String saltSmilesIn)
     {
         this.cmpdFragmentStructure = cmpdFragmentStructureIn;
         this.cmpdFragmentPChem = cmpdFragmentPChemIn;
+        this.saltName = saltNameIn;
+        this.saltSmiles = saltSmilesIn;
     }
 
     /**
@@ -55,12 +65,18 @@ public class CmpdFragmentVO
      * @param idIn Long
      * @param cmpdFragmentStructureIn CmpdFragmentStructureVO
      * @param cmpdFragmentPChemIn CmpdFragmentPChemVO
+     * @param saltNameIn String
+     * @param saltSmilesIn String
+     * @param saltIdIn Long
      */
-    public CmpdFragmentVO(final Long idIn, final CmpdFragmentStructureVO cmpdFragmentStructureIn, final CmpdFragmentPChemVO cmpdFragmentPChemIn)
+    public CmpdFragmentVO(final Long idIn, final CmpdFragmentStructureVO cmpdFragmentStructureIn, final CmpdFragmentPChemVO cmpdFragmentPChemIn, final String saltNameIn, final String saltSmilesIn, final Long saltIdIn)
     {
         this.id = idIn;
         this.cmpdFragmentStructure = cmpdFragmentStructureIn;
         this.cmpdFragmentPChem = cmpdFragmentPChemIn;
+        this.saltName = saltNameIn;
+        this.saltSmiles = saltSmilesIn;
+        this.saltId = saltIdIn;
     }
 
     /**
@@ -74,6 +90,9 @@ public class CmpdFragmentVO
         this.id = otherBean.getId();
         this.cmpdFragmentStructure = otherBean.getCmpdFragmentStructure();
         this.cmpdFragmentPChem = otherBean.getCmpdFragmentPChem();
+        this.saltName = otherBean.getSaltName();
+        this.saltSmiles = otherBean.getSaltSmiles();
+        this.saltId = otherBean.getSaltId();
     }
 
     /**
@@ -87,6 +106,9 @@ public class CmpdFragmentVO
             this.setId(otherBean.getId());
             this.setCmpdFragmentStructure(otherBean.getCmpdFragmentStructure());
             this.setCmpdFragmentPChem(otherBean.getCmpdFragmentPChem());
+            this.setSaltName(otherBean.getSaltName());
+            this.setSaltSmiles(otherBean.getSaltSmiles());
+            this.setSaltId(otherBean.getSaltId());
         }
     }
 
@@ -148,6 +170,63 @@ public class CmpdFragmentVO
     }
 
     /**
+     * TODO: Model Documentation for attribute saltName
+     * Get the saltName Attribute
+     * @return saltName String
+     */
+    public String getSaltName()
+    {
+        return this.saltName;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setSaltName(final String value)
+    {
+        this.saltName = value;
+    }
+
+    /**
+     * TODO: Model Documentation for attribute saltSmiles
+     * Get the saltSmiles Attribute
+     * @return saltSmiles String
+     */
+    public String getSaltSmiles()
+    {
+        return this.saltSmiles;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setSaltSmiles(final String value)
+    {
+        this.saltSmiles = value;
+    }
+
+    /**
+     * TODO: Model Documentation for attribute saltId
+     * Get the saltId Attribute
+     * @return saltId Long
+     */
+    public Long getSaltId()
+    {
+        return this.saltId;
+    }
+
+    /**
+     * 
+     * @param value Long
+     */
+    public void setSaltId(final Long value)
+    {
+        this.saltId = value;
+    }
+
+    /**
      * @param object to compare this object against
      * @return boolean if equal
      * @see Object#equals(Object)
@@ -169,6 +248,9 @@ public class CmpdFragmentVO
             .append(this.getId(), rhs.getId())
             .append(this.getCmpdFragmentStructure(), rhs.getCmpdFragmentStructure())
             .append(this.getCmpdFragmentPChem(), rhs.getCmpdFragmentPChem())
+            .append(this.getSaltName(), rhs.getSaltName())
+            .append(this.getSaltSmiles(), rhs.getSaltSmiles())
+            .append(this.getSaltId(), rhs.getSaltId())
             .isEquals();
     }
 
@@ -192,6 +274,9 @@ public class CmpdFragmentVO
             .append(this.getId(), object.getId())
             .append(this.getCmpdFragmentStructure(), object.getCmpdFragmentStructure())
             .append(this.getCmpdFragmentPChem(), object.getCmpdFragmentPChem())
+            .append(this.getSaltName(), object.getSaltName())
+            .append(this.getSaltSmiles(), object.getSaltSmiles())
+            .append(this.getSaltId(), object.getSaltId())
             .toComparison();
     }
 
@@ -206,6 +291,9 @@ public class CmpdFragmentVO
             .append(this.getId())
             .append(this.getCmpdFragmentStructure())
             .append(this.getCmpdFragmentPChem())
+            .append(this.getSaltName())
+            .append(this.getSaltSmiles())
+            .append(this.getSaltId())
             .toHashCode();
     }
 
@@ -220,6 +308,9 @@ public class CmpdFragmentVO
             .append("id", this.getId())
             .append("cmpdFragmentStructure", this.getCmpdFragmentStructure())
             .append("cmpdFragmentPChem", this.getCmpdFragmentPChem())
+            .append("saltName", this.getSaltName())
+            .append("saltSmiles", this.getSaltSmiles())
+            .append("saltId", this.getSaltId())
             .toString();
     }
 
@@ -251,6 +342,9 @@ public class CmpdFragmentVO
             equal(this.getId(), that.getId())
             && equal(this.getCmpdFragmentStructure(), that.getCmpdFragmentStructure())
             && equal(this.getCmpdFragmentPChem(), that.getCmpdFragmentPChem())
+            && equal(this.getSaltName(), that.getSaltName())
+            && equal(this.getSaltSmiles(), that.getSaltSmiles())
+            && equal(this.getSaltId(), that.getSaltId())
         ;
     }
 

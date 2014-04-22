@@ -1,10 +1,10 @@
 // license-header java merge-point
 //
 /**
- * @author Generated on 09/01/2013 19:57:04-0400 Do not modify by hand!
+ * @author Generated on 04/15/2014 17:22:57-0400 Do not modify by hand!
  *
  * TEMPLATE:     ValueObject.vsl in andromda-java-cartridge.
- * MODEL CLASS:  AndroMDAModel::DCTDDataModel::mwk.dctddata::vo::CmpdVO
+ * MODEL CLASS:  AndroMDAModel::DataSystemModel::mwk.datasystem::vo::CmpdVO
  * STEREOTYPE:   ValueObject
  */
 package mwk.datasystem.vo;
@@ -26,7 +26,7 @@ public class CmpdVO
     implements Serializable, Comparable<CmpdVO>
 {
     /** The serial version UID of this class. Needed for serialization. */
-    private static final long serialVersionUID = 2849999779598602057L;
+    private static final long serialVersionUID = 7275281280992994245L;
 
     // Class attributes
     /** TODO: Model Documentation for attribute name */
@@ -69,6 +69,12 @@ public class CmpdVO
     protected Integer countCmpdFragments;
     /** TODO: Model Documentation for attribute isSelected */
     protected Boolean isSelected;
+    /** TODO: Model Documentation for attribute saltName */
+    protected String saltName;
+    /** TODO: Model Documentation for attribute saltSmiles */
+    protected String saltSmiles;
+    /** TODO: Model Documentation for attribute saltId */
+    protected Long saltId;
 
     /** Default Constructor with no properties */
     public CmpdVO()
@@ -81,12 +87,16 @@ public class CmpdVO
      * @param prefixIn String
      * @param cmpdBioAssayIn CmpdBioAssayVO
      * @param parentFragmentIn CmpdFragmentVO
+     * @param saltNameIn String
+     * @param saltSmilesIn String
      */
-    public CmpdVO(final String prefixIn, final CmpdBioAssayVO cmpdBioAssayIn, final CmpdFragmentVO parentFragmentIn)
+    public CmpdVO(final String prefixIn, final CmpdBioAssayVO cmpdBioAssayIn, final CmpdFragmentVO parentFragmentIn, final String saltNameIn, final String saltSmilesIn)
     {
         this.prefix = prefixIn;
         this.cmpdBioAssay = cmpdBioAssayIn;
         this.parentFragment = parentFragmentIn;
+        this.saltName = saltNameIn;
+        this.saltSmiles = saltSmilesIn;
     }
 
     /**
@@ -111,8 +121,11 @@ public class CmpdVO
      * @param platesIn List<String>
      * @param countCmpdFragmentsIn Integer
      * @param isSelectedIn Boolean
+     * @param saltNameIn String
+     * @param saltSmilesIn String
+     * @param saltIdIn Long
      */
-    public CmpdVO(final String nameIn, final Integer nscIn, final String distributionIn, final String confIn, final Double inventoryIn, final String casIn, final List<String> targetsIn, final List<String> aliasesIn, final String prefixIn, final Collection<CmpdFragmentVO> cmpdFragmentsIn, final Long idIn, final CmpdBioAssayVO cmpdBioAssayIn, final Long nscCmpdIdIn, final CmpdFragmentVO parentFragmentIn, final Long adHocCmpdIdIn, final List<String> setsIn, final List<String> projectsIn, final List<String> platesIn, final Integer countCmpdFragmentsIn, final Boolean isSelectedIn)
+    public CmpdVO(final String nameIn, final Integer nscIn, final String distributionIn, final String confIn, final Double inventoryIn, final String casIn, final List<String> targetsIn, final List<String> aliasesIn, final String prefixIn, final Collection<CmpdFragmentVO> cmpdFragmentsIn, final Long idIn, final CmpdBioAssayVO cmpdBioAssayIn, final Long nscCmpdIdIn, final CmpdFragmentVO parentFragmentIn, final Long adHocCmpdIdIn, final List<String> setsIn, final List<String> projectsIn, final List<String> platesIn, final Integer countCmpdFragmentsIn, final Boolean isSelectedIn, final String saltNameIn, final String saltSmilesIn, final Long saltIdIn)
     {
         this.name = nameIn;
         this.nsc = nscIn;
@@ -134,6 +147,9 @@ public class CmpdVO
         this.plates = platesIn;
         this.countCmpdFragments = countCmpdFragmentsIn;
         this.isSelected = isSelectedIn;
+        this.saltName = saltNameIn;
+        this.saltSmiles = saltSmilesIn;
+        this.saltId = saltIdIn;
     }
 
     /**
@@ -164,6 +180,9 @@ public class CmpdVO
         this.plates = otherBean.getPlates();
         this.countCmpdFragments = otherBean.getCountCmpdFragments();
         this.isSelected = otherBean.getIsSelected();
+        this.saltName = otherBean.getSaltName();
+        this.saltSmiles = otherBean.getSaltSmiles();
+        this.saltId = otherBean.getSaltId();
     }
 
     /**
@@ -194,6 +213,9 @@ public class CmpdVO
             this.setPlates(otherBean.getPlates());
             this.setCountCmpdFragments(otherBean.getCountCmpdFragments());
             this.setIsSelected(otherBean.getIsSelected());
+            this.setSaltName(otherBean.getSaltName());
+            this.setSaltSmiles(otherBean.getSaltSmiles());
+            this.setSaltId(otherBean.getSaltId());
         }
     }
 
@@ -614,6 +636,63 @@ public class CmpdVO
     }
 
     /**
+     * TODO: Model Documentation for attribute saltName
+     * Get the saltName Attribute
+     * @return saltName String
+     */
+    public String getSaltName()
+    {
+        return this.saltName;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setSaltName(final String value)
+    {
+        this.saltName = value;
+    }
+
+    /**
+     * TODO: Model Documentation for attribute saltSmiles
+     * Get the saltSmiles Attribute
+     * @return saltSmiles String
+     */
+    public String getSaltSmiles()
+    {
+        return this.saltSmiles;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setSaltSmiles(final String value)
+    {
+        this.saltSmiles = value;
+    }
+
+    /**
+     * TODO: Model Documentation for attribute saltId
+     * Get the saltId Attribute
+     * @return saltId Long
+     */
+    public Long getSaltId()
+    {
+        return this.saltId;
+    }
+
+    /**
+     * 
+     * @param value Long
+     */
+    public void setSaltId(final Long value)
+    {
+        this.saltId = value;
+    }
+
+    /**
      * @param object to compare this object against
      * @return boolean if equal
      * @see Object#equals(Object)
@@ -652,6 +731,9 @@ public class CmpdVO
             .append(this.getPlates(), rhs.getPlates())
             .append(this.getCountCmpdFragments(), rhs.getCountCmpdFragments())
             .append(this.getIsSelected(), rhs.getIsSelected())
+            .append(this.getSaltName(), rhs.getSaltName())
+            .append(this.getSaltSmiles(), rhs.getSaltSmiles())
+            .append(this.getSaltId(), rhs.getSaltId())
             .isEquals();
     }
 
@@ -692,6 +774,9 @@ public class CmpdVO
             .append(this.getPlates(), object.getPlates())
             .append(this.getCountCmpdFragments(), object.getCountCmpdFragments())
             .append(this.getIsSelected(), object.getIsSelected())
+            .append(this.getSaltName(), object.getSaltName())
+            .append(this.getSaltSmiles(), object.getSaltSmiles())
+            .append(this.getSaltId(), object.getSaltId())
             .toComparison();
     }
 
@@ -723,6 +808,9 @@ public class CmpdVO
             .append(this.getPlates())
             .append(this.getCountCmpdFragments())
             .append(this.getIsSelected())
+            .append(this.getSaltName())
+            .append(this.getSaltSmiles())
+            .append(this.getSaltId())
             .toHashCode();
     }
 
@@ -754,6 +842,9 @@ public class CmpdVO
             .append("plates", this.getPlates())
             .append("countCmpdFragments", this.getCountCmpdFragments())
             .append("isSelected", this.getIsSelected())
+            .append("saltName", this.getSaltName())
+            .append("saltSmiles", this.getSaltSmiles())
+            .append("saltId", this.getSaltId())
             .toString();
     }
 
@@ -802,6 +893,9 @@ public class CmpdVO
             && equal(this.getPlates(), that.getPlates())
             && equal(this.getCountCmpdFragments(), that.getCountCmpdFragments())
             && equal(this.getIsSelected(), that.getIsSelected())
+            && equal(this.getSaltName(), that.getSaltName())
+            && equal(this.getSaltSmiles(), that.getSaltSmiles())
+            && equal(this.getSaltId(), that.getSaltId())
         ;
     }
 

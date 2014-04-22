@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <p:panel style="display: inline-block;border: none;">
+
+        <p:panel style="display: inline-block;border: none;">
+
+            <p:panel style="display: block;border: none;">
+
+                <h:outputText style="color: black; font-size: inherit" 
+                              value="List Name:     " />                
+                <h:outputText style="color: green; font-size: larger" 
+                              value="#{listManagerController.selectedList.listName}" />
+
+                <br/>
+
+                <h:outputText style="color: black; font-size: inherit" 
+                              value="List Members:     " />                                
+                <h:outputText style="color: green; font-size: larger" 
+                              value="#{fn:length(listManagerController.selectedList.cmpdListMembers)}" />
+
+                <br/>
+
+                <h:outputText style="color: black; font-size: inherit" 
+                              value="CmpdListId:     " />                
+                <h:outputText style="color: green; font-size: larger" 
+                              value="#{listManagerController.selectedList.cmpdListId}" />
+
+            </p:panel>
+
+            <p:panel style="display: inline-block;">
+                <f:facet name="header">
+                    <h:outputText value="anchor SMILES" />
+                    <br/>
+                    <h:outputText value="defined as an anchor for this list." />
+                </f:facet>
+                <h:graphicImage rendered="#{!empty listManagerController.selectedList.anchorSmiles}"
+                                alt="png-structure-image"
+                                width="200" height="200"
+                                url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listManagerController.selectedList.anchorSmiles)}'>
+                </h:graphicImage>
+                <br/>
+                <h:outputText value="#{listManagerController.selectedList.anchorSmiles}" />
+            </p:panel>              
+
+            <p:panel style="display: inline-block;border: none;">
+
+                <p:commandButton value="HISTOGRAMS"
+                                 icon="ui-icon-image"
+                                 action="#{listManagerController.renderHistoAndScatter()}"
+                                 update=":dataSystemForm:HistogramsDialog,:dataSystemForm:SelectedListMembersDialog"
+                                 oncomplete="histogramsdlg.show();selectedListMembersDlg.show();">      
+                </p:commandButton>                
+                <p:selectManyButton value="#{listManagerController.parametersPchem}" style="display: inline-block;border: none;">  
+                    <f:selectItem itemLabel="mw" itemValue="mw" />  
+                    <f:selectItem itemLabel="hba" itemValue="hba" />  
+                    <f:selectItem itemLabel="hbd" itemValue="hbd" />  
+                    <f:selectItem itemLabel="alogp" itemValue="alogp" />  
+                    <f:selectItem itemLabel="logd" itemValue="logd" />  
+                    <f:selectItem itemLabel="sa" itemValue="sa" />  
+                    <f:selectItem itemLabel="psa" itemValue="psa" />  
+                </p:selectManyButton>
+
+                <p/>
+
+                <p:commandButton value="PAINS NOT FUNC"
+                                 icon="ui-icon-image">      
+                </p:commandButton>
+
+                <p/>
+
+                <p:commandButton value="BIODATA NOT FUNC"
+                                 icon="ui-icon-image">      
+                </p:commandButton>
+                <p:selectManyButton value="#{listManagerController.parametersBiodata}" style="display: inline-block;border: none;">  
+                    <f:selectItem itemLabel="nci60" itemValue="nci60" />  
+                    <f:selectItem itemLabel="hf" itemValue="hf" />  
+                    <f:selectItem itemLabel="xeno" itemValue="xeno" />  
+                </p:selectManyButton>
+
+                <p/>
+
+                <p:commandButton value="VOTE COUNTERION"
+                                 icon="ui-icon-image">      
+                </p:commandButton>
+                <p:selectOneRadio value="#{listManagerController.parameterCounterion}" style="display: inline-block;border: none;">  
+                    <f:selectItem itemLabel="ALWAYS" itemValue="always" />  
+                    <f:selectItem itemLabel="NEVER" itemValue="never" />  
+                    <f:selectItem itemLabel="SOMETIMES" itemValue="sometimes" />  
+                </p:selectOneRadio>
+
+            </p:panel>
+
+        </p:panel>
+
+
+    </p:panel>
+
+</ui:composition>

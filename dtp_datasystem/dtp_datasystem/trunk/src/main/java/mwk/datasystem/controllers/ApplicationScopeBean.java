@@ -18,22 +18,16 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 public class ApplicationScopeBean {
 
-    private String structureServletUrl;
-
-    public String getStructureServletUrl() {
-        return structureServletUrl;
-    }
-
-    public ApplicationScopeBean() {
-        Properties props = new Properties();
-        try {
-            InputStream is = this.getClass().getResourceAsStream("/deployment.properties");
-            props.load(is);
-            this.structureServletUrl = props.getProperty("structure.servlet.url");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public ApplicationScopeBean() {
+//        Properties props = new Properties();
+//        try {
+//            InputStream is = this.getClass().getResourceAsStream("/deployment.properties");
+//            props.load(is);
+//            this.structureServletUrl = props.getProperty("structure.servlet.url");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static String urlEncode(String in) {
         String rtn = "";

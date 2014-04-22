@@ -42,7 +42,7 @@
                           width="200" height="200"
                           id="selectedStructureImg"
                           class="selectedListMemberStructureImage"
-                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                          url='/StructureServlet?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
           </h:graphicImage> 
 
           <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" 

@@ -118,7 +118,7 @@
                           alt="png-structure-with-highlighted-substructure-image"
                           width="200" height="200"                         
                           id="substrucImg"
-                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>              
+                          url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>              
               
           </h:graphicImage> 
         </p:panel>
@@ -151,7 +151,7 @@
           <h:graphicImage rendered="#{!empty frag.cmpdFragmentStructure.smiles}"
                           alt="png-structure-image"
                           width="150" height="150"
-                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(frag.cmpdFragmentStructure.smiles)}'>
+                          url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(frag.cmpdFragmentStructure.smiles)}'>
           </h:graphicImage> 
 
         </p:dataGrid>  

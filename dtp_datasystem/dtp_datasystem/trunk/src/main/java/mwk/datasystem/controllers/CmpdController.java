@@ -181,8 +181,8 @@ public class CmpdController implements Serializable {
     }
 
     HelperCmpd cmpdHelper = new HelperCmpd();
-
-    CmpdListVO tempCLvo = cmpdHelper.createCmpdListByNscs(this.substructureResultsListName, nscIntList, "kunkelm");
+    
+    CmpdListVO tempCLvo = cmpdHelper.createCmpdListByNscs(this.substructureResultsListName, nscIntList, this.getListManagerController().getLoggedUser());
 
     // have to fetch the list so that the compound details will be populated
 

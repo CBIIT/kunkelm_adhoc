@@ -8,9 +8,8 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-  <p:dialog  header="Cmpd Details" 
-             showEffect="fade" 
-             hideEffect="fade" 
+  <p:dialog  header="Cmpd Details"
+             position="left"
              widgetVar="cmpddetailsdlg"> 
 
     <p:outputPanel id="CmpdDetailsDialog">
@@ -116,7 +115,7 @@
               <h:graphicImage rendered="#{!empty cmpdController.selectedCmpd.parentFragment.cmpdFragmentStructure.smiles}"
                               alt="png-structure-image"
                               width="400" height="400"
-                              url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpdController.selectedCmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                              url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpdController.selectedCmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
               </h:graphicImage> 
             </p:panel>
           </p:column>

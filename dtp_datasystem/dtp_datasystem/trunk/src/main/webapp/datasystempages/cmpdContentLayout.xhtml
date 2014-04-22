@@ -116,13 +116,13 @@
           <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                           alt="png-structure-image"
                           width="200" height="200"
-                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                          url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
           </h:graphicImage> 
         </p:panel>
       </p:column>
     </p:row>
 
-      #{applicationScopeBean.structureServletUrl}
+      /StructureServlet
       
     <p:row>
       <p:column colspan="4">
@@ -150,7 +150,7 @@
           <h:graphicImage rendered="#{!empty frag.cmpdFragmentStructure.smiles}"
                           alt="png-structure-image"
                           width="150" height="150"
-                          url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(frag.cmpdFragmentStructure.smiles)}'>
+                          url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(frag.cmpdFragmentStructure.smiles)}'>
           </h:graphicImage> 
 
         </p:dataGrid>  

@@ -352,6 +352,10 @@ public class TransformAndroToVO {
         rtn.setListOwner(entityList.getListOwner());
         rtn.setShareWith(entityList.getShareWith());
         rtn.setCountListMembers(entityList.getCountListMembers());
+        
+        rtn.setAnchorComment(entityList.getAnchorComment());
+        rtn.setAnchorSmiles(entityList.getAnchorSmiles());
+        rtn.setListComment(entityList.getListComment());
 
         if (includeListMembers.booleanValue()) {
 

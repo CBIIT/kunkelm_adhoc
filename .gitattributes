@@ -9334,8 +9334,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/domain/RdkitMol
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/domain/RdkitMolImpl.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/domain/StandardizedSmiles.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/domain/StandardizedSmilesImpl.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/hibernate.cfg.xml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/hibernate.reveng.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/Histogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/HistogramBin.java -text
@@ -9363,6 +9361,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdListVO.j
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdViewVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/RelatedCompoundVO.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/generators/ExternalHighlightGenerator.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/structureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/AdHocCmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/AdHocCmpdFragmentPChem.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/AdHocCmpdFragmentStructure.hbm.xml -text
@@ -9387,7 +9387,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdTarget.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdView.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/RdkitMol.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/StandardizedSmiles.hbm.xml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/resources/deployment.properties -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/hibernate.cfg.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/hibernate.properties -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/META-INF/context.xml -text
@@ -9401,12 +9400,14 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/wsdl/localhost_8080/
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/dataSystem.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/FRAGMENT_VIEW_PARKING_LOT.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/PARKED_NOT_USED_dialogSubstructureSearchResults.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/activeListHeader.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/cmpdContentHighlightStructureLayout.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/cmpdContentLayout.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/customGridContentLayout.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogCmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogExportImage.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogHistograms.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogHistograms_beforeLayoutUnit.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogListManagerCmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogListOfCmpds.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/datasystempages/dialogLoadingList.xhtml -text

@@ -169,7 +169,7 @@ public abstract class AdHocCmpd
      * but since it extends the <code>CmpdImpl</code> class
      * it will simply delegate the call up there.
      *
-     * @see mwk.dctddata.domain.Cmpd#equals(Object)
+     * @see mwk.datasystem.domain.Cmpd#equals(Object)
      */
     @Override
     public boolean equals(Object object)
@@ -182,7 +182,7 @@ public abstract class AdHocCmpd
      * but since it extends the <code>CmpdImpl</code> class
      * it will simply delegate the call up there.
      *
-     * @see mwk.dctddata.domain.Cmpd#hashCode()
+     * @see mwk.datasystem.domain.Cmpd#hashCode()
      */
     @Override
     public int hashCode()

@@ -52,7 +52,7 @@
                     <h:graphicImage rendered="#{!empty listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                     alt="png-structure-image"
                                     width="150" height="150"
-                                  url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                  url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                     </h:graphicImage> 
                     -->
                     <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
@@ -188,7 +188,7 @@
                 <h:graphicImage rendered="#{!empty listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                 alt="png-structure-image"
                                 width="150" height="150"
-                                url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                 </h:graphicImage> 
 
                 <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
@@ -251,7 +251,7 @@
                 <h:graphicImage rendered="#{!empty frag.cmpdFragmentStructure.smiles}"
                                 alt="png-structure-image"
                                 width="150" height="150"
-                                url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(frag.cmpdFragmentStructure.smiles)}'>
+                                url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(frag.cmpdFragmentStructure.smiles)}'>
                 </h:graphicImage> 
 
               </p:dataGrid>  

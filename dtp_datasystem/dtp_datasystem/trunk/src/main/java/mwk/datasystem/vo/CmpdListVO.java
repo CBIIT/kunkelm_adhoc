@@ -1,10 +1,10 @@
 // license-header java merge-point
 //
 /**
- * @author Generated on 09/01/2013 19:57:03-0400 Do not modify by hand!
+ * @author Generated on 04/15/2014 17:22:57-0400 Do not modify by hand!
  *
  * TEMPLATE:     ValueObject.vsl in andromda-java-cartridge.
- * MODEL CLASS:  AndroMDAModel::DCTDDataModel::mwk.dctddata::vo::CmpdListVO
+ * MODEL CLASS:  AndroMDAModel::DataSystemModel::mwk.datasystem::vo::CmpdListVO
  * STEREOTYPE:   ValueObject
  */
 package mwk.datasystem.vo;
@@ -26,7 +26,7 @@ public class CmpdListVO
     implements Serializable, Comparable<CmpdListVO>
 {
     /** The serial version UID of this class. Needed for serialization. */
-    private static final long serialVersionUID = 1731314636099904546L;
+    private static final long serialVersionUID = -5872663994729971096L;
 
     // Class attributes
     /** TODO: Model Documentation for attribute listName */
@@ -47,6 +47,12 @@ public class CmpdListVO
     protected Integer countListMembers;
     /** TODO: Model Documentation for attribute isSelected */
     protected Boolean isSelected;
+    /** TODO: Model Documentation for attribute anchorSmiles */
+    protected String anchorSmiles;
+    /** TODO: Model Documentation for attribute anchorComment */
+    protected String anchorComment;
+    /** TODO: Model Documentation for attribute listComment */
+    protected String listComment;
 
     /** Default Constructor with no properties */
     public CmpdListVO()
@@ -60,13 +66,19 @@ public class CmpdListVO
      * @param dateCreatedIn Date
      * @param listOwnerIn String
      * @param shareWithIn String
+     * @param anchorSmilesIn String
+     * @param anchorCommentIn String
+     * @param listCommentIn String
      */
-    public CmpdListVO(final String listNameIn, final Date dateCreatedIn, final String listOwnerIn, final String shareWithIn)
+    public CmpdListVO(final String listNameIn, final Date dateCreatedIn, final String listOwnerIn, final String shareWithIn, final String anchorSmilesIn, final String anchorCommentIn, final String listCommentIn)
     {
         this.listName = listNameIn;
         this.dateCreated = dateCreatedIn;
         this.listOwner = listOwnerIn;
         this.shareWith = shareWithIn;
+        this.anchorSmiles = anchorSmilesIn;
+        this.anchorComment = anchorCommentIn;
+        this.listComment = listCommentIn;
     }
 
     /**
@@ -80,8 +92,11 @@ public class CmpdListVO
      * @param cmpdListIdIn Long
      * @param countListMembersIn Integer
      * @param isSelectedIn Boolean
+     * @param anchorSmilesIn String
+     * @param anchorCommentIn String
+     * @param listCommentIn String
      */
-    public CmpdListVO(final String listNameIn, final Date dateCreatedIn, final String listOwnerIn, final String shareWithIn, final Long idIn, final Collection<CmpdListMemberVO> cmpdListMembersIn, final Long cmpdListIdIn, final Integer countListMembersIn, final Boolean isSelectedIn)
+    public CmpdListVO(final String listNameIn, final Date dateCreatedIn, final String listOwnerIn, final String shareWithIn, final Long idIn, final Collection<CmpdListMemberVO> cmpdListMembersIn, final Long cmpdListIdIn, final Integer countListMembersIn, final Boolean isSelectedIn, final String anchorSmilesIn, final String anchorCommentIn, final String listCommentIn)
     {
         this.listName = listNameIn;
         this.dateCreated = dateCreatedIn;
@@ -92,6 +107,9 @@ public class CmpdListVO
         this.cmpdListId = cmpdListIdIn;
         this.countListMembers = countListMembersIn;
         this.isSelected = isSelectedIn;
+        this.anchorSmiles = anchorSmilesIn;
+        this.anchorComment = anchorCommentIn;
+        this.listComment = listCommentIn;
     }
 
     /**
@@ -111,6 +129,9 @@ public class CmpdListVO
         this.cmpdListId = otherBean.getCmpdListId();
         this.countListMembers = otherBean.getCountListMembers();
         this.isSelected = otherBean.getIsSelected();
+        this.anchorSmiles = otherBean.getAnchorSmiles();
+        this.anchorComment = otherBean.getAnchorComment();
+        this.listComment = otherBean.getListComment();
     }
 
     /**
@@ -130,6 +151,9 @@ public class CmpdListVO
             this.setCmpdListId(otherBean.getCmpdListId());
             this.setCountListMembers(otherBean.getCountListMembers());
             this.setIsSelected(otherBean.getIsSelected());
+            this.setAnchorSmiles(otherBean.getAnchorSmiles());
+            this.setAnchorComment(otherBean.getAnchorComment());
+            this.setListComment(otherBean.getListComment());
         }
     }
 
@@ -321,6 +345,63 @@ public class CmpdListVO
     }
 
     /**
+     * TODO: Model Documentation for attribute anchorSmiles
+     * Get the anchorSmiles Attribute
+     * @return anchorSmiles String
+     */
+    public String getAnchorSmiles()
+    {
+        return this.anchorSmiles;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setAnchorSmiles(final String value)
+    {
+        this.anchorSmiles = value;
+    }
+
+    /**
+     * TODO: Model Documentation for attribute anchorComment
+     * Get the anchorComment Attribute
+     * @return anchorComment String
+     */
+    public String getAnchorComment()
+    {
+        return this.anchorComment;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setAnchorComment(final String value)
+    {
+        this.anchorComment = value;
+    }
+
+    /**
+     * TODO: Model Documentation for attribute listComment
+     * Get the listComment Attribute
+     * @return listComment String
+     */
+    public String getListComment()
+    {
+        return this.listComment;
+    }
+
+    /**
+     * 
+     * @param value String
+     */
+    public void setListComment(final String value)
+    {
+        this.listComment = value;
+    }
+
+    /**
      * @param object to compare this object against
      * @return boolean if equal
      * @see Object#equals(Object)
@@ -348,6 +429,9 @@ public class CmpdListVO
             .append(this.getCmpdListId(), rhs.getCmpdListId())
             .append(this.getCountListMembers(), rhs.getCountListMembers())
             .append(this.getIsSelected(), rhs.getIsSelected())
+            .append(this.getAnchorSmiles(), rhs.getAnchorSmiles())
+            .append(this.getAnchorComment(), rhs.getAnchorComment())
+            .append(this.getListComment(), rhs.getListComment())
             .isEquals();
     }
 
@@ -377,6 +461,9 @@ public class CmpdListVO
             .append(this.getCmpdListId(), object.getCmpdListId())
             .append(this.getCountListMembers(), object.getCountListMembers())
             .append(this.getIsSelected(), object.getIsSelected())
+            .append(this.getAnchorSmiles(), object.getAnchorSmiles())
+            .append(this.getAnchorComment(), object.getAnchorComment())
+            .append(this.getListComment(), object.getListComment())
             .toComparison();
     }
 
@@ -397,6 +484,9 @@ public class CmpdListVO
             .append(this.getCmpdListId())
             .append(this.getCountListMembers())
             .append(this.getIsSelected())
+            .append(this.getAnchorSmiles())
+            .append(this.getAnchorComment())
+            .append(this.getListComment())
             .toHashCode();
     }
 
@@ -417,6 +507,9 @@ public class CmpdListVO
             .append("cmpdListId", this.getCmpdListId())
             .append("countListMembers", this.getCountListMembers())
             .append("isSelected", this.getIsSelected())
+            .append("anchorSmiles", this.getAnchorSmiles())
+            .append("anchorComment", this.getAnchorComment())
+            .append("listComment", this.getListComment())
             .toString();
     }
 
@@ -454,6 +547,9 @@ public class CmpdListVO
             && equal(this.getCmpdListId(), that.getCmpdListId())
             && equal(this.getCountListMembers(), that.getCountListMembers())
             && equal(this.getIsSelected(), that.getIsSelected())
+            && equal(this.getAnchorSmiles(), that.getAnchorSmiles())
+            && equal(this.getAnchorComment(), that.getAnchorComment())
+            && equal(this.getListComment(), that.getListComment())
         ;
     }
 

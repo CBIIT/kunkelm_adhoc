@@ -1,10 +1,10 @@
 // license-header java merge-point
 //
 /**
- * @author Generated on 02/16/2014 13:18:08-0500 Do not modify by hand!
+ * @author Generated on 04/15/2014 17:22:57-0400 Do not modify by hand!
  *
  * TEMPLATE:     ValueObject.vsl in andromda-java-cartridge.
- * MODEL CLASS:  AndroMDAModel::DCTDDataModel::mwk.datasystem::vo::CmpdViewVO
+ * MODEL CLASS:  AndroMDAModel::DataSystemModel::mwk.datasystem::vo::CmpdViewVO
  * STEREOTYPE:   ValueObject
  */
 package mwk.datasystem.vo;

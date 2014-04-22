@@ -4,7 +4,7 @@
 
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>20140219</version>
+    <version>20140420</version>
     <packaging>war</packaging>
 
     <name>datasystem</name>
@@ -22,16 +22,20 @@
             <scope>provided</scope>
         </dependency>
         
+        
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
-            <version>2.1.1-b04</version>
+            <!--<version>2.1.1-b04</version>-->
+            <version>2.2.6</version>
         </dependency>
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
-            <version>2.1.1-b04</version>
+            <!--<version>2.1.1-b04</version>-->
+            <version>2.2.6</version>
         </dependency>
+                
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -148,7 +152,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>3.5.18</version>      
+            <version>4.0.10</version>      
         </dependency>
 
         <!--
@@ -195,6 +199,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${deploy.war.name}</warName>
                 </configuration>
             </plugin>
             <plugin>
@@ -232,6 +237,30 @@
         </resources>
 
     </build>
+    
+    <profiles>
+        
+        <profile>
+            <id>datasystem_default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>                
+            </activation>
+            <properties>
+                <deploy.war.name>datasystem</deploy.war.name>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>datasystem_local</id>
+            <properties>
+                <deploy.war.name>datasystem</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/dctddb</deploy.db.url>
+                <deploy.db.user>dctd_user</deploy.db.user>
+                <deploy.db.pass>dctd_pass</deploy.db.pass>
+            </properties>
+        </profile>
+        
+    </profiles>
 
     <repositories> 
         
@@ -247,6 +276,7 @@
             <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
             <layout>default</layout>  
         </repository>
+        
     </repositories>
 
 </project>

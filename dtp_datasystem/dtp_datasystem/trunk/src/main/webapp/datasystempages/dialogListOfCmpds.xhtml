@@ -48,13 +48,12 @@
                   <h:outputText value="Parent Fragment"/>                
                 </f:facet>                              
 
-                <!--
                 <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                 alt="png-structure-image"
                                 width="150" height="150"
-                                  url='http://localhost:8080/structureservlet-0.1/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                  url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                 </h:graphicImage> 
-                -->
+                  
                 <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  
                   <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
                   <f:setPropertyActionListener value="#{cmpd}"   
@@ -208,7 +207,7 @@
                       <p:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                       alt="png-structure-image"
                                       width="150" height="150"                                                                                    
-                                      url='http://localhost:8080/structureservlet-0.1/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                                      url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
                       </p:graphicImage> 
 
                       <p:commandLink update=":dataSystemForm:ListManagerCmpdDetailsDialog" oncomplete="listmanagercmpddetailsdlg.show()" title="View Detail">  

@@ -85,7 +85,7 @@
                       <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
                                       alt="png-structure-image"
                                       width="150" height="150"
-                                      url='#{applicationScopeBean.structureServletUrl}?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
+                                      url='/StructureServlet?structureDim=200&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
                       </h:graphicImage> 
 
                       <p:commandLink update=":dataSystemForm:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
