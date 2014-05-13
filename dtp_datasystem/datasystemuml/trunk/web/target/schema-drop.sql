@@ -35,9 +35,6 @@
     alter table CMPD_FRAGMENT 
         drop constraint CMPD_FRAGMENT_CMPD_FRAGMENT_PC;
 
-    alter table CMPD_INVENTORY 
-        drop constraint CMPD_INVENTORY_NSC_CMPD_FKC;
-
     alter table CMPD_LIST_MEMBER 
         drop constraint CMPD_LIST_MEMBER_CMPD_LIST_FKC;
 
@@ -79,6 +76,9 @@
 
     alter table CMPD_TARGETS2NSC_CMPDS 
         drop constraint NSC_CMPD_CMPD_TARGETS_FKC;
+
+    alter table NSC_CMPD 
+        drop constraint NSC_CMPD_CMPD_INVENTORY_FKC;
 
     alter table NSC_CMPD 
         drop constraint NSC_CMPDIFKC;

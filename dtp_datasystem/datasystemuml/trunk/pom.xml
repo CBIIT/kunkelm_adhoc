@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>mwk.dctddata</groupId>
-    <artifactId>dctddata</artifactId>
+    <groupId>mwk.datasystem</groupId>
+    <artifactId>datasystem</artifactId>
     <packaging>pom</packaging>
     <version>0.1</version>
     <name>DCTD Data</name>
@@ -529,7 +529,7 @@
         <createChecksum>true</createChecksum>
         <uniqueVersion>false</uniqueVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <stagingDirectory>/home/mwkunkel/dctd_from_home/dctddata/target/site</stagingDirectory>
+        <stagingDirectory>/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/datasystemuml/target/site</stagingDirectory>
         <testdb.groupId>com.h2database</testdb.groupId>
         <testdb.artifactId>h2</testdb.artifactId>
         <testdb.version>1.3.168</testdb.version>
@@ -584,8 +584,8 @@
             org.hibernate.dialect.PostgreSQLDialect
         </hibernate.dialect>
         <tomcat.home>${env.CATALINA_HOME}</tomcat.home>
-        <application.id>dctddata</application.id>
-        <application.package>mwk.dctddata</application.package>
+        <application.id>datasystem</application.id>
+        <application.package>mwk.datasystem</application.package>
         <application.name>DCTD Data</application.name>
         <application.version>0.1</application.version>
         <dataSource.name>jdbc/${application.id}</dataSource.name>
@@ -637,17 +637,17 @@
                 </jdbc.driver>
                 <!--
                     Change connection url for appropriate database
-                    For MySQL use: jdbc:mysql://localhost:3306/dctddata
+                    For MySQL use: jdbc:mysql://localhost:3306/datasystem
                     For Hypersonic use: jdbc:hsqldb:hsql://127.0.0.1:1701
                     For Oracle9i use: jdbc:oracle:thin:@localhost:1521:yoursid
-                    For DB2 use: jdbc:db2:dctddata
-                    For Informix use: jdbc:informix-sqli://localhost:1557/dctddata:INFORMIXSERVER=myserver
-                    For MSSQL use: jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=dctddata
-                    For Pointbase use: jdbc:pointbase:server://@pointbase.server@:@pointbase.port/pointbase.dctddata@,new
-                    For Postgres use: jdbc:postgresql://localhost/dctddata
-                    For Sybase use: jdbc:sybase:Tds:localhost:5000/dctddata?JCONNECT_VERSION=6
-                    For SapDB use: jdbc:sapdb://127.0.0.1/dctddata
-                    For Progress use: jdbc:JdbcProgress:T:localhost:3305:dctddata
+                    For DB2 use: jdbc:db2:datasystem
+                    For Informix use: jdbc:informix-sqli://localhost:1557/datasystem:INFORMIXSERVER=myserver
+                    For MSSQL use: jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=datasystem
+                    For Pointbase use: jdbc:pointbase:server://@pointbase.server@:@pointbase.port/pointbase.datasystem@,new
+                    For Postgres use: jdbc:postgresql://localhost/datasystem
+                    For Sybase use: jdbc:sybase:Tds:localhost:5000/datasystem?JCONNECT_VERSION=6
+                    For SapDB use: jdbc:sapdb://127.0.0.1/datasystem
+                    For Progress use: jdbc:JdbcProgress:T:localhost:3305:datasystem
                 -->
                 <jdbc.url>
                     jdbc:postgresql://localhost:5432/dctddb
@@ -730,18 +730,18 @@
                 <repository>
                     <id>andromda-repository</id>
                     <name>AndroMDA Repository</name>
-                    <url>file:/scratch/hudson/workspace/Andromda/dctddata/</url>
+                    <url>file:/scratch/hudson/workspace/Andromda/datasystem/</url>
                     <uniqueVersion>false</uniqueVersion>
                 </repository>
                 <snapshotRepository>
                     <id>andromda-snapshots</id>
                     <name>AndroMDA Snapshot Repository</name>
-                    <url>file:/scratch/hudson/workspace/Andromda/dctddata/</url>
+                    <url>file:/scratch/hudson/workspace/Andromda/datasystem/</url>
                     <uniqueVersion>false</uniqueVersion>
                 </snapshotRepository>
                 <site>
                     <id>website</id>
-                    <url>file:/scratch/hudson/workspace/Andromda/site/dctddata/</url>
+                    <url>file:/scratch/hudson/workspace/Andromda/site/datasystem/</url>
                 </site>
             </distributionManagement-->
         </profile>
