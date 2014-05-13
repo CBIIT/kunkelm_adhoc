@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/pages508/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:tab title="Search Results">
+
+            <p:outputPanel id="SubstructureSearchResultsPanel">
+
+                <p:panel>
+
+                    <p:tabView dynamic="true"
+                               cache="false"
+                               effect="fade">
+
+                        <p:tab title="List View">
+
+                            <p:panel header="Export All Data">  
+                                <h:commandLink>  
+                                    <p:graphicImage name="images/excel.png" />  
+                                    <p:dataExporter type="xls" 
+                                                    target="substructureResultsTbl" 
+                                                    postProcessor="#{listManagerController.postProcessXLS}"
+                                                    fileName="SubstructureSearchResults" />  
+                                </h:commandLink>  
+                                <h:commandLink>  
+                                    <p:graphicImage name="images/csv.png" />  
+                                    <p:dataExporter type="csv" 
+                                                    target="substructureResultsTbl" 
+                                                    fileName="SubstructureSearchResults" />  
+                                </h:commandLink>  
+                            </p:panel>  
+
+                            <p:dataTable  id="substructureResultsTbl"
+                                          var="cmpd" 
+                                          value="#{cmpdController.substructureSearchResults}" 
+                                          rows="50" 
+                                          paginator="true" 
+                                          resizableColumns="true"
+                                          paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
+                                          rowsPerPageTemplate="50,100,250,500"
+                                          selectionMode="multiple"
+                                          selection="#{cmpdController.selectedCmpds}"
+                                          rowKey="#{cmpd.id}"
+                                          sortMode="multiple">  
+
+                                <f:facet name="header">                
+                                    <h:outputText value="Substructure Search Results with #{fn:length(cmpdController.substructureSearchResults)} Compounds"/>                
+                                </f:facet>
+
+                                <p:column>  
+                                    <f:facet name="header">                
+                                        <h:outputText value="Parent Fragment"/>                
+                                    </f:facet>   
+
+                                    <p:commandLink update=":dataSystemForm:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
+                                        <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                                        <f:setPropertyActionListener value="#{cmpd}"   
+                                                                     target="#{cmpdController.selectedCmpd}" />  
+                                    </p:commandLink>  
+
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.isSelected}" sortFunction="#{cmpdController.mySelectedSort}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="isSelected"/>                
+                                    </f:facet>              
+                                    <p:selectBooleanCheckbox disabled="true" value="#{cmpd.isSelected}" itemLabel="#{cmpd.isSelected}"/>
+                                </p:column>             
+
+                                <!--
+                                
+                                <p:column>                
+                                <f:facet name="header">                
+                                    <h:outputText value="cmpd.id"/>                
+                                  </f:facet>                            
+                                  <h:outputText value="#{cmpd.id}"/>
+                                </p:column>             
+                    
+                                <p:column>                
+                                <f:facet name="header">                
+                                    <h:outputText value="adHocCmpdId"/>              
+                                </f:facet>                            
+                                  <h:outputText value="#{cmpd.adHocCmpdId}"/>
+                                </p:column>                      
+                    
+                                <p:column> 
+                                <f:facet name="header">                
+                                    <h:outputText value="nscCmpdId"/>                
+                                  </f:facet>                            
+                                  <h:outputText value="#{cmpd.nscCmpdId}"/>
+                                </p:column>             
+                    
+                                -->
+
+                                <p:column sortBy="#{cmpd.nsc}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="NSC"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.nsc}"/>
+                                </p:column>             
+
+                                <p:column sortBy="#{cmpd.name}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="name"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.name}"/>
+                                </p:column>        
+
+                                <!--
+                                  <p:column sortBy="#{fn:length(cmpd.cmpdFragments)}">                
+                                      <f:facet name="header">                
+                                          <h:outputText value="Count Fragments"/>                
+                                      </f:facet>
+                                      <h:outputText value="#{cmpd.countCmpdFragments}"/>
+                                  </p:column>   
+                                -->
+
+                                <p:column sortBy="#{cmpd.inventory}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="Inventory"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.inventory}"/>
+                                </p:column>
+
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.mf}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="MF"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.mf}"/>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.mw}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="MW"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.mw}">
+                                        <f:convertNumber pattern="#0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.alogp}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="aLogP"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.alogp}">
+                                        <f:convertNumber pattern="#0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.hba}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="HBA"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.hba}"/>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.hbd}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="HBD"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.hbd}"/>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.logd}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="logD"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.logd}">
+                                        <f:convertNumber pattern="#0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.sa}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="SA"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.sa}">
+                                        <f:convertNumber pattern="#0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.psa}">                
+                                    <f:facet name="header">                
+                                        <h:outputText value="PSA"/>                
+                                    </f:facet>              
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.psa}">
+                                        <f:convertNumber pattern="#0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column>                
+                                    <f:facet name="header">                
+                                        <h:outputText value="SMILES"/>                
+                                    </f:facet>
+                                    <h:outputText value="#{cmpd.parentFragment.cmpdFragmentStructure.smiles}">
+                                    </h:outputText>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </p:tab>
+
+                        <p:tab title="Grid View">
+
+                            <p:dataGrid var="cmpd" 
+                                        value="#{cmpdController.substructureSearchResults}"                                     
+                                        columns="3"  
+                                        rows="24" 
+                                        paginator="true"  
+                                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                        rowsPerPageTemplate="24,48,72">  
+
+                                <f:facet name="header">  
+                                    <p:row>  
+                                        <p:column>Search Results: #{fn:length(cmpdController.substructureSearchResults)} Cmpds</p:column>  
+                                    </p:row>                                              
+                                </f:facet>
+
+                                <ui:include src="cmpdContentHighlightStructureLayout.xhtml"/>
+
+                            </p:dataGrid>
+
+
+                        </p:tab>
+
+                        <p:tab title="Compact Grid View">
+
+                            <p:commandButton onclick="imageGridFromSubstructures();" value="All structures as image grid" /> 
+
+                            <p:dataGrid  var="cmpd" 
+                                         value="#{cmpdController.substructureSearchResults}" 
+                                         columns="8"  
+                                         rows="80" 
+                                         paginator="true"  
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                         rowsPerPageTemplate="80,160,240">  
+
+                                <f:facet name="header">  
+                                    <p:row>  
+                                        <p:column>Search Results: #{fn:length(cmpdController.substructureSearchResults)} Cmpds</p:column>  
+                                    </p:row>                                              
+                                </f:facet>
+
+                                <p:panelGrid>  
+
+                                    <f:facet name="header">  
+                                        <p:row>  
+                                            <p:column>Name: #{cmpd.name}</p:column>  
+                                        </p:row>                                              
+                                    </f:facet>  
+
+                                    #{cmpdController.smilesString}
+
+                                    <p:row>
+                                        <p:column>
+                                            <p:panel>
+                                                <h:graphicImage rendered="#{!empty cmpd.parentFragment.cmpdFragmentStructure.smiles}"
+                                                                alt="png-structure-image"
+                                                                width="200" height="200"
+                                                                id="substructureImg"
+                                                                url='/StructureServlet?structureDim=200&amp;title=#{cmpd.nsc}&amp;smiles=#{applicationScopeBean.urlEncode(cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(cmpdController.smilesString)}'>
+                                                </h:graphicImage> 
+
+                                                <p:commandLink update=":dataSystemForm:CmpdDetailsDialog" oncomplete="cmpddetailsdlg.show()" title="View Detail">  
+                                                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                                                    <f:setPropertyActionListener value="#{cmpd}"   
+                                                                                 target="#{cmpdController.selectedCmpd}" />  
+                                                </p:commandLink>  
+
+                                            </p:panel>
+
+                                        </p:column>
+
+                                    </p:row>
+
+                                </p:panelGrid>
+
+                            </p:dataGrid>
+
+                        </p:tab>
+
+                    </p:tabView>
+
+                </p:panel>
+
+            </p:outputPanel>
+
+        </p:tab>

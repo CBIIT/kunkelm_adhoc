@@ -89,7 +89,7 @@ public class StructureServlet extends HttpServlet {
         try {
 
             // parse mol
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());                        
             Molecule theMol = (Molecule) sp.parseSmiles(smiles);
 
             // try to deduce bonds for ring systems
@@ -104,7 +104,7 @@ public class StructureServlet extends HttpServlet {
             theMol = (Molecule) fbot.kekuliseAromaticRings(theMol);
 
             // generate coordinates
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();  
             sdg.setMolecule(theMol);
 
             // NEED TO CATCH org.openscience.cdk.exception.CDKException: Molecule not connected.      
@@ -129,6 +129,7 @@ public class StructureServlet extends HttpServlet {
             generators.add(new BasicBondGenerator());
 
             // only add RingGenerator if deduceBonds was unsuccessful
+            
 //      if (!ableToDeduceBonds) {
 //        //generators.add(new RingGenerator());
 //      }
@@ -176,6 +177,7 @@ public class StructureServlet extends HttpServlet {
                 model.set(RendererModel.ExternalHighlightColor.class, Color.PINK);
                 model.setExternalSelectedPart(selection);
             }
+            
             Graphics2D g2 = (Graphics2D) image.getGraphics();
 
             g2.setColor(Color.WHITE);

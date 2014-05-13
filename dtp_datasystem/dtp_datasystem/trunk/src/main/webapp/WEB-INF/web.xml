@@ -24,12 +24,13 @@
         <servlet-class>structureservlet.StructureServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>StructureServlet</servlet-name>
         <url-pattern>/StructureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -39,7 +40,7 @@
     <welcome-file-list>
         <welcome-file>faces/dataSystem.xhtml</welcome-file>
     </welcome-file-list>
-        
+    <!--
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Raw-JSF-Pages</web-resource-name>
@@ -54,7 +55,7 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-  
+    -->
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>default secure</web-resource-name>
@@ -70,28 +71,25 @@
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Exclude from Security</web-resource-name>
-            <url-pattern>/images/*</url-pattern>  
-            <url-pattern>/faces/javax.faces.resource/*</url-pattern>      
+            <url-pattern>/images/*</url-pattern>
+            <url-pattern>/jchempaint/*</url-pattern>
+            <url-pattern>/faces/javax.faces.resource/*</url-pattern>
         </web-resource-collection>
     </security-constraint>
-
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
             <form-login-page>/faces/login.xhtml</form-login-page>
-            <form-error-page>/faces/loginFailed.xhtml</form-error-page>  
+            <form-error-page>/faces/loginFailed.xhtml</form-error-page>
         </form-login-config>
     </login-config>
-
     <security-role>
         <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
     </security-role>
-  
-  <!--
+    <!--
   
   	<Realm className="org.apache.catalina.realm.JNDIRealm" 
 				debug="10"				
@@ -109,10 +107,8 @@
 				allRolesMode="authOnly" />
   
     -->
-  
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/login.xhtml?faces-redirect=true</location>
     </error-page>
-
 </web-app>

@@ -100,8 +100,6 @@ public class DrugTrackerApplicationBean implements Serializable {
     plateItems.add(new SelectItem("INVESTIGATIONAL", "INVESTIGATIONAL"));
     plateItems.add(new SelectItem("NOT PLATED", "NOT PLATED"));
 
-
-
     String[] targetArray = {"EGFR", "PKC"};
     List<String> targetList = Arrays.asList(targetArray);
     Collections.sort(targetList);

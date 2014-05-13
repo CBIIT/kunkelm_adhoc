@@ -64,9 +64,6 @@ public class CmpdController implements Serializable {
   //
   @ManagedProperty(value = "#{listManagerController}")
   private ListManagerController listManagerController;
-
-  
-  
   
    public int mySelectedSort(Object o1, Object o2) {
 

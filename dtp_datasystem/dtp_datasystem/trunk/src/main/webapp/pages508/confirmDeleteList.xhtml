@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/pages508/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:panel style="display: inline-block;">
+
+            <p:outputLabel value="Delete cannot be undone." style="font-size: 4em; color: red;"/>
+
+            <p:panelGrid columns="2">
+
+                <h:outputText value="List Name"/>
+                <h:outputText value="#{listManagerController508.listForDelete.listName}"/>
+
+                <h:outputText value="Share With"/>
+                <h:outputText value="#{listManagerController508.listForDelete.shareWith}"/>
+
+                <h:outputText value="List Owner:"/>
+                <h:outputText value="#{listManagerController508.listForDelete.listOwner}"/>
+
+                <h:outputText value="CmpdListId"/>
+                <h:outputText value="#{listManagerController508.listForDelete.cmpdListId}"/>
+
+                <h:outputText value="Count List Members"/>
+                <h:outputText value="#{listManagerController508.listForDelete.countListMembers}"/>
+
+            </p:panelGrid>
+
+            <p:outputLabel value="Are you sure you want to delete #{listManagerController508.listForDelete.listName} ?" style="font-size: 2em; color: red;"/>
+
+            <br/>
+            
+            <p:commandButton id="decline" 
+                             value="Do NOT delete. Return to Available Lists" 
+                             action="/pages508/availableLists?faces-redirect=true"/>      
+                             
+            <p:commandButton id="confirm" 
+                             value="Yes, DELETE"
+                             style="background-color: red;"
+                             action="#{listManagerController508.performDeleteList}"/>      
+
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

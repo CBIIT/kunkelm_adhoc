@@ -21,8 +21,7 @@
 
                 <h:outputText value="Please login."/>
 
-                <p:fieldset legend="Username and Password" 
-                            style="width: 20%; height: 20%;position: absolute;top: 40%;left: 40%;">
+                <p:fieldset legend="Username and Password">
                     <p:outputLabel for="j_username" value="Username" />
                     <br/>                    
                     <p:inputText required="true" id="j_username" name="j_username" />            
@@ -31,10 +30,10 @@
                     <br/>                    
                     <p:inputText type="password" required="true" id="j_password" name="j_password"/>
                     <br/>                    
-                    <p:outputLabel for="login_button" value="Click to attempt" />
-                    <br/>
-                    <p:commandButton id="login_button" value="Login" ajax="false"/>
+                    <p:outputLabel for="login_button" value="Click to attempt" />                   
                 </p:fieldset>
+
+                <p:commandButton id="login_button" value="Login" ajax="false"/>
 
             </h:form>
 

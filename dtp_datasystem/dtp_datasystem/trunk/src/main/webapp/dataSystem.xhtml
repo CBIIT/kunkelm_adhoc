@@ -30,17 +30,18 @@
                 </noscript>
 
                 <h:outputScript library="js" name="dctdDataSystem.js"/>
-                
                 <h:outputScript library="js" name="canvasWrangling.js"/>
-
                 <h:outputStylesheet library="css" name="my.css"/>
+
+                <p:commandButton action="/pages508/availableLists?faces-redirect=true"
+                                 value="Click to go to 508 Compliant site, in progress"/>
+
+                <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
 
                 <p:tabView id="outerTabView" 
                            activeIndex="#{listManagerController.outerTabViewActiveIndex}"
                            dynamic="true"
                            cache="true">
-                    
-                    <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
 
                     <p:tab title="List Manager">
                         <h:outputText value="LoggedUser is: #{listManagerController.loggedUser}"/>
@@ -62,7 +63,7 @@
                 <ui:include src="datasystempages/dialogSearchCriteria.xhtml"/>
 
                 <ui:include src="datasystempages/dialogCmpdDetails.xhtml"/>
-                
+
                 <ui:include src="datasystempages/dialogListOfCmpds.xhtml"/>
 
                 <ui:include src="datasystempages/dialogListManagerCmpdDetails.xhtml"/>
@@ -74,7 +75,7 @@
                 <ui:include src="datasystempages/dialogSearchingCompounds.xhtml"/>
 
                 <ui:include src="datasystempages/dialogLoadingList.xhtml"/>
-                
+
                 <ui:include src="datasystempages/dialogExportImage.xhtml"/>
 
             </h:form>

@@ -15,7 +15,7 @@ public class CmpdListImpl
     /**
      * The serial version UID of this class. Needed for serialization.
      */
-    private static final long serialVersionUID = 160310783492567416L;
+    private static final long serialVersionUID = -4411415242228169065L;
 
 // HibernateEntityImpl.vsl merge-point
 }

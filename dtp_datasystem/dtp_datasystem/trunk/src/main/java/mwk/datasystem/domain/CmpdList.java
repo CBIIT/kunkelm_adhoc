@@ -20,9 +20,9 @@ public abstract class CmpdList
     /**
      * The serial version UID of this class. Needed for serialization.
      */
-    private static final long serialVersionUID = 160310783492567416L;
+    private static final long serialVersionUID = -4411415242228169065L;
 
-    // Generate 7 attributes
+    // Generate 10 attributes
     private String listName;
 
     /**
@@ -141,6 +141,66 @@ public abstract class CmpdList
     public void setCountListMembers(Integer countListMembersIn)
     {
         this.countListMembers = countListMembersIn;
+    }
+
+    private String anchorSmiles;
+
+    /**
+     * 
+     * @return this.anchorSmiles String
+     */
+    public String getAnchorSmiles()
+    {
+        return this.anchorSmiles;
+    }
+
+    /**
+     * 
+     * @param anchorSmilesIn String
+     */
+    public void setAnchorSmiles(String anchorSmilesIn)
+    {
+        this.anchorSmiles = anchorSmilesIn;
+    }
+
+    private String listComment;
+
+    /**
+     * 
+     * @return this.listComment String
+     */
+    public String getListComment()
+    {
+        return this.listComment;
+    }
+
+    /**
+     * 
+     * @param listCommentIn String
+     */
+    public void setListComment(String listCommentIn)
+    {
+        this.listComment = listCommentIn;
+    }
+
+    private String anchorComment;
+
+    /**
+     * 
+     * @return this.anchorComment String
+     */
+    public String getAnchorComment()
+    {
+        return this.anchorComment;
+    }
+
+    /**
+     * 
+     * @param anchorCommentIn String
+     */
+    public void setAnchorComment(String anchorCommentIn)
+    {
+        this.anchorComment = anchorCommentIn;
     }
 
     private Long id;
@@ -283,10 +343,13 @@ public abstract class CmpdList
          * @param shareWith String
          * @param cmpdListId Long
          * @param countListMembers Integer
+         * @param anchorSmiles String
+         * @param listComment String
+         * @param anchorComment String
          * @param cmpdListMembers Collection<CmpdListMember>
          * @return newInstance CmpdList
          */
-        public static CmpdList newInstance(String listName, Date dateCreated, String listOwner, String shareWith, Long cmpdListId, Integer countListMembers, Collection<CmpdListMember> cmpdListMembers)
+        public static CmpdList newInstance(String listName, Date dateCreated, String listOwner, String shareWith, Long cmpdListId, Integer countListMembers, String anchorSmiles, String listComment, String anchorComment, Collection<CmpdListMember> cmpdListMembers)
         {
             final CmpdList entity = new CmpdListImpl();
             entity.setListName(listName);
@@ -295,6 +358,9 @@ public abstract class CmpdList
             entity.setShareWith(shareWith);
             entity.setCmpdListId(cmpdListId);
             entity.setCountListMembers(countListMembers);
+            entity.setAnchorSmiles(anchorSmiles);
+            entity.setListComment(listComment);
+            entity.setAnchorComment(anchorComment);
             entity.setCmpdListMembers(cmpdListMembers);
             return entity;
         }
@@ -335,6 +401,18 @@ public abstract class CmpdList
             if (this.getCountListMembers() != null)
             {
                 cmp = (cmp != 0 ? cmp : this.getCountListMembers().compareTo(o.getCountListMembers()));
+            }
+            if (this.getAnchorSmiles() != null)
+            {
+                cmp = (cmp != 0 ? cmp : this.getAnchorSmiles().compareTo(o.getAnchorSmiles()));
+            }
+            if (this.getListComment() != null)
+            {
+                cmp = (cmp != 0 ? cmp : this.getListComment().compareTo(o.getListComment()));
+            }
+            if (this.getAnchorComment() != null)
+            {
+                cmp = (cmp != 0 ? cmp : this.getAnchorComment().compareTo(o.getAnchorComment()));
             }
         }
         return cmp;

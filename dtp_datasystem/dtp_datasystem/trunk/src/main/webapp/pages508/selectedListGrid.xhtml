@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/pages508/templates/ui.xhtml">
+
+    <ui:define name="content">
+        
+        <ui:include src="/pages508/templates/list_view_nav.xhtml"/>
+
+        <p:dataGrid var="listMember" 
+                    value="#{listManagerController508.selectedList.cmpdListMembers}"                                     
+                    columns="3"  
+                    rows="24" 
+                    paginator="true"  
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                    rowsPerPageTemplate="24,48,72">  
+
+            <f:facet name="header">  
+                <p:row>  
+                    <p:column>List Contains: #{fn:length(listManagerController508.selectedList.cmpdListMembers)} Cmpds</p:column>  
+                </p:row>                                              
+            </f:facet>
+
+            <ui:include src="/pages508/listMemberDetails.xhtml"/>
+
+        </p:dataGrid>
+
+    </ui:define>
+
+</ui:composition>

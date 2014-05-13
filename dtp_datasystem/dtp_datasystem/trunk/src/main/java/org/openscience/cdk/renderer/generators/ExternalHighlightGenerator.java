@@ -36,7 +36,6 @@ import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.OvalElement;
-import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondWidth;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 

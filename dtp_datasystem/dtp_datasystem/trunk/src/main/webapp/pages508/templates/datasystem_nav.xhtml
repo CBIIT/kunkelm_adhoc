@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <p:fieldset legend="Data System">
+
+        <p:commandButton action="/pages508/availableLists?faces-redirect=true"
+                         value="Available Lists"/>
+
+        <p:spacer width="20"/>
+
+        <p:commandButton action="/pages508/createList?faces-redirect=true"
+                         value="Create List"/>
+
+        <p:spacer width="20"/>
+
+        <p:commandButton action="/pages508/uploadList?faces-redirect=true"
+                         value="Upload List"/>
+
+        <p:spacer width="20"/>
+
+        <p:commandButton action="/pages508/listLogic?faces-redirect=true"
+                         value="List Logic"/>     
+
+        <p:spacer width="20"/>
+
+        <p:commandButton value="Logout"                           
+                         actionListener="#{sessionController508.logout}"
+                         action="/faces/login.xhtml?faces-redirect=true"/>
+
+    </p:fieldset>
+
+    <p:spacer height="20px"/>
+
+</ui:composition>
