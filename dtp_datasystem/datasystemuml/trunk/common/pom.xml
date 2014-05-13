@@ -3,17 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>mwk.dctddata</groupId>
-        <artifactId>dctddata</artifactId>
+        <groupId>mwk.datasystem</groupId>
+        <artifactId>datasystem</artifactId>
         <version>0.1</version>
     </parent>
-    <artifactId>dctddata-common</artifactId>
+    <artifactId>datasystem-common</artifactId>
     <packaging>jar</packaging>
     <name>DCTD Data Common</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>dctddata-mda</artifactId>
+            <artifactId>datasystem-mda</artifactId>
             <version>${project.version}</version>
             <type>pom</type>
             <scope>provided</scope>
