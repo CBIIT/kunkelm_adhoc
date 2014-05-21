@@ -6,13 +6,19 @@ package mwk.datasystem.controllers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperCmpdList;
+import mwk.datasystem.util.HelperStructure;
+import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdVO;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -61,6 +67,7 @@ public class ListContentController508 implements Serializable {
     private String hbd_min_form;
     private String hbd_max_form;
     //
+    private String smilesString;
     // reach-through to sessionController
     @ManagedProperty(value = "#{sessionController508}")
     private SessionController508 sessionController;
@@ -134,6 +141,106 @@ public class ListContentController508 implements Serializable {
         this.listManagerController.setSelectedList(clVO);
 
         return "/pages508/selectedListTable?faces-redirect=true";
+
+    }
+
+    public String performExactMatchSearch() {
+
+        List structureSearchResults = new ArrayList<CmpdVO>();
+
+        HelperStructure strcHelper = new HelperStructure();
+
+        List<Integer> nscIntList = strcHelper.findNSCsByExactMatch(this.smilesString);
+
+        HelperCmpd cmpdHelper = new HelperCmpd();
+
+        List<CmpdVO> cVOlist = cmpdHelper.getCmpdsByNsc(nscIntList);
+
+        structureSearchResults = cVOlist;
+        
+        this.listManagerController.setTempCmpdList(cVOlist);
+
+        return null;
+
+    }
+
+    public String performSubstructureSearch() {
+
+        System.out.println("Now in performSubstructureSearch()");
+
+        List structureSearchResults = new ArrayList<CmpdVO>();
+
+        HelperStructure strcHelper = new HelperStructure();
+
+        List<Integer> nscIntList = strcHelper.findNSCsBySmilesSubstructure(this.smilesString);
+
+        System.out.println("Size of nscIntList: " + nscIntList.size());
+
+        Date now = new Date();
+
+        if (this.listName == null || this.listName.length() == 0) {
+            this.listName = "structureSearchResults " + now.toString();
+        }
+
+        HelperCmpd cmpdHelper = new HelperCmpd();
+
+        CmpdListVO tempCLvo = cmpdHelper.createCmpdListByNscs(this.listName, nscIntList, this.sessionController.getLoggedUser());
+
+        // have to fetch the list so that the compound details will be populated
+
+        HelperCmpdList listHelper = new HelperCmpdList();
+        CmpdListVO realList = listHelper.getCmpdListByCmpdListId(tempCLvo.getCmpdListId(), Boolean.TRUE);
+
+        List<CmpdVO> cVOlist = new ArrayList<CmpdVO>();
+        for (CmpdListMemberVO clmVO : realList.getCmpdListMembers()) {
+            cVOlist.add(clmVO.getCmpd());
+        }
+
+        this.listManagerController.setTempCmpdList(cVOlist);
+
+        listManagerController.getAvailableLists().add(realList);
+
+        return null;
+    }
+
+    public String performSmartsSearch() {
+
+          String smartsString = this.smilesString;
+
+        // double bonds to any bond
+        smartsString = smartsString.replaceAll("=", "~");
+
+        // disguise chlorine as HIDDEN (no "C" or "c"), replace C and c then restore chlorine
+        smartsString = smartsString.replaceAll("Cl", "HIDDEN").replaceAll("C", "[#6]").replaceAll("c", "[#6]").replaceAll("HIDDEN", "Cl");
+
+        // same exercise for nitrogen, oxygen, sulfur, phosphorus, but no need to disguise other elements
+        smartsString = smartsString.replaceAll("N", "[#7]").replaceAll("n", "[#7]");
+        smartsString = smartsString.replaceAll("O", "[#8]").replaceAll("o", "[#8]");
+
+        smartsString = smartsString.replaceAll("P", "[#15]").replaceAll("p", "[#15]");
+        smartsString = smartsString.replaceAll("S", "[#16]").replaceAll("s", "[#16]");
+
+        FacesMessage msg = new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "SMILES string and SMARTS string: ",
+                smilesString + " " + smartsString);
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        System.out.println("smilesString: " + this.smilesString);
+        System.out.println("smartsString: " + smartsString);
+
+        HelperStructure strcHelper = new HelperStructure();
+
+        List<Integer> nscIntList = strcHelper.findNSCsBySmartsSubstructure(smartsString);
+
+        HelperCmpd cmpdHelper = new HelperCmpd();
+
+        List<CmpdVO> cVOlist = cmpdHelper.getCmpdsByNsc(nscIntList);
+
+        this.listManagerController.setTempCmpdList(cVOlist);
+
+        return null;
 
     }
 
@@ -472,4 +579,13 @@ public class ListContentController508 implements Serializable {
     public void setHbd_max_form(String hbd_max_form) {
         this.hbd_max_form = hbd_max_form;
     }
+
+    public String getSmilesString() {
+        return smilesString;
+    }
+
+    public void setSmilesString(String smilesString) {
+        this.smilesString = smilesString;
+    }
+
 }

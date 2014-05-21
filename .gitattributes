@@ -9268,6 +9268,7 @@ dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.4.19/cdk-1.4.19.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/3.5.18/primefaces-3.5.18.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.13/primefaces-4.0.13.jar -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/HibernateStringClobType.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/AdaptiveHistogram.java -text
@@ -9459,6 +9460,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/jchempaint/jchempaint-applet
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/login.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/loginFailed.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/availableLists.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/cmpdListGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/cmpdListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/confirmDeleteList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/createList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/dialogExportImage.xhtml -text
@@ -9467,6 +9470,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/jChemPaint.xhtml -t
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/listMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/selectedListCompactGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/selectedListCompactGrid_1.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/selectedListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/selectedListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/pages508/structureSearchResults.xhtml -text

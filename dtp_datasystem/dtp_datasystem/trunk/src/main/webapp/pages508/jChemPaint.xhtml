@@ -31,7 +31,7 @@
 
                 <p:panelGrid columns="2">
 
-                    <p:commandButton value="Load Structure for NSC"
+                    <p:commandButton value="TEST TEST Load Structure for NSC"
                                      onclick="runLoadByNsc()"
                                      oncomplete="loadFromSmiles();"/>
 
@@ -43,14 +43,13 @@
                 </p:panelGrid>
 
                 <f:verbatim>
-
-
+                    
                     <applet code="org.openscience.jchempaint.applet.JChemPaintEditorApplet"                                
-                            archive="jchempaint/jchempaint-applet-editor.jar,jchempaint/jchempaint-applet-core.jar"                
+                            archive="jchempaint-applet-editor.jar,jchempaint-applet-core.jar"                
                             name="JChemPaintEditor"
                             width="800" height="600">
                         <param name="impliciths"      value="true"/>
-                        <param name="codebase"        value="."/>
+                        <param name="codebase"        value="../../jchempaint"/>
                         <param name="image"           value="hourglass.gif"/>
                         <param name="centerImage"     value="true"/>
                         <param name="boxBorder"       value="false"/>

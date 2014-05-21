@@ -14,11 +14,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdVO;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -39,15 +39,27 @@ public class ListManagerController508 implements Serializable {
     static final long serialVersionUID = -8653468638698142855l;
     private List<CmpdListVO> availableLists;
     private ArrayList<SelectItem> availableListSelectItems;
+    //
     private CmpdListVO selectedList;
     private CmpdListVO[] selectedLists;
+    //
     private CmpdListMemberVO selectedListMember;
     private CmpdListMemberVO[] selectedListMembers;
+    //
     private CmpdListVO listForDelete;
-    private String loggedUser;
+    // temp sets, structure search results, e.g.
+    private List<CmpdVO> tempCmpdList;
+    private CmpdVO selectedTempCmpd;
+    private CmpdVO[] selectedTempCmpds;
+     // reach-through to sessionController
+    @ManagedProperty(value = "#{sessionController508}")
+    private SessionController508 sessionController;
+
+    public void setSessionController(SessionController508 sessionController) {
+        this.sessionController = sessionController;
+    }
 
     public ListManagerController508() {
-        this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         this.performUpdateAvailableLists();
     }
 
@@ -94,7 +106,7 @@ public class ListManagerController508 implements Serializable {
         try {
 
             HelperCmpdList helper = new HelperCmpdList();
-            List<CmpdListVO> lists = helper.showAvailableCmpdLists(this.loggedUser);
+            List<CmpdListVO> lists = helper.showAvailableCmpdLists(this.sessionController.getLoggedUser());
 
             this.availableLists = lists;
 
@@ -133,7 +145,7 @@ public class ListManagerController508 implements Serializable {
 
         // only if owner
 
-        if (this.selectedList.getListOwner().equals(this.loggedUser)) {
+        if (this.selectedList.getListOwner().equals(this.sessionController.getLoggedUser())) {
             helper.makeCmpdListPublic(this.selectedList.getCmpdListId());
             this.selectedList.setShareWith("PUBLIC");
         }
@@ -173,7 +185,7 @@ public class ListManagerController508 implements Serializable {
 
         System.out.println("Now in performDeleteList in listManagerController508.");
 
-        if (this.listForDelete.getListOwner().equals(this.loggedUser)) {
+        if (this.listForDelete.getListOwner().equals(this.sessionController.getLoggedUser())) {
             HelperCmpdList helper = new HelperCmpdList();
             helper.deleteCmpdListByCmpdListId(this.listForDelete.getCmpdListId());
             this.availableLists.remove(this.listForDelete);
@@ -369,11 +381,28 @@ public class ListManagerController508 implements Serializable {
         this.listForDelete = listForDelete;
     }
 
-    public String getLoggedUser() {
-        return loggedUser;
+    public List<CmpdVO> getTempCmpdList() {
+        return tempCmpdList;
     }
 
-    public void setLoggedUser(String loggedUser) {
-        this.loggedUser = loggedUser;
+    public void setTempCmpdList(List<CmpdVO> tempCmpdList) {
+        this.tempCmpdList = tempCmpdList;
     }
+
+    public CmpdVO getSelectedTempCmpd() {
+        return selectedTempCmpd;
+    }
+
+    public void setSelectedTempCmpd(CmpdVO selectedTempCmpd) {
+        this.selectedTempCmpd = selectedTempCmpd;
+    }
+
+    public CmpdVO[] getSelectedTempCmpds() {
+        return selectedTempCmpds;
+    }
+
+    public void setSelectedTempCmpds(CmpdVO[] selectedTempCmpds) {
+        this.selectedTempCmpds = selectedTempCmpds;
+    }
+ 
 }

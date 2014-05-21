@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/pages508/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <ui:include src="/pages508/templates/list_view_nav.xhtml"/>
+
+        <p:commandButton onclick="imageGridFromAllSelectedStructures();" 
+                         value="All structures as image grid" /> 
+
+
+        <p:dataGrid  var="listMember" 
+                     value="#{listManagerController508.selectedList.cmpdListMembers}" 
+                     id="compactGridViewDataGrid"
+                     columns="8"
+                     rows="80"
+                     paginator="true"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="80,160,240,320">  
+
+            <f:facet name="header">  
+                <h:outputText value="List with #{fn:length(listManagerController508.selectedList.cmpdListMembers)} Members"/>
+            </f:facet>
+
+            <p:panelGrid columns="1">
+
+                <f:facet name="header"> 
+                    <h:outputText value="#{listMember.cmpd.name}"/>
+                </f:facet> 
+
+                <h:graphicImage rendered="#{!empty listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
+                                id="selectedStructureImg"
+                                alt="png-structure-image"
+                                width="200" height="200"
+                                url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                </h:graphicImage> 
+
+                <f:facet name="footer">
+                    <p:commandLink update=":form508:ListMemberDetailsDialog" oncomplete="listmemberdetailsdlg.show()" title="View Detail">  
+                        <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                        <f:setPropertyActionListener value="#{listMember}"   
+                                                     target="#{listManagerController508.selectedListMember}" />  
+                    </p:commandLink>
+                </f:facet> 
+
+
+            </p:panelGrid>
+
+        </p:dataGrid>
+
+    </ui:define>
+
+</ui:composition>
