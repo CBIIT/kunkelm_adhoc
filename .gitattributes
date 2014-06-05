@@ -9305,15 +9305,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformA
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformCmpdViewToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdBioAssayVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdFragmentPChemVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdFragmentStructureVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdFragmentVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdListMemberVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdListVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/CmpdViewVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/vo/RelatedCompoundVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/elements/WedgeLineElement.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/elements/WigglyLineElement.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/generators/ExternalHighlightGenerator.java -text
