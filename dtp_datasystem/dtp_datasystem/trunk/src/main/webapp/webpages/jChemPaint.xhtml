@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"                
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:remoteCommand name="runLoadByNsc" 
+                         action="#{listContentController.performLoadJChemPaintByNsc()}" 
+                         onstart="PF('loadingBUI').show();"
+                         oncomplete="PF('loadingBUI').hide();"
+                         update=":datasystemForm:smilesforload"/>
+
+        <p:remoteCommand name="runExactMatchSearch" 
+                         action="#{listContentController.performExactMatchSearch()}" />
+
+        <p:remoteCommand name="runSubstructureSearch" 
+                         action="#{listContentController.performSubstructureSearch()}" />
+
+        <p:remoteCommand name="runSmartsSearch" 
+                         action="#{listContentController.performSmartsSearch()}" />
+
+        <p:panel>
+
+            <p:panelGrid columns="2">
+
+                <p:commandButton value="Load Structure for NSC"
+                                 onclick="runLoadByNsc()"
+                                 oncomplete="loadFromSmiles();"/>
+
+                <p:column>
+                    <h:outputLabel for="nscforjcp" value="NSC:"/>    
+                    <p:inputText value="#{listContentController.nscForJChemPaintLoad}" id="nscforjcp" maxlength="10"/>
+                </p:column>
+
+            </p:panelGrid>
+
+            <f:verbatim>
+
+                <applet code="org.openscience.jchempaint.applet.JChemPaintEditorApplet"                                
+                        archive="jchempaint-applet-editor.jar,jchempaint-applet-core.jar"                
+                        name="JChemPaintEditor"
+                        width="800" height="600">
+                    <param name="impliciths"      value="true"/>
+                    <param name="codebase"        value="../jchempaint"/>
+                    <param name="image"           value="hourglass.gif"/>
+                    <param name="centerImage"     value="true"/>
+                    <param name="boxBorder"       value="false"/>
+                    <param name="language"        value="en"/>
+                    <param name="centerimage"     value="en"/>
+                </applet>
+
+            </f:verbatim>
+
+            <p:panel>
+
+                <p:outputLabel for="ssSearchListName" value="Save results to list named:" />
+                <p:inputText id="ssSearchListName" value="#{listContentController.listName}"/>
+
+                <br/>
+
+                <p:commandButton value="Exact Match Search"
+                                 disabled="true"
+                                 onclick="showSmiles();
+                                     showMolFile();
+                                     PF('searchingBUI').show();
+                                     runExactMatchSearch();"
+                                 update=":datasystemForm:smilesforload"
+                                 oncomplete="PF('searchingBUI').hide();"/>
+
+                <p:commandButton value="Substructure Search"
+                                 onclick="showSmiles();
+                                     showMolFile();
+                                     PF('searchingBUI').show();
+                                     runSubstructureSearch();"
+                                 update=":datasystemForm:smilesforload"
+                                 oncomplete="PF('searchingBUI').hide();"/>
+
+                <p:commandButton value="Fuzzy Substructure Search"
+                                 disabled="true"
+                                 onclick="showSmiles();
+                                     showMolFile();
+                                     PF('searchingBUI').show();
+                                     runSmartsSearch();"
+                                 update=":datasystemForm:smilesforload"
+                                 oncomplete="PF('searchingBUI').hide();"/>
+
+                <br/>
+
+                <p:commandButton onclick="showSmiles();"
+                                 value="showSmiles()"/>
+
+                <p:commandButton onclick="showMolFile();"
+                                 value="showMolFile()"/>
+
+
+            </p:panel>
+
+            <p:panelGrid columns="2">
+                <h:outputLabel for="smilesforload" value="Load Smiles String:"/>    
+                <h:inputTextarea id="smilesforload" cols="100" rows="1" value="#{listContentController.smilesForJChemPaintLoad}"/>
+                <h:outputLabel for="smilesstring" value="Smiles String:"/>        
+                <h:inputTextarea id="smilesstring" value="#{listContentController.smilesString}" cols="100" rows="1"/>
+                <h:outputLabel for="molfile" value="Mol File:"/>    
+                <h:inputTextarea id="molfile" value="#{listContentController.molFile}"  cols="100" rows="10"/>  
+            </p:panelGrid>
+
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

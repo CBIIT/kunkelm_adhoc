@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>Data System Project</title>
+            </f:facet>
+
+            <noscript>
+                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
+            </noscript>
+
+            <h:outputScript library="js" name="dctdDataSystem.js"/>                
+            <h:outputScript library="js" name="canvasWrangling.js"/>
+            <h:outputStylesheet library="css" name="my.css"/>
+
+            <h:outputStylesheet name="css/my.css" />
+
+        </h:head>
+
+        <h:body>
+
+            <h:form id="datasystemForm" enctype="multipart/form-data">
+
+                <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+
+                <h:outputLink value="#centerContent">
+                    <h:outputText value="Skip to Content"/>
+                </h:outputLink>
+
+                <p:panel style="display: block;" id="wholePage">
+
+                    <a name="centerContent"/>
+
+                    <h:outputText value="LoggedUser is: #{sessionController.loggedUser}"/> 
+                    <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
+
+                    <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
+
+                    <ui:insert name="content"/>
+
+                </p:panel>
+
+                <ui:include src="/webpages/dialogExportImage.xhtml"/>
+                <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
+
+            </h:form>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="searchingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="loadingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="creatingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm"
+                       widgetVar="resolvingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="uploadingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="deletingBUI">
+                <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="appendingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+        </h:body>
+
+    </f:view>
+
+</html>
