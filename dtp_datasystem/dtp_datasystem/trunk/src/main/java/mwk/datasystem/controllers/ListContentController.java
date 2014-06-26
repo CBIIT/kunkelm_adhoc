@@ -126,15 +126,13 @@ public class ListContentController implements Serializable {
 
         HelperCmpdListMember helper = new HelperCmpdListMember();
 
-        helper.deleteCmpdListMembers(this.selectedActiveListMembers, this.sessionController.getLoggedUser());
-        
+        helper.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+
         // now fetch the list        
         HelperCmpdList listHelper = new HelperCmpdList();
         CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(this.listManagerController.getActiveList().getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
-        // MWK TODO COMPLETELY update the activeList?
-
-        this.listManagerController.setActiveList(clVO);        
+        this.listManagerController.setActiveList(clVO);
 
         return "/webpages/activeListTable?faces-redirect=true";
     }
@@ -146,15 +144,18 @@ public class ListContentController implements Serializable {
     public String performAppendSelectedToExistingList() {
 
         HelperCmpdListMember helper = new HelperCmpdListMember();
-        
+
         helper.appendCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
 
-        // have to UPDATE the list
-        // now fetch the list        
+        // have to UPDATE the list   
         HelperCmpdList listHelper = new HelperCmpdList();
         CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
         this.listManagerController.setActiveList(clVO);
+        
+        // is this really the way to do this?
+        this.listManagerController.performUpdateAvailableLists();
+
         return "/webpages/activeListTable?faces-redirect=true";
 
     }
@@ -401,100 +402,18 @@ public class ListContentController implements Serializable {
 
             ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
 
-            // have to persist the compounds
-            // then associate with listMembers
-            // then create list
-
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
-            session.beginTransaction();
-
-            Date now = new Date();
-
-            //String localListName = this.listName;
-            String listOwner = this.sessionController.getLoggedUser();
-            String shareWith = this.sessionController.getLoggedUser();
-
-            ArrayList<Cmpd> entityCmpdList = new ArrayList<Cmpd>();
-
-            for (AdHocCmpd ahc : adHocCmpdList) {
-
-                // come up with a unique adHocListId
-                //do {      
-                long randomId = randomGenerator.nextLong();
-                if (randomId < 0) {
-                    randomId = -1 * randomId;
-                }
-                Long adHocCmpdId = new Long(randomId);
-                //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
-
-                ahc.setAdHocCmpdId(adHocCmpdId);
-                ahc.setCmpdOwner(listOwner);
-
-                session.persist("Cmpd", ahc);
-
-                for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
-                    // persist the struc and pchem
-                    session.persist(ahcf.getAdHocCmpdFragmentPChem());
-                    session.persist(ahcf.getAdHocCmpdFragmentStructure());
-                    // persist the fragment
-                    session.persist(ahcf);
-                }
-
-                // if only one fragment, make it the parent, otherwise sort by size
-
-                ArrayList<AdHocCmpdFragment> fragList = new ArrayList<AdHocCmpdFragment>(ahc.getAdHocCmpdFragments());
-                Collections.sort(fragList, new Comparators.AdHocCmpdFragmentSizeComparator());
-                Collections.reverse(fragList);
-                ahc.setAdHocCmpdParentFragment(fragList.get(0));
-
-                // track the cmpds for addition to CmpdList
-                entityCmpdList.add(ahc);
-
-            }
-
-            // create a new list
-
-            //do {    
-            long randomId = randomGenerator.nextLong();
-            if (randomId < 0) {
-                randomId = -1 * randomId;
-            }
-            Long cmpdListId = new Long(randomId);
-            //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
-
-            CmpdList cl = CmpdList.Factory.newInstance();
-
-            cl.setCmpdListId(cmpdListId);
-            cl.setListName(this.listName);
-            cl.setDateCreated(now);
-            cl.setListOwner(listOwner);
-            cl.setShareWith(shareWith);
-            cl.setCountListMembers(entityCmpdList.size());
-
-            // id from GenerateSequence in Entity class
-            session.persist(cl);
-
-            for (Cmpd c : entityCmpdList) {
-                CmpdListMember clm = CmpdListMember.Factory.newInstance();
-                clm.setCmpd(c);
-                clm.setCmpdList(cl);
-                session.persist(clm);
-            }
-
-            // commit the new entries
-            session.getTransaction().commit();
-
-            // new fetch the list
-
             HelperCmpdList listHelper = new HelperCmpdList();
-
-            CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(cl.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+            
+            CmpdListVO clVO_sparse = listHelper.makieCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+            
+            // new fetch the list
+            
+            CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
             this.listManagerController.getAvailableLists().add(clVO);
             this.listManagerController.setActiveList(clVO);
 
-            System.out.println("UploadCmpds contains: " + clVO.getCountListMembers() + " cmpds");
+            System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
 
         } catch (Exception e) {
             e.printStackTrace();

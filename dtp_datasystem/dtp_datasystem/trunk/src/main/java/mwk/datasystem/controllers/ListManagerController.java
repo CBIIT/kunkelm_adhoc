@@ -294,15 +294,10 @@ public class ListManagerController implements Serializable {
 
         System.out.println("Entering performLoadList(CmpdListVO clVO)");
 
-        // only fetch if not already fetched    
-        if (clVO.getCmpdListMembers() == null || clVO.getCmpdListMembers().size() == 0) {
-            System.out.println("------------------------ListId: " + clVO.getCmpdListId() + " was not populated. Now fetching listMembers");
-            HelperCmpdList helper = new HelperCmpdList();
-            CmpdListVO voList = helper.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
-            clVO.setCmpdListMembers(voList.getCmpdListMembers());
-        } else {
-            System.out.println("------------------------ListId: " + clVO.getCmpdListId() + " WAS populated. No need to fetch");
-        }
+        System.out.println("------------------------ListId: " + clVO.getCmpdListId() + " was not populated. Now fetching listMembers");
+        HelperCmpdList helper = new HelperCmpdList();
+        CmpdListVO voList = helper.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+        clVO.setCmpdListMembers(voList.getCmpdListMembers());
 
         return "/webpages/activeListTable?faces-redirect=true";
 

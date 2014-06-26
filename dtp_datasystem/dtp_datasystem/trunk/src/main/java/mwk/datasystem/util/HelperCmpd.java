@@ -7,13 +7,17 @@ package mwk.datasystem.util;
 import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
-import mwk.datasystem.domain.CmpdView;
+import mwk.datasystem.domain.CmpdTable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.xml.datatype.XMLGregorianCalendar;
+import mwk.datasystem.domain.AdHocCmpd;
+import mwk.datasystem.domain.AdHocCmpdFragment;
+import mwk.datasystem.domain.AdHocCmpdFragmentPChem;
+import mwk.datasystem.domain.AdHocCmpdFragmentStructure;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -27,18 +31,105 @@ import mwk.datasystem.vo.CmpdVO;
  * @author mwkunkel
  */
 public class HelperCmpd {
-
-    Session session = null;
-
-    public HelperCmpd() {
-        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
+    
+    public static void replicatePchem(AdHocCmpdFragmentPChem cur, AdHocCmpdFragmentPChem nw){        
+        nw.setAlogp(cur.getAlogp());
+        nw.setHba(cur.getHba());
+        nw.setHbd(cur.getHbd());
+        nw.setLogd(cur.getLogd());
+        nw.setMf(cur.getMf());
+        nw.setPsa(cur.getPsa());
+        nw.setSa(cur.getSa());        
     }
+    
+    public static void replicateStructure(AdHocCmpdFragmentStructure cur, AdHocCmpdFragmentStructure nw){        
+        nw.setCtab(cur.getCtab());
+        nw.setInchi(cur.getInchi());
+        nw.setInchiAux(cur.getInchiAux());
+        nw.setMol(cur.getMol());
+        nw.setSmiles(cur.getSmiles());
+    }
+    
+//    public static AdHocCmpd createNewAdHocCmpd(AdHocCmpd ahc, String currentUser) {
+//
+//        Random randomGenerator = new Random();
+//
+//        Session session = null;
+//        Transaction tx = null;
+//
+//        AdHocCmpd newAhc = null;
+//
+//        try {
+//
+//            session = HibernateUtil.getSessionFactory().openSession();
+//
+//            long randomId = randomGenerator.nextLong();
+//            if (randomId < 0) {
+//                randomId = -1 * randomId;
+//            }
+//            Long adHocCmpdId = new Long(randomId);
+//
+//            tx = session.beginTransaction();
+//
+//            newAhc = AdHocCmpd.Factory.newInstance();
+//            
+//            newAhc.setAdHocCmpdId(adHocCmpdId);
+//            newAhc.setCmpdOwner(currentUser);
+//            newAhc.setName(ahc.getName());
+//            newAhc.setOriginalAdHocCmpdId(ahc.getAdHocCmpdId());
+//
+//            for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
+//                
+//                AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
+//
+//                AdHocCmpdFragmentPChem pchem = AdHocCmpdFragmentPChem.Factory.newInstance();                
+//                replicatePchem(ahcf.getAdHocCmpdFragmentPChem(), pchem);                
+//                session.persist(pchem);
+//                
+//                frag.setAdHocCmpdFragmentPChem(pchem);
+//                                
+//                AdHocCmpdFragmentStructure struc = AdHocCmpdFragmentStructure.Factory.newInstance();
+//                replicateStructure(ahcf.getAdHocCmpdFragmentStructure(), struc);
+//                session.persist(struc);
+//                
+//                frag.setAdHocCmpdFragmentStructure(struc);
+//                
+//                // persist the fragment                
+//                session.persist(frag);
+//                
+//                // check whether this is parent, and set that while we're at it
+//                
+//                if (ahc.getAdHocCmpdParentFragment().equals(ahcf)){
+//                    newAhc.setAdHocCmpdParentFragment(frag);
+//                }
+//                
+//            }
+//            
+//            session.persist("Cmpd", newAhc);
+//            
+//            tx.commit();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tx.rollback();            
+//        } finally {
+//            session.close();
+//        }
+//
+//        return ahc;
+//
+//    }
 
     public CmpdList createCmpdList(List<Cmpd> listOfCmpds, String currentUser) {
 
         CmpdList rtn = CmpdList.Factory.newInstance();
 
+        Session session = null;
+        Transaction tx = null;
+
         try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
 
             Date now = new Date();
             Timestamp ts = new Timestamp(now.getTime());
@@ -58,7 +149,7 @@ public class HelperCmpd {
 
             //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
 
-            Transaction tx = session.beginTransaction();
+            tx = session.beginTransaction();
 
             // create a new list
 
@@ -86,7 +177,10 @@ public class HelperCmpd {
             tx.commit();
 
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
 
         return rtn;
@@ -97,7 +191,12 @@ public class HelperCmpd {
 
         Long rtn = Long.valueOf(-1);
 
+        Session session = null;
+        Transaction tx = null;
+
         try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
 
             Date now = new Date();
             XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
@@ -113,7 +212,7 @@ public class HelperCmpd {
             cmpdListId = new Long(randomId);
             //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
 
-            Transaction tx = session.beginTransaction();
+            tx = session.beginTransaction();
 
             Criteria c = session.createCriteria(Cmpd.class);
             c.add(Restrictions.in("nsc", nscIntList));
@@ -148,7 +247,10 @@ public class HelperCmpd {
             tx.commit();
 
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
 
         return rtn;
@@ -161,9 +263,14 @@ public class HelperCmpd {
 
         List<CmpdVO> rtnList = new ArrayList<CmpdVO>();
 
+        Session session = null;
+        Transaction tx = null;
+
         try {
 
-            org.hibernate.Transaction tx = session.beginTransaction();
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            tx = session.beginTransaction();
             Criteria cmpdCrit = session.createCriteria(Cmpd.class);
             cmpdCrit.add(Restrictions.in("nsc", nscIntList));
             List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
@@ -177,19 +284,22 @@ public class HelperCmpd {
             }
 
 // fetch a list of cmpdViews
-            Criteria cvCrit = session.createCriteria(CmpdView.class);
+            Criteria cvCrit = session.createCriteria(CmpdTable.class);
             cvCrit.add(Restrictions.in("id", cmpdIdList));
-            List<CmpdView> entityCVlist = (List<CmpdView>) cvCrit.list();
+            List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
-            for (CmpdView cv : entityCVlist) {
-                CmpdVO cVO = TransformCmpdViewToVO.toCmpdVO(cv);
+            for (CmpdTable cv : entityCVlist) {
+                CmpdVO cVO = TransformCmpdTableToVO.toCmpdVO(cv);
                 rtnList.add(cVO);
             }
 
             tx.commit();
 
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
 
         return rtnList;
@@ -202,28 +312,37 @@ public class HelperCmpd {
 
         CmpdVO rtn = new CmpdVO();
 
+        Session session = null;
+        Transaction tx = null;
+
         try {
 
-            org.hibernate.Transaction tx = session.beginTransaction();
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            tx = session.beginTransaction();
             Criteria cmpdCrit = session.createCriteria(Cmpd.class);
             cmpdCrit.add(Restrictions.eq("nsc", nsc));
             Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
 
             Long cmpdId = (Long) session.getIdentifier(cmpd);
 
-            Criteria cvCrit = session.createCriteria(CmpdView.class);
+            Criteria cvCrit = session.createCriteria(CmpdTable.class);
             cvCrit.add(Restrictions.eq("id", cmpdId));
-            CmpdView entityCV = (CmpdView) cvCrit.uniqueResult();
+            CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
 
-            rtn = TransformCmpdViewToVO.toCmpdVO(entityCV);
+            rtn = TransformCmpdTableToVO.toCmpdVO(entityCV);
 
             tx.commit();
 
         } catch (Exception e) {
+            tx.rollback();
             e.printStackTrace();
+        } finally {
+            session.close();
         }
 
         return rtn;
 
     }
+    
 }

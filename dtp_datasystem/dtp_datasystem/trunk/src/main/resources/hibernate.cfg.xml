@@ -2,8 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 
-    <session-factory>
-                
+    <session-factory>                
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragment.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentPChem.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentStructure.hbm.xml"/>
@@ -26,7 +25,10 @@
         <mapping resource="mwk/datasystem/domain/CmpdSet.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdTarget.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/RdkitMol.hbm.xml"/>
-        <mapping resource="mwk/datasystem/domain/CmpdView.hbm.xml"/>
+        
+        <!-- MWK local copy modified to remove generator on id -->        
+        <mapping resource="CmpdTable.hbm.xml"/>
+        
     </session-factory>
     
     <!--
@@ -57,7 +59,7 @@
         <mapping class="mwk.datasystem.domain.CmpdProjectImpl"/>
         <mapping class="mwk.datasystem.domain.CmpdImpl"/>
         <mapping class="mwk.datasystem.domain.CmpdListMemberImpl"/>
-        <mapping class="mwk.datasystem.domain.CmpdViewImpl"/>
+        <mapping class="mwk.datasystem.domain.CmpdTableImpl"/>
     </session-factory>
     
     -->

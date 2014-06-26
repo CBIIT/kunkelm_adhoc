@@ -17,7 +17,7 @@ import mwk.datasystem.domain.CmpdFragmentStructure;
 import mwk.datasystem.domain.CmpdTarget;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
-import mwk.datasystem.domain.CmpdView;
+import mwk.datasystem.domain.CmpdTable;
 import mwk.datasystem.domain.NscCmpd;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -31,21 +31,21 @@ import mwk.datasystem.vo.CmpdFragmentVO;
 import mwk.datasystem.vo.CmpdVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
-import mwk.datasystem.vo.CmpdViewVO;
+import mwk.datasystem.vo.CmpdTableVO;
 
 /**
  *
  * @author mwkunkel
  */
-public class TransformCmpdViewToVO {
+public class TransformCmpdTableToVO {
 
-    public static List<CmpdViewVO> translateListOfCmpdView(List<CmpdView> entityListIn) {
+    public static List<CmpdTableVO> translateListOfCmpdTable(List<CmpdTable> entityListIn) {
 
-        ArrayList<CmpdViewVO> rtnList = new ArrayList<CmpdViewVO>();
+        ArrayList<CmpdTableVO> rtnList = new ArrayList<CmpdTableVO>();
 
         try {
-            for (CmpdView cv : entityListIn) {
-                rtnList.add(translateCmpdView(cv));
+            for (CmpdTable cv : entityListIn) {
+                rtnList.add(translateCmpdTable(cv));
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -54,9 +54,9 @@ public class TransformCmpdViewToVO {
 
     }
 
-    public static CmpdViewVO translateCmpdView(CmpdView entityIn) {
+    public static CmpdTableVO translateCmpdTable(CmpdTable entityIn) {
 
-        CmpdViewVO rtnVO = new CmpdViewVO();
+        CmpdTableVO rtnVO = new CmpdTableVO();
         try {
             if (entityIn != null) {
                 rtnVO.setId(entityIn.getId());
@@ -138,7 +138,7 @@ public class TransformCmpdViewToVO {
 
     }
 
-    public static CmpdFragmentVO toCmpdFragmentVO(CmpdView entityIn) {
+    public static CmpdFragmentVO toCmpdFragmentVO(CmpdTable entityIn) {
 
         CmpdFragmentVO rtn = new CmpdFragmentVO();
 
@@ -155,7 +155,7 @@ public class TransformCmpdViewToVO {
 
     }
 
-    public static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdView entityIn) {
+    public static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdTable entityIn) {
 
         CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
 
@@ -176,7 +176,7 @@ public class TransformCmpdViewToVO {
 
     }
 
-    public static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdView entityIn) {
+    public static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdTable entityIn) {
 
         CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
 
@@ -185,7 +185,7 @@ public class TransformCmpdViewToVO {
             rtn.setInchi(entityIn.getInchi());
             rtn.setMol(entityIn.getSmiles());
             rtn.setInchiAux(entityIn.getInchiAux());
-            // no cTab in CmpdView
+            // no cTab in CmpdTable
             //rtn.setCtab(entityIn.getCtab());
             rtn.setId(entityIn.getId());
         } catch (Exception e) {
@@ -196,7 +196,7 @@ public class TransformCmpdViewToVO {
 
     }
 
-    public static CmpdBioAssayVO toCmpdBioAssayVO(CmpdView entityIn) {
+    public static CmpdBioAssayVO toCmpdBioAssayVO(CmpdTable entityIn) {
 
         CmpdBioAssayVO rtn = new CmpdBioAssayVO();
 
@@ -211,7 +211,7 @@ public class TransformCmpdViewToVO {
         return rtn;
     }
 
-    public static CmpdVO toCmpdVO(CmpdView entityIn) {
+    public static CmpdVO toCmpdVO(CmpdTable entityIn) {
 
         CmpdVO cmpdVO = new CmpdVO();
 
@@ -253,9 +253,9 @@ public class TransformCmpdViewToVO {
         return cmpdVO;
     }
 
-    public static List<CmpdVO> translateListOfCmpdViews(List<CmpdView> entityListIn) {
+    public static List<CmpdVO> translateListOfCmpdTables(List<CmpdTable> entityListIn) {
         List<CmpdVO> returnList = new ArrayList<CmpdVO>();
-        for (CmpdView cv : entityListIn) {
+        for (CmpdTable cv : entityListIn) {
             returnList.add(toCmpdVO(cv));
         }
         return returnList;
@@ -303,7 +303,7 @@ public class TransformCmpdViewToVO {
 
         try {
             rtn.setId(entityIn.getId());
-            //rtn.setCmpd(toCmpdVO(entityIn.getCmpdView()));
+            //rtn.setCmpd(toCmpdVO(entityIn.getCmpdTable()));
         } catch (Exception exception) {
             exception.printStackTrace();
         }

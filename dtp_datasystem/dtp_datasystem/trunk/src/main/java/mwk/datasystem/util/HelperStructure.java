@@ -7,7 +7,7 @@ package mwk.datasystem.util;
 import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
-import mwk.datasystem.domain.CmpdView;
+import mwk.datasystem.domain.CmpdTable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,89 +29,166 @@ import mwk.datasystem.vo.CmpdVO;
  */
 public class HelperStructure {
 
-  Session session = null;
+    public List<Integer> findNSCsByExactMatch(String smiles) {
 
-  public HelperStructure() {
-    this.session = HibernateUtil.getSessionFactory().getCurrentSession();
-  }
+        ArrayList<Integer> nscList = new ArrayList<Integer>();
 
-  public List<Integer> findNSCsByExactMatch(String smiles) {
+        Session session = null;
+        Transaction tx = null;
 
-    String sqlQuery = "select nsc from rdkit_mol where '" + smiles + "' @= mol";
+        try {
 
-    Transaction tx = session.beginTransaction();
-    Query q = session.createSQLQuery(sqlQuery);
-    List resultList = q.list();
-    ArrayList<Integer> nscList = new ArrayList<Integer>(resultList);
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    tx.commit();
-    
-    return nscList;
-  }
+            String sqlQuery = "select nsc from rdkit_mol where '" + smiles + "' @= mol";
 
-  public List<Integer> findNSCsBySmilesSubstructure(String substructureSmiles) {
+            tx = session.beginTransaction();
+            Query q = session.createSQLQuery(sqlQuery);
+            List resultList = q.list();
+            nscList = new ArrayList<Integer>(resultList);
 
-    String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "' <@ mol";
+            tx.commit();
 
-    Transaction tx = session.beginTransaction();
-    Query q = session.createSQLQuery(sqlQuery);
-    List resultList = q.list();
-    ArrayList<Integer> nscList = new ArrayList<Integer>(resultList);
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
 
-    tx.commit();
-    
-    return nscList;
-  }
+        return nscList;
+    }
 
-  public List<Integer> findNSCsBySmartsSubstructure(String substructureSmiles) {
+    public List<Integer> findNSCsBySmilesSubstructure(String substructureSmiles) {
 
-    String sqlQuery = "select nsc from rdkit_mol  where cast('" + substructureSmiles + "' as qmol) <@ mol";
+        ArrayList<Integer> nscList = new ArrayList<Integer>();
 
-    Transaction tx = session.beginTransaction();
-    Query q = session.createSQLQuery(sqlQuery);
-    List resultList = q.list();
-    ArrayList<Integer> nscList = new ArrayList<Integer>(resultList);
+        Session session = null;
+        Transaction tx = null;
 
-    tx.commit();
-    
-    return nscList;
-  }
+        try {
 
-  public List<Integer> findNSCsByDiceSimilarity(String structureSmiles, Double similarityCutoff) {
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    String sqlQuery = "set rdkit.dice_threshold = " + similarityCutoff.toString();
 
-    Transaction tx = session.beginTransaction();
-    Query q = session.createSQLQuery(sqlQuery);
-    q.executeUpdate();
+            String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "' <@ mol";
 
-    sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) # morganbv and fps.id = rdkit_mol.id";
+            tx = session.beginTransaction();
+            Query q = session.createSQLQuery(sqlQuery);
+            List resultList = q.list();
+            nscList = new ArrayList<Integer>(resultList);
 
-    q = session.createSQLQuery(sqlQuery);
-    List resultList = q.list();
-    ArrayList<Integer> nscList = new ArrayList<Integer>(resultList);
+            tx.commit();
 
-    tx.commit();
-    
-    return nscList;
-  }
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
 
-  public List<Integer> findNSCsByTanimotoSimilarity(String structureSmiles, Double similarityCutoff) {
 
-    String sqlQuery = "set rdkit.tanimoto_threshold = " + similarityCutoff.toString();
+        return nscList;
+    }
 
-    Transaction tx = session.beginTransaction();
-    Query q = session.createSQLQuery(sqlQuery);
-    q.executeUpdate();
+    public List<Integer> findNSCsBySmartsSubstructure(String substructureSmiles) {
 
-    sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) % morganbv and fps.id = rdkit_mol.id";
+        ArrayList<Integer> nscList = new ArrayList<Integer>();
 
-    q = session.createSQLQuery(sqlQuery);
-    List resultList = q.list();
-    ArrayList<Integer> nscList = new ArrayList<Integer>(resultList);
+        Session session = null;
+        Transaction tx = null;
 
-    tx.commit();
-    
-    return nscList;
-  }
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            String sqlQuery = "select nsc from rdkit_mol  where cast('" + substructureSmiles + "' as qmol) <@ mol";
+
+            tx = session.beginTransaction();
+            Query q = session.createSQLQuery(sqlQuery);
+            List resultList = q.list();
+            nscList = new ArrayList<Integer>(resultList);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return nscList;
+    }
+
+    public List<Integer> findNSCsByDiceSimilarity(String structureSmiles, Double similarityCutoff) {
+
+        ArrayList<Integer> nscList = new ArrayList<Integer>();
+
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            String sqlQuery = "set rdkit.dice_threshold = " + similarityCutoff.toString();
+
+            tx = session.beginTransaction();
+            Query q = session.createSQLQuery(sqlQuery);
+            q.executeUpdate();
+
+            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) # morganbv and fps.id = rdkit_mol.id";
+
+            q = session.createSQLQuery(sqlQuery);
+            List resultList = q.list();
+            nscList = new ArrayList<Integer>(resultList);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return nscList;
+    }
+
+    public List<Integer> findNSCsByTanimotoSimilarity(String structureSmiles, Double similarityCutoff) {
+
+        ArrayList<Integer> nscList = new ArrayList<Integer>();
+
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+
+            String sqlQuery = "set rdkit.tanimoto_threshold = " + similarityCutoff.toString();
+
+            tx = session.beginTransaction();
+            Query q = session.createSQLQuery(sqlQuery);
+            q.executeUpdate();
+
+            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) % morganbv and fps.id = rdkit_mol.id";
+
+            q = session.createSQLQuery(sqlQuery);
+            List resultList = q.list();
+            nscList = new ArrayList<Integer>(resultList);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return nscList;
+    }
 }

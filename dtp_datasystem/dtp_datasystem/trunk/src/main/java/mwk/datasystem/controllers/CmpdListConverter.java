@@ -53,6 +53,7 @@ public class CmpdListConverter implements Converter, Serializable {
                 }
 
             } catch (NumberFormatException exception) {
+                exception.printStackTrace();
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid player"));
             }
         }

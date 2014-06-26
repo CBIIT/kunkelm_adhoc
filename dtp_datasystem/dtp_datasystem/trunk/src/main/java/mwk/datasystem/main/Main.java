@@ -24,18 +24,21 @@ import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdImpl;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
+import mwk.datasystem.domain.CmpdTable;
 import mwk.datasystem.domain.NscCmpd;
 import mwk.datasystem.domain.NscCmpdImpl;
 import mwk.datasystem.util.Comparators;
+import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.util.HelperStructure;
 import mwk.datasystem.util.HibernateUtil;
 import mwk.datasystem.util.MoleculeParser;
 import mwk.datasystem.util.TransformAndroToVO;
-import mwk.datasystem.util.TransformCmpdViewToVO;
+import mwk.datasystem.util.TransformCmpdTableToVO;
 import mwk.datasystem.util.TransformXMLGregorianCalendar;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdTableVO;
 import mwk.datasystem.vo.CmpdVO;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -47,6 +50,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -83,26 +87,225 @@ public class Main {
 //
 //        deleteCmpdListMembers(lmForDelete, "kunkelm");
 
-        // append ListMembers
+//        // append ListMembers
+//
+//        // ONE
+//        Long targetListId = 457969235628580421l;
+//        CmpdListVO clVO = new CmpdListVO();
+//        clVO.setCmpdListId(targetListId);
+//
+//        ArrayList<Long> idsForAppend = new ArrayList<Long>();
+//        idsForAppend.add(7835l);
+//        idsForAppend.add(7813l);
+//
+//        ArrayList<CmpdListMemberVO> lmForAppend = new ArrayList<CmpdListMemberVO>();
+//
+//        for (Long l : idsForAppend) {
+//            CmpdListMemberVO clmVO = new CmpdListMemberVO();
+//            clmVO.setId(l);
+//            lmForAppend.add(clmVO);
+//        }
+//        
+//        appendCmpdListMembers(clVO, lmForAppend, "kunkelm");
 
-        // ONE
-        Long targetListId = 457969235628580421l;
-        CmpdListVO clVO = new CmpdListVO();
-        clVO.setCmpdListId(targetListId);
+        //performListLogicSql();
 
-        ArrayList<Long> idsForAppend = new ArrayList<Long>();
-        idsForAppend.add(7835l);
-        idsForAppend.add(7813l);
+        adHocCmpdsToCmpdTable();
 
-        ArrayList<CmpdListMemberVO> lmForAppend = new ArrayList<CmpdListMemberVO>();
+    }
 
-        for (Long l : idsForAppend) {
-            CmpdListMemberVO clmVO = new CmpdListMemberVO();
-            clmVO.setId(l);
-            lmForAppend.add(clmVO);
+    public static void adHocCmpdsToCmpdTable() {
+
+        Session session = null;
+        Transaction tx = null;
+        Transaction tx2 = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            tx = session.beginTransaction();
+
+            Criteria crit = session.createCriteria(AdHocCmpd.class);
+            List<AdHocCmpd> cmpdList = crit.list();
+
+            ArrayList<CmpdTable> l = new ArrayList<CmpdTable>();
+
+            for (AdHocCmpd ahc : cmpdList) {
+
+                CmpdTable ct = CmpdTable.Factory.newInstance();
+
+                ct.setMw(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getMw());
+                ct.setMf(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getMf());
+                ct.setAlogp(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getAlogp());
+                ct.setLogd(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getLogd());
+                ct.setHba(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getHba());
+                ct.setHbd(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getHbd());
+                ct.setSa(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getSa());
+                ct.setPsa(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentPChem().getPsa());
+                ct.setSmiles(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentStructure().getSmiles());
+                ct.setInchi(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentStructure().getInchi());
+                ct.setMol(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentStructure().getMol());
+                ct.setInchiAux(ahc.getAdHocCmpdParentFragment().getAdHocCmpdFragmentStructure().getInchiAux());
+                ct.setName(ahc.getName());
+
+                // nulls 
+
+//            cv.setNscCmpdId(ahc.getNscCmpdId());
+//            cv.setPrefix(ahc.getPrefix());
+//            cv.setNsc(ahc.getNsc());
+//            cv.setConf(ahc.getConf());
+//            cv.setDistribution(ahc.getDistribution());
+//            cv.setCas(ahc.getCas());
+//            cv.setNci60(ahc.getNci60());
+//            cv.setHf(ahc.getHf());
+//            cv.setXeno(ahc.getXeno());
+
+                ct.setCmpdOwner(ahc.getCmpdOwner());
+                ct.setAdHocCmpdId(ahc.getAdHocCmpdId());
+                
+//            cv.setTargets(ahc.getTargets());
+//            cv.setSets(ahc.getSets());
+//            cv.setProjects(ahc.getProjects());
+//            cv.setPlates(ahc.getPlates());
+//            cv.setAliases(ahc.getAliases());
+
+                ct.setId(ahc.getId());
+
+//            cv.setInventory(ahc.getInventory());
+
+                l.add(ct);
+
+            }
+
+            tx.commit();
+
+            for (CmpdTable ct : l) {
+
+                CmpdVO ctVO = TransformCmpdTableToVO.toCmpdVO(ct);
+
+                System.out.println(ctVO.toString());
+
+//                System.out.println(ct.getMw());
+//                System.out.println(ct.getMf());
+//                System.out.println(ct.getAlogp());
+//                System.out.println(ct.getLogd());
+//                System.out.println(ct.getHba());
+//                System.out.println(ct.getHbd());
+//                System.out.println(ct.getSa());
+//                System.out.println(ct.getPsa());
+//                System.out.println(ct.getSmiles());
+//                System.out.println(ct.getInchi());
+//                System.out.println(ct.getMol());
+//                System.out.println(ct.getInchiAux());
+//                System.out.println(ct.getName());
+//                System.out.println("--------------------------------------------------------------");
+
+            }
+
+            tx2 = session.beginTransaction();
+
+            for (CmpdTable ct : l) {
+                //session.persist(ct);
+                
+                System.out.println("ct.getId(): " + ct.getId());
+                
+                session.merge(ct);
+            }
+
+            tx2.commit();
+
+        } catch (Exception e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            if (tx2.isActive()) {
+                tx2.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
-        
-        appendCmpdListMembers(clVO, lmForAppend, "kunkelm");
+
+    }
+
+    public static String performListLogicSql() {
+
+        Long listAid = 9129646950110277617l;
+        Long listBid = 943327792639172795l;
+
+        ArrayList<Integer> AnotBintList = doSingleQuery("except", listAid, listBid);
+        ArrayList<Integer> AandBintList = doSingleQuery("intersect", listAid, listBid);
+        ArrayList<Integer> AorBintList = doSingleQuery("union", listAid, listBid);
+
+        HelperCmpd helper = new HelperCmpd();
+
+//        this.cmpdsListAnotListB = 
+        helper.getCmpdsByNsc(AnotBintList, "kunkelm");
+//        this.cmpdsListAorListB = 
+        helper.getCmpdsByNsc(AorBintList, "kunkelm");
+//        this.cmpdsListAandListB = 
+        helper.getCmpdsByNsc(AandBintList, "kunkelm");
+
+        return "/webpages/listLogic?faces-redirect=true";
+
+    }
+
+    private static ArrayList<Integer> doSingleQuery(
+            String keyword,
+            Long aId,
+            Long bId) {
+
+        ArrayList<Integer> nscIntList = new ArrayList<Integer>();
+
+        String templatedQuery = " select n.nsc "
+                + " from cmpd_list cl, cmpd_list_member clm, nsc_cmpd n "
+                + " where cl.cmpd_list_id = :aId "
+                + " and clm.cmpd_list_fk = cl.id "
+                + " and clm.cmpd_fk = n.id "
+                + " " + keyword + " "
+                + " select n.nsc "
+                + " from cmpd_list cl, cmpd_list_member clm, nsc_cmpd n "
+                + " where cl.cmpd_list_id = :bId "
+                + " and clm.cmpd_list_fk = cl.id "
+                + " and clm.cmpd_fk = n.id ";
+
+
+        Session s = null;
+        Transaction t = null;
+
+        try {
+
+            s = HibernateUtil.getSessionFactory().openSession();
+
+            t = s.beginTransaction();
+
+            Query q = s.createSQLQuery(templatedQuery);
+            q.setParameter("aId", aId);
+            q.setParameter("bId", bId);
+
+            List results = q.list();
+
+            int cntNsc = 0;
+            for (Iterator itr = results.iterator(); itr.hasNext();) {
+                cntNsc++;
+                Integer nsc = (Integer) itr.next();
+                nscIntList.add(nsc);
+            }
+
+            System.out.println("cntNsc: " + cntNsc);
+
+            t.commit();
+            s.close();
+
+        } catch (Exception e) {
+            t.rollback();
+            s.close();
+            e.printStackTrace();
+        }
+
+        return nscIntList;
+
     }
 
     public static void appendCmpdListMembers(CmpdListVO targetList, List<CmpdListMemberVO> forAppend, String currentUser) {
@@ -592,7 +795,7 @@ public class Main {
 
             session.getTransaction().commit();
 
-            CmpdListVO clVO = TransformCmpdViewToVO.toCmpdListVO(cl, Boolean.TRUE);
+            CmpdListVO clVO = TransformCmpdTableToVO.toCmpdListVO(cl, Boolean.TRUE);
 
         } catch (Exception e) {
             e.printStackTrace();

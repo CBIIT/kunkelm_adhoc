@@ -159,7 +159,7 @@ Fri 05Apr2013
 
 generator = sequence tags on all Entity
 
-backup ENTIRE PROJECT before start mods to use completely-flat CmpdView instead of Cmpd
+backup ENTIRE PROJECT before start mods to use completely-flat CmpdTable instead of Cmpd
 
 Sat 06Apr2013
 
@@ -167,21 +167,21 @@ removed hib and jpa remnants
 
 Mon 08Apr2013 Homework
 
-1::0..1 association to CmpdView
-util.Transform to translate CmpdView into CmpdVO 
+1::0..1 association to CmpdTable
+util.Transform to translate CmpdTable into CmpdVO 
 
 Wed 10Apr2013 Homework
 
-moved CmpdView to CmpdListMember; otherwise all accessors have to call .getCmpd().getCmpdView() which loads NscCmpd->lots of 1::many
+moved CmpdTable to CmpdListMember; otherwise all accessors have to call .getCmpd().getCmpdTable() which loads NscCmpd->lots of 1::many
 
-COMPLETELY disconnected CmpdView from model; HelperXXX methods will resolve calls against CmpdView
+COMPLETELY disconnected CmpdTable from model; HelperXXX methods will resolve calls against CmpdTable
 
 TODO! POLICE all cascade="delete" mappings
 
 Thu 11Apr2013
 
 fromWork design:  toCmpdListVO:   CmpdList.hbm.xml translate the CLM to VO while building
-list of id for contained cmpds, store in HashMap<cmpdId, clmVO>, fetch all CmpdView via Helper, resolve against HashMap
+list of id for contained cmpds, store in HashMap<cmpdId, clmVO>, fetch all CmpdTable via Helper, resolve against HashMap
 
 deleteList:  fetch list, store cmpdId numbers, search AdHocCmpd by id, delete any found
 
@@ -213,7 +213,7 @@ otherwise it wouldn't release the screen on hide();
 
 Tue 18Jun2013
 
-need to restore fragments to the cmpd view data model, and TransformCmpdViewToVO methods
+need to restore fragments to the cmpd view data model, and TransformCmpdTableToVO methods
 
 Wed 28Aug2013
 

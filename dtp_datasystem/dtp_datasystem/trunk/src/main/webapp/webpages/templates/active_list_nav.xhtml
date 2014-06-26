@@ -30,7 +30,7 @@
         <p:spacer width="20"/>
 
         <p:commandButton ajax="false" 
-                         disabled="#{empty listManagerController.activeList}"
+                         disabled="#{empty listManagerController.activeList || 1 == 1}"
                          action="/webpages/activeListScrollGrid?faces-redirect=true"
                          value="Scrollable Grid"/>        
 
@@ -45,7 +45,12 @@
                 <p:commandButton action="#{listContentController.performDeleteFromActiveList()}"
                                  value="Delete Selected"
                                  onstart="PF('deletingBUI').show();"
-                                 oncomplete="PF('deletingBUI').hide();"/>
+                                 oncomplete="PF('deletingBUI').hide();">
+                    
+                    <f:setPropertyActionListener value="#{listManagerController.activeList}"   
+                                                 target="#{listContentController.targetList}" />  
+                    
+                </p:commandButton>
             </p:panel>            
         </p:fieldset>
 

@@ -156,7 +156,6 @@ public class MoleculeParser {
 
         try {
 
-
             FileInputStream fis = new FileInputStream(sdFile);
 
             IteratingMDLReader reader = new IteratingMDLReader(fis, DefaultChemObjectBuilder.getInstance());
