@@ -18,7 +18,8 @@
             <p:commandButton ajax="false" value="Export to Excel">
                 <p:dataExporter type="xls" 
                                 target="activeListTbl" 
-                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        </p:commandButton>
+                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
+            </p:commandButton>
 
             <p:spacer width="20"/>
 
@@ -34,7 +35,8 @@
                 <p:dataExporter type="xls" 
                                 target="activeListTbl" 
                                 postProcessor="#{listManagerController.postProcessXLS}"
-                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        </p:commandButton>
+                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
+            </p:commandButton>
 
             <p:spacer width="20"/>
 
@@ -42,7 +44,7 @@
                              value="Image of bare structures as grid" /> 
 
         </p:fieldset>
-        
+
         <p:spacer height="20" width="100%"/>
 
         <p:dataTable  id="activeListTbl"
@@ -57,10 +59,13 @@
                       rowKey="#{listMember.id}"                              
                       sortMode="multiple">  
 
+            <p:ajax event="rowSelect" listener="#{listContentController.onRowSelect}" />
+            <p:ajax event="rowUnselect" listener="#{listContentController.onRowDeSelect}" />
+
             <f:facet name="header">                
                 <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
                 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
-                <p:columnToggler datasource="activeListTbl" trigger="toggler" />
+                <!--<p:columnToggler datasource="activeListTbl" trigger="toggler" />-->
             </f:facet>
 
             <p:column headerText="All"
@@ -87,6 +92,26 @@
                 </h:graphicImage>
 
             </p:column>
+
+
+
+
+            <p:column headerText="adHocCmpdId" resizeable="true" sortBy="#{listMember.cmpd.adHocCmpdId}}">                                
+                <h:outputText value="#{listMember.cmpd.adHocCmpdId}"/>
+            </p:column>  
+
+            <p:column headerText="originalAdHocCmpdId" resizeable="true" sortBy="#{listMember.cmpd.originalAdHocCmpdId}}">                                
+                <h:outputText value="#{listMember.cmpd.originalAdHocCmpdId}"/>
+            </p:column>  
+
+            <p:column headerText="nscCmpdId" resizeable="true" sortBy="#{listMember.cmpd.nscCmpdId}}">                                
+                <h:outputText value="#{listMember.cmpd.nscCmpdId}"/>
+            </p:column>  
+
+
+
+
+
 
             <p:column headerText="Comment" resizeable="true">                                
                 <h:outputText value="#{listMember.listMemberComment}"/>

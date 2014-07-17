@@ -113,6 +113,10 @@
             <column name="AD_HOC_CMPD_ID" not-null="false" unique="true" sql-type="BIGINT"/>
             <type name="java.lang.Long"/>
         </property>
+        <property name="originalAdHocCmpdId">
+            <column name="ORIGINAL_AD_HOC_CMPD_ID" not-null="false" unique="true" sql-type="BIGINT"/>
+            <type name="java.lang.Long"/>
+        </property>
         <property name="formattedTargetsString">
             <column name="FORMATTED_TARGETS_STRING" not-null="false" unique="false" sql-type="CHARACTER VARYING(1024)"/>
             <type name="java.lang.String"/>

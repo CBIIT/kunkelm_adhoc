@@ -235,6 +235,7 @@ public class TransformAndroToVO {
 
             cmpdVO.setId(ahc.getId());
             cmpdVO.setAdHocCmpdId(ahc.getAdHocCmpdId());
+            cmpdVO.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
             cmpdVO.setName(ahc.getName());
 
             // no other cmpd properties
@@ -270,8 +271,12 @@ public class TransformAndroToVO {
 
     public static CmpdListVO toCmpdListVO(CmpdList entityList, Boolean includeListMembers) {
 
+        
+        
         CmpdListVO rtn = new CmpdListVO();
 
+        try{
+        
         rtn.setId(entityList.getId());
         rtn.setCmpdListId(entityList.getCmpdListId());
         rtn.setListName(entityList.getListName());
@@ -296,6 +301,10 @@ public class TransformAndroToVO {
 
             rtn.setCmpdListMembers(voList);
 
+        }
+        
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
         return rtn;

@@ -56,6 +56,8 @@ public class ListManagerController implements Serializable {
     private CmpdListVO agnosticList;
     //
     private CmpdListVO activeList;
+    
+    // Are these still needed, or are the ones in ListContentController sufficient?     
     private CmpdListMemberVO selectedActiveListMember;
     private List<CmpdListMemberVO> selectedActiveListMembers;
     //
@@ -67,7 +69,6 @@ public class ListManagerController implements Serializable {
     // reach-through to sessionController
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
-
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
@@ -114,40 +115,7 @@ public class ListManagerController implements Serializable {
 
     }
 
-    /**
-     *
-     * @return For checkboxes outside of dataTable
-     */
-    public String performMySelect() {
-
-        StringBuilder msgBuilder = new StringBuilder();
-
-        // check the activeList for selectedMembers        
-        if (this.selectedActiveListMembers == null) {
-            msgBuilder.append("selectedActiveListMembers is null.  new ArrayList().");
-            System.out.println("selectedActiveListMembers is null.  new ArrayList().");
-            this.selectedActiveListMembers = new ArrayList<CmpdListMemberVO>();
-        } else {
-            msgBuilder.append("selectedActiveListMembers is NOT null.  list.clear().");
-            System.out.println("selectedActiveListMembers is NOT null.  list.clear().");
-            this.selectedActiveListMembers.clear();
-        }
-
-        for (CmpdListMemberVO clmVO : this.activeList.getCmpdListMembers()) {
-            if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                msgBuilder.append("selected: " + clmVO.getCmpd().getNsc());
-                System.out.println("selected: " + clmVO.getCmpd().getNsc());
-                this.selectedActiveListMembers.add(clmVO);
-            }
-        }
-
-        FacesMessage msg = new FacesMessage("Selected List Members: ", msgBuilder.toString());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        return "/webpages/activeListTable?faces-redirect=true";
-
-    }
-
+  
     public void onRowEdit(RowEditEvent event) {
 
         FacesMessage msg = new FacesMessage("List Edited", ((CmpdListVO) event.getObject()).getId().toString());
@@ -292,9 +260,6 @@ public class ListManagerController implements Serializable {
 
     public String performLoadList(CmpdListVO clVO) {
 
-        System.out.println("Entering performLoadList(CmpdListVO clVO)");
-
-        System.out.println("------------------------ListId: " + clVO.getCmpdListId() + " was not populated. Now fetching listMembers");
         HelperCmpdList helper = new HelperCmpdList();
         CmpdListVO voList = helper.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
         clVO.setCmpdListMembers(voList.getCmpdListMembers());

@@ -32,7 +32,7 @@ import mwk.datasystem.vo.CmpdVO;
  */
 public class HelperAdHocCmpd {
     
-    private static void replicatePchem(AdHocCmpdFragmentPChem cur, AdHocCmpdFragmentPChem nw){        
+    public static void replicatePchem(AdHocCmpdFragmentPChem cur, AdHocCmpdFragmentPChem nw){        
         nw.setAlogp(cur.getAlogp());
         nw.setHba(cur.getHba());
         nw.setHbd(cur.getHbd());
@@ -42,7 +42,7 @@ public class HelperAdHocCmpd {
         nw.setSa(cur.getSa());        
     }
     
-    private static void replicateStructure(AdHocCmpdFragmentStructure cur, AdHocCmpdFragmentStructure nw){        
+    public static void replicateStructure(AdHocCmpdFragmentStructure cur, AdHocCmpdFragmentStructure nw){        
         nw.setCtab(cur.getCtab());
         nw.setInchi(cur.getInchi());
         nw.setInchiAux(cur.getInchiAux());
@@ -50,14 +50,61 @@ public class HelperAdHocCmpd {
         nw.setSmiles(cur.getSmiles());
     }
     
-    public static AdHocCmpd createNewAdHocCmpd(AdHocCmpd ahc, String currentUser) {
+    public static AdHocCmpd replicateAdHocCmpdObject(AdHocCmpd ahc, String currentUser) {
+
+        Random randomGenerator = new Random();
+        
+        AdHocCmpd rtn = AdHocCmpd.Factory.newInstance();
+
+        try {
+
+            long randomId = randomGenerator.nextLong();
+            if (randomId < 0) {
+                randomId = -1 * randomId;
+            }
+            Long newRandomId = new Long(randomId);
+
+            rtn.setAdHocCmpdId(newRandomId);
+            rtn.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
+            rtn.setCmpdOwner(currentUser);            
+            rtn.setName(ahc.getName());            
+
+            for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
+                
+                AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
+
+                AdHocCmpdFragmentPChem pchem = AdHocCmpdFragmentPChem.Factory.newInstance();                
+                replicatePchem(ahcf.getAdHocCmpdFragmentPChem(), pchem);  
+                frag.setAdHocCmpdFragmentPChem(pchem);
+                                
+                AdHocCmpdFragmentStructure struc = AdHocCmpdFragmentStructure.Factory.newInstance();
+                replicateStructure(ahcf.getAdHocCmpdFragmentStructure(), struc);
+                frag.setAdHocCmpdFragmentStructure(struc);
+                
+                if (ahc.getAdHocCmpdParentFragment().equals(ahcf)){
+                    rtn.setAdHocCmpdParentFragment(frag);
+                }
+                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            
+        }
+
+        return rtn;
+
+    }
+    
+  public static AdHocCmpd createNewAdHocCmpd(AdHocCmpd ahc, String currentUser) {
 
         Random randomGenerator = new Random();
 
         Session session = null;
         Transaction tx = null;
 
-        AdHocCmpd newAhc = null;
+        AdHocCmpd rtn = null;
 
         try {
 
@@ -67,17 +114,17 @@ public class HelperAdHocCmpd {
             if (randomId < 0) {
                 randomId = -1 * randomId;
             }
-            Long adHocCmpdId = new Long(randomId);
+            Long newRandomId = new Long(randomId);
 
             tx = session.beginTransaction();
 
-            newAhc = AdHocCmpd.Factory.newInstance();
+            rtn = AdHocCmpd.Factory.newInstance();
             
-            newAhc.setAdHocCmpdId(adHocCmpdId);
-            newAhc.setCmpdOwner(currentUser);
-            newAhc.setName(ahc.getName());
-            newAhc.setOriginalAdHocCmpdId(ahc.getAdHocCmpdId());
-
+            rtn.setAdHocCmpdId(newRandomId);
+            rtn.setOriginalAdHocCmpdId(newRandomId);
+            rtn.setCmpdOwner(currentUser);
+            rtn.setName(ahc.getName());
+            
             for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
                 
                 AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
@@ -100,12 +147,12 @@ public class HelperAdHocCmpd {
                 // check whether this is parent, and set that while we're at it
                 
                 if (ahc.getAdHocCmpdParentFragment().equals(ahcf)){
-                    newAhc.setAdHocCmpdParentFragment(frag);
+                    rtn.setAdHocCmpdParentFragment(frag);
                 }
                 
             }
             
-            session.persist("Cmpd", newAhc);
+            session.persist("Cmpd", rtn);
             
             tx.commit();
 
@@ -116,7 +163,7 @@ public class HelperAdHocCmpd {
             session.close();
         }
 
-        return ahc;
+        return rtn;
 
     }
 

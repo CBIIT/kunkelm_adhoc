@@ -39,66 +39,7 @@ import mwk.datasystem.vo.CmpdTableVO;
  */
 public class TransformCmpdTableToVO {
 
-    public static List<CmpdTableVO> translateListOfCmpdTable(List<CmpdTable> entityListIn) {
-
-        ArrayList<CmpdTableVO> rtnList = new ArrayList<CmpdTableVO>();
-
-        try {
-            for (CmpdTable cv : entityListIn) {
-                rtnList.add(translateCmpdTable(cv));
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        return rtnList;
-
-    }
-
-    public static CmpdTableVO translateCmpdTable(CmpdTable entityIn) {
-
-        CmpdTableVO rtnVO = new CmpdTableVO();
-        try {
-            if (entityIn != null) {
-                rtnVO.setId(entityIn.getId());
-                rtnVO.setMw(entityIn.getMw());
-                rtnVO.setMf(entityIn.getMf());
-                rtnVO.setAlogp(entityIn.getAlogp());
-                rtnVO.setLogd(entityIn.getLogd());
-                rtnVO.setHba(entityIn.getHba());
-                rtnVO.setHbd(entityIn.getHbd());
-                rtnVO.setSa(entityIn.getSa());
-                rtnVO.setPsa(entityIn.getPsa());
-                rtnVO.setSmiles(entityIn.getSmiles());
-                rtnVO.setInchi(entityIn.getInchi());
-                rtnVO.setMol(entityIn.getMol());
-                rtnVO.setInchiAux(entityIn.getInchiAux());
-                rtnVO.setName(entityIn.getName());
-                rtnVO.setNscCmpdId(entityIn.getNscCmpdId());
-                rtnVO.setPrefix(entityIn.getPrefix());
-                rtnVO.setNsc(entityIn.getNsc());
-                rtnVO.setConf(entityIn.getConf());
-                rtnVO.setDistribution(entityIn.getDistribution());
-                rtnVO.setCas(entityIn.getCas());
-                rtnVO.setNci60(entityIn.getNci60());
-                rtnVO.setHf(entityIn.getHf());
-                rtnVO.setXeno(entityIn.getXeno());
-                rtnVO.setCmpdOwner(entityIn.getCmpdOwner());
-                rtnVO.setAdHocCmpdId(entityIn.getAdHocCmpdId());
-
-                rtnVO.setInventory(entityIn.getInventory());
-
-                rtnVO.setTargets(parseFormattedString(entityIn.getFormattedTargetsString()));
-                rtnVO.setSets(parseFormattedString(entityIn.getFormattedSetsString()));
-                rtnVO.setProjects(parseFormattedString(entityIn.getFormattedProjectsString()));
-                rtnVO.setPlates(parseFormattedString(entityIn.getFormattedPlatesString()));
-                rtnVO.setAliases(parseFormattedString(entityIn.getFormattedAliasesString()));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rtnVO;
-
-    }
+    public static final Boolean DEBUG = Boolean.FALSE;
 
     public static ArrayList<String> parseFormattedString(String fmtdString) {
 
@@ -138,7 +79,7 @@ public class TransformCmpdTableToVO {
 
     }
 
-    public static CmpdFragmentVO toCmpdFragmentVO(CmpdTable entityIn) {
+    private static CmpdFragmentVO toCmpdFragmentVO(CmpdTable entityIn) {
 
         CmpdFragmentVO rtn = new CmpdFragmentVO();
 
@@ -155,7 +96,7 @@ public class TransformCmpdTableToVO {
 
     }
 
-    public static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdTable entityIn) {
+    private static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdTable entityIn) {
 
         CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
 
@@ -176,7 +117,7 @@ public class TransformCmpdTableToVO {
 
     }
 
-    public static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdTable entityIn) {
+    private static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdTable entityIn) {
 
         CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
 
@@ -196,7 +137,7 @@ public class TransformCmpdTableToVO {
 
     }
 
-    public static CmpdBioAssayVO toCmpdBioAssayVO(CmpdTable entityIn) {
+    private static CmpdBioAssayVO toCmpdBioAssayVO(CmpdTable entityIn) {
 
         CmpdBioAssayVO rtn = new CmpdBioAssayVO();
 
@@ -216,35 +157,35 @@ public class TransformCmpdTableToVO {
         CmpdVO cmpdVO = new CmpdVO();
 
         try {
+            cmpdVO.setId(entityIn.getId());
+            cmpdVO.setNscCmpdId(entityIn.getNscCmpdId());
+            cmpdVO.setAdHocCmpdId(entityIn.getAdHocCmpdId());
 
-            try {
-                cmpdVO.setId(entityIn.getId());
-                cmpdVO.setNscCmpdId(entityIn.getNscCmpdId());
-                cmpdVO.setAdHocCmpdId(entityIn.getAdHocCmpdId());
-                cmpdVO.setName(entityIn.getName());
-                cmpdVO.setPrefix(entityIn.getPrefix());
-                cmpdVO.setNsc(entityIn.getNsc());
-                cmpdVO.setDistribution(entityIn.getDistribution());
-                cmpdVO.setConf(entityIn.getConf());
-                cmpdVO.setCas(entityIn.getCas());
-
-                cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(entityIn));
-
-                cmpdVO.setParentFragment(toCmpdFragmentVO(entityIn));
-
-                cmpdVO.setInventory(entityIn.getInventory());
-
-                // need fragments
-
-                cmpdVO.setTargets(parseFormattedString(entityIn.getFormattedTargetsString()));
-                cmpdVO.setSets(parseFormattedString(entityIn.getFormattedSetsString()));
-                cmpdVO.getTargets().addAll(parseFormattedString(entityIn.getFormattedProjectsString()));
-                cmpdVO.setPlates(parseFormattedString(entityIn.getFormattedPlatesString()));
-                cmpdVO.setAliases(parseFormattedString(entityIn.getFormattedAliasesString()));
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (DEBUG) {
+                System.out.println("In TransformCmpdTableToVO.toCmpdVo.  Setting originalAdHocCmpdId to: " + entityIn.getOriginalAdHocCmpdId());
             }
+            cmpdVO.setOriginalAdHocCmpdId(entityIn.getOriginalAdHocCmpdId());
+
+            cmpdVO.setName(entityIn.getName());
+            cmpdVO.setPrefix(entityIn.getPrefix());
+            cmpdVO.setNsc(entityIn.getNsc());
+            cmpdVO.setDistribution(entityIn.getDistribution());
+            cmpdVO.setConf(entityIn.getConf());
+            cmpdVO.setCas(entityIn.getCas());
+
+            cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(entityIn));
+
+            cmpdVO.setParentFragment(toCmpdFragmentVO(entityIn));
+
+            cmpdVO.setInventory(entityIn.getInventory());
+
+            // need fragments ?
+
+            cmpdVO.setTargets(parseFormattedString(entityIn.getFormattedTargetsString()));
+            cmpdVO.setSets(parseFormattedString(entityIn.getFormattedSetsString()));
+            cmpdVO.getTargets().addAll(parseFormattedString(entityIn.getFormattedProjectsString()));
+            cmpdVO.setPlates(parseFormattedString(entityIn.getFormattedPlatesString()));
+            cmpdVO.setAliases(parseFormattedString(entityIn.getFormattedAliasesString()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -264,6 +205,10 @@ public class TransformCmpdTableToVO {
     public static CmpdListVO toCmpdListVO(CmpdList entityList, Boolean includeListMembers) {
 
         CmpdListVO rtn = new CmpdListVO();
+
+        if (entityList == null) {
+            System.out.println("Entity list is null in TransformCmpdTableToVO.java");
+        }
 
         try {
             rtn.setId(entityList.getId());
@@ -294,7 +239,9 @@ public class TransformCmpdTableToVO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return rtn;
+
     }
 
     public static CmpdListMemberVO toCmpdListMemberVO(CmpdListMember entityIn) {

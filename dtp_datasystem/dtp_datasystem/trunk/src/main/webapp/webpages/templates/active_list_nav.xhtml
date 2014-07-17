@@ -30,7 +30,7 @@
         <p:spacer width="20"/>
 
         <p:commandButton ajax="false" 
-                         disabled="#{empty listManagerController.activeList || 1 == 1}"
+                         disabled="#{empty listManagerController.activeList}"
                          action="/webpages/activeListScrollGrid?faces-redirect=true"
                          value="Scrollable Grid"/>        
 

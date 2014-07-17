@@ -5,25 +5,24 @@
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import mwk.datasystem.util.HelperCmpd;
-import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.util.HibernateUtil;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
-import mwk.datasystem.vo.CmpdVO;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.type.StandardBasicTypes;
 
 /**
  *
@@ -33,6 +32,8 @@ import org.hibernate.type.StandardBasicTypes;
 @SessionScoped
 public class ListLogicController implements Serializable {
 
+    private static final Boolean DEBUG = Boolean.FALSE;
+    //
     private Long listAid;
     private Long listBid;
     //  
@@ -59,115 +60,167 @@ public class ListLogicController implements Serializable {
         this.sessionController = sessionController;
     }
 
-    public String performListLogic_Java() {
+    public String performListLogic() {
 
         CmpdListVO a = this.listManagerController.performLoadList(this.listAid);
         CmpdListVO b = this.listManagerController.performLoadList(listBid);
 
-        ArrayList<CmpdVO> cmpdCollA = new ArrayList<CmpdVO>();
-        for (CmpdListMemberVO clm : a.getCmpdListMembers()) {
-            cmpdCollA.add(clm.getCmpd());
+        // overlap is based on a.nsc = b.nsc OR a.originalAdHocCmpdId = b.originalAdHocCmpdId
+
+        HashMap<Integer, CmpdVO> nscMap = new HashMap<Integer, CmpdVO>();
+        HashMap<Long, CmpdVO> ahcIdMap = new HashMap<Long, CmpdVO>();
+
+        HashSet<Integer> nscSetA = new HashSet<Integer>();
+        HashSet<Integer> nscSetB = new HashSet<Integer>();
+
+        HashSet<Long> ahcIdSetA = new HashSet<Long>();
+        HashSet<Long> ahcIdSetB = new HashSet<Long>();
+
+        for (CmpdListMemberVO clmVO : a.getCmpdListMembers()) {
+            if (clmVO.getCmpd().getNsc() != null) {
+                nscMap.put(clmVO.getCmpd().getNsc(), clmVO.getCmpd());
+                nscSetA.add(clmVO.getCmpd().getNsc());
+            } else {
+                ahcIdMap.put(clmVO.getCmpd().getOriginalAdHocCmpdId(), clmVO.getCmpd());
+                ahcIdSetA.add(clmVO.getCmpd().getOriginalAdHocCmpdId());
+            }
         }
 
-        System.out.println("Size of cmpdCollA: " + cmpdCollA.size());
-
-        ArrayList<CmpdVO> cmpdCollB = new ArrayList<CmpdVO>();
-        for (CmpdListMemberVO clm : b.getCmpdListMembers()) {
-            cmpdCollB.add(clm.getCmpd());
+        for (CmpdListMemberVO clmVO : b.getCmpdListMembers()) {
+            if (clmVO.getCmpd().getNsc() != null) {
+                nscMap.put(clmVO.getCmpd().getNsc(), clmVO.getCmpd());
+                nscSetB.add(clmVO.getCmpd().getNsc());
+            } else {
+                ahcIdMap.put(clmVO.getCmpd().getOriginalAdHocCmpdId(), clmVO.getCmpd());
+                ahcIdSetB.add(clmVO.getCmpd().getOriginalAdHocCmpdId());
+            }
         }
 
-        System.out.println("Size of cmpdCollB: " + cmpdCollB.size());
+        if (DEBUG) {
+            System.out.println("a: " + a.getListName() + " " + a.getCmpdListMembers().size());
+            System.out.println("b: " + b.getListName() + " " + b.getCmpdListMembers().size());
+            System.out.println("----------------------------");
+            System.out.println("nsc in a: " + nscSetA.size());
+            System.out.println("ahc in a: " + ahcIdSetA.size());
+            System.out.println("----------------------------");
+            System.out.println("nsc in b: " + nscSetB.size());
+            System.out.println("ahc in b: " + ahcIdSetB.size());
+            System.out.println("----------------------------");
+        }
 
-        // union via HashSet
-        HashSet<CmpdVO> unionSet = new HashSet<CmpdVO>();
-        unionSet.addAll(cmpdCollA);
-        unionSet.addAll(cmpdCollB);
-        ArrayList<CmpdVO> unionList = new ArrayList<CmpdVO>();
-        unionList.addAll(unionSet);
-        this.cmpdsListAorListB = unionList;
+        // union
 
-        ArrayList<CmpdVO> tempListA = new ArrayList<CmpdVO>(cmpdCollA);
-        tempListA.retainAll(cmpdCollB);
-        System.out.println("Size of tempListA after retainAll: " + tempListA.size());
-        this.cmpdsListAandListB = new ArrayList<CmpdVO>(tempListA);
+        HashSet<Integer> tempNscA = new HashSet<Integer>(nscSetA);
+        HashSet<Long> tempAhcA = new HashSet<Long>(ahcIdSetA);
 
-        tempListA = new ArrayList<CmpdVO>(cmpdCollA);
-        tempListA.removeAll(cmpdCollB);
-        System.out.println("Size of tempListA after removeAll: " + tempListA.size());
-        this.cmpdsListAnotListB = new ArrayList<CmpdVO>(tempListA);
+        if (DEBUG) {
+            System.out.println("nsc in a BEFORE addAll: " + tempNscA.size());
+            System.out.println("ahc in a BEFORE addAll: " + tempAhcA.size());
+            System.out.println("----------------------------");
+        }
 
-        return "/webpages/listLogic?faces-redirect=true";
+        tempNscA.addAll(nscSetB);
+        tempAhcA.addAll(ahcIdSetB);
 
-    }
+        if (DEBUG) {
+            System.out.println("nsc in a AFTER addAll: " + tempNscA.size());
+            System.out.println("ahc in a AFTER addAll: " + tempAhcA.size());
+            System.out.println("----------------------------");
+        }
 
-    public String performListLogic() {
+        ArrayList<CmpdVO> AorB = new ArrayList<CmpdVO>();
+        for (Integer i : tempNscA) {
+            AorB.add(nscMap.get(i));
+        }
+        for (Long l : tempAhcA) {
+            AorB.add(ahcIdMap.get(l));
+        }
 
-        ArrayList<Integer> AnotBintList = doSingleQuery("except", this.listAid, this.listBid);
-        ArrayList<Integer> AandBintList = doSingleQuery("intersect", this.listAid, this.listBid);
-        ArrayList<Integer> AorBintList = doSingleQuery("union", this.listAid, this.listBid);
+        // intersection via retainAll by nsc and then retainAll by adHocCmpdId
 
-        HelperCmpd helper = new HelperCmpd();
+        tempNscA = new HashSet<Integer>(nscSetA);
+        tempAhcA = new HashSet<Long>(ahcIdSetA);
 
-        this.cmpdsListAnotListB = helper.getCmpdsByNsc(AnotBintList, this.sessionController.getLoggedUser());
-        this.cmpdsListAorListB = helper.getCmpdsByNsc(AorBintList, this.sessionController.getLoggedUser());
-        this.cmpdsListAandListB = helper.getCmpdsByNsc(AandBintList, this.sessionController.getLoggedUser());
+        if (DEBUG) {
+            System.out.println("nsc in a BEFORE retainAll: " + tempNscA.size());
+            System.out.println("ahc in a BEFORE retainAll: " + tempAhcA.size());
+            System.out.println("----------------------------");
+        }
 
-        return "/webpages/listLogic?faces-redirect=true";
+        tempNscA.retainAll(nscSetB);
+        tempAhcA.retainAll(ahcIdSetB);
 
-    }
+        if (DEBUG) {
+            System.out.println("nsc in a AFTER retainAll: in a and b by nsc " + tempNscA.size());
+            System.out.println("ahc in a AFTER retainAll: in a and b by ahc " + tempAhcA.size());
+            System.out.println("----------------------------");
+        }
 
-    private ArrayList<Integer> doSingleQuery(
-            String keyword,
-            Long aId,
-            Long bId) {
+        ArrayList<CmpdVO> AandB = new ArrayList<CmpdVO>();
+        for (Integer i : tempNscA) {
+            AandB.add(nscMap.get(i));
+        }
+        for (Long l : tempAhcA) {
+            AandB.add(ahcIdMap.get(l));
+        }
 
-        ArrayList<Integer> nscIntList = new ArrayList<Integer>();
+        // AnotB via removeAll of B from A
 
-        String templatedQuery = " select n.nsc "
-                + " from cmpd_list cl, cmpd_list_member clm, nsc_cmpd n "
-                + " where cl.cmpd_list_id = :aId "
-                + " and clm.cmpd_list_fk = cl.id "
-                + " and clm.cmpd_fk = n.id "
-                + " " + keyword + " "
-                + " select n.nsc "
-                + " from cmpd_list cl, cmpd_list_member clm, nsc_cmpd n "
-                + " where cl.cmpd_list_id = :bId "
-                + " and clm.cmpd_list_fk = cl.id "
-                + " and clm.cmpd_fk = n.id ";
+        tempNscA = new HashSet<Integer>(nscSetA);
+        tempAhcA = new HashSet<Long>(ahcIdSetA);
 
+        if (DEBUG) {
+            System.out.println("nsc in a BEFORE removeAll: " + tempNscA.size());
+            System.out.println("ahc in a BEFORE removeAll: " + tempAhcA.size());
+            System.out.println("----------------------------");
+        }
 
-        Session s = null;
-        Transaction t = null;
+        tempNscA.removeAll(nscSetB);
+        tempAhcA.removeAll(ahcIdSetB);
 
-        try {
+        if (DEBUG) {
+            System.out.println("nsc in a AFTER removeAll: " + tempNscA.size());
+            System.out.println("nsc in a AFTER removeAll: " + tempAhcA.size());
+            System.out.println("----------------------------");
+        }
 
-            s = HibernateUtil.getSessionFactory().openSession();
+        ArrayList<CmpdVO> AnotB = new ArrayList<CmpdVO>();
+        for (Integer i : tempNscA) {
+            AnotB.add(nscMap.get(i));
+        }
+        for (Long l : tempAhcA) {
+            AnotB.add(ahcIdMap.get(l));
+        }
 
-            t = s.beginTransaction();
+        if (DEBUG) {
+            System.out.println("AorB: " + AorB.size());
+            System.out.println("AandB: " + AandB.size());
+            System.out.println("AnotB: " + AnotB.size());
 
-            Query q = s.createSQLQuery(templatedQuery);
-            q.setParameter("aId", aId);
-            q.setParameter("bId", bId);
-
-            List results = q.list();
-
-            int i = 0;
-            for (Iterator itr = results.iterator(); itr.hasNext();) {
-                Integer nsc = (Integer) itr.next();
-                nscIntList.add(nsc);
-                // System.out.println("i: " + ++i + " nsc: " + nsc);
+            System.out.println("----------------------------");
+            System.out.println("AorB");
+            for (CmpdVO cVO : AorB) {
+                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
             }
 
-            t.commit();
-            s.close();
+            System.out.println("----------------------------");
+            System.out.println("AandB");
+            for (CmpdVO cVO : AandB) {
+                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
+            }
 
-        } catch (Exception e) {
-            t.rollback();
-            s.close();
-            e.printStackTrace();
+            System.out.println("----------------------------");
+            System.out.println("AnotB");
+            for (CmpdVO cVO : AnotB) {
+                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
+            }
         }
 
-        return nscIntList;
+        this.cmpdsListAorListB = AorB;
+        this.cmpdsListAandListB = AandB;
+        this.cmpdsListAnotListB = AnotB;
+
+        return "/webpages/listLogic?faces-redirect=true";
 
     }
 
@@ -219,7 +272,7 @@ public class ListLogicController implements Serializable {
     public void setCurrentListOfCompounds(List<CmpdVO> currentListOfCompounds) {
         this.currentListOfCompounds = currentListOfCompounds;
     }
-    
+
     public List<CmpdVO> getSelectedCmpds() {
         return selectedCmpds;
     }
@@ -227,7 +280,7 @@ public class ListLogicController implements Serializable {
     public void setSelectedCmpds(List<CmpdVO> selectedCmpds) {
         this.selectedCmpds = selectedCmpds;
     }
-    
+
     public CmpdVO getSelectedCmpd() {
         return selectedCmpd;
     }
@@ -235,9 +288,5 @@ public class ListLogicController implements Serializable {
     public void setSelectedCmpd(CmpdVO selectedCmpd) {
         this.selectedCmpd = selectedCmpd;
     }
-    
     // </editor-fold>
-
-    
-    
 }

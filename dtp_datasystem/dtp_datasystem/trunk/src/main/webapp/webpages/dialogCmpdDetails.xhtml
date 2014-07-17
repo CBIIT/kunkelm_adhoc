@@ -17,6 +17,8 @@
 
             <c:set var="the_cmpd" value="#{listLogicController.selectedCmpd}"/>
             
+            #{listLogicController.selectedCmpd.cmpdFragments}
+            
             <ui:include src="/webpages/cmpdDetails.xhtml"/>            
 
         </p:outputPanel>

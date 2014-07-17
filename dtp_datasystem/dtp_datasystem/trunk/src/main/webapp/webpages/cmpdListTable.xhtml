@@ -18,7 +18,7 @@
             <p:commandButton ajax="false" value="Export to Excel">
                 <p:dataExporter type="xls" 
                                 target="cmpdListTbl" 
-                                fileName="cmpdList_listId_#{listLogicController.currentListOfCompounds.cmpdListId}" />        
+                                fileName="listOfCompounds" />        
             </p:commandButton>
 
             <p:spacer width="20"/>
@@ -26,7 +26,7 @@
             <p:commandButton ajax="false" value="Export as CSV">  
                 <p:dataExporter type="csv" 
                                 target="cmpdListTbl" 
-                                fileName="cmpdList_listId_#{listLogicController.currentListOfCompounds.cmpdListId}" />
+                                fileName="listOfCompounds" />
             </p:commandButton> 
 
             <p:spacer width="20"/>
@@ -35,7 +35,7 @@
                 <p:dataExporter type="xls" 
                                 target="cmpdListTbl" 
                                 postProcessor="#{listManagerController.postProcessXLS}"
-                                fileName="cmpdList_listId_#{listLogicController.currentListOfCompounds.cmpdListId}" />        
+                                fileName="listOfCompounds" />        
             </p:commandButton>
 
             <p:spacer width="20"/>
@@ -62,7 +62,7 @@
             <f:facet name="header">                
                 <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Members"/>    
                 <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
-                <p:columnToggler datasource="cmpdListTbl" trigger="toggler" />
+                <!--<p:columnToggler datasource="cmpdListTbl" trigger="toggler" />-->
             </f:facet>
 
             <p:column headerText="All"

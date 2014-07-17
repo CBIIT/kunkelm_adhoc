@@ -158,9 +158,22 @@
 
         <p:row>
             <p:column colspan="4">
-                <p:panel header="SMILES, InChI, Aliases" toggleable="true" toggleOrientation="vertical" collapsed="true"> 
+                
+                <p:panel header="Fragments, SMILES, InChI, Aliases" toggleable="true" toggleOrientation="vertical" collapsed="true"> 
 
                     <p:panelGrid>
+                        
+                          <p:row>  
+                            <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">Fragments</p:column>  
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column colspan="4">                                
+                                <p:dataList value="#{the_cmpd.cmpdFragments}" var="frag" itemType="disc">  
+                                    <h:outputText value="#{frag.cmpdFragmentStructure.smiles}"/>                
+                                </p:dataList>
+                            </p:column>   
+                        </p:row>
 
                         <p:row>
                             <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">SMILES</p:column>  
@@ -193,7 +206,7 @@
                                 </p:dataList>
                             </p:column>   
                         </p:row>
-
+  
                     </p:panelGrid>
 
                 </p:panel>

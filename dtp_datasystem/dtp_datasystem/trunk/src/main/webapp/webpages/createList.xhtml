@@ -223,7 +223,7 @@
                 <br/>
                 <h:inputText value="#{listContentController.mw_max_form}" id="mwmax_id" cols="15" rows="5"/>
             </p:panel>
-            
+
             <p:panel header="alogp" style="display:inline-block;border: none;">
                 <h:outputLabel for="alogpmin_id" value="alogp Minimum"/>
                 <br/>
@@ -233,7 +233,7 @@
                 <br/>
                 <h:inputText value="#{listContentController.alogp_max_form}" id="alogpmax_id" cols="15" rows="5"/>
             </p:panel>
-            
+
             <p:panel header="logd" style="display:inline-block;border: none;">
                 <h:outputLabel for="logdmin_id" value="logd Minimum"/>
                 <br/>
@@ -243,7 +243,7 @@
                 <br/>
                 <h:inputText value="#{listContentController.logd_max_form}" id="logdmax_id" cols="15" rows="5"/>
             </p:panel>
-            
+
             <p:panel header="sa" style="display:inline-block;border: none;">
                 <h:outputLabel for="samin_id" value="sa Minimum"/>
                 <br/>
@@ -253,7 +253,7 @@
                 <br/>
                 <h:inputText value="#{listContentController.sa_max_form}" id="samax_id" cols="15" rows="5"/>
             </p:panel>
-            
+
             <p:panel header="psa" style="display:inline-block;border: none;">
                 <h:outputLabel for="psamin_id" value="psa Minimum"/>
                 <br/>
@@ -263,7 +263,7 @@
                 <br/>
                 <h:inputText value="#{listContentController.psa_max_form}" id="psamax_id" cols="15" rows="5"/>
             </p:panel>
-            
+
             <p:panel header="hba" style="display:inline-block;border: none;">
                 <h:outputLabel for="hbamin_id" value="hba Minimum"/>
                 <br/>
@@ -273,7 +273,7 @@
                 <br/>
                 <h:inputText value="#{listContentController.hba_max_form}" id="hbamax_id" cols="15" rows="5"/>
             </p:panel>
-            
+
             <p:panel header="hbd" style="display:inline-block;border: none;">
                 <h:outputLabel for="hbdmin_id" value="hbd Minimum"/>
                 <br/>
@@ -285,19 +285,25 @@
             </p:panel>
 
         </p:panel>
-
-        <p:panel header="List Name" style="display:inline-block;border: none;"> 
-            <h:outputLabel for="listnametext" value="List Name"/>
-            <br/>
-            <h:inputText value="#{listContentController.listName}" id="listnametext" cols="15" rows="5"/>
-        </p:panel>
-
         
-        <p:commandButton value="Create List"
-                         id="createListButton"
-                         action="#{listContentController.performCreateListBySearch()}"
-                         onstart="PF('creatingBUI').show();"
-                         oncomplete="PF('creatingBUI').hide();"/>
+        <p:spacer height="20" width="100%"/>
+
+        <p:panel header="List Name" style="display: inline-block;">
+
+            <p:panel style="display:inline-block;border: none;"> 
+                <h:outputLabel for="listnametext" value="List Name"/>
+                <br/>
+                <h:inputText value="#{listContentController.listName}" id="listnametext" cols="15" rows="5"/>
+                <br/>
+                <p:commandButton value="Create List"
+                                 id="createListButton"
+                                 action="#{listContentController.performCreateListBySearch()}"
+                                 onstart="PF('creatingBUI').show();"
+                                 oncomplete="PF('creatingBUI').hide();"/>
+
+            </p:panel>
+
+        </p:panel>
 
     </ui:define>
 

@@ -5,8 +5,10 @@
 package mwk.datasystem.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import mwk.datasystem.domain.AdHocCmpd;
 import mwk.datasystem.domain.AdHocCmpdFragment;
 import mwk.datasystem.domain.AdHocCmpdFragmentPChem;
@@ -14,9 +16,11 @@ import mwk.datasystem.domain.AdHocCmpdFragmentStructure;
 import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
+import mwk.datasystem.domain.NscCmpd;
 import mwk.datasystem.domain.NscCmpdImpl;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdVO;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -27,6 +31,8 @@ import org.hibernate.criterion.Restrictions;
  * @author mwkunkel
  */
 public class HelperCmpdListMember {
+
+    private static Boolean DEBUG = Boolean.TRUE;
 
     public void deleteCmpdListMembers(CmpdListVO targetList, List<CmpdListMemberVO> forDelete, String currentUser) {
 
@@ -48,6 +54,7 @@ public class HelperCmpdListMember {
             Criteria clCrit = session.createCriteria(CmpdList.class);
             clCrit.add(Restrictions.eq("cmpdListId", targetList.getCmpdListId()));
             clCrit.add(Restrictions.eq("listOwner", currentUser));
+            clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
             CmpdList target = (CmpdList) clCrit.uniqueResult();
 
@@ -69,7 +76,9 @@ public class HelperCmpdListMember {
                 if (clm.getCmpdList().getListOwner().equals(currentUser)) {
 
                     Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
-                    System.out.println("c: " + c.getClass());
+                    if (DEBUG) {
+                        System.out.println("c: " + c.getClass());
+                    }
 
                     // NSC compounds -> just delete the list member
 
@@ -150,35 +159,86 @@ public class HelperCmpdListMember {
             Criteria clCrit = session.createCriteria(CmpdList.class);
             clCrit.add(Restrictions.eq("cmpdListId", targetList.getCmpdListId()));
             clCrit.add(Restrictions.eq("listOwner", currentUser));
+            clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
             CmpdList target = (CmpdList) clCrit.uniqueResult();
 
-            // members for appending
+            int beginningSize = target.getCountListMembers();
 
-            ArrayList<Long> idsForAppend = new ArrayList<Long>();
+            // does NOT allow duplicates
+            // by either NSC for NscCmpd or original_ad_hoc_cmpd_id
 
-            for (CmpdListMemberVO clmVO : forAppend) {
-                idsForAppend.add(clmVO.getId());
+            HashSet<Integer> nscSet = new HashSet<Integer>();
+            HashSet<Long> origAhcIdSet = new HashSet<Long>();
+
+            for (CmpdListMember clm : target.getCmpdListMembers()) {
+                Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
+                if (DEBUG) {
+                    System.out.println("c: " + c.getClass());
+                }
+                if (c instanceof NscCmpdImpl) {
+                    NscCmpd n = (NscCmpd) c;
+                    nscSet.add(n.getNsc());
+                } else {
+                    AdHocCmpd ahc = (AdHocCmpd) c;
+                    origAhcIdSet.add(ahc.getOriginalAdHocCmpdId());
+                }
             }
 
-            Criteria clmCriteria = session.createCriteria(CmpdListMember.class);
-            clmCriteria.add(Restrictions.in("id", idsForAppend));
+            // members for appending
+            ArrayList<Long> clmIdsForAppend = new ArrayList<Long>();
 
+            ArrayList<Long> clmIdsThatAreDups = new ArrayList<Long>();
+
+            for (CmpdListMemberVO clmVO : forAppend) {
+
+                if (clmVO.getCmpd().getNsc() != null) {
+
+                    if (!nscSet.contains(clmVO.getCmpd().getNsc())) {
+                        clmIdsForAppend.add(clmVO.getId());
+                    } else {
+                        clmIdsThatAreDups.add(clmVO.getId());
+                    }
+
+                } else {
+
+                    if (!origAhcIdSet.contains(clmVO.getCmpd().getOriginalAdHocCmpdId())) {
+                        clmIdsForAppend.add(clmVO.getId());
+                    } else {
+                        clmIdsThatAreDups.add(clmVO.getId());
+                    }
+                }
+
+            }
+
+            // update the size of the list
+
+            int newSize = beginningSize + clmIdsForAppend.size();
+
+            // get the list members            
+            Criteria clmCriteria = session.createCriteria(CmpdListMember.class);
+            clmCriteria.add(Restrictions.in("id", clmIdsForAppend));
             List<CmpdListMember> clml = clmCriteria.list();
+
+            // set up for tracking            
+            List<AdHocCmpd> ahcForCmpdTable = new ArrayList<AdHocCmpd>();
+
+            // NscCmpd is just referenced by the clm
+            // AdHocCmpd have to be replicated first, AND they have to be persisted to CmpdTable
 
             for (CmpdListMember clm : clml) {
 
                 // check ownership
                 if (clm.getCmpdList().getListOwner().equals(currentUser)) {
 
+                    Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
+                    if (DEBUG) {
+                        System.out.println("c: " + c.getClass());
+                    }
+
                     CmpdListMember newClm = CmpdListMember.Factory.newInstance();
 
                     // nsc compounds are just added
-
-                    Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
-
-                    System.out.println("c: " + c.getClass());
-
                     if (c instanceof NscCmpdImpl) {
 
                         newClm.setCmpd(c);
@@ -189,37 +249,46 @@ public class HelperCmpdListMember {
 
                     } else {
 
-                        // helper method, opens another session on-the-side
                         AdHocCmpd ahc = (AdHocCmpd) c;
+
+                        AdHocCmpd newAhc = AdHocCmpd.Factory.newInstance();
 
                         long randomId = randomGenerator.nextLong();
                         if (randomId < 0) {
                             randomId = -1 * randomId;
                         }
+                        Long newRandomId = new Long(randomId);
 
-                        Long adHocCmpdId = new Long(randomId);
+                        newAhc = AdHocCmpd.Factory.newInstance();
 
-                        AdHocCmpd newAhc = AdHocCmpd.Factory.newInstance();
-
-                        newAhc.setAdHocCmpdId(adHocCmpdId);
+                        // this is an existing AdHocCmpd
+                        // harvest existing originalAdHocCmpdId                        
+                        newAhc.setAdHocCmpdId(newRandomId);
+                        newAhc.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
+                        
                         newAhc.setCmpdOwner(currentUser);
                         newAhc.setName(ahc.getName());
-                        newAhc.setOriginalAdHocCmpdId(ahc.getAdHocCmpdId());
+
+                        if (DEBUG) {
+                            System.out.println("cmpdOwner: " + newAhc.getCmpdOwner());
+                        }
+
+                        session.persist("Cmpd", newAhc);
+
+                        Set<AdHocCmpdFragment> entityFragSet = new HashSet<AdHocCmpdFragment>();
 
                         for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
 
-                            AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
-
                             AdHocCmpdFragmentPChem pchem = AdHocCmpdFragmentPChem.Factory.newInstance();
-                            HelperCmpd.replicatePchem(ahcf.getAdHocCmpdFragmentPChem(), pchem);
+                            HelperAdHocCmpd.replicatePchem(ahcf.getAdHocCmpdFragmentPChem(), pchem);
                             session.persist(pchem);
 
-                            frag.setAdHocCmpdFragmentPChem(pchem);
-
                             AdHocCmpdFragmentStructure struc = AdHocCmpdFragmentStructure.Factory.newInstance();
-                            HelperCmpd.replicateStructure(ahcf.getAdHocCmpdFragmentStructure(), struc);
+                            HelperAdHocCmpd.replicateStructure(ahcf.getAdHocCmpdFragmentStructure(), struc);
                             session.persist(struc);
 
+                            AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
+                            frag.setAdHocCmpdFragmentPChem(pchem);
                             frag.setAdHocCmpdFragmentStructure(struc);
 
                             // persist the fragment                
@@ -231,18 +300,35 @@ public class HelperCmpdListMember {
                                 newAhc.setAdHocCmpdParentFragment(frag);
                             }
 
+                            entityFragSet.add(frag);
+
                         }
 
-                        session.persist("Cmpd", newAhc);
+                        newAhc.setAdHocCmpdFragments(entityFragSet);
 
-                        System.out.println("ahc id: " + ahc.getId());
-                        System.out.println("newAhc id: " + newAhc.getId());
+                        // add it to the list to be inserted to CmpdTable
+                        ahcForCmpdTable.add(newAhc);
+
+                        if (DEBUG) {
+                            System.out.println("ahc id: " + ahc.getId());
+                        }
+                        if (DEBUG) {
+                            System.out.println("newAhc id: " + newAhc.getId());
+                        }
 
                         newClm.setCmpd(newAhc);
                         newClm.setListMemberComment(clm.getListMemberComment());
                         newClm.setCmpdList(target);
 
+                        if (DEBUG) {
+                            System.out.println("checkpoint: 3");
+                        }
+
                         session.persist(newClm);
+
+                        if (DEBUG) {
+                            System.out.println("checkpoint: 4");
+                        }
 
                     }
 
@@ -252,17 +338,44 @@ public class HelperCmpdListMember {
 
             }
 
+            // update the cmpdList size       
+
+            if (DEBUG) {
+                System.out.println("checkpoint: BEFORE size");
+                System.out.println("beginningSize was: " + beginningSize);
+                System.out.println("newSize is: " + newSize);
+            }
+
+            target.setCountListMembers(newSize);
+            session.merge(target);
+
+            if (DEBUG) {
+                System.out.println("checkpoint: AFTER size");
+            }
+
+            if (DEBUG) {
+                System.out.println("checkpoint: BEFORE commit");
+            }
+
             tx.commit();
 
-            // update the cmpdList size            
+            if (DEBUG) {
+                System.out.println("checkpoint: AFTER commit");
+            }
 
-            tx2 = session.beginTransaction();
+            // now persist new ahc to CmpdTable
+            // transaction is managed from HelperCmpdTable
 
-            int newSize = target.getCmpdListMembers().size();
-            target.setCountListMembers(newSize);
-            session.update(target);
+            if (DEBUG) {
+                System.out.println("checkpoint: BEFORE adHocCmpdsToCmpdTable");
+            }
 
-            tx2.commit();
+            HelperCmpdTable.adHocCmpdsToCmpdTable(ahcForCmpdTable);
+
+            if (DEBUG) {
+                System.out.println("checkpoint: AFTER adHocCmpdsToCmpdTable");
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

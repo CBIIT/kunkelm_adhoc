@@ -10,18 +10,25 @@
                 template="/webpages/templates/ui.xhtml">
 
     <ui:define name="content">
-        
+
         <ui:include src="/webpages/templates/active_list_nav.xhtml"/>
-        
+
         <p:fieldset legend="Export Structure Images">  
             <p:commandButton onclick="structuresAsGridImage();" 
                              value="Image of bare structures as grid" /> 
         </p:fieldset>
-        
+
         <p:spacer height="20" width="100%"/>
 
         <h:outputText value="anchorSmiles: ${listManagerController.activeList.anchorSmiles}"/>
-        
+
+        <br/>
+
+        <h:graphicImage alt="activeListAnchorSmiles"
+                        width="200" height="200"
+                        url='/StructureServlet?structureDim=200&amp;title=listAnchorSmiles&amp;smiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+        </h:graphicImage>
+
         <p:dataGrid var="listMember" 
                     value="#{listManagerController.activeList.cmpdListMembers}"                                     
                     columns="3"  

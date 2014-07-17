@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.AtomContainerRenderer;
 import org.openscience.cdk.renderer.RendererModel;
@@ -36,6 +36,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.ExternalHighlightGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.FixBondOrdersTool;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
@@ -89,8 +90,11 @@ public class StructureServlet extends HttpServlet {
         try {
 
             // parse mol
-            SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());                        
-            Molecule theMol = (Molecule) sp.parseSmiles(smiles);
+            
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();            
+            SmilesParser sp = new SmilesParser(builder);                        
+            
+            IMolecule theMol = sp.parseSmiles(smiles);
 
             // try to deduce bonds for ring systems
             // flag is false by default, only changed if deduce is successful
@@ -101,7 +105,7 @@ public class StructureServlet extends HttpServlet {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(theMol);
 
             FixBondOrdersTool fbot = new FixBondOrdersTool();
-            theMol = (Molecule) fbot.kekuliseAromaticRings(theMol);
+            theMol = fbot.kekuliseAromaticRings(theMol);
 
             // generate coordinates
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();  
@@ -116,7 +120,7 @@ public class StructureServlet extends HttpServlet {
                 throw e;
             }
 
-            theMol = (Molecule) sdg.getMolecule();
+            theMol = sdg.getMolecule();
 
             // set up for rendering
             Rectangle drawArea = new Rectangle(structureDim, structureDim);
@@ -141,7 +145,7 @@ public class StructureServlet extends HttpServlet {
             IAtomContainer selection = new AtomContainer();
 
             if (querySmiles != null && querySmiles.length() > 0) {
-
+                
                 SMARTSQueryTool queryTool = new SMARTSQueryTool(querySmiles);
                 queryTool.matches(theMol);
 
