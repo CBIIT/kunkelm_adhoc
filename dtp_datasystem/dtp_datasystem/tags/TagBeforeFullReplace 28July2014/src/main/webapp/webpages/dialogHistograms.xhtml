@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <p:dialog header="Histograms"  
+              position="center"             
+              widgetVar="histogramsdlg"
+              minimizable="false"
+              maximizable="true"
+              resizable="true"
+              draggable="true"
+              height="900"
+              width="1100"
+              appendTo="@(body)">  
+
+        <p:outputPanel id="HistogramsDialog">
+
+            <p:layout style="height: 800px;width: 1000px;">
+
+                <p:layoutUnit position="west" resizable="true" size="50%">
+
+                    <ui:repeat rendered="#{listManagerController.scatterplotModel != null}" 
+                               value="#{listManagerController.scatterplotModel}" 
+                               var="scat" 
+                               columns="3">      
+
+                        <p:lineChart value="#{scat}" 
+                                     title="#{scat.title}"
+                                     xaxisLabel="#{scat.labelAxisX}"
+                                     yaxisLabel="#{scat.labelAxisY}"
+                                     xaxisAngle="-90"            
+                                     zoom="true"
+                                     style="height: 200px; width: 200px;display: inline-block;"
+                                     extender="scatterPlotExtender"/>
+                    </ui:repeat>
+
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" resizable="true" size="50%">
+
+                    <ui:repeat rendered="#{listManagerController.histoModel != null}"
+                               value="#{listManagerController.histoModel}" 
+                               var="histo" 
+                               columns="3">      
+
+                        <p:barChart value="#{histo.chartModel}"
+                                    title="#{histo.chartModel.title}"                      
+                                    extender="histogramExtender"
+                                    zoom="false"
+                                    showDatatip="true"
+                                    style="height: 200px; width: 200px;display: inline-block;"
+                                    barPadding="1"
+                                    barMargin="1"
+                                    xaxisAngle="-90"
+                                    animate="true"
+                                    stacked="true">
+
+                            <p:ajax event="itemSelect" 
+                                    immediate="true" 
+                                    process="@this"
+                                    listener="#{listManagerController.itemSelectHistogram}"
+                                    update=":datasystemForm:growl,:datasystemForm:HistogramsDialog,:datasystemForm:outerTabView:activeListTabView,:datasystemForm:SelectedListMembersDialog"/>   
+
+                        </p:barChart>
+
+                    </ui:repeat>
+
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="south" resizable="true" size="33%">
+
+                    <ui:repeat rendered="#{!empty listManagerController.selectedActiveListMembers}"
+                               value="#{listManagerController.selectedActiveListMembers}"
+                               var="clm">
+
+                        <p:commandLink style="display: inline-block;"
+                                       update=":datasystemForm:ListManagerCmpdDetailsDialog" 
+                                       oncomplete="PF('listmanagercmpddetailsdlg').show();" 
+                                       title="View Detail">  
+
+                            <f:setPropertyActionListener value="#{clm.cmpd}"   
+                                                         target="#{listManagerController.selectedCmpd}" />  
+
+                            <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.smiles}"
+                                            alt="png-structure-image"
+                                            width="100" 
+                                            height="100"
+                                            id="structureImg"
+                                            url='/StructureServlet?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.smiles)}'>
+                            </h:graphicImage> 
+
+                        </p:commandLink>
+
+                    </ui:repeat>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </p:outputPanel>
+
+    </p:dialog>
+
+</ui:composition>
