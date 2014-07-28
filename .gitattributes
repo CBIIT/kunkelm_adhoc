@@ -9272,12 +9272,6 @@ dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-cor
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-core/0.1/datasystem-core-0.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.4.19/cdk-1.4.19.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.5.6/cdk-1.5.6.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.13/primefaces-4.0.13.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.16/primefaces-4.0.16-sources.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.16/primefaces-4.0.16.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.1/primefaces-5.0.1.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.3/primefaces-5.0.3-sources.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.3/primefaces-5.0.3.jar -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/AdaptiveHistogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/Cell.java -text
