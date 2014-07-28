@@ -9325,10 +9325,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/META-INF/context.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/faces-config.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/jax-ws-catalog.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/web.xml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/wsdl/localhost_8080/novumcxfjsf-webservice/services/DrugTrackerService.wsdl -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/wsdl/localhost_8080/novumservices-webservice/services/CompoundService.wsdl -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/wsdl/localhost_8080/novumservices-webservice/services/DrugTrackerService.wsdl -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/wsdl/localhost_8080/novumservices-webservice/services/NovumListManagerService.wsdl -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/csv.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/excel.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/pdf.png -text
