@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <ui:include src="/webpages/templates/active_list_nav.xhtml"/>
+
+        <p:fieldset legend="Export All Data">  
+
+            <p:commandButton ajax="false" value="Export to Excel">
+                <p:dataExporter type="xls" 
+                                target="activeListTbl" 
+                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
+            </p:commandButton>
+
+            <p:spacer width="20"/>
+
+            <p:commandButton ajax="false" value="Export as CSV">  
+                <p:dataExporter type="csv" 
+                                target="activeListTbl" 
+                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />
+            </p:commandButton> 
+
+            <p:spacer width="20"/>
+
+            <p:commandButton ajax="false" value="Export to Excel with Structure Images">
+                <p:dataExporter type="xls" 
+                                target="activeListTbl" 
+                                postProcessor="#{listManagerController.postProcessXLS}"
+                                fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
+            </p:commandButton>
+
+            <p:spacer width="20"/>
+
+            <p:commandButton onclick="structuresAsGridImage();" 
+                             value="Image of bare structures as grid" /> 
+
+        </p:fieldset>
+
+        <p:spacer height="20" width="100%"/>
+
+        <p:dataTable  id="activeListTbl"
+                      var="listMember" 
+                      value="#{listManagerController.activeList.cmpdListMembers}" 
+                      rows="50"                        
+                      paginator="true"
+                      resizableColumns="true"
+                      paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
+                      rowsPerPageTemplate="50,100,250,500"
+                      selection="#{listContentController.selectedActiveListMembers}"
+                      rowKey="#{listMember.id}"                              
+                      sortMode="multiple">  
+
+            <p:ajax event="rowSelect" listener="#{listContentController.onRowSelect}" />
+            <p:ajax event="rowUnselect" listener="#{listContentController.onRowDeSelect}" />
+
+            <f:facet name="header">                
+                <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
+                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+                <!--<p:columnToggler datasource="activeListTbl" trigger="toggler" />-->
+            </f:facet>
+
+            <p:column headerText="All"
+                      toggleable="false"
+                      resizeable="true" selectionMode="multiple" 
+                      style="width:4%" 
+                      exportable="false"/>
+
+            <p:column headerText="Click for details" toggleable="false" resizeable="true">
+
+                <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
+                    <h:graphicImage alt="png-structure-with-highlighted-substructure-image"
+                                    width="75" height="75"
+                                    url='/StructureServlet?structureDim=75&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                    </h:graphicImage>
+                    <f:setPropertyActionListener value="#{listMember}"   
+                                                 target="#{listManagerController.selectedActiveListMember}" />  
+                </p:commandLink>
+
+                <h:graphicImage style="display: none;" alt="png-structure-with-highlighted-substructure-image"
+                                width="200" height="200"
+                                id="structureImg"
+                                url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                </h:graphicImage>
+
+            </p:column>
+
+
+
+
+            <p:column headerText="adHocCmpdId" resizeable="true" sortBy="#{listMember.cmpd.adHocCmpdId}}">                                
+                <h:outputText value="#{listMember.cmpd.adHocCmpdId}"/>
+            </p:column>  
+
+            <p:column headerText="originalAdHocCmpdId" resizeable="true" sortBy="#{listMember.cmpd.originalAdHocCmpdId}}">                                
+                <h:outputText value="#{listMember.cmpd.originalAdHocCmpdId}"/>
+            </p:column>  
+
+            <p:column headerText="nscCmpdId" resizeable="true" sortBy="#{listMember.cmpd.nscCmpdId}}">                                
+                <h:outputText value="#{listMember.cmpd.nscCmpdId}"/>
+            </p:column>  
+
+
+
+
+
+
+            <p:column headerText="Comment" resizeable="true">                                
+                <h:outputText value="#{listMember.listMemberComment}"/>
+            </p:column>             
+
+            <p:column headerText="NSC" resizeable="true" sortBy="#{listMember.cmpd.nsc}}">                                
+                <h:outputText value="#{listMember.cmpd.nsc}"/>
+            </p:column>             
+
+            <p:column headerText="Name" 
+                      resizeable="true" 
+                      sortBy="#{listMember.cmpd.name}" 
+                      filterBy="#{listMember.cmpd.name}"
+                      filterMatchMode="contains">                
+                <h:outputText value="#{listMember.cmpd.name}"/>                
+            </p:column>       
+
+            <p:column headerText="Aliases" resizeable="true">                
+                <p:scrollPanel style="width:250px;height:100px"> 
+                    <p:dataList value="#{listMember.cmpd.aliases}" var="n" itemType="disc" type="ordered">  
+                        <h:outputText value="#{n}"/>                
+                    </p:dataList>
+                </p:scrollPanel>
+            </p:column>   
+
+            <p:column headerText="Projects" resizeable="true">                
+                <p:scrollPanel style="width:250px;height:100px"> 
+                    <p:dataList value="#{listMember.cmpd.projects}" var="n" itemType="disc" type="ordered">  
+                        <h:outputText value="#{n}"/>                
+                    </p:dataList>
+                </p:scrollPanel>
+            </p:column>   
+
+            <p:column headerText="Plates" resizeable="true">                
+                <p:scrollPanel style="width:250px;height:100px"> 
+                    <p:dataList value="#{listMember.cmpd.plates}" var="n" itemType="disc" type="ordered">  
+                        <h:outputText value="#{n}"/>                
+                    </p:dataList>
+                </p:scrollPanel>
+            </p:column>   
+
+            <p:column headerText="Inventory" resizeable="true" sortBy="#{listMember.cmpd.inventory}">                                
+                <h:outputText value="#{listMember.cmpd.inventory}"/>
+            </p:column>
+
+            <p:column headerText="NCI60" resizeable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.nci60}">                
+                <f:facet name="header">                
+                    <h:outputText value="NCI60"/>                
+                </f:facet>              
+                <h:outputText value="#{listMember.cmpd.cmpdBioAssay.nci60}"/>
+            </p:column>
+
+            <p:column headerText="HF" resizeable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.hf}">                
+                <h:outputText value="#{listMember.cmpd.cmpdBioAssay.hf}"/>
+            </p:column>
+
+            <p:column headerText="XENO" resizeable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.xeno}">                
+                <h:outputText value="#{listMember.cmpd.cmpdBioAssay.xeno}"/>
+            </p:column>
+
+            <p:column headerText="MF" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mf}">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mf}"/>
+            </p:column>
+
+            <p:column headerText="MW" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mw}">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.mw}">
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="aLogP" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.alogp}">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.alogp}">
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="HBA" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hba}">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hba}"/>
+            </p:column>
+
+            <p:column headerText="HBD" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hbd}">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.hbd}"/>
+            </p:column>
+
+            <p:column headerText="PSA" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.psa}">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.psa}">
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="SMILES" resizeable="true">                
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.smiles}">
+                </h:outputText>
+            </p:column>
+
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <session-factory>                
+        <mapping resource="mwk/datasystem/domain/AdHocCmpdFragment.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentPChem.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentStructure.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdAlias.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdAliasType.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdBioAssay.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdFragment.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdFragmentPChem.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdFragmentStructure.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/Cmpd.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdInventory.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdKnownSalt.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdList.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdPlate.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdProject.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdPubChemSid.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdRelated.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdRelationType.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdSet.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdTarget.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/RdkitMol.hbm.xml"/>        
+        
+        <mapping resource="mwk/datasystem/domain/DataSystemUser.hbm.xml"/>        
+        <mapping resource="mwk/datasystem/domain/DataSystemRole.hbm.xml"/>        
+        
+        <!-- MWK local copy modified to remove generator on id -->        
+        <mapping resource="CmpdTable.hbm.xml"/>        
+        <!-- MWK local copy modified to change cascade to none from clm to cmpd -->        
+        <mapping resource="CmpdListMember.hbm.xml"/>
+        
+        
+    </session-factory>
+    
+</hibernate-configuration>
