@@ -31,10 +31,7 @@ import mwk.datasystem.vo.CmpdVO;
  * @author mwkunkel
  */
 public class HelperCmpd {
-<<<<<<< .mine
     
-=======
->>>>>>> .r93
     public Long createCmpdListByNscs(String listName, List<Integer> nscIntList, String smilesString, String currentUser) {
 
         Long rtn = Long.valueOf(-1);

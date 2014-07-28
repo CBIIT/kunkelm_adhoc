@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -16,23 +17,32 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import jena.version;
 import mwk.datasystem.domain.AdHocCmpd;
+import mwk.datasystem.domain.AdHocCmpdFragment;
+import mwk.datasystem.domain.Cmpd;
+import mwk.datasystem.domain.CmpdList;
+import mwk.datasystem.domain.CmpdListMember;
+import mwk.datasystem.util.Comparators;
 import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.util.HelperCmpdListMember;
 import mwk.datasystem.util.HelperStructure;
+import mwk.datasystem.util.HibernateUtil;
 import mwk.datasystem.util.MoleculeParser;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.Session;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IMolecule;
+import org.openscience.cdk.Molecule;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -111,7 +121,6 @@ public class ListContentController implements Serializable {
         this.listManagerController = listManagerController;
     }
 
-<<<<<<< .mine
     public void onRowSelect(SelectEvent evt){
         
         try {
@@ -180,75 +189,6 @@ public class ListContentController implements Serializable {
 
     }
 
-=======
-    public void onRowSelect(SelectEvent evt) {
-
-        try {
-
-            CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
-
-            System.out.println("Select: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-
-            clmVO.setIsSelected(Boolean.TRUE);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void onRowDeSelect(SelectEvent evt) {
-
-        try {
-
-            CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
-
-            System.out.println("Delect: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-
-            clmVO.setIsSelected(Boolean.FALSE);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     *
-     * @return For checkboxes outside of dataTable
-     */
-    public String performMySelect() {
-
-        StringBuilder msgBuilder = new StringBuilder();
-
-        // check the activeList for selectedMembers        
-        if (this.selectedActiveListMembers == null) {
-            msgBuilder.append("selectedActiveListMembers is null.  new ArrayList().");
-            System.out.println("selectedActiveListMembers is null.  new ArrayList().");
-            this.selectedActiveListMembers = new ArrayList<CmpdListMemberVO>();
-        } else {
-            msgBuilder.append("selectedActiveListMembers is NOT null.  list.clear().");
-            System.out.println("selectedActiveListMembers is NOT null.  list.clear().");
-            this.selectedActiveListMembers.clear();
-        }
-
-        for (CmpdListMemberVO clmVO : this.listManagerController.getActiveList().getCmpdListMembers()) {
-            if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                msgBuilder.append("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-                System.out.println("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-                this.selectedActiveListMembers.add(clmVO);
-            }
-        }
-
-        FacesMessage msg = new FacesMessage("Selected List Members: ", msgBuilder.toString());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        return "/webpages/activeListTable?faces-redirect=true";
-
-    }
-
->>>>>>> .r93
     //
     public String performDeleteFromActiveList() {
 
@@ -269,7 +209,6 @@ public class ListContentController implements Serializable {
         return null;
     }
 
-<<<<<<< .mine
     public String performCreateNewListFromSelectedListMembers() {
         
         HelperCmpdList helper = new HelperCmpdList();
@@ -278,16 +217,6 @@ public class ListContentController implements Serializable {
         
     }
     
-=======
-    public String performCreateNewListFromSelectedListMembers() {
-
-        HelperCmpdList helper = new HelperCmpdList();
-
-        return null;
-
-    }
-
->>>>>>> .r93
     public String performAppendSelectedToExistingList() {
 
         HelperCmpdListMember helper = new HelperCmpdListMember();
@@ -299,7 +228,7 @@ public class ListContentController implements Serializable {
         CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
         this.listManagerController.setActiveList(clVO);
-
+        
         // is this really the way to do this?
         this.listManagerController.performUpdateAvailableLists();
 
@@ -319,8 +248,8 @@ public class ListContentController implements Serializable {
         try {
 
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-            
-            IMolecule molecule = sp.parseSmiles(smiles);
+
+            Molecule molecule = (Molecule) sp.parseSmiles(smiles);
 
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 
@@ -331,7 +260,7 @@ public class ListContentController implements Serializable {
                 ex.printStackTrace();
             }
 
-            IMolecule fixedMol = sdg.getMolecule();
+            Molecule fixedMol = (Molecule) sdg.getMolecule();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -375,7 +304,6 @@ public class ListContentController implements Serializable {
 
     }
 
-<<<<<<< .mine
     public String performSmilesFileUpload() {
 
         try {
@@ -429,8 +357,6 @@ public class ListContentController implements Serializable {
 
         return "/webpages/activeListTable?faces-redirect=true";
 
-=======
->>>>>>> .r93
     }
     
     public String performFileUpload() {
@@ -468,17 +394,11 @@ public class ListContentController implements Serializable {
             ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
 
             HelperCmpdList listHelper = new HelperCmpdList();
-<<<<<<< .mine
             
             CmpdListVO clVO_sparse = listHelper.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
             
-=======
-
-            CmpdListVO clVO_sparse = listHelper.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
-
->>>>>>> .r93
             // new fetch the list
-
+            
             CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
             this.listManagerController.getAvailableLists().add(clVO);

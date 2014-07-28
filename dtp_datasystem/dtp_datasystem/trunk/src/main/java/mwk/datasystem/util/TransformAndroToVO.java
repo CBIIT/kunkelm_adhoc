@@ -312,32 +312,11 @@ public class TransformAndroToVO {
 
     public static CmpdListVO toCmpdListVO(CmpdList entityList, Boolean includeListMembers) {
 
-<<<<<<< .mine
 
 
-=======
-        
-        
->>>>>>> .r93
         CmpdListVO rtn = new CmpdListVO();
 
-<<<<<<< .mine
         try {
-=======
-        try{
-        
-        rtn.setId(entityList.getId());
-        rtn.setCmpdListId(entityList.getCmpdListId());
-        rtn.setListName(entityList.getListName());
-        rtn.setDateCreated(entityList.getDateCreated());
-        rtn.setListOwner(entityList.getListOwner());
-        rtn.setShareWith(entityList.getShareWith());
-        rtn.setCountListMembers(entityList.getCountListMembers());
-        
-        rtn.setAnchorComment(entityList.getAnchorComment());
-        rtn.setAnchorSmiles(entityList.getAnchorSmiles());
-        rtn.setListComment(entityList.getListComment());
->>>>>>> .r93
 
             rtn.setId(entityList.getId());
             rtn.setCmpdListId(entityList.getCmpdListId());
@@ -366,10 +345,6 @@ public class TransformAndroToVO {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        } catch (Exception e){
             e.printStackTrace();
         }
 

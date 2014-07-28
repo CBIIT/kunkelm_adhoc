@@ -76,16 +76,10 @@ public class HelperCmpdListMember {
                 if (clm.getCmpdList().getListOwner().equals(currentUser)) {
 
                     Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
-<<<<<<< .mine
                     
                     if (DEBUG) {
                         System.out.println("c.getClass() is: " + c.getClass());
                     }
-=======
-                    if (DEBUG) {
-                        System.out.println("c: " + c.getClass());
-                    }
->>>>>>> .r93
 
                     System.out.println("OUTSIDE of if(DEBUG) c.getClass() is: " + c.getClass());
                     
@@ -268,44 +262,19 @@ public class HelperCmpdListMember {
                         }
                         Long newRandomId = new Long(randomId);
 
-<<<<<<< .mine
                         newAhc = AdHocCmpd.Factory.newInstance();
 
                         // this is an existing AdHocCmpd
                         // harvest existing originalAdHocCmpdId                        
                         newAhc.setAdHocCmpdId(newRandomId);
                         newAhc.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());                        
-=======
-                        newAhc = AdHocCmpd.Factory.newInstance();
-
-                        // this is an existing AdHocCmpd
-                        // harvest existing originalAdHocCmpdId                        
-                        newAhc.setAdHocCmpdId(newRandomId);
-                        newAhc.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
-                        
-                        newAhc.setCmpdOwner(currentUser);
->>>>>>> .r93
                         newAhc.setName(ahc.getName());
 
-<<<<<<< .mine
-                        session.persist("Cmpd", newAhc);
-=======
-                        if (DEBUG) {
-                            System.out.println("cmpdOwner: " + newAhc.getCmpdOwner());
-                        }
->>>>>>> .r93
-
-<<<<<<< .mine
-                        Set<AdHocCmpdFragment> entityFragSet = new HashSet<AdHocCmpdFragment>();
-
-                        for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
-=======
                         session.persist("Cmpd", newAhc);
 
                         Set<AdHocCmpdFragment> entityFragSet = new HashSet<AdHocCmpdFragment>();
 
                         for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
->>>>>>> .r93
 
                             AdHocCmpdFragmentPChem pchem = AdHocCmpdFragmentPChem.Factory.newInstance();
                             HelperAdHocCmpd.replicatePchem(ahcf.getAdHocCmpdFragmentPChem(), pchem);

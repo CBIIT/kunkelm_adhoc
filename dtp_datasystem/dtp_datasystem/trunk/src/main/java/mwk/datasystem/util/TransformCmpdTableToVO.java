@@ -157,11 +157,6 @@ public class TransformCmpdTableToVO {
         CmpdVO cmpdVO = new CmpdVO();
 
         try {
-<<<<<<< .mine
-            cmpdVO.setId(entityIn.getId());
-            cmpdVO.setNscCmpdId(entityIn.getNscCmpdId());
-            cmpdVO.setAdHocCmpdId(entityIn.getAdHocCmpdId());
-=======
             cmpdVO.setId(entityIn.getId());
             cmpdVO.setNscCmpdId(entityIn.getNscCmpdId());
             cmpdVO.setAdHocCmpdId(entityIn.getAdHocCmpdId());
@@ -170,60 +165,21 @@ public class TransformCmpdTableToVO {
                 System.out.println("In TransformCmpdTableToVO.toCmpdVo.  Setting originalAdHocCmpdId to: " + entityIn.getOriginalAdHocCmpdId());
             }
             cmpdVO.setOriginalAdHocCmpdId(entityIn.getOriginalAdHocCmpdId());
->>>>>>> .r93
 
-<<<<<<< .mine
-            if (DEBUG) {
-                System.out.println("In TransformCmpdTableToVO.toCmpdVo.  Setting originalAdHocCmpdId to: " + entityIn.getOriginalAdHocCmpdId());
-            }
-            cmpdVO.setOriginalAdHocCmpdId(entityIn.getOriginalAdHocCmpdId());
-=======
             cmpdVO.setName(entityIn.getName());
             cmpdVO.setPrefix(entityIn.getPrefix());
             cmpdVO.setNsc(entityIn.getNsc());
             cmpdVO.setDistribution(entityIn.getDistribution());
             cmpdVO.setConf(entityIn.getConf());
             cmpdVO.setCas(entityIn.getCas());
->>>>>>> .r93
 
-<<<<<<< .mine
-            cmpdVO.setName(entityIn.getName());
-            cmpdVO.setPrefix(entityIn.getPrefix());
-            cmpdVO.setNsc(entityIn.getNsc());
-            cmpdVO.setDistribution(entityIn.getDistribution());
-            cmpdVO.setConf(entityIn.getConf());
-            cmpdVO.setCas(entityIn.getCas());
-=======
             cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(entityIn));
->>>>>>> .r93
 
-<<<<<<< .mine
-            cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(entityIn));
-=======
             cmpdVO.setParentFragment(toCmpdFragmentVO(entityIn));
->>>>>>> .r93
 
-<<<<<<< .mine
-            cmpdVO.setParentFragment(toCmpdFragmentVO(entityIn));
-=======
             cmpdVO.setInventory(entityIn.getInventory());
->>>>>>> .r93
 
-<<<<<<< .mine
-            cmpdVO.setInventory(entityIn.getInventory());
-=======
             // need fragments ?
->>>>>>> .r93
-
-<<<<<<< .mine
-            // need fragments ?
-=======
-            cmpdVO.setTargets(parseFormattedString(entityIn.getFormattedTargetsString()));
-            cmpdVO.setSets(parseFormattedString(entityIn.getFormattedSetsString()));
-            cmpdVO.getTargets().addAll(parseFormattedString(entityIn.getFormattedProjectsString()));
-            cmpdVO.setPlates(parseFormattedString(entityIn.getFormattedPlatesString()));
-            cmpdVO.setAliases(parseFormattedString(entityIn.getFormattedAliasesString()));
->>>>>>> .r93
 
             cmpdVO.setTargets(parseFormattedString(entityIn.getFormattedTargetsString()));
             cmpdVO.setSets(parseFormattedString(entityIn.getFormattedSetsString()));

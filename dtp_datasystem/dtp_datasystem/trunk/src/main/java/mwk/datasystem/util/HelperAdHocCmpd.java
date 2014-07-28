@@ -50,7 +50,6 @@ public class HelperAdHocCmpd {
         nw.setSmiles(cur.getSmiles());
     }
     
-<<<<<<< .mine
     public static AdHocCmpd replicateAdHocCmpdObject(AdHocCmpd ahc, String currentUser) {
 
         Random randomGenerator = new Random();
@@ -98,56 +97,6 @@ public class HelperAdHocCmpd {
     }
     
   public static AdHocCmpd createNewAdHocCmpd(AdHocCmpd ahc, String currentUser) {
-=======
-    public static AdHocCmpd replicateAdHocCmpdObject(AdHocCmpd ahc, String currentUser) {
-
-        Random randomGenerator = new Random();
-        
-        AdHocCmpd rtn = AdHocCmpd.Factory.newInstance();
-
-        try {
-
-            long randomId = randomGenerator.nextLong();
-            if (randomId < 0) {
-                randomId = -1 * randomId;
-            }
-            Long newRandomId = new Long(randomId);
-
-            rtn.setAdHocCmpdId(newRandomId);
-            rtn.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
-            rtn.setCmpdOwner(currentUser);            
-            rtn.setName(ahc.getName());            
-
-            for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
-                
-                AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
-
-                AdHocCmpdFragmentPChem pchem = AdHocCmpdFragmentPChem.Factory.newInstance();                
-                replicatePchem(ahcf.getAdHocCmpdFragmentPChem(), pchem);  
-                frag.setAdHocCmpdFragmentPChem(pchem);
-                                
-                AdHocCmpdFragmentStructure struc = AdHocCmpdFragmentStructure.Factory.newInstance();
-                replicateStructure(ahcf.getAdHocCmpdFragmentStructure(), struc);
-                frag.setAdHocCmpdFragmentStructure(struc);
-                
-                if (ahc.getAdHocCmpdParentFragment().equals(ahcf)){
-                    rtn.setAdHocCmpdParentFragment(frag);
-                }
-                
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            
-        }
-
-        return rtn;
-
-    }
-    
-  public static AdHocCmpd createNewAdHocCmpd(AdHocCmpd ahc, String currentUser) {
->>>>>>> .r93
 
         Random randomGenerator = new Random();
 
@@ -170,18 +119,10 @@ public class HelperAdHocCmpd {
 
             rtn = AdHocCmpd.Factory.newInstance();
             
-<<<<<<< .mine
             rtn.setAdHocCmpdId(newRandomId);
             rtn.setOriginalAdHocCmpdId(newRandomId);
             rtn.setName(ahc.getName());
             
-=======
-            rtn.setAdHocCmpdId(newRandomId);
-            rtn.setOriginalAdHocCmpdId(newRandomId);
-            rtn.setCmpdOwner(currentUser);
-            rtn.setName(ahc.getName());
-            
->>>>>>> .r93
             for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
                 
                 AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();

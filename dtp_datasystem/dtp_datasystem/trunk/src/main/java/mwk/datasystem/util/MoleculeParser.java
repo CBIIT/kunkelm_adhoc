@@ -46,11 +46,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class MoleculeParser {
 
-<<<<<<< .mine
     InChIGeneratorFactory INCHI_FACTORY;
-=======
-    // InChIGeneratorFactory INCHI_FACTORY;
->>>>>>> .r93
     SmilesGenerator SMILES_GENERATOR;
     MDLV2000Writer MDL_WRITER;
     SaturationChecker SATURATION_CHECKER;
@@ -59,11 +55,7 @@ public class MoleculeParser {
 
         try {
 
-<<<<<<< .mine
             INCHI_FACTORY = InChIGeneratorFactory.getInstance();
-=======
-            // INCHI_FACTORY = InChIGeneratorFactory.getInstance();
->>>>>>> .r93
             SMILES_GENERATOR = new SmilesGenerator();
             MDL_WRITER = new MDLV2000Writer();
             SATURATION_CHECKER = new SaturationChecker();
@@ -93,13 +85,8 @@ public class MoleculeParser {
                 IMolecule mol = (IMolecule) reader.next();
                 countMol++;
 
-<<<<<<< .mine
                 AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, smilesFile.getName(), countMol);
 
-=======
-                AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, smilesFile.getName(), countMol);
-
->>>>>>> .r93
                 cmpdList.add(ahc);
 
             }
@@ -182,17 +169,10 @@ public class MoleculeParser {
 
             System.out.println("CDKConstants.TITLE: " + CDKConstants.TITLE);
 
-<<<<<<< .mine
-            Object titleObj = mol.getProperty(CDKConstants.TITLE);
-=======
             Object titleObj = mol.getProperty(CDKConstants.TITLE);
 
             String nameStr = null;
->>>>>>> .r93
 
-<<<<<<< .mine
-            String nameStr = null;
-=======
             if (nameObj != null) {
                 nameStr = nameObj.toString();
             } else if (nameDbObj != null) {
@@ -202,87 +182,32 @@ public class MoleculeParser {
             } else if (titleObj != null) {
                 nameStr = titleObj.toString();
             }
->>>>>>> .r93
 
-<<<<<<< .mine
-            if (nameObj != null) {
-                nameStr = nameObj.toString();
-            } else if (nameDbObj != null) {
-                nameStr = nameDbObj.toString();
-            } else if (cmpdIdObj != null) {
-                nameStr = cmpdIdObj.toString();
-            } else if (titleObj != null) {
-                nameStr = titleObj.toString();
-            }
-=======
             if (nameStr == null || nameStr.length() == 0 || nameStr.equals(".")) {
                 nameStr = fileName + countMol;
             }
->>>>>>> .r93
 
-<<<<<<< .mine
-            if (nameStr == null || nameStr.length() == 0 || nameStr.equals(".")) {
-                nameStr = fileName + countMol;
-            }
-=======
             System.out.println("Setting adHocCmpd name to: " + nameStr);
             ahc.setName(nameStr);
->>>>>>> .r93
 
-<<<<<<< .mine
-            System.out.println("Setting adHocCmpd name to: " + nameStr);
-            ahc.setName(nameStr);
-=======
             Set<AdHocCmpdFragment> fragSet = new HashSet<AdHocCmpdFragment>();
->>>>>>> .r93
 
-<<<<<<< .mine
-            Set<AdHocCmpdFragment> fragSet = new HashSet<AdHocCmpdFragment>();
-=======
             for (IMolecule iMol : cdkFragList) {
->>>>>>> .r93
 
-<<<<<<< .mine
-            for (IMolecule iMol : cdkFragList) {
-=======
                 //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
                 //System.out.println("At start: " + sg.createSMILES(iMol));
->>>>>>> .r93
 
-<<<<<<< .mine
-                //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-                //System.out.println("At start: " + sg.createSMILES(iMol));
-=======
                 // CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
                 // hAdder.addImplicitHydrogens(iMol);
->>>>>>> .r93
 
-<<<<<<< .mine
-                // CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
-                // hAdder.addImplicitHydrogens(iMol);
-=======
                 //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
                 //System.out.println("At start: " + sg.createSMILES(iMol));
->>>>>>> .r93
 
-<<<<<<< .mine
-                //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-                //System.out.println("At start: " + sg.createSMILES(iMol));
-=======
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
                 AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
->>>>>>> .r93
 
-<<<<<<< .mine
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
-                AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
-=======
                 SATURATION_CHECKER.saturate(iMol);
->>>>>>> .r93
 
-<<<<<<< .mine
-                SATURATION_CHECKER.saturate(iMol);
-=======
 //                System.out.println("At end: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
 //                System.out.println("At end: " + sg.createSMILES(iMol));
 //                System.out.println();
@@ -297,56 +222,18 @@ public class MoleculeParser {
 //                CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
 //                hAdder.addImplicitHydrogens(iMol);
 //                AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
->>>>>>> .r93
 
-<<<<<<< .mine
-//                System.out.println("At end: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-//                System.out.println("At end: " + sg.createSMILES(iMol));
-//                System.out.println();
-//
-//                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(iMol.getBuilder());
-//                Iterator<IAtom> atoms = iMol.atoms().iterator();
-//                while (atoms.hasNext()) {
-//                    IAtom atom = atoms.next();
-//                    IAtomType type = matcher.findMatchingAtomType(iMol, atom);
-//                    AtomTypeManipulator.configure(atom, type);
-//                }
-//                CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
-//                hAdder.addImplicitHydrogens(iMol);
-//                AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
-=======
                 AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
->>>>>>> .r93
 
-<<<<<<< .mine
-                AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
-=======
                 AdHocCmpdFragmentStructure cfs = doStructureStrings(iMol);
                 frag.setAdHocCmpdFragmentStructure(cfs);
->>>>>>> .r93
 
-<<<<<<< .mine
-                AdHocCmpdFragmentStructure cfs = doStructureStrings(iMol);
-                frag.setAdHocCmpdFragmentStructure(cfs);
-=======
                 AdHocCmpdFragmentPChem cfpc = doCalcs(iMol);
                 frag.setAdHocCmpdFragmentPChem(cfpc);
->>>>>>> .r93
-
-<<<<<<< .mine
-                AdHocCmpdFragmentPChem cfpc = doCalcs(iMol);
-                frag.setAdHocCmpdFragmentPChem(cfpc);
-=======
-                fragSet.add(frag);
->>>>>>> .r93
 
                 fragSet.add(frag);
 
-<<<<<<< .mine
             }
-=======
-            ahc.setAdHocCmpdFragments(fragSet);
->>>>>>> .r93
 
             ahc.setAdHocCmpdFragments(fragSet);
             
@@ -480,7 +367,6 @@ public class MoleculeParser {
 //intended to silence any exception
 //caused by R groups and/or PseudoAtoms
         }
-<<<<<<< .mine
         try {
             InChIGenerator gen = INCHI_FACTORY.getInChIGenerator(im);
             INCHI_RET ret = gen.getReturnStatus();
@@ -495,35 +381,11 @@ public class MoleculeParser {
 //intended to silence any Inchi-related exceptions
 //caused by R groups and/or PseudoAtoms
         }
-=======
-        
-//        try {
-//            InChIGenerator gen = INCHI_FACTORY.getInChIGenerator(im);
-//            INCHI_RET ret = gen.getReturnStatus();
-//            if (ret == INCHI_RET.WARNING) {
-//                System.out.println("InChI warning: " + gen.getMessage());
-//            } else if (ret != INCHI_RET.OKAY) {
-//                throw new CDKException("InChI failed: " + ret.toString() + " [" + gen.getMessage() + "]");
-//            }
-//            rtn.setInchi(gen.getInchi());
-//            rtn.setInchiAux(gen.getAuxInfo());
-//        } catch (Exception e) {
-////intended to silence any Inchi-related exceptions
-////caused by R groups and/or PseudoAtoms
-//        }
->>>>>>> .r93
 
-<<<<<<< .mine
         System.out.println("Value of ctab is:" + rtn.getCtab());
         System.out.println("Value of smiles is:" + rtn.getSmiles());
         System.out.println("Value of inchi is:" + rtn.getInchi());
         System.out.println("Value of inchiAuxInfo is:" + rtn.getInchiAux());
-=======
-        System.out.println("Value of ctab is:" + rtn.getCtab());
-        System.out.println("Value of smiles is:" + rtn.getSmiles());
-//        System.out.println("Value of inchi is:" + rtn.getInchi());
-        System.out.println("Value of inchiAuxInfo is:" + rtn.getInchiAux());
->>>>>>> .r93
 
         return rtn;
     }
