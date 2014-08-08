@@ -9426,7 +9426,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HistogramC
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/MoleculeParser.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ScatterPlotChartUtil.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformAndroToVO.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformAndroToVO.java.r87 -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformCmpdTableToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
@@ -9486,6 +9485,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvasWrangling
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListCompactGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragmentGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListScrollGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text

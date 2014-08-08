@@ -77,13 +77,13 @@
     <security-role>
         <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
     </security-role>
-    <!--
-  
+    
+    <!--  
   	<Realm className="org.apache.catalina.realm.JNDIRealm" 
 				debug="10"				
 				connectionTimeout="30000" 
 				connectionName="ncimkldapconnect" 
-				connectionPassword="Mk020714**moravian" 
+				connectionPassword="Mk080714**mesozoic" 
 				connectionURL="ldap://nihdcadhub.nih.gov:389"
 				userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"
 				roleName="cn" 

@@ -13,15 +13,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.interfaces.IMoleculeSet;
@@ -36,8 +40,10 @@ import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -194,34 +200,20 @@ public class MoleculeParser {
 
             for (IMolecule iMol : cdkFragList) {
 
-                //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-                //System.out.println("At start: " + sg.createSMILES(iMol));
+                try {
+                    CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(iMol.getBuilder());
+                    Iterator<IAtom> atoms = iMol.atoms().iterator();
+                    while (atoms.hasNext()) {
+                        IAtom atom = atoms.next();
+                        IAtomType type = matcher.findMatchingAtomType(iMol, atom);
+                        AtomTypeManipulator.configure(atom, type);
+                    }
+                    CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
+                    hAdder.addImplicitHydrogens(iMol);
 
-                // CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
-                // hAdder.addImplicitHydrogens(iMol);
-
-                //System.out.println("At start: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-                //System.out.println("At start: " + sg.createSMILES(iMol));
-
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
-                AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
-
-                SATURATION_CHECKER.saturate(iMol);
-
-//                System.out.println("At end: total charge: " + AtomContainerManipulator.getTotalCharge(iMol) + " formalCharge: " + AtomContainerManipulator.getTotalFormalCharge(iMol));
-//                System.out.println("At end: " + sg.createSMILES(iMol));
-//                System.out.println();
-//
-//                CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(iMol.getBuilder());
-//                Iterator<IAtom> atoms = iMol.atoms().iterator();
-//                while (atoms.hasNext()) {
-//                    IAtom atom = atoms.next();
-//                    IAtomType type = matcher.findMatchingAtomType(iMol, atom);
-//                    AtomTypeManipulator.configure(atom, type);
-//                }
-//                CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
-//                hAdder.addImplicitHydrogens(iMol);
-//                AtomContainerManipulator.convertImplicitToExplicitHydrogens(iMol);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
 
@@ -236,7 +228,7 @@ public class MoleculeParser {
             }
 
             ahc.setAdHocCmpdFragments(fragSet);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
