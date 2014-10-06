@@ -1,0 +1,572 @@
+source	smiles	name	atomArray	can_smi	can_taut	can_taut_strip_stereo	Molecular_Formula	Molecular_Weight	CanonicalTautomer	NumberOfTautomers
+from NCGCCanonicalForm.java	CC(=O)[O-]	ACETATE		CC(=O)[O-]	CC(=O)[O-]	CC(=O)[O-]	C2H3O2	59.04402		
+from NCGCCanonicalForm.java	CC(NCC(=O)[O-])=O	ACETURATE		CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	C4H6NO3	116.09534		
+from NCGCCanonicalForm.java	CC(NCC(=O)[O-])=O	N-ACETYLGLYCINATE		CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	C4H6NO3	116.09534		
+from NCGCCanonicalForm.java	CC(Oc1c(C(=O)[O-])cccc1)=O	ACETYLSALICYLATE		CC(=O)Oc1ccccc1C(=O)[O-]	CC(=O)Oc1ccccc1C(=O)[O-]	CC(=O)Oc1ccccc1C(=O)[O-]	C9H7O4	179.14948		
+from NCGCCanonicalForm.java	[O-]C(CCCCC(=O)[O-])=O	ADIPATE		[O-]C(=O)CCCCC(=O)[O-]	[O-]C(=O)CCCCC(=O)[O-]	[O-]C(=O)CCCCC(=O)[O-]	C6H8O4	144.12532		
+from NCGCCanonicalForm.java	NOc1c(C(=O)[O-])cccc1	AMINOSALICYLATE		NOc1ccccc1C(=O)[O-]	NOc1ccccc1C(=O)[O-]	NOc1ccccc1C(=O)[O-]	C7H6NO3	152.12744		
+from NCGCCanonicalForm.java	N[C@H](C(=O)O)CCCNC(=N)N	ARGININE		N[C@@H](CCCNC(=N)N)C(=O)O	N[C@@H](CCCN=C(N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	C6H14N4O2	174.20095	Yes	3
+from NCGCCanonicalForm.java	OC[C@@H]([C@@H]1C(O)=C(O)C(=O)O1)O	ASCORBATE		OC[C@H](O)[C@H]1OC(=O)C(=C1O)O	OC[C@H](O)[C@H]1OC(=C(O)C1=O)O	OCC(O)C1OC(=C(O)C1=O)O	C6H8O6	176.12411	Yes	2
+from NCGCCanonicalForm.java	O=C1NC(=O)NC(=O)C1	BARBITURATE		O=C1CC(=O)NC(=O)N1	O=C1CC(=O)NC(=O)N1	O=C1CC(=O)NC(=O)N1	C4H4N2O3	128.08615	Yes	8
+from NCGCCanonicalForm.java	[O-]S(c1ccccc1)(=O)=O	BENZENESULFONATE		[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	C6H5O3S	157.16709		
+from NCGCCanonicalForm.java	[O-]C(c1ccccc1)=O	BENZOATE		[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	C7H5O2	121.1134		
+from NCGCCanonicalForm.java	OC(C(=O)O)C(C(=O)O)O	BITARTRATE		OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684		
+from NCGCCanonicalForm.java	OB(O)O	BORATE		OB(O)O	OB(O)O	OB(O)O	BH3O3	61.83302		
+from NCGCCanonicalForm.java	CCCC(=O)[O-]	butanoate		CCCC(=O)[O-]	CCCC(=O)[O-]	CCCC(=O)[O-]	C4H7O2	87.09718		
+from NCGCCanonicalForm.java	CC(OC(C)(C)C)=O	t-BUTYL ACETATE		CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	C6H12O2	116.15828		
+from NCGCCanonicalForm.java	CC(N)(C)C	t-BUTYLAMINE		CC(C)(C)N	CC(C)(C)N	CC(C)(C)N	C4H11N	73.13683		
+from NCGCCanonicalForm.java	CCCC(=O)[O-]	BUTYLATE		CCCC(=O)[O-]	CCCC(=O)[O-]	CCCC(=O)[O-]	C4H7O2	87.09718		
+from NCGCCanonicalForm.java	CCCC(=O)[O-]	BUTYRATE		CCCC(=O)[O-]	CCCC(=O)[O-]	CCCC(=O)[O-]	C4H7O2	87.09718		
+from NCGCCanonicalForm.java	CC(C1(CS(=O)(=O)[O-])CC2)(C2CC1=O)C	CAMPHOR-10-SULFONATE		CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887		
+from NCGCCanonicalForm.java	CCCCCC(=O)[O-]	CAPROATE		CCCCCC(=O)[O-]	CCCCCC(=O)[O-]	CCCCCC(=O)[O-]	C6H11O2	115.15033		
+from NCGCCanonicalForm.java	NC(=O)[O-]	CARBAMATE		NC(=O)[O-]	NC(=O)[O-]	NC(=O)[O-]	CH2NO2	60.03208		
+from NCGCCanonicalForm.java	[O-]C(=O)[O-]	CARBONATE		[O-]C(=O)[O-]	[O-]C(=O)[O-]	[O-]C(=O)[O-]	CO3	60.0089		
+from NCGCCanonicalForm.java	[O-]S(c1ccc(Cl)cc1)(=O)=O	p-CHLOROBENZENESULFONATE		[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	C6H4ClO3S	191.61216		
+from NCGCCanonicalForm.java	[O-]S(c1ccc(Cl)cc1)(=O)=O	p-CHLOROBENZENESULPHONATE		[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	C6H4ClO3S	191.61216		
+from NCGCCanonicalForm.java	CN1C(=O)c(c2N(C(=O)[O-])C1=O)[nH]c(Cl)n2	8-CHLOROTHEOPHYLLINATE		CN1C(=O)N(C(=O)[O-])c2nc(Cl)[nH]c2C1=O	CN1C(=O)N(C(=O)[O-])c2[nH]c(Cl)nc2C1=O	CN1C(=O)N(C(=O)[O-])c2[nH]c(Cl)nc2C1=O	C7H4ClN4O4	243.58405	Yes	3
+from NCGCCanonicalForm.java	C[N+](CCO)(C)C	CHOLINE		C[N+](C)(C)CCO	C[N+](C)(C)CCO	C[N+](C)(C)CCO	C5H14NO	104.17075		
+from NCGCCanonicalForm.java	[O-]C(\C=C\c1ccccc1)=O	CINNAMATE		[O-]C(=O)\C=C\c1ccccc1	[O-]C(=O)\C=C\c1ccccc1	[O-]C(=O)C=Cc1ccccc1	C9H7O2	147.15068		
+from NCGCCanonicalForm.java	OC(C(=O)[O-])(CC(=O)[O-])CC(=O)[O-]	CITRATE		OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	C6H5O7	189.0997		
+from NCGCCanonicalForm.java	OS(c1ccc(Cl)cc1)(=O)=O	CLOSILATE		OS(=O)(=O)c1ccc(Cl)cc1	OS(=O)(=O)c1ccc(Cl)cc1	OS(=O)(=O)c1ccc(Cl)cc1	C6H5ClO3S	192.6201		
+from NCGCCanonicalForm.java	[O-]C(CCC1CCCCC1)=O	CYCLOHEXANEPROPIONATE		[O-]C(=O)CCC1CCCCC1	[O-]C(=O)CCC1CCCCC1	[O-]C(=O)CCC1CCCCC1	C9H15O2	155.2142		
+from NCGCCanonicalForm.java	[NH3+]C1CCCCC1	CYCLOHEXYLAMMONIUM		[NH3+]C1CCCCC1	[NH3+]C1CCCCC1	[NH3+]C1CCCCC1	C6H14N	100.18206		
+from NCGCCanonicalForm.java	OC(CCC1CCCCC1)=O	CYCLOHEXYLPROPIONATE		OC(=O)CCC1CCCCC1	OC(=O)CCC1CCCCC1	OC(=O)CCC1CCCCC1	C9H16O2	156.22214		
+from NCGCCanonicalForm.java	[O-]S(NC1CCCCC1)(=O)=O	N-CYCLOHEXYLSULFAMATE		[O-]S(=O)(=O)NC1CCCCC1	[O-]S(=O)(=O)NC1CCCCC1	[O-]S(=O)(=O)NC1CCCCC1	C6H12NO3S	178.22938		
+from NCGCCanonicalForm.java	[O-]S(NC1CCCCC1)(=O)=O	N-CYCLOHEXYLSULPHAMATE		[O-]S(=O)(=O)NC1CCCCC1	[O-]S(=O)(=O)NC1CCCCC1	[O-]S(=O)(=O)NC1CCCCC1	C6H12NO3S	178.22938		
+from NCGCCanonicalForm.java	[O-]C(CCC1CCCC1)=O	CYCLOPENTANEPROPIONATE		[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	C8H13O2	141.18762		
+from NCGCCanonicalForm.java	[O-]C(CCC1CCCC1)=O	CYPIONATE		[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	C8H13O2	141.18762		
+from NCGCCanonicalForm.java	CCCCCCCC(=O)[O-]	OCTANOATE		CCCCCCCC(=O)[O-]	CCCCCCCC(=O)[O-]	CCCCCCCC(=O)[O-]	C8H15O2	143.2035		
+from NCGCCanonicalForm.java	CCCCCCCCCC(=O)[O-]	DECANOATE		CCCCCCCCCC(=O)[O-]	CCCCCCCCCC(=O)[O-]	CCCCCCCCCC(=O)[O-]	C10H19O2	171.25666		
+from NCGCCanonicalForm.java	C1CCC([NH2+]C2CCCCC2)CC1	DICYCLOHEXYLAMMONIUM		C1CCC(CC1)[NH2+]C2CCCCC2	C1CCC(CC1)[NH2+]C2CCCCC2	C1CCC(CC1)[NH2+]C2CCCCC2	C12H24N	182.32566		
+from NCGCCanonicalForm.java	OCCNCCO	DIETHANOLAMINE		OCCNCCO	OCCNCCO	OCCNCCO	C4H11NO2	105.13563		
+from NCGCCanonicalForm.java	CCNCC	DIETHYLAMINE		CCNCC	CCNCC	CCNCC	C4H11N	73.13684		
+from NCGCCanonicalForm.java	CC[NH2+]CC	DIETHYLAMMONIUM		CC[NH2+]CC	CC[NH2+]CC	CC[NH2+]CC	C4H12N	74.14478		
+from NCGCCanonicalForm.java	OC(CC(C(=O)O)(CC(=O)O)O)=O	DIHYDROGEN CITRATE		OC(=O)CC(O)(CC(=O)O)C(=O)O	OC(=O)CC(O)(CC(=O)O)C(=O)O	OC(=O)CC(O)(CC(=O)O)C(=O)O	C6H8O7	192.12352		
+from NCGCCanonicalForm.java	OP(=O)(O)O	DIHYDROGEN PHOSPHATE		OP(=O)(O)O	OP(=O)(O)O	OP(=O)(O)O	H3O4P	97.99518		
+from NCGCCanonicalForm.java	Oc1c(O)c(C(=O)[O-])ccc1	DIHYDROXYBENZOATE		Oc1cccc(C(=O)[O-])c1O	Oc1cccc(C(=O)[O-])c1O	Oc1cccc(C(=O)[O-])c1O	C7H5O4	153.11219		
+from NCGCCanonicalForm.java	CN(CCC(=O)O)C	N,N-DIMETHYL-beta-ALANINE		CN(C)CCC(=O)O	CN(C)CCC(=O)O	CN(C)CCC(=O)O	C5H11NO2	117.14634		
+from NCGCCanonicalForm.java	[O-]C(c1c([N+](=O)[O-])c([N+](=O)[O-])ccc1)=O	DINITROBENZOATE		[O-]C(=O)c1cccc(c1[N+](=O)[O-])[N+](=O)[O-]	[O-]C(=O)c1cccc(c1[N+](=O)[O-])[N+](=O)[O-]	[O-]C(=O)c1cccc(c1[N+](=O)[O-])[N+](=O)[O-]	C7H3N2O6	211.10852		
+from NCGCCanonicalForm.java	[O-]P(OP(=O)([O-])[O-])(=O)[O-]	DIPHOSPHATE		[O-]P(=O)([O-])OP(=O)([O-])[O-]	[O-]P(=O)([O-])OP(=O)([O-])[O-]	[O-]P(=O)([O-])OP(=O)([O-])[O-]	O7P2	173.94332		
+from NCGCCanonicalForm.java	Oc1c(Cc2c(c3cc(C(=O)[O-])c2O)cccc3)c(c4cc1C(=O)[O-])cccc4	EMBONATE		Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	C23H14O6	386.35365		
+from NCGCCanonicalForm.java	CCCCCCC(=O)[O-]	ENANTHATE		CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	C7H13O2	129.17692		
+from NCGCCanonicalForm.java	CCS(=O)(=O)O	ESYLATE		CCS(=O)(=O)O	CCS(=O)(=O)O	CCS(=O)(=O)O	C2H6O3S	110.13223		
+from NCGCCanonicalForm.java	[O-]S(CCS(=O)(=O)[O-])(=O)=O	1,2-ETHANEDISULFONATE		[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956		
+from NCGCCanonicalForm.java	[O-]S(CCS(=O)(=O)[O-])(=O)=O	1,2-ETHANEDISULPHONATE		[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956		
+from NCGCCanonicalForm.java	CCS(=O)(=O)[O-]	ETHANESULFONATE		CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	C2H5O3S	109.12429		
+from NCGCCanonicalForm.java	CCS(=O)(=O)[O-]	ETHANESULPHONATE		CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	C2H5O3S	109.12429		
+from NCGCCanonicalForm.java	NCCO	ETHANOLAMINE		NCCO	NCCO	NCCO	C2H7NO	61.08308		
+from NCGCCanonicalForm.java	CCN	ETHYLAMINE		CCN	CCN	CCN	C2H7N	45.08368		
+from NCGCCanonicalForm.java	CC[NH3+]	ETHYLAMMONIUM		CC[NH3+]	CC[NH3+]	CC[NH3+]	C2H8N	46.09162		
+from NCGCCanonicalForm.java	NCCN	ETHYLENEDIAMINE		NCCN	NCCN	NCCN	C2H8N2	60.09832		
+from NCGCCanonicalForm.java	CCCCC(C(=O)[O-])CC	ETHYLHEXANOATE		CCCCC(CC)C(=O)[O-]	CCCCC(CC)C(=O)[O-]	CCCCC(CC)C(=O)[O-]	C8H15O2	143.2035		
+from NCGCCanonicalForm.java	CCC(C(=O)[O-])CC(=O)[O-]	ETHYLSUCCINATE		CCC(CC(=O)[O-])C(=O)[O-]	CCC(CC(=O)[O-])C(=O)[O-]	CCC(CC(=O)[O-])C(=O)[O-]	C6H8O4	144.12531		
+from NCGCCanonicalForm.java	[O-]S(=O)(=O)F	FLUOROSULFONATE		[O-]S(=O)(=O)F	[O-]S(=O)(=O)F	[O-]S(=O)(=O)F	FO3S	99.0616		
+from NCGCCanonicalForm.java	[O-]S(=O)(=O)F	FLUOROSULPHONATE		[O-]S(=O)(=O)F	[O-]S(=O)(=O)F	[O-]S(=O)(=O)F	FO3S	99.0616		
+from NCGCCanonicalForm.java	[O-]C=O	FORMATE		[O-]C=O	[O-]C=O	[O-]C=O	CHO2	45.01744		
+from NCGCCanonicalForm.java	[O-]C(\C=C\C(=O)[O-])=O	FUMARATE		[O-]C(=O)\C=C\C(=O)[O-]	[O-]C(=O)\C=C\C(=O)[O-]	[O-]C(=O)C=CC(=O)[O-]	C4H2O4	114.05627		
+from NCGCCanonicalForm.java	[O-]C(c1occc1)=O	FUROATE		[O-]C(=O)c1occc1	[O-]C(=O)c1occc1	[O-]C(=O)c1occc1	C5H3O3	111.07552		
+from NCGCCanonicalForm.java	O[C@H]([C@@H](C(=O)[O-])O)[C@@H]([C@H](C(=O)[O-])O)O	GLUCARATE		O[C@@H]([C@H](O)[C@H](O)C(=O)[O-])[C@@H](O)C(=O)[O-]	O[C@@H]([C@H](O)[C@H](O)C(=O)[O-])[C@@H](O)C(=O)[O-]	OC(C(O)C(O)C(=O)[O-])C(O)C(=O)[O-]	C6H8O8	208.12292		
+from NCGCCanonicalForm.java	OC[C@H]([C@@H]([C@H]([C@H]([C@H](C(=O)[O-])O)O)O)O)O	GLUCOHEPTONATE		OC[C@@H](O)[C@H](O)[C@@H](O)[C@@H](O)[C@@H](O)C(=O)[O-]	OC[C@@H](O)[C@H](O)[C@@H](O)[C@@H](O)[C@@H](O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	C7H13O8	225.17332		
+from NCGCCanonicalForm.java	OC[C@H]([C@H]([C@@H]([C@H](C(=O)[O-])O)O)O)O	GLUCONATE		OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(=O)[O-]	OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(=O)[O-]	C6H11O7	195.14734		
+from NCGCCanonicalForm.java	OC[C@@H]1[C@@H](O)[C@H](O)[C@@H](O)C(O)O1	GLUCOSIDE		OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O	OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O	OCC1OC(O)C(O)C(O)C1O	C6H12O6	180.15588		
+from NCGCCanonicalForm.java	OCC(=O)[O-]	GLYCOLATE		OCC(=O)[O-]	OCC(=O)[O-]	OCC(=O)[O-]	C2H3O3	75.04342		
+from NCGCCanonicalForm.java	[O-]C(C=O)=O	GLYOXYLATE		[O-]C(=O)C=O	[O-]C(=O)C=O	[O-]C(=O)C=O	C2HO3	73.02754		
+from NCGCCanonicalForm.java	CCCCCCC(=O)[O-]	HEPTANOATE		CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	C7H13O2	129.17692		
+from NCGCCanonicalForm.java	CCCCCC(=O)[O-]	HEXANOATE		CCCCCC(=O)[O-]	CCCCCC(=O)[O-]	CCCCCC(=O)[O-]	C6H11O2	115.15033		
+from NCGCCanonicalForm.java	[O-]C(CNC(c1ccccc1)=O)=O	HIPPURATE		[O-]C(=O)CNC(=O)c1ccccc1	[O-]C(=O)CNC(=O)c1ccccc1	[O-]C(=O)CNC(=O)c1ccccc1	C9H8NO3	178.16472		
+from NCGCCanonicalForm.java	OC(\C=C\C(=O)O)=O	FUMARATE		OC(=O)\C=C\C(=O)O	OC(=O)\C=C\C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216		
+from NCGCCanonicalForm.java	OC(C(=O)O)CC(=O)O	MALATE		OC(CC(=O)O)C(=O)O	OC(CC(=O)O)C(=O)O	OC(CC(=O)O)C(=O)O	C4H6O5	134.08744		
+from NCGCCanonicalForm.java	OC(\C=C/C(=O)O)=O	MALEATE		OC(=O)\C=C/C(=O)O	OC(=O)\C=C/C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216		
+from NCGCCanonicalForm.java	OC(CC(=O)O)=O	MALONATE		OC(=O)CC(=O)O	OC(=O)CC(=O)O	OC(=O)CC(=O)O	C3H4O4	104.06146		
+from NCGCCanonicalForm.java	OC(C(=O)O)=O	OXALATE		OC(=O)C(=O)O	OC(=O)C(=O)O	OC(=O)C(=O)O	C2H2O4	90.03488		
+from NCGCCanonicalForm.java	OC(CCC(=O)O)=O	SUCCINATE		OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	C4H6O4	118.08804		
+from NCGCCanonicalForm.java	OS(=O)(=O)O	SULFATE		OS(=O)(=O)O	OS(=O)(=O)O	OS(=O)(=O)O	H2O4S	98.07847		
+from NCGCCanonicalForm.java	OS(=O)O	SULFITE		OS(=O)O	OS(=O)O	OS(=O)O	H2O3S	82.07907		
+from NCGCCanonicalForm.java	OS(=O)(=O)O	SULPHATE		OS(=O)(=O)O	OS(=O)(=O)O	OS(=O)(=O)O	H2O4S	98.07847		
+from NCGCCanonicalForm.java	OS(=O)O	SULPHITE		OS(=O)O	OS(=O)O	OS(=O)O	H2O3S	82.07907		
+from NCGCCanonicalForm.java	OC(C(=O)O)C(C(=O)O)O	TARTRATE		OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684		
+from NCGCCanonicalForm.java	Oc1c(C(=O)[O-])cccc1	HYDROXYBENZOATE		Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	C7H5O3	137.1128		
+from NCGCCanonicalForm.java	Oc1ccc(C(c2c(C(=O)[O-])cccc2)=O)cc1	o-(4-HYDROXYBENZOYL)BENZOATE		Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	C14H9O4	241.21886	Yes	2
+from NCGCCanonicalForm.java	OCCS(=O)(=O)[O-]	2-HYDROXYETHANESULFONATE		OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	C2H5O4S	125.12369		
+from NCGCCanonicalForm.java	OCCS(=O)(=O)[O-]	2-HYDROXYETHANESULPHONATE		OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	C2H5O4S	125.12369		
+from NCGCCanonicalForm.java	Oc1c(C(=O)[O-])c(c2cc1)cccc2	HYDROXYNAPHTHOATE		Oc1ccc2ccccc2c1C(=O)[O-]	Oc1ccc2ccccc2c1C(=O)[O-]	Oc1ccc2ccccc2c1C(=O)[O-]	C11H7O3	187.17148		
+from NCGCCanonicalForm.java	OCCS(=O)(=O)O	ISETHIONATE		OCCS(=O)(=O)O	OCCS(=O)(=O)O	OCCS(=O)(=O)O	C2H6O4S	126.13163		
+from NCGCCanonicalForm.java	CC(C(=O)[O-])C	ISOBUTYRATE		CC(C)C(=O)[O-]	CC(C)C(=O)[O-]	CC(C)C(=O)[O-]	C4H7O2	87.09718		
+from NCGCCanonicalForm.java	CC(CCC(=O)[O-])C	ISOCAPROATE		CC(C)CCC(=O)[O-]	CC(C)CCC(=O)[O-]	CC(C)CCC(=O)[O-]	C6H11O2	115.15034		
+from NCGCCanonicalForm.java	[O-]C(c1ccncc1)=O	ISONICOTINATE		[O-]C(=O)c1ccncc1	[O-]C(=O)c1ccncc1	[O-]C(=O)c1ccncc1	C6H4NO2	122.10146		
+from NCGCCanonicalForm.java	[O-]C(c1cc(C(=O)[O-])ccc1)=O	ISOPHTHALATE		[O-]C(=O)c1cccc(c1)C(=O)[O-]	[O-]C(=O)c1cccc(c1)C(=O)[O-]	[O-]C(=O)c1cccc(c1)C(=O)[O-]	C8H4O4	164.11496		
+from NCGCCanonicalForm.java	CCC(=O)[O-]	ISOPROPIONATE		CCC(=O)[O-]	CCC(=O)[O-]	CCC(=O)[O-]	C3H5O2	73.0706		
+from NCGCCanonicalForm.java	C[CH]C	ISOPROPYL		C[CH]C	C[CH]C	C[CH]C	C3H7	43.08768		
+from NCGCCanonicalForm.java	CC(C(=O)[O-])O	LACTATE		CC(O)C(=O)[O-]	CC(O)C(=O)[O-]	CC(O)C(=O)[O-]	C3H5O3	89.07		
+from NCGCCanonicalForm.java	CCCCCCCCCCCC(=O)[O-]	LAURATE		CCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCC(=O)[O-]	C12H23O2	199.30982		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCOS(=O)(=O)O	LAURILSULFATE		CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCOS(=O)(=O)O	LAURILSULPHATE		CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCOS(=O)(=O)O	LAURYLSULFATE		CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCOS(=O)(=O)O	LAURYLSULPHATE		CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744		
+from NCGCCanonicalForm.java	CC(CCC(=O)[O-])=O	LEVULINATE		CC(=O)CCC(=O)[O-]	CC(=O)CCC(=O)[O-]	CC(=O)CCC(=O)[O-]	C5H7O3	115.10727		
+from NCGCCanonicalForm.java	NCCCC[C@@H](C(=O)[O-])N	LYSINATE		NCCCC[C@H](N)C(=O)[O-]	NCCCC[C@H](N)C(=O)[O-]	NCCCCC(N)C(=O)[O-]	C6H13N2O2	145.17962		
+from NCGCCanonicalForm.java	OC(C(=O)[O-])CC(=O)[O-]	MALATE		OC(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])C(=O)[O-]	C4H4O5	132.07156		
+from NCGCCanonicalForm.java	[O-]C(\C=C/C(=O)[O-])=O	MALEATE		[O-]C(=O)\C=C/C(=O)[O-]	[O-]C(=O)\C=C/C(=O)[O-]	[O-]C(=O)C=CC(=O)[O-]	C4H2O4	114.05627		
+from NCGCCanonicalForm.java	[O-]C(CC(=O)[O-])=O	MALONATE		[O-]C(=O)CC(=O)[O-]	[O-]C(=O)CC(=O)[O-]	[O-]C(=O)CC(=O)[O-]	C3H2O4	102.04558		
+from NCGCCanonicalForm.java	OC(c1ccccc1)C(=O)[O-]	MANDELATE		OC(C(=O)[O-])c1ccccc1	OC(C(=O)[O-])c1ccccc1	OC(C(=O)[O-])c1ccccc1	C8H7O3	151.13937		
+from NCGCCanonicalForm.java	CNC[C@@H]([C@H]([C@@H]([C@@H](CO)O)O)O)O	MEGLUMINE		CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO	CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO	CNCC(O)C(O)C(O)C(O)CO	C7H17NO5	195.21358		
+from NCGCCanonicalForm.java	CS(=O)(=O)O	MESYLATE		CS(=O)(=O)O	CS(=O)(=O)O	CS(=O)(=O)O	CH4O3S	96.10565		
+from NCGCCanonicalForm.java	CS(=O)(=O)[O-]	METHANESULFONATE		CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772		
+from NCGCCanonicalForm.java	CS(=O)(=O)[O-]	METHANESULPHONATE		CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772		
+from NCGCCanonicalForm.java	CC(C=C1)(CC2)CCC12C(=O)[O-]	4-METHYLBICYCLO[2.2.2]OCT-2-ENE-1-CARBOXYLATE		CC12CCC(CC1)(C=C2)C(=O)[O-]	CC12CCC(CC1)(C=C2)C(=O)[O-]	CC12CCC(CC1)(C=C2)C(=O)[O-]	C10H13O2	165.20902		
+from NCGCCanonicalForm.java	OC(c1c(O)c(Cc2c(c3cc(C(=O)O)c2O)cccc3)c(c4c1)cccc4)=O	4,4.-METHYLENEBIS(3-HYDROXY-2-NAPHTHOATE)		OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	C23H16O6	388.36953		
+from NCGCCanonicalForm.java	Oc1c(C(OCOC(c2c(O)cccc2)=O)=O)cccc1	METHYLENEDISALICYLATE		Oc1ccccc1C(=O)OCOC(=O)c2ccccc2O	Oc1ccccc1C(=O)OCOC(=O)c2ccccc2O	Oc1ccccc1C(=O)OCOC(=O)c2ccccc2O	C15H12O6	288.25218	Yes	4
+from NCGCCanonicalForm.java	CNC[C@@H]([C@H]([C@@H]([C@@H](CO)O)O)O)O	N-METHYLGLUCAMINE		CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO	CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO	CNCC(O)C(O)C(O)C(O)CO	C7H17NO5	195.21358		
+from NCGCCanonicalForm.java	COS(=O)(=O)O	METHYLSULFATE		COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506		
+from NCGCCanonicalForm.java	COS(=O)(=O)O	METHYLSULPHATE		COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506		
+from NCGCCanonicalForm.java	COS(=O)(=O)O	METILSULFATE		COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506		
+from NCGCCanonicalForm.java	COS(=O)(=O)O	METILSULPHATE		COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506		
+from NCGCCanonicalForm.java	[O-]C(c1ccccc1)=O	MONOBENZOATE		[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	C7H5O2	121.1134		
+from NCGCCanonicalForm.java	[O-][N+](=O)[O-]	MONONITRATE		[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	NO3	62.0049		
+from NCGCCanonicalForm.java	[O-]S(c1c(c2ccc1)cccc2S(=O)(=O)[O-])(=O)=O	1,5-NAPHTHALENEDISULFONATE		[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	C10H6O6S2	286.28103		
+from NCGCCanonicalForm.java	[O-]S(c1c(c2ccc1)cccc2S(=O)(=O)[O-])(=O)=O	1,5-NAPHTHALENEDISULPHONATE		[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	C10H6O6S2	286.28103		
+from NCGCCanonicalForm.java	[O-]S(c1cc(c2cc1)cccc2)(=O)=O	2-NAPHTHALENESULFONATE		[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	C10H7O3S	207.22578		
+from NCGCCanonicalForm.java	[O-]S(c1cc(c2cc1)cccc2)(=O)=O	2-NAPHTHALENESULPHONATE		[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	C10H7O3S	207.22578		
+from NCGCCanonicalForm.java	[O-]C(c1cnccc1)=O	NICOTINATE		[O-]C(=O)c1cccnc1	[O-]C(=O)c1cccnc1	[O-]C(=O)c1cccnc1	C6H4NO2	122.10146		
+from NCGCCanonicalForm.java	[O-][N+](=O)[O-]	NITRATE		[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	NO3	62.0049		
+from NCGCCanonicalForm.java	[O-]C(c1c([N+](=O)[O-])cccc1)=O	NITROBENZOATE		[O-]C(=O)c1ccccc1[N+](=O)[O-]	[O-]C(=O)c1ccccc1[N+](=O)[O-]	[O-]C(=O)c1ccccc1[N+](=O)[O-]	C7H4NO4	166.11096		
+from NCGCCanonicalForm.java	CCCCCCCC\C=C/CCCCCCCC(=O)[O-]	OLEATE		CCCCCCCC\C=C/CCCCCCCC(=O)[O-]	CCCCCCCC\C=C/CCCCCCCC(=O)[O-]	CCCCCCCCC=CCCCCCCCC(=O)[O-]	C18H33O2	281.45342		
+from NCGCCanonicalForm.java	[O-]C(C(NC(=O)NC1=O)=C1)=O	OROTATE		[O-]C(=O)C1=CC(=O)NC(=O)N1	Oc1cc(nc(O)n1)C(=O)[O-]	Oc1cc(nc(O)n1)C(=O)[O-]	C5H3N2O4	155.08831	Yes	6
+from NCGCCanonicalForm.java	[O-]P(=O)([O-])[O-]	ORTHOPHOSPHATE		[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	O4P	94.97136		
+from NCGCCanonicalForm.java	[O-]C(C(=O)[O-])=O	OXALATE		[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	C2O4	88.019		
+from NCGCCanonicalForm.java	CC(CCC(=O)[O-])=O	4-OXOPENTANOATE		CC(=O)CCC(=O)[O-]	CC(=O)CCC(=O)[O-]	CC(=O)CCC(=O)[O-]	C5H7O3	115.10727		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCCCCC(=O)[O-]	PALMITATE		CCCCCCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCCCCCC(=O)[O-]	C16H31O2	255.41614		
+from NCGCCanonicalForm.java	Oc1c(Cc2c(c3cc(C(=O)[O-])c2O)cccc3)c(c4cc1C(=O)[O-])cccc4	PAMOATE		Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	C23H14O6	386.35365		
+from NCGCCanonicalForm.java	CC(C(C(NCCC(=O)[O-])=O)O)(CO)C	PANTOTHENATE		CC(C)(CO)C(O)C(=O)NCCC(=O)[O-]	CC(C)(CO)C(O)C(=O)NCCC(=O)[O-]	CC(C)(CO)C(O)C(=O)NCCC(=O)[O-]	C9H16NO5	218.22704		
+from NCGCCanonicalForm.java	[O-]Cl(=O)(=O)=O	PERCHLORATE		[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	ClO4	99.4506		
+from NCGCCanonicalForm.java	OC(CCc1ccccc1)=O	PHENYLPROPIONATE		OC(=O)CCc1ccccc1	OC(=O)CCc1ccccc1	OC(=O)CCc1ccccc1	C9H10O2	150.1745		
+from NCGCCanonicalForm.java	[O-]P(=O)([O-])[O-]	PHOSPHATE		[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	O4P	94.97136		
+from NCGCCanonicalForm.java	[O-]P([O-])[O-]	PHOSPHITE		[O-]P([O-])[O-]	[O-]P([O-])[O-]	[O-]P([O-])[O-]	O3P	78.97196		
+from NCGCCanonicalForm.java	[O-]C(c1c(C(=O)[O-])cccc1)=O	PHTHALATE		[O-]C(=O)c1ccccc1C(=O)[O-]	[O-]C(=O)c1ccccc1C(=O)[O-]	[O-]C(=O)c1ccccc1C(=O)[O-]	C8H4O4	164.11496		
+from NCGCCanonicalForm.java	Oc1c([N+](=O)[O-])cc([N+](=O)[O-])cc1[N+](=O)[O-]	PICRATE		Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H3N3O7	229.10392		
+from NCGCCanonicalForm.java	CC(C(=O)[O-])(C)C	PIVALATE		CC(C)(C)C(=O)[O-]	CC(C)(C)C(=O)[O-]	CC(C)(C)C(=O)[O-]	C5H9O2	101.12375		
+from NCGCCanonicalForm.java	CCC(=O)[O-]	PROPIONATE		CCC(=O)[O-]	CCC(=O)[O-]	CCC(=O)[O-]	C3H5O2	73.0706		
+from NCGCCanonicalForm.java	OC(Cc1ncccc1)=O	PYRIDYLACETATE		OC(=O)Cc1ccccn1	OC(=O)Cc1ccccn1	OC(=O)Cc1ccccn1	C7H7NO2	137.13598		
+from NCGCCanonicalForm.java	OCCN1CCCC1	1-PYRROLIDINEETHANOL		OCCN1CCCC1	OCCN1CCCC1	OCCN1CCCC1	C6H13NO	115.17351		
+from NCGCCanonicalForm.java	O[C@H]([C@@H](C(=O)[O-])O)[C@@H]([C@H](C(=O)[O-])O)O	SACCHARATE		O[C@@H]([C@H](O)[C@H](O)C(=O)[O-])[C@@H](O)C(=O)[O-]	O[C@@H]([C@H](O)[C@H](O)C(=O)[O-])[C@@H](O)C(=O)[O-]	OC(C(O)C(O)C(=O)[O-])C(O)C(=O)[O-]	C6H8O8	208.12292		
+from NCGCCanonicalForm.java	Oc1c(C(=O)[O-])cccc1	SALICYLATE		Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	C7H5O3	137.1128		
+from NCGCCanonicalForm.java	OC(CC(c1c(O)cccc1)=O)=O	SALICYLOYLACETATE		OC(=O)CC(=O)c1ccccc1O	OC(=O)CC(=O)c1ccccc1O	OC(=O)CC(=O)c1ccccc1O	C9H8O4	180.15742	Yes	2
+from NCGCCanonicalForm.java	CCCCCCCCCCCCCCCCCC(=O)[O-]	STEARATE		CCCCCCCCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCCCCCCCC(=O)[O-]	C18H35O2	283.4693		
+from NCGCCanonicalForm.java	[O-]C(CCC(=O)[O-])=O	SUCCINATE		[O-]C(=O)CCC(=O)[O-]	[O-]C(=O)CCC(=O)[O-]	[O-]C(=O)CCC(=O)[O-]	C4H4O4	116.07216		
+from NCGCCanonicalForm.java	[O-]S(=O)(=O)[O-]	SULFATE		[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	O4S	96.06259		
+from NCGCCanonicalForm.java	[O-]S(=O)[O-]	SULFITE		[O-]S(=O)[O-]	[O-]S(=O)[O-]	[O-]S(=O)[O-]	O3S	80.06319		
+from NCGCCanonicalForm.java	OS(Oc1c(C(=O)[O-])cccc1)(=O)=O	SULFOSALICYLATE		OS(=O)(=O)Oc1ccccc1C(=O)[O-]	OS(=O)(=O)Oc1ccccc1C(=O)[O-]	OS(=O)(=O)Oc1ccccc1C(=O)[O-]	C7H5O6S	217.176		
+from NCGCCanonicalForm.java	[O-]S(=O)(=O)[O-]	SULPHATE		[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	O4S	96.06259		
+from NCGCCanonicalForm.java	[O-]S(=O)[O-]	SULPHITE		[O-]S(=O)[O-]	[O-]S(=O)[O-]	[O-]S(=O)[O-]	O3S	80.06319		
+from NCGCCanonicalForm.java	OS(Oc1c(C(=O)[O-])cccc1)(=O)=O	SULPHOSALICYLATE		OS(=O)(=O)Oc1ccccc1C(=O)[O-]	OS(=O)(=O)Oc1ccccc1C(=O)[O-]	OS(=O)(=O)Oc1ccccc1C(=O)[O-]	C7H5O6S	217.176		
+from NCGCCanonicalForm.java	OC(C(=O)[O-])C(C(=O)[O-])O	TARTRATE		OC(C(O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCCCOP(=O)(O)O	TETRADECYL HYDROGEN PHOSPHATE		CCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCOP(=O)(O)O	C14H31O4P	294.3673		
+from NCGCCanonicalForm.java	[O-]C(C1C(C(=O)[O-])C=CCC1)=O	TETRAHYDROPHTHALATE		[O-]C(=O)C1CCC=CC1C(=O)[O-]	[O-]C(=O)C1CCC=CC1C(=O)[O-]	[O-]C(=O)C1CCC=CC1C(=O)[O-]	C8H8O4	168.14672		
+from NCGCCanonicalForm.java	[S-]C#N	THIOCYANATE		[S-]C#N	[S-]C#N	[S-]C#N	CNS	58.0824		
+from NCGCCanonicalForm.java	Cc1ccc(S(=O)(=O)[O-])cc1	p-TOLUENESULFONATE		Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	C7H7O3S	171.19368		
+from NCGCCanonicalForm.java	Cc1ccc(S(=O)(=O)[O-])cc1	p-TOLUENESULPHONATE		Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	C7H7O3S	171.19368		
+from NCGCCanonicalForm.java	Cc1ccc(S(=O)(=O)O)cc1	TOSILATE		Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	C7H8O3S	172.20162		
+from NCGCCanonicalForm.java	Cc1ccc(S(=O)(=O)O)cc1	TOSYLATE		Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	C7H8O3S	172.20162		
+from NCGCCanonicalForm.java	OCCN(CCO)CCO	TRIETHANOLAMINE		OCCN(CCO)CCO	OCCN(CCO)CCO	OCCN(CCO)CCO	C6H15NO3	149.1882		
+from NCGCCanonicalForm.java	[O-]C(C(F)(F)F)=O	TRIFLUOROACETATE		[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	C2F3O2	113.0154		
+from NCGCCanonicalForm.java	CC(C(=O)[O-])(C)C	TRIMETHYLACETATE		CC(C)(C)C(=O)[O-]	CC(C)(C)C(=O)[O-]	CC(C)(C)C(=O)[O-]	C5H9O2	101.12375		
+from NCGCCanonicalForm.java	CCCCCCCCCCC(=O)[O-]	UNDECANOATE		CCCCCCCCCCC(=O)[O-]	CCCCCCCCCCC(=O)[O-]	CCCCCCCCCCC(=O)[O-]	C11H21O2	185.28324		
+from NCGCCanonicalForm.java	[O-]C(CCCCCCCCC=C)=O	UNDEC-10-ENOATE		[O-]C(=O)CCCCCCCCC=C	[O-]C(=O)CCCCCCCCC=C	[O-]C(=O)CCCCCCCCC=C	C11H19O2	183.26736		
+from NCGCCanonicalForm.java	CCCCCCCC\C=C/C(=O)[O-]	UNDECYLENATE		CCCCCCCC\C=C/C(=O)[O-]	CCCCCCCC\C=C/C(=O)[O-]	CCCCCCCCC=CC(=O)[O-]	C11H19O2	183.26736		
+from NCGCCanonicalForm.java	CCCCC(=O)[O-]	VALERATE		CCCCC(=O)[O-]	CCCCC(=O)[O-]	CCCCC(=O)[O-]	C5H9O2	101.12375		
+from NCGCCanonicalForm.java	CC(NCC(=O)[O-])=O	N-Acetylglycinate		CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	C4H6NO3	116.09534		
+from NCGCCanonicalForm.java	NC(C=C(S(OS(=O)(=O)[O-])(=O)=O)C(\C=C\c1ccccc1)=C2)(=C2)N	4,4-Diaminostilbene-2,2-disulfonate << NOT VALID RDKit mol		NC1(=CC=C(\C=C\c2ccccc2)C(=C1)S(=O)(=O)OS(=O)(=O)[O-])N	NC1(=CC=C(\C=C\c2ccccc2)C(=C1)S(=O)(=O)OS(=O)(=O)[O-])N	NC1(=CC=C(C=Cc2ccccc2)C(=C1)S(=O)(=O)OS(=O)(=O)[O-])N	C14H14N2O6S2	370.40075		
+from NCGCCanonicalForm.java	[O-]S(c1ccccc1)(=O)=O	Benzenesulfonate		[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	C6H5O3S	157.16709		
+from NCGCCanonicalForm.java	CC(c1cc(c2c(S(=O)(=O)[O-])c1)c(S(=O)(=O)[O-])cc(C(C)(C)C)c2)(C)C	3,7-di-tert-butyl-1,5-naphthalenedisulfonate		CC(C)(C)c1cc(c2cc(cc(c2c1)S(=O)(=O)[O-])C(C)(C)C)S(=O)(=O)[O-]	CC(C)(C)c1cc(c2cc(cc(c2c1)S(=O)(=O)[O-])C(C)(C)C)S(=O)(=O)[O-]	CC(C)(C)c1cc(c2cc(cc(c2c1)S(=O)(=O)[O-])C(C)(C)C)S(=O)(=O)[O-]	C18H22O6S2	398.49367		
+from NCGCCanonicalForm.java	CC(C1(CS(=O)(=O)[O-])CC2)(C2CC1=O)C	Camphorsulfonate		CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887		
+from NCGCCanonicalForm.java	OC(c1ccc(S(=O)(=O)[O-])cc1)=O	p-Carboxybenzenesulfonate		OC(=O)c1ccc(cc1)S(=O)(=O)[O-]	OC(=O)c1ccc(cc1)S(=O)(=O)[O-]	OC(=O)c1ccc(cc1)S(=O)(=O)[O-]	C7H5O5S	201.1766		
+from NCGCCanonicalForm.java	CC(C=C1)(CC2)CCC12C(=O)[O-]	4-Methylbicyclo[2.2.2]oct-2-ene-1-carboxylate		CC12CCC(CC1)(C=C2)C(=O)[O-]	CC12CCC(CC1)(C=C2)C(=O)[O-]	CC12CCC(CC1)(C=C2)C(=O)[O-]	C10H13O2	165.20902		
+from NCGCCanonicalForm.java	[O-]C(CCC1CCCC1)=O	Cyclopentanepropionate		[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	C8H13O2	141.18762		
+from NCGCCanonicalForm.java	[O-]S(c1ccc(Cl)cc1)(=O)=O	p-Chlorobenzenesulfonate		[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	C6H4ClO3S	191.61216		
+from NCGCCanonicalForm.java	CC(c(c1OC2=O)cc(O)c(OCC(=O)O)c1)=C2	[(6-hydroxy-4-methyl-2-oxo-2H-1-benzopyran-7-yl)oxy]acetate		CC1=CC(=O)Oc2cc(OCC(=O)O)c(O)cc12	CC1=CC(=O)Oc2cc(OCC(=O)O)c(O)cc12	CC1=CC(=O)Oc2cc(OCC(=O)O)c(O)cc12	C12H10O6	250.2042		
+from NCGCCanonicalForm.java	Oc1c(O)cc(c2c1)C(CS(=O)(=O)[O-])=CC(=O)O2	6,7-Dihydroxycoumarin-4-methanesulfonate		Oc1cc2OC(=O)C=C(CS(=O)(=O)[O-])c2cc1O	Oc1cc2OC(=O)C=C(CS(=O)(=O)[O-])c2cc1O	Oc1cc2OC(=O)C=C(CS(=O)(=O)[O-])c2cc1O	C10H7O7S	271.22338	Yes	2
+from NCGCCanonicalForm.java	CC(c1c(S(=O)(=O)[O-])c(c2cc1)ccc(C(C)(C)C)c2S(=O)(=O)[O-])(C)C	2,6-di-tert-butyl-1,5-naphthalenedisulfonate		CC(C)(C)c1ccc2c(c(ccc2c1S(=O)(=O)[O-])C(C)(C)C)S(=O)(=O)[O-]	CC(C)(C)c1ccc2c(c(ccc2c1S(=O)(=O)[O-])C(C)(C)C)S(=O)(=O)[O-]	CC(C)(C)c1ccc2c(c(ccc2c1S(=O)(=O)[O-])C(C)(C)C)S(=O)(=O)[O-]	C18H22O6S2	398.49367		
+from NCGCCanonicalForm.java	OCCNCCO	Diethanolamine		OCCNCCO	OCCNCCO	OCCNCCO	C4H11NO2	105.13563		
+from NCGCCanonicalForm.java	[O-]S(CCS(=O)(=O)[O-])(=O)=O	1,2-Ethanedisulfonate		[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956		
+from NCGCCanonicalForm.java	OC(c1c(O)c(Cc2c(c3cc(C(=O)O)c2O)cccc3)c(c4c1)cccc4)=O	4,4-Methylenebis(3-hydroxy-2-naphthoate)		OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	C23H16O6	388.36953		
+from NCGCCanonicalForm.java	CCCCCCC(=O)[O-]	Heptanoate		CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	C7H13O2	129.17692		
+from NCGCCanonicalForm.java	CCS(=O)(=O)[O-]	Ethanesulfonate		CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	C2H5O3S	109.12429		
+from NCGCCanonicalForm.java	Oc1c(c2ccccc2)ccc(C(c3c(C(=O)[O-])cccc3)=O)c1	o-[(2-hydroxy-4-biphenylyl)-carbonyl]benzoate		Oc1cc(ccc1c2ccccc2)C(=O)c3ccccc3C(=O)[O-]	Oc1cc(ccc1c2ccccc2)C(=O)c3ccccc3C(=O)[O-]	Oc1cc(ccc1c2ccccc2)C(=O)c3ccccc3C(=O)[O-]	C20H13O4	317.31482		
+from NCGCCanonicalForm.java	OC[C@H]([C@@H]([C@H]([C@H]([C@H](C(=O)[O-])O)O)O)O)O	Glucoheptonate		OC[C@@H](O)[C@H](O)[C@@H](O)[C@@H](O)[C@@H](O)C(=O)[O-]	OC[C@@H](O)[C@H](O)[C@@H](O)[C@@H](O)[C@@H](O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	C7H13O8	225.17332		
+from NCGCCanonicalForm.java	Oc1ccc(C(c2c(C(=O)[O-])cccc2)=O)cc1	o-(4-hydroxybenzoyl)benzoate		Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	C14H9O4	241.21886	Yes	2
+from NCGCCanonicalForm.java	OCCS(=O)(=O)[O-]	2-Hydroxyethanesulfonate		OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	C2H5O4S	125.12369		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCOS(=O)(=O)O	n-Dodecylsulfate		CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744		
+from NCGCCanonicalForm.java	COc1c(OC)c(OC)ccc1	3,4,5-Trimethoxybenzene		COc1cccc(OC)c1OC	COc1cccc(OC)c1OC	COc1cccc(OC)c1OC	C9H12O3	168.18978		
+from NCGCCanonicalForm.java	CS(=O)(=O)[O-]	Methanesulfonate		CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772		
+from NCGCCanonicalForm.java	COc1c(C(=O)[O-])cc(c2c1)cccc2	3-methoxy-2-naphthoate		COc1cc2ccccc2cc1C(=O)[O-]	COc1cc2ccccc2cc1C(=O)[O-]	COc1cc2ccccc2cc1C(=O)[O-]	C12H9O3	201.19806		
+from NCGCCanonicalForm.java	COS(=O)(=O)O	Methylsulfate		COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506		
+from NCGCCanonicalForm.java	[O-]S(c1c(c2ccc1)cccc2S(=O)(=O)[O-])(=O)=O	1,5-Naphthalenedisulfonate		[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	C10H6O6S2	286.28103		
+from NCGCCanonicalForm.java	[O-]S(c1cc(c2cc1)cccc2)(=O)=O	2-Naphthalenesulfonate		[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	C10H7O3S	207.22578		
+from NCGCCanonicalForm.java	NCCO	Ethanolamine		NCCO	NCCO	NCCO	C2H7NO	61.08308		
+from NCGCCanonicalForm.java	[O-]C(CCC(C(=O)[O-])=O)=O	2-Oxoglutarate		[O-]C(=O)CCC(=O)C(=O)[O-]	[O-]C(=O)CCC(=O)C(=O)[O-]	[O-]C(=O)CCC(=O)C(=O)[O-]	C5H4O5	144.08226		
+from NCGCCanonicalForm.java	CC(C(=O)[O-])(C)C	Trimethylacetate		CC(C)(C)C(=O)[O-]	CC(C)(C)C(=O)[O-]	CC(C)(C)C(=O)[O-]	C5H9O2	101.12375		
+from NCGCCanonicalForm.java	[CH2]OC(C(C)(C)C)=O	(Pivaloyloxy)methyl		CC(C)(C)C(=O)O[CH2]	CC(C)(C)C(=O)O[CH2]	CC(C)(C)C(=O)O[CH2]	C6H11O2	115.15034		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCCCCCCC(C(C(=O)[O-])O)=O	Stearoyl-glycolate		CCCCCCCCCCCCCCCCCC(=O)C(O)C(=O)[O-]	CCCCCCCCCCCCCCCCCC(=O)C(O)C(=O)[O-]	CCCCCCCCCCCCCCCCCC(=O)C(O)C(=O)[O-]	C20H37O4	341.50538		
+from NCGCCanonicalForm.java	CC(OC(C)(C)C)=O	t-butyl acetate		CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	C6H12O2	116.15828		
+from NCGCCanonicalForm.java	CN1C(=O)c(c2N(C(=O)[O-])C1=O)[nH]c(Cl)n2	8-Chlorotheophyllinate		CN1C(=O)N(C(=O)[O-])c2nc(Cl)[nH]c2C1=O	CN1C(=O)N(C(=O)[O-])c2[nH]c(Cl)nc2C1=O	CN1C(=O)N(C(=O)[O-])c2[nH]c(Cl)nc2C1=O	C7H4ClN4O4	243.58405	Yes	3
+from NCGCCanonicalForm.java	CN1C(=O)N(C)C(=O)c(c12)n(CCCS(=O)(=O)[O-])cn2	1,2,3,6-Tetrahydro-1,3-dimethyl-2,6-dioxopurine-7-propanesulfonate		CN1C(=O)N(C)c2ncn(CCCS(=O)(=O)[O-])c2C1=O	CN1C(=O)N(C)c2ncn(CCCS(=O)(=O)[O-])c2C1=O	CN1C(=O)N(C)c2ncn(CCCS(=O)(=O)[O-])c2C1=O	C10H13N4O5S	301.29902		
+from NCGCCanonicalForm.java	CN1C(=O)N(C)C(=O)c(c12)n(CCS(=O)(=O)[O-])cn2	1,2,3,6-Tetrahydro-1,3-dimethyl-2,6-dioxopurine-7-ethanesulfonate		CN1C(=O)N(C)c2ncn(CCS(=O)(=O)[O-])c2C1=O	CN1C(=O)N(C)c2ncn(CCS(=O)(=O)[O-])c2C1=O	CN1C(=O)N(C)c2ncn(CCS(=O)(=O)[O-])c2C1=O	C9H11N4O5S	287.27243		
+from NCGCCanonicalForm.java	Cc1ccc(S(=O)(=O)[O-])cc1	p-Toluenesulfonate		Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	C7H7O3S	171.19368		
+from NCGCCanonicalForm.java	[O-]c1c(Cl)cc(Cl)c(Cl)c1	2,4,5-Trichlorophenolate		[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	C6H2Cl3O	196.43848		
+from NCGCCanonicalForm.java	OCCN(CCO)CCO	Triethanolamine		OCCN(CCO)CCO	OCCN(CCO)CCO	OCCN(CCO)CCO	C6H15NO3	149.1882		
+from NCGCCanonicalForm.java	CC(NCC(=O)[O-])=O	N-acetylglycinate		CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	CC(=O)NCC(=O)[O-]	C4H6NO3	116.09534		
+from NCGCCanonicalForm.java	[O-]S(c1ccccc1)(=O)=O	benzenesulfonate		[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	C6H5O3S	157.16709		
+from NCGCCanonicalForm.java	CCCC[C@@H]1CC[C@@H](C(=O)[O-])CC1	trans-4-butylcyclohexanecarboxylate		CCCC[C@@H]1CC[C@H](CC1)C(=O)[O-]	CCCC[C@@H]1CC[C@H](CC1)C(=O)[O-]	CCCCC1CCC(CC1)C(=O)[O-]	C11H19O2	183.26736		
+from NCGCCanonicalForm.java	CC(C1(CS(=O)(=O)[O-])CC2)(C2CC1=O)C	camphorsulfonate		CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887		
+from NCGCCanonicalForm.java	CCCCCC(=O)[O-]	hexanoate		CCCCCC(=O)[O-]	CCCCCC(=O)[O-]	CCCCCC(=O)[O-]	C6H11O2	115.15033		
+from NCGCCanonicalForm.java	[O-]S(c1ccc(Cl)cc1)(=O)=O	p-chlorobenzenesulfonate		[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	C6H4ClO3S	191.61216		
+from NCGCCanonicalForm.java	CC(C=C1)(CC2)CCC12C(=O)[O-]	4-methylbicyclo[2,2,2]oct-2-ene-1-carboxylate		CC12CCC(CC1)(C=C2)C(=O)[O-]	CC12CCC(CC1)(C=C2)C(=O)[O-]	CC12CCC(CC1)(C=C2)C(=O)[O-]	C10H13O2	165.20902		
+from NCGCCanonicalForm.java	[O-]C(CCC1CCCC1)=O	cyclopentanepropionate		[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	[O-]C(=O)CCC1CCCC1	C8H13O2	141.18762		
+from NCGCCanonicalForm.java	CN(CCC(=O)[O-])C	N,N-dimethyl-beta-alaninate		CN(C)CCC(=O)[O-]	CN(C)CCC(=O)[O-]	CN(C)CCC(=O)[O-]	C5H10NO2	116.13839		
+from NCGCCanonicalForm.java	OCCNCCO	diethanolamine		OCCNCCO	OCCNCCO	OCCNCCO	C4H11NO2	105.13563		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	octadecyl hydrogen phosphate		CCCCCCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	C18H39O4P	350.47362		
+from NCGCCanonicalForm.java	NCCN	ethylenediamine		NCCN	NCCN	NCCN	C2H8N2	60.09832		
+from NCGCCanonicalForm.java	[O-]C(CN(CC(=O)[O-])CCN(CC(=O)[O-])CC(=O)[O-])=O	ethylenediaminetetraacetate		[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	C10H12N2O8	288.21088		
+from NCGCCanonicalForm.java	[O-]S(CCS(=O)(=O)[O-])(=O)=O	1,2-ethanedisulfonate		[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956		
+from NCGCCanonicalForm.java	CCCCCCC(=O)[O-]	heptanoate		CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	CCCCCCC(=O)[O-]	C7H13O2	129.17692		
+from NCGCCanonicalForm.java	OCCN1CCCC1	1-pyrrolidineethanol		OCCN1CCCC1	OCCN1CCCC1	OCCN1CCCC1	C6H13NO	115.17351		
+from NCGCCanonicalForm.java	CC(N)(C)C	tert-butylamine		CC(C)(C)N	CC(C)(C)N	CC(C)(C)N	C4H11N	73.13683		
+from NCGCCanonicalForm.java	CCS(=O)(=O)[O-]	ethanesulfonate		CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	C2H5O3S	109.12429		
+from NCGCCanonicalForm.java	CCOC(=O)O	ethyl carbonate		CCOC(=O)O	CCOC(=O)O	CCOC(=O)O	C3H6O3	90.07794		
+from NCGCCanonicalForm.java	CCCCCCCCCCCCCCOP(=O)(O)O	TETRADECYL HYDROGEN PHOSPHATE		CCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCOP(=O)(O)O	C14H31O4P	294.3673		
+from NCGCCanonicalForm.java	Oc1ccc(C(c2c(C(=O)[O-])cccc2)=O)cc1	o-(p-hydroxybenzoyl)benzoate		Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	Oc1ccc(cc1)C(=O)c2ccccc2C(=O)[O-]	C14H9O4	241.21886	Yes	2
+from NCGCCanonicalForm.java	OCCS(=O)(=O)[O-]	2-hydroxyethanesulfonate		OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	C2H5O4S	125.12369		
+from NCGCCanonicalForm.java	CNC[C@@H]([C@H]([C@@H]([C@@H](CO)O)O)O)O	N-methylglucamine		CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO	CNC[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO	CNCC(O)C(O)C(O)C(O)CO	C7H17NO5	195.21358		
+from NCGCCanonicalForm.java	CS(=O)(=O)[O-]	methanesulfonate		CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772		
+from NCGCCanonicalForm.java	[O-]S(c1cc(c2cc1)cccc2)(=O)=O	2-naphthalenesulfonate		[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	C10H7O3S	207.22578		
+from NCGCCanonicalForm.java	OC(c1c(O)c(Cc2c(c3cc(C(=O)O)c2O)cccc3)c(c4c1)cccc4)=O	4,4-methylenebis[3-hydroxy-2-naphthoate]		OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	C23H16O6	388.36953		
+from NCGCCanonicalForm.java	[O-]C(CCc1ccccc1)=O	3-phenylpropionate		[O-]C(=O)CCc1ccccc1	[O-]C(=O)CCc1ccccc1	[O-]C(=O)CCc1ccccc1	C9H9O2	149.16656		
+from NCGCCanonicalForm.java	CC(OC(C)(C)C)=O	tert-butyl acetate		CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	C6H12O2	116.15828		
+from NCGCCanonicalForm.java	CC(CC(=O)[O-])(C)C	3,3-dimethylbutyrate		CC(C)(C)CC(=O)[O-]	CC(C)(C)CC(=O)[O-]	CC(C)(C)CC(=O)[O-]	C6H11O2	115.15033		
+from NCGCCanonicalForm.java	Cc1ccc(S(=O)(=O)[O-])cc1	p-toluenesulfonate		Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	C7H7O3S	171.19368		
+from NCGCCanonicalForm.java	[O-]C(C(F)(F)F)=O	trifluoroacetate		[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	C2F3O2	113.0154		
+from NCGCCanonicalForm.java	OCCN(CCO)CCO	triethanolamine		OCCN(CCO)CCO	OCCN(CCO)CCO	OCCN(CCO)CCO	C6H15NO3	149.1882		
+from NCGCCanonicalForm.java	OCCN(CCO)CCO	2,2,2-nitrilotriethanol		OCCN(CCO)CCO	OCCN(CCO)CCO	OCCN(CCO)CCO	C6H15NO3	149.1882		
+from NCGCCanonicalForm.java	Oc1c(c2ccc1C(=O)[O-])cccc2	1-hydroxy-2-naphthoate		Oc1c(ccc2ccccc12)C(=O)[O-]	Oc1c(ccc2ccccc12)C(=O)[O-]	Oc1c(ccc2ccccc12)C(=O)[O-]	C11H7O3	187.17148		
+Schrodinger anionic salt	O=C(O)C	# Acetic acid		CC(=O)O	CC(=O)O	CC(=O)O	C2H4O2	60.05196		
+Schrodinger anionic salt	[O-]C(C)=O	# Acetic acid		CC(=O)[O-]	CC(=O)[O-]	CC(=O)[O-]	C2H3O2	59.04402		
+Schrodinger anionic salt	O=C(C)Oc1c(C(O)=O)cccc1	# 2-Acetoxybenzoic acid*		CC(=O)Oc1ccccc1C(=O)O	CC(=O)Oc1ccccc1C(=O)O	CC(=O)Oc1ccccc1C(=O)O	C9H8O4	180.15742		
+Schrodinger anionic salt	O=C(C1(C2)CC(CC23)CC(C3)C1)O	# Adamantanecarboxylic acid		OC(=O)C12CC3CC(CC(C3)C1)C2	OC(=O)C12CC3CC(CC(C3)C1)C2	OC(=O)C12CC3CC(CC(C3)C1)C2	C11H16O2	180.24354		
+Schrodinger anionic salt	O=C(CCCCC(O)=O)O	# Adipic acid		OC(=O)CCCCC(=O)O	OC(=O)CCCCC(=O)O	OC(=O)CCCCC(=O)O	C6H10O4	146.1412		
+Schrodinger anionic salt	O=C(c1c(O)cc(N)cc1)O	# 4-Aminosalicylic acid*		Nc1ccc(C(=O)O)c(O)c1	Nc1ccc(C(=O)O)c(O)c1	Nc1ccc(C(=O)O)c(O)c1	C7H7NO3	153.13538		
+Schrodinger anionic salt	OCC(C1C(=C(O)C(=O)O1)O)O	# Ascorbic acid		OCC(O)C1OC(=O)C(=C1O)O	OCC(O)C1OC(=C(O)C1=O)O	OCC(O)C1OC(=C(O)C1=O)O	C6H8O6	176.12412	Yes	2
+Schrodinger anionic salt	O=C(CC(C(O)=O)N)O	# Aspartic acid*		NC(CC(=O)O)C(=O)O	NC(CC(=O)O)C(=O)O	NC(CC(=O)O)C(=O)O	C4H7NO4	133.10268		
+Schrodinger anionic salt	O=C(CCCCCCCC(O)=O)O	# Azelaic acid*		OC(=O)CCCCCCCC(=O)O	OC(=O)CCCCCCCC(=O)O	OC(=O)CCCCCCCC(=O)O	C9H16O4	188.22094		
+Schrodinger anionic salt	O=S(c1ccccc1)(O)=O	# Benzenesulfonic acid		OS(=O)(=O)c1ccccc1	OS(=O)(=O)c1ccccc1	OS(=O)(=O)c1ccccc1	C6H6O3S	158.17504		
+Schrodinger anionic salt	[O-]S(c1ccccc1)(=O)=O	# Benzenesulfonic acid		[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	C6H5O3S	157.16709		
+Schrodinger anionic salt	O=C(c1ccccc1)O	# Benzoic acid		OC(=O)c1ccccc1	OC(=O)c1ccccc1	OC(=O)c1ccccc1	C7H6O2	122.12134		
+Schrodinger anionic salt	[O-]C(c1ccccc1)=O	# Benzoic acid		[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	C7H5O2	121.1134		
+Schrodinger anionic salt	[O-]C(C(C)C)=O	# Butyric acid		CC(C)C(=O)[O-]	CC(C)C(=O)[O-]	CC(C)C(=O)[O-]	C4H7O2	87.09718		
+Schrodinger anionic salt	O=C(O)[O-]	# Carbonate		OC(=O)[O-]	OC(=O)[O-]	OC(=O)[O-]	CHO3	61.01684	Yes	2
+Schrodinger anionic salt	OC(O)=O	# Carbonate		OC(=O)O	OC(=O)O	OC(=O)O	CH2O3	62.02478	Yes	3
+Schrodinger anionic salt	[O-]C(=O)[O-]	# Carbonate		[O-]C(=O)[O-]	[O-]C(=O)[O-]	[O-]C(=O)[O-]	CO3	60.0089		
+Schrodinger anionic salt	O=C(\C=C\c1ccccc1)O	# Cinnamic acid*		OC(=O)\C=C\c1ccccc1	OC(=O)\C=C\c1ccccc1	OC(=O)C=Cc1ccccc1	C9H8O2	148.15862		
+Schrodinger anionic salt	O=C(CC(CC(O)=O)(C(O)=O)O)O	# Citric acid		OC(=O)CC(O)(CC(=O)O)C(=O)O	OC(=O)CC(O)(CC(=O)O)C(=O)O	OC(=O)CC(O)(CC(=O)O)C(=O)O	C6H8O7	192.12352		
+Schrodinger anionic salt	O=C(C1CCCCC1)O	# Cyclohexancarboxylic acid*		OC(=O)C1CCCCC1	OC(=O)C1CCCCC1	OC(=O)C1CCCCC1	C7H12O2	128.16897		
+Schrodinger anionic salt	O=C(CCCCCCCCC)O	# Decanoic acid*		CCCCCCCCCC(=O)O	CCCCCCCCCC(=O)O	CCCCCCCCCC(=O)O	C10H20O2	172.2646		
+Schrodinger anionic salt	O=C(CCCCCCCCCCC)O	# Dodecanoic acid*		CCCCCCCCCCCC(=O)O	CCCCCCCCCCCC(=O)O	CCCCCCCCCCCC(=O)O	C12H24O2	200.31776		
+Schrodinger anionic salt	O=S(O)(OCCCCCCCCCCCC)=O	# Dodecylsulfuric acid*		CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744		
+Schrodinger anionic salt	O=S(CCS(=O)(=O)O)(O)=O	# Ethane-1,2-disulfonic acid*		OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	C2H6O6S2	190.19544		
+Schrodinger anionic salt	CCOS(=O)(=O)[O-]	# Ethylsulfuric acid		CCOS(=O)(=O)[O-]	CCOS(=O)(=O)[O-]	CCOS(=O)(=O)[O-]	C2H5O4S	125.12369		
+Schrodinger anionic salt	CCOS(O)(=O)=O	# Ethylsulfuric acid		CCOS(=O)(=O)O	CCOS(=O)(=O)O	CCOS(=O)(=O)O	C2H6O4S	126.13163		
+Schrodinger anionic salt	CCO[S+](=O)([O-])[O-]	# Ethylsulfuric acid		CCO[S+](=O)([O-])[O-]	CCO[S+](=O)([O-])[O-]	CCO[S+](=O)([O-])[O-]	C2H5O4S	125.12369		
+Schrodinger anionic salt	O=C[O-]	# Formic acid		[O-]C=O	[O-]C=O	[O-]C=O	CHO2	45.01744		
+Schrodinger anionic salt	OC=O	# Formic acid		OC=O	OC=O	OC=O	CH2O2	46.02538		
+Schrodinger anionic salt	O=C(\C=C\C(O)=O)O	# Fumaric acid		OC(=O)\C=C\C(=O)O	OC(=O)\C=C\C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216		
+Schrodinger anionic salt	[O-]C(\C=C\C(O)=O)=O	# Fumaric acid		OC(=O)\C=C\C(=O)[O-]	OC(=O)\C=C\C(=O)[O-]	OC(=O)C=CC(=O)[O-]	C4H3O4	115.06422		
+Schrodinger anionic salt	[O-]C(\C=C\C(=O)[O-])=O	# Fumaric acid		[O-]C(=O)\C=C\C(=O)[O-]	[O-]C(=O)\C=C\C(=O)[O-]	[O-]C(=O)C=CC(=O)[O-]	C4H2O4	114.05627		
+Schrodinger anionic salt	[O-]C([C@@H]([C@@H]([C@@H]([C@H](CO)O)O)O)O)=O	# Gluconic acid		OC[C@H](O)[C@@H](O)[C@@H](O)[C@@H](O)C(=O)[O-]	OC[C@H](O)[C@@H](O)[C@@H](O)[C@@H](O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(=O)[O-]	C6H11O7	195.14734		
+Schrodinger anionic salt	[O-]C([C@@H]([C@H]([C@H]([C@@H](CO)O)O)O)O)=O	# Gluconic acid		OC[C@@H](O)[C@H](O)[C@H](O)[C@@H](O)C(=O)[O-]	OC[C@@H](O)[C@H](O)[C@H](O)[C@@H](O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(=O)[O-]	C6H11O7	195.14734		
+Schrodinger anionic salt	O=C(CCC(C(O)=O)N)O	# Glutamic acid*		NC(CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12925		
+Schrodinger anionic salt	O=C(CO)O	# Glycolic acid		OCC(=O)O	OCC(=O)O	OCC(=O)O	C2H4O3	76.05136		
+Schrodinger anionic salt	[F-]	# Halogens		[F-]	[F-]	[F-]	F	18.9984		
+Schrodinger anionic salt	[F-]	# Halogens		[F-]	[F-]	[F-]	F	18.9984		
+Schrodinger anionic salt	[Cl-]	# Halogens		[Cl-]	[Cl-]	[Cl-]	Cl	35.453		
+Schrodinger anionic salt	[Cl-]	# Halogens		[Cl-]	[Cl-]	[Cl-]	Cl	35.453		
+Schrodinger anionic salt	[Br-]	# Halogens		[Br-]	[Br-]	[Br-]	Br	79.904		
+Schrodinger anionic salt	[Br-]	# Halogens		[Br-]	[Br-]	[Br-]	Br	79.904		
+Schrodinger anionic salt	[I-]	# Halogens		[I-]	[I-]	[I-]	I	126.90447		
+Schrodinger anionic salt	[I-]	# Halogens		[I-]	[I-]	[I-]	I	126.90447		
+Schrodinger anionic salt	O=S(CCO)(O)=O	# 2-Hydroxyethanesulfonic acid		OCCS(=O)(=O)O	OCCS(=O)(=O)O	OCCS(=O)(=O)O	C2H6O4S	126.13163		
+Schrodinger anionic salt	OC(\C=C(/C(=O)O)\O)=O	# Hydroxymaleic acid*		OC(=O)\C=C(\O)/C(=O)O	OC(=O)\C=C(\O)/C(=O)O	OC(=O)C=C(O)C(=O)O	C4H4O5	132.07156		
+Schrodinger anionic salt	[O-]C(c1ccncc1)=O	# Isonicotinic acid		[O-]C(=O)c1ccncc1	[O-]C(=O)c1ccncc1	[O-]C(=O)c1ccncc1	C6H4NO2	122.10146		
+Schrodinger anionic salt	O=C(C(O)C)O	# Lactic acid		CC(O)C(=O)O	CC(O)C(=O)O	CC(O)C(=O)O	C3H6O3	90.07794		
+Schrodinger anionic salt	[O-]C([C@@H](O)C)=O	# Lactic acid		C[C@H](O)C(=O)[O-]	C[C@H](O)C(=O)[O-]	CC(O)C(=O)[O-]	C3H5O3	89.07		
+Schrodinger anionic salt	[O-]C([C@H](O)C)=O	# Lactic acid		C[C@@H](O)C(=O)[O-]	C[C@@H](O)C(=O)[O-]	CC(O)C(=O)[O-]	C3H5O3	89.07		
+Schrodinger anionic salt	O=C(\C=C/C(O)=O)O	# Maleic acid		OC(=O)\C=C/C(=O)O	OC(=O)\C=C/C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216		
+Schrodinger anionic salt	[O-]C(CC(C(O)=O)O)=O	# Malic acid		OC(CC(=O)[O-])C(=O)O	OC(CC(=O)[O-])C(=O)O	OC(CC(=O)[O-])C(=O)O	C4H5O5	133.0795		
+Schrodinger anionic salt	[O-]C(C(CC(O)=O)O)=O	# Malic acid		OC(CC(=O)O)C(=O)[O-]	OC(CC(=O)O)C(=O)[O-]	OC(CC(=O)O)C(=O)[O-]	C4H5O5	133.0795		
+Schrodinger anionic salt	O=C([C@H](CC(O)=O)O)O	# Malic acid		O[C@@H](CC(=O)O)C(=O)O	O[C@@H](CC(=O)O)C(=O)O	OC(CC(=O)O)C(=O)O	C4H6O5	134.08743		
+Schrodinger anionic salt	[O-]C(CC(O)=O)=O	# Malonic acid		OC(=O)CC(=O)[O-]	OC(=O)CC(=O)[O-]	OC(=O)CC(=O)[O-]	C3H3O4	103.05352		
+Schrodinger anionic salt	O=C(CC(O)=O)O	# Malonic acid		OC(=O)CC(=O)O	OC(=O)CC(=O)O	OC(=O)CC(=O)O	C3H4O4	104.06146		
+Schrodinger anionic salt	O=C(C(c1ccccc1)O)O	# Mandelic acid*		OC(C(=O)O)c1ccccc1	OC(C(=O)O)c1ccccc1	OC(C(=O)O)c1ccccc1	C8H8O3	152.14732		
+Schrodinger anionic salt	Cc1cc(C)cc(C)c1S(O)(=O)=O	# Mesitylenesulfonic acid		Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	C9H12O3S	200.25477		
+Schrodinger anionic salt	CS(O)(=O)=O	# Methansulfonic acid		CS(=O)(=O)O	CS(=O)(=O)O	CS(=O)(=O)O	CH4O3S	96.10566		
+Schrodinger anionic salt	CS(=O)(=O)[O-]	# Methansulfonic acid << NOT VALID RDKit mol		CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772		
+Schrodinger anionic salt	CS(=O)(=O)[O-]	# Methansulfonic acid		CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772		
+Schrodinger anionic salt	O=S(c1c(C)cccc1)(O)=O	# 2-Methylbenzenesulfonic		Cc1ccccc1S(=O)(=O)O	Cc1ccccc1S(=O)(=O)O	Cc1ccccc1S(=O)(=O)O	C7H8O3S	172.20162		
+Schrodinger anionic salt	O=S(c1cc(C)ccc1)(O)=O	# 3-Methylbenzenesulfonic acid*		Cc1cccc(c1)S(=O)(=O)O	Cc1cccc(c1)S(=O)(=O)O	Cc1cccc(c1)S(=O)(=O)O	C7H8O3S	172.20162		
+Schrodinger anionic salt	O=C(\C=C(\C)/C(O)=O)O	# Methylmaleic acid*		C\C(=C\C(=O)O)\C(=O)O	C\C(=C\C(=O)O)\C(=O)O	CC(=CC(=O)O)C(=O)O	C5H6O4	130.09874		
+Schrodinger anionic salt	COS(=O)(=O)[O-]	# Methylsulfuric acid		COS(=O)(=O)[O-]	COS(=O)(=O)[O-]	COS(=O)(=O)[O-]	CH3O4S	111.09711		
+Schrodinger anionic salt	COS(O)(=O)=O	# Methylsulfuric acid		COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506		
+Schrodinger anionic salt	O=S(c1c2c(c(S(O)(=O)=O)ccc2)ccc1)(O)=O	# 1,5-Naphthalene-disulfonic acid*		OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	C10H8O6S2	288.29692		
+Schrodinger anionic salt	c1c(cc(S(=O)(=O)[O-])cc2)c2ccc1	# 2-Naphthalenesulfonic acid		[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	[O-]S(=O)(=O)c1ccc2ccccc2c1	C10H7O3S	207.22578		
+Schrodinger anionic salt	O=S(NC1CCCCC1)(O)=O	# N-cyclohexylsulfamic acid*		OS(=O)(=O)NC1CCCCC1	OS(=O)(=O)NC1CCCCC1	OS(=O)(=O)NC1CCCCC1	C6H13NO3S	179.23732		
+Schrodinger anionic salt	O=S(NCC)(O)=O	# N-ethylsulfamic acid*		CCNS(=O)(=O)O	CCNS(=O)(=O)O	CCNS(=O)(=O)O	C2H7NO3S	125.14688		
+Schrodinger anionic salt	[O-]C(c1cnccc1)=O	# Nicotinic acid*		[O-]C(=O)c1cccnc1	[O-]C(=O)c1cccnc1	[O-]C(=O)c1cccnc1	C6H4NO2	122.10146		
+Schrodinger anionic salt	O=C(c1cnccc1)O	# Nicotinic acid*		OC(=O)c1cccnc1	OC(=O)c1cccnc1	OC(=O)c1cccnc1	C6H5NO2	123.1094		
+Schrodinger anionic salt	O=[N+](O)[O-]	# Nitrate		O[N+](=O)[O-]	O[N+](=O)[O-]	O[N+](=O)[O-]	HNO3	63.01284	Yes	2
+Schrodinger anionic salt	[O-][N+](O)=O	# Nitrate		O[N+](=O)[O-]	O[N+](=O)[O-]	O[N+](=O)[O-]	HNO3	63.01284	Yes	2
+Schrodinger anionic salt	[O-][N+](=O)[O-]	# Nitrate		[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	NO3	62.0049		
+Schrodinger anionic salt	[O-][N+](=O)[O-]	# Nitrate		[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	NO3	62.0049		
+Schrodinger anionic salt	O=S(NC)(O)=O	# N-methylsulfamic acid*		CNS(=O)(=O)O	CNS(=O)(=O)O	CNS(=O)(=O)O	CH5NO3S	111.1203		
+Schrodinger anionic salt	O=C(c1c(Oc2ccccc2)cccc1)O	# 2-Phenoxybenzoic acid*		OC(=O)c1ccccc1Oc2ccccc2	OC(=O)c1ccccc1Oc2ccccc2	OC(=O)c1ccccc1Oc2ccccc2	C13H10O3	214.2167		
+Schrodinger anionic salt	O=C(CCCCCCC)O	# Octanoic acid		CCCCCCCC(=O)O	CCCCCCCC(=O)O	CCCCCCCC(=O)O	C8H16O2	144.21143		
+Schrodinger anionic salt	[O-]C(C(NC(=O)NC1=O)=C1)=O	# Orotic acid		[O-]C(=O)C1=CC(=O)NC(=O)N1	Oc1cc(nc(O)n1)C(=O)[O-]	Oc1cc(nc(O)n1)C(=O)[O-]	C5H3N2O4	155.08831	Yes	6
+Schrodinger anionic salt	O=C(C(NC(=O)NC1=O)=C1)O	# Orotic acid		OC(=O)C1=CC(=O)NC(=O)N1	OC(=O)c1cc(O)nc(O)n1	OC(=O)c1cc(O)nc(O)n1	C5H4N2O4	156.09625	Yes	6
+Schrodinger anionic salt	O=C1NC(=O)NC(C(O)=O)C1	# Orotic acid		OC(=O)C1CC(=O)NC(=O)N1	OC(=O)C1CC(=O)NC(=O)N1	OC(=O)C1CC(=O)NC(=O)N1	C5H6N2O4	158.11213	Yes	3
+Schrodinger anionic salt	O=C(C(O)=O)O	# Oxalic acid		OC(=O)C(=O)O	OC(=O)C(=O)O	OC(=O)C(=O)O	C2H2O4	90.03488		
+Schrodinger anionic salt	[O-]C(C(O)=O)=O	# Oxalic acid		OC(=O)C(=O)[O-]	OC(=O)C(=O)[O-]	OC(=O)C(=O)[O-]	C2HO4	89.02694		
+Schrodinger anionic salt	[O-]C(C(=O)[O-])=O	# Oxalic acid		[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	C2O4	88.019		
+Schrodinger anionic salt	O=C(C(CCC(O)=O)=O)O	# Oxoglutaric acid		OC(=O)CCC(=O)C(=O)O	OC(=O)CCC(=O)C(=O)O	OC(=O)CCC(=O)C(=O)O	C5H6O5	146.09814		
+Schrodinger anionic salt	[O-]Cl(=O)(=O)=O	# Perchlorate		[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	ClO4	99.4506		
+Schrodinger anionic salt	O=Cl(O)(=O)=O	# Perchlorate		OCl(=O)(=O)=O	OCl(=O)(=O)=O	OCl(=O)(=O)=O	ClHO4	100.45854		
+Schrodinger anionic salt	[O-]Cl(=O)(=O)=O	# Perchlorate << NOT VALID RDKit mol		[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	ClO4	99.4506		
+Schrodinger anionic salt	O=C(Cc1ccccc1)O	# Phenylacetic acid		OC(=O)Cc1ccccc1	OC(=O)Cc1ccccc1	OC(=O)Cc1ccccc1	C8H8O2	136.14792		
+Schrodinger anionic salt	O=P(O)(O)O	# Phosphate		OP(=O)(O)O	OP(=O)(O)O	OP(=O)(O)O	H3O4P	97.99518		
+Schrodinger anionic salt	[O-][P](O)(O)O	# Phosphate << NOT VALID RDKit mol		O[P](O)(O)[O-]	O[P](O)(O)[O-]	O[P](O)(O)[O-]	H3O4P	97.99518		
+Schrodinger anionic salt	[O-]P(O)(O)=O	# Phosphate		OP(=O)(O)[O-]	OP(=O)(O)[O-]	OP(=O)(O)[O-]	H2O4P	96.98724		
+Schrodinger anionic salt	O=P(O)(=O)=O	# Phosphate << NOT VALID RDKit mol		OP(=O)(=O)=O	OP(=O)(=O)=O	OP(=O)(=O)=O	HO4P	95.9793		
+Schrodinger anionic salt	[O-]P(O)(=O)[O-]	# Phosphate		OP(=O)([O-])[O-]	OP(=O)([O-])[O-]	OP(=O)([O-])[O-]	HO4P	95.9793		
+Schrodinger anionic salt	[O-][N+](c1cc(cc([N+](=O)[O-])c1O)[N+](=O)[O-])=O	# Picric acid		Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H3N3O7	229.10392		
+Schrodinger anionic salt	[O-]c1c([N+](=O)[O-])cc([N+](=O)[O-])cc1[N+](=O)[O-]	# Picric acid		[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H2N3O7	228.09598		
+Schrodinger anionic salt	O=C(CCCCCC(O)=O)O	# Pimelic acid*		OC(=O)CCCCCC(=O)O	OC(=O)CCCCCC(=O)O	OC(=O)CCCCCC(=O)O	C7H12O4	160.16778		
+Schrodinger anionic salt	O=C(CC)O	# Propionic acid*		CCC(=O)O	CCC(=O)O	CCC(=O)O	C3H6O2	74.07854		
+Schrodinger anionic salt	O=C(c1c(C(O)=O)cccc1)O	# Phthalic acid*		OC(=O)c1ccccc1C(=O)O	OC(=O)c1ccccc1C(=O)O	OC(=O)c1ccccc1C(=O)O	C8H6O4	166.13084		
+Schrodinger anionic salt	O=C(C1CCC(=O)N1)O	# Pyroglutamic acid		OC(=O)C1CCC(=O)N1	OC(=O)C1CCC(=O)N1	OC(=O)C1CCC(=O)N1	C5H7NO3	129.11398		
+Schrodinger anionic salt	O=C([C@@H]1CCC(=O)N1)O	# Pyroglutamic acid		OC(=O)[C@@H]1CCC(=O)N1	OC(=O)[C@@H]1CCC(=O)N1	OC(=O)C1CCC(=O)N1	C5H7NO3	129.11398		
+Schrodinger anionic salt	O=C(c1ccccc1O)O	# Salicylic acid		OC(=O)c1ccccc1O	OC(=O)c1ccccc1O	OC(=O)c1ccccc1O	C7H6O3	138.12073		
+Schrodinger anionic salt	[O-]C(c1ccccc1O)=O	# Salicylic acid		Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	C7H5O3	137.1128		
+Schrodinger anionic salt	O=C(CCCCCCC(O)=O)O	# Suberic acid*		OC(=O)CCCCCCC(=O)O	OC(=O)CCCCCCC(=O)O	OC(=O)CCCCCCC(=O)O	C8H14O4	174.19436		
+Schrodinger anionic salt	O=C(CCC(O)=O)O	# Succinic acid		OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	C4H6O4	118.08804		
+Schrodinger anionic salt	[O-]C(CCC(O)=O)=O	# Succinic acid		OC(=O)CCC(=O)[O-]	OC(=O)CCC(=O)[O-]	OC(=O)CCC(=O)[O-]	C4H5O4	117.0801		
+Schrodinger anionic salt	O=S(N)(O)=O	# Sulfamic acid*		NS(=O)(=O)O	NS(=O)(=O)O	NS(=O)(=O)O	H3NO3S	97.09371		
+Schrodinger anionic salt	Nc1ccc(S(O)(=O)=O)cc1	# Sulfanilic acid		Nc1ccc(cc1)S(=O)(=O)O	Nc1ccc(cc1)S(=O)(=O)O	Nc1ccc(cc1)S(=O)(=O)O	C6H7NO3S	173.18968		
+Schrodinger anionic salt	O=S(O)(O)=O	# Sulfuric acid		OS(=O)(=O)O	OS(=O)(=O)O	OS(=O)(=O)O	H2O4S	98.07848		
+Schrodinger anionic salt	[O-]S(O)(=O)=O	# Sulfuric acid		OS(=O)(=O)[O-]	OS(=O)(=O)[O-]	OS(=O)(=O)[O-]	HO4S	97.07054		
+Schrodinger anionic salt	[O-]S(=O)(=O)[O-]	# Sulfuric acid		[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	O4S	96.06259		
+Schrodinger anionic salt	[O-]S(=O)(=O)[O-]	# Sulfuric acid << NOT VALID RDKit mol		[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	O4S	96.06259		
+Schrodinger anionic salt	[O-]S(=O)(=O)=O	# Sulfuric acid << NOT VALID RDKit mol		[O-]S(=O)(=O)=O	[O-]S(=O)(=O)=O	[O-]S(=O)(=O)=O	O4S	96.06259		
+Schrodinger anionic salt	O=S(O)(O)=O	# Sulfuric acid		OS(=O)(=O)O	OS(=O)(=O)O	OS(=O)(=O)O	H2O4S	98.07848		
+Schrodinger anionic salt	[O-][S+](=O)([O-])[O-]	# Sulfuric acid		[O-][S+](=O)([O-])[O-]	[O-][S+](=O)([O-])[O-]	[O-][S+](=O)([O-])[O-]	O4S	96.06259		
+Schrodinger anionic salt	[O-][S+](O)(=O)[O-]	# Sulfuric acid		O[S+](=O)([O-])[O-]	O[S+](=O)([O-])[O-]	O[S+](=O)([O-])[O-]	HO4S	97.07054		
+Schrodinger anionic salt	[O-]C(C(C(C(O)=O)O)O)=O	# Tartaric acid		OC(C(O)C(=O)[O-])C(=O)O	OC(C(O)C(=O)[O-])C(=O)O	OC(C(O)C(=O)[O-])C(=O)O	C4H5O6	149.0789		
+Schrodinger anionic salt	O=C(C(C(C(O)=O)O)O)O	# Tartaric acid		OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684		
+Schrodinger anionic salt	O=C([C@@H]([C@H](C(O)=O)O)O)O	# Tartaric acid		O[C@H]([C@@H](O)C(=O)O)C(=O)O	O[C@H]([C@@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684		
+Schrodinger anionic salt	O=C([C@H]([C@@H](C(O)=O)O)O)O	# Tartaric acid		O[C@@H]([C@H](O)C(=O)O)C(=O)O	O[C@@H]([C@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684		
+Schrodinger anionic salt	O=C([C@H]([C@H](C(O)=O)O)O)O	# Tartaric acid		O[C@H]([C@H](O)C(=O)O)C(=O)O	O[C@H]([C@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684		
+Schrodinger anionic salt	[O-]C([C@@H]([C@H](C(O)=O)O)O)=O	# Tartaric acid		O[C@H]([C@@H](O)C(=O)[O-])C(=O)O	O[C@H]([C@@H](O)C(=O)[O-])C(=O)O	OC(C(O)C(=O)[O-])C(=O)O	C4H5O6	149.0789		
+Schrodinger anionic salt	F[B-](F)(F)F	# Tetrafluroborate		F[B-](F)(F)F	F[B-](F)(F)F	F[B-](F)(F)F	BF4	86.80461		
+Schrodinger anionic salt	Cc1ccc(S(O)(=O)=O)cc1	# p-toluenesulfonic acid		Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	C7H8O3S	172.20162		
+Schrodinger anionic salt	Cc1ccc(S(=O)(=O)[O-])cc1	# p-toluenesulfonic acid		Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	C7H7O3S	171.19368		
+Schrodinger anionic salt	Cc1ccc([S+](=O)([O-])[O-])cc1	# p-toluenesulfonic acid		Cc1ccc(cc1)[S+](=O)([O-])[O-]	Cc1ccc(cc1)[S+](=O)([O-])[O-]	Cc1ccc(cc1)[S+](=O)([O-])[O-]	C7H7O3S	171.19368		
+Schrodinger anionic salt	O=C(O)C(F)(F)F	# TFA		OC(=O)C(F)(F)F	OC(=O)C(F)(F)F	OC(=O)C(F)(F)F	C2HF3O2	114.02334		
+Schrodinger anionic salt	[O-]C(C(F)(F)F)=O	# TFA		[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	C2F3O2	113.0154		
+Schrodinger anionic salt	SC#N	# Thiocyanate		SC#N	SC#N	SC#N	CHNS	59.09034		
+Schrodinger anionic salt	S=C=[N-]	# Thiocyanate		[N-]=C=S	[N-]=C=S	[N-]=C=S	CNS	58.0824		
+Schrodinger anionic salt	[S-]C#N	# Thiocyanate		[S-]C#N	[S-]C#N	[S-]C#N	CNS	58.0824		
+Schrodinger cationic salt	[NH4+]	# Ammonia		[NH4+]	[NH4+]	[NH4+]	H4N	18.03846		
+Schrodinger cationic salt	N	# Ammonia		N	N	N	H3N	17.03052		
+Schrodinger cationic salt	O=C(C(CCCNC(N)=N)N)O	# Arginine		NC(CCCNC(=N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	C6H14N4O2	174.20096	Yes	3
+Schrodinger cationic salt	NC1CC1	# Cyclopropylamine		NC1CC1	NC1CC1	NC1CC1	C3H7N	57.09438		
+Schrodinger cationic salt	NCCCN	# Diaminopropane		NCCCN	NCCCN	NCCCN	C3H10N2	74.1249		
+Schrodinger cationic salt	N1(CCN(C)CC1)C	# N.N'-dimethylpiperazine		CN1CCN(C)CC1	CN1CCN(C)CC1	CN1CCN(C)CC1	C6H14N2	114.18876		
+Schrodinger cationic salt	C1C(NC2CCCCC2)CCCC1	# Dicyclohexylamine		C1CCC(CC1)NC2CCCCC2	C1CCC(CC1)NC2CCCCC2	C1CCC(CC1)NC2CCCCC2	C12H23N	181.31772		
+Schrodinger cationic salt	NCCN	# Ethylenediamine		NCCN	NCCN	NCCN	C2H8N2	60.09832		
+Schrodinger cationic salt	[Li+]	# Elements		[Li+]	[Li+]	[Li+]	Li	6.941		
+Schrodinger cationic salt	[LiH+]	# Elements		[LiH+]	[LiH+]	[LiH+]	HLi	7.94894		
+Schrodinger cationic salt	[Na+]	# Elements		[Na+]	[Na+]	[Na+]	Na	22.98977		
+Schrodinger cationic salt	[NaH+]	# Elements		[NaH+]	[NaH+]	[NaH+]	HNa	23.99771		
+Schrodinger cationic salt	[Mg+2]	# Elements		[Mg+2]	[Mg+2]	[Mg+2]	Mg	24.305		
+Schrodinger cationic salt	[MgH+2]	# Elements		[MgH+2]	[MgH+2]	[MgH+2]	HMg	25.31294		
+Schrodinger cationic salt	[MgH2+2]	# Elements		[MgH2+2]	[MgH2+2]	[MgH2+2]	H2Mg	26.32088		
+Schrodinger cationic salt	[Al+3]	# Elements		[Al+3]	[Al+3]	[Al+3]	Al	26.98153		
+Schrodinger cationic salt	[Al+3]	# Elements		[Al+3]	[Al+3]	[Al+3]	Al	26.98153		
+Schrodinger cationic salt	[Al+3]	# Elements		[Al+3]	[Al+3]	[Al+3]	Al	26.98153		
+Schrodinger cationic salt	[SiH6+2]	# Elements		[SiH6+2]	[SiH6+2]	[SiH6+2]	H6Si	34.13313		
+Schrodinger cationic salt	[K+]	# Elements		[K+]	[K+]	[K+]	K	39.0983		
+Schrodinger cationic salt	[KH+]	# Elements		[KH+]	[KH+]	[KH+]	HK	40.10624		
+Schrodinger cationic salt	[KH2+]	# Elements		[KH2+]	[KH2+]	[KH2+]	H2K	41.11418		
+Schrodinger cationic salt	[Ca+2]	# Elements		[Ca+2]	[Ca+2]	[Ca+2]	Ca	40.078		
+Schrodinger cationic salt	[CaH+2]	# Elements		[CaH+2]	[CaH+2]	[CaH+2]	CaH	41.08594		
+Schrodinger cationic salt	[CaH2+2]	# Elements		[CaH2+2]	[CaH2+2]	[CaH2+2]	CaH2	42.09388		
+Schrodinger cationic salt	[Sc+3]	# Elements		[Sc+3]	[Sc+3]	[Sc+3]	Sc	44.95591		
+Schrodinger cationic salt	[Sc+3]	# Elements		[Sc+3]	[Sc+3]	[Sc+3]	Sc	44.95591		
+Schrodinger cationic salt	[Ti+3]	# Elements		[Ti+3]	[Ti+3]	[Ti+3]	Ti	47.867		
+Schrodinger cationic salt	[Ti+3]	# Elements		[Ti+3]	[Ti+3]	[Ti+3]	Ti	47.867		
+Schrodinger cationic salt	[V+5]	# Elements		[V+5]	[V+5]	[V+5]	V	50.9415		
+Schrodinger cationic salt	[Cr+6]	# Elements		[Cr+6]	[Cr+6]	[Cr+6]	Cr	51.9961		
+Schrodinger cationic salt	[Cr+6]	# Elements		[Cr+6]	[Cr+6]	[Cr+6]	Cr	51.9961		
+Schrodinger cationic salt	[Mn+7]	# Elements		[Mn+7]	[Mn+7]	[Mn+7]	Mn	54.93804		
+Schrodinger cationic salt	[Mn+7]	# Elements		[Mn+7]	[Mn+7]	[Mn+7]	Mn	54.93804		
+Schrodinger cationic salt	[Fe+2]	# Elements		[Fe+2]	[Fe+2]	[Fe+2]	Fe	55.845		
+Schrodinger cationic salt	[Fe+2]	# Elements		[Fe+2]	[Fe+2]	[Fe+2]	Fe	55.845		
+Schrodinger cationic salt	[Fe+2]	# Elements		[Fe+2]	[Fe+2]	[Fe+2]	Fe	55.845		
+Schrodinger cationic salt	[Fe+2]	# Elements		[Fe+2]	[Fe+2]	[Fe+2]	Fe	55.845		
+Schrodinger cationic salt	[Co+2]	# Elements		[Co+2]	[Co+2]	[Co+2]	Co	58.9332		
+Schrodinger cationic salt	[Co+2]	# Elements		[Co+2]	[Co+2]	[Co+2]	Co	58.9332		
+Schrodinger cationic salt	[Co+2]	# Elements		[Co+2]	[Co+2]	[Co+2]	Co	58.9332		
+Schrodinger cationic salt	[Ni+2]	# Elements		[Ni+2]	[Ni+2]	[Ni+2]	Ni	58.6934		
+Schrodinger cationic salt	[Ni+2]	# Elements		[Ni+2]	[Ni+2]	[Ni+2]	Ni	58.6934		
+Schrodinger cationic salt	[Cu+2]	# Elements		[Cu+2]	[Cu+2]	[Cu+2]	Cu	63.546		
+Schrodinger cationic salt	[Cu+2]	# Elements		[Cu+2]	[Cu+2]	[Cu+2]	Cu	63.546		
+Schrodinger cationic salt	[Cu+2]	# Elements		[Cu+2]	[Cu+2]	[Cu+2]	Cu	63.546		
+Schrodinger cationic salt	[Zn+2]	# Elements		[Zn+2]	[Zn+2]	[Zn+2]	Zn	65.409		
+Schrodinger cationic salt	[ZnH2+2]	# Elements		[ZnH2+2]	[ZnH2+2]	[ZnH2+2]	H2Zn	67.42488		
+Schrodinger cationic salt	[Ga+3]	# Elements		[Ga+3]	[Ga+3]	[Ga+3]	Ga	69.723		
+Schrodinger cationic salt	[Ga+3]	# Elements		[Ga+3]	[Ga+3]	[Ga+3]	Ga	69.723		
+Schrodinger cationic salt	[AsH6+3]	# Elements		[AsH6+3]	[AsH6+3]	[AsH6+3]	AsH6	80.96924		
+Schrodinger cationic salt	[Rb+]	# Elements		[Rb+]	[Rb+]	[Rb+]	Rb	85.4678		
+Schrodinger cationic salt	[Rb+]	# Elements		[Rb+]	[Rb+]	[Rb+]	Rb	85.4678		
+Schrodinger cationic salt	[Sr+2]	# Elements		[Sr+2]	[Sr+2]	[Sr+2]	Sr	87.62		
+Schrodinger cationic salt	[Y+3]	# Elements		[Y+3]	[Y+3]	[Y+3]	Y	88.90585		
+Schrodinger cationic salt	[Y+3]	# Elements		[Y+3]	[Y+3]	[Y+3]	Y	88.90585		
+Schrodinger cationic salt	[Zr+4]	# Elements		[Zr+4]	[Zr+4]	[Zr+4]	Zr	91.224		
+Schrodinger cationic salt	[Zr+4]	# Elements		[Zr+4]	[Zr+4]	[Zr+4]	Zr	91.224		
+Schrodinger cationic salt	[Mo+2]	# Elements		[Mo+2]	[Mo+2]	[Mo+2]	Mo	95.94		
+Schrodinger cationic salt	[RuH+2]	# Elements		[RuH+2]	[RuH+2]	[RuH+2]	HRu	102.07794		
+Schrodinger cationic salt	[RuH2+2]	# Elements		[RuH2+2]	[RuH2+2]	[RuH2+2]	H2Ru	103.08587		
+Schrodinger cationic salt	[Ru+2]	# Elements		[Ru+2]	[Ru+2]	[Ru+2]	Ru	101.07		
+Schrodinger cationic salt	[Ru+2]	# Elements		[Ru+2]	[Ru+2]	[Ru+2]	Ru	101.07		
+Schrodinger cationic salt	[Rh+2]	# Elements		[Rh+2]	[Rh+2]	[Rh+2]	Rh	102.9055		
+Schrodinger cationic salt	[Rh+2]	# Elements		[Rh+2]	[Rh+2]	[Rh+2]	Rh	102.9055		
+Schrodinger cationic salt	[RhH+2]	# Elements		[RhH+2]	[RhH+2]	[RhH+2]	HRh	103.91344		
+Schrodinger cationic salt	[PdH4+2]	# Elements		[PdH4+2]	[PdH4+2]	[PdH4+2]	H4Pd	110.45176		
+Schrodinger cationic salt	[PdH2+2]	# Elements		[PdH2+2]	[PdH2+2]	[PdH2+2]	H2Pd	108.43588		
+Schrodinger cationic salt	[Ag+]	# Elements		[Ag+]	[Ag+]	[Ag+]	Ag	107.8682		
+Schrodinger cationic salt	[Ag+]	# Elements		[Ag+]	[Ag+]	[Ag+]	Ag	107.8682		
+Schrodinger cationic salt	[Ag+]	# Elements		[Ag+]	[Ag+]	[Ag+]	Ag	107.8682		
+Schrodinger cationic salt	[Cd+2]	# Elements		[Cd+2]	[Cd+2]	[Cd+2]	Cd	112.411		
+Schrodinger cationic salt	[CdH2+2]	# Elements		[CdH2+2]	[CdH2+2]	[CdH2+2]	CdH2	114.42688		
+Schrodinger cationic salt	[In+3]	# Elements		[In+3]	[In+3]	[In+3]	In	114.818		
+Schrodinger cationic salt	[In+3]	# Elements		[In+3]	[In+3]	[In+3]	In	114.818		
+Schrodinger cationic salt	[SnH4+2]	# Elements		[SnH4+2]	[SnH4+2]	[SnH4+2]	H4Sn	122.74176		
+Schrodinger cationic salt	[SnH2+2]	# Elements		[SnH2+2]	[SnH2+2]	[SnH2+2]	H2Sn	120.72587		
+Schrodinger cationic salt	[Sb+3]	# Elements		[Sb+3]	[Sb+3]	[Sb+3]	Sb	121.76		
+Schrodinger cationic salt	[Cs+]	# Elements		[Cs+]	[Cs+]	[Cs+]	Cs	132.90545		
+Schrodinger cationic salt	[Cs+]	# Elements		[Cs+]	[Cs+]	[Cs+]	Cs	132.90545		
+Schrodinger cationic salt	[Ba+2]	# Elements		[Ba+2]	[Ba+2]	[Ba+2]	Ba	137.327		
+Schrodinger cationic salt	[Ba+2]	# Elements		[Ba+2]	[Ba+2]	[Ba+2]	Ba	137.327		
+Schrodinger cationic salt	[La+3]	# Elements		[La+3]	[La+3]	[La+3]	La	138.90549		
+Schrodinger cationic salt	[La+3]	# Elements		[La+3]	[La+3]	[La+3]	La	138.90549		
+Schrodinger cationic salt	[Ce+3]	# Elements		[Ce+3]	[Ce+3]	[Ce+3]	Ce	140.116		
+Schrodinger cationic salt	[Ce+3]	# Elements		[Ce+3]	[Ce+3]	[Ce+3]	Ce	140.116		
+Schrodinger cationic salt	[Pr+3]	# Elements		[Pr+3]	[Pr+3]	[Pr+3]	Pr	140.90764		
+Schrodinger cationic salt	[Pr+3]	# Elements		[Pr+3]	[Pr+3]	[Pr+3]	Pr	140.90764		
+Schrodinger cationic salt	[Nd+3]	# Elements		[Nd+3]	[Nd+3]	[Nd+3]	Nd	144.24		
+Schrodinger cationic salt	[Nd+3]	# Elements		[Nd+3]	[Nd+3]	[Nd+3]	Nd	144.24		
+Schrodinger cationic salt	[Sm+2]	# Elements		[Sm+2]	[Sm+2]	[Sm+2]	Sm	150.36		
+Schrodinger cationic salt	[Sm+2]	# Elements		[Sm+2]	[Sm+2]	[Sm+2]	Sm	150.36		
+Schrodinger cationic salt	[Eu+3]	# Elements		[Eu+3]	[Eu+3]	[Eu+3]	Eu	151.964		
+Schrodinger cationic salt	[Eu+3]	# Elements		[Eu+3]	[Eu+3]	[Eu+3]	Eu	151.964		
+Schrodinger cationic salt	[Gd+3]	# Elements		[Gd+3]	[Gd+3]	[Gd+3]	Gd	157.25		
+Schrodinger cationic salt	[Gd+3]	# Elements		[Gd+3]	[Gd+3]	[Gd+3]	Gd	157.25		
+Schrodinger cationic salt	[Tb+3]	# Elements		[Tb+3]	[Tb+3]	[Tb+3]	Tb	158.92534		
+Schrodinger cationic salt	[Tb+3]	# Elements		[Tb+3]	[Tb+3]	[Tb+3]	Tb	158.92534		
+Schrodinger cationic salt	[Dy+3]	# Elements		[Dy+3]	[Dy+3]	[Dy+3]	Dy	162.5		
+Schrodinger cationic salt	[Dy+3]	# Elements		[Dy+3]	[Dy+3]	[Dy+3]	Dy	162.5		
+Schrodinger cationic salt	[Ho+3]	# Elements		[Ho+3]	[Ho+3]	[Ho+3]	Ho	164.93032		
+Schrodinger cationic salt	[Ho+3]	# Elements		[Ho+3]	[Ho+3]	[Ho+3]	Ho	164.93032		
+Schrodinger cationic salt	[Er+3]	# Elements		[Er+3]	[Er+3]	[Er+3]	Er	167.25899		
+Schrodinger cationic salt	[Er+3]	# Elements		[Er+3]	[Er+3]	[Er+3]	Er	167.25899		
+Schrodinger cationic salt	[Tm+2]	# Elements		[Tm+2]	[Tm+2]	[Tm+2]	Tm	168.93421		
+Schrodinger cationic salt	[Tm+2]	# Elements		[Tm+2]	[Tm+2]	[Tm+2]	Tm	168.93421		
+Schrodinger cationic salt	[Yb+2]	# Elements		[Yb+2]	[Yb+2]	[Yb+2]	Yb	173.04		
+Schrodinger cationic salt	[Lu+3]	# Elements		[Lu+3]	[Lu+3]	[Lu+3]	Lu	174.967		
+Schrodinger cationic salt	[Lu+3]	# Elements		[Lu+3]	[Lu+3]	[Lu+3]	Lu	174.967		
+Schrodinger cationic salt	[Ta+5]	# Elements		[Ta+5]	[Ta+5]	[Ta+5]	Ta	180.9479		
+Schrodinger cationic salt	[W+2]	# Elements		[W+2]	[W+2]	[W+2]	W	183.84		
+Schrodinger cationic salt	[Ir+2]	# Elements		[Ir+2]	[Ir+2]	[Ir+2]	Ir	192.217		
+Schrodinger cationic salt	[PtH4+2]	# Elements		[PtH4+2]	[PtH4+2]	[PtH4+2]	H4Pt	199.10976		
+Schrodinger cationic salt	[PtH2+2]	# Elements		[PtH2+2]	[PtH2+2]	[PtH2+2]	H2Pt	197.09388		
+Schrodinger cationic salt	[Au+]	# Elements		[Au+]	[Au+]	[Au+]	Au	196.96655		
+Schrodinger cationic salt	[Hg+]	# Elements		[Hg+]	[Hg+]	[Hg+]	Hg	200.59		
+Schrodinger cationic salt	[HgH2+]	# Elements		[HgH2+]	[HgH2+]	[HgH2+]	H2Hg	202.60588		
+Schrodinger cationic salt	[HgH+]	# Elements		[HgH+]	[HgH+]	[HgH+]	HHg	201.59794		
+Schrodinger cationic salt	[Tl+]	# Elements		[Tl+]	[Tl+]	[Tl+]	Tl	204.3833		
+Schrodinger cationic salt	[Tl+]	# Elements		[Tl+]	[Tl+]	[Tl+]	Tl	204.3833		
+Schrodinger cationic salt	[PbH4+2]	# Elements		[PbH4+2]	[PbH4+2]	[PbH4+2]	H4Pb	211.23175		
+Schrodinger cationic salt	[PbH2+2]	# Elements		[PbH2+2]	[PbH2+2]	[PbH2+2]	H2Pb	209.21588		
+Schrodinger cationic salt	[Bi+3]	# Elements		[Bi+3]	[Bi+3]	[Bi+3]	Bi	208.98038		
+Schrodinger cationic salt	[BiH3+3]	# Elements		[BiH3+3]	[BiH3+3]	[BiH3+3]	BiH3	212.0042		
+Schrodinger cationic salt	N1(CCCCC1)CC	# N-ethylpiperidine*		CCN1CCCCC1	CCN1CCCCC1	CCN1CCCCC1	C7H15N	113.2007		
+Schrodinger cationic salt	O=C(C(CCCCN)N)O	# Lysine		NCCCCC(N)C(=O)O	NCCCCC(N)C(=O)O	NCCCCC(N)C(=O)O	C6H14N2O2	146.18755		
+Schrodinger cationic salt	CC[N+](CC)(CC)CC	# TEA		CC[N+](CC)(CC)CC	CC[N+](CC)(CC)CC	CC[N+](CC)(CC)CC	C8H20N	130.25109		
+Schrodinger solvent	CC(C)=O	# Acetone		CC(=O)C	CC(=O)C	CC(=O)C	C3H6O	58.07914		
+Schrodinger solvent	N#CC	# Acetonitrile*		CC#N	CC#N	CC#N	C2H3N	41.05192		
+Schrodinger solvent	[NH3+]c1ccccc1	# Aniline		[NH3+]c1ccccc1	[NH3+]c1ccccc1	[NH3+]c1ccccc1	C6H8N	94.13442		
+Schrodinger solvent	c1ccccc1	# Benzene		c1ccccc1	c1ccccc1	c1ccccc1	C6H6	78.11184		
+Schrodinger solvent	OCCCC	# 1-butanol*		CCCCO	CCCCO	CCCCO	C4H10O	74.1216		
+Schrodinger solvent	OC(CC)C	# 2-butanol*		CCC(C)O	CCC(C)O	CCC(C)O	C4H10O	74.1216		
+Schrodinger solvent	O=C(CC)C	# 2-butanone*		CCC(=O)C	CCC(=O)C	CCC(=O)C	C4H8O	72.10572		
+Schrodinger solvent	OC(C)(C)C	# t-butyl alcohol*		CC(C)(C)O	CC(C)(C)O	CC(C)(C)O	C4H10O	74.1216		
+Schrodinger solvent	N#Cc1ccccc1	# Benzonitrile		N#Cc1ccccc1	N#Cc1ccccc1	N#Cc1ccccc1	C7H5N	103.1213		
+Schrodinger solvent	OCCCCO	# 1,4-Butanediol		OCCCCO	OCCCCO	OCCCCO	C4H10O2	90.121		
+Schrodinger solvent	ClC(Cl)(Cl)Cl	# Carbon tetrachloride*		ClC(Cl)(Cl)Cl	ClC(Cl)(Cl)Cl	ClC(Cl)(Cl)Cl	CCl4	153.8227		
+Schrodinger solvent	Clc1ccccc1	# Chlorobenzene*		Clc1ccccc1	Clc1ccccc1	Clc1ccccc1	C6H5Cl	112.5569		
+Schrodinger solvent	ClC(Cl)Cl	# Chloroform*		ClC(Cl)Cl	ClC(Cl)Cl	ClC(Cl)Cl	CHCl3	119.37764		
+Schrodinger solvent	C1CCCCC1	# Cyclohexane		C1CCCCC1	C1CCCCC1	C1CCCCC1	C6H12	84.15947		
+Schrodinger solvent	ClCCCl	# 1,2-dichloroethane*		ClCCCl	ClCCCl	ClCCCl	C2H4Cl2	98.95916		
+Schrodinger solvent	NC1CCCCC1	# Cyclohexylamine		NC1CCCCC1	NC1CCCCC1	NC1CCCCC1	C6H13N	99.17412		
+Schrodinger solvent	[NH3+]C1CCCCC1	# Cyclohexylamine		[NH3+]C1CCCCC1	[NH3+]C1CCCCC1	[NH3+]C1CCCCC1	C6H14N	100.18206		
+Schrodinger solvent	CC(N(C)C)=O	# Dimethylacetamide		CN(C)C(=O)C	CN(C)C(=O)C	CN(C)C(=O)C	C4H9NO	87.12036		
+Schrodinger solvent	O=CN(C)C	# Dimethylformamide		CN(C)C=O	CN(C)C=O	CN(C)C=O	C3H7NO	73.09378		
+Schrodinger solvent	CCOCC	# Diethylether		CCOCC	CCOCC	CCOCC	C4H10O	74.1216		
+Schrodinger solvent	COCCOCCOC	# Diglyme*		COCCOCCOC	COCCOCCOC	COCCOCCOC	C6H14O3	134.17356		
+Schrodinger solvent	COCCOC	# DME*		COCCOC	COCCOC	COCCOC	C4H10O2	90.121		
+Schrodinger solvent	O(C)C	# Dimethylether*		COC	COC	COC	C2H6O	46.06844		
+Schrodinger solvent	O=CN(C)C	# DMF*		CN(C)C=O	CN(C)C=O	CN(C)C=O	C3H7NO	73.09378		
+Schrodinger solvent	C1OCCOC1	# 1,4-Dioxane		C1COCCO1	C1COCCO1	C1COCCO1	C4H8O2	88.10512		
+Schrodinger solvent	CS(C)=O	# DMSO		CS(=O)C	CS(=O)C	CS(=O)C	C2H6OS	78.13344		
+Schrodinger solvent	OCC	# Ethanol		CCO	CCO	CCO	C2H6O	46.06844		
+Schrodinger solvent	OCCO	# Ethylene glycol*		OCCO	OCCO	OCCO	C2H6O2	62.06784		
+Schrodinger solvent	OCC(CO)O	# Glycerin*		OCC(O)CO	OCC(O)CO	OCC(O)CO	C3H8O3	92.09381		
+Schrodinger solvent	CCCCCCC	# Heptane		CCCCCCC	CCCCCCC	CCCCCCC	C7H16	100.20194		
+Schrodinger solvent	O=P(N(C)C)(N(C)C)N(C)C	# HMPA*		CN(C)P(=O)(N(C)C)N(C)C	CN(C)P(=O)(N(C)C)N(C)C	CN(C)P(=O)(N(C)C)N(C)C	C6H18N3OP	179.20038		
+Schrodinger solvent	N(C)(C)P(N(C)C)N(C)C	# HMPT*		CN(C)P(N(C)C)N(C)C	CN(C)P(N(C)C)N(C)C	CN(C)P(N(C)C)N(C)C	C6H18N3P	163.20098		
+Schrodinger solvent	CCCCCC	# Hexane*		CCCCCC	CCCCCC	CCCCCC	C6H14	86.17536		
+Schrodinger solvent	NCCO	# MEA		NCCO	NCCO	NCCO	C2H7NO	61.08308		
+Schrodinger solvent	[NH3+]CCO	# MEA		[NH3+]CCO	[NH3+]CCO	[NH3+]CCO	C2H8NO	62.09102		
+Schrodinger solvent	CO	# Methanol		CO	CO	CO	CH4O	32.04186		
+Schrodinger solvent	ClCCl	# Methylene Chloride*		ClCCl	ClCCl	ClCCl	CH2Cl2	84.93258		
+Schrodinger solvent	CN1CCOCC1	# N-Methylmorpholine		CN1CCOCC1	CN1CCOCC1	CN1CCOCC1	C5H11NO	101.14694		
+Schrodinger solvent	C[NH+]1CCOCC1	# N-Methylmorpholine		C[NH+]1CCOCC1	C[NH+]1CCOCC1	C[NH+]1CCOCC1	C5H12NO	102.15488		
+Schrodinger solvent	C1NCCOC1	# Morpholine		C1COCCN1	C1COCCN1	C1COCCN1	C4H9NO	87.12036		
+Schrodinger solvent	C1[NH2+]CCOC1	# Morpholine		C1COCC[NH2+]1	C1COCC[NH2+]1	C1COCC[NH2+]1	C4H10NO	88.1283		
+Schrodinger solvent	O(C)C(C)(C)C	# MTBE*		COC(C)(C)C	COC(C)(C)C	COC(C)(C)C	C5H12O	88.14818		
+Schrodinger solvent	[O-][N+](C)=O	# Nitromethane*		C[N+](=O)[O-]	C[N+](=O)[O-]	C[N+](=O)[O-]	CH3NO2	61.04002		
+Schrodinger solvent	O=C1CCCN1C	# NMP*		CN1CCCC1=O	CN1CCCC1=O	CN1CCCC1=O	C5H9NO	99.13106		
+Schrodinger solvent	CCCCC	# Pentane*		CCCCC	CCCCC	CCCCC	C5H12	72.14878		
+Schrodinger solvent	Cc1ccncc1	# 4-Picoline		Cc1ccncc1	Cc1ccncc1	Cc1ccncc1	C6H7N	93.12648		
+Schrodinger solvent	C1NCCNC1	# Piperazine		C1CNCCN1	C1CNCCN1	C1CNCCN1	C4H10N2	86.1356		
+Schrodinger solvent	C1CC[NH2+]CC1	# Piperidine		C1CC[NH2+]CC1	C1CC[NH2+]CC1	C1CC[NH2+]CC1	C5H12N	86.15548		
+Schrodinger solvent	C1CCNCC1	# Piperidine		C1CCNCC1	C1CCNCC1	C1CCNCC1	C5H11N	85.14754		
+Schrodinger solvent	OCCCO	# 1,3-Propanediol		OCCCO	OCCCO	OCCCO	C3H8O2	76.09442		
+Schrodinger solvent	CCCO	# 1-Propanol		CCCO	CCCO	CCCO	C3H8O	60.09502		
+Schrodinger solvent	CC(O)C	# 2-Propanol		CC(C)O	CC(C)O	CC(C)O	C3H8O	60.09502		
+Schrodinger solvent	c1cc[nH+]cc1	# Pyridine		c1cc[nH+]cc1	c1cc[nH+]cc1	c1cc[nH+]cc1	C5H6N	80.10784		
+Schrodinger solvent	c1ccncc1	# Pyridine		c1ccncc1	c1ccncc1	c1ccncc1	C5H5N	79.0999		
+Schrodinger solvent	C1COCC1	# THF		C1CCOC1	C1CCOC1	C1CCOC1	C4H8O	72.10572		
+Schrodinger solvent	Cc1ccccc1	# Toluene		Cc1ccccc1	Cc1ccccc1	Cc1ccccc1	C7H8	92.13842		
+Schrodinger solvent	CCN(CC)CC	# Triethylamine		CCN(CC)CC	CCN(CC)CC	CCN(CC)CC	C6H15N	101.19		
+Schrodinger solvent	CC[NH+](CC)CC	# Triethylamine		CC[NH+](CC)CC	CC[NH+](CC)CC	CC[NH+](CC)CC	C6H16N	102.19794		
+Schrodinger solvent	O	# Water		O	O	O	H2O	18.01528		
+Schrodinger solvent	[OH-]	# Water		[OH-]	[OH-]	[OH-]	HO	17.00734		
+Schrodinger solvent	Cc1ccccc1C	# Xylene (ortho)		Cc1ccccc1C	Cc1ccccc1C	Cc1ccccc1C	C8H10	106.165		
+Schrodinger solvent	Cc1cccc(C)c1	# Xylene (meta)		Cc1cccc(C)c1	Cc1cccc(C)c1	Cc1cccc(C)c1	C8H10	106.165		
+Schrodinger solvent	Cc1ccc(C)cc1	# Xylene (para)		Cc1ccc(C)cc1	Cc1ccc(C)cc1	Cc1ccc(C)cc1	C8H10	106.165		
