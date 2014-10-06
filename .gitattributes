@@ -9220,6 +9220,8 @@ dtp_datasystem/DrugTracker/trunk/web/resources/images/pdf.png -text
 dtp_datasystem/DrugTracker/trunk/web/resources/images/xml.png -text
 dtp_datasystem/DrugTracker/trunk/web/welcomePrimefaces.xhtml -text
 dtp_datasystem/datasystemuml/trunk/common/pom.xml -text
+dtp_datasystem/datasystemuml/trunk/core/pom.xml -text
+dtp_datasystem/datasystemuml/trunk/core/src/test/resources/applicationContext-testDataSource.xml -text
 dtp_datasystem/datasystemuml/trunk/m2eclipse.bat -text
 dtp_datasystem/datasystemuml/trunk/mda/.project -text
 dtp_datasystem/datasystemuml/trunk/mda/build.properties -text
