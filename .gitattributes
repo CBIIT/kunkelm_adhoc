@@ -9381,6 +9381,16 @@ dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main
 dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main/webapp/webpages/uploadList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.4.19/cdk-1.4.19.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.5.6/cdk-1.5.6.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.16/primefaces-4.0.16-sources.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.16/primefaces-4.0.16.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.8/primefaces-5.0.8-sources.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.8/primefaces-5.0.8.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.9/primefaces-5.0.9-sources.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.0.9/primefaces-5.0.9.jar -text
 dtp_pptp/trunk/CHANGELOG -text
 dtp_pptp/trunk/nb-configuration.xml -text
 dtp_pptp/trunk/pom.xml -text
