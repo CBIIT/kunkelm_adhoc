@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <p:panelGrid style="width:100%">
+
+        <f:facet name="header">  
+            <p:row>  
+                <p:column colspan="4">#{the_cmpd.name}</p:column>  
+            </p:row>  
+        </f:facet>  
+
+        <p:row>  
+            <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">Biological Data (Count Experiments)</p:column>                  
+        </p:row>
+        
+        <p:row>
+            <p:column style="font-weight:bold">NCI60</p:column>
+            <p:column>#{the_cmpd.cmpdBioAssay.nci60}</p:column>
+
+            <p:column style="font-weight:bold">XENO</p:column>
+            <p:column>#{the_cmpd.cmpdBioAssay.xeno}</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight:bold">HF</p:column>
+            <p:column>#{the_cmpd.cmpdBioAssay.hf}</p:column>
+
+            <p:column></p:column>
+            <p:column></p:column>
+        </p:row>
+
+        <p:row>  
+            <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Status</p:column>  
+            <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Identifiers</p:column>  
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight:bold">Inventory (mg)</p:column>
+            <p:column>#{the_cmpd.inventory}</p:column>
+
+            <p:column style="font-weight:bold">Agent</p:column>
+            <p:column></p:column>
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight:bold">Plated Set</p:column>
+            <p:column></p:column>
+
+            <p:column style="font-weight:bold">NSC</p:column>
+            <p:column>#{the_cmpd.nsc}</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight:bold">Originator</p:column>
+            <p:column></p:column>
+
+            <p:column style="font-weight:bold">CAS</p:column>
+            <p:column>#{the_cmpd.cas}</p:column>
+        </p:row>  
+
+        <p:row>  
+            <p:column colspan="2">
+                <p:panel header="#{fn:length(the_cmpd.plates)} Plates" toggleable="true" toggleOrientation="vertical" collapsed="true"> 
+                    <p:dataList value="#{the_cmpd.plates}" var="n" itemType="disc">
+                        #{n}
+                    </p:dataList>
+                </p:panel>            
+            </p:column>  
+            <p:column colspan="2">
+                <p:panel header="#{fn:length(the_cmpd.projects)} Projects" toggleable="true" toggleOrientation="vertical" collapsed="true"> 
+                    <p:dataList value="#{the_cmpd.projects}" var="n" itemType="disc">
+                        #{n}
+                    </p:dataList>
+                </p:panel>            
+            </p:column>
+        </p:row>
+
+        <p:row>  
+            <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">PChem</p:column>  
+            <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Structure</p:column>                                          
+        </p:row>
+
+        <p:row>
+            <p:column colspan="2">                                 
+                <p:panelGrid>
+                    <p:row>
+                        <p:column style="font-weight:bold">mw</p:column>
+                        <p:column>
+                            <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
+                        </p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">mf</p:column>
+                        <p:column>
+                            <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}"/>
+                        </p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">alogp</p:column>
+                        <p:column>
+                            <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
+                        </p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">logD</p:column>
+                        <p:column>
+                            <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentPChem.logD}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
+                        </p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">sa</p:column>
+                        <p:column>
+                            <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentPChem.sa}">
+                                <f:convertNumber pattern="#0.00" />
+                            </h:outputText>
+                        </p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">filler psa</p:column>
+                        <p:column>
+                            <h:outputText value="filler psa"/>
+                        </p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">hba</p:column>
+                        <p:column>#{the_cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}</p:column>                                            
+                    </p:row>                                        
+                    <p:row>
+                        <p:column style="font-weight:bold">hbd</p:column>
+                        <p:column>#{the_cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}</p:column>                                            
+                    </p:row>                                        
+                </p:panelGrid>
+
+            </p:column>
+
+            <p:column colspan="2" rowspan="1">        
+                    
+                <h:graphicImage alt="png-structure-with-highlighted-substructure-image"
+                                width="200" height="200"
+                                url='/StructureServlet?structureDim=200&amp;title=#{the_cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(the_cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                </h:graphicImage>
+
+            </p:column>
+        </p:row>
+
+        <p:row>
+            <p:column colspan="4">
+                
+                <p:panel header="Fragments, SMILES, InChI, Aliases" toggleable="true" toggleOrientation="vertical" collapsed="true"> 
+
+                    <p:panelGrid>
+                        
+                          <p:row>  
+                            <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">Fragments</p:column>  
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column colspan="4">                                
+                                <p:dataList value="#{the_cmpd.cmpdFragments}" var="frag" itemType="disc">  
+                                    <h:outputText value="#{frag.cmpdFragmentStructure.canSmi}"/>                
+                                </p:dataList>
+                            </p:column>   
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">SMILES</p:column>  
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="4">                
+                                <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">InChI</p:column>  
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="4">                
+                                <h:outputText value="#{the_cmpd.parentFragment.cmpdFragmentStructure.inchi}"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>  
+                            <p:column style="white-space: nowrap" colspan="4" styleClass="ui-widget-header">Aliases</p:column>  
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="4">                                
+                                <p:dataList value="#{the_cmpd.aliases}" var="n" itemType="disc">  
+                                    <h:outputText value="#{n}"/>                
+                                </p:dataList>
+                            </p:column>   
+                        </p:row>
+  
+                    </p:panelGrid>
+
+                </p:panel>
+
+            </p:column>
+
+        </p:row>
+
+    </p:panelGrid>
+
+</ui:composition>
