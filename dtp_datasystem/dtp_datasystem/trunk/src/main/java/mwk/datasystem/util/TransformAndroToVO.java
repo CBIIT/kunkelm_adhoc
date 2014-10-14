@@ -24,9 +24,9 @@ import java.util.Collections;
 import java.util.List;
 import mwk.datasystem.domain.CmpdAnnotation;
 import mwk.datasystem.domain.CmpdLegacyCmpd;
+import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
-import mwk.datasystem.domain.CmpdSet;
 import mwk.datasystem.domain.DataSystemRole;
 import mwk.datasystem.domain.DataSystemUser;
 import mwk.datasystem.domain.NscCmpdImpl;
@@ -40,9 +40,9 @@ import mwk.datasystem.vo.CmpdLegacyCmpdVO;
 import mwk.datasystem.vo.CmpdVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdNamedSetVO;
 import mwk.datasystem.vo.CmpdPlateVO;
 import mwk.datasystem.vo.CmpdProjectVO;
-import mwk.datasystem.vo.CmpdSetVO;
 import mwk.datasystem.vo.CmpdTargetVO;
 import mwk.datasystem.vo.DataSystemRoleVO;
 import mwk.datasystem.vo.DataSystemUserVO;
@@ -68,8 +68,8 @@ public class TransformAndroToVO {
         return rtn;
     }
 
-    public static CmpdSetVO toCmpdSetVO(CmpdSet entityIn) {
-        CmpdSetVO rtn = new CmpdSetVO();
+    public static CmpdNamedSetVO toCmpdNamedSetVO(CmpdNamedSet entityIn) {
+        CmpdNamedSetVO rtn = new CmpdNamedSetVO();
         rtn.setSetName(entityIn.getSetName());
         return rtn;
     }
@@ -395,12 +395,12 @@ public class TransformAndroToVO {
                 }
                 cmpdVO.setAliases(strColl);
 
-                Collection<CmpdSet> setColl = nscc.getCmpdSets();
+                Collection<CmpdNamedSet> setColl = nscc.getCmpdNamedSets();
                 strColl = new ArrayList<String>();
-                for (CmpdSet cs : setColl) {
+                for (CmpdNamedSet cs : setColl) {
                     strColl.add(cs.getSetName());
                 }
-                cmpdVO.setSets(strColl);
+                cmpdVO.setNamedSets(strColl);
 
                 Collection<CmpdProject> projColl = nscc.getCmpdProjects();
                 strColl = new ArrayList<String>();

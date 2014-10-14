@@ -508,6 +508,94 @@ print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
+
+
+
+
+
+
+
+
+
+
+
+  ####   ######   #####   ####
+ #       #          #    #
+  ####   #####      #     ####
+      #  #          #         #
+ #    #  #          #    #    #
+  ####   ######     #     ####
+
+my $tempSql = qq[drop table if exists temp];
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my $tempSql = qq[
+create table temp
+as
+select distinct plate_set
+from prod_plated_sets
+where plate_set is not null
+and nsc in (
+select nsc from nsc_to_load
+)]; 
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my $tempSql = qq[
+insert into cmpd_plate(id, plate_name)
+select nextval('cmpd_plate_seq'), plate_set
+from temp];
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my $tempSql = qq[drop table if exists temp];
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my $tempSql = qq[
+create table temp
+as
+select pps.nsc, pps.plate_set, n.nsc as nsc_cmpds_fk, p.id as cmpd_plates_fk
+from prod_plated_sets pps, nsc_to_load n, cmpd_plate p
+where pps.nsc = n.nsc
+and pps.plate_set = p.plate_name];
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my $tempSql = qq[
+insert into cmpd_plates2nsc_cmpds(nsc_cmpds_fk, cmpd_plates_fk)
+select nsc_cmpds_fk, cmpd_plates_fk
+from temp];
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # clean up
 $dbh->disconnect();
 

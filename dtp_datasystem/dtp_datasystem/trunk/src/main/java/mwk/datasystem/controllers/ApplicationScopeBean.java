@@ -18,7 +18,7 @@ import javax.faces.model.SelectItem;
 import mwk.datasystem.domain.CmpdAlias;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
-import mwk.datasystem.domain.CmpdSet;
+import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdTarget;
 import mwk.datasystem.domain.NscCmpd;
 import mwk.datasystem.util.HibernateUtil;
@@ -43,7 +43,7 @@ public class ApplicationScopeBean implements Serializable {
     private List<SelectItem> drugNameItems;
     private List<SelectItem> aliasItems;
     private List<SelectItem> casItems;
-    private List<SelectItem> cmpdSetItems;
+    private List<SelectItem> cmpdNamedSetItems;
     private List<SelectItem> nscItems;
     private List<SelectItem> projectCodeItems;
     private List<SelectItem> originatorItems;
@@ -67,7 +67,7 @@ public class ApplicationScopeBean implements Serializable {
         this.drugNameItems = new ArrayList<SelectItem>();
         this.aliasItems = new ArrayList<SelectItem>();
         this.casItems = new ArrayList<SelectItem>();
-        this.cmpdSetItems = new ArrayList<SelectItem>();
+        this.cmpdNamedSetItems = new ArrayList<SelectItem>();
         this.nscItems = new ArrayList<SelectItem>();
         this.projectCodeItems = new ArrayList<SelectItem>();
         this.originatorItems = new ArrayList<SelectItem>();
@@ -80,7 +80,7 @@ public class ApplicationScopeBean implements Serializable {
         this.drugNameItems.add(new SelectItem("drugNameItemsTest", "drugNameItemsTest"));
         this.aliasItems.add(new SelectItem("aliasItemsTest", "aliasItemsTest"));
         this.casItems.add(new SelectItem("casItemsTest", "casItemsTest"));
-        this.cmpdSetItems.add(new SelectItem("cmpdSetItemsTest", "cmpdSetItemsTest"));
+        this.cmpdNamedSetItems.add(new SelectItem("cmpdNamedSetItemsTest", "cmpdNamedSetItemsTest"));
         this.nscItems.add(new SelectItem("123456", "123456"));
         this.projectCodeItems.add(new SelectItem("projectCodeItemsTest", "projectCodeItemsTest"));
         this.originatorItems.add(new SelectItem("originatorItemsTest", "originatorItemsTest"));
@@ -97,7 +97,7 @@ public class ApplicationScopeBean implements Serializable {
         HashSet<String> drugNameSet = new HashSet<String>();
         HashSet<String> aliasSet = new HashSet<String>();
         HashSet<String> casSet = new HashSet<String>();
-        HashSet<String> cmpdSetSet = new HashSet<String>();
+        HashSet<String> cmpdNamedSetSet = new HashSet<String>();
         HashSet<Integer> nscSet = new HashSet<Integer>();
         HashSet<String> projectCodeSet = new HashSet<String>();
         HashSet<String> originatorSet = new HashSet<String>();
@@ -142,10 +142,10 @@ public class ApplicationScopeBean implements Serializable {
             }
 
             //cmpdSet
-            Criteria cmpdSetCrit = session.createCriteria(CmpdSet.class);
-            List<CmpdSet> cmpdSetResultList = (List<CmpdSet>) cmpdSetCrit.list();
-            for (CmpdSet cs : cmpdSetResultList) {
-                cmpdSetSet.add(cs.getSetName());
+            Criteria cmpdSetCrit = session.createCriteria(CmpdNamedSet.class);
+            List<CmpdNamedSet> cmpdSetResultList = (List<CmpdNamedSet>) cmpdSetCrit.list();
+            for (CmpdNamedSet cns : cmpdSetResultList) {
+                cmpdNamedSetSet.add(cns.getSetName());
             }
 
             //projectCode
@@ -162,7 +162,7 @@ public class ApplicationScopeBean implements Serializable {
             Criteria cmpdPlateCrit = session.createCriteria(CmpdPlate.class);
             List<CmpdPlate> cmpdPlateResultList = (List<CmpdPlate>) cmpdPlateCrit.list();
             for (CmpdPlate cp : cmpdPlateResultList) {
-                cmpdSetSet.add(cp.getPlateName());
+                cmpdNamedSetSet.add(cp.getPlateName());
             }
 
             //target
@@ -197,10 +197,10 @@ public class ApplicationScopeBean implements Serializable {
                 this.casItems.add(new SelectItem(s, s));
             }
 //cmpdSet
-            ArrayList<String> cmpdSetList = new ArrayList<String>(cmpdSetSet);
-            Collections.sort(cmpdSetList);
-            for (String s : cmpdSetList) {
-                this.cmpdSetItems.add(new SelectItem(s, s));
+            ArrayList<String> cmpdNamedSetList = new ArrayList<String>(cmpdNamedSetSet);
+            Collections.sort(cmpdNamedSetList);
+            for (String s : cmpdNamedSetList) {
+                this.cmpdNamedSetItems.add(new SelectItem(s, s));
             }
 //nsc
             ArrayList<Integer> nscList = new ArrayList<Integer>(nscSet);
@@ -283,9 +283,9 @@ public class ApplicationScopeBean implements Serializable {
         return suggestions;
     }
 
-    public List<String> completecmpdSet(String query) {
+    public List<String> completecmpdNamedSet(String query) {
         List<String> suggestions = new ArrayList<String>();
-        for (SelectItem si : this.cmpdSetItems) {
+        for (SelectItem si : this.cmpdNamedSetItems) {
             if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
                 suggestions.add(si.getLabel());
             }
@@ -364,8 +364,8 @@ public class ApplicationScopeBean implements Serializable {
         return casItems;
     }
 
-    public List<SelectItem> getCmpdSetItems() {
-        return cmpdSetItems;
+    public List<SelectItem> getCmpdNamedSetItems() {
+        return cmpdNamedSetItems;
     }
 
     public List<SelectItem> getNscItems() {

@@ -88,7 +88,7 @@ Collection<CmpdRelated> cmpdRelateds = new HashSet<CmpdRelated>();
 CmpdInventory cmpdInventory;
 Collection<CmpdTarget> cmpdTargets = new HashSet<CmpdTarget>();
 Collection<CmpdPlate> cmpdPlates = new HashSet<CmpdPlate>();
-Collection<CmpdSet> cmpdSets = new HashSet<CmpdSet>();
+Collection<CmpdNamedSet> cmpdNamedSets = new HashSet<CmpdNamedSet>();
 Collection<CmpdProject> cmpdProjects = new HashSet<CmpdProject>();
 CmpdAnnotations cmpdAnnotations;
 CmpdLegacyCmpd cmpdLegacyCmpd;

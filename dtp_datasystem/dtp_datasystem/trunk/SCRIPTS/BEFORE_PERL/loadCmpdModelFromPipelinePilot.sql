@@ -132,9 +132,9 @@ vacuum analyze verbose rs3_from_plp_frags;
 alter table rs3_from_plp_frags add salt_smiles varchar(1024);
 
 update rs3_from_plp_frags
-set salt_smiles = same_salts.can_taut_strip_stereo
-from same_salts
-where rs3_from_plp_frags.can_taut_strip_stereo = same_salts.can_taut_strip_stereo;
+set salt_smiles = unique_salts.can_taut_strip_stereo
+from unique_salts
+where rs3_from_plp_frags.can_taut_strip_stereo = unique_salts.can_taut_strip_stereo;
 
 -- 82127
 

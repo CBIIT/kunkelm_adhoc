@@ -235,7 +235,7 @@ public class TransformCmpdTableToVO {
             // need fragments ?
 
             cmpdVO.setTargets(parseFormattedString(entityIn.getFormattedTargetsString()));
-            cmpdVO.setSets(parseFormattedString(entityIn.getFormattedSetsString()));
+            cmpdVO.setNamedSets(parseFormattedString(entityIn.getFormattedSetsString()));
             cmpdVO.getTargets().addAll(parseFormattedString(entityIn.getFormattedProjectsString()));
             cmpdVO.setPlates(parseFormattedString(entityIn.getFormattedPlatesString()));
             cmpdVO.setAliases(parseFormattedString(entityIn.getFormattedAliasesString()));

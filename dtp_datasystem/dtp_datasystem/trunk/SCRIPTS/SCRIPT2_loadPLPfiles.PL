@@ -97,9 +97,9 @@ print "$tempSql\n"; # my $sth = $dbh->prepare($tempSql);
 
 my $tempSql = qq[
 update rs3_from_plp_frags
-set salt_smiles = same_salts.can_taut_strip_stereo
-from same_salts
-where rs3_from_plp_frags.can_taut_strip_stereo = same_salts.can_taut_strip_stereo];
+set salt_smiles = unique_salts.can_taut_strip_stereo
+from unique_salts
+where rs3_from_plp_frags.can_taut_strip_stereo = unique_salts.can_taut_strip_stereo];
 print "$tempSql\n"; # my $sth = $dbh->prepare($tempSql);
 # $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 

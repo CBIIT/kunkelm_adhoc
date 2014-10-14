@@ -8,15 +8,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdAlias;
 import mwk.datasystem.domain.CmpdFragment;
+import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
-import mwk.datasystem.domain.CmpdSet;
 import mwk.datasystem.domain.CmpdTarget;
 import mwk.datasystem.domain.NscCmpd;
 import mwk.datasystem.domain.NscCmpdImpl;
@@ -24,17 +22,15 @@ import mwk.datasystem.util.HibernateUtil;
 import mwk.datasystem.util.TransformAndroToVO;
 import mwk.datasystem.vo.CmpdAliasVO;
 import mwk.datasystem.vo.CmpdFragmentVO;
+import mwk.datasystem.vo.CmpdNamedSetVO;
 import mwk.datasystem.vo.CmpdPlateVO;
 import mwk.datasystem.vo.CmpdProjectVO;
-import mwk.datasystem.vo.CmpdSetVO;
 import mwk.datasystem.vo.CmpdTargetVO;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -70,9 +66,6 @@ public class SCRIPT7_gsonFragments {
             tx = session.beginTransaction();
 
             // all cmpds
-
-            Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-            cmpdCrit.add(Restrictions.le("nsc", 1000));
 
             Query q = session.createQuery("from CmpdFragmentImpl where id >= 400000");
 
@@ -169,9 +162,10 @@ public class SCRIPT7_gsonFragments {
 
             ScrollableResults scrollableResults = 
                     session
-                    .createQuery("from CmpdImpl")
+                    .createQuery("from CmpdImpl c order by c.id asc")
                     .setReadOnly(true)
                     .setFetchSize(1000)
+                    .setCacheable(false)
                     .scroll(ScrollMode.FORWARD_ONLY);
 
             while (scrollableResults.next()) {
@@ -246,9 +240,9 @@ public class SCRIPT7_gsonFragments {
 
                     // sets
 
-                    ArrayList<CmpdSetVO> setList = new ArrayList<CmpdSetVO>();
-                    for (CmpdSet cs : nscc.getCmpdSets()) {
-                        CmpdSetVO csVO = TransformAndroToVO.toCmpdSetVO(cs);
+                    ArrayList<CmpdNamedSetVO> setList = new ArrayList<CmpdNamedSetVO>();
+                    for (CmpdNamedSet cs : nscc.getCmpdNamedSets()) {
+                        CmpdNamedSetVO csVO = TransformAndroToVO.toCmpdNamedSetVO(cs);
                         setList.add(csVO);
                     }
 
@@ -348,7 +342,6 @@ public class SCRIPT7_gsonFragments {
                 if (plateW != null) {
                     plateW.close();
                 }
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -360,6 +353,7 @@ public class SCRIPT7_gsonFragments {
         } finally {
 
             try {
+                
                 if (session != null) {
                     session.close();
                 }

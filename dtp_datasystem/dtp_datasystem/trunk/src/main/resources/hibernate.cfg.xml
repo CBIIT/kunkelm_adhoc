@@ -20,7 +20,7 @@
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragment.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentStructure.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdPlate.hbm.xml"/>
-        <mapping resource="mwk/datasystem/domain/CmpdSet.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CmpdNamedSet.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdProject.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/Cmpd.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/DataSystemUser.hbm.xml"/>

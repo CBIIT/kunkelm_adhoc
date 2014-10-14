@@ -789,11 +789,11 @@ public class ListContentController implements Serializable {
         this.cases = cases;
     }
 
-    public List<String> getCmpdSets() {
+    public List<String> getCmpdNamedSets() {
         return cmpdSets;
     }
 
-    public void setCmpdSets(List<String> cmpdSets) {
+    public void setCmpdNamedSets(List<String> cmpdSets) {
         this.cmpdSets = cmpdSets;
     }
 
@@ -861,11 +861,11 @@ public class ListContentController implements Serializable {
         this.casTextArea = casTextArea;
     }
 
-    public String getCmpdSetTextArea() {
+    public String getCmpdNamedSetTextArea() {
         return cmpdSetTextArea;
     }
 
-    public void setCmpdSetTextArea(String cmpdSetTextArea) {
+    public void setCmpdNamedSetTextArea(String cmpdSetTextArea) {
         this.cmpdSetTextArea = cmpdSetTextArea;
     }
 

@@ -127,7 +127,7 @@
                                 dropdown="false"
                                 scrollHeight="150"
                                 minQueryLength="3"                                    
-                                completeMethod="#{applicationScopeBean.completecmpdSet}">
+                                completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
                     <p:ajax event="itemSelect" 
                             listener="#{listContentController.appendTocmpdSetTextArea}" 
                             update=":datasystemForm:cmpdSetTextArea_id"/>  

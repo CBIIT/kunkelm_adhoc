@@ -31,14 +31,17 @@ NumberOfTautomers int);
 
 -- same salts
 
-drop table if exists same_salts;
+drop table if exists unique_salts;
 
-create table same_salts
+create table unique_salts
 as
-select can_taut_strip_stereo, count(*), array_to_string(array_agg(name), ',') as names 
+select can_taut_strip_stereo, count(*), array_to_string(array_agg(distinct name), ',') as names, array_to_string(array_agg(distinct source), ',') as sources 
 from processed_salts
 group by 1 order by 2 desc;
 
-create index same_salts_can_taut_strip_stereo on same_salts(can_taut_strip_stereo);
+create index unique_salts_can_taut_strip_stereo on unique_salts(can_taut_strip_stereo);
 
-vacuum analyze verbose same_salts;
+vacuum analyze verbose unique_salts;
+
+-- salts that have actually been found in rs3_from_plp_frags
+
