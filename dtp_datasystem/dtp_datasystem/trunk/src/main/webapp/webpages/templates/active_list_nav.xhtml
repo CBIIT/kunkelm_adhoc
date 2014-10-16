@@ -14,7 +14,7 @@
                          value="Table"/>
 
         <p:spacer width="20"/>
-        
+
         <p:commandButton ajax="false" 
                          disabled="#{empty listManagerController.activeList}" 
                          action="/webpages/activeListFragmentsTable?faces-redirect=true"
@@ -35,7 +35,7 @@
                          value="Compact Grid"/>        
 
         <p:spacer width="20"/>
-        
+
         <p:commandButton ajax="false" 
                          disabled="#{empty listManagerController.activeList}"
                          action="/webpages/activeListFragmentsGrid?faces-redirect=true"
@@ -54,55 +54,40 @@
 
     <p:fieldset legend="Active List Manipulation">
 
-        <p:fieldset legend="Delete Selected from List" style="display: inline-block;  vertical-align: top;">        
-            <p:panel style="display: inline-block;border: none;">               
-                <p:commandButton action="#{listContentController.performDeleteFromActiveList()}"
-                                 value="Delete Selected"
-                                 onstart="PF('deletingBUI').show();"
-                                 oncomplete="PF('deletingBUI').hide();">
-                    
-                    <f:setPropertyActionListener value="#{listManagerController.activeList}"   
-                                                 target="#{listContentController.targetList}" />  
-                    
-                </p:commandButton>
-            </p:panel>            
-        </p:fieldset>
+        <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
 
-        <p:spacer width="20"/>
+            <p:commandButton action="#{listContentController.performDeleteFromActiveList()}"
+                             value="Delete Selected from List"
+                             onstart="PF('deletingBUI').show();"
+                             oncomplete="PF('deletingBUI').hide();"
+                             style="width: 100%;">
+                <f:setPropertyActionListener value="#{listManagerController.activeList}"   
+                                             target="#{listContentController.targetList}" />  
+            </p:commandButton>
+            <p:column />
+            <p:column />
 
-        <p:fieldset legend="Create New List from Selected" style="display: inline-block;  vertical-align: top;">
-            <p:panel style="display: inline-block;border: none;">                       
-                <p:outputLabel for="listNameText" value="List name:" />
-                <br/>
-                <p:inputText id="listNameText"/>
-                <br/>
-                <p:commandButton ajax="false" 
-                                 value="Selected to New List"/>
-            </p:panel>
-        </p:fieldset>
+            <p:commandButton ajax="false" 
+                             value="Create New List from Selected"
+                             style="width: 100%;" />
+            <p:outputLabel for="listNameText" value="List name:" />            
+            <p:inputText id="listNameText" />
 
-        <p:spacer width="20"/>
+            <p:commandButton action="#{listContentController.performAppendSelectedToExistingList()}"
+                             value="Append Selected to Existing List"
+                             onstart="PF('appendingBUI').show();"
+                             oncomplete="PF('appendingBUI').hide();"
+                             style="width: 100%;" />        
+            <h:outputLabel for="selectOneList" value="List" />
+            <p:selectOneMenu converter="#{cmpdListConverter}" 
+                             id="selectOneList" 
+                             value="#{listContentController.targetList}">  
+                <f:selectItems value="#{listManagerController.availableLists}" 
+                               var="list"   
+                               itemValue="#{list}" itemLabel="#{list.listName}, #{list.countListMembers} members"/>
+            </p:selectOneMenu>            
 
-        <p:fieldset legend="Append Selected to Existing List" style="display: inline-block;  vertical-align: top;">
-            <p:panel style="display: inline-block;border: none;">               
-                <h:outputLabel for="selectOneList" value="List" />
-                <br/>
-                <p:selectOneMenu converter="#{cmpdListConverter}" 
-                                 id="selectOneList" 
-                                 value="#{listContentController.targetList}">  
-                    <f:selectItems value="#{listManagerController.availableLists}" 
-                                   var="list"   
-                                   itemValue="#{list}" itemLabel="#{list.listName}, #{list.countListMembers} members"/>
-
-                </p:selectOneMenu>            
-                <br/>
-                <p:commandButton action="#{listContentController.performAppendSelectedToExistingList()}"
-                                 value="Append to List"
-                                 onstart="PF('appendingBUI').show();"
-                                 oncomplete="PF('appendingBUI').hide();"/>        
-                                
-            </p:panel>
-        </p:fieldset>
+        </p:panelGrid>
 
     </p:fieldset>
 

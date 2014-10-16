@@ -27,8 +27,7 @@
 
                     <ui:repeat rendered="#{listManagerController.scatterplotModel != null}" 
                                value="#{listManagerController.scatterplotModel}" 
-                               var="scat" 
-                               columns="3">      
+                               var="scat">      
 
                         <p:lineChart value="#{scat}" 
                                      title="#{scat.title}"
@@ -46,8 +45,7 @@
 
                     <ui:repeat rendered="#{listManagerController.histoModel != null}"
                                value="#{listManagerController.histoModel}" 
-                               var="histo" 
-                               columns="3">      
+                               var="histo">      
 
                         <p:barChart value="#{histo.chartModel}"
                                     title="#{histo.chartModel.title}"                      

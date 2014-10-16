@@ -61,17 +61,15 @@
 
             <f:facet name="header">                
                 <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Members"/>    
-                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
-                <!--<p:columnToggler datasource="cmpdListTbl" trigger="toggler" />-->
-            </f:facet>
+             </f:facet>
 
             <p:column headerText="All"
-                      toggleable="false"
-                      resizeable="true" selectionMode="multiple" 
+                      resizable="true" 
+                      selectionMode="multiple" 
                       style="width:4%" 
                       exportable="false"/>
 
-            <p:column headerText="Click for details" toggleable="false" resizeable="true">
+            <p:column headerText="Click for details" resizable="true">
 
                 <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
                     <h:graphicImage alt="png-structure-with-highlighted-substructure-image"
@@ -90,15 +88,15 @@
 
             </p:column>
 
-            <p:column headerText="NSC" resizeable="true" sortBy="#{cmpd.nsc}}">                                
+            <p:column headerText="NSC" resizable="true" sortBy="#{cmpd.nsc}}">                                
                 <h:outputText value="#{cmpd.nsc}"/>
             </p:column>             
 
-            <p:column headerText="Name" resizeable="true" sortBy="#{cmpd.name}">                
+            <p:column headerText="Name" resizable="true" sortBy="#{cmpd.name}">                
                 <h:outputText value="#{cmpd.name}"/>                
             </p:column>        
 
-            <p:column headerText="Aliases" resizeable="true">                
+            <p:column headerText="Aliases" resizable="true">                
                 <p:scrollPanel style="width:250px;height:100px"> 
                     <p:dataList value="#{cmpd.aliases}" var="n" itemType="disc" type="ordered">  
                         <h:outputText value="#{n}"/>                
@@ -106,7 +104,7 @@
                 </p:scrollPanel>
             </p:column>   
 
-            <p:column headerText="Projects" resizeable="true">                
+            <p:column headerText="Projects" resizable="true">                
                 <p:scrollPanel style="width:250px;height:100px"> 
                     <p:dataList value="#{cmpd.projects}" var="n" itemType="disc" type="ordered">  
                         <h:outputText value="#{n}"/>                
@@ -114,7 +112,7 @@
                 </p:scrollPanel>
             </p:column>   
 
-            <p:column headerText="Plates" resizeable="true">                
+            <p:column headerText="Plates" resizable="true">                
                 <p:scrollPanel style="width:250px;height:100px"> 
                     <p:dataList value="#{cmpd.plates}" var="n" itemType="disc" type="ordered">  
                         <h:outputText value="#{n}"/>                
@@ -122,56 +120,56 @@
                 </p:scrollPanel>
             </p:column>   
 
-            <p:column headerText="Inventory" resizeable="true" sortBy="#{cmpd.inventory}">                                
+            <p:column headerText="Inventory" resizable="true" sortBy="#{cmpd.inventory}">                                
                 <h:outputText value="#{cmpd.inventory}"/>
             </p:column>
 
-            <p:column headerText="NCI60" resizeable="true" sortBy="#{cmpd.cmpdBioAssay.nci60}">                
+            <p:column headerText="NCI60" resizable="true" sortBy="#{cmpd.cmpdBioAssay.nci60}">                
                 <f:facet name="header">                
                     <h:outputText value="NCI60"/>                
                 </f:facet>              
                 <h:outputText value="#{cmpd.cmpdBioAssay.nci60}"/>
             </p:column>
 
-            <p:column headerText="HF" resizeable="true" sortBy="#{cmpd.cmpdBioAssay.hf}">                
+            <p:column headerText="HF" resizable="true" sortBy="#{cmpd.cmpdBioAssay.hf}">                
                 <h:outputText value="#{cmpd.cmpdBioAssay.hf}"/>
             </p:column>
 
-            <p:column headerText="XENO" resizeable="true" sortBy="#{cmpd.cmpdBioAssay.xeno}">                
+            <p:column headerText="XENO" resizable="true" sortBy="#{cmpd.cmpdBioAssay.xeno}">                
                 <h:outputText value="#{cmpd.cmpdBioAssay.xeno}"/>
             </p:column>
 
-            <p:column headerText="MF" resizeable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}">                
+            <p:column headerText="MF" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}"/>
             </p:column>
 
-            <p:column headerText="MW" resizeable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">                
+            <p:column headerText="MW" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
                     <f:convertNumber pattern="#0.00" />
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="aLogP" resizeable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">                
+            <p:column headerText="aLogP" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
                     <f:convertNumber pattern="#0.00" />
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="HBA" resizeable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}">                
+            <p:column headerText="HBA" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}"/>
             </p:column>
 
-            <p:column headerText="HBD" resizeable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}">                
+            <p:column headerText="HBD" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}"/>
             </p:column>
 
-            <p:column headerText="SA" resizeable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">                
+            <p:column headerText="SA" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
                     <f:convertNumber pattern="#0.00" />
                 </h:outputText>
             </p:column>
 
-            <p:column headerText="SMILES" resizeable="true">                
+            <p:column headerText="SMILES" resizable="true">                
                 <h:outputText value="#{cmpd.parentFragment.cmpdFragmentStructure.canSmi}">
                 </h:outputText>
             </p:column>

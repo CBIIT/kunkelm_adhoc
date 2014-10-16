@@ -139,7 +139,7 @@ foreach my $line(@lines){
                 ];	
                 
                 print OUTPUTPART qq[
-                <p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
+                <p:column headerText="$varName" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
                 <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
                 </p:column>
                 ];
@@ -164,7 +164,7 @@ foreach my $line(@lines){
                 ];
                 
                 print OUTPUTPART qq[
-                <p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
+                <p:column headerText="$varName" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
                 <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
                 <f:convertNumber pattern="#0.00" />
                 </h:outputText>
@@ -185,7 +185,7 @@ foreach my $line(@lines){
                 ];
                 
                 print OUTPUTPART qq[
-                <p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
+                <p:column headerText="$varName" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
                 <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
                 </p:column>
                 ];
