@@ -101,8 +101,9 @@ print "start time $theTime\n";
 
 open ( JAVAPART, ">JAVAPART") or die "Can't open JAVAPART\n";
 open ( FORMPART, ">FORMPART") or die "Can't open FORMPART\n";
-open ( OUTPUTPART, ">OUTPUTPART") or die "Can't open OUTPUTPART\n";
-
+open ( OUTPUTPARTCOLUMNS, ">OUTPUTPARTCOLUMNS") or die "Can't open OUTPUTPARTCOLUMNS\n";
+open ( OUTPUTPARTLABELVALUE, ">OUTPUTPARTLABELVALUE") or die "Can't open OUTPUTPARTLABELVALUE\n";
+open ( HIBERNATEPART, ">HIBERNATEPART") or die "Can't open HIBERNATEPART\n";
 
 #--------------------------------------------------------------------
 #--------------------------------------------------------------------
@@ -128,21 +129,36 @@ foreach my $line(@lines){
 		
 		print FORMPART qq[
 		<p:panel header="$varName" style="display:inline-block;border: none;">
-                <h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
-                <br/>
-                <h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
-                <br/>
-                <h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
-                <br/>
-                <h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
-                </p:panel>
-                ];	
-                
-                print OUTPUTPART qq[
-                <p:column headerText="$varName" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
-                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
-                </p:column>
-                ];
+		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
+		<br/>
+		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
+		<br/>
+		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
+		<br/>
+		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
+		</p:panel>
+		];	
+		
+		print OUTPUTPARTCOLUMNS qq[
+		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		</p:column>
+		];
+		
+		print OUTPUTPARTLABELVALUE qq[
+		<p:outputLabel value="$varName"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		];
+		
+		print HIBERNATEPART qq[		
+		if (this.min_$varName != null && this.max_$varName != null){
+		// between
+		} else if (this.min_$varName != null){
+		// gt min
+		} else if (this.max_$varName != null){
+		// lt max
+		}		
+		];
 		
 	} elsif ($varType eq "Double"){
 		
@@ -153,23 +169,40 @@ foreach my $line(@lines){
 		
 		print FORMPART qq[
 		<p:panel header="$varName" style="display:inline-block;border: none;">
-                <h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
-                <br/>
-                <h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
-                <br/>
-                <h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
-                <br/>
-                <h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
-                </p:panel>
-                ];
-                
-                print OUTPUTPART qq[
-                <p:column headerText="$varName" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
-                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
-                <f:convertNumber pattern="#0.00" />
-                </h:outputText>
-                </p:column>
-                ];
+		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
+		<br/>
+		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
+		<br/>
+		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
+		<br/>
+		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
+		</p:panel>
+		];
+		
+		print OUTPUTPARTCOLUMNS qq[
+		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		];
+		
+		print OUTPUTPARTLABELVALUE qq[
+		<p:outputLabel value="$varName"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		];
+		
+		print HIBERNATEPART qq[		
+		if (this.min_$varName != null && this.max_$varName != null){
+		// between
+		} else if (this.min_$varName != null){
+		// gt min
+		} else if (this.max_$varName != null){
+		// lt max
+		}
+		];
 		
 	} elsif ($varType eq "String"){
 		
@@ -178,17 +211,29 @@ foreach my $line(@lines){
 		
 		print FORMPART qq[
 		<p:panel header="$varName" style="display:inline-block;border: none;">
-                <h:outputLabel for="$varName\_id" value="$varName"/>
-                <br/>
-                <h:inputText value="#{pChemBean.$varName}" id="$varName\_id" cols="15" rows="5"/>                
-                </p:panel>
-                ];
-                
-                print OUTPUTPART qq[
-                <p:column headerText="$varName" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
-                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
-                </p:column>
-                ];
+		<h:outputLabel for="$varName\_id" value="$varName"/>
+		<br/>
+		<h:inputText value="#{pChemBean.$varName}" id="$varName\_id" cols="15" rows="5"/>                
+		</p:panel>
+		];
+		
+		print OUTPUTPARTCOLUMNS qq[
+		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		</p:column>
+		];
+		
+		print OUTPUTPARTLABELVALUE qq[
+		<p:outputLabel value="$varName"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		];
+		
+		print HIBERNATEPART qq[		
+		if (this.$varName != null){
+		// eq
+		}
+		];
+		
 		
 	}
 	
@@ -199,22 +244,9 @@ foreach my $line(@lines){
 
 close JAVAPART;
 close FORMPART;
-close OUTPUTPART;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+close OUTPUTPARTCOLUMNS;
+close OUTPUTPARTLABELVALUE;
+close HIBERNATEPART;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
 my $year = 1900 + $yearOffset;

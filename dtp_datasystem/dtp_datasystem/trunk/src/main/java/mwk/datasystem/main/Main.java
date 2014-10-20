@@ -7,7 +7,9 @@ package mwk.datasystem.main;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import mwk.datasystem.controllers.QueryObject;
 import mwk.datasystem.domain.CmpdList;
+import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HibernateUtil;
 import mwk.datasystem.util.MoleculeParser;
 import mwk.datasystem.util.TransformAndroToVO;
@@ -35,27 +37,24 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // testCdk();
-
-        // tautomerMattSwainSMARTS();
-
-        // testAmbitTautomers();
-
-        // testSmilesParsing();
-
-        System.out.println("START");
-
-        List<CmpdListVO> cl = showAvailableCmpdLists("kunkelm");
-        
-        System.out.println("Size of clVO: " + cl.size());
-        for (CmpdListVO clVO : cl) {
-            System.out.println(clVO.getListName());
-        }
-
-        System.out.println("DONE");
+      testHibernateCriteria();
 
     }
 
+    public static void testHibernateCriteria(){
+      
+      HelperCmpd cmpdHelper = new HelperCmpd();
+      
+      QueryObject lcb = new QueryObject();
+      lcb.getProjectCodes().add("SL-102");
+      lcb.getProjectCodes().add("DTP-114");
+      
+      Long cmpdListId = cmpdHelper.createCmpdListByListContentBean("TEST", lcb, null, "kunkelm");
+      
+      System.out.println("cmpdListId: " + cmpdListId);
+      
+    }
+    
     public static List<CmpdListVO> showAvailableCmpdLists(String currentUser) {
 
         System.out.println("In showAvailableCmpdLists.");

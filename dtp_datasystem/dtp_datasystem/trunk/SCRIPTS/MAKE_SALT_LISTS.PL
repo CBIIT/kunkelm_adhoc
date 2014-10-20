@@ -7,15 +7,7 @@
 use strict;
 
 my $solvents = 'false';
-
-my $listLabelType;
-
-if ($solvents = 'true'){
-$listLabelType = 'SOLVENT LIST';
-} else {
-$listLabelType = 'SALT LIST';
-}
-
+my $saltLabel = 'SALT LIST';
 
 # load module
 use DBI;
@@ -28,6 +20,7 @@ print "start time $theTime\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
+
 my $tempSql;
 
 #    #  #    #  #    #  ######
@@ -37,12 +30,12 @@ my $tempSql;
 #   ##  #    #  #   #   #
 #    #   ####   #    #  ######
 
-$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like '$listLabelType%')];
+$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like '$saltLabel%')];
 my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-$tempSql = qq[delete from cmpd_list where list_name like 'listLabelType%'];
+$tempSql = qq[delete from cmpd_list where list_name like 'saltLabel%'];
 my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
@@ -57,6 +50,7 @@ if ($solvents eq 'true'){
 	where salt_smiles is not null
 	and salt_smiles = unique_salts.can_taut_strip_stereo
 	and unique_salts.sources = 'Schrodinger solvent'
+	limit 10
 	];
 	
 } else {
@@ -69,7 +63,7 @@ if ($solvents eq 'true'){
 	where salt_smiles is not null
 	and salt_smiles = unique_salts.can_taut_strip_stereo
 	and unique_salts.sources not like '%Schrodinger solvent%'
-        limit 100
+	limit 10
 	];
 	
 }
@@ -142,15 +136,15 @@ foreach my $saltSmiles(@saltSmilesList){
 	select
 	
 	$cmpdListId,
-	'$listLabelType $saltSmiles',
+	'$saltLabel '|| unique_salts.names,
 	now(),
 	'kunkelm',
 	'kunkelm',
 	round(random() * 9223372036854775807),
 	count(temp.*),
 	'$saltSmiles',
-	'$listLabelType' || unique_salts.names,
-	'$listLabelType $saltSmiles'
+	unique_salts.names,
+	'$saltLabel $saltSmiles'
 	from temp, unique_salts
 	where '$saltSmiles' = can_taut_strip_stereo
 	group by names

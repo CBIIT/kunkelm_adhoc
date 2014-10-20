@@ -35,7 +35,10 @@ drop table if exists unique_salts;
 
 create table unique_salts
 as
-select can_taut_strip_stereo, count(*), array_to_string(array_agg(distinct name), ',') as names, array_to_string(array_agg(distinct source), ',') as sources 
+select can_taut_strip_stereo, 
+count(*), 
+array_to_string(array_agg(distinct name), ',') as names, 
+array_to_string(array_agg(distinct source), ',') as sources 
 from processed_salts
 group by 1 order by 2 desc;
 

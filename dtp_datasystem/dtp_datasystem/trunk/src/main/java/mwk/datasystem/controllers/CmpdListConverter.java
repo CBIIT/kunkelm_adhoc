@@ -44,12 +44,14 @@ public class CmpdListConverter implements Converter, Serializable {
         } else {
             
             try {
-
-                long number = Long.valueOf(submittedValue).longValue();
+              
+                // THIS COULD FAIL FOR LISTS WITH THE SAME NAME
+                // SINCE IT RETURNS THE FIRST MATCH
 
                 for (CmpdListVO clVO : this.listManagerController.getAvailableLists()) {
-                    if (clVO.getCmpdListId() == number) {
+                    if (clVO.getListName().equals(submittedValue)) {
                         rtn = clVO;
+                        break;
                     }
                 }
 
@@ -68,7 +70,7 @@ public class CmpdListConverter implements Converter, Serializable {
         if (modelValue == null) {
             
         } else if (modelValue instanceof CmpdListVO) {
-            rtn = String.valueOf(((CmpdListVO) modelValue).getCmpdListId());
+            rtn = ((CmpdListVO) modelValue).getListName();
         } else {
             System.out.println("Conversion Error: Not a valid CmpdListVO instance");
         }

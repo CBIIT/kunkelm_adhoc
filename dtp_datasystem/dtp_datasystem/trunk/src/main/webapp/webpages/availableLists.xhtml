@@ -22,7 +22,8 @@
                      var="list"
                      value="#{listManagerController.availableLists}"
                      paginator="true" 
-                     rows="10"   
+                     rows="10" 
+                     filteredValue="#{listManagerController.filteredAvailableLists}"
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                      rowsPerPageTemplate="10,25,50">
 
@@ -78,7 +79,9 @@
                 <h:outputText value="#{list.cmpdListId}" />  
             </p:column> 
 
-            <p:column headerText="ListName" resizable="true" sortBy="#{list.listName}">       
+            <p:column headerText="ListName" resizable="true" sortBy="#{list.listName}"
+                      filterBy="#{list.listName}"
+                      filterMatchMode="contains">       
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{list.listName}" /></f:facet>
                     <f:facet name="input"><p:inputText id="listNameInput" value="#{list.listName}" style="width:100%"/></f:facet>
@@ -89,7 +92,9 @@
                 <h:outputText value="#{list.countListMembers}" />  
             </p:column> 
 
-            <p:column headerText="Owner" resizable="true" sortBy="#{list.listOwner}">              
+            <p:column headerText="Owner" resizable="true" sortBy="#{list.listOwner}"
+                      filterBy="#{list.listOwner}"
+                      filterMatchMode="contains">
                 <h:outputText value="#{list.listOwner}" />  
             </p:column> 
 
@@ -97,14 +102,18 @@
                 <h:outputText value="#{list.shareWith}" />  
             </p:column> 
 
-            <p:column headerText="List Comment" resizable="true">
+            <p:column headerText="List Comment" resizable="true"
+                      filterBy="#{list.listComment}"
+                      filterMatchMode="contains">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{list.listComment}" /></f:facet>
                     <f:facet name="input"><p:inputText id="listCommentInput" value="#{list.listComment}" style="width:100%"/></f:facet>
                 </p:cellEditor>
             </p:column> 
 
-            <p:column headerText="Anchor Comment" resizable="true">              
+            <p:column headerText="Anchor Comment" resizable="true"
+                      filterBy="#{list.anchorComment}"
+                      filterMatchMode="contains">             
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{list.anchorComment}" /></f:facet>
                     <f:facet name="input"><p:inputText id="anchorCommentInput" value="#{list.anchorComment}" style="width:100%"/></f:facet>

@@ -8,186 +8,316 @@ import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
 import mwk.datasystem.domain.CmpdTable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.xml.datatype.XMLGregorianCalendar;
-import mwk.datasystem.domain.AdHocCmpd;
-import mwk.datasystem.domain.AdHocCmpdFragment;
-import mwk.datasystem.domain.AdHocCmpdFragmentPChem;
-import mwk.datasystem.domain.AdHocCmpdFragmentStructure;
+import mwk.datasystem.controllers.QueryObject;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Disjunction;
 
 /**
  *
  * @author mwkunkel
  */
 public class HelperCmpd {
-    
-    public Long createCmpdListByNscs(String listName, List<Integer> nscIntList, String smilesString, String currentUser) {
 
-        Long rtn = Long.valueOf(-1);
+  public Long createCmpdListByNscs(
+          String listName,
+          List<Integer> nscIntList,
+          String smilesString,
+          String currentUser) {
 
-        Session session = null;
-        Transaction tx = null;
+    Long rtn = Long.valueOf(-1);
 
-        try {
+    Session session = null;
+    Transaction tx = null;
 
-            session = HibernateUtil.getSessionFactory().openSession();
+    try {
 
-            Date now = new Date();
-            XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            Long cmpdListId = null;
+      Date now = new Date();
+      XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
 
-            java.util.Random generator = new Random();
-            long randomId = generator.nextLong();
-            if (randomId < 0) {
-                randomId = -1 * randomId;
-            }
-            cmpdListId = new Long(randomId);
+      Long cmpdListId = null;
 
-            tx = session.beginTransaction();
+      java.util.Random generator = new Random();
+      long randomId = generator.nextLong();
+      if (randomId < 0) {
+        randomId = -1 * randomId;
+      }
+      cmpdListId = new Long(randomId);
 
-            Criteria c = session.createCriteria(Cmpd.class);
-            c.add(Restrictions.in("nsc", nscIntList));
-            List<Cmpd> cmpdList = (List<Cmpd>) c.list();
-            
-            System.out.println("Size of cmpdList in createCmpdListByNscs in HelperCmpd is: " + cmpdList.size());
+      tx = session.beginTransaction();
 
-            // create a new cmpdlist
+      Criteria c = session.createCriteria(Cmpd.class);
+      c.add(Restrictions.in("nsc", nscIntList));
+      List<Cmpd> cmpdList = (List<Cmpd>) c.list();
 
-            CmpdList cl = CmpdList.Factory.newInstance();
+      System.out.println("Size of cmpdList in createCmpdListByNscs in HelperCmpd is: " + cmpdList.size());
 
-            cl.setCmpdListId(cmpdListId);
-            cl.setListName(listName);
-            cl.setDateCreated(now);
-            cl.setListOwner(currentUser);
-            cl.setShareWith(currentUser);
-            cl.setAnchorSmiles(smilesString);
+      // create a new cmpdlist
+      CmpdList cl = CmpdList.Factory.newInstance();
 
-            session.persist(cl);
+      cl.setCmpdListId(cmpdListId);
+      cl.setListName(listName);
+      cl.setDateCreated(now);
+      cl.setListOwner(currentUser);
+      cl.setShareWith(currentUser);
+      cl.setAnchorSmiles(smilesString);
 
-            for (Cmpd cmpd : cmpdList) {
-                CmpdListMember clm = CmpdListMember.Factory.newInstance();
-                clm.setCmpd(cmpd);
-                clm.setCmpdList(cl);
-                session.persist(clm);
-                // not needed for persistence, added for quick(er) conversion to VO
-                cl.getCmpdListMembers().add(clm);
-            }
+      session.persist(cl);
 
-            cl.setCountListMembers(cl.getCmpdListMembers().size());
+      for (Cmpd cmpd : cmpdList) {
+        CmpdListMember clm = CmpdListMember.Factory.newInstance();
+        clm.setCmpd(cmpd);
+        clm.setCmpdList(cl);
+        session.persist(clm);
+        // not needed for persistence, added for quick(er) conversion to VO
+        cl.getCmpdListMembers().add(clm);
+      }
 
-            rtn = cl.getCmpdListId();
+      cl.setCountListMembers(cl.getCmpdListMembers().size());
 
-            tx.commit();
+      rtn = cl.getCmpdListId();
 
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+      tx.commit();
 
-        return rtn;
-
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
 
-    public List<CmpdVO> getCmpdsByNsc(List<Integer> nscIntList, String currentUser) {
+    return rtn;
 
-        //MWK TODO this doesn't call currentUser
+  }
 
-        List<CmpdVO> rtnList = new ArrayList<CmpdVO>();
+  public Long createCmpdListByListContentBean(
+          String listName,
+          QueryObject qo,
+          String smilesString,
+          String currentUser) {
 
-        Session session = null;
-        Transaction tx = null;
+    Long rtn = Long.valueOf(-1);
 
-        try {
+    Session session = null;
+    Transaction tx = null;
 
-            session = HibernateUtil.getSessionFactory().openSession();
+    try {
 
-            tx = session.beginTransaction();
-            Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-            cmpdCrit.add(Restrictions.in("nsc", nscIntList));
-            List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            List<Long> cmpdIdList = new ArrayList<Long>();
-            Long cmpdId = null;
+      Date now = new Date();
+      XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
 
-            for (Cmpd cmpd : cmpdList) {
-                cmpdId = (Long) session.getIdentifier(cmpd);
-                cmpdIdList.add(cmpdId);
-            }
+      Long cmpdListId = null;
+
+      java.util.Random generator = new Random();
+      long randomId = generator.nextLong();
+      if (randomId < 0) {
+        randomId = -1 * randomId;
+      }
+      cmpdListId = new Long(randomId);
+
+      tx = session.beginTransaction();
+
+      // root crit
+      Criteria c = session.createCriteria(Cmpd.class);
+
+      Disjunction disj = Restrictions.disjunction();
+
+      if (qo.getNscs() != null && !qo.getNscs().isEmpty()) {
+        // nscs to Integers
+        ArrayList<Integer> nscIntList = new ArrayList<Integer>();
+        for (String s : qo.getNscs()) {
+          try {
+            nscIntList.add(Integer.valueOf(s));
+          } catch (Exception e) {
+
+          }
+        }
+        if (!nscIntList.isEmpty()) {
+          disj.add(Restrictions.in("nsc", nscIntList));
+        }
+      }
+
+      if (qo.getCases() != null && !qo.getCases().isEmpty()) {
+        disj.add(Restrictions.in("cas", qo.getCases()));
+      }
+
+      if ((qo.getDrugNames() != null && !qo.getDrugNames().isEmpty()) || (qo.getAliases() != null && !qo.getAliases().isEmpty())) {
+        c.createAlias("cmpdAliases", "aliases", CriteriaSpecification.LEFT_JOIN);
+        ArrayList<String> combinedList = new ArrayList<String>();
+        if (qo.getAliases() != null && !qo.getAliases().isEmpty()) {
+          combinedList.addAll(qo.getAliases());
+        }
+        if (qo.getDrugNames() != null && !qo.getDrugNames().isEmpty()) {
+          combinedList.addAll(qo.getDrugNames());
+        }
+        disj.add(Restrictions.in("aliases.alias", combinedList));
+      }
+
+      if (qo.getCmpdNamedSets() != null && !qo.getCmpdNamedSets().isEmpty()) {
+        c.createAlias("cmpdNamedSets", "namedSets", CriteriaSpecification.LEFT_JOIN);
+        disj.add(Restrictions.in("namedSets.setName", qo.getCmpdNamedSets()));
+      }
+
+      if (qo.getProjectCodes() != null && !qo.getProjectCodes().isEmpty()) {
+        c.createAlias("cmpdProjects", "projects", CriteriaSpecification.LEFT_JOIN);
+        disj.add(Restrictions.in("projects.projectCode", qo.getProjectCodes()));
+      }
+
+      if (qo.getPlates() != null && !qo.getPlates().isEmpty()) {
+        c.createAlias("cmpdPlates", "plates", CriteriaSpecification.LEFT_JOIN);
+        disj.add(Restrictions.in("plates.plateName", qo.getPlates()));
+      }
+
+      if (qo.getTargets() != null && !qo.getTargets().isEmpty()) {
+        c.createAlias("cmpdTargets", "targets", CriteriaSpecification.LEFT_JOIN);
+        disj.add(Restrictions.in("targets.target", qo.getTargets()));
+      }
+
+      // add the disjunction
+      c.add(disj);
+      
+      // have to handle multiplicities by plate, alias, etc.
+      c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+
+      List<Cmpd> cmpdList = (List<Cmpd>) c.list();
+
+      System.out.println("Size of cmpdList in createCmpdListByListContentBeanin HelperCmpd is: " + cmpdList.size());
+
+      // create a new cmpdlist
+      CmpdList cl = CmpdList.Factory.newInstance();
+
+      cl.setCmpdListId(cmpdListId);
+      cl.setListName(listName);
+      cl.setDateCreated(now);
+      cl.setListOwner(currentUser);
+      cl.setShareWith(currentUser);
+      cl.setAnchorSmiles(smilesString);
+
+      session.persist(cl);
+
+      for (Cmpd cmpd : cmpdList) {
+        CmpdListMember clm = CmpdListMember.Factory.newInstance();
+        clm.setCmpd(cmpd);
+        clm.setCmpdList(cl);
+        session.persist(clm);
+        // not needed for persistence, added for quick(er) conversion to VO
+        cl.getCmpdListMembers().add(clm);
+      }
+
+      cl.setCountListMembers(cl.getCmpdListMembers().size());
+
+      rtn = cl.getCmpdListId();
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+
+    return rtn;
+
+  }
+
+  public List<CmpdVO> getCmpdsByNsc(List<Integer> nscIntList, String currentUser) {
+
+    //MWK TODO this doesn't call currentUser
+    List<CmpdVO> rtnList = new ArrayList<CmpdVO>();
+
+    Session session = null;
+    Transaction tx = null;
+
+    try {
+
+      session = HibernateUtil.getSessionFactory().openSession();
+
+      tx = session.beginTransaction();
+      Criteria cmpdCrit = session.createCriteria(Cmpd.class);
+      cmpdCrit.add(Restrictions.in("nsc", nscIntList));
+      List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
+
+      List<Long> cmpdIdList = new ArrayList<Long>();
+      Long cmpdId = null;
+
+      for (Cmpd cmpd : cmpdList) {
+        cmpdId = (Long) session.getIdentifier(cmpd);
+        cmpdIdList.add(cmpdId);
+      }
 
 // fetch a list of cmpdViews
-            Criteria cvCrit = session.createCriteria(CmpdTable.class);
-            cvCrit.add(Restrictions.in("id", cmpdIdList));
-            List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
+      Criteria cvCrit = session.createCriteria(CmpdTable.class);
+      cvCrit.add(Restrictions.in("id", cmpdIdList));
+      List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
-            for (CmpdTable cv : entityCVlist) {
-                CmpdVO cVO = TransformCmpdTableToVO.toCmpdVO(cv);
-                rtnList.add(cVO);
-            }
+      for (CmpdTable cv : entityCVlist) {
+        CmpdVO cVO = TransformCmpdTableToVO.toCmpdVO(cv);
+        rtnList.add(cVO);
+      }
 
-            tx.commit();
+      tx.commit();
 
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-        return rtnList;
-
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
 
-    public CmpdVO getSingleCmpdByNsc(Integer nsc, String currentUser) {
+    return rtnList;
 
-        //MWK TODO this doesn't call currentUser
+  }
 
-        CmpdVO rtn = new CmpdVO();
+  public CmpdVO getSingleCmpdByNsc(Integer nsc, String currentUser) {
 
-        Session session = null;
-        Transaction tx = null;
+    //MWK TODO this doesn't call currentUser
+    CmpdVO rtn = new CmpdVO();
 
-        try {
+    Session session = null;
+    Transaction tx = null;
 
-            session = HibernateUtil.getSessionFactory().openSession();
+    try {
 
-            tx = session.beginTransaction();
-            Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-            cmpdCrit.add(Restrictions.eq("nsc", nsc));
-            Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            Long cmpdId = (Long) session.getIdentifier(cmpd);
+      tx = session.beginTransaction();
+      Criteria cmpdCrit = session.createCriteria(Cmpd.class);
+      cmpdCrit.add(Restrictions.eq("nsc", nsc));
+      Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
 
-            Criteria cvCrit = session.createCriteria(CmpdTable.class);
-            cvCrit.add(Restrictions.eq("id", cmpdId));
-            CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
+      Long cmpdId = (Long) session.getIdentifier(cmpd);
 
-            rtn = TransformCmpdTableToVO.toCmpdVO(entityCV);
+      Criteria cvCrit = session.createCriteria(CmpdTable.class);
+      cvCrit.add(Restrictions.eq("id", cmpdId));
+      CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
 
-            tx.commit();
+      rtn = TransformCmpdTableToVO.toCmpdVO(entityCV);
 
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
+      tx.commit();
 
-        return rtn;
-
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
-    
+
+    return rtn;
+
+  }
+
 }

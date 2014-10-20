@@ -8,18 +8,23 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <p:dialog  header="List Member Details" 
-               showEffect="fade" 
-               hideEffect="fade" 
-               widgetVar="listMemberDetailDlg"> 
+  <p:dialog  header="List Member Details" 
+             showEffect="fade" 
+             hideEffect="fade" 
+             widgetVar="listMemberDetailDlg" 
+             appendTo="@(body)"> 
 
-        <p:outputPanel id="ListMemberDetailsDialogPanel">
+    <p:scrollPanel style="width:800px;height:600px">
 
-            <c:set var="listMember" value="#{listManagerController.selectedActiveListMember}"/>
-            <ui:include src="/webpages/listMemberDetails.xhtml"/>            
+      <p:outputPanel id="ListMemberDetailsDialogPanel">
 
-        </p:outputPanel>
+        <c:set var="listMember" value="#{listManagerController.selectedActiveListMember}"/>
+        <ui:include src="/webpages/listMemberDetails.xhtml"/>            
 
-    </p:dialog>
+      </p:outputPanel>
+
+    </p:scrollPanel>
+
+  </p:dialog>
 
 </ui:composition>

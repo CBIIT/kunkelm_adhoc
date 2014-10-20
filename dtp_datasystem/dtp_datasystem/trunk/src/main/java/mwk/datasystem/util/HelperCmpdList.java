@@ -34,523 +34,439 @@ import org.hibernate.FetchMode;
  */
 public class HelperCmpdList {
 
-    public static final Boolean DEBUG = Boolean.TRUE;
+  public static final Boolean DEBUG = Boolean.TRUE;
 
-    public CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
+  public CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
 
-        CmpdList rtn = CmpdList.Factory.newInstance();
+    CmpdList rtn = CmpdList.Factory.newInstance();
 
-        Session session = null;
-        Transaction tx = null;
+    Session session = null;
+    Transaction tx = null;
 
-        try {
+    try {
 
-            session = HibernateUtil.getSessionFactory().openSession();
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            Date now = new Date();
-            Timestamp ts = new Timestamp(now.getTime());
+      Date now = new Date();
+      Timestamp ts = new Timestamp(now.getTime());
 
-            Long cmpdListId = null;
+      Long cmpdListId = null;
 
-            //do {
+      //do {
+      java.util.Random generator = new Random();
+      long randomId = generator.nextLong();
 
-            java.util.Random generator = new Random();
-            long randomId = generator.nextLong();
+      if (randomId < 0) {
+        randomId = -1 * randomId;
+      }
 
-            if (randomId < 0) {
-                randomId = -1 * randomId;
-            }
+      cmpdListId = new Long(randomId);
 
-            cmpdListId = new Long(randomId);
+      //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
+      tx = session.beginTransaction();
 
-            //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
+      // create a new list
+      CmpdList cl = CmpdList.Factory.newInstance();
 
-            tx = session.beginTransaction();
+      cl.setCmpdListId(cmpdListId);
+      cl.setListName(currentUser + " " + now);
+      cl.setDateCreated(ts);
+      cl.setListOwner(currentUser);
+      cl.setShareWith(currentUser);
 
-            // create a new list
+      session.persist(cl);
 
-            CmpdList cl = CmpdList.Factory.newInstance();
+      for (Cmpd c : listOfCmpds) {
+        CmpdListMember clm = CmpdListMember.Factory.newInstance();
+        clm.setCmpd(c);
+        clm.setCmpdList(cl);
+        session.persist(clm);
+        // not needed for persistence, added for quick(er) conversion to VO
+        cl.getCmpdListMembers().add(clm);
+      }
 
-            cl.setCmpdListId(cmpdListId);
-            cl.setListName(currentUser + " " + now);
-            cl.setDateCreated(ts);
-            cl.setListOwner(currentUser);
-            cl.setShareWith(currentUser);
+      cl.setCountListMembers(cl.getCmpdListMembers().size());
 
-            session.persist(cl);
+      tx.commit();
 
-            for (Cmpd c : listOfCmpds) {
-                CmpdListMember clm = CmpdListMember.Factory.newInstance();
-                clm.setCmpd(c);
-                clm.setCmpdList(cl);
-                session.persist(clm);
-                // not needed for persistence, added for quick(er) conversion to VO
-                cl.getCmpdListMembers().add(clm);
-            }
-
-            cl.setCountListMembers(cl.getCmpdListMembers().size());
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-        return rtn;
-
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
 
-    public CmpdList createCmpdListFromCmpdListMembers(List<CmpdListMember> listOfCmpdListMember, String currentUser) {
+    return rtn;
 
-        CmpdList rtn = CmpdList.Factory.newInstance();
+  }
 
-        Session session = null;
-        Transaction tx = null;
+  /**
+   *
+   * @param adHocCmpdList In order to pass this off to HelperCmpdTable have to
+   * update it dynamically IN ADDITION to creating new ahc that are persisted as
+   * "Cmpd"
+   * @param listName
+   * @param currentUser
+   * @return
+   */
+  public CmpdListVO deNovoCmpdListFromAdHocCmpds(ArrayList<AdHocCmpd> adHocCmpdList, String listName, String currentUser) {
 
-        try {
+    Random randomGenerator = new Random();
 
-            session = HibernateUtil.getSessionFactory().openSession();
+    CmpdListVO clVO = new CmpdListVO();
 
-            Date now = new Date();
-            Timestamp ts = new Timestamp(now.getTime());
+    Session session = null;
+    Transaction tx = null;
 
-            Long cmpdListId = null;
+    try {
 
-            java.util.Random generator = new Random();
-            long randomId = generator.nextLong();
-            if (randomId < 0) {
-                randomId = -1 * randomId;
-            }
-            cmpdListId = new Long(randomId);
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            tx = session.beginTransaction();
+      tx = session.beginTransaction();
 
-            // create a new list
+      Date now = new Date();
 
-            CmpdList cl = CmpdList.Factory.newInstance();
+      ArrayList<Cmpd> entityCmpdList = new ArrayList<Cmpd>();
 
-            cl.setCmpdListId(cmpdListId);
-            cl.setListName(currentUser + " " + now);
-            cl.setDateCreated(ts);
-            cl.setListOwner(currentUser);
-            cl.setShareWith(currentUser);
+      for (AdHocCmpd ahc : adHocCmpdList) {
 
-            session.persist(cl);
+        long randomId = randomGenerator.nextLong();
+        if (randomId < 0) {
+          randomId = -1 * randomId;
+        }
+        Long newRandomId = new Long(randomId);
 
-            for (CmpdListMember clm : listOfCmpdListMember) {
-                CmpdListMember newClm = CmpdListMember.Factory.newInstance();
+        // new AdHocCmpd:  originalAdHocCmpdId = adHocCmpdId
+        ahc.setAdHocCmpdId(newRandomId);
 
-                newClm.setCmpd(clm.getCmpd());
+        if (DEBUG) {
+          System.out.println("adHocCmpd name is: " + ahc.getName());
+          System.out.println("In HelperCmpdList deNovCmpdListFromAdHocCmpds.  Setting originalAdHocCmpdId to: " + newRandomId);
+        }
+        ahc.setOriginalAdHocCmpdId(newRandomId);
 
-                newClm.setCmpdList(cl);
-                session.persist(newClm);
-                // not needed for persistence, added for quick(er) conversion to VO
-                cl.getCmpdListMembers().add(newClm);
-            }
+        session.persist("Cmpd", ahc);
 
-            cl.setCountListMembers(cl.getCmpdListMembers().size());
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+        for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
+          // persist the struc and pchem
+          session.persist(ahcf.getAdHocCmpdFragmentPChem());
+          session.persist(ahcf.getAdHocCmpdFragmentStructure());
+          // persist the fragment
+          session.persist(ahcf);
         }
 
-        return rtn;
+        // if only one fragment, make it the parent, otherwise sort by size
+        ArrayList<AdHocCmpdFragment> fragList = new ArrayList<AdHocCmpdFragment>(ahc.getAdHocCmpdFragments());
+        Collections.sort(fragList, new Comparators.AdHocCmpdFragmentSizeComparator());
+        Collections.reverse(fragList);
 
-    }
-
-    /**
-     *
-     * @param adHocCmpdList In order to pass this off to HelperCmpdTable have to
-     * update it dynamically IN ADDITION to creating new ahc that are persisted
-     * as "Cmpd"
-     * @param listName
-     * @param currentUser
-     * @return
-     */
-    public CmpdListVO deNovoCmpdListFromAdHocCmpds(ArrayList<AdHocCmpd> adHocCmpdList, String listName, String currentUser) {
-
-        Random randomGenerator = new Random();
-
-        CmpdListVO clVO = new CmpdListVO();
-
-        Session session = null;
-        Transaction tx = null;
-
-        try {
-
-            session = HibernateUtil.getSessionFactory().openSession();
-
-            tx = session.beginTransaction();
-
-            Date now = new Date();
-
-            ArrayList<Cmpd> entityCmpdList = new ArrayList<Cmpd>();
-
-            for (AdHocCmpd ahc : adHocCmpdList) {
-
-                long randomId = randomGenerator.nextLong();
-                if (randomId < 0) {
-                    randomId = -1 * randomId;
-                }
-                Long newRandomId = new Long(randomId);
-
-                // new AdHocCmpd:  originalAdHocCmpdId = adHocCmpdId
-                ahc.setAdHocCmpdId(newRandomId);
-
-                if (DEBUG) {
-                    System.out.println("adHocCmpd name is: " + ahc.getName());
-                    System.out.println("In HelperCmpdList deNovCmpdListFromAdHocCmpds.  Setting originalAdHocCmpdId to: " + newRandomId);
-                }
-                ahc.setOriginalAdHocCmpdId(newRandomId);
-
-                session.persist("Cmpd", ahc);
-
-                for (AdHocCmpdFragment ahcf : ahc.getAdHocCmpdFragments()) {
-                    // persist the struc and pchem
-                    session.persist(ahcf.getAdHocCmpdFragmentPChem());
-                    session.persist(ahcf.getAdHocCmpdFragmentStructure());
-                    // persist the fragment
-                    session.persist(ahcf);
-                }
-
-                // if only one fragment, make it the parent, otherwise sort by size
-
-                ArrayList<AdHocCmpdFragment> fragList = new ArrayList<AdHocCmpdFragment>(ahc.getAdHocCmpdFragments());
-                Collections.sort(fragList, new Comparators.AdHocCmpdFragmentSizeComparator());
-                Collections.reverse(fragList);
-
-                // LOTS of possible issues with adHoc cmpds --> could end up with no fragments
-                if (fragList.size() == 0) {
-                } else {
-                    ahc.setAdHocCmpdParentFragment(fragList.get(0));
-                }
-
-                // track the cmpds for addition to CmpdList
-                // each ahc has been persisted as Cmpd
-                entityCmpdList.add(ahc);
-
-            }
-
-            // create a new list
-            long randomId = randomGenerator.nextLong();
-            if (randomId < 0) {
-                randomId = -1 * randomId;
-            }
-            Long cmpdListId = new Long(randomId);
-
-            CmpdList cl = CmpdList.Factory.newInstance();
-
-            cl.setCmpdListId(cmpdListId);
-            cl.setListName(listName);
-            cl.setDateCreated(now);
-            cl.setListOwner(currentUser);
-            cl.setShareWith(currentUser);
-            cl.setCountListMembers(entityCmpdList.size());
-
-            // id from GenerateSequence in Entity class
-            session.persist(cl);
-
-            // create the list members
-            for (Cmpd c : entityCmpdList) {
-                CmpdListMember clm = CmpdListMember.Factory.newInstance();
-                // bidirectional
-                clm.setCmpd(c);
-                clm.setCmpdList(cl);
-                session.persist(clm);
-            }
-
-            tx.commit();
-
-            // writes to CmpdTable so that subsequent fetch will work
-
-            List<CmpdVO> cList = HelperCmpdTable.adHocCmpdsToCmpdTable(adHocCmpdList);
-
-            clVO = this.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, currentUser);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            tx.rollback();
-        } finally {
-            session.close();
+        // LOTS of possible issues with adHoc cmpds --> could end up with no fragments
+        if (fragList.size() == 0) {
+        } else {
+          ahc.setAdHocCmpdParentFragment(fragList.get(0));
         }
 
-        return clVO;
+        // track the cmpds for addition to CmpdList
+        // each ahc has been persisted as Cmpd
+        entityCmpdList.add(ahc);
 
+      }
+
+      // create a new list
+      long randomId = randomGenerator.nextLong();
+      if (randomId < 0) {
+        randomId = -1 * randomId;
+      }
+      Long cmpdListId = new Long(randomId);
+
+      CmpdList cl = CmpdList.Factory.newInstance();
+
+      cl.setCmpdListId(cmpdListId);
+      cl.setListName(listName);
+      cl.setDateCreated(now);
+      cl.setListOwner(currentUser);
+      cl.setShareWith(currentUser);
+      cl.setCountListMembers(entityCmpdList.size());
+
+      // id from GenerateSequence in Entity class
+      session.persist(cl);
+
+      // create the list members
+      for (Cmpd c : entityCmpdList) {
+        CmpdListMember clm = CmpdListMember.Factory.newInstance();
+        // bidirectional
+        clm.setCmpd(c);
+        clm.setCmpdList(cl);
+        session.persist(clm);
+      }
+
+      tx.commit();
+
+      // writes to CmpdTable so that subsequent fetch will work
+      List<CmpdVO> cList = HelperCmpdTable.adHocCmpdsToCmpdTable(adHocCmpdList);
+
+      clVO = this.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, currentUser);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      tx.rollback();
+    } finally {
+      session.close();
     }
 
-    public CmpdListVO getCmpdListByCmpdListId(Long cmpdListId, Boolean includeListMembers, String currentUser) {
+    return clVO;
 
-        CmpdListVO rtnVO = new CmpdListVO();
-        CmpdList entityCL = null;
+  }
 
-        Session session = null;
-        Transaction tx = null;
+  public CmpdListVO getCmpdListByCmpdListId(Long cmpdListId, Boolean includeListMembers, String currentUser) {
 
-        try {
+    CmpdListVO rtnVO = new CmpdListVO();
+    CmpdList entityCL = null;
 
-            session = HibernateUtil.getSessionFactory().openSession();
+    Session session = null;
+    Transaction tx = null;
 
-            tx = session.beginTransaction();
+    try {
 
-            Criteria clCrit = session.createCriteria(CmpdList.class);
-            clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
-            clCrit.add(Restrictions.disjunction()
-                    .add(Restrictions.eq("listOwner", currentUser))
-                    .add(Restrictions.eq("shareWith", "PUBLIC")));
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            if (includeListMembers) {
-                clCrit.setFetchMode("listMembers", FetchMode.JOIN);
-            }
+      tx = session.beginTransaction();
 
+      Criteria clCrit = session.createCriteria(CmpdList.class);
+      clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
+      clCrit.add(Restrictions.disjunction()
+              .add(Restrictions.eq("listOwner", currentUser))
+              .add(Restrictions.eq("shareWith", "PUBLIC")));
 
-            entityCL = (CmpdList) clCrit.uniqueResult();
+      if (includeListMembers) {
+        clCrit.setFetchMode("listMembers", FetchMode.JOIN);
+      }
 
-            // just populate the top-level stuff
+      entityCL = (CmpdList) clCrit.uniqueResult();
 
-            // MWK WHY/HOW does using the TransformCmpdTable method speed things up so much?
+      // just populate the top-level stuff
+      rtnVO = TransformCmpdTableToVO.toCmpdListVO(entityCL, includeListMembers);
 
-            rtnVO = TransformCmpdTableToVO.toCmpdListVO(entityCL, includeListMembers);
+      // HashMap for holding cmpdId numbers and their respective CmpdListMemberVO
+      // for resolution AFTER fetching CmpdTable by cmpdIdList
+      HashMap<Long, CmpdListMemberVO> map = new HashMap<Long, CmpdListMemberVO>();
 
-            // HashMap for holding cmpdId numbers and their respective CmpdListMemberVO
-            // for resolution AFTER fetching CmpdTable by cmpdIdList
+      List<Long> cmpdIdList = new ArrayList<Long>();
+      Long cmpdId = null;
 
-            HashMap<Long, CmpdListMemberVO> map = new HashMap<Long, CmpdListMemberVO>();
+      for (CmpdListMember clm : entityCL.getCmpdListMembers()) {
+        cmpdId = (Long) session.getIdentifier(clm.getCmpd());
+        cmpdIdList.add(cmpdId);
+        map.put(cmpdId, TransformCmpdTableToVO.toCmpdListMemberVO(clm));
+      }
 
-            List<Long> cmpdIdList = new ArrayList<Long>();
-            Long cmpdId = null;
+      // fetch a list of cmpdTable
+      Criteria cvCrit = session.createCriteria(CmpdTable.class);
+      cvCrit.add(Restrictions.in("id", cmpdIdList));
+      List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
-            for (CmpdListMember clm : entityCL.getCmpdListMembers()) {
-                cmpdId = (Long) session.getIdentifier(clm.getCmpd());
-                cmpdIdList.add(cmpdId);
-                map.put(cmpdId, TransformCmpdTableToVO.toCmpdListMemberVO(clm));
-            }
+      if (entityCVlist.size() > 0) {
 
-            // fetch a list of cmpdTable
-            Criteria cvCrit = session.createCriteria(CmpdTable.class);
-            cvCrit.add(Restrictions.in("id", cmpdIdList));
-            List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
-
-            if (entityCVlist.size() > 0) {
-
-                for (CmpdTable cv : entityCVlist) {
-                    // translate to VO
-                    CmpdVO cVO = TransformCmpdTableToVO.toCmpdVO(cv);
-                    // add the VO to appropriate HashMap (CellLineMemberVO)        
-                    map.get(cVO.getId()).setCmpd(cVO);
-                }
-
-                ArrayList<CmpdListMemberVO> memberList = new ArrayList<CmpdListMemberVO>(map.values());
-
-                rtnVO.setCmpdListMembers(memberList);
-
-            }
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+        for (CmpdTable cv : entityCVlist) {
+          // translate to VO
+          CmpdVO cVO = TransformCmpdTableToVO.toCmpdVO(cv);
+          // add the VO to appropriate HashMap (CellLineMemberVO)        
+          map.get(cVO.getId()).setCmpd(cVO);
         }
 
+        ArrayList<CmpdListMemberVO> memberList = new ArrayList<CmpdListMemberVO>(map.values());
 
-        return rtnVO;
+        rtnVO.setCmpdListMembers(memberList);
 
+      }
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
 
-    public List<CmpdListVO> showAvailableCmpdLists(String currentUser) {
+    return rtnVO;
 
-        List<CmpdListVO> voList = new ArrayList<CmpdListVO>();
-        List<CmpdList> entityList = null;
+  }
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
+  public List<CmpdListVO> showAvailableCmpdLists(String currentUser) {
 
-        try {
+    List<CmpdListVO> voList = new ArrayList<CmpdListVO>();
+    List<CmpdList> entityList = null;
 
-            Criteria c = session.createCriteria(CmpdList.class);
-            c.add(Restrictions.disjunction()
-                    .add(Restrictions.eq("listOwner", currentUser))
-                    .add(Restrictions.eq("shareWith", "PUBLIC")));
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction tx = session.beginTransaction();
 
-            entityList = (List<CmpdList>) c.list();
+    try {
 
-            voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
+      Criteria c = session.createCriteria(CmpdList.class);
+      c.add(Restrictions.disjunction()
+              .add(Restrictions.eq("listOwner", currentUser))
+              .add(Restrictions.eq("shareWith", "PUBLIC")));
 
-            tx.commit();
+      entityList = (List<CmpdList>) c.list();
 
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+      voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+
+    return voList;
+
+  }
+
+  public void updateCmpdList(CmpdListVO cL, String currentUser) {
+
+    Session session = null;
+    Transaction tx = null;
+
+    try {
+
+      session = HibernateUtil.getSessionFactory().openSession();
+
+      tx = session.beginTransaction();
+      Criteria c = session.createCriteria(CmpdList.class);
+      c.add(Restrictions.eq("cmpdListId", cL.getCmpdListId()));
+
+      // ONLY listOwner can update, but only if not PUBLIC
+      c.add(Restrictions.eq("listOwner", currentUser));
+      c.add(Restrictions.ne("shareWith", "PUBLIC"));
+
+      CmpdList cl = (CmpdList) c.uniqueResult();
+
+      if (cL.getListName() != null) {
+        cl.setListName(cL.getListName());
+      }
+      if (cL.getListComment() != null) {
+        cl.setListComment(cL.getListComment());
+      }
+      if (cL.getAnchorComment() != null) {
+        cl.setAnchorComment(cL.getAnchorComment());
+      }
+      if (cL.getAnchorSmiles() != null) {
+        cl.setAnchorSmiles(cL.getAnchorSmiles());
+      }
+
+      session.update(cl);
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+
+  }
+
+  public void makeCmpdListPublic(Long cmpdListId, String currentUser) {
+
+    Session session = null;
+    Transaction tx = null;
+
+    try {
+
+      session = HibernateUtil.getSessionFactory().openSession();
+
+      tx = session.beginTransaction();
+      Criteria c = session.createCriteria(CmpdList.class);
+      c.add(Restrictions.eq("cmpdListId", cmpdListId));
+      c.add(Restrictions.eq("listOwner", currentUser));
+
+      CmpdList cl = (CmpdList) c.uniqueResult();
+
+      cl.setShareWith("PUBLIC");
+
+      session.update(cl);
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
+    }
+
+  }
+
+  public void deleteCmpdListByCmpdListId(Long cmpdListId, String currentUser) {
+
+    Session session = null;
+    Transaction tx = null;
+
+    try {
+
+      session = HibernateUtil.getSessionFactory().openSession();
+
+      tx = session.beginTransaction();
+
+      Criteria clCrit = session.createCriteria(CmpdList.class);
+      clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
+      clCrit.add(Restrictions.eq("listOwner", currentUser));
+      clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
+
+      CmpdList target = (CmpdList) clCrit.uniqueResult();
+
+      Collection<CmpdListMember> clml = target.getCmpdListMembers();
+
+      //have to programatically determine whether any ad_hoc_cmpds
+      //and delete those
+      Long cmpdId;
+      ArrayList<Long> cmpdIdsForDelete = new ArrayList<Long>();
+
+      for (CmpdListMember clm : clml) {
+
+        // check ownership ?
+        if (clm.getCmpdList().getListOwner().equals(currentUser)) {
+
+          Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
+
+          if (DEBUG) {
+            System.out.println("c.getClass() is: " + c.getClass());
+          }
+
+          // NSC compounds -> just delete the list member
+          if (c instanceof NscCmpdImpl) {
+
+            if (DEBUG) {
+              System.out.println("c.getClass() is: " + c.getClass() + " only deleting clm");
+            }
+
+            session.delete(clm);
+
+          } else {
+
+            session.delete(clm);
+
+            // cmpdIdsForDelete.add(c.getId());
+            if (DEBUG) {
+              System.out.println("c.getClass() is: " + c.getClass() + " also deleting cmpd");
+            }
+
+            // AND delete the AdHocCmpd
+            session.delete(c);
+
+          }
+
+        } else {
+          System.out.println(currentUser + " doesn't own list containing listMember: " + clm.getId());
         }
 
-        return voList;
+      }
 
-    }
-
-    public void updateCmpdList(CmpdListVO cL, String currentUser) {
-
-        Session session = null;
-        Transaction tx = null;
-
-        try {
-
-            session = HibernateUtil.getSessionFactory().openSession();
-
-            tx = session.beginTransaction();
-            Criteria c = session.createCriteria(CmpdList.class);
-            c.add(Restrictions.eq("cmpdListId", cL.getCmpdListId()));
-
-            // ONLY listOwner can update, but only if not PUBLIC
-            c.add(Restrictions.eq("listOwner", currentUser));
-            c.add(Restrictions.ne("shareWith", "PUBLIC"));
-
-            CmpdList cl = (CmpdList) c.uniqueResult();
-
-            if (cL.getListName() != null) {
-                cl.setListName(cL.getListName());
-            }
-            if (cL.getListComment() != null) {
-                cl.setListComment(cL.getListComment());
-            }
-            if (cL.getAnchorComment() != null) {
-                cl.setAnchorComment(cL.getAnchorComment());
-            }
-            if (cL.getAnchorSmiles() != null) {
-                cl.setAnchorSmiles(cL.getAnchorSmiles());
-            }
-
-            session.update(cl);
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-    }
-
-    public void makeCmpdListPublic(Long cmpdListId, String currentUser) {
-
-
-
-        Session session = null;
-        Transaction tx = null;
-
-        try {
-
-            session = HibernateUtil.getSessionFactory().openSession();
-
-            tx = session.beginTransaction();
-            Criteria c = session.createCriteria(CmpdList.class);
-            c.add(Restrictions.eq("cmpdListId", cmpdListId));
-            c.add(Restrictions.eq("listOwner", currentUser));
-
-            CmpdList cl = (CmpdList) c.uniqueResult();
-
-            cl.setShareWith("PUBLIC");
-
-            session.update(cl);
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-    }
-
-    public void deleteCmpdListByCmpdListId(Long cmpdListId, String currentUser) {
-
-        Session session = null;
-        Transaction tx = null;
-
-        try {
-
-            session = HibernateUtil.getSessionFactory().openSession();
-
-            tx = session.beginTransaction();
-
-            Criteria clCrit = session.createCriteria(CmpdList.class);
-            clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
-            clCrit.add(Restrictions.eq("listOwner", currentUser));
-            clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
-
-            CmpdList target = (CmpdList) clCrit.uniqueResult();
-
-            Collection<CmpdListMember> clml = target.getCmpdListMembers();
-
-            //have to programatically determine whether any ad_hoc_cmpds
-            //and delete those
-
-            Long cmpdId;
-            ArrayList<Long> cmpdIdsForDelete = new ArrayList<Long>();
-
-            for (CmpdListMember clm : clml) {
-
-                // check ownership ?
-
-                if (clm.getCmpdList().getListOwner().equals(currentUser)) {
-
-                    Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
-
-                    if (DEBUG) {
-                        System.out.println("c.getClass() is: " + c.getClass());
-                    }
-
-
-
-                    // NSC compounds -> just delete the list member
-
-                    if (c instanceof NscCmpdImpl) {
-
-                        if (DEBUG) {
-                            System.out.println("c.getClass() is: " + c.getClass() + " only deleting clm");
-                        }
-
-                        session.delete(clm);
-
-                    } else {
-
-                        session.delete(clm);
-                        
-                        // cmpdIdsForDelete.add(c.getId());
-
-                        if (DEBUG) {
-                            System.out.println("c.getClass() is: " + c.getClass() + " also deleting cmpd");
-                        }
-
-                        // AND delete the AdHocCmpd
-                        
-                        session.delete(c);
-
-                    }
-
-                } else {
-                    System.out.println(currentUser + " doesn't own list containing listMember: " + clm.getId());
-                }
-
-            }
-
-            // MWK TODO handle ownership of AdHocCmpds?
-
+      // MWK TODO handle ownership of AdHocCmpds?
 //            if (cmpdIdsForDelete.size() > 0) {
 //
 //                // find and delete those cmpd with join to ahc
@@ -564,19 +480,17 @@ public class HelperCmpdList {
 //                }
 //
 //            }
+      // delete the CmpdList        
+      session.delete(target);
 
-            // delete the CmpdList        
-            session.delete(target);
+      tx.commit();
 
-            tx.commit();
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            tx.rollback();
-        } finally {
-            session.close();
-        }
-
+    } catch (Exception e) {
+      e.printStackTrace();
+      tx.rollback();
+    } finally {
+      session.close();
     }
+
+  }
 }
