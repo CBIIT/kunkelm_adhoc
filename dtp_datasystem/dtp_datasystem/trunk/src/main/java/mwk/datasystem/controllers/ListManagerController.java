@@ -65,7 +65,7 @@ public class ListManagerController implements Serializable {
   // Are these still needed, or are the ones in ListContentController sufficient?     
   private CmpdListMemberVO selectedActiveListMember;
   private List<CmpdListMemberVO> selectedActiveListMembers;
-    //
+  //
   //
   private CmpdFragmentVO selectedCmpdFragment;
   //
@@ -173,7 +173,7 @@ public class ListManagerController implements Serializable {
       HelperCmpdList helper = new HelperCmpdList();
       List<CmpdListVO> justFetchedLists = helper.showAvailableCmpdLists(this.sessionController.getLoggedUser());
 
-            //
+      //
       // check for change in size of lists
       // null out the listMembers if there has been a change to force
       // re-load next time it is called
@@ -188,13 +188,13 @@ public class ListManagerController implements Serializable {
 
         if (listMap.containsKey(fetchedList.getId())) {
 
-                    // existing list
+          // existing list
           // update list-level info and fetch data if count has changed
           CmpdListVO curList = listMap.get(fetchedList.getId());
           // how many current members
           Integer curCountMembers = curList.getCountListMembers();
 
-                    // if the number of members has changed
+          // if the number of members has changed
           // then null it out listMembers force re-fetch the next time it is called
           if (fetchedList.getCountListMembers().intValue() != curList.getCountListMembers().intValue()) {
 
@@ -263,7 +263,7 @@ public class ListManagerController implements Serializable {
   }
 
   public String performLoadList(CmpdListVO clVO) {
-    
+
     System.out.println("Entering performLoadList(CmpdListVO clVO)");
 
     HelperCmpdList helper = new HelperCmpdList();
@@ -334,6 +334,14 @@ public class ListManagerController implements Serializable {
 
   }
 
+  /**
+   * 
+   * @param smiles
+   * @param title
+   * @return
+   * @throws Exception 
+   * used to render structure images for postProcessXLS
+   */
   public byte[] getStructureImage(String smiles, String title) throws Exception {
 
     String servletString = "notSet";
@@ -438,7 +446,7 @@ public class ListManagerController implements Serializable {
           //add a picture shape
           ClientAnchor anchor = helper.createClientAnchor();
 
-                    //set top-left corner of the picture,
+          //set top-left corner of the picture,
           //subsequent call of Picture#resize() will operate relative to it
           anchor.setCol1(18);
           anchor.setRow1(row.getRowNum());

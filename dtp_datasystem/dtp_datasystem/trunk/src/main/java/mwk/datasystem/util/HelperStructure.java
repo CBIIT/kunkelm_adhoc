@@ -4,6 +4,7 @@
  */
 package mwk.datasystem.util;
 
+import java.sql.PreparedStatement;
 import mwk.datasystem.domain.Cmpd;
 import mwk.datasystem.domain.CmpdList;
 import mwk.datasystem.domain.CmpdListMember;
@@ -69,7 +70,6 @@ public class HelperStructure {
         try {
 
             session = HibernateUtil.getSessionFactory().openSession();
-
 
             String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "' <@ mol";
 

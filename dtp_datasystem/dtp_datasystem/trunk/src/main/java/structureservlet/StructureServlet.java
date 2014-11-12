@@ -146,7 +146,7 @@ public class StructureServlet extends HttpServlet {
 
             if (querySmiles != null && querySmiles.length() > 0) {
                 
-                SMARTSQueryTool queryTool = new SMARTSQueryTool(querySmiles);
+                SMARTSQueryTool queryTool = new SMARTSQueryTool(querySmiles);                
                 queryTool.matches(theMol);
 
                 if (queryTool.countMatches() > 0) {

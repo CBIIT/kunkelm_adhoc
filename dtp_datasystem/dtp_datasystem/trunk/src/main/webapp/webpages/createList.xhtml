@@ -10,11 +10,7 @@
                 template="/webpages/templates/ui.xhtml">
   <ui:define name="content">
 
-    <p:panel>
-
-      <f:facet name="header">  
-        Free-form type or copy/paste of search terms
-      </f:facet>
+    <p:fieldset legend="Free-form type or copy/paste of search terms">
 
       <p:panel style="display:inline-block;border: none;"> 
         <h:outputLabel for="nscTextArea_id" value="NSC Text Area"/>
@@ -64,11 +60,11 @@
         <h:inputTextarea value="#{listContentBean.targetTextArea}" id="targetTextArea_id" cols="15" rows="5"/>
       </p:panel>
 
-    </p:panel>
+    </p:fieldset>
 
     <p:spacer height="20" width="100%"/>
 
-    <p:panel header="List Name" style="display: inline-block;">
+    <p:fieldset legend="Create List" style="display: inline-block;">
 
       <p:panel style="display:inline-block;border: none;"> 
         <h:outputLabel for="listnametext" value="List Name"/>
@@ -80,412 +76,403 @@
                          action="#{listContentController.performCreateListBySearch()}"
                          onstart="PF('creatingBUI').show();"
                          oncomplete="PF('creatingBUI').hide();"/>
-
       </p:panel>
 
-      <p:spacer height="20" width="100%"/>
+    </p:fieldset>
 
-      <p:panel>
+    <p:spacer height="20" width="100%"/>
 
-        <f:facet name="header">  
-          Interactive suggestions for search terms. Possible matches for 3 or more characters will be listed. Selections from the list will be added to free-form text areas above. 
-        </f:facet>
+    <p:fieldset legend="Interactive suggestions for search terms. Possible matches for 3 or more characters will be listed. Selections from the list will be added to free-form text areas above."> 
 
-        <ui:remove>
-
-          <p:panel style="display: inline-block;border: none;">
-            <p:outputLabel for="nscAutoComp" value="nsc"/>
-            <br/>
-            <p:autoComplete id="nscAutoComp" 
-                            dropdown="false"
-                            scrollHeight="150"
-                            minQueryLength="3"                                    
-                            completeMethod="#{applicationScopeBean.completensc}">
-              <p:ajax event="itemSelect" 
-                      listener="#{listContentBean.appendTonscTextArea}" 
-                      update=":datasystemForm:nscTextArea_id"/>  
-            </p:autoComplete>                
-          </p:panel>
-
-          <p:panel style="display: inline-block;border: none;">
-            <p:outputLabel for="drugNameAutoComp" value="drugName"/>
-            <br/>
-            <p:autoComplete id="drugNameAutoComp" 
-                            dropdown="false"
-                            scrollHeight="150"
-                            minQueryLength="3"                                    
-                            completeMethod="#{applicationScopeBean.completedrugName}">
-              <p:ajax event="itemSelect" 
-                      listener="#{listContentBean.appendTodrugNameTextArea}" 
-                      update=":datasystemForm:drugNameTextArea_id"/>  
-            </p:autoComplete>                
-          </p:panel>
-
-          <p:panel style="display: inline-block;border: none;">
-            <p:outputLabel for="aliasAutoComp" value="alias"/>
-            <br/>
-            <p:autoComplete id="aliasAutoComp" 
-                            dropdown="false"
-                            scrollHeight="150"
-                            minQueryLength="3"                                    
-                            completeMethod="#{applicationScopeBean.completealias}">
-              <p:ajax event="itemSelect" 
-                      listener="#{listContentBean.appendToaliasTextArea}" 
-                      update=":datasystemForm:aliasTextArea_id"/>  
-            </p:autoComplete>                
-          </p:panel>
-
-          <p:panel style="display: inline-block;border: none;">
-            <p:outputLabel for="casAutoComp" value="cas"/>
-            <br/>
-            <p:autoComplete id="casAutoComp" 
-                            dropdown="false"
-                            scrollHeight="150"
-                            minQueryLength="3"                                    
-                            completeMethod="#{applicationScopeBean.completecas}">
-              <p:ajax event="itemSelect" 
-                      listener="#{listContentBean.appendTocasTextArea}" 
-                      update=":datasystemForm:casTextArea_id"/>  
-            </p:autoComplete>                
-          </p:panel>
-
-        </ui:remove>
+      <ui:remove>
 
         <p:panel style="display: inline-block;border: none;">
-          <p:outputLabel for="cmpdNamedSetAutoComp" value="cmpdNamedSet"/>
+          <p:outputLabel for="nscAutoComp" value="nsc"/>
           <br/>
-          <p:autoComplete id="cmpdNamedSetAutoComp" 
-                          dropdown="true"
+          <p:autoComplete id="nscAutoComp" 
+                          dropdown="false"
                           scrollHeight="150"
                           minQueryLength="3"                                    
-                          completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
+                          completeMethod="#{applicationScopeBean.completensc}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentBean.appendTocmpdNamedSetTextArea}" 
-                    update=":datasystemForm:cmpdNamedSetTextArea_id"/>  
+                    listener="#{listContentBean.appendTonscTextArea}" 
+                    update=":datasystemForm:nscTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
 
         <p:panel style="display: inline-block;border: none;">
-          <p:outputLabel for="projectCodeAutoComp" value="projectCode"/>
+          <p:outputLabel for="drugNameAutoComp" value="drugName"/>
           <br/>
-          <p:autoComplete id="projectCodeAutoComp" 
-                          dropdown="true"
+          <p:autoComplete id="drugNameAutoComp" 
+                          dropdown="false"
                           scrollHeight="150"
                           minQueryLength="3"                                    
-                          completeMethod="#{applicationScopeBean.completeprojectCode}">
+                          completeMethod="#{applicationScopeBean.completedrugName}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentBean.appendToprojectCodeTextArea}" 
-                    update=":datasystemForm:projectCodeTextArea_id"/>  
+                    listener="#{listContentBean.appendTodrugNameTextArea}" 
+                    update=":datasystemForm:drugNameTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
 
         <p:panel style="display: inline-block;border: none;">
-          <p:outputLabel for="plateAutoComp" value="plate"/>
+          <p:outputLabel for="aliasAutoComp" value="alias"/>
           <br/>
-          <p:autoComplete id="plateAutoComp" 
-                          dropdown="true"
+          <p:autoComplete id="aliasAutoComp" 
+                          dropdown="false"
                           scrollHeight="150"
                           minQueryLength="3"                                    
-                          completeMethod="#{applicationScopeBean.completeplate}">
+                          completeMethod="#{applicationScopeBean.completealias}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentBean.appendToplateTextArea}" 
-                    update=":datasystemForm:plateTextArea_id"/>  
+                    listener="#{listContentBean.appendToaliasTextArea}" 
+                    update=":datasystemForm:aliasTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
 
         <p:panel style="display: inline-block;border: none;">
-          <p:outputLabel for="targetAutoComp" value="target"/>
+          <p:outputLabel for="casAutoComp" value="cas"/>
           <br/>
-          <p:autoComplete id="targetAutoComp" 
-                          dropdown="true"
+          <p:autoComplete id="casAutoComp" 
+                          dropdown="false"
                           scrollHeight="150"
                           minQueryLength="3"                                    
-                          completeMethod="#{applicationScopeBean.completetarget}">
+                          completeMethod="#{applicationScopeBean.completecas}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentBean.appendTotargetTextArea}" 
-                    update=":datasystemForm:targetTextArea_id"/>  
+                    listener="#{listContentBean.appendTocasTextArea}" 
+                    update=":datasystemForm:casTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
 
+      </ui:remove>
+
+      <p:panel style="display: inline-block;border: none;">
+        <p:outputLabel for="cmpdNamedSetAutoComp" value="cmpdNamedSet"/>
+        <br/>
+        <p:autoComplete id="cmpdNamedSetAutoComp" 
+                        dropdown="true"
+                        scrollHeight="150"
+                        minQueryLength="3"                                    
+                        completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
+          <p:ajax event="itemSelect" 
+                  listener="#{listContentBean.appendTocmpdNamedSetTextArea}" 
+                  update=":datasystemForm:cmpdNamedSetTextArea_id"/>  
+        </p:autoComplete>                
       </p:panel>
 
-      <p:spacer height="20" width="100%"/>
-
-      <p:panel style="display: inline-block;">
-
-        <f:facet name="header">  
-          Filter by pChem
-        </f:facet>
-
-        <p:panel header="molecularWeight" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_molecularWeight_id" value="molecularWeight Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_molecularWeight}" id="min_molecularWeight_id"/>
-          <br/>
-          <h:outputLabel for="max_molecularWeight_id" value="molecularWeight Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_molecularWeight}" id="max_molecularWeight_id"/>
-        </p:panel>
-
-        <p:panel header="molecularFormula" style="display:inline-block;border: none;">
-          <h:outputLabel for="molecularFormula_id" value="molecularFormula"/>
-          <br/>
-          <h:inputText value="#{listContentBean.molecularFormula}" id="molecularFormula_id"/>                
-        </p:panel>
-
-        <p:panel header="logD" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_logD_id" value="logD Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_logD}" id="min_logD_id"/>
-          <br/>
-          <h:outputLabel for="max_logD_id" value="logD Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_logD}" id="max_logD_id"/>
-        </p:panel>
-
-        <p:panel header="countHydBondAcceptors" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countHydBondAcceptors_id" value="countHydBondAcceptors Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countHydBondAcceptors}" id="min_countHydBondAcceptors_id"/>
-          <br/>
-          <h:outputLabel for="max_countHydBondAcceptors_id" value="countHydBondAcceptors Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countHydBondAcceptors}" id="max_countHydBondAcceptors_id"/>
-        </p:panel>
-
-        <p:panel header="countHydBondDonors" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countHydBondDonors_id" value="countHydBondDonors Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countHydBondDonors}" id="min_countHydBondDonors_id"/>
-          <br/>
-          <h:outputLabel for="max_countHydBondDonors_id" value="countHydBondDonors Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countHydBondDonors}" id="max_countHydBondDonors_id"/>
-        </p:panel>
-
-        <p:panel header="surfaceArea" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_surfaceArea_id" value="surfaceArea Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_surfaceArea}" id="min_surfaceArea_id"/>
-          <br/>
-          <h:outputLabel for="max_surfaceArea_id" value="surfaceArea Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_surfaceArea}" id="max_surfaceArea_id"/>
-        </p:panel>
-
-        <p:panel header="solubility" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_solubility_id" value="solubility Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_solubility}" id="min_solubility_id"/>
-          <br/>
-          <h:outputLabel for="max_solubility_id" value="solubility Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_solubility}" id="max_solubility_id"/>
-        </p:panel>
-
-        <p:panel header="countRings" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countRings_id" value="countRings Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countRings}" id="min_countRings_id"/>
-          <br/>
-          <h:outputLabel for="max_countRings_id" value="countRings Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countRings}" id="max_countRings_id"/>
-        </p:panel>
-
-        <p:panel header="countAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countAtoms_id" value="countAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countAtoms}" id="min_countAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countAtoms_id" value="countAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countAtoms}" id="max_countAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countBonds_id" value="countBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countBonds}" id="min_countBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countBonds_id" value="countBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countBonds}" id="max_countBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countSingleBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countSingleBonds_id" value="countSingleBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countSingleBonds}" id="min_countSingleBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countSingleBonds_id" value="countSingleBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countSingleBonds}" id="max_countSingleBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countDoubleBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countDoubleBonds_id" value="countDoubleBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countDoubleBonds}" id="min_countDoubleBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countDoubleBonds_id" value="countDoubleBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countDoubleBonds}" id="max_countDoubleBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countTripleBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countTripleBonds_id" value="countTripleBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countTripleBonds}" id="min_countTripleBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countTripleBonds_id" value="countTripleBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countTripleBonds}" id="max_countTripleBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countRotatableBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countRotatableBonds_id" value="countRotatableBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countRotatableBonds}" id="min_countRotatableBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countRotatableBonds_id" value="countRotatableBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countRotatableBonds}" id="max_countRotatableBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countHydrogenAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countHydrogenAtoms_id" value="countHydrogenAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countHydrogenAtoms}" id="min_countHydrogenAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countHydrogenAtoms_id" value="countHydrogenAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countHydrogenAtoms}" id="max_countHydrogenAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countMetalAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countMetalAtoms_id" value="countMetalAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countMetalAtoms}" id="min_countMetalAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countMetalAtoms_id" value="countMetalAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countMetalAtoms}" id="max_countMetalAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countHeavyAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countHeavyAtoms_id" value="countHeavyAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countHeavyAtoms}" id="min_countHeavyAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countHeavyAtoms_id" value="countHeavyAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countHeavyAtoms}" id="max_countHeavyAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countPositiveAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countPositiveAtoms_id" value="countPositiveAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countPositiveAtoms}" id="min_countPositiveAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countPositiveAtoms_id" value="countPositiveAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countPositiveAtoms}" id="max_countPositiveAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countNegativeAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countNegativeAtoms_id" value="countNegativeAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countNegativeAtoms}" id="min_countNegativeAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countNegativeAtoms_id" value="countNegativeAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countNegativeAtoms}" id="max_countNegativeAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countRingBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countRingBonds_id" value="countRingBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countRingBonds}" id="min_countRingBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countRingBonds_id" value="countRingBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countRingBonds}" id="max_countRingBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countStereoAtoms" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countStereoAtoms_id" value="countStereoAtoms Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countStereoAtoms}" id="min_countStereoAtoms_id"/>
-          <br/>
-          <h:outputLabel for="max_countStereoAtoms_id" value="countStereoAtoms Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countStereoAtoms}" id="max_countStereoAtoms_id"/>
-        </p:panel>
-
-        <p:panel header="countStereoBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countStereoBonds_id" value="countStereoBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countStereoBonds}" id="min_countStereoBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countStereoBonds_id" value="countStereoBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countStereoBonds}" id="max_countStereoBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countRingAssemblies" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countRingAssemblies_id" value="countRingAssemblies Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countRingAssemblies}" id="min_countRingAssemblies_id"/>
-          <br/>
-          <h:outputLabel for="max_countRingAssemblies_id" value="countRingAssemblies Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countRingAssemblies}" id="max_countRingAssemblies_id"/>
-        </p:panel>
-
-        <p:panel header="countAromaticBonds" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countAromaticBonds_id" value="countAromaticBonds Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countAromaticBonds}" id="min_countAromaticBonds_id"/>
-          <br/>
-          <h:outputLabel for="max_countAromaticBonds_id" value="countAromaticBonds Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countAromaticBonds}" id="max_countAromaticBonds_id"/>
-        </p:panel>
-
-        <p:panel header="countAromaticRings" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_countAromaticRings_id" value="countAromaticRings Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_countAromaticRings}" id="min_countAromaticRings_id"/>
-          <br/>
-          <h:outputLabel for="max_countAromaticRings_id" value="countAromaticRings Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_countAromaticRings}" id="max_countAromaticRings_id"/>
-        </p:panel>
-
-        <p:panel header="formalCharge" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_formalCharge_id" value="formalCharge Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_formalCharge}" id="min_formalCharge_id"/>
-          <br/>
-          <h:outputLabel for="max_formalCharge_id" value="formalCharge Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_formalCharge}" id="max_formalCharge_id"/>
-        </p:panel>
-
-        <p:panel header="theALogP" style="display:inline-block;border: none;">
-          <h:outputLabel for="min_theALogP_id" value="theALogP Minimum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.min_theALogP}" id="min_theALogP_id"/>
-          <br/>
-          <h:outputLabel for="max_theALogP_id" value="theALogP Maximum"/>
-          <br/>
-          <h:inputText value="#{listContentBean.max_theALogP}" id="max_theALogP_id"/>
-        </p:panel>
-
+      <p:panel style="display: inline-block;border: none;">
+        <p:outputLabel for="projectCodeAutoComp" value="projectCode"/>
+        <br/>
+        <p:autoComplete id="projectCodeAutoComp" 
+                        dropdown="true"
+                        scrollHeight="150"
+                        minQueryLength="3"                                    
+                        completeMethod="#{applicationScopeBean.completeprojectCode}">
+          <p:ajax event="itemSelect" 
+                  listener="#{listContentBean.appendToprojectCodeTextArea}" 
+                  update=":datasystemForm:projectCodeTextArea_id"/>  
+        </p:autoComplete>                
       </p:panel>
 
-    </p:panel>
+      <p:panel style="display: inline-block;border: none;">
+        <p:outputLabel for="plateAutoComp" value="plate"/>
+        <br/>
+        <p:autoComplete id="plateAutoComp" 
+                        dropdown="true"
+                        scrollHeight="150"
+                        minQueryLength="3"                                    
+                        completeMethod="#{applicationScopeBean.completeplate}">
+          <p:ajax event="itemSelect" 
+                  listener="#{listContentBean.appendToplateTextArea}" 
+                  update=":datasystemForm:plateTextArea_id"/>  
+        </p:autoComplete>                
+      </p:panel>
+
+      <p:panel style="display: inline-block;border: none;">
+        <p:outputLabel for="targetAutoComp" value="target"/>
+        <br/>
+        <p:autoComplete id="targetAutoComp" 
+                        dropdown="true"
+                        scrollHeight="150"
+                        minQueryLength="3"                                    
+                        completeMethod="#{applicationScopeBean.completetarget}">
+          <p:ajax event="itemSelect" 
+                  listener="#{listContentBean.appendTotargetTextArea}" 
+                  update=":datasystemForm:targetTextArea_id"/>  
+        </p:autoComplete>                
+      </p:panel>
+
+    </p:fieldset>
+
+    <p:spacer height="20" width="100%"/>
+
+    <p:fieldset legend="Filter by pChem" style="display: inline-block;">
+
+      <p:panel header="molecularWeight" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_molecularWeight_id" value="molecularWeight Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_molecularWeight}" id="min_molecularWeight_id"/>
+        <br/>
+        <h:outputLabel for="max_molecularWeight_id" value="molecularWeight Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_molecularWeight}" id="max_molecularWeight_id"/>
+      </p:panel>
+
+      <p:panel header="molecularFormula" style="display:inline-block;border: none;">
+        <h:outputLabel for="molecularFormula_id" value="molecularFormula"/>
+        <br/>
+        <h:inputText value="#{listContentBean.molecularFormula}" id="molecularFormula_id"/>                
+      </p:panel>
+
+      <p:panel header="logD" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_logD_id" value="logD Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_logD}" id="min_logD_id"/>
+        <br/>
+        <h:outputLabel for="max_logD_id" value="logD Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_logD}" id="max_logD_id"/>
+      </p:panel>
+
+      <p:panel header="countHydBondAcceptors" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countHydBondAcceptors_id" value="countHydBondAcceptors Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countHydBondAcceptors}" id="min_countHydBondAcceptors_id"/>
+        <br/>
+        <h:outputLabel for="max_countHydBondAcceptors_id" value="countHydBondAcceptors Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countHydBondAcceptors}" id="max_countHydBondAcceptors_id"/>
+      </p:panel>
+
+      <p:panel header="countHydBondDonors" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countHydBondDonors_id" value="countHydBondDonors Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countHydBondDonors}" id="min_countHydBondDonors_id"/>
+        <br/>
+        <h:outputLabel for="max_countHydBondDonors_id" value="countHydBondDonors Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countHydBondDonors}" id="max_countHydBondDonors_id"/>
+      </p:panel>
+
+      <p:panel header="surfaceArea" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_surfaceArea_id" value="surfaceArea Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_surfaceArea}" id="min_surfaceArea_id"/>
+        <br/>
+        <h:outputLabel for="max_surfaceArea_id" value="surfaceArea Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_surfaceArea}" id="max_surfaceArea_id"/>
+      </p:panel>
+
+      <p:panel header="solubility" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_solubility_id" value="solubility Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_solubility}" id="min_solubility_id"/>
+        <br/>
+        <h:outputLabel for="max_solubility_id" value="solubility Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_solubility}" id="max_solubility_id"/>
+      </p:panel>
+
+      <p:panel header="countRings" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countRings_id" value="countRings Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countRings}" id="min_countRings_id"/>
+        <br/>
+        <h:outputLabel for="max_countRings_id" value="countRings Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countRings}" id="max_countRings_id"/>
+      </p:panel>
+
+      <p:panel header="countAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countAtoms_id" value="countAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countAtoms}" id="min_countAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countAtoms_id" value="countAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countAtoms}" id="max_countAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countBonds_id" value="countBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countBonds}" id="min_countBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countBonds_id" value="countBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countBonds}" id="max_countBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countSingleBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countSingleBonds_id" value="countSingleBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countSingleBonds}" id="min_countSingleBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countSingleBonds_id" value="countSingleBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countSingleBonds}" id="max_countSingleBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countDoubleBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countDoubleBonds_id" value="countDoubleBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countDoubleBonds}" id="min_countDoubleBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countDoubleBonds_id" value="countDoubleBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countDoubleBonds}" id="max_countDoubleBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countTripleBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countTripleBonds_id" value="countTripleBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countTripleBonds}" id="min_countTripleBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countTripleBonds_id" value="countTripleBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countTripleBonds}" id="max_countTripleBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countRotatableBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countRotatableBonds_id" value="countRotatableBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countRotatableBonds}" id="min_countRotatableBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countRotatableBonds_id" value="countRotatableBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countRotatableBonds}" id="max_countRotatableBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countHydrogenAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countHydrogenAtoms_id" value="countHydrogenAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countHydrogenAtoms}" id="min_countHydrogenAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countHydrogenAtoms_id" value="countHydrogenAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countHydrogenAtoms}" id="max_countHydrogenAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countMetalAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countMetalAtoms_id" value="countMetalAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countMetalAtoms}" id="min_countMetalAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countMetalAtoms_id" value="countMetalAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countMetalAtoms}" id="max_countMetalAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countHeavyAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countHeavyAtoms_id" value="countHeavyAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countHeavyAtoms}" id="min_countHeavyAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countHeavyAtoms_id" value="countHeavyAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countHeavyAtoms}" id="max_countHeavyAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countPositiveAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countPositiveAtoms_id" value="countPositiveAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countPositiveAtoms}" id="min_countPositiveAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countPositiveAtoms_id" value="countPositiveAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countPositiveAtoms}" id="max_countPositiveAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countNegativeAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countNegativeAtoms_id" value="countNegativeAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countNegativeAtoms}" id="min_countNegativeAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countNegativeAtoms_id" value="countNegativeAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countNegativeAtoms}" id="max_countNegativeAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countRingBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countRingBonds_id" value="countRingBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countRingBonds}" id="min_countRingBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countRingBonds_id" value="countRingBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countRingBonds}" id="max_countRingBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countStereoAtoms" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countStereoAtoms_id" value="countStereoAtoms Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countStereoAtoms}" id="min_countStereoAtoms_id"/>
+        <br/>
+        <h:outputLabel for="max_countStereoAtoms_id" value="countStereoAtoms Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countStereoAtoms}" id="max_countStereoAtoms_id"/>
+      </p:panel>
+
+      <p:panel header="countStereoBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countStereoBonds_id" value="countStereoBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countStereoBonds}" id="min_countStereoBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countStereoBonds_id" value="countStereoBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countStereoBonds}" id="max_countStereoBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countRingAssemblies" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countRingAssemblies_id" value="countRingAssemblies Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countRingAssemblies}" id="min_countRingAssemblies_id"/>
+        <br/>
+        <h:outputLabel for="max_countRingAssemblies_id" value="countRingAssemblies Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countRingAssemblies}" id="max_countRingAssemblies_id"/>
+      </p:panel>
+
+      <p:panel header="countAromaticBonds" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countAromaticBonds_id" value="countAromaticBonds Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countAromaticBonds}" id="min_countAromaticBonds_id"/>
+        <br/>
+        <h:outputLabel for="max_countAromaticBonds_id" value="countAromaticBonds Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countAromaticBonds}" id="max_countAromaticBonds_id"/>
+      </p:panel>
+
+      <p:panel header="countAromaticRings" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_countAromaticRings_id" value="countAromaticRings Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_countAromaticRings}" id="min_countAromaticRings_id"/>
+        <br/>
+        <h:outputLabel for="max_countAromaticRings_id" value="countAromaticRings Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_countAromaticRings}" id="max_countAromaticRings_id"/>
+      </p:panel>
+
+      <p:panel header="formalCharge" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_formalCharge_id" value="formalCharge Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_formalCharge}" id="min_formalCharge_id"/>
+        <br/>
+        <h:outputLabel for="max_formalCharge_id" value="formalCharge Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_formalCharge}" id="max_formalCharge_id"/>
+      </p:panel>
+
+      <p:panel header="theALogP" style="display:inline-block;border: none;">
+        <h:outputLabel for="min_theALogP_id" value="theALogP Minimum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.min_theALogP}" id="min_theALogP_id"/>
+        <br/>
+        <h:outputLabel for="max_theALogP_id" value="theALogP Maximum"/>
+        <br/>
+        <h:inputText value="#{listContentBean.max_theALogP}" id="max_theALogP_id"/>
+      </p:panel>
+
+    </p:fieldset>
 
   </ui:define>
 
