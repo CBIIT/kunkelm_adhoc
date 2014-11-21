@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 
 use strict;
-
-# load module
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
@@ -18,20 +16,13 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
-## #    #   ####    ####            #####   ####
-## ##   #  #       #    #             #    #    #
-## # #  #   ####   #                  #    #    #
-## #  # #       #  #                  #    #    #
-## #   ##  #    #  #    #             #    #    #
-## #    #   ####    ####  #######     #     ####  #######
-##
-##
-## #        ####     ##    #####
-## #       #    #   #  #   #    #
-## #       #    #  #    #  #    #
-## #       #    #  ######  #    #
-## #       #    #  #    #  #    #
-## ######   ####   #    #  #####
+  #####   ####           #        ####     ##    #####
+    #    #    #          #       #    #   #  #   #    #
+    #    #    #          #       #    #  #    #  #    #
+    #    #    #          #       #    #  ######  #    #
+    #    #    #          #       #    #  #    #  #    #
+    #     ####           ######   ####   #    #  #####
+
 
 my @setsToLoad = (
 	"one_strc",

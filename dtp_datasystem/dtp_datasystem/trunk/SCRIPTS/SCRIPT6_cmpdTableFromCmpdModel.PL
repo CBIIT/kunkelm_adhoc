@@ -11,7 +11,7 @@ my $theTime = "$hour:$minute:$second";
 print "start time $theTime\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -47,7 +47,7 @@ nsc_cmpd nsc
 left outer join cmpd_aliases2nsc_cmpds alia2c on (alia2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_alias alia on (alia2c.cmpd_aliases_fk = alia.id)
 left outer join cmpd_plates2nsc_cmpds plat2c on (plat2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_plate plat on (plat2c.cmpd_plates_fk = plat.id)
 left outer join cmpd_projects2nsc_cmpds proj2c on (proj2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_project proj on (proj2c.cmpd_projects_fk = proj.id)
-left outer join cmpd_sets2nsc_cmpds sets2c on (sets2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_set cset on (sets2c.cmpd_sets_fk = cset.id)
+left outer join cmpd_named_sets2nsc_cmpds sets2c on (sets2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_named_set cset on (sets2c.cmpd_named_sets_fk = cset.id)
 left outer join cmpd_targets2nsc_cmpds targ2c on (targ2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_target targ on (targ2c.cmpd_targets_fk = targ.id)
 group by 
 nsc.id, 
@@ -273,6 +273,7 @@ nsc_cmpd nsc
 left outer join cmpd_fragment frag on nsc.cmpd_parent_fragment_fk = frag.id
 left outer join cmpd_fragment_p_chem pchem on frag.cmpd_fragment_p_chem_fk = pchem.id
 left outer join cmpd_fragment_structure strc on frag.cmpd_fragment_structure_fk = strc.id
+
 left outer join cmpd_annotation annot on nsc.cmpd_annotation_fk = annot.id
 left outer join cmpd_inventory invent on nsc.cmpd_inventory_fk = invent.id
 left outer join cmpd_bio_assay bioass on nsc.cmpd_bio_assay_fk = bioass.id
@@ -282,12 +283,14 @@ left outer join cmpd_bio_assay bioass on nsc.cmpd_bio_assay_fk = bioass.id
 left outer join temp_formatted_strings tfs on nsc.nsc = tfs.nsc
 left outer join temp_formatted_fragments tff on nsc.nsc = tff.nsc
 left outer join temp_ident_descr temp_ident_descr on nsc.nsc = temp_ident_descr.nsc
+left outer join nsc_cmpd_type typ on nsc.nsc_cmpd_type_fk = typ.id,
 
-left outer join nsc_cmpd_type typ on nsc.nsc_cmpd_type_fk = typ.id
+nsc_to_load load
 
-where nsc.nsc in (
-select nsc from nsc_to_load
-)]; 
+where nsc.nsc = load.nsc
+and nsc.nsc <= 100000
+]; 
+
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	

@@ -27,8 +27,6 @@ import mwk.datasystem.domain.CmpdLegacyCmpd;
 import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
-import mwk.datasystem.domain.DataSystemRole;
-import mwk.datasystem.domain.DataSystemUser;
 import mwk.datasystem.domain.NscCmpdImpl;
 import mwk.datasystem.vo.CmpdAliasVO;
 import mwk.datasystem.vo.CmpdAnnotationVO;
@@ -44,8 +42,7 @@ import mwk.datasystem.vo.CmpdNamedSetVO;
 import mwk.datasystem.vo.CmpdPlateVO;
 import mwk.datasystem.vo.CmpdProjectVO;
 import mwk.datasystem.vo.CmpdTargetVO;
-import mwk.datasystem.vo.DataSystemRoleVO;
-import mwk.datasystem.vo.DataSystemUserVO;
+
 
 /**
  *
@@ -99,43 +96,6 @@ public class TransformAndroToVO {
         rtn.setMolecularWeight(entityIn.getMolecularWeight());
 
         return rtn;
-    }
-
-    public static DataSystemUserVO translateDataSystemUser(DataSystemUser entityIn) {
-
-        DataSystemUserVO rtn = new DataSystemUserVO();
-
-        rtn.setId(entityIn.getId());
-        rtn.setRealName(entityIn.getRealName());
-        rtn.setUserName(entityIn.getUserName());
-        rtn.setDataSystemRoles(translateDataSystemRoles(entityIn.getDataSystemRoles()));
-
-        return rtn;
-
-    }
-
-    public static List<DataSystemRoleVO> translateDataSystemRoles(Collection<DataSystemRole> entityListIn) {
-
-        List<DataSystemRoleVO> rtnList = new ArrayList<DataSystemRoleVO>();
-
-        for (DataSystemRole dsr : entityListIn) {
-            rtnList.add(translateDataSystemRole(dsr));
-        }
-
-        return rtnList;
-
-    }
-
-    public static DataSystemRoleVO translateDataSystemRole(DataSystemRole entityIn) {
-
-        DataSystemRoleVO rtn = new DataSystemRoleVO();
-
-        rtn.setId(entityIn.getId());
-        rtn.setRoleName(entityIn.getRoleName());
-        rtn.setRoleDescription(entityIn.getRoleDescription());
-
-        return rtn;
-
     }
 
     public static List<CmpdListVO> translateCmpdLists(List<CmpdList> entityListIn, Boolean includeListMembers) {
