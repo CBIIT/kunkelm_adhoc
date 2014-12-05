@@ -68,6 +68,7 @@ my @indexFieldList = ("nsc", "fragmentindex", "can_smi", "can_taut", "can_taut_s
 foreach my $indexField(@indexFieldList){
 	
 	my $tempSql = qq[create index rfps_$indexField on rs3_from_plp_frags($indexField)];
+
 	print "$tempSql\n"; 
         my $sth = $dbh->prepare($tempSql);
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -79,6 +80,7 @@ my @indexFieldList = ("nsc", "fragmentindex");
 foreach my $indexField(@indexFieldList){
 	
 	my $tempSql = qq[create index rfpc_$indexField on rs3_from_plp_ctab($indexField)];
+
 	print "$tempSql\n"; 
         my $sth = $dbh->prepare($tempSql);
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -90,6 +92,7 @@ my @indexFieldList = ("nsc");
 foreach my $indexField(@indexFieldList){
 	
 	my $tempSql = qq[create index rfpn_$indexField on rs3_from_plp_nsc($indexField)];
+
 	print "$tempSql\n"; 
         my $sth = $dbh->prepare($tempSql);
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -119,15 +122,24 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## UPDATE the frags table for salts
 
 my $tempSql = qq[alter table rs3_from_plp_frags add salt_smiles varchar(1024)];
+
 print "$tempSql\n"; 
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
+my $tempSql = qq[alter table rs3_from_plp_frags add salt_id bigint];
+
+print "$tempSql\n"; 
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+
+
 my $tempSql = qq[
 update rs3_from_plp_frags
-set salt_smiles = unique_salts.can_taut_strip_stereo
-from unique_salts
-where rs3_from_plp_frags.can_taut_strip_stereo = unique_salts.can_taut_strip_stereo];
+set salt_smiles = cmpd_known_salt.can_taut_strip_stereo, salt_id = cmpd_known_salt.id
+from cmpd_known_salt
+where rs3_from_plp_frags.can_taut_strip_stereo = cmpd_known_salt.can_taut_strip_stereo];
+
 print "$tempSql\n"; 
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;

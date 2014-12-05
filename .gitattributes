@@ -9398,7 +9398,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BEFORE_PERL/util.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/FORMPART -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/HIBERNATEPART -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/JAVAPART -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MAKE_SALT_LISTS.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/OUTPUTPARTCOLUMNS -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/OUTPUTPARTLABELVALUE -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT0_constraintWrangling.sql -text
@@ -9412,11 +9411,14 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT4_processProdData.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT5_1_nscToLoad.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT5_2_processCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT6_cmpdTableFromCmpdModel.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT9_exportToAccord.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/loadRDKit.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeSaltLists.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/output -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeAnyList.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQualityControlLists.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeSaltList.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/prepareForMakeQualityControlLists.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/templateDbi.PL -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
@@ -9519,6 +9521,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/images/pdf.png -te
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/images/xml.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvasWrangling.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionTimeOut.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListCompactGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragmentsGrid.xhtml -text
@@ -9526,6 +9529,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragments
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListScrollGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable_allColumns.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListCompactGrid.xhtml -text

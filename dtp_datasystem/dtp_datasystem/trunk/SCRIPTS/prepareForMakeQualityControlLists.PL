@@ -26,12 +26,12 @@ my @allTbls = qw(
 	multi_strc_any_lbl
 	);
 
-my $sql = qq[drop table if exists qc];
+my $sql = qq[drop table if exists qc_with_nsc];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-my $sql = qq[create table qc (source varchar(1024), comparator varchar(1024), target varchar(1024), the_count int)];
+my $sql = qq[create table qc_with_nsc (source varchar(1024), comparator varchar(1024), target varchar(1024), nsc int)];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -54,55 +54,55 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc 
-	select '$allTbls[$cnt]', 'count nsc', 'count nsc', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc 
+	select distinct '$allTbls[$cnt]', 'count nsc', 'count nsc', nsc 
 	from temp];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc
-	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 0', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc
+	select distinct '$allTbls[$cnt]', 'count nsc', 'mw DIFF 0', nsc 
 	from temp 
 	where round(mw) = round(fw)];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc
-	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 2', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc
+	select distinct '$allTbls[$cnt]', 'count nsc', 'mw DIFF 2', nsc 
 	from temp 
 	where abs( round(mw) - round(fw) ) < 2];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc
-	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 5', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc
+	select distinct '$allTbls[$cnt]', 'count nsc', 'mw DIFF 5', nsc 
 	from temp 
 	where abs( round(mw) - round(fw) ) < 5];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc
-	select '$allTbls[$cnt]', 'count nsc', 'mf W99', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc
+	select distinct '$allTbls[$cnt]', 'count nsc', 'mf W99', nsc 
 	from temp 
 	where mf  = 'W99'];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc
-	select '$allTbls[$cnt]', 'count nsc', 'mf with .', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc
+	select distinct '$allTbls[$cnt]', 'count nsc', 'mf with .', nsc 
 	from temp 
 	where mf  like '%.%'];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
-	my $sql = qq[insert into qc
-	select '$allTbls[$cnt]', 'count nsc', 'mf ~ .*\(.*\)[xn0-9]', count(distinct nsc) 
+	my $sql = qq[insert into qc_with_nsc
+	select distinct '$allTbls[$cnt]', 'count nsc', 'mf ~ .*\(.*\)[xn0-9]', nsc 
 	from temp 
 	where mf ~ '.*\\(.*\\)[xn0-9]'];
 	print "$sql\n";
@@ -111,60 +111,22 @@ for my $cnt(0 .. @allTbls - 1){
 	
 }
 
-# crosstab the results
+# indexes
 
-# set up for command line
-
-my $tblName = "qc";
-my $colName = "target";
-my $rowName = "source";
-
-# get the distinct column headers
-
-my $tempSql = qq[select distinct $colName from $tblName order by 1];
-
-my $sth = $dbh->prepare($tempSql);
-
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my @identList;	
-while(my $ref = $sth->fetchrow_hashref()) {		
-	push (@identList, $ref->{$colName});
-}
-
-# overlaps of categories
-
-my $sql = qq[drop table if exists qc_overlap];
+my $sql = qq[create index qc_with_nsc_source on qc_with_nsc(source)];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-my $sql = qq[create table qc_overlap (source varchar(1024), target varchar(1024), the_count int)];
+my $sql = qq[create index qc_with_nsc_comparator on qc_with_nsc(comparator)];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-for my $cnt(0 .. @allTbls - 1){	
-	for my $innerCnt($cnt .. @allTbls - 1){
-		
-		if ($cnt != $innerCnt){
-			
-			my $sql = qq[
-			insert into qc_overlap
-			select '$allTbls[$cnt]', '$allTbls[$innerCnt]',
-			count(i.*)
-			from (
-			select nsc from $allTbls[$cnt]
-			intersect
-			select nsc from $allTbls[$innerCnt]
-			) as i];
-			print "$sql\n";
-			my $sth = $dbh->prepare($sql);
-			$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-			
-		}
-	}			
-}
+my $sql = qq[create index qc_with_nsc_target on qc_with_nsc(target)];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 # clean up
 $dbh->disconnect();
@@ -173,4 +135,3 @@ $dbh->disconnect();
 my $year = 1900 + $yearOffset;
 my $theTime = "$hour:$minute:$second";
 print "finish time $theTime\n";
-

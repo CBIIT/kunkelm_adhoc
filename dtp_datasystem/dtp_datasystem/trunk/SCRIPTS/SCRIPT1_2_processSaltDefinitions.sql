@@ -35,14 +35,39 @@ drop table if exists unique_salts;
 
 create table unique_salts
 as
-select can_taut_strip_stereo, 
+select can_smi, can_taut, can_taut_strip_stereo, Molecular_Formula, Molecular_Weight, 
 count(*), 
 array_to_string(array_agg(distinct name), ',') as names, 
 array_to_string(array_agg(distinct source), ',') as sources 
 from processed_salts
-group by 1 order by 2 desc;
+group by 1, 2, 3, 4, 5 order by 2 desc;
 
 create index unique_salts_can_taut_strip_stereo on unique_salts(can_taut_strip_stereo);
 
 vacuum analyze verbose unique_salts;
 
+drop sequence if exists cmpd_known_salt_seq;
+
+create sequence cmpd_known_salt_seq;
+
+--                    Table "public.cmpd_known_salt"
+--             Column             |          Type           | Modifiers 
+----------------------------------+-------------------------+-----------
+-- id                             | bigint                  | not null
+-- canonical_smiles               | character varying(1024) | 
+-- canonical_tautomer_smiles      | character varying(1024) | 
+-- canonical_tautomer_smiles_stri | character varying(1024) | 
+-- salt_name                      | character varying(1024) | 
+-- salt_mf                        | character varying(1024) | 
+-- salt_mw                        | double precision        | 
+--Indexes:
+--    "cmpd_known_salt_pkey" PRIMARY KEY, btree (id)
+
+truncate cmpd_known_salt;
+
+insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
+select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0;
+
+insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
+select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight
+from unique_salts;

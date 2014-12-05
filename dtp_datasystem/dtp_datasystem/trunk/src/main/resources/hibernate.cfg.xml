@@ -23,8 +23,6 @@
         <mapping resource="mwk/datasystem/domain/CmpdNamedSet.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdProject.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/Cmpd.hbm.xml"/>
-        <mapping resource="mwk/datasystem/domain/DataSystemUser.hbm.xml"/>
-        <mapping resource="mwk/datasystem/domain/DataSystemRole.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdAnnotation.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdLegacyCmpd.hbm.xml"/>        
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentPChem.hbm.xml"/>

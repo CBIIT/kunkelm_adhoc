@@ -16,11 +16,13 @@ select valid_can_smi, valid_can_taut, valid_can_taut_strip_stereo, count(*)
 from rdkit_validity 
 group by 1, 2, 3 order by 4 desc;
 
+--datasystemdb-# group by 1, 2, 3 order by 4 desc;
 -- valid_can_smi | valid_can_taut | valid_can_taut_strip_stereo | count  
 -----------------+----------------+-----------------------------+--------
--- t             | t              | t                           | 765207
--- f             | f              | f                           |   7348
+-- t             | t              | t                           | 668637
+-- f             | f              | f                           |   5738
 -- f             | f              | t                           |      8
+--(3 rows)
 
 create index rdkv_nsc on rdkit_validity(nsc);
 vacuum analyze verbose rdkit_validity;

@@ -1,13 +1,6 @@
 #!/usr/bin/perl
 
-
-## delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like 'SOLVENT LIST%'); 
-## delete from cmpd_list where list_name like 'SOLVENT LIST%';
-
 use strict;
-
-my $solvents = 'false';
-my $saltLabel = 'SALT LIST';
 
 # load module
 use DBI;
@@ -20,7 +13,6 @@ print "start time $theTime\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
-
 my $tempSql;
 
 #    #  #    #  #    #  ######
@@ -30,7 +22,7 @@ my $tempSql;
 #   ##  #    #  #   #   #
 #    #   ####   #    #  ######
 
-$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like '$saltLabel%')];
+$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like 'QC SAMPLE LIST%')];
 my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
@@ -40,50 +32,26 @@ my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-if ($solvents eq 'true'){
-	
-	# get the distinct salt_smiles FOR SOLVENTS ONLY
-	
-	$tempSql = qq[
-	select distinct salt_smiles
-	from two_strc_any_lbl_one_salt, unique_salts
-	where salt_smiles is not null
-	and salt_smiles = unique_salts.can_taut_strip_stereo
-	and unique_salts.sources = 'Schrodinger solvent'
-	limit 10
-	];
-	
-} else {
-	
-	# get the distinct salt_smiles FOR NON-SOLVENTS ONLY
-	
-	$tempSql = qq[
-	select distinct salt_smiles
-	from two_strc_any_lbl_one_salt, unique_salts
-	where salt_smiles is not null
-	and salt_smiles = unique_salts.can_taut_strip_stereo
-	and unique_salts.sources not like '%Schrodinger solvent%'
-	limit 10
-	];
-	
-}
+# get the distinct categories
+# fetch from the qc table since there is only 
+# one row for each unique source + comparator + target
 
+$tempSql = qq[
+select distinct source, comparator, target
+from qc
+];
 my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
-my @saltSmilesList;	
-while(my $ref = $sth->fetchrow_hashref()) {		
-	push (@saltSmilesList, $ref->{'salt_smiles'});
-}
-
-# cycle through them
-
-foreach my $saltSmiles(@saltSmilesList){
+my @row;
+while (@row = $sth->fetchrow_array) {  # retrieve one row
+	print join(", ", @row), "\n";
 	
-	print "salt_smiles: $saltSmiles";
+	print "source: $row[0]\n";
+	print "comparator: $row[1]\n";
+	print "target: $row[2]\n";
 	
-	# nsc for saltSmiles
 	# use table temp
 	
 	$tempSql = qq[
@@ -93,14 +61,19 @@ foreach my $saltSmiles(@saltSmilesList){
 	#print "$tempSql\n\n";
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
+	# the nsc are fetched from qc_with_nsc
+
 	$tempSql = qq[
 	create table temp as
 	select distinct nsc 
-	from two_strc_any_lbl_one_salt
-	where salt_smiles = '$saltSmiles'
+	from qc_with_nsc
+	where source = '$row[0]'
+	and comparator = '$row[1]'
+	and target = '$row[2]'
+        limit 500
 	];
 	my $sth = $dbh->prepare($tempSql);
-	#print "$tempSql\n\n";
+	print "$tempSql\n\n";
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 	# create cmpd_list
@@ -136,18 +109,16 @@ foreach my $saltSmiles(@saltSmilesList){
 	select
 	
 	$cmpdListId,
-	'$saltLabel '|| unique_salts.names,
+	'QC SAMPLE LIST $row[0] $row[1] $row[2]',
 	now(),
 	'kunkelm',
 	'kunkelm',
 	round(random() * 9223372036854775807),
 	count(temp.*),
-	'$saltSmiles',
-	unique_salts.names,
-	'$saltLabel $saltSmiles'
-	from temp, unique_salts
-	where '$saltSmiles' = can_taut_strip_stereo
-	group by names
+	null,
+	null,
+	null
+	from temp
 	];
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
@@ -185,4 +156,3 @@ $dbh->disconnect();
 my $year = 1900 + $yearOffset;
 my $theTime = "$hour:$minute:$second";
 print "finish time $theTime\n";
-

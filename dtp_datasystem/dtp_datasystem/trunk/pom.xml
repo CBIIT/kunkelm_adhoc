@@ -4,7 +4,7 @@
 
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>2014.11.09</version>
+    <version>2014.12.01</version>
     <packaging>war</packaging>
 
     <name>datasystem</name>
@@ -16,7 +16,6 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>      
     </properties>
-    
     
     <dependencies>
         
@@ -292,6 +291,9 @@
       </activation>
       <properties>
         <deploy.war.name>datasystem</deploy.war.name>
+        <deploy.db.url>jdbc:postgresql://localhost:5432/datasystemdb</deploy.db.url>
+        <deploy.db.user>datasystem_user</deploy.db.user>
+        <deploy.db.pass>datasystem_pass</deploy.db.pass>
       </properties>
     </profile>
         

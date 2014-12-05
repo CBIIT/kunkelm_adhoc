@@ -343,9 +343,14 @@ public class StructureSearchController implements Serializable {
       this.smilesForLoad = null;
       this.ctabForLoad = null;
     } else {
+        
       String smiles = cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi();
       this.smilesForLoad = smiles;
-      this.ctabForLoad = ctabFromSmiles(smiles);
+      
+      String ctab = cVO.getParentFragment().getCmpdFragmentStructure().getCtab();
+      //this.ctabForLoad = ctabFromSmiles(smiles);
+      this.ctabForLoad = ctab;
+      
     }
 
     return null;
@@ -401,4 +406,5 @@ public class StructureSearchController implements Serializable {
   }
 
     // </editor-fold>  
+  
 }
