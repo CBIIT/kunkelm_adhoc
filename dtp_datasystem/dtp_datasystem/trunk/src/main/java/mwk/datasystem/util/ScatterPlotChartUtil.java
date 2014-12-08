@@ -8,6 +8,8 @@ import com.flaptor.hist4j.AdaptiveHistogram;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import mwk.datasystem.mwkcharting.Histogram;
@@ -22,52 +24,60 @@ import mwk.datasystem.vo.CmpdListVO;
  */
 public class ScatterPlotChartUtil {
 
-    public static ArrayList<ExtendedCartesianChartModel> generateScatter(CmpdListVO incoming, List<String> propertyNameList) {
+    public static ArrayList<ExtendedCartesianChartModel> generateScatter(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
 
+        // MWK 07Dec2014 added sort step to propertyNameList
+      
+        ArrayList<String> sortList = new ArrayList<String>(propertyNameList);
+        Collections.sort(sortList);
+      
         ArrayList<ExtendedCartesianChartModel> scatterModel = new ArrayList<ExtendedCartesianChartModel>();
 
         try {
 
-            for (int xCnt = 0; xCnt < propertyNameList.size(); xCnt++) {
+            for (int outerCnt = 0; outerCnt < sortList.size(); outerCnt++) {
 
-                String xParam = propertyNameList.get(xCnt);
+                String outerParam = sortList.get(outerCnt);
 
-                for (int yCnt = 0; yCnt < xCnt; yCnt++) {
+                //for (int yCnt = 0; yCnt < xCnt; yCnt++) {
+                
+                for (int innterCnt = 0; innterCnt < sortList.size(); innterCnt++) {
 
                     ExtendedCartesianChartModel thisModel = new ExtendedCartesianChartModel();
 
-                    String yParam = propertyNameList.get(yCnt);
+                    String innerParam = sortList.get(innterCnt);
 
-                    thisModel.setTitle(yParam + " vs " + xParam);
-                    thisModel.setLabelAxisX(xParam);
-                    thisModel.setLabelAxisY(yParam);
+                    thisModel.setTitle(outerParam + " vs " + innerParam);
+                    thisModel.setLabelAxisX(innerParam);
+                    thisModel.setLabelAxisY(outerParam);
 
                     ChartSeries series = new ChartSeries();
-                    series.setLabel(yParam + " vs " + xParam);
+                    series.setLabel(outerParam + " vs " + innerParam);
 
                     ChartSeries selectedSeries = new ChartSeries();
-                    selectedSeries.setLabel(yParam + " vs " + xParam + " selected");
+                    selectedSeries.setLabel(outerParam + " vs " + innerParam + " selected");
 
                     NumberFormat nf = new DecimalFormat();
                     nf.setMaximumFractionDigits(2);
 
-                    for (CmpdListMemberVO clmVO : incoming.getCmpdListMembers()) {
+                    for (CmpdListMemberVO clmVO : incoming) {
+                      
                         if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
                             CmpdFragmentPChemVO pChem = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
-                            double xProp = getProperty(clmVO, xParam);
-                            double yProp = getProperty(clmVO, yParam);
+                            double xProp = getProperty(clmVO, innerParam);
+                            double yProp = getProperty(clmVO, outerParam);
 
                             if (xProp != Double.NaN && yProp != Double.NaN) {
                                 if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                                    selectedSeries.set(xProp, yProp);
+                                    selectedSeries.set(xProp, yProp);                                    
                                 } else {
                                     series.set(xProp, yProp);
                                 }
                             }
                         }
                     }
-
+                    
                     if (!series.getData().isEmpty()) {
                         thisModel.addSeries(series);
                     }
@@ -81,7 +91,7 @@ public class ScatterPlotChartUtil {
                 }
 
             }
-
+ 
         } catch (Exception e) {
             e.printStackTrace();
         }

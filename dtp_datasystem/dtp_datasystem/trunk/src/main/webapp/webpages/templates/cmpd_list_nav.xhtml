@@ -17,22 +17,15 @@
 
         <p:commandButton ajax="false" 
                          disabled="#{empty listLogicController.currentListOfCompounds}" 
-                         action="/webpages/cmpdListGrid?faces-redirect=true"
-                         value="Detail Grid"/>
+                         action="/webpages/cmpdListForm?faces-redirect=true"
+                         value="Form"/>
 
         <p:spacer width="20"/>
 
         <p:commandButton ajax="false" 
                          disabled="#{empty listLogicController.currentListOfCompounds}"
-                         action="/webpages/cmpdListCompactGrid?faces-redirect=true"
-                         value="Compact Grid"/>        
-
-        <p:spacer width="20"/>
-
-        <p:commandButton ajax="false" 
-                         disabled="#{empty listLogicController.currentListOfCompounds || 1 == 1}"
-                         action="/webpages/cmpdListScrollGrid?faces-redirect=true"
-                         value="Scrollable Grid"/>        
+                         action="/webpages/cmpdListGrid?faces-redirect=true"
+                         value="Grid"/>        
 
     </p:fieldset>
 

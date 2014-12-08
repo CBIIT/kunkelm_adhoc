@@ -60,8 +60,8 @@ function structuresAsGridImage(){
 
     imag.onload=function(){
   
-        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+        $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+        $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
         $("[id='datasystemForm:exportableImageOutputPanel']").empty();
         $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
@@ -140,8 +140,8 @@ function imageGridFromSubstructures(){
 
     imag.onload=function(){
   
-        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+        $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+        $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
     }
      
@@ -259,8 +259,8 @@ function addAllPanels() {
 
             imag.onload=function(){
   
-                $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-                $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+                $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+                $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
             }
   
@@ -358,8 +358,8 @@ MaxVal	-5
 
             imag.onload=function(){
   
-                $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-                $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+                $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+                $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
             }
     
@@ -422,8 +422,8 @@ function addAllNanoStringMeanGraphs(arrayOfArray) {
 
             imag.onload=function(){
   
-                $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-                $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+                $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+                $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
             }
     
@@ -510,8 +510,8 @@ MaxVal	-5
 
             imag.onload=function(){
   
-                $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-                $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);
+                $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+                $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
             }
     
@@ -626,8 +626,8 @@ function exportHeatMapImage(rowArray){
     imag.src = theCanvas.toDataURL();
 
     imag.onload=function(){  
-        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);    
+        $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+        $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);    
     }
  
     PF('exportImageDlg').show();
@@ -729,8 +729,8 @@ function exportHeatMapImageLabelsBelow(rowArray){
     imag.src = theCanvas.toDataURL();
 
     imag.onload=function(){  
-        $("[id='dataSystemForm:exportableImageOutputPanel']").empty();
-        $("[id='dataSystemForm:exportableImageOutputPanel']").append(imag);    
+        $("[id='datasystemForm:exportableImageOutputPanel']").empty();
+        $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);    
     }
  
     PF('exportImageDlg').show();

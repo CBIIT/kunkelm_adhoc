@@ -9442,6 +9442,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImage
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/EntityConverter.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
@@ -9523,16 +9524,16 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvasWrangling
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionTimeOut.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListCompactGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragmentsGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragmentsTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListScrollGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistograms.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable_allColumns.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListCompactGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.xhtml -text
@@ -9542,6 +9543,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdFragment.
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogExportImage.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogHistograms.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDetails.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogSelectedListMembers.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails_ORIGINAL.xhtml -text

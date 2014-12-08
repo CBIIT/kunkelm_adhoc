@@ -6,18 +6,24 @@
       xmlns:p="http://primefaces.org/ui">
 
   <ui:remove>
+    
+    References to concept and javascript, etc. on this page
+    
     http://stackoverflow.com/questions/19097565/alert-when-the-session-expires-with-primefaces
     http://murygin.wordpress.com/2012/11/29/jsf-primefaces-session-timeout-handling/
-       
-<h:form>
-    <p:growl id="messages" showDetail="true" sticky="true" />
- 
-    <p:idleMonitor timeout="5000">
+    timeout="#{session.maxInactiveInterval * 1000 - 125000}"
+
+    This is from primefaces manual...
+    
+    <h:form>
+      <p:growl id="messages" showDetail="true" sticky="true" />
+
+      <p:idleMonitor timeout="#{session.maxInactiveInterval * 1000 - 125000}">
         <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messages" />
         <p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messages" />
-    </p:idleMonitor>
-</h:form>
-       
+      </p:idleMonitor>
+    </h:form>
+
   </ui:remove>
 
 
@@ -41,7 +47,7 @@
                 appendTo="@(body)"
                 onHide="stopCount()"
                 onShow="doTimer()">
-       
+
         <p>
           <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
           <p:panel>
@@ -56,11 +62,12 @@
       <p:remoteCommand name="keepAlive" actionListener="#{auth.keepSessionAlive}" />
     </h:form>
     <script type="text/javascript">
-      var TIME = 120; // in seconds
+
+      var TIME = 10; // in seconds
       var countTimer = TIME;
       var processTimer;
       var timer_is_on = 0;
-      var redirectPage = "#{request.contextPath}/auth/j_verinice_timeout";
+      var redirectPage = "#{request.contextPath}/viewExpired.xhtml";
 
       var countDownDiv = "dialog-countdown";
       var txtCountDown = null;
@@ -94,5 +101,7 @@
         keepAlive();
       }
     </script>
+
   </ui:composition>
+
 </html>

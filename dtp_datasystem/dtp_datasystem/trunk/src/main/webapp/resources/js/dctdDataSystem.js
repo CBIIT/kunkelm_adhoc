@@ -1,13 +1,13 @@
 // chemDoodle functions
 
 function getMolFromEditor() {
-  
+
   //alert('in getMolFromEditor()');
-  
+
   var mol = sketcher.getMolecule();
   var stringMol = ChemDoodle.writeMOL(mol);
   document.getElementById('datasystemForm:ctabfromeditor').value = stringMol;
-  
+
 }
 
 function loadEditorFromMol() {
@@ -15,7 +15,7 @@ function loadEditorFromMol() {
   //alert('in loadEditorFromMol()');
 
   var ctab = document.getElementById('datasystemForm:ctabforload').value;
-  
+
   //replace car rtn with \n
   var replStr = String.fromCharCode(92, 110);
   var fixed = ctab.replace(/[\n\r|\r|\n]/g, '\n');
@@ -26,7 +26,7 @@ function loadEditorFromMol() {
   var mol = ChemDoodle.readMOL(prepended);
 
   if (mol) {
-    sketcher.loadMolecule(mol);    
+    sketcher.loadMolecule(mol);
   } else {
     alert('NSC not found or no parent fragment defined.');
   }
@@ -44,6 +44,10 @@ function tooltipContentEditor(str, seriesIndex, pointIndex, plot) {
 
 }
 
+function barChartTooltipContentEditor(str, seriesIndex, pointIndex, plot) {
+  return plot.axes.yaxis.ticks[pointIndex];
+}
+
 function histogramExtender() {
   this.cfg.seriesColors = ["red", "blue"];
 }
@@ -52,6 +56,17 @@ function scatterPlotExtender() {
   this.cfg.seriesColors = ["blue", "red"];
   this.cfg.seriesDefaults = {
     showLine: false,
+    showMarker: true
+  };
+  this.cfg.highlighter = {
+    show: true,
+    sizeAdjust: 25,
+    //lineWidthAdjust: 25,
+    tooltipLocation: 'e',
+    bringSeriesToFront: true,
+    //useAxesFormatters: true,
+    tooltipContentEditor: tooltipContentEditor,
+    //tooltipAxes: 'y',
     showMarker: true
   };
 }

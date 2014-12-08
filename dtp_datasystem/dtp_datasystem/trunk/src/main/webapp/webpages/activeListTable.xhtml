@@ -67,12 +67,13 @@
       </f:facet>
 
       <p:column style="width:16px">
-        <p:rowToggler /><h:outputText value="pChem"/>
+        <p:rowToggler /><h:outputText value="pChem and Structure Info"/>
       </p:column>
 
       <p:rowExpansion>
+        
         <p:panelGrid  columns="6" columnClasses="label,value" style="width:300px">
-          
+
           <f:facet name="header">
             <h:outputText value="pChem details" />
           </f:facet>
@@ -156,6 +157,65 @@
           </h:outputText>
 
         </p:panelGrid>
+
+        <p:panelGrid>
+
+          <p:row>  
+            <p:column styleClass="ui-widget-header">Fragments</p:column>  
+          </p:row>
+
+          <p:row>
+            <p:column>                                
+              <p:dataList value="#{listMember.cmpd.cmpdFragments}" var="frag" itemType="disc">  
+                <h:outputText value="#{frag.cmpdFragmentStructure.canSmi}"/>                
+              </p:dataList>
+            </p:column>   
+          </p:row>
+
+          <p:row>
+            <p:column styleClass="ui-widget-header">SMILES</p:column>  
+          </p:row>
+
+          <p:row>
+            <p:column>                
+              <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
+            </p:column>
+          </p:row>
+
+          <p:row>
+            <p:column styleClass="ui-widget-header">InChI</p:column>  
+          </p:row>
+
+          <p:row>
+            <p:column>                
+              <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi}"/>
+            </p:column>
+          </p:row>
+
+          <p:row>  
+            <p:column styleClass="ui-widget-header">Aliases</p:column>  
+          </p:row>
+
+          <p:row>
+            <p:column>                                
+              <p:dataList value="#{listMember.cmpd.aliases}" var="n" itemType="disc">  
+                <h:outputText value="#{n}"/>                
+              </p:dataList>
+            </p:column>   
+          </p:row>
+
+          <p:row>
+            <p:column styleClass="ui-widget-header">CTAB</p:column>  
+          </p:row>
+
+          <p:row>
+            <p:column>                              
+              <h:inputTextarea cols="50" rows="25" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.ctab}" />
+            </p:column>
+          </p:row>
+
+        </p:panelGrid>
+
       </p:rowExpansion>
 
       <p:column headerText="All"
@@ -230,6 +290,8 @@
         <h:outputText value="#{listMember.cmpd.inventory}"/>
       </p:column>
 
+      
+      
       <p:column headerText="NCI60" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.nci60}">                
         <f:facet name="header">                
           <h:outputText value="NCI60"/>                
@@ -286,15 +348,6 @@
         </p:scrollPanel>
       </p:column>   
 
-      <p:column headerText="SMILES" resizable="true">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}">
-        </h:outputText>
-      </p:column>
-         
-      <p:column headerText="CTAB" resizable="true">                
-          <h:inputTextarea cols="50" rows="25" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.ctab}" />
-      </p:column>
-      
     </p:dataTable>
 
   </ui:define>

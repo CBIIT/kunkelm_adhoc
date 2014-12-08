@@ -9,97 +9,62 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <p:dialog header="Histograms"  
-              position="center"             
+              position="right"
+              showEffect="fade" 
+              hideEffect="fade"                
               widgetVar="histogramsdlg"
               minimizable="false"
-              maximizable="true"
+              maximizable="false"
               resizable="true"
               draggable="true"
-              height="900"
-              width="1100"
+              height="800"
+              width="1000"
               appendTo="@(body)">  
 
         <p:outputPanel id="HistogramsDialog">
 
-            <p:layout style="height: 800px;width: 1000px;">
+            <p:dataGrid rendered="#{histogramController.scatterPlotModel != null}" 
+                        value="#{histogramController.scatterPlotModel}" 
+                        var="scat" 
+                        columns="3">      
 
-                <p:layoutUnit position="west" resizable="true" size="50%">
+                <p:lineChart value="#{scat}" 
+                             title="#{scat.title}"
+                             xaxisLabel="#{scat.labelAxisX}"
+                             yaxisLabel="#{scat.labelAxisY}"
+                             xaxisAngle="-90"            
+                             zoom="true"
+                             style="height:400px; width:400px"
+                             extender="scatterPlotExtender"/>
 
-                    <ui:repeat rendered="#{listManagerController.scatterplotModel != null}" 
-                               value="#{listManagerController.scatterplotModel}" 
-                               var="scat">      
+            </p:dataGrid>
 
-                        <p:lineChart value="#{scat}" 
-                                     title="#{scat.title}"
-                                     xaxisLabel="#{scat.labelAxisX}"
-                                     yaxisLabel="#{scat.labelAxisY}"
-                                     xaxisAngle="-90"            
-                                     zoom="true"
-                                     style="height: 200px; width: 200px;display: inline-block;"
-                                     extender="scatterPlotExtender"/>
-                    </ui:repeat>
+            <p:dataGrid rendered="#{histogramController.histoModel != null}"
+                        value="#{histogramController.histoModel}" 
+                        var="histo" 
+                        columns="3">      
 
-                </p:layoutUnit>
+                <p:barChart value="#{histo.chartModel}"
+                            title="#{histo.chartModel.title}"                      
+                            extender="histogramExtender"
+                            zoom="false"
+                            showDatatip="true"
+                            style="height:200px; width:200px"
+                            barPadding="1"
+                            barMargin="1"
+                            xaxisAngle="-90"
+                            animate="true"
+                            stacked="true">
 
-                <p:layoutUnit position="center" resizable="true" size="50%">
+                    <p:ajax event="itemSelect" 
+                            immediate="true" 
+                            process="@this"
+                            listener="#{histogramController.itemSelectHistogram}"
+                            update=":datasystemForm:HistogramsDialog,:datasystemForm:SelectedListMembersDialog"/>   
 
-                    <ui:repeat rendered="#{listManagerController.histoModel != null}"
-                               value="#{listManagerController.histoModel}" 
-                               var="histo">      
+                </p:barChart>
 
-                        <p:barChart value="#{histo.chartModel}"
-                                    title="#{histo.chartModel.title}"                      
-                                    extender="histogramExtender"
-                                    zoom="false"
-                                    showDatatip="true"
-                                    style="height: 200px; width: 200px;display: inline-block;"
-                                    barPadding="1"
-                                    barMargin="1"
-                                    xaxisAngle="-90"
-                                    animate="true"
-                                    stacked="true">
-
-                            <p:ajax event="itemSelect" 
-                                    immediate="true" 
-                                    process="@this"
-                                    listener="#{listManagerController.itemSelectHistogram}"
-                                    update=":datasystemForm:growl,:datasystemForm:HistogramsDialog,:datasystemForm:outerTabView:activeListTabView,:datasystemForm:SelectedListMembersDialog"/>   
-
-                        </p:barChart>
-
-                    </ui:repeat>
-
-                </p:layoutUnit>
-                
-                <p:layoutUnit position="south" resizable="true" size="33%">
-
-                    <ui:repeat rendered="#{!empty listManagerController.selectedActiveListMembers}"
-                               value="#{listManagerController.selectedActiveListMembers}"
-                               var="clm">
-
-                        <p:commandLink style="display: inline-block;"
-                                       update=":datasystemForm:ListManagerCmpdDetailsDialog" 
-                                       oncomplete="PF('listmanagercmpddetailsdlg').show();" 
-                                       title="View Detail">  
-
-                            <f:setPropertyActionListener value="#{clm.cmpd}"   
-                                                         target="#{listManagerController.selectedCmpd}" />  
-
-                            <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
-                                            alt="png-structure-image"
-                                            width="100" 
-                                            height="100"
-                                            id="structureImg"
-                                            url='/StructureServlet?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}'>
-                            </h:graphicImage> 
-
-                        </p:commandLink>
-
-                    </ui:repeat>
-
-                </p:layoutUnit>
-
-            </p:layout>
+            </p:dataGrid>
 
         </p:outputPanel>
 
