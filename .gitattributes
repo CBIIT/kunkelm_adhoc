@@ -9412,13 +9412,16 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT5_1_nscToLoad.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT5_2_processCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT6_cmpdTableFromCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT9_exportToAccord.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/combinedRS3andAlt.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/loadRDKit.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeAnyList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQualityControlLists.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeSaltList.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/mwk_hts_salt.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/prepareForMakeQualityControlLists.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/processCombinedRS3andAlt.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/templateDbi.PL -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
@@ -9441,7 +9444,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/package-inf
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImageServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/EntityConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text

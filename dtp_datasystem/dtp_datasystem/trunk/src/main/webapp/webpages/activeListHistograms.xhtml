@@ -7,238 +7,242 @@
       xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:p="http://primefaces.org/ui">
 
-  <f:view contentType="text/html">
+    <f:view contentType="text/html">
 
-    <h:head>
-      <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-        <title>Data System Project Histograms and ScatterPlots</title>
-      </f:facet>
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>Data System Project Histograms and ScatterPlots</title>
+            </f:facet>
 
-      <noscript>
-        <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
-      </noscript>
+            <noscript>
+                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
+            </noscript>
 
-      <h:outputScript library="js" name="dctdDataSystem.js"/>                
-      <h:outputScript library="js" name="canvasWrangling.js"/>
-      <h:outputStylesheet library="css" name="my.css"/>
+            <h:outputScript library="js" name="dctdDataSystem.js"/>                
+            <h:outputScript library="js" name="canvasWrangling.js"/>
+            <h:outputStylesheet library="css" name="my.css"/>
 
 
-    </h:head>
+        </h:head>
 
-    <h:body>
-      
-      <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+        <h:body>
 
-      <p:layout  fullPage="true">
+            <p:growl id="msgs" 
+                     showDetail="true" 
+                     autoUpdate="true"
+                     sticky="true" />
 
-        <p:layoutUnit position="north" 
-                      resizable="true" 
-                      size="100" 
-                      minSize="100">	
+            <p:layout  fullPage="true">
 
+                <p:layoutUnit position="north" 
+                              resizable="true" 
+                              size="100" 
+                              minSize="100">	
 
-          <h:form id="histogramsConfigurationForm" enctype="multipart/form-data">
 
-            <p:outputPanel id="HistogramsConfiguration">
+                    <h:form id="histogramsConfigurationForm" enctype="multipart/form-data">
 
-              <h:outputText style="font-size: 200%;" value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>
+                        <p:outputPanel id="HistogramsConfiguration">
 
-              <p:commandButton ajax="true" 
-                               disabled="#{empty listManagerController.activeList}"
-                               value="HISTOGRAMS"
-                               icon="ui-icon-image"
-                               action="#{histogramController.renderHistoAndScatter()}"
-                               update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog" />   
+                            <h:outputText style="font-size: 200%;" value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>
 
-              <p:selectManyCheckbox value="#{histogramController.parametersPchem}" >  
-                <f:selectItem itemLabel="mw" itemValue="mw" />  
-                <f:selectItem itemLabel="hba" itemValue="hba" />  
-                <f:selectItem itemLabel="hbd" itemValue="hbd" />  
-                <f:selectItem itemLabel="alogp" itemValue="alogp" />  
-                <f:selectItem itemLabel="logd" itemValue="logd" />  
-                <f:selectItem itemLabel="sa" itemValue="sa" />  
-                <f:selectItem itemLabel="psa" itemValue="psa" />  
-              </p:selectManyCheckbox>
+                            <p:commandButton ajax="true" 
+                                             disabled="#{empty listManagerController.activeList}"
+                                             value="HISTOGRAMS"
+                                             icon="ui-icon-image"
+                                             action="#{histogramController.renderHistoAndScatter()}"
+                                             update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog" />   
 
-            </p:outputPanel>
+                            <p:selectManyCheckbox value="#{histogramController.parametersPchem}" >  
+                                <f:selectItem itemLabel="mw" itemValue="mw" />  
+                                <f:selectItem itemLabel="hba" itemValue="hba" />  
+                                <f:selectItem itemLabel="hbd" itemValue="hbd" />  
+                                <f:selectItem itemLabel="alogp" itemValue="alogp" />  
+                                <f:selectItem itemLabel="logd" itemValue="logd" />  
+                                <f:selectItem itemLabel="sa" itemValue="sa" />  
+                                <f:selectItem itemLabel="psa" itemValue="psa" />  
+                            </p:selectManyCheckbox>
 
-          </h:form>
-
-        </p:layoutUnit>
+                        </p:outputPanel>
 
-        <p:layoutUnit position="west" 
-                      resizable="true" 
-                      size="50%" 
-                      minSize="100">	
+                    </h:form>
 
-          <h:form id="histogramsForm" enctype="multipart/form-data">
+                </p:layoutUnit>
 
-            <p:outputPanel id="HistogramsDialog">
+                <p:layoutUnit position="west" 
+                              resizable="true" 
+                              size="50%" 
+                              minSize="100">	
 
-              <p:remoteCommand name="remoteDoUpdateHistograms"
-                               action="#{histogramController.placeholderAction()}"
-                               update=":histogramsForm:HistogramsDialog" />   
+                    <h:form id="histogramsForm" enctype="multipart/form-data">
 
-              <p:selectOneRadio value="#{histogramController.histogramSizeString}"
-                                onchange="remoteDoUpdateHistograms()">
-                <f:selectItem itemLabel="small" itemValue="small" />  
-                <f:selectItem itemLabel="medium" itemValue="medium" />  
-                <f:selectItem itemLabel="large" itemValue="large" />  
-              </p:selectOneRadio>
+                        <p:outputPanel id="HistogramsDialog">
 
-              <h:outputText rendered="#{histogramController.histoModel == null}"
-                            value="NO HISTOGRAMS"
-                            style="font-size: 200%;" />
+                            <p:remoteCommand name="remoteDoUpdateHistograms"
+                                             action="#{histogramController.placeholderAction()}"
+                                             update=":histogramsForm:HistogramsDialog" />   
 
-              <ui:repeat rendered="#{histogramController.histoModel != null}"
-                         value="#{histogramController.histoModel}" 
-                         var="histo">      
+                            <p:selectOneRadio value="#{histogramController.histogramSizeString}"
+                                              onchange="remoteDoUpdateHistograms()">
+                                <f:selectItem itemLabel="small" itemValue="small" />  
+                                <f:selectItem itemLabel="medium" itemValue="medium" />  
+                                <f:selectItem itemLabel="large" itemValue="large" />  
+                            </p:selectOneRadio>
 
-                <p:barChart value="#{histo.chartModel}"
-                            title="#{histo.chartModel.title}"                      
-                            extender="histogramExtender"
-                            zoom="false"
-                            showDatatip="true"
-                            style="display: inline-block; height: #{histogramController.histogramSize}px; width: #{histogramController.histogramSize}px"
-                            barPadding="1"
-                            barMargin="1"
-                            xaxisAngle="-90"
-                            animate="true"
-                            stacked="true">
+                            <h:outputText rendered="#{histogramController.histoModel == null}"
+                                          value="NO HISTOGRAMS"
+                                          style="font-size: 200%;" />
 
-                  <p:ajax event="itemSelect" 
-                          immediate="true" 
-                          process="@this"
-                          listener="#{histogramController.itemSelectHistogram}"
-                          update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog"/>   
+                            <ui:repeat rendered="#{histogramController.histoModel != null}"
+                                       value="#{histogramController.histoModel}" 
+                                       var="histo">      
 
-                </p:barChart>
+                                <p:barChart value="#{histo.chartModel}"
+                                            title="#{histo.chartModel.title}"                      
+                                            extender="histogramExtender"
+                                            zoom="false"
+                                            showDatatip="true"
+                                            style="display: inline-block; height: #{histogramController.histogramSize}px; width: #{histogramController.histogramSize}px"
+                                            barPadding="1"
+                                            barMargin="1"
+                                            xaxisAngle="-90"
+                                            animate="true"
+                                            stacked="true">
 
-              </ui:repeat>
+                                    <p:ajax event="itemSelect" 
+                                            immediate="true" 
+                                            process="@this"
+                                            listener="#{histogramController.itemSelectHistogram}"
+                                            update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog"/>   
 
-            </p:outputPanel>
+                                </p:barChart>
 
-          </h:form>
+                            </ui:repeat>
 
-        </p:layoutUnit>
+                        </p:outputPanel>
 
-        <p:layoutUnit position="center"
-                      resizable="true">	
+                    </h:form>
 
-          <h:form id="scatterPlotsForm" enctype="multipart/form-data">
+                </p:layoutUnit>
 
-            <p:outputPanel id="ScatterPlotsDialog">
+                <p:layoutUnit position="center"
+                              resizable="true">	
 
-              <p:remoteCommand name="remoteDoUpdateScatterPlots"
-                               action="#{histogramController.placeholderAction()}"
-                               update=":scatterPlotsForm:ScatterPlotsDialog" />   
+                    <h:form id="scatterPlotsForm" enctype="multipart/form-data">
 
-              <p:selectOneRadio value="#{histogramController.scatterPlotSizeString}"
-                                onchange="remoteDoUpdateScatterPlots()">
-                <f:selectItem itemLabel="small" itemValue="small" />  
-                <f:selectItem itemLabel="medium" itemValue="medium" />  
-                <f:selectItem itemLabel="large" itemValue="large" />  
-              </p:selectOneRadio>
+                        <p:outputPanel id="ScatterPlotsDialog">
 
-              <h:outputText rendered="#{histogramController.scatterPlotModel == null}"
-                            value="NO SCATTERPLOTS"
-                            style="font-size: 200%;" />              
+                            <p:remoteCommand name="remoteDoUpdateScatterPlots"
+                                             action="#{histogramController.placeholderAction()}"
+                                             update=":scatterPlotsForm:ScatterPlotsDialog" />   
 
-              <ui:repeat rendered="#{histogramController.scatterPlotModel != null}" 
-                         value="#{histogramController.scatterPlotModel}" 
-                         var="scat">      
+                            <p:selectOneRadio value="#{histogramController.scatterPlotSizeString}"
+                                              onchange="remoteDoUpdateScatterPlots()">
+                                <f:selectItem itemLabel="small" itemValue="small" />  
+                                <f:selectItem itemLabel="medium" itemValue="medium" />  
+                                <f:selectItem itemLabel="large" itemValue="large" />  
+                            </p:selectOneRadio>
 
-                
-                
-                <p:lineChart value="#{scat}" 
-                             title="#{scat.title}"
-                             xaxisLabel="#{scat.labelAxisX}"
-                             yaxisLabel="#{scat.labelAxisY}"
-                             xaxisAngle="-90"            
-                             zoom="true"
-                             style="display: inline-block; height: #{histogramController.scatterPlotSize}px; width: #{histogramController.scatterPlotSize}px"
-                             extender="scatterPlotExtender">
-                  
-                  <p:ajax event="itemSelect" 
-                          immediate="true" 
-                          process="@this"
-                          listener="#{histogramController.itemSelectScatterPlot}"
-                          update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog"/>   
+                            <h:outputText rendered="#{histogramController.scatterPlotModel == null}"
+                                          value="NO SCATTERPLOTS"
+                                          style="font-size: 200%;" />              
 
-                </p:lineChart>
+                            <p:dataGrid columns="#{fn:length(histogramController.parametersPchem)}"
+                                        rendered="#{histogramController.scatterPlotModel != null}" 
+                                        value="#{histogramController.scatterPlotModel}" 
+                                        var="scat">      
 
-              </ui:repeat>
 
-            </p:outputPanel>
 
-          </h:form>
+                                <p:lineChart value="#{scat}" 
+                                             title="#{scat.title}"
+                                             xaxisLabel="#{scat.labelAxisX}"
+                                             yaxisLabel="#{scat.labelAxisY}"
+                                             xaxisAngle="-90"            
+                                             zoom="true"
+                                             style="display: inline-block; height: #{histogramController.scatterPlotSize}px; width: #{histogramController.scatterPlotSize}px"
+                                             extender="scatterPlotExtender">
 
-        </p:layoutUnit>
+                                    <p:ajax event="itemSelect" 
+                                            immediate="true" 
+                                            process="@this"
+                                            listener="#{histogramController.itemSelectScatterPlot}"
+                                            update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog"/>   
 
-        <p:layoutUnit position="south" 
-                      resizable="true" 
-                      size="50%" 
-                      minSize="100">	
+                                </p:lineChart>
 
-          <h:form id="selectedListMembersForm" enctype="multipart/form-data">
+                            </p:dataGrid>
 
-            <p:outputPanel id="SelectedListMembersDialog">
+                        </p:outputPanel>
 
-              <p:remoteCommand name="remoteDoUpdateSelectedListMembers"
-                               action="#{histogramController.placeholderAction()}"
-                               update=":selectedListMembersForm:SelectedListMembersDialog" />
+                    </h:form>
 
-              <p:commandButton onclick="imageGridFromAllSelectedStructures();" value="All structures as image grid" />
+                </p:layoutUnit>
 
-              <br/>
+                <p:layoutUnit position="south" 
+                              resizable="true" 
+                              size="50%" 
+                              minSize="100">	
 
-              <p:selectOneRadio value="#{histogramController.structureSizeString}"
-                                onchange="remoteDoUpdateSelectedListMembers()" >
-                <f:selectItem itemLabel="small" itemValue="small" />  
-                <f:selectItem itemLabel="medium" itemValue="medium" />  
-                <f:selectItem itemLabel="large" itemValue="large" />  
-              </p:selectOneRadio>
+                    <h:form id="selectedListMembersForm" enctype="multipart/form-data">
 
-              <br/>
+                        <p:outputPanel id="SelectedListMembersDialog">
 
-              <h:outputText rendered="#{empty listManagerController.selectedActiveListMembers}"
-                            value="NO SELECTED COMPOUNDS"
-                            style="font-size: 200%;" />
+                            <p:remoteCommand name="remoteDoUpdateSelectedListMembers"
+                                             action="#{histogramController.placeholderAction()}"
+                                             update=":selectedListMembersForm:SelectedListMembersDialog" />
 
+                            <p:commandButton onclick="imageGridFromAllSelectedStructures();" value="All structures as image grid" />
 
-              <h:outputText rendered="#{!empty listManagerController.selectedActiveListMembers}"
-                            value="Selected List Members with #{fn:length(listManagerController.selectedActiveListMembers)} selected"
-                            style="font-size: 200%;" />
+                            <br/>
 
-              <br/>
+                            <p:selectOneRadio value="#{histogramController.structureSizeString}"
+                                              onchange="remoteDoUpdateSelectedListMembers()" >
+                                <f:selectItem itemLabel="small" itemValue="small" />  
+                                <f:selectItem itemLabel="medium" itemValue="medium" />  
+                                <f:selectItem itemLabel="large" itemValue="large" />  
+                            </p:selectOneRadio>
 
-              <ui:repeat rendered="#{!empty listManagerController.selectedActiveListMembers}"
-                         value="#{listManagerController.selectedActiveListMembers}"
-                         var="clm">
+                            <br/>
 
-                <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
-                                alt="png-structure-image"
-                                width="#{histogramController.structureSize}" 
-                                height="#{histogramController.structureSize}"
-                                id="selectedStructureImg"
-                                class="selectedListMemberStructureImage"                          
-                                url='/StructureServlet?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
-                </h:graphicImage> 
+                            <h:outputText rendered="#{empty listManagerController.selectedActiveListMembers}"
+                                          value="NO SELECTED COMPOUNDS"
+                                          style="font-size: 200%;" />
 
-              </ui:repeat>
 
-            </p:outputPanel>
+                            <h:outputText rendered="#{!empty listManagerController.selectedActiveListMembers}"
+                                          value="Selected List Members with #{fn:length(listManagerController.selectedActiveListMembers)} selected"
+                                          style="font-size: 200%;" />
 
-          </h:form>
+                            <br/>
 
-        </p:layoutUnit>
+                            <ui:repeat rendered="#{!empty listManagerController.selectedActiveListMembers}"
+                                       value="#{listManagerController.selectedActiveListMembers}"
+                                       var="clm">
 
-      </p:layout>
+                                <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
+                                                alt="png-structure-image"
+                                                width="#{histogramController.structureSize}" 
+                                                height="#{histogramController.structureSize}"
+                                                id="selectedStructureImg"
+                                                class="selectedListMemberStructureImage"                          
+                                                url='/StructureServlet?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
+                                </h:graphicImage> 
 
-    </h:body>
+                            </ui:repeat>
 
-  </f:view>
+                        </p:outputPanel>
+
+                    </h:form>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
 
 </html>

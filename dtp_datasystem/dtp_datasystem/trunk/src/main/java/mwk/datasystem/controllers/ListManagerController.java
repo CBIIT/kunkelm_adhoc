@@ -57,8 +57,6 @@ public class ListManagerController implements Serializable {
   private List<CmpdListVO> selectedAvailableLists;
   private List<CmpdListVO> filteredAvailableLists;
   //
-  private ArrayList<SelectItem> availableListSelectItems;
-  //    
   private CmpdListVO agnosticList;
   //
   private CmpdListVO activeList;
@@ -166,7 +164,6 @@ public class ListManagerController implements Serializable {
   public String performUpdateAvailableLists() {
 
     this.availableLists = new ArrayList<CmpdListVO>();
-    this.availableListSelectItems = new ArrayList<SelectItem>();
 
     try {
 
@@ -216,7 +213,6 @@ public class ListManagerController implements Serializable {
         } else {
           // a brand new list
           this.availableLists.add(fetchedList);
-          this.availableListSelectItems.add(new SelectItem(fetchedList.getCmpdListId(), fetchedList.getListName() + ", " + fetchedList.getCountListMembers() + " members"));
         }
 
       }
@@ -508,14 +504,6 @@ public class ListManagerController implements Serializable {
 
   public void setFilteredAvailableLists(List<CmpdListVO> filteredAvailableLists) {
     this.filteredAvailableLists = filteredAvailableLists;
-  }
-
-  public ArrayList<SelectItem> getAvailableListSelectItems() {
-    return availableListSelectItems;
-  }
-
-  public void setAvailableListSelectItems(ArrayList<SelectItem> availableListSelectItems) {
-    this.availableListSelectItems = availableListSelectItems;
   }
 
   public CmpdListVO getAgnosticList() {

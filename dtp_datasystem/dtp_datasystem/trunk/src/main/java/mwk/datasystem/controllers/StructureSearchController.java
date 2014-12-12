@@ -63,12 +63,14 @@ public class StructureSearchController implements Serializable {
   private String nscForLoad;
   private String smilesForLoad;
   private String ctabForLoad;
-  
+
   private String smilesFromEditor;
   private String ctabFromEditor;
-  
+
   private String listName;
-  
+
+  private CmpdListVO listToSearch;
+
   public String performExactMatchSearch() {
 
     HelperStructure strcHelper = new HelperStructure();
@@ -249,9 +251,9 @@ public class StructureSearchController implements Serializable {
 
       AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
-      FixBondOrdersTool fbot = new FixBondOrdersTool();      
+      FixBondOrdersTool fbot = new FixBondOrdersTool();
       molecule = (Molecule) fbot.kekuliseAromaticRings(molecule);
-      
+
       StructureDiagramGenerator sdg = new StructureDiagramGenerator();
       sdg.setMolecule(molecule);
 
@@ -264,7 +266,7 @@ public class StructureSearchController implements Serializable {
       Molecule fixedMol = (Molecule) sdg.getMolecule();
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      MDLV2000Writer ctabWriter = new MDLV2000Writer(baos);      
+      MDLV2000Writer ctabWriter = new MDLV2000Writer(baos);
       ctabWriter.write(fixedMol);
       ctabWriter.close();
       baos.close();
@@ -287,9 +289,9 @@ public class StructureSearchController implements Serializable {
 
       MDLV2000Reader mdlReader = new MDLV2000Reader(new ByteArrayInputStream(ctab.getBytes()));
       mdlReader.read(mol);
-      
+
       // have to fix this up...
-       try {
+      try {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
@@ -317,8 +319,8 @@ public class StructureSearchController implements Serializable {
         ex.printStackTrace();
       }
 
-      Molecule fixedMol = (Molecule) sdg.getMolecule();      
-      
+      Molecule fixedMol = (Molecule) sdg.getMolecule();
+
       SmilesGenerator sg = new SmilesGenerator();
       sg.setUseAromaticityFlag(true);
       rtn = sg.createSMILES(mol);
@@ -343,14 +345,14 @@ public class StructureSearchController implements Serializable {
       this.smilesForLoad = null;
       this.ctabForLoad = null;
     } else {
-        
+
       String smiles = cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi();
       this.smilesForLoad = smiles;
-      
+
       String ctab = cVO.getParentFragment().getCmpdFragmentStructure().getCtab();
       //this.ctabForLoad = ctabFromSmiles(smiles);
       this.ctabForLoad = ctab;
-      
+
     }
 
     return null;
@@ -405,6 +407,13 @@ public class StructureSearchController implements Serializable {
     this.smilesForLoad = smilesForLoad;
   }
 
+  public CmpdListVO getListToSearch() {
+    return listToSearch;
+  }
+
+  public void setListToSearch(CmpdListVO listToSearch) {
+    this.listToSearch = listToSearch;
+  }
+
     // </editor-fold>  
-  
 }

@@ -64,7 +64,7 @@ public class HelperCmpdLegacyCmpd {
 
             tx = session.beginTransaction();
             Criteria cmpdCrit = session.createCriteria(CmpdLegacyCmpd.class);
-            cmpdCrit.add(Restrictions.eq("id", nsc));
+            cmpdCrit.add(Restrictions.eq("id", nsc.longValue()));
             CmpdLegacyCmpd cmpdLegacyCmpd = (CmpdLegacyCmpd) cmpdCrit.uniqueResult();
 
             rtn = TransformAndroToVO.toCmpdLegacyCmpdVO(cmpdLegacyCmpd);
