@@ -43,281 +43,289 @@ import mwk.datasystem.vo.CmpdPlateVO;
 import mwk.datasystem.vo.CmpdProjectVO;
 import mwk.datasystem.vo.CmpdTargetVO;
 
-
 /**
  *
  * @author mwkunkel
  */
 public class TransformAndroToVO {
 
-    public static final Boolean DEBUG = Boolean.FALSE;
-    //
+  public static final Boolean DEBUG = Boolean.FALSE;
+  //
 
-    public static CmpdAliasVO toCmpdAliasVO(CmpdAlias entityIn) {
-        CmpdAliasVO rtn = new CmpdAliasVO();
-        rtn.setAlias(entityIn.getAlias());        
-        return rtn;
+  public static CmpdAliasVO toCmpdAliasVO(CmpdAlias entityIn) {
+    CmpdAliasVO rtn = new CmpdAliasVO();
+    rtn.setAlias(entityIn.getAlias());
+    return rtn;
+  }
+
+  public static CmpdTargetVO toCmpdTargetVO(CmpdTarget entityIn) {
+    CmpdTargetVO rtn = new CmpdTargetVO();
+    rtn.setTarget(entityIn.getTarget());
+    return rtn;
+  }
+
+  public static CmpdNamedSetVO toCmpdNamedSetVO(CmpdNamedSet entityIn) {
+    CmpdNamedSetVO rtn = new CmpdNamedSetVO();
+    rtn.setSetName(entityIn.getSetName());
+    return rtn;
+  }
+
+  public static CmpdProjectVO toCmpdProjectVO(CmpdProject entityIn) {
+    CmpdProjectVO rtn = new CmpdProjectVO();
+    rtn.setProjectCode(entityIn.getProjectCode());
+    rtn.setProjectName(entityIn.getProjectName());
+    return rtn;
+  }
+
+  public static CmpdPlateVO toCmpdPlateVO(CmpdPlate entityIn) {
+    CmpdPlateVO rtn = new CmpdPlateVO();
+    rtn.setPlateName(entityIn.getPlateName());
+    return rtn;
+  }
+
+  public static CmpdLegacyCmpdVO toCmpdLegacyCmpdVO(CmpdLegacyCmpd entityIn) {
+
+    CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
+
+    rtn.setId(entityIn.getId());
+    rtn.setNsc(entityIn.getId().intValue());
+    rtn.setCtab(entityIn.getCtab());
+    rtn.setJpg512(entityIn.getJpg512());
+    rtn.setMolecularFormula(entityIn.getMolecularFormula());
+    rtn.setMolecularWeight(entityIn.getMolecularWeight());
+
+    return rtn;
+  }
+
+  public static List<CmpdListVO> translateCmpdLists(List<CmpdList> entityListIn, Boolean includeListMembers) {
+
+    List<CmpdListVO> returnList = new ArrayList<CmpdListVO>();
+    for (CmpdList nl : entityListIn) {
+      returnList.add(toCmpdListVO(nl, includeListMembers));
+    }
+    return returnList;
+
+  }
+
+  public static CmpdFragmentVO toCmpdFragmentVO(CmpdFragment entityIn) {
+
+    CmpdFragmentVO rtn = new CmpdFragmentVO();
+
+    if (entityIn != null) {
+
+      rtn.setId(entityIn.getId());
+
+      if (entityIn.getCmpdFragmentStructure() != null) {
+        rtn.setCmpdFragmentStructure(toCmpdFragmentStructureVO(entityIn.getCmpdFragmentStructure()));
+      }
+
+      if (entityIn.getCmpdFragmentPChem() != null) {
+        rtn.setCmpdFragmentPChem(toCmpdFragmentPChemVO(entityIn.getCmpdFragmentPChem()));
+      }
+
     }
 
-    public static CmpdTargetVO toCmpdTargetVO(CmpdTarget entityIn) {
-        CmpdTargetVO rtn = new CmpdTargetVO();
-        rtn.setTarget(entityIn.getTarget());
-        return rtn;
+    return rtn;
+
+  }
+
+  public static CmpdFragmentVO adHocToCmpdFragmentVO(AdHocCmpdFragment entityIn) {
+
+    CmpdFragmentVO rtn = new CmpdFragmentVO();
+
+    rtn.setId(entityIn.getId());
+
+    if (entityIn.getAdHocCmpdFragmentStructure() != null) {
+      rtn.setCmpdFragmentStructure(adHocToCmpdFragmentStructureVO(entityIn.getAdHocCmpdFragmentStructure()));
     }
 
-    public static CmpdNamedSetVO toCmpdNamedSetVO(CmpdNamedSet entityIn) {
-        CmpdNamedSetVO rtn = new CmpdNamedSetVO();
-        rtn.setSetName(entityIn.getSetName());
-        return rtn;
+    if (entityIn.getAdHocCmpdFragmentPChem() != null) {
+      rtn.setCmpdFragmentPChem(adHocToCmpdFragmentPChemVO(entityIn.getAdHocCmpdFragmentPChem()));
     }
 
-    public static CmpdProjectVO toCmpdProjectVO(CmpdProject entityIn) {
-        CmpdProjectVO rtn = new CmpdProjectVO();
-        rtn.setProjectCode(entityIn.getProjectCode());
-        rtn.setProjectName(entityIn.getProjectName());
-        return rtn;
+    return rtn;
+  }
+
+  public static CmpdFragmentPChemVO adHocToCmpdFragmentPChemVO(AdHocCmpdFragmentPChem entityIn) {
+
+    CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
+
+    if (entityIn != null) {
+      rtn.setId(entityIn.getId());
+      rtn.setMolecularWeight(entityIn.getMolecularWeight());
+      rtn.setMolecularFormula(entityIn.getMolecularFormula());
+      rtn.setLogD(entityIn.getLogD());
+      rtn.setCountHydBondAcceptors(entityIn.getCountHydBondAcceptors());
+      rtn.setCountHydBondDonors(entityIn.getCountHydBondDonors());
+      rtn.setSurfaceArea(entityIn.getSurfaceArea());
+      rtn.setSolubility(entityIn.getSolubility());
+      rtn.setCountRings(entityIn.getCountRings());
+      rtn.setCountAtoms(entityIn.getCountAtoms());
+      rtn.setCountBonds(entityIn.getCountBonds());
+      rtn.setCountSingleBonds(entityIn.getCountSingleBonds());
+      rtn.setCountDoubleBonds(entityIn.getCountDoubleBonds());
+      rtn.setCountTripleBonds(entityIn.getCountTripleBonds());
+      rtn.setCountRotatableBonds(entityIn.getCountRotatableBonds());
+      rtn.setCountHydrogenAtoms(entityIn.getCountHydrogenAtoms());
+      rtn.setCountMetalAtoms(entityIn.getCountMetalAtoms());
+      rtn.setCountHeavyAtoms(entityIn.getCountHeavyAtoms());
+      rtn.setCountPositiveAtoms(entityIn.getCountPositiveAtoms());
+      rtn.setCountNegativeAtoms(entityIn.getCountNegativeAtoms());
+      rtn.setCountRingBonds(entityIn.getCountRingBonds());
+      rtn.setCountStereoAtoms(entityIn.getCountStereoAtoms());
+      rtn.setCountStereoBonds(entityIn.getCountStereoBonds());
+      rtn.setCountRingAssemblies(entityIn.getCountRingAssemblies());
+      rtn.setCountAromaticBonds(entityIn.getCountAromaticBonds());
+      rtn.setCountAromaticRings(entityIn.getCountAromaticRings());
+      rtn.setFormalCharge(entityIn.getFormalCharge());
+      rtn.setTheALogP(entityIn.getTheALogP());
     }
 
-    public static CmpdPlateVO toCmpdPlateVO(CmpdPlate entityIn) {
-        CmpdPlateVO rtn = new CmpdPlateVO();
-        rtn.setPlateName(entityIn.getPlateName());
-        return rtn;
+    return rtn;
+
+  }
+
+  public static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdFragmentPChem entityIn) {
+
+    CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
+
+    if (entityIn != null) {
+      rtn.setId(entityIn.getId());
+      rtn.setMolecularWeight(entityIn.getMolecularWeight());
+      rtn.setMolecularFormula(entityIn.getMolecularFormula());
+      rtn.setLogD(entityIn.getLogD());
+      rtn.setCountHydBondAcceptors(entityIn.getCountHydBondAcceptors());
+      rtn.setCountHydBondDonors(entityIn.getCountHydBondDonors());
+      rtn.setSurfaceArea(entityIn.getSurfaceArea());
+      rtn.setSolubility(entityIn.getSolubility());
+      rtn.setCountRings(entityIn.getCountRings());
+      rtn.setCountAtoms(entityIn.getCountAtoms());
+      rtn.setCountBonds(entityIn.getCountBonds());
+      rtn.setCountSingleBonds(entityIn.getCountSingleBonds());
+      rtn.setCountDoubleBonds(entityIn.getCountDoubleBonds());
+      rtn.setCountTripleBonds(entityIn.getCountTripleBonds());
+      rtn.setCountRotatableBonds(entityIn.getCountRotatableBonds());
+      rtn.setCountHydrogenAtoms(entityIn.getCountHydrogenAtoms());
+      rtn.setCountMetalAtoms(entityIn.getCountMetalAtoms());
+      rtn.setCountHeavyAtoms(entityIn.getCountHeavyAtoms());
+      rtn.setCountPositiveAtoms(entityIn.getCountPositiveAtoms());
+      rtn.setCountNegativeAtoms(entityIn.getCountNegativeAtoms());
+      rtn.setCountRingBonds(entityIn.getCountRingBonds());
+      rtn.setCountStereoAtoms(entityIn.getCountStereoAtoms());
+      rtn.setCountStereoBonds(entityIn.getCountStereoBonds());
+      rtn.setCountRingAssemblies(entityIn.getCountRingAssemblies());
+      rtn.setCountAromaticBonds(entityIn.getCountAromaticBonds());
+      rtn.setCountAromaticRings(entityIn.getCountAromaticRings());
+      rtn.setFormalCharge(entityIn.getFormalCharge());
+      rtn.setTheALogP(entityIn.getTheALogP());
     }
 
-    public static CmpdLegacyCmpdVO toCmpdLegacyCmpdVO(CmpdLegacyCmpd entityIn) {
+    return rtn;
 
-        CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
+  }
 
-        rtn.setId(entityIn.getId());
-        rtn.setNsc(entityIn.getId().intValue());
-        rtn.setCtab(entityIn.getCtab());
-        rtn.setJpg512(entityIn.getJpg512());
-        rtn.setMolecularFormula(entityIn.getMolecularFormula());
-        rtn.setMolecularWeight(entityIn.getMolecularWeight());
+  public static CmpdFragmentStructureVO adHocToCmpdFragmentStructureVO(AdHocCmpdFragmentStructure entityIn) {
 
-        return rtn;
+    CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
+
+    if (entityIn != null) {
+      rtn.setId(entityIn.getId());
+      rtn.setInchi(entityIn.getInchi());
+      rtn.setInchiAux(entityIn.getInchiAux());
+      rtn.setCtab(entityIn.getCtab());
+      rtn.setCanSmi(entityIn.getCanSmi());
+      rtn.setCanTaut(entityIn.getCanTaut());
+      rtn.setCanTautStripStereo(entityIn.getCanTautStripStereo());
     }
 
-    public static List<CmpdListVO> translateCmpdLists(List<CmpdList> entityListIn, Boolean includeListMembers) {
+    return rtn;
 
-        List<CmpdListVO> returnList = new ArrayList<CmpdListVO>();
-        for (CmpdList nl : entityListIn) {
-            returnList.add(toCmpdListVO(nl, includeListMembers));
+  }
+
+  public static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdFragmentStructure entityIn) {
+
+    CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
+
+    if (entityIn != null) {
+      rtn.setId(entityIn.getId());
+      rtn.setInchi(entityIn.getInchi());
+      rtn.setInchiAux(entityIn.getInchiAux());
+      rtn.setCtab(entityIn.getCtab());
+      rtn.setCanSmi(entityIn.getCanSmi());
+      rtn.setCanTaut(entityIn.getCanTaut());
+      rtn.setCanTautStripStereo(entityIn.getCanTautStripStereo());
+    }
+
+    return rtn;
+
+  }
+
+  public static CmpdAnnotationVO toCmpdAnnotationVO(CmpdAnnotation entityIn) {
+
+    CmpdAnnotationVO rtn = new CmpdAnnotationVO();
+
+    rtn.setGeneralComment(entityIn.getGeneralComment());
+    rtn.setMtxt(entityIn.getMtxt());
+    rtn.setPseudoAtoms(entityIn.getPseudoAtoms());
+    rtn.setPurityComment(entityIn.getPurityComment());
+    rtn.setStereochemistryComment(entityIn.getStereochemistryComment());
+
+    return rtn;
+
+  }
+
+  public static CmpdBioAssayVO toCmpdBioAssayVO(CmpdBioAssay entityIn) {
+
+    CmpdBioAssayVO rtn = new CmpdBioAssayVO();
+
+    rtn.setId(entityIn.getId());
+    rtn.setHf(entityIn.getHf());
+    rtn.setNci60(entityIn.getNci60());
+    rtn.setXeno(entityIn.getXeno());
+    rtn.setSarcoma(entityIn.getSarcoma());
+
+    return rtn;
+  }
+
+  public static CmpdVO toCmpdVO(Cmpd incomingCmpd) {
+
+    CmpdVO cmpdVO = new CmpdVO();
+
+    Cmpd entityIn = Unproxy.initializeAndUnproxy(incomingCmpd);
+
+    System.out.println("incomingCmpd in toCmpdVO is class: " + entityIn.getClass().getName());
+
+    if (entityIn instanceof NscCmpdImpl) {
+
+      NscCmpd nscc = (NscCmpd) entityIn;
+
+      if (null != nscc) {
+
+        // identifier
+        cmpdVO.setId(nscc.getId());
+        cmpdVO.setNscCmpdId(nscc.getNscCmpdId());
+        cmpdVO.setPrefix(nscc.getPrefix());
+        cmpdVO.setNsc(nscc.getNsc());
+        cmpdVO.setCas(nscc.getCas());
+        cmpdVO.setName("NSC " + nscc.getPrefix() + nscc.getNsc());
+        cmpdVO.setDistribution(nscc.getDistribution());
+        cmpdVO.setConf(nscc.getConf());
+        cmpdVO.setDiscreet(nscc.getDiscreet());
+
+        cmpdVO.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
+
+        cmpdVO.setInventory(nscc.getCmpdInventory().getInventory());
+
+        cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(nscc.getCmpdBioAssay()));
+
+        if (nscc.getCmpdParentFragment() != null) {
+          cmpdVO.setParentFragment(toCmpdFragmentVO(nscc.getCmpdParentFragment()));
+          cmpdVO.setCountHydrogenAtoms(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getCountHydrogenAtoms());
+          cmpdVO.setCountMetalAtoms(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getCountMetalAtoms());
+          cmpdVO.setCountHeavyAtoms(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getCountHeavyAtoms());
         }
-        return returnList;
 
-    }
-
-    public static CmpdFragmentVO toCmpdFragmentVO(CmpdFragment entityIn) {
-
-        CmpdFragmentVO rtn = new CmpdFragmentVO();
-
-        rtn.setId(entityIn.getId());
-
-        if (entityIn.getCmpdFragmentStructure() != null) {
-            rtn.setCmpdFragmentStructure(toCmpdFragmentStructureVO(entityIn.getCmpdFragmentStructure()));
-        }
-
-        if (entityIn.getCmpdFragmentPChem() != null) {
-            rtn.setCmpdFragmentPChem(toCmpdFragmentPChemVO(entityIn.getCmpdFragmentPChem()));
-        }
-
-        return rtn;
-
-    }
-
-    public static CmpdFragmentVO adHocToCmpdFragmentVO(AdHocCmpdFragment entityIn) {
-
-        CmpdFragmentVO rtn = new CmpdFragmentVO();
-
-        rtn.setId(entityIn.getId());
-
-        if (entityIn.getAdHocCmpdFragmentStructure() != null) {
-            rtn.setCmpdFragmentStructure(adHocToCmpdFragmentStructureVO(entityIn.getAdHocCmpdFragmentStructure()));
-        }
-
-        if (entityIn.getAdHocCmpdFragmentPChem() != null) {
-            rtn.setCmpdFragmentPChem(adHocToCmpdFragmentPChemVO(entityIn.getAdHocCmpdFragmentPChem()));
-        }
-
-        return rtn;
-    }
-
-    public static CmpdFragmentPChemVO adHocToCmpdFragmentPChemVO(AdHocCmpdFragmentPChem entityIn) {
-
-        CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
-
-        if (entityIn != null) {
-            rtn.setId(entityIn.getId());
-            rtn.setMolecularWeight(entityIn.getMolecularWeight());
-            rtn.setMolecularFormula(entityIn.getMolecularFormula());
-            rtn.setLogD(entityIn.getLogD());
-            rtn.setCountHydBondAcceptors(entityIn.getCountHydBondAcceptors());
-            rtn.setCountHydBondDonors(entityIn.getCountHydBondDonors());
-            rtn.setSurfaceArea(entityIn.getSurfaceArea());
-            rtn.setSolubility(entityIn.getSolubility());
-            rtn.setCountRings(entityIn.getCountRings());
-            rtn.setCountAtoms(entityIn.getCountAtoms());
-            rtn.setCountBonds(entityIn.getCountBonds());
-            rtn.setCountSingleBonds(entityIn.getCountSingleBonds());
-            rtn.setCountDoubleBonds(entityIn.getCountDoubleBonds());
-            rtn.setCountTripleBonds(entityIn.getCountTripleBonds());
-            rtn.setCountRotatableBonds(entityIn.getCountRotatableBonds());
-            rtn.setCountHydrogenAtoms(entityIn.getCountHydrogenAtoms());
-            rtn.setCountMetalAtoms(entityIn.getCountMetalAtoms());
-            rtn.setCountHeavyAtoms(entityIn.getCountHeavyAtoms());
-            rtn.setCountPositiveAtoms(entityIn.getCountPositiveAtoms());
-            rtn.setCountNegativeAtoms(entityIn.getCountNegativeAtoms());
-            rtn.setCountRingBonds(entityIn.getCountRingBonds());
-            rtn.setCountStereoAtoms(entityIn.getCountStereoAtoms());
-            rtn.setCountStereoBonds(entityIn.getCountStereoBonds());
-            rtn.setCountRingAssemblies(entityIn.getCountRingAssemblies());
-            rtn.setCountAromaticBonds(entityIn.getCountAromaticBonds());
-            rtn.setCountAromaticRings(entityIn.getCountAromaticRings());
-            rtn.setFormalCharge(entityIn.getFormalCharge());
-            rtn.setTheALogP(entityIn.getTheALogP());
-        }
-
-        return rtn;
-
-    }
-
-    public static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdFragmentPChem entityIn) {
-
-        CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
-
-        if (entityIn != null) {
-            rtn.setId(entityIn.getId());
-            rtn.setMolecularWeight(entityIn.getMolecularWeight());
-            rtn.setMolecularFormula(entityIn.getMolecularFormula());
-            rtn.setLogD(entityIn.getLogD());
-            rtn.setCountHydBondAcceptors(entityIn.getCountHydBondAcceptors());
-            rtn.setCountHydBondDonors(entityIn.getCountHydBondDonors());
-            rtn.setSurfaceArea(entityIn.getSurfaceArea());
-            rtn.setSolubility(entityIn.getSolubility());
-            rtn.setCountRings(entityIn.getCountRings());
-            rtn.setCountAtoms(entityIn.getCountAtoms());
-            rtn.setCountBonds(entityIn.getCountBonds());
-            rtn.setCountSingleBonds(entityIn.getCountSingleBonds());
-            rtn.setCountDoubleBonds(entityIn.getCountDoubleBonds());
-            rtn.setCountTripleBonds(entityIn.getCountTripleBonds());
-            rtn.setCountRotatableBonds(entityIn.getCountRotatableBonds());
-            rtn.setCountHydrogenAtoms(entityIn.getCountHydrogenAtoms());
-            rtn.setCountMetalAtoms(entityIn.getCountMetalAtoms());
-            rtn.setCountHeavyAtoms(entityIn.getCountHeavyAtoms());
-            rtn.setCountPositiveAtoms(entityIn.getCountPositiveAtoms());
-            rtn.setCountNegativeAtoms(entityIn.getCountNegativeAtoms());
-            rtn.setCountRingBonds(entityIn.getCountRingBonds());
-            rtn.setCountStereoAtoms(entityIn.getCountStereoAtoms());
-            rtn.setCountStereoBonds(entityIn.getCountStereoBonds());
-            rtn.setCountRingAssemblies(entityIn.getCountRingAssemblies());
-            rtn.setCountAromaticBonds(entityIn.getCountAromaticBonds());
-            rtn.setCountAromaticRings(entityIn.getCountAromaticRings());
-            rtn.setFormalCharge(entityIn.getFormalCharge());
-            rtn.setTheALogP(entityIn.getTheALogP());
-        }
-
-        return rtn;
-
-    }
-
-    public static CmpdFragmentStructureVO adHocToCmpdFragmentStructureVO(AdHocCmpdFragmentStructure entityIn) {
-
-        CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
-
-        if (entityIn != null) {
-            rtn.setId(entityIn.getId());
-            rtn.setInchi(entityIn.getInchi());
-            rtn.setInchiAux(entityIn.getInchiAux());
-            rtn.setCtab(entityIn.getCtab());
-            rtn.setCanSmi(entityIn.getCanSmi());
-            rtn.setCanTaut(entityIn.getCanTaut());
-            rtn.setCanTautStripStereo(entityIn.getCanTautStripStereo());
-        }
-
-        return rtn;
-
-    }
-
-    public static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdFragmentStructure entityIn) {
-
-        CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
-
-        if (entityIn != null) {
-            rtn.setId(entityIn.getId());
-            rtn.setInchi(entityIn.getInchi());
-            rtn.setInchiAux(entityIn.getInchiAux());
-            rtn.setCtab(entityIn.getCtab());
-            rtn.setCanSmi(entityIn.getCanSmi());
-            rtn.setCanTaut(entityIn.getCanTaut());
-            rtn.setCanTautStripStereo(entityIn.getCanTautStripStereo());
-        }
-
-        return rtn;
-
-    }
-
-    public static CmpdAnnotationVO toCmpdAnnotationVO(CmpdAnnotation entityIn) {
-
-        CmpdAnnotationVO rtn = new CmpdAnnotationVO();
-
-        rtn.setGeneralComment(entityIn.getGeneralComment());
-        rtn.setMtxt(entityIn.getMtxt());
-        rtn.setPseudoAtoms(entityIn.getPseudoAtoms());
-        rtn.setPurityComment(entityIn.getPurityComment());
-        rtn.setStereochemistryComment(entityIn.getStereochemistryComment());
-
-        return rtn;
-
-    }
-
-    public static CmpdBioAssayVO toCmpdBioAssayVO(CmpdBioAssay entityIn) {
-
-        CmpdBioAssayVO rtn = new CmpdBioAssayVO();
-
-        rtn.setId(entityIn.getId());
-        rtn.setHf(entityIn.getHf());
-        rtn.setNci60(entityIn.getNci60());
-        rtn.setXeno(entityIn.getXeno());
-        rtn.setSarcoma(entityIn.getSarcoma());
-
-        return rtn;
-    }
-
-    public static CmpdVO toCmpdVO(Cmpd incomingCmpd) {
-
-        CmpdVO cmpdVO = new CmpdVO();
-
-        Cmpd entityIn = Unproxy.initializeAndUnproxy(incomingCmpd);
-
-        System.out.println("incomingCmpd in toCmpdVO is class: " + entityIn.getClass().getName());
-
-        if (entityIn instanceof NscCmpdImpl) {
-
-            NscCmpd nscc = (NscCmpd) entityIn;
-
-            if (null != nscc) {
-
-                // identifier
-                cmpdVO.setId(nscc.getId());
-                cmpdVO.setNscCmpdId(nscc.getNscCmpdId());
-                cmpdVO.setPrefix(nscc.getPrefix());
-                cmpdVO.setNsc(nscc.getNsc());
-                cmpdVO.setCas(nscc.getCas());
-                cmpdVO.setName("NSC " + nscc.getPrefix() + nscc.getNsc());
-                cmpdVO.setDistribution(nscc.getDistribution());
-                cmpdVO.setConf(nscc.getConf());
-                cmpdVO.setDiscreet(nscc.getDiscreet());
-
-                cmpdVO.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
-
-                cmpdVO.setInventory(nscc.getCmpdInventory().getInventory());
-
-                cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(nscc.getCmpdBioAssay()));
-
-                cmpdVO.setParentFragment(toCmpdFragmentVO(nscc.getCmpdParentFragment()));
-
-                cmpdVO.setCountCmpdFragments(nscc.getCountFragments());
+        cmpdVO.setCountCmpdFragments(nscc.getCountFragments());
 
 //                cmpdVO.setIsSelected(nscc.getIsSelected());
 //                cmpdVO.setSaltSmiles(nscc.getSaltSmiles()); 
@@ -326,201 +334,191 @@ public class TransformAndroToVO {
 //                cmpdVO.setSaltMw(nscc.getSaltMw());
 //                cmpdVO.setParentStoichiometry(nscc.getParentStoichiometry());
 //                cmpdVO.setSaltStoichiometry(nscc.getSaltStoichiometry());
+        cmpdVO.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
+        cmpdVO.setIdentifierString(nscc.getIdentifierString());
+        cmpdVO.setDescriptorString(nscc.getDescriptorString());
 
-                cmpdVO.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
-                cmpdVO.setIdentifierString(nscc.getIdentifierString());
-                cmpdVO.setDescriptorString(nscc.getDescriptorString());
-                cmpdVO.setCountHydrogenAtoms(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getCountHydrogenAtoms());
-                cmpdVO.setCountMetalAtoms(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getCountMetalAtoms());
-                cmpdVO.setCountHeavyAtoms(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getCountHeavyAtoms());
+        cmpdVO.setCmpdAnnotation(toCmpdAnnotationVO(nscc.getCmpdAnnotation()));
 
-                cmpdVO.setCmpdAnnotation(toCmpdAnnotationVO(nscc.getCmpdAnnotation()));
+        cmpdVO.setIdentifierString(nscc.getIdentifierString());
+        cmpdVO.setDescriptorString(nscc.getDescriptorString());
+        cmpdVO.setMolecularWeight(nscc.getMolecularWeight());
+        cmpdVO.setMolecularFormula(nscc.getMolecularFormula());
 
-                cmpdVO.setIdentifierString(nscc.getIdentifierString());
-                cmpdVO.setDescriptorString(nscc.getDescriptorString());
-                cmpdVO.setMolecularWeight(nscc.getMolecularWeight());
-                cmpdVO.setMolecularFormula(nscc.getMolecularFormula());
+        Collection<CmpdTarget> entityColl = nscc.getCmpdTargets();
+        ArrayList<String> strColl = new ArrayList<String>();
+        for (CmpdTarget ct : entityColl) {
+          strColl.add(ct.getTarget());
+        }
+        cmpdVO.setTargets(strColl);
 
-                Collection<CmpdTarget> entityColl = nscc.getCmpdTargets();
-                ArrayList<String> strColl = new ArrayList<String>();
-                for (CmpdTarget ct : entityColl) {
-                    strColl.add(ct.getTarget());
-                }
-                cmpdVO.setTargets(strColl);
+        Collection<CmpdAlias> aliasColl = nscc.getCmpdAliases();
+        strColl = new ArrayList<String>();
+        for (CmpdAlias ca : aliasColl) {
+          strColl.add(ca.getAlias());
+        }
+        cmpdVO.setAliases(strColl);
 
-                Collection<CmpdAlias> aliasColl = nscc.getCmpdAliases();
-                strColl = new ArrayList<String>();
-                for (CmpdAlias ca : aliasColl) {
-                    strColl.add(ca.getAlias());
-                }
-                cmpdVO.setAliases(strColl);
+        Collection<CmpdNamedSet> setColl = nscc.getCmpdNamedSets();
+        strColl = new ArrayList<String>();
+        for (CmpdNamedSet cs : setColl) {
+          strColl.add(cs.getSetName());
+        }
+        cmpdVO.setNamedSets(strColl);
 
-                Collection<CmpdNamedSet> setColl = nscc.getCmpdNamedSets();
-                strColl = new ArrayList<String>();
-                for (CmpdNamedSet cs : setColl) {
-                    strColl.add(cs.getSetName());
-                }
-                cmpdVO.setNamedSets(strColl);
+        Collection<CmpdProject> projColl = nscc.getCmpdProjects();
+        strColl = new ArrayList<String>();
+        for (CmpdProject cp : projColl) {
+          strColl.add(cp.getProjectName());
+        }
+        cmpdVO.setProjects(strColl);
 
-                Collection<CmpdProject> projColl = nscc.getCmpdProjects();
-                strColl = new ArrayList<String>();
-                for (CmpdProject cp : projColl) {
-                    strColl.add(cp.getProjectName());
-                }
-                cmpdVO.setProjects(strColl);
+        Collection<CmpdPlate> plateColl = nscc.getCmpdPlates();
+        strColl = new ArrayList<String>();
+        for (CmpdPlate cp : plateColl) {
+          strColl.add(cp.getPlateName());
+        }
+        cmpdVO.setPlates(strColl);
 
-                Collection<CmpdPlate> plateColl = nscc.getCmpdPlates();
-                strColl = new ArrayList<String>();
-                for (CmpdPlate cp : plateColl) {
-                    strColl.add(cp.getPlateName());
-                }
-                cmpdVO.setPlates(strColl);
+        Collection<CmpdTarget> targetColl = nscc.getCmpdTargets();
+        strColl = new ArrayList<String>();
+        for (CmpdTarget ct : targetColl) {
+          strColl.add(ct.getTarget());
+        }
+        cmpdVO.setTargets(strColl);
 
-                Collection<CmpdTarget> targetColl = nscc.getCmpdTargets();
-                strColl = new ArrayList<String>();
-                for (CmpdTarget ct : targetColl) {
-                    strColl.add(ct.getTarget());
-                }
-                cmpdVO.setTargets(strColl);
+        Collection<CmpdFragment> fragColl = nscc.getCmpdFragments();
+        ArrayList<CmpdFragmentVO> voFragColl = new ArrayList<CmpdFragmentVO>();
+        ArrayList<String> fragList = new ArrayList<String>();
+        for (CmpdFragment cf : fragColl) {
+          voFragColl.add(toCmpdFragmentVO(cf));
+          fragList.add(cf.getCmpdFragmentStructure().getCanSmi());
+        }
+        cmpdVO.setCmpdFragments(voFragColl);
+        cmpdVO.setCmpdFragmentSmilesStrings(fragList);
 
-                Collection<CmpdFragment> fragColl = nscc.getCmpdFragments();
-                ArrayList<CmpdFragmentVO> voFragColl = new ArrayList<CmpdFragmentVO>();
-                ArrayList<String> fragList = new ArrayList<String>();
-                for (CmpdFragment cf : fragColl) {
-                    voFragColl.add(toCmpdFragmentVO(cf));
-                    fragList.add(cf.getCmpdFragmentStructure().getCanSmi());
-                }
-                cmpdVO.setCmpdFragments(voFragColl);
-                cmpdVO.setCmpdFragmentSmilesStrings(fragList);
+      }
 
-            }
+      // is there a parent fragment
+      if (nscc.getCmpdParentFragment() != null) {
 
-            // is there a parent fragment
+        cmpdVO.setParentFragment(toCmpdFragmentVO(nscc.getCmpdParentFragment()));
 
-            if (nscc.getCmpdParentFragment() != null) {
+      } else {
 
-                cmpdVO.setParentFragment(toCmpdFragmentVO(nscc.getCmpdParentFragment()));
+        // nsc_cmpd should already have a parent fragment
+        // if not, calculation on-the-fly by size
+        ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(cmpdVO.getCmpdFragments());
 
-            } else {
+        // some cmpds will have no fragments
+        // or no parentFragment
+        if (fragList.size() > 0) {
+          Collections.sort(fragList, new Comparators.CmpdFragmentSizeComparator());
+          Collections.reverse(fragList);
+          cmpdVO.setParentFragment(fragList.get(0));
 
-                // nsc_cmpd should already have a parent fragment
-                // if not, calculation on-the-fly by size
+          ArrayList<String> smilesStrings = new ArrayList<String>();
+          for (CmpdFragmentVO cf : fragList) {
+            smilesStrings.add(cf.getCmpdFragmentStructure().getCanSmi());
+          }
 
-                ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(cmpdVO.getCmpdFragments());
+          cmpdVO.setCmpdFragmentSmilesStrings(smilesStrings);
+          cmpdVO.setCountCmpdFragments(cmpdVO.getCmpdFragmentSmilesStrings().size());
 
-                // some cmpds will have no fragments
-                // or no parentFragment
+          if (DEBUG) {
+            System.out.println("setting countCmpdFragments to: " + cmpdVO.getCmpdFragmentSmilesStrings().size());
+          }
 
-                if (fragList.size() > 0) {
-                    Collections.sort(fragList, new Comparators.CmpdFragmentSizeComparator());
-                    Collections.reverse(fragList);
-                    cmpdVO.setParentFragment(fragList.get(0));
-
-                    ArrayList<String> smilesStrings = new ArrayList<String>();
-                    for (CmpdFragmentVO cf : fragList) {
-                        smilesStrings.add(cf.getCmpdFragmentStructure().getCanSmi());
-                    }
-
-                    cmpdVO.setCmpdFragmentSmilesStrings(smilesStrings);
-                    cmpdVO.setCountCmpdFragments(cmpdVO.getCmpdFragmentSmilesStrings().size());
-
-                    if (DEBUG) {
-                        System.out.println("setting countCmpdFragments to: " + cmpdVO.getCmpdFragmentSmilesStrings().size());
-                    }
-
-                }
-
-            }
-
-        } else {
-
-            AdHocCmpd ahc = (AdHocCmpd) entityIn;
-
-            cmpdVO.setId(ahc.getId());
-            cmpdVO.setAdHocCmpdId(ahc.getAdHocCmpdId());
-            cmpdVO.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
-            cmpdVO.setName(ahc.getName());
-
-            // no other cmpd properties
-            // no CmpdBioAssay
-
-            Collection<AdHocCmpdFragment> fragColl = ahc.getAdHocCmpdFragments();
-            ArrayList<CmpdFragmentVO> voFragColl = new ArrayList<CmpdFragmentVO>();
-            for (AdHocCmpdFragment ahcf : fragColl) {
-                voFragColl.add(adHocToCmpdFragmentVO(ahcf));
-            }
-            cmpdVO.setCmpdFragments(voFragColl);
-
-            // AdHoc Cmpd needs parent fragment
-
-            ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(cmpdVO.getCmpdFragments());
-
-            Collections.sort(fragList, new Comparators.CmpdFragmentSizeComparator());
-            Collections.reverse(fragList);
-
-            cmpdVO.setParentFragment(fragList.get(0));
         }
 
-        return cmpdVO;
+      }
+
+    } else {
+
+      AdHocCmpd ahc = (AdHocCmpd) entityIn;
+
+      cmpdVO.setId(ahc.getId());
+      cmpdVO.setAdHocCmpdId(ahc.getAdHocCmpdId());
+      cmpdVO.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
+      cmpdVO.setName(ahc.getName());
+
+      // no other cmpd properties
+      // no CmpdBioAssay
+      Collection<AdHocCmpdFragment> fragColl = ahc.getAdHocCmpdFragments();
+      ArrayList<CmpdFragmentVO> voFragColl = new ArrayList<CmpdFragmentVO>();
+      for (AdHocCmpdFragment ahcf : fragColl) {
+        voFragColl.add(adHocToCmpdFragmentVO(ahcf));
+      }
+      cmpdVO.setCmpdFragments(voFragColl);
+
+      // AdHoc Cmpd needs parent fragment
+      ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(cmpdVO.getCmpdFragments());
+
+      Collections.sort(fragList, new Comparators.CmpdFragmentSizeComparator());
+      Collections.reverse(fragList);
+
+      cmpdVO.setParentFragment(fragList.get(0));
     }
 
-    public static List<CmpdVO> translateListOfCmpds(List<Cmpd> entityListIn) {
-        List<CmpdVO> returnList = new ArrayList<CmpdVO>();
-        for (Cmpd c : entityListIn) {
-            returnList.add(toCmpdVO(c));
+    return cmpdVO;
+  }
+
+  public static List<CmpdVO> translateListOfCmpds(List<Cmpd> entityListIn) {
+    List<CmpdVO> returnList = new ArrayList<CmpdVO>();
+    for (Cmpd c : entityListIn) {
+      returnList.add(toCmpdVO(c));
+    }
+    return returnList;
+  }
+
+  public static CmpdListVO toCmpdListVO(CmpdList entityList, Boolean includeListMembers) {
+
+    CmpdListVO rtn = new CmpdListVO();
+
+    try {
+
+      rtn.setId(entityList.getId());
+      rtn.setCmpdListId(entityList.getCmpdListId());
+      rtn.setListName(entityList.getListName());
+      rtn.setDateCreated(entityList.getDateCreated());
+      rtn.setListOwner(entityList.getListOwner());
+      rtn.setShareWith(entityList.getShareWith());
+      rtn.setCountListMembers(entityList.getCountListMembers());
+
+      rtn.setAnchorComment(entityList.getAnchorComment());
+      rtn.setAnchorSmiles(entityList.getAnchorSmiles());
+      rtn.setListComment(entityList.getListComment());
+
+      if (includeListMembers.booleanValue()) {
+
+        ArrayList<CmpdListMemberVO> voList = new ArrayList<CmpdListMemberVO>();
+
+        Collection<CmpdListMember> entityColl = entityList.getCmpdListMembers();
+
+        for (CmpdListMember lm : entityColl) {
+          voList.add(toCmpdListMemberVO(lm));
         }
-        return returnList;
+
+        rtn.setCmpdListMembers(voList);
+
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    public static CmpdListVO toCmpdListVO(CmpdList entityList, Boolean includeListMembers) {
+    return rtn;
+  }
 
-        CmpdListVO rtn = new CmpdListVO();
+  public static CmpdListMemberVO toCmpdListMemberVO(CmpdListMember entityIn) {
 
-        try {
+    CmpdListMemberVO rtn = new CmpdListMemberVO();
 
-            rtn.setId(entityList.getId());
-            rtn.setCmpdListId(entityList.getCmpdListId());
-            rtn.setListName(entityList.getListName());
-            rtn.setDateCreated(entityList.getDateCreated());
-            rtn.setListOwner(entityList.getListOwner());
-            rtn.setShareWith(entityList.getShareWith());
-            rtn.setCountListMembers(entityList.getCountListMembers());
+    rtn.setId(entityIn.getId());
+    rtn.setListMemberComment(entityIn.getListMemberComment());
+    rtn.setCmpd(toCmpdVO(entityIn.getCmpd()));
 
-            rtn.setAnchorComment(entityList.getAnchorComment());
-            rtn.setAnchorSmiles(entityList.getAnchorSmiles());
-            rtn.setListComment(entityList.getListComment());
+    return rtn;
 
-            if (includeListMembers.booleanValue()) {
-
-                ArrayList<CmpdListMemberVO> voList = new ArrayList<CmpdListMemberVO>();
-
-                Collection<CmpdListMember> entityColl = entityList.getCmpdListMembers();
-
-                for (CmpdListMember lm : entityColl) {
-                    voList.add(toCmpdListMemberVO(lm));
-                }
-
-                rtn.setCmpdListMembers(voList);
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return rtn;
-    }
-
-    public static CmpdListMemberVO toCmpdListMemberVO(CmpdListMember entityIn) {
-
-        CmpdListMemberVO rtn = new CmpdListMemberVO();
-
-        rtn.setId(entityIn.getId());
-        rtn.setListMemberComment(entityIn.getListMemberComment());
-        rtn.setCmpd(toCmpdVO(entityIn.getCmpd()));
-
-
-        return rtn;
-
-    }
+  }
 }

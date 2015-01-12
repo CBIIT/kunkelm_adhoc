@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.AtomContainerRenderer;
-import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
@@ -90,25 +89,22 @@ public class StructureServlet extends HttpServlet {
         try {
 
             // parse mol
-            
-            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();            
-            SmilesParser sp = new SmilesParser(builder);                        
-            
+            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+            SmilesParser sp = new SmilesParser(builder);
+
             IMolecule theMol = sp.parseSmiles(smiles);
 
             // try to deduce bonds for ring systems
             // flag is false by default, only changed if deduce is successful
             // used below to determine generator for image (BondGen if successful, otherwise RingGen
-
             //boolean ableToDeduceBonds = false;
-
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(theMol);
 
             FixBondOrdersTool fbot = new FixBondOrdersTool();
             theMol = fbot.kekuliseAromaticRings(theMol);
 
             // generate coordinates
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();  
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
             sdg.setMolecule(theMol);
 
             // NEED TO CATCH org.openscience.cdk.exception.CDKException: Molecule not connected.      
@@ -127,26 +123,26 @@ public class StructureServlet extends HttpServlet {
             Image image = new BufferedImage(structureDim, structureDim, BufferedImage.TYPE_INT_RGB);
 
             List<IGenerator<IAtomContainer>> generators = new ArrayList<IGenerator<IAtomContainer>>();
-            generators.add(new BasicSceneGenerator());
+            
+            generators.add(new BasicSceneGenerator());            
             generators.add(new ExternalHighlightGenerator());
             generators.add(new BasicAtomGenerator());
             generators.add(new BasicBondGenerator());
 
-            // only add RingGenerator if deduceBonds was unsuccessful
-            
-//      if (!ableToDeduceBonds) {
-//        //generators.add(new RingGenerator());
-//      }
+//            // only add RingGenerator if deduceBonds was unsuccessful
+//            if (!ableToDeduceBonds) {
+//                //generators.add(new RingGenerator());
+//            }
 
             AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
-
+            
             renderer.setup(theMol, drawArea);
 
             IAtomContainer selection = new AtomContainer();
 
             if (querySmiles != null && querySmiles.length() > 0) {
-                
-                SMARTSQueryTool queryTool = new SMARTSQueryTool(querySmiles);                
+
+                SMARTSQueryTool queryTool = new SMARTSQueryTool(querySmiles);
                 queryTool.matches(theMol);
 
                 if (queryTool.countMatches() > 0) {
@@ -174,14 +170,14 @@ public class StructureServlet extends HttpServlet {
             Rectangle diagram = renderer.calculateDiagramBounds(theMol);
             renderer.setZoomToFit(drawArea.width, drawArea.height, diagram.width, diagram.height);
 
-            RendererModel model = renderer.getRenderer2DModel();
+//            RendererModel model = renderer.getRenderer2DModel();
+//
+//            if (!selection.isEmpty()) {
+//                model.set(ExternalHighlightGenerator.ExternalHighlightDistance.class, (double) 12);
+//                model.set(RendererModel.ExternalHighlightColor.class, Color.PINK);
+//                model.setExternalSelectedPart(selection);
+//            }
 
-            if (!selection.isEmpty()) {
-                model.set(ExternalHighlightGenerator.ExternalHighlightDistance.class, (double) 12);
-                model.set(RendererModel.ExternalHighlightColor.class, Color.PINK);
-                model.setExternalSelectedPart(selection);
-            }
-            
             Graphics2D g2 = (Graphics2D) image.getGraphics();
 
             g2.setColor(Color.WHITE);
@@ -212,7 +208,6 @@ public class StructureServlet extends HttpServlet {
 
                     //g2.setPaint(Color.pink);
                     //g2.fill(new Rectangle.Double(0, tCnt * referenceSize, titleLength, referenceSize));
-
                     g2.setFont(font);
                     g2.setPaint(Color.LIGHT_GRAY);
 
@@ -262,7 +257,6 @@ public class StructureServlet extends HttpServlet {
             } catch (Exception e) {
 
                 // if ANYTHING goes wrong, just return simple message
-
                 byteArray = getTextImage("Unable to render structure image from smiles.");
 
                 System.out.println(e);
@@ -302,7 +296,6 @@ public class StructureServlet extends HttpServlet {
             } catch (Exception e) {
 
                 // if ANYTHING goes wrong, just return simple message
-
                 byteArray = getTextImage("Unable to render structure/substructure image from smiles.");
 
                 System.out.println(e);
@@ -330,9 +323,8 @@ public class StructureServlet extends HttpServlet {
     }
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -422,8 +414,7 @@ public class StructureServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -436,8 +427,7 @@ public class StructureServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

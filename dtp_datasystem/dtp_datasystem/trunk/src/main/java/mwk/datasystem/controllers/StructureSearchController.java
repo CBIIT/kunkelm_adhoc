@@ -234,7 +234,7 @@ public class StructureSearchController implements Serializable {
 
       SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
       Molecule molecule = (Molecule) sp.parseSmiles(smiles);
-
+      
       try {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         Iterator<IAtom> atoms = molecule.atoms().iterator();

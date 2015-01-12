@@ -88,6 +88,7 @@ as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
 from rs3_from_plp_frags
 group by nsc, mf, mw];
+
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;

@@ -9,6 +9,10 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
+    <ui:remove>
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+    </ui:remove>
+    
     <ui:define name="content">
 
         <ui:include src="/webpages/templates/active_list_nav.xhtml"/>
@@ -31,11 +35,10 @@
 
         <p:dataGrid var="listMember" 
                     value="#{listManagerController.activeList.cmpdListMembers}"                                     
-                    columns="3"  
-                    rows="24" 
+                    columns="1"  
+                    rows="1" 
                     paginator="true"  
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                    rowsPerPageTemplate="24,48,72">  
+                    paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">  
 
             <f:facet name="header">  
                 <p:row>  

@@ -88,7 +88,17 @@
 
             </p:column>
 
-            <p:column headerText="NSC" resizable="true" sortBy="#{cmpd.nsc}}">                                
+            <p:column headerText="originalAdHocCmpdId" resizable="true" sortBy="#{cmpd.originalAdHocCmpdId}">                                
+                <h:outputText value="#{cmpd.originalAdHocCmpdId}"/>
+            </p:column>             
+            
+            <p:column headerText="adHocCmpdId" resizable="true" sortBy="#{cmpd.adHocCmpdId}">                                
+                <h:outputText value="#{cmpd.adHocCmpdId}"/>
+            </p:column>             
+            
+            
+
+            <p:column headerText="NSC" resizable="true" sortBy="#{cmpd.nsc}">                                
                 <h:outputText value="#{cmpd.nsc}"/>
             </p:column>             
 
