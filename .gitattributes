@@ -9465,7 +9465,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/templateDbi.PL -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.4.19/cdk-1.4.19.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.5.6/cdk-1.5.6.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17-sources.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17.jar -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
