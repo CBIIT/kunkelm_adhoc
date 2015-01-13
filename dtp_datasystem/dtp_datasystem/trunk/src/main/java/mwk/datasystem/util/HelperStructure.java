@@ -91,6 +91,43 @@ public class HelperStructure {
         return nscList;
     }
 
+    public List<Integer> findNSCsByCtabSubstructure(String substrcutureCtab) {
+
+        ArrayList<Integer> nscList = new ArrayList<Integer>();
+
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+// select rdk.nsc 
+// from rdkit_mol rdk, rs3_from_plp_frags frags 
+// where frags.nsc = 743380
+// --and mol_from_ctab(frags.ctab) <@ rdk.mol;
+            
+            String sqlQuery = "select nsc from rdkit_mol where mol_from_ctab(" + substrcutureCtab + "::cstring) <@ mol";
+
+            tx = session.beginTransaction();
+            Query q = session.createSQLQuery(sqlQuery);
+            List resultList = q.list();
+            nscList = new ArrayList<Integer>(resultList);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+
+        return nscList;
+    }
+
+    
     public List<Integer> findNSCsBySmartsSubstructure(String substructureSmiles) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();

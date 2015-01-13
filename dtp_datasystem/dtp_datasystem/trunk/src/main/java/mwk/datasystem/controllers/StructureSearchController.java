@@ -234,7 +234,7 @@ public class StructureSearchController implements Serializable {
 
       SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
       Molecule molecule = (Molecule) sp.parseSmiles(smiles);
-      
+
       try {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
         Iterator<IAtom> atoms = molecule.atoms().iterator();
@@ -350,8 +350,12 @@ public class StructureSearchController implements Serializable {
       this.smilesForLoad = smiles;
 
       String ctab = cVO.getParentFragment().getCmpdFragmentStructure().getCtab();
-      //this.ctabForLoad = ctabFromSmiles(smiles);
-      this.ctabForLoad = ctab;
+
+      if (ctab != null) {
+        this.ctabForLoad = ctab;
+      } else {
+        this.ctabForLoad = ctabFromSmiles(smiles);
+      }
 
     }
 
