@@ -1,8 +1,11 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
-# load module
+use lib('./');
+use CATEGORYPARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
+
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
@@ -20,6 +23,7 @@ my @allTbls = qw(
 	multi_lbl
 	one_strc_one_lbl
 	one_strc_multi_lbl
+        two_strc_no_lbl_one_salt
 	two_strc_any_lbl_one_salt
 	two_strc_any_lbl_two_salt
 	two_strc_any_lbl
@@ -125,7 +129,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 2', count(distinct nsc) 
 	from temp 
-	where abs( round(mw) - round(fw) ) < 2];
+	where abs( round(mw) - round(fw) ) >= 2];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -133,7 +137,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 2 inv', count(distinct nsc) 
 	from temp where nsc in (select nsc from prod_inventory where inventory > 0)
-	and abs( round(mw) - round(fw) ) < 2];
+	and abs( round(mw) - round(fw) ) >= 2];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -141,7 +145,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 2 nci60', count(distinct nsc) 
 	from temp where nsc in (select nsc from prod_count_nci60 where the_count > 0)
-	and abs( round(mw) - round(fw) ) < 2];
+	and abs( round(mw) - round(fw) ) >= 2];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -149,7 +153,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 2 both', count(distinct nsc) 
 	from temp where nsc in (select nsc from prod_inventory where inventory > 0 intersect select nsc from prod_count_nci60 where the_count > 0)
-	and abs( round(mw) - round(fw) ) < 2];
+	and abs( round(mw) - round(fw) ) >= 2];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -159,7 +163,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 5', count(distinct nsc) 
 	from temp 
-	where abs( round(mw) - round(fw) ) < 5];
+	where abs( round(mw) - round(fw) ) >= 5];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -167,7 +171,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 5 inv', count(distinct nsc) 
 	from temp where nsc in (select nsc from prod_inventory where inventory > 0)
-	and abs( round(mw) - round(fw) ) < 5];
+	and abs( round(mw) - round(fw) ) >= 5];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -175,7 +179,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 5 nci60', count(distinct nsc) 
 	from temp where nsc in (select nsc from prod_count_nci60 where the_count > 0)
-	and abs( round(mw) - round(fw) ) < 5];
+	and abs( round(mw) - round(fw) ) >= 5];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -183,7 +187,7 @@ for my $cnt(0 .. @allTbls - 1){
 	my $sql = qq[insert into qc
 	select '$allTbls[$cnt]', 'count nsc', 'mw DIFF 5 both', count(distinct nsc) 
 	from temp where nsc in (select nsc from prod_inventory where inventory > 0 intersect select nsc from prod_count_nci60 where the_count > 0)
-	and abs( round(mw) - round(fw) ) < 5];
+	and abs( round(mw) - round(fw) ) >= 5];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	

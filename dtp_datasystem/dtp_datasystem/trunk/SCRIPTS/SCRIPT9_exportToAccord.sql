@@ -12,13 +12,6 @@
 --
 --# connect
 --my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
---
-  ####    ####           #####    #   #          #    #   ####    ####
- #    #  #    #          #    #    # #           ##   #  #       #    #
- #    #  #               #####      #            # #  #   ####   #
- #  # #  #               #    #     #            #  # #       #  #
- #   #   #    #          #    #     #            #   ##  #    #  #    #
-  ### #   ####  #######  #####      #   #######  #    #   ####    ####
 
 drop table if exists mwk_hts_salt;
 
@@ -27,7 +20,7 @@ as
 select id as salt_code_number, salt_name, salt_name as salt_description, salt_mw as salt_weight, salt_mf as salt_formula, 1::int as multiplier
 from cmpd_known_salt;
 
-drop table if exists temp;
+drop table if exists one_strc_mw_diff_0;
 
 create table one_strc_mw_diff_0 
 as 
@@ -44,7 +37,7 @@ as
 select distinct nsc
 from qc_with_nsc
 where (
-    source='two_strc_any_lbl_one_salt' and comparator='count nsc' and target='mw DIFF 0'
+    source='two_strc_no_lbl_one_salt' and comparator='count nsc' and target='mw DIFF 0'
 );
 
 drop table if exists mwk_hts_compound;
@@ -55,7 +48,7 @@ select nsc as compound_id, 'NSC' || nsc as description from one_strc_mw_diff_0
 union
 select nsc as compound_id, 'NSC' || nsc as description from two_strc_one_salt_mw_diff_0;
 
-drop table if exists combo
+drop table if exists combo;
 
 create table combo
 as
@@ -83,7 +76,7 @@ drop table if exists mwk_hts_compound_lot;
 create table mwk_hts_compound_lot
 as
 select 1 as lot_id, nsc as compound_id, 1 as sample_id, salt_id as salt_code
-from two_strc_one_salt_mw_diff_0;
+from combo;
 
 drop table if exists mwk_rs3_structure_object;
 

@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
-# load module
+
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
@@ -35,6 +36,7 @@ my @tablesToNuke = (
 	"multi_lbl",
 	"one_strc_one_lbl",
 	"one_strc_multi_lbl",
+        "two_strc_no_lbl_one_salt",
 	"two_strc_any_lbl_one_salt",
 	"two_strc_any_lbl_two_salt",
 	"two_strc_any_lbl",
@@ -802,6 +804,60 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
+
+  #####  #    #   ####            ####    #####  #####    ####
+    #    #    #  #    #          #          #    #    #  #    #
+    #    #    #  #    #           ####      #    #    #  #
+    #    # ## #  #    #               #     #    #####   #
+    #    ##  ##  #    #          #    #     #    #   #   #    #
+    #    #    #   ####            ####      #    #    #   ####
+
+
+ #    #   ####           #       #####   #
+ ##   #  #    #          #       #    #  #
+ # #  #  #    #          #       #####   #
+ #  # #  #    #          #       #    #  #
+ #   ##  #    #          #       #    #  #
+ #    #   ####           ######  #####   ######
+
+
+  ####   #    #  ######           ####     ##    #        #####
+ #    #  ##   #  #               #        #  #   #          #
+ #    #  # #  #  #####            ####   #    #  #          #
+ #    #  #  # #  #                    #  ######  #          #
+ #    #  #   ##  #               #    #  #    #  #          #
+  ####   #    #  ######           ####   #    #  ######     #
+
+my $tempSql = qq[drop table if exists two_strc_no_lbl_one_salt];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+
+my $tempSql = qq[
+create table two_strc_no_lbl_one_salt
+as
+select rs3.*
+from rs3_from_plp_frags rs3, frag_stats_with_totals fs
+where rs3.nsc = fs.nsc
+and fs.count_strc = 2
+and fs.count_frags = 2
+and fs.count_lbl = 0
+and fs.salt = 1];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+
+my $tempSql = qq[
+create index tsnlos_nsc on two_strc_no_lbl_one_salt(nsc)];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+
+## ---------------------------------------------------------
+## ---------------------------------------------------------
+## ---------------------------------------------------------
+## ---------------------------------------------------------
+
 ## #####  #    #   ####            ####    #####  #####    ####
 ##   #    #    #  #    #          #          #    #    #  #    #
 ##   #    #    #  #    #           ####      #    #    #  #
@@ -809,6 +865,12 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ##   #    ##  ##  #    #          #    #     #    #   #   #    #
 ##   #    #    #   ####            ####      #    #    #   ####
 ##
+##   ##    #    #   #   #          #       #####   #
+##  #  #   ##   #    # #           #       #    #  #
+## #    #  # #  #     #            #       #####   #
+## ######  #  # #     #            #       #    #  #
+## #    #  #   ##     #            #       #    #  #
+## #    #  #    #     #            ######  #####   ######
 ##
 ##  ####   #    #  ######           ####     ##    #        #####
 ## #    #  ##   #  #               #        #  #   #          #
@@ -834,6 +896,7 @@ select rs3.*
 from rs3_from_plp_frags rs3, frag_stats_with_totals fs
 where rs3.nsc = fs.nsc
 and fs.count_strc = 2
+and fs.count_lbl > 0
 and fs.salt = 1];
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
@@ -1025,6 +1088,8 @@ UNION
 select nsc from one_strc_one_lbl
 UNION
 select nsc from one_strc_multi_lbl
+UNION
+select nsc from two_strc_no_lbl_one_salt
 UNION
 select nsc from two_strc_any_lbl_one_salt
 UNION

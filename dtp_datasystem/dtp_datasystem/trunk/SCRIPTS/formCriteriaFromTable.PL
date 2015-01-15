@@ -9,6 +9,7 @@
 
 
 use strict;
+use warnings;
 
 my $fragString = "rs3_from_plp_frags";
 my $nscString = "rs3_from_plp_nsc";

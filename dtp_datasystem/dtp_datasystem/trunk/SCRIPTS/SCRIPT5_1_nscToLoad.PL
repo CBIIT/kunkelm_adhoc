@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
+
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
@@ -26,6 +28,7 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 
 my @setsToLoad = (
 	"one_strc",
+        "two_strc_no_lbl_one_salt",
 	"two_strc_any_lbl_one_salt",
 	"one_strc_one_lbl",
 	"one_strc_multi_lbl",

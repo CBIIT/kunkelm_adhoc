@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
 open ( FILENAMES, "<./list.csv") or die "Can't open ./list.csv\n";
 

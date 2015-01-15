@@ -12,7 +12,7 @@ my $sourceFieldFilter = 'multi_strc_any_lbl';
 
 my $solvents = 'false';
 
-# load module
+
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();

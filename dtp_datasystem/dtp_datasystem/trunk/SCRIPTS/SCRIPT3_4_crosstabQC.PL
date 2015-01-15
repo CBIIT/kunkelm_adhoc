@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 use strict;
-#KEEP
+use warnings;
 
-# load module
+
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
@@ -41,8 +41,7 @@ $sth->finish;
 
 # run the crosstab
 
-my $ctSql = qq[
-drop table if exists $tblName\_ct;
+my $ctSql = qq[drop table if exists $tblName\_ct;
 
 create table $tblName\_ct as
 select * from crosstab(

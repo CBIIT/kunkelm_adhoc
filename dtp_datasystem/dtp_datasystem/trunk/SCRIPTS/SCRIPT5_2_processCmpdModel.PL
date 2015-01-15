@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
-# load module
+
 use DBI;
 
 (my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
@@ -60,6 +61,7 @@ my @cmpdTypes = (
 	"multi_lbl",
 	"one_strc_one_lbl",
 	"one_strc_multi_lbl",
+        "two_strc_no_lbl_one_salt",
 	"two_strc_any_lbl_one_salt",
 	"two_strc_any_lbl_two_salt",
 	"two_strc_any_lbl",
@@ -270,6 +272,8 @@ and (nsc, fragmentindex) in
 (
 select nsc, fragmentindex from one_strc
 union
+select nsc, fragmentindex from two_strc_no_lbl_one_salt where salt_smiles is null and can_smi != '[RH]'
+union
 select nsc, fragmentindex from two_strc_any_lbl_one_salt where salt_smiles is null and can_smi != '[RH]'
 union
 select nsc, fragmentindex from one_strc_one_lbl where can_smi != '[RH]'
@@ -329,6 +333,27 @@ select distinct nsc from one_strc where nsc in (select nsc from nsc_to_load)
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+
+
+
+
+my $tempSql = qq[
+insert into temp_ident_descr
+select uni.nsc, 'S'||uni.nsc||' two_strc_no_lbl_one_salt' , 'S'||uni.nsc||' two_strc_no_lbl_one_salt'
+from(
+select distinct nsc from two_strc_no_lbl_one_salt where nsc in (select nsc from nsc_to_load)
+) as uni];
+
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+
+
+
+
+
 
 my $tempSql = qq[
 insert into temp_ident_descr

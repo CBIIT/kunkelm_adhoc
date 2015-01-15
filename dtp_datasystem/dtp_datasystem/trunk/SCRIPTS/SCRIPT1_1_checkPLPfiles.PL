@@ -11,6 +11,8 @@
 # otherwise the expected and found names are printed
 
 use strict;
+use warnings;
+
 use DBI;
 
 ## -----------------------------------------------------------------------------------

@@ -63,6 +63,7 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 	# the nsc are fetched from qc_with_nsc
+	# N E E D S   I N D E X E S!
 
 	$tempSql = qq[
 	create table temp as
@@ -71,7 +72,6 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	where source = '$row[0]'
 	and comparator = '$row[1]'
 	and target = '$row[2]'
-        limit 500
 	];
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
@@ -112,8 +112,8 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	$cmpdListId,
 	'QC SAMPLE LIST $row[0] $row[1] $row[2]',
 	now(),
-	'mwkunkel',
-	'mwkunkel',
+	'kunkelm',
+	'kunkelm',
 	round(random() * 9223372036854775807),
 	count(temp.*),
 	null,
@@ -157,3 +157,4 @@ $dbh->disconnect();
 my $year = 1900 + $yearOffset;
 my $theTime = "$hour:$minute:$second";
 print "finish time $theTime\n";
+
