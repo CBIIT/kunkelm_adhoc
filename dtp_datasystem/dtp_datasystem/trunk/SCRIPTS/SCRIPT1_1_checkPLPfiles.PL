@@ -2,12 +2,16 @@
 
 # delimited files from Pipeline Pilot have a default column order 
 # that is MOSTLY dependent on the order in which widgets appear 
-# BUT ALSO on which field(s) are null early in the pipeline(s)
+# BUT ALSO on which field(s) might have been null early in the pipeline(s)
 
 # this checks the postgres create table statement field names used for file import
 # against the actual column headers
 
-# if OK then the create table statement is executed
+# the plp files are split in half:  file names with 400K have nsc <= 400000, 
+# file names with remainder have the rest
+#
+
+# if OK then the drop and create table statements are executed
 # otherwise the expected and found names are printed
 
 use strict;
@@ -36,9 +40,9 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 
-my $fragString = "rs3_from_plp_400k_frags";
-my $nscString = "rs3_from_plp_400k_nsc";
-my $ctabString = "rs3_from_plp_400k_ctab";
+my @fragFileList = qw(rs3_from_plp_400k_frags rs3_from_plp_400k_frags);
+my @nscFileList = qw(rs3_from_plp_400k_nsc rs3_from_plp_400k_nsc);
+my @ctabFileList = qw(rs3_from_plp_400k_ctab rs3_from_plp_400k_ctab);
 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
@@ -46,70 +50,17 @@ my $ctabString = "rs3_from_plp_400k_ctab";
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 
- ######  #####     ##     ####           #####     ##     #####    ##
- #       #    #   #  #   #    #          #    #   #  #      #     #  #
- #####   #    #  #    #  #               #    #  #    #     #    #    #
- #       #####   ######  #  ###          #    #  ######     #    ######
- #       #   #   #    #  #    #          #    #  #    #     #    #    #
- #       #    #  #    #   ####           #####   #    #     #    #    #
+######  #####     ##     ####           #####     ##     #####    ##
+#       #    #   #  #   #    #          #    #   #  #      #     #  #
+#####   #    #  #    #  #               #    #  #    #     #    #    #
+#       #####   ######  #  ###          #    #  ######     #    ######
+#       #   #   #    #  #    #          #    #  #    #     #    #    #
+#       #    #  #    #   ####           #####   #    #     #    #    #
 
-my $fragFileName = "/home/mwkunkel/$fragString.txt";
-my $fragTableName = "$fragString";
-
-# array of expected column names for sanity check with header row in PLP files
-
-my @fragColumnNames = (
-"NSC",
-"MF",
-"MW",
-"CAS",
-"Name",
-"Comment",
-"fragmentIndex",
-"atomArray",
-"smiles",
-"can_smi",
-"can_taut",
-"can_taut_strip_stereo",
-"InChI",
-"InChI_AuxInfo",
-"Molecular_Formula",
-"Molecular_Weight",
-"Num_Atoms",
-"Num_Bonds",
-"Num_Hydrogens",
-"Num_PositiveAtoms",
-"Num_NegativeAtoms",
-"Num_RingBonds",
-"Num_RotatableBonds",
-"Num_AromaticBonds",
-"Num_Rings",
-"Num_AromaticRings",
-"Num_RingAssemblies",
-"Num_MetalAtoms",
-"Num_StereoAtoms",
-"Num_StereoBonds",
-"Num_SingleBonds",
-"Num_DoubleBonds",
-"Num_TripleBonds",
-"FormalCharge",
-"CoordDimension",
-"IsChiral",
-"ALogP",
-"LogD",
-"Molecular_Solubility",
-"Molecular_SurfaceArea",
-"Num_H_Acceptors",
-"Num_H_Donors",
-"CanonicalTautomer",
-"NumberOfTautomers",
-"BadValenceAtoms"
-);
-
-my $dropFragTableSql = "drop table if exists $fragTableName";
+my $dropFragTableSql = "drop table if exists rs3_from_plp_frags";
 
 my $createFragTableSql = qq[
-create table $fragTableName(
+create table rs3_from_plp_frags(
 NSC int,
 MF varchar(4096),
 MW double precision,
@@ -158,99 +109,147 @@ BadValenceAtoms varchar(4096)
 )
 ];
 
-# open the frag input file and make sure that the first line matches the expected fragFileHeaders
+# array of expected column names for sanity check with header row in PLP files
 
-open ( INPUTFILE, "<$fragFileName") or die "Can't open $fragFileName\n";
-my $firstLine = <INPUTFILE>;
-chomp($firstLine);
+my @fragColumnNames = (
+	"NSC",
+	"MF",
+	"MW",
+	"CAS",
+	"Name",
+	"Comment",
+	"fragmentIndex",
+	"atomArray",
+	"smiles",
+	"can_smi",
+	"can_taut",
+	"can_taut_strip_stereo",
+	"InChI",
+	"InChI_AuxInfo",
+	"Molecular_Formula",
+	"Molecular_Weight",
+	"Num_Atoms",
+	"Num_Bonds",
+	"Num_Hydrogens",
+	"Num_PositiveAtoms",
+	"Num_NegativeAtoms",
+	"Num_RingBonds",
+	"Num_RotatableBonds",
+	"Num_AromaticBonds",
+	"Num_Rings",
+	"Num_AromaticRings",
+	"Num_RingAssemblies",
+	"Num_MetalAtoms",
+	"Num_StereoAtoms",
+	"Num_StereoBonds",
+	"Num_SingleBonds",
+	"Num_DoubleBonds",
+	"Num_TripleBonds",
+	"FormalCharge",
+	"CoordDimension",
+	"IsChiral",
+	"ALogP",
+	"LogD",
+	"Molecular_Solubility",
+	"Molecular_SurfaceArea",
+	"Num_H_Acceptors",
+	"Num_H_Donors",
+	"CanonicalTautomer",
+	"NumberOfTautomers",
+	"BadValenceAtoms"
+	);
 
-$firstLine =~ s/[\r\n]//g;
+my $overallFragOK = 0;
 
-# print "firstLine: $firstLine\n";
-my @fragFileHeaders = split(/\t/, $firstLine);
-
-# print join(",", @fragColumnNames);
-# print "\n";
-# print join(",", @fragFileHeaders);
-# print "\n";
-
-my $equals = 0;
-
-if (@fragColumnNames != @fragFileHeaders) {
-	$equals = 0;
-} else {
-	$equals = 1;
-	foreach (my $i = 0; $i < @fragColumnNames; $i++) {		
-		if (lc $fragColumnNames[$i] ne lc $fragFileHeaders[$i]) {
-			$equals = 0;
-			last;
+foreach my $fragFileBase(@fragFileList){
+	
+	my $fragFileName = "/home/mwkunkel/$fragFileBase.txt";
+	
+	# open the frag input file and make sure that the first line matches the expected fragFileHeaders
+	
+	open ( INPUTFILE, "<$fragFileName") or die "Can't open $fragFileName\n";
+	my $firstLine = <INPUTFILE>;
+	chomp($firstLine);
+	
+	$firstLine =~ s/[\r\n]//g;
+	
+	# print "firstLine: $firstLine\n";
+	my @fragFileHeaders = split(/\t/, $firstLine);
+	
+	# print join(",", @fragColumnNames);
+	# print "\n";
+	# print join(",", @fragFileHeaders);
+	# print "\n";
+	
+	my $equals = 0;
+	
+	# comparison of list sizes
+	
+	if (@fragColumnNames != @fragFileHeaders) {
+		$equals = 0;
+	} else {
+		$equals = 1;
+		foreach (my $i = 0; $i < @fragColumnNames; $i++) {		
+			if (lc $fragColumnNames[$i] ne lc $fragFileHeaders[$i]) {
+				$equals = 0;
+				last;
+			}
 		}
 	}
+	
+	if ($equals == 1){
+		
+		$overallFragOK = $overallFragOK + 1;
+		
+		print "$fragFileName MATCHES expected headers.\n";
+		
+	} else {
+		
+		print "$fragFileName DOES NOT MATCH expected headers.\n";
+		
+		printf "%-30s | %-30s\n", "Table Column Name", "File Header";		
+		foreach (my $i = 0; $i < @fragColumnNames; $i++) {		
+			if (lc $fragColumnNames[$i] ne lc $fragFileHeaders[$i]) {				
+				printf "%-30s | %-30s\n", "-----FAIL----- " . $fragColumnNames[$i] , "-----FAIL----- " . $fragFileHeaders[$i];
+			} else {
+				printf "%-30s | %-30s\n", $fragColumnNames[$i], $fragFileHeaders[$i];
+				
+			}
+		}
+		
+		print "\n\n\n";
+		
+	}
+	
+	close INPUTFILE;
+	
 }
 
-if ($equals == 1){
+if ($overallFragOK == 2){
 	
-	print "$fragFileName MATCHES expected headers.  Creating table $fragTableName. \n\n\n";
+	print join(' and ', @fragFileList) . " were OK.  Dropping and re-creating rs3_from_plp_frags table.\n\n\n";
 	
-	print "$dropFragTableSql\n";
+	#print "$dropFragTableSql\n";
 	my $sth = $dbh->prepare($dropFragTableSql);
-	$sth->execute() or die "Couldn't execute statement: $dropFragTableSql " . $sth->errstr;
+	#$sth->execute() or die "Couldn't execute statement: $dropFragTableSql " . $sth->errstr;
 	
-	print "$createFragTableSql\n";
+	#print "$createFragTableSql\n";
 	my $sth = $dbh->prepare($createFragTableSql);
-	$sth->execute() or die "Couldn't execute statement: $createFragTableSql " . $sth->errstr;
-	
-} else {
-	
- 	print "$fragFileName DOES NOT MATCH expected headers.  Not creating table $fragTableName. \n\n\n";
- 	
- 	print "Table Column Name , File Header\n";
- 	
- 	foreach (my $i = 0; $i < @fragColumnNames; $i++) {		
-		if (lc $fragColumnNames[$i] ne lc $fragFileHeaders[$i]) {
-			print "$fragColumnNames[$i] , $fragFileHeaders[$i] FAIL FAIL FAIL\n";			
-		} else {
-			print "$fragColumnNames[$i] , $fragFileHeaders[$i]\n";
-		}
-	}
+	#$sth->execute() or die "Couldn't execute statement: $createFragTableSql " . $sth->errstr;
 	
 }
 
-close INPUTFILE;
+#    #   ####    ####           #####     ##     #####    ##
+##   #  #       #    #          #    #   #  #      #     #  #
+# #  #   ####   #               #    #  #    #     #    #    #
+#  # #       #  #               #    #  ######     #    ######
+#   ##  #    #  #    #          #    #  #    #     #    #    #
+#    #   ####    ####           #####   #    #     #    #    #
 
- #    #   ####    ####           #####     ##     #####    ##
- ##   #  #       #    #          #    #   #  #      #     #  #
- # #  #   ####   #               #    #  #    #     #    #    #
- #  # #       #  #               #    #  ######     #    ######
- #   ##  #    #  #    #          #    #  #    #     #    #    #
- #    #   ####    ####           #####   #    #     #    #    #
-
-my $nscFileName = "/home/mwkunkel/$nscString.txt";
-my $nscTableName = "$nscString";
-
-my @nscColumnNames = (
-"NSC",
-"MF",
-"MW",
-"CAS",
-"Name",
-"Comment",
-"Molecular_Formula",
-"Molecular_Weight",
-"Num_Atoms",
-"Num_Bonds",
-"Num_Hydrogens",
-"Num_PositiveAtoms",
-"Num_NegativeAtoms",
-"Num_Fragments",
-"Num_MetalAtoms",
-"FormalCharge"
-);
-
-my $dropNscTableSql = "drop table if exists $nscTableName";
+my $dropNscTableSql = "drop table if exists rs3_from_plp_nsc";
 
 my $createNscTableSql = qq[
-create table $nscTableName(
+create table rs3_from_plp_nsc(
 NSC int,
 MF varchar(4096),
 MW double precision,
@@ -270,158 +269,206 @@ FormalCharge int
 )
 ];
 
-# open the nsc input file and make sure that the first line matches the expected nscFileHeaders
+my @nscColumnNames = (
+	"NSC",
+	"MF",
+	"MW",
+	"CAS",
+	"Name",
+	"Comment",
+	"Molecular_Formula",
+	"Molecular_Weight",
+	"Num_Atoms",
+	"Num_Bonds",
+	"Num_Hydrogens",
+	"Num_PositiveAtoms",
+	"Num_NegativeAtoms",
+	"Num_Fragments",
+	"Num_MetalAtoms",
+	"FormalCharge"
+	);
 
-open ( INPUTFILE, "<$nscFileName") or die "Can't open $nscFileName\n";
-my $firstLine = <INPUTFILE>;
-chomp($firstLine);
+my $overallNscOK = 0;
 
-$firstLine =~ s/[\r\n]//g;
-
-# print "firstLine: $firstLine\n";
-my @nscFileHeaders = split(/\t/, $firstLine);
-
-# print join(",", @nscColumnNames);
-# print "\n";
-# print join(",", @nscFileHeaders);
-# print "\n";
-
-my $equals = 0;
-
-if (@nscColumnNames != @nscFileHeaders) {
-	$equals = 0;
-} else {
-	$equals = 1;
-	for my $i ( 0 .. $#nscColumnNames) {		
-		if (lc($nscColumnNames[$i]) ne lc($nscFileHeaders[$i])) {
-			
-			my $lccol = lc($nscColumnNames[$i]);
-			my $lcfil = lc($nscFileHeaders[$i]);
-			
-			print "FAIL FAIL FAIL FAIL FAIL $lccol , $lcfil\n";
-			
-			$equals = 0;
-			# last;
+foreach my $nscFileBase(@nscFileList){
+	
+	my $nscFileName = "/home/mwkunkel/$nscFileBase.txt";
+	
+	# open the nsc input file and make sure that the first line matches the expected nscFileHeaders
+	
+	open ( INPUTFILE, "<$nscFileName") or die "Can't open $nscFileName\n";
+	my $firstLine = <INPUTFILE>;
+	chomp($firstLine);
+	
+	$firstLine =~ s/[\r\n]//g;
+	
+	# print "firstLine: $firstLine\n";
+	my @nscFileHeaders = split(/\t/, $firstLine);
+	
+	# print join(",", @nscColumnNames);
+	# print "\n";
+	# print join(",", @nscFileHeaders);
+	# print "\n";
+	
+	my $equals = 0;
+	
+	if (@nscColumnNames != @nscFileHeaders) {
+		$equals = 0;
+	} else {
+		$equals = 1;
+		for my $i ( 0 .. $#nscColumnNames) {		
+			if (lc($nscColumnNames[$i]) ne lc($nscFileHeaders[$i])) {				
+				my $lccol = lc($nscColumnNames[$i]);
+				my $lcfil = lc($nscFileHeaders[$i]);				
+				$equals = 0;
+			}
 		}
 	}
+	
+	if ($equals == 1){
+		
+		$overallNscOK = $overallNscOK + 1;
+		
+		print "$nscFileName MATCHES expected headers.\n";
+		
+		
+	} else {
+		
+		print "$nscFileName DOES NOT MATCH expected headers.\n";
+		
+		printf "%-30s | %-30s\n", "Table Column Name", "File Header";		
+		foreach (my $i = 0; $i < @nscColumnNames; $i++) {		
+			if (lc $nscColumnNames[$i] ne lc $nscFileHeaders[$i]) {				
+				printf "%-30s | %-30s\n",  "-----FAIL----- " . $nscColumnNames[$i] , "-----FAIL----- " . $nscFileHeaders[$i];
+			} else {
+				printf "%-30s | %-30s\n", $nscColumnNames[$i], $nscFileHeaders[$i];
+			}
+		}
+		
+		print "\n\n\n";
+		
+	}
+	
+	close INPUTFILE;
+	
 }
 
-if ($equals == 1){
+if ($overallNscOK == 2){
+		
+	print join(' and ', @nscFileList) . " were OK.  Dropping and re-creating rs3_from_plp_nsc table.\n\n\n";
 	
-	print "$nscFileName MATCHES expected headers. Creating table $nscTableName. \n\n\n";
-	
-	print "$dropNscTableSql\n";
+	#print "$dropNscTableSql\n";
 	my $sth = $dbh->prepare($dropNscTableSql);
-	$sth->execute() or die "Couldn't execute statement: $dropNscTableSql " . $sth->errstr;
+	#$sth->execute() or die "Couldn't execute statement: $dropNscTableSql " . $sth->errstr;
 	
-	print "$createNscTableSql\n";
+	#print "$createNscTableSql\n";
 	my $sth = $dbh->prepare($createNscTableSql);
-	$sth->execute() or die "Couldn't execute statement: $createNscTableSql " . $sth->errstr;
+	#$sth->execute() or die "Couldn't execute statement: $createNscTableSql " . $sth->errstr;
 	
-} else {
-	
- 	print "$nscFileName DOES NOT MATCH expected headers.  Not creating table $nscTableName. \n\n\n";
- 	
- 	print "Table Column Name , File Header\n";
- 	
- 	foreach (my $i = 0; $i < @nscColumnNames; $i++) {		
-		if (lc $nscColumnNames[$i] ne lc $nscFileHeaders[$i]) {
-			print "$nscColumnNames[$i] , $nscFileHeaders[$i] FAIL FAIL FAIL\n";			
-		} else {
-			print "$nscColumnNames[$i] , $nscFileHeaders[$i]\n";
-		}
-	}
 	
 }
 
-close INPUTFILE;
+##  ####    #####    ##    #####           #####     ##     #####    ##
+## #    #     #     #  #   #    #          #    #   #  #      #     #  #
+## #          #    #    #  #####           #    #  #    #     #    #    #
+## #          #    ######  #    #          #    #  ######     #    ######
+## #    #     #    #    #  #    #          #    #  #    #     #    #    #
+##  ####      #    #    #  #####           #####   #    #     #    #    #
 
-  ####    #####    ##    #####           #####     ##     #####    ##
- #    #     #     #  #   #    #          #    #   #  #      #     #  #
- #          #    #    #  #####           #    #  #    #     #    #    #
- #          #    ######  #    #          #    #  ######     #    ######
- #    #     #    #    #  #    #          #    #  #    #     #    #    #
-  ####      #    #    #  #####           #####   #    #     #    #    #
-
-my $ctabFileName = "/home/mwkunkel/$ctabString.txt";
-my $ctabTableName = "$ctabString";
-
-my @ctabColumnNames = (
-"NSC",
-"fragmentIndex",
-"CTAB"
-);
-
-my $dropCtabTableSql = "drop table if exists $ctabTableName";
+my $dropCtabTableSql = "drop table if exists rs3_from_plp_ctab";
 
 my $createCtabTableSql = qq[
-create table $ctabTableName(
+create table rs3_from_plp_ctab(
 NSC int,
 fragmentIndex int,
 CTAB text
 )
 ];
 
-# open the ctab input file and make sure that the first line matches the expected ctabFileHeaders
+my @ctabColumnNames = (
+	"NSC",
+	"fragmentIndex",
+	"CTAB"
+	);
 
-open ( INPUTFILE, "<$ctabFileName") or die "Can't open $ctabFileName\n";
-my $firstLine = <INPUTFILE>;
-chomp($firstLine);
+my $overallCtabOK = 0;
 
-$firstLine =~ s/[\r\n]//g;
-
-# print "firstLine: $firstLine\n";
-my @ctabFileHeaders = split(/,/, $firstLine);
-
-# print join(",", @ctabColumnNames);
-# print "\n";
-# print join(",", @ctabFileHeaders);
-# print "\n";
-
-my $equals = 0;
-
-if (@ctabColumnNames != @ctabFileHeaders) {
-	$equals = 0;
-} else {
-	$equals = 1;
-	foreach (my $i = 0; $i < @ctabColumnNames; $i++) {		
-		if (lc $ctabColumnNames[$i] ne lc $ctabFileHeaders[$i]) {
-			$equals = 0;
-			last;
+foreach my $ctabFileBase (@ctabFileList){
+	
+	my $ctabFileName = "/home/mwkunkel/$ctabFileBase.txt";
+	my $ctabTableName = "$ctabFileBase";
+	
+	# open the ctab input file and make sure that the first line matches the expected ctabFileHeaders
+	
+	open ( INPUTFILE, "<$ctabFileName") or die "Can't open $ctabFileName\n";
+	my $firstLine = <INPUTFILE>;
+	chomp($firstLine);
+	
+	$firstLine =~ s/[\r\n]//g;
+	
+	# print "firstLine: $firstLine\n";
+	my @ctabFileHeaders = split(/,/, $firstLine);
+	
+	# print join(",", @ctabColumnNames);
+	# print "\n";
+	# print join(",", @ctabFileHeaders);
+	# print "\n";
+	
+	my $equals = 0;
+	
+	if (@ctabColumnNames != @ctabFileHeaders) {
+		$equals = 0;
+	} else {
+		$equals = 1;
+		foreach (my $i = 0; $i < @ctabColumnNames; $i++) {		
+			if (lc $ctabColumnNames[$i] ne lc $ctabFileHeaders[$i]) {
+				$equals = 0;
+				last;
+			}
 		}
 	}
+	
+	if ($equals == 1){
+		
+		$overallCtabOK = $overallCtabOK + 1; 
+		
+		print "$ctabFileName MATCHES expected headers.\n";
+		
+	} else {
+		
+		print "$ctabFileName DOES NOT MATCH expected headers.\n";
+		
+		printf "%-30s | %-30s\n", "Table Column Name", "File Header";		
+		foreach (my $i = 0; $i < @ctabColumnNames; $i++) {		
+			if (lc $ctabColumnNames[$i] ne lc $ctabFileHeaders[$i]) {
+				printf "%-30s | %-30s\n",  "-----FAIL----- " . $ctabColumnNames[$i] , "-----FAIL----- " . $ctabFileHeaders[$i];
+			} else {
+				printf "%-30s | %-30s\n", $ctabColumnNames[$i], $ctabFileHeaders[$i];
+			}
+		}
+		
+		print "\n\n\n";
+		
+	}
+	
+	close INPUTFILE;
+	
 }
 
-if ($equals == 1){
+if ($overallCtabOK == 2){
 	
-	print "$ctabFileName MATCHES expected headers.  Creating table $ctabTableName. \n\n\n";
+	print join(' and ', @ctabFileList) . " were OK.  Dropping and re-creating rs3_from_plp_ctab table.\n\n\n";
 	
-	print "$dropCtabTableSql\n";
+	#print "$dropCtabTableSql\n";
 	my $sth = $dbh->prepare($dropCtabTableSql);
-	$sth->execute() or die "Couldn't execute statement: $dropCtabTableSql " . $sth->errstr;
+	#$sth->execute() or die "Couldn't execute statement: $dropCtabTableSql " . $sth->errstr;
 	
-	print "$createCtabTableSql\n";
+	#print "$createCtabTableSql\n";
 	my $sth = $dbh->prepare($createCtabTableSql);
-	$sth->execute() or die "Couldn't execute statement: $createCtabTableSql " . $sth->errstr;
+	#$sth->execute() or die "Couldn't execute statement: $createCtabTableSql " . $sth->errstr;
 	
-} else {
-	
- 	print "$ctabFileName DOES NOT MATCH expected headers.  Not creating table $ctabTableName. \n\n\n";
- 	
- 	print "Table Column Name , File Header\n";
- 	
- 	foreach (my $i = 0; $i < @ctabColumnNames; $i++) {		
-		if (lc $ctabColumnNames[$i] ne lc $ctabFileHeaders[$i]) {
-			print "$ctabColumnNames[$i] , $ctabFileHeaders[$i] FAIL FAIL FAIL\n";			
-		} else {
-			print "$ctabColumnNames[$i] , $ctabFileHeaders[$i]\n";
-		}
-	}
 	
 }
-
-close INPUTFILE;
-
 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
@@ -437,28 +484,4 @@ $dbh->disconnect();
 my $year = 1900 + $yearOffset;
 my $theTime = "$hour:$minute:$second";
 print "finish time $theTime\n";
-
-# Perl trim function to remove whitespace from the start and end of the string
-sub trim($)
-{
-	my $string = shift;
-	$string =~ s/^\s+//;
-	$string =~ s/\s+$//;
-	return $string;
-}
-# Left trim function to remove leading whitespace
-sub ltrim($)
-{
-	my $string = shift;
-	$string =~ s/^\s+//;
-	return $string;
-}
-# Right trim function to remove trailing whitespace
-sub rtrim($)
-{
-	my $string = shift;
-	$string =~ s/\s+$//;
-	return $string;
-}
-
 
