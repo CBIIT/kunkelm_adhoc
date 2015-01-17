@@ -63,7 +63,7 @@ create sequence cmpd_known_salt_seq;
 --Indexes:
 --    "cmpd_known_salt_pkey" PRIMARY KEY, btree (id)
 
-truncate cmpd_known_salt;
+delete from cmpd_known_salt;
 
 insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
 select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0;

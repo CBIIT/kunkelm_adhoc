@@ -9399,10 +9399,11 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CATEGORYPARAMETERS.pm -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT0_dropAndRecreateConstraints.sql.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MAKE_CATEGORIES.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT0_dropAndRecreateConstraints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT1_1_checkPLPfiles.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT1_2_processSaltDefinitions.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT2_loadPLPfiles.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT2_loadPLPfiles.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT3_1_doLblStrcFrags.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT3_2_makeQCwithNSC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT3_3_makeQC.PL -text

@@ -3,15 +3,18 @@
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
 use lib('./');
 use CATEGORYPARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
 use DBI;
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "start time $theTime\n";
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
 
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
@@ -42,15 +45,21 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 
 my @sqlList;
 
-push(@sqlList,qq[drop table if exists count_frags]);
+push @sqlList,qq[
+drop table if exists count_frags
+];
 
-push(@sqlList,qq[create table count_frags
+push @sqlList,qq[
+create table count_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
 from rs3_from_plp_frags
-group by nsc, mf, mw]);
+group by nsc, mf, mw
+];
 
-push(@sqlList,qq[create index cf_nsc on count_frags(nsc)]);
+push @sqlList,qq[
+create index cf_nsc on count_frags(nsc)
+];
 
 ##  #       #####   #        ####
 ##  #       #    #  #       #
@@ -59,16 +68,22 @@ push(@sqlList,qq[create index cf_nsc on count_frags(nsc)]);
 ##  #       #    #  #       #    #
 ##  ######  #####   ######   ####
 
-push(@sqlList,qq[drop table if exists count_lbl_frags]);
+push @sqlList,qq[
+drop table if exists count_lbl_frags
+];
 
-push(@sqlList,qq[create table count_lbl_frags
+push @sqlList,qq[
+create table count_lbl_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
 from rs3_from_plp_frags
 where can_smi = '[RH]' and atomarray is not null
-group by nsc, mf, mw]);
+group by nsc, mf, mw
+];
 
-push(@sqlList,qq[create index clf_nsc on count_lbl_frags(nsc)]);
+push @sqlList,qq[
+create index clf_nsc on count_lbl_frags(nsc)
+];
 
 ##   ####    #####  #####    ####
 ##  #          #    #    #  #    #
@@ -78,16 +93,22 @@ push(@sqlList,qq[create index clf_nsc on count_lbl_frags(nsc)]);
 ##   ####      #    #    #   ####
 
 
-push(@sqlList,qq[drop table if exists count_strc_frags]);
+push @sqlList,qq[
+drop table if exists count_strc_frags
+];
 
-push(@sqlList,qq[create table count_strc_frags
+push @sqlList,qq[
+create table count_strc_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
 from rs3_from_plp_frags
 where can_smi != '[RH]' and atomarray is null
-group by nsc, mf, mw]);
+group by nsc, mf, mw
+];
 
-push(@sqlList,qq[create index csf_nsc on count_strc_frags(nsc)]);
+push @sqlList,qq[
+create index csf_nsc on count_strc_frags(nsc)
+];
 
 
 ##   ####     ##    #        #####   ####
@@ -97,16 +118,22 @@ push(@sqlList,qq[create index csf_nsc on count_strc_frags(nsc)]);
 ##  #    #  #    #  #          #    #    #
 ##   ####   #    #  ######     #     ####
 
-push(@sqlList,qq[drop table if exists count_salt_frags]);
+push @sqlList,qq[
+drop table if exists count_salt_frags
+];
 
-push(@sqlList,qq[create table count_salt_frags
+push @sqlList,qq[
+create table count_salt_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
 from rs3_from_plp_frags
 where salt_smiles is not null
-group by nsc, mf, mw]);
+group by nsc, mf, mw
+];
 
-push(@sqlList,qq[create index csaltf_nsc on count_salt_frags(nsc)]);
+push @sqlList,qq[
+create index csaltf_nsc on count_salt_frags(nsc)
+];
 
 foreach my $sqlStmt(@sqlList){
 	 my $sth = $dbh->prepare($sqlStmt);
@@ -141,9 +168,12 @@ foreach my $sqlStmt(@sqlList){
 
 @sqlList = ();
 
-push(@sqlList,qq[drop table if exists problem_nsc]);
+push @sqlList,qq[
+drop table if exists problem_nsc
+];
 
-push(@sqlList,qq[create table problem_nsc
+push @sqlList,qq[
+create table problem_nsc
 as
 select
 f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw,
@@ -156,13 +186,19 @@ count_frags f
 left outer join count_lbl_frags lbl on f.nsc = lbl.nsc
 left outer join count_strc_frags strc on f.nsc = strc.nsc
 left outer join count_salt_frags salt on f.nsc = salt.nsc
-where f.count_frags != lbl.count_frags + strc.count_frags]);
+where f.count_frags != lbl.count_frags + strc.count_frags
+];
 
-push(@sqlList,qq[create index pn_nsc on problem_nsc(nsc)]);
+push @sqlList,qq[
+create index pn_nsc on problem_nsc(nsc)
+];
 
-push(@sqlList,qq[drop table if exists frag_stats]);
+push @sqlList,qq[
+drop table if exists frag_stats
+];
 
-push(@sqlList,qq[create table frag_stats
+push @sqlList,qq[
+create table frag_stats
 as
 select
 f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw,
@@ -174,20 +210,29 @@ from
 count_frags f
 left outer join count_lbl_frags lbl on f.nsc = lbl.nsc
 left outer join count_strc_frags strc on f.nsc = strc.nsc
-left outer join count_salt_frags salt on f.nsc = salt.nsc]);
+left outer join count_salt_frags salt on f.nsc = salt.nsc
+];
 
-push(@sqlList,qq[create index fs_nsc on frag_stats(nsc)]);
+push @sqlList,qq[
+create index fs_nsc on frag_stats(nsc)
+];
 
-push(@sqlList,qq[drop table if exists frag_stats_with_totals]);
+push @sqlList,qq[
+drop table if exists frag_stats_with_totals
+];
 
-push(@sqlList,qq[create table frag_stats_with_totals
+push @sqlList,qq[
+create table frag_stats_with_totals
 as
 select
 *,
 (count_lbl + count_strc) as total_type_frags
-from frag_stats]);
+from frag_stats
+];
 
-push(@sqlList,qq[create index fswt_nsc on frag_stats_with_totals(nsc)]);
+push @sqlList,qq[
+create index fswt_nsc on frag_stats_with_totals(nsc)
+];
 
 foreach my $sqlStmt (@sqlList){
 	my $sth = $dbh->prepare($sqlStmt);
@@ -225,7 +270,7 @@ foreach my $thisInfo (@infoList){
 	
   print $thisInfo . "\n";
   
-  my ($category, $count_frags, $count_lbl, $count_strc,	$salt) = split(/\t/, $thisInfo);
+  my ($category, $count_frags, $count_lbl, $count_strc,	$salt) = split(/ /, $thisInfo);
 
   # set up here for UNION join to find missing NSC
   push (@unionStmtList, "select nsc from " . $category);
@@ -235,12 +280,15 @@ foreach my $thisInfo (@infoList){
   ## ---------------------------------------------------------
   ## ---------------------------------------------------------
   
-  my $tempSql = qq[drop table if exists $category];
+  my $tempSql = qq[
+drop table if exists $category
+];
   my $sth = $dbh->prepare($tempSql);
   print "$tempSql\n\n";
   $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
   
-  my $tempSql = qq[  create table $category
+  my $tempSql = qq[
+  create table $category
   as
   select rs3.*
   from rs3_from_plp_frags rs3, frag_stats_with_totals fs
@@ -248,12 +296,15 @@ foreach my $thisInfo (@infoList){
   and fs.count_frags $count_frags
   and fs.count_lbl $count_lbl
   and fs.count_strc $count_strc
-  and fs.salt $salt];
+  and fs.salt $salt
+];
   my $sth = $dbh->prepare($tempSql);
   print "$tempSql\n\n";
   $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
   
-  my $tempSql = qq[  create index $category\_nsc on $category(nsc)];
+  my $tempSql = qq[
+  create index $category\_nsc on $category(nsc)
+];
   my $sth = $dbh->prepare($tempSql);
   print "$tempSql\n\n";
   $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -277,7 +328,9 @@ foreach my $thisInfo (@infoList){
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
-my $tempSql = qq[drop table if exists missing_nsc];
+my $tempSql = qq[
+drop table if exists missing_nsc
+];
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -286,7 +339,8 @@ my $unionStmt = join(" \n UNION \n ", @unionStmtList);
 
 #print $unionStmt . "\n";
 
-my $tempSql = qq[create table missing_nsc
+my $tempSql = qq[
+create table missing_nsc
 as
 select frag.*
 from frag_stats_with_totals frag
@@ -297,7 +351,19 @@ from
 $unionStmt
 )
 as x
-)];
+)
+];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+
+my $tempSql = qq[
+
+select count_frags, count_lbl, count_strc, salt, count(*)
+from missing_nsc 
+group by 1, 2, 3, 4 order by 5 desc
+
+];
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -310,10 +376,11 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 # clean up
 $dbh->disconnect();
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "finish time $theTime\n";
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start : $startDate\n";
+print "finish: $finishDate\n";
 
 
 

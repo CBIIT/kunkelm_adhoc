@@ -12,13 +12,12 @@ my $sourceFieldFilter = 'multi_strc_any_lbl';
 
 my $solvents = 'false';
 
-
 use DBI;
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "start time $theTime\n";
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
 
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
@@ -138,7 +137,8 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 # clean up
 $dbh->disconnect();
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "finish time $theTime\n";
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start : $startDate\n";
+print "finish: $finishDate\n";

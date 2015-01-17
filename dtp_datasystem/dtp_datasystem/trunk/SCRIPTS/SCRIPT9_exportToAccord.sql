@@ -1,17 +1,4 @@
---#!/usr/bin/perl
---
---use strict;
---
---# load module
---use DBI;
---
---(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
---my $year = 1900 + $yearOffset;
---my $theTime = "$hour:$minute:$second";
---print "start time $theTime\n";
---
---# connect
---my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+\c datasystemdb
 
 drop table if exists mwk_hts_salt;
 
@@ -101,12 +88,3 @@ from combo;
 \copy mwk_hts_compound_lot to /tmp/mwk_hts_compound_lot.tsv csv header delimiter as E'\t';
 \copy mwk_rs3_structure to /tmp/mwk_rs3_structure.tsv csv header delimiter as E'\t';
 \copy mwk_rs3_structure_object to /tmp/mwk_rs3_structure_object.tsv csv header delimiter as E'\t';
-
-
---# clean up
---$dbh->disconnect();
---
---(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
---my $year = 1900 + $yearOffset;
---my $theTime = "$hour:$minute:$second";
---print "finish time $theTime\n";

@@ -17,6 +17,9 @@
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
 use DBI;
 
 ## -----------------------------------------------------------------------------------
@@ -25,10 +28,10 @@ use DBI;
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "start time $theTime\n";
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
 
 # connect
 #my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1, AutoCommit => 0 });
@@ -231,11 +234,11 @@ if ($overallFragOK == 2){
 	
 	#print "$dropFragTableSql\n";
 	my $sth = $dbh->prepare($dropFragTableSql);
-	#$sth->execute() or die "Couldn't execute statement: $dropFragTableSql " . $sth->errstr;
+	$sth->execute() or die "Couldn't execute statement: $dropFragTableSql " . $sth->errstr;
 	
 	#print "$createFragTableSql\n";
-	my $sth = $dbh->prepare($createFragTableSql);
-	#$sth->execute() or die "Couldn't execute statement: $createFragTableSql " . $sth->errstr;
+	$sth = $dbh->prepare($createFragTableSql);
+	$sth->execute() or die "Couldn't execute statement: $createFragTableSql " . $sth->errstr;
 	
 }
 
@@ -359,11 +362,11 @@ if ($overallNscOK == 2){
 	
 	#print "$dropNscTableSql\n";
 	my $sth = $dbh->prepare($dropNscTableSql);
-	#$sth->execute() or die "Couldn't execute statement: $dropNscTableSql " . $sth->errstr;
+	$sth->execute() or die "Couldn't execute statement: $dropNscTableSql " . $sth->errstr;
 	
 	#print "$createNscTableSql\n";
-	my $sth = $dbh->prepare($createNscTableSql);
-	#$sth->execute() or die "Couldn't execute statement: $createNscTableSql " . $sth->errstr;
+	$sth = $dbh->prepare($createNscTableSql);
+	$sth->execute() or die "Couldn't execute statement: $createNscTableSql " . $sth->errstr;
 	
 	
 }
@@ -400,7 +403,7 @@ foreach my $ctabFileBase (@ctabFileList){
 	
 	# open the ctab input file and make sure that the first line matches the expected ctabFileHeaders
 	
-	open ( INPUTFILE, "<$ctabFileName") or die "Can't open $ctabFileName\n";
+	open ( INPUTFILE, "<$ctabFileName") or die "Can't open $ctabFileName\n\n\n";
 	my $firstLine = <INPUTFILE>;
 	chomp($firstLine);
 	
@@ -461,11 +464,11 @@ if ($overallCtabOK == 2){
 	
 	#print "$dropCtabTableSql\n";
 	my $sth = $dbh->prepare($dropCtabTableSql);
-	#$sth->execute() or die "Couldn't execute statement: $dropCtabTableSql " . $sth->errstr;
+	$sth->execute() or die "Couldn't execute statement: $dropCtabTableSql " . $sth->errstr;
 	
 	#print "$createCtabTableSql\n";
-	my $sth = $dbh->prepare($createCtabTableSql);
-	#$sth->execute() or die "Couldn't execute statement: $createCtabTableSql " . $sth->errstr;
+	$sth = $dbh->prepare($createCtabTableSql);
+	$sth->execute() or die "Couldn't execute statement: $createCtabTableSql " . $sth->errstr;
 	
 	
 }
@@ -480,8 +483,9 @@ if ($overallCtabOK == 2){
 # clean up
 $dbh->disconnect();
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "finish time $theTime\n";
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start : $startDate\n";
+print "finish: $finishDate\n";
 

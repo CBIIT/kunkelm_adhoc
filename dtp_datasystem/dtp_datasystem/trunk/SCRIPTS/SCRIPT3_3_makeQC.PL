@@ -3,23 +3,24 @@
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
 use lib('./');
 use CATEGORYPARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
 use DBI;
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "start time $theTime\n";
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
 
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 my @paramsList = getQualityControlCriteriaList();
-
 my @allCategories = getCategoryList();
-
 
 ##     _                                   _ 
 ##  __| |_ __ ___  _ __     __ _ _ __   __| |
@@ -40,12 +41,16 @@ my @allCategories = getCategoryList();
 ## \__, |\___|
 ##    |_|   
 
-my $sql = qq[drop table if exists qc];
+my $sql = qq[
+drop table if exists qc
+];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-my $sql = qq[create table qc (source varchar(1024), comparator varchar(1024), target varchar(1024), the_count int)];
+my $sql = qq[
+create table qc (source varchar(1024), comparator varchar(1024), target varchar(1024), the_count int)
+];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -64,10 +69,12 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 ##    |_|   |_____|                |_____|              
 ##
 
-my $sql = qq[insert into qc (source, comparator, target, the_count)
+my $sql = qq[
+insert into qc (source, comparator, target, the_count)
 select source, comparator, target||' '||invTest, count(*) 
 from qc_with_nsc
-group by source, comparator, target, invTest];
+group by source, comparator, target, invTest
+];
 
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
@@ -88,12 +95,16 @@ foreach my $thisCategory (@allCategories){
 	push (@innerCategories, $thisCategory);
 }
 
-my $sql = qq[drop table if exists qc_overlap];
+my $sql = qq[
+drop table if exists qc_overlap
+];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-my $sql = qq[create table qc_overlap (source varchar(1024), target varchar(1024), the_count int)];
+my $sql = qq[
+create table qc_overlap (source varchar(1024), target varchar(1024), the_count int)
+];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
@@ -106,14 +117,16 @@ foreach my $outerTbl (@outerCategories){
 		
 		if ($outerTbl ne $innerTbl){
 			
-			my $sql = qq[			insert into qc_overlap
+			my $sql = qq[
+			insert into qc_overlap
 			select '$outerTbl', '$innerTbl',
 			count(i.*)
 			from (
 			select nsc from $outerTbl
 			intersect
 			select nsc from $innerTbl
-			) as i];
+			) as i
+			];
 			
 			print "$sql\n";
 			
@@ -127,8 +140,9 @@ foreach my $outerTbl (@outerCategories){
 # clean up
 $dbh->disconnect();
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "finish time $theTime\n";
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start : $startDate\n";
+print "finish: $finishDate\n";
 

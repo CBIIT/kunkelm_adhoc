@@ -7,9 +7,13 @@
 # min/max criteria for integer and double precision fields
 # string criteria for String fields
 
-
 use strict;
 use warnings;
+
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
 
 my $fragString = "rs3_from_plp_frags";
 my $nscString = "rs3_from_plp_nsc";
@@ -95,10 +99,6 @@ CmpdAnnotations cmpdAnnotations;
 CmpdLegacyCmpd cmpdLegacyCmpd;
 ";
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "start time $theTime\n";
 
 open ( JAVAPART, ">JAVAPART") or die "Can't open JAVAPART\n";
 open ( FORMPART, ">FORMPART") or die "Can't open FORMPART\n";
@@ -249,10 +249,11 @@ close OUTPUTPARTCOLUMNS;
 close OUTPUTPARTLABELVALUE;
 close HIBERNATEPART;
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "finish time $theTime\n";
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start : $startDate\n";
+print "finish: $finishDate\n";
 
 # Perl trim function to remove whitespace from the start and end of the string
 sub trim($)

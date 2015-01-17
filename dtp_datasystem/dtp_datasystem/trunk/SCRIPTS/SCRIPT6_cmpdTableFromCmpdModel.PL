@@ -3,13 +3,15 @@
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
 
 use DBI;
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "start time $theTime\n";
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
 
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
@@ -27,9 +29,9 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ##  ####   #    #  #       #####  #######     #    #    #  #####   ######  ######
 
 my $tempSql = qq[drop table if exists temp_formatted_strings];
-print "$tempSql\n\n";
+#print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_formatted_strings
@@ -53,22 +55,22 @@ left outer join cmpd_targets2nsc_cmpds targ2c on (targ2c.nsc_cmpds_fk = nsc.id) 
 group by 
 nsc.id, 
 nsc.nsc];
-print "$tempSql\n\n";
+#print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 
 my $tempSql = qq[create index tfs_nsc on temp_formatted_strings(nsc)];
-print "$tempSql\n\n";
+#print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## temp_formatted_fragments
 
 my $tempSql = qq[drop table if exists temp_formatted_fragments];
-print "$tempSql\n\n";
+#print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_formatted_fragments
@@ -87,14 +89,14 @@ select nsc from nsc_to_load
 group by 
 nsc.id, 
 nsc.nsc];
-print "$tempSql\n\n";
+#print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tff_nsc on temp_formatted_fragments(nsc)];
-print "$tempSql\n\n";
+#print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # have to break up these inserts into sets of 100k
 
@@ -315,9 +317,9 @@ foreach my $pair(@highLowPairs){
 	and nsc.nsc <= $highVal
 	]; 
 	
-	print "$tempSql\n\n";
+	#print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
@@ -329,8 +331,13 @@ foreach my $pair(@highLowPairs){
 # clean up
 $dbh->disconnect();
 
-(my $second, my $minute, my $hour, my $dayOfMonth, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
-my $year = 1900 + $yearOffset;
-my $theTime = "$hour:$minute:$second";
-print "finish time $theTime\n";
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start : $startDate\n";
+print "finish: $finishDate\n";
 
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start: $startDate\n";
