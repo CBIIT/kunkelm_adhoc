@@ -31,7 +31,7 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 my $tempSql = qq[drop table if exists temp_formatted_strings];
 #print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_formatted_strings
@@ -57,20 +57,20 @@ nsc.id,
 nsc.nsc];
 #print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 
 my $tempSql = qq[create index tfs_nsc on temp_formatted_strings(nsc)];
 #print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## temp_formatted_fragments
 
 my $tempSql = qq[drop table if exists temp_formatted_fragments];
 #print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_formatted_fragments
@@ -91,12 +91,12 @@ nsc.id,
 nsc.nsc];
 #print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tff_nsc on temp_formatted_fragments(nsc)];
 #print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # have to break up these inserts into sets of 100k
 
@@ -319,7 +319,7 @@ foreach my $pair(@highLowPairs){
 	
 	#print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
-	#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 

@@ -292,7 +292,8 @@ drop table if exists $category
   as
   select rs3.*
   from rs3_from_plp_frags rs3, frag_stats_with_totals fs
-  where rs3.nsc = fs.nsc  
+  where fs.count_frags = fs.total_type_frags
+  and rs3.nsc = fs.nsc  
   and fs.count_frags $count_frags
   and fs.count_lbl $count_lbl
   and fs.count_strc $count_strc

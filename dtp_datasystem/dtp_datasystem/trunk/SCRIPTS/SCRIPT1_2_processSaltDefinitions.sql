@@ -65,9 +65,9 @@ create sequence cmpd_known_salt_seq;
 
 delete from cmpd_known_salt;
 
-insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
+insert into cmpd_known_salt(id, canonical_smiles, canonical_tautomer_smiles, canonical_tautomer_smiles_stri, salt_name, salt_mf, salt_mw)
 select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0;
 
-insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
+insert into cmpd_known_salt(id, canonical_smiles, canonical_tautomer_smiles, canonical_tautomer_smiles_stri, salt_name, salt_mf, salt_mw)
 select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight
 from unique_salts;

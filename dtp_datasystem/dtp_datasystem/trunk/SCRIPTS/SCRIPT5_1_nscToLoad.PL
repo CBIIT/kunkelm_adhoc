@@ -38,7 +38,7 @@ create table temp(nsc int, cmpd_type varchar(1024))
 
 foreach my $setToLoad(@setsToLoad){	
 	push @sqlList, qq[
-	insert into temp select distinct nsc, '$setToLoad' from $setToLoad
+	insert into temp select distinct nsc, '$setToLoad' from $setToLoad limit 100
 	];
 }
 
@@ -63,7 +63,7 @@ create index ntl_cmpd_type on nsc_to_load(cmpd_type)
 foreach my $tempSql(@sqlList){
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
-	#$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
 }
 
 ## ---------------------------------------------------------

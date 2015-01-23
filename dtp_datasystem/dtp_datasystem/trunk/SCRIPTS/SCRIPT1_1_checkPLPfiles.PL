@@ -43,9 +43,9 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 
-my @fragFileList = qw(rs3_from_plp_400k_frags rs3_from_plp_400k_frags);
-my @nscFileList = qw(rs3_from_plp_400k_nsc rs3_from_plp_400k_nsc);
-my @ctabFileList = qw(rs3_from_plp_400k_ctab rs3_from_plp_400k_ctab);
+my @fragFileList = qw(rs3_from_plp_400k_frags rs3_from_plp_remainder_frags);
+my @nscFileList = qw(rs3_from_plp_400k_nsc rs3_from_plp_remainder_nsc);
+my @ctabFileList = qw(rs3_from_plp_400k_ctab rs3_from_plp_remainder_ctab);
 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------

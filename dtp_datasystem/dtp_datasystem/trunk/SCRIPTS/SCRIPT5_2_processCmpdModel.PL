@@ -39,8 +39,7 @@ my @tablesToNuke = (
 	"cmpd_fragment_structure",
 	"cmpd_known_salt",              
 	"cmpd_list",                    
-	"cmpd_list_member",             
-	"cmpd_lists2share_with_users",  
+	"cmpd_list_member",
 	"cmpd_related",                 
 	"cmpd_relation_type",           
 	"cmpd_table",
@@ -53,7 +52,7 @@ foreach my $tableToNuke(@tablesToNuke){
 	
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
-	$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
@@ -72,7 +71,7 @@ foreach my $cmpdType(@cmpdTypes){
 	
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
-	$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
@@ -179,7 +178,7 @@ select nsc from nsc_to_load
 )];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -220,7 +219,7 @@ and frags.fragmentindex = ctab.fragmentindex];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -258,7 +257,7 @@ select nsc from nsc_to_load
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -278,7 +277,10 @@ my $tempSql = qq[drop table if exists temp_parent_fragment];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+# only UNAMBIGUOUS parents
+# any combo of labels, but only a single strc or a single strc with a single salt
 
 my $tempSql = qq[
 create table temp_parent_fragment
@@ -289,26 +291,24 @@ select nsc from nsc_to_load
 )
 and (nsc, fragmentindex) in  
 (
-select nsc, fragmentindex from one_strc
+
+select nsc, fragmentindex from no_lbl_one_strc_no_salt
+
 union
-select nsc, fragmentindex from two_strc_no_lbl_one_salt where salt_smiles is null and can_smi != '[RH]'
-union
-select nsc, fragmentindex from two_strc_any_lbl_one_salt where salt_smiles is null and can_smi != '[RH]'
-union
-select nsc, fragmentindex from one_strc_one_lbl where can_smi != '[RH]'
-union 
-select nsc, fragmentindex from one_strc_multi_lbl where can_smi != '[RH]'
+
+select nsc, fragmentindex from no_lbl_two_strc_one_salt where salt_smiles is null
+
 )];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tpf_nsc on temp_parent_fragment(nsc)];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -330,11 +330,12 @@ $sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;
 ##  #####   ######   ####    ####   #    #           ####      #    #    #
 
 
+
 my $tempSql = qq[drop table if exists temp_ident_descr];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_ident_descr(
@@ -345,123 +346,32 @@ descriptor_string varchar(1024)
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' one_strc' , 'S'||uni.nsc||' one_strc'
-from(
-select distinct nsc from one_strc where nsc in (select nsc from nsc_to_load)
-) as uni];
+## cycle through the categories
 
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+my @categories = getCategoryList();
 
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' two_strc_no_lbl_one_salt' , 'S'||uni.nsc||' two_strc_no_lbl_one_salt'
-from(
-select distinct nsc from two_strc_no_lbl_one_salt where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' two_strc_any_lbl_one_salt' , 'S'||uni.nsc||' two_strc_any_lbl_one_salt'
-from(
-select distinct nsc from two_strc_any_lbl_one_salt where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' one_strc_one_lbl' , 'S'||uni.nsc||' one_strc_one_lbl'
-from(
-select distinct nsc from one_strc_one_lbl where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' one_strc_multi_lbl' , 'S'||uni.nsc||' one_strc_multi_lbl'
-from(
-select distinct nsc from one_strc_multi_lbl where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' one_lbl' , 'S'||uni.nsc||' one_lbl'
-from(
-select distinct nsc from one_lbl where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' multi_lbl' , 'S'||uni.nsc||' multi_lbl'
-from(
-select distinct nsc from multi_lbl where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' multi_strc_any_lbl' , 'S'||uni.nsc||' multi_strc_any_lbl'
-from(
-select distinct nsc from multi_strc_any_lbl where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' two_strc_any_lbl_two_salt' , 'S'||uni.nsc||' two_strc_any_lbl_two_salt'
-from(
-select distinct nsc from two_strc_any_lbl_two_salt where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-my $tempSql = qq[
-insert into temp_ident_descr
-select uni.nsc, 'S'||uni.nsc||' two_strc_any_lbl' , 'S'||uni.nsc||' two_strc_any_lbl'
-from(
-select distinct nsc from two_strc_any_lbl where nsc in (select nsc from nsc_to_load)
-) as uni];
-
-print "$tempSql\n\n";
-my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+foreach my $categ (@categories){
+	
+	my $tempSql = qq[
+	insert into temp_ident_descr
+	select uni.nsc, 'S'||uni.nsc||' $categ' , 'S'||uni.nsc||' $categ'
+	from(
+	select distinct nsc from $categ where nsc in (select nsc from nsc_to_load)
+	) as uni];
+	
+	print "$tempSql\n\n";
+	my $sth = $dbh->prepare($tempSql);
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+		
+}
 
 my $tempSql = qq[create index tid_nsc on temp_ident_descr(nsc)];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -478,7 +388,7 @@ $sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;
 my $tempSql = qq[drop table if exists temp_nsc_agg];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_nsc_agg
@@ -498,13 +408,13 @@ group by nsc];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tna_nsc on temp_nsc_agg(nsc)];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -547,8 +457,8 @@ n.nsc,
 n.nsc,
 'S',
 n.nsc,
-'fake', --n.conf,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-'fake', --n.distribution,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+pc.conf,
+pc.distribution_code,
 n.cas,
 tna.count_fragments,
 'fake', --n.discreet,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -558,18 +468,19 @@ tna.molecular_weight,
 tna.molecular_formula,
 nct.id, --nsc_cmpd_type_fk
 tpf.fragmentindex, --cmpd_parent_fragment_fk
-null, -- cba.id, --cmpd_bio_assay_fk,
-null, -- ci.id, --cmpd_inventory_fk,
-null, -- annot.id, --cmpd_annotation_fk,
+cba.id, --cmpd_bio_assay_fk,
+ci.id, --cmpd_inventory_fk,
+annot.id, --cmpd_annotation_fk,
 null -- cmpd_legacy_cmpd_fk
 
 from rs3_from_plp_nsc n
 left outer join temp_ident_descr tid on n.nsc = tid.nsc
 left outer join temp_nsc_agg tna on n.nsc = tna.nsc
 left outer join temp_parent_fragment tpf on n.nsc = tpf.nsc
--- left outer join cmpd_bio_assay cba on n.nsc = cba.id
--- left outer join cmpd_inventory ci on n.nsc = ci.id
---left outer join cmpd_annotation annot on n.nsc = annot.id
+left outer join prod_cmpd pc on n.nsc = pc.nsc
+left outer join cmpd_bio_assay cba on n.nsc = cba.id
+left outer join cmpd_inventory ci on n.nsc = ci.id
+left outer join cmpd_annotation annot on n.nsc = annot.id
 left outer join nsc_to_load ntl on n.nsc = ntl.nsc,
 
 nsc_cmpd_type nct
@@ -578,7 +489,7 @@ where ntl.cmpd_type = nct.nsc_cmpd_type];
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -595,7 +506,7 @@ $sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;
 my $tempSql = qq[insert into cmpd(id) select nsc from nsc_to_load];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
@@ -613,7 +524,7 @@ $sth->execute() or warn "Couldn't execute statement: $tempSql " . $sth->errstr;
 ##  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __|
 ## | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
 ##  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
- 
+
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
