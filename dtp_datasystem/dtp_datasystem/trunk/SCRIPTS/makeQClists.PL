@@ -3,6 +3,11 @@
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
+use lib('./');
+use CATEGORYPARAMETERS qw(getDatasystemTableList getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
 use DBI;
 
@@ -13,7 +18,6 @@ print "start: $startDate\n";
 
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
-
 my $tempSql;
 
 #    #  #    #  #    #  ######
@@ -23,37 +27,28 @@ my $tempSql;
 #   ##  #    #  #   #   #
 #    #   ####   #    #  ######
 
-$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like 'QC SAMPLE LIST%')];
-my $sth = $dbh->prepare($tempSql);
-#print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-$tempSql = qq[delete from cmpd_list where list_name like 'saltLabel%'];
-my $sth = $dbh->prepare($tempSql);
-#print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-# get the distinct categories
-# fetch from the qc table since there is only 
-# one row for each unique source + comparator + target
-
 $tempSql = qq[
-select distinct source, comparator, target
-from qc
+delete from cmpd_list_member 
+where cmpd_list_fk 
+in (
+select id from cmpd_list where list_name like 'QC%'
+)
 ];
 my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-my @row;
-while (@row = $sth->fetchrow_array) {  # retrieve one row
-	print join(", ", @row), "\n";
-	
-	print "source: $row[0]\n";
-	print "comparator: $row[1]\n";
-	print "target: $row[2]\n";
-	
-	# use table temp
+$tempSql = qq[
+delete from cmpd_list 
+where list_name like 'saltLabel%'
+];
+my $sth = $dbh->prepare($tempSql);
+#print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my @categoryList = getCategoryList();
+
+foreach my $ctg(@categoryList){
 	
 	$tempSql = qq[
 	drop table if exists temp
@@ -63,15 +58,13 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 	# the nsc are fetched from qc_with_nsc
-
+	
 	$tempSql = qq[
 	create table temp as
 	select distinct nsc 
 	from qc_with_nsc
-	where source = '$row[0]'
-	and comparator = '$row[1]'
-	and target = '$row[2]'
-        limit 500
+	where source = '$ctg'
+	limit 500
 	];
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
@@ -79,16 +72,17 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	
 	# create cmpd_list
 	
-	# get the id
+	# get a new id
 	
-	my $cmpdListId;
+	
 	
 	$tempSql = qq[select nextval('cmpd_list_seq')];
 	my $sth = $dbh->prepare($tempSql);
 	#print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-	while (my @row = $sth->fetchrow_array) {
-		$cmpdListId = $row[0];
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+	my $cmpdListId;
+	$sth->bind_columns(\$cmpdListId);
+	while ($sth->fetch()) {
 		print "cmpdListId: $cmpdListId\n";
 	}
 	
@@ -110,10 +104,10 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	select
 	
 	$cmpdListId,
-	'QC SAMPLE LIST $row[0] $row[1] $row[2]',
+	'QC $ctg',
 	now(),
-	'mwkunkel',
-	'mwkunkel',
+	'kunkelm',
+	'kunkelm',
 	round(random() * 9223372036854775807),
 	count(temp.*),
 	null,

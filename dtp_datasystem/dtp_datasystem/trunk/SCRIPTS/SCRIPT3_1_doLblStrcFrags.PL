@@ -136,7 +136,7 @@ create index csaltf_nsc on count_salt_frags(nsc)
 ];
 
 foreach my $sqlStmt(@sqlList){
-	 my $sth = $dbh->prepare($sqlStmt);
+	my $sth = $dbh->prepare($sqlStmt);
 	print "$sqlStmt\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
@@ -271,7 +271,7 @@ foreach my $thisInfo (@infoList){
   print $thisInfo . "\n";
   
   my ($category, $count_frags, $count_lbl, $count_strc,	$salt) = split(/ /, $thisInfo);
-
+  
   # set up here for UNION join to find missing NSC
   push (@unionStmtList, "select nsc from " . $category);
   
@@ -281,8 +281,8 @@ foreach my $thisInfo (@infoList){
   ## ---------------------------------------------------------
   
   my $tempSql = qq[
-drop table if exists $category
-];
+  drop table if exists $category
+  ];
   my $sth = $dbh->prepare($tempSql);
   print "$tempSql\n\n";
   $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
@@ -298,18 +298,18 @@ drop table if exists $category
   and fs.count_lbl $count_lbl
   and fs.count_strc $count_strc
   and fs.salt $salt
-];
+  ];
   my $sth = $dbh->prepare($tempSql);
   print "$tempSql\n\n";
   $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
   
   my $tempSql = qq[
   create index $category\_nsc on $category(nsc)
-];
+  ];
   my $sth = $dbh->prepare($tempSql);
   print "$tempSql\n\n";
   $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
-    
+  
 }
 
 ## ---------------------------------------------------------
@@ -359,11 +359,20 @@ print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
 my $tempSql = qq[
+drop table if exists missing_nsc_frags
+];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
-select count_frags, count_lbl, count_strc, salt, count(*)
-from missing_nsc 
-group by 1, 2, 3, 4 order by 5 desc
-
+my $tempSql = qq[
+create table missing_nsc_frags
+as
+select *
+from rs3_from_plp_frags
+where nsc in (
+select nsc from missing_nsc
+)
 ];
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
@@ -382,17 +391,4 @@ my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start : $startDate\n";
 print "finish: $finishDate\n";
-
-
-
-
-
-
-
-
-
-
-
-
-
 

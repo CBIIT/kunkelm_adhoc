@@ -75,6 +75,20 @@ foreach my $cmpdType(@cmpdTypes){
 	
 }
 
+my $tempSql = qq[
+	drop index if exists nsc_cmpd_type_cmpd_type
+];	
+	my $sth = $dbh->prepare($tempSql);
+	print "$tempSql\n\n";
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+
+	my $tempSql = qq[
+	create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
+];	
+	my $sth = $dbh->prepare($tempSql);
+	print "$tempSql\n\n";
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
@@ -428,6 +442,17 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## #   ##  #    #  #    #          #    #  #    #  #       #    #
 ## #    #   ####    ####  #######   ####   #    #  #       #####
 
+##vacuum analyze rs3_from_plp_nsc;
+##vacuum analyze temp_parent_fragment;
+##vacuum analyze prod_cmpd;
+##vacuum analyze cmpd_bio_assay;
+##vacuum analyze cmpd_inventory;
+##vacuum analyze cmpd_annotation;
+##vacuum analyze temp_nsc_agg;
+##vacuum analyze temp_ident_descr;
+##vacuum analyze nsc_to_load;
+##vacuum analyze nsc_cmpd_type;
+
 my $tempSql = qq[
 insert into nsc_cmpd(
 id,
@@ -452,14 +477,14 @@ cmpd_annotation_fk,
 cmpd_legacy_cmpd_fk
 )
 select
-n.nsc,
-'NSC ' || 'S' || n.nsc || ' name: ' || n.name,
-n.nsc,
+ntl.nsc,
+'NSC ' || 'S' || ntl.nsc,
+ntl.nsc,
 'S',
-n.nsc,
+ntl.nsc,
 pc.conf,
 pc.distribution_code,
-n.cas,
+pc.cas,
 tna.count_fragments,
 'fake', --n.discreet,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 tid.identifier_string, --identifier_string,
@@ -473,15 +498,14 @@ ci.id, --cmpd_inventory_fk,
 annot.id, --cmpd_annotation_fk,
 null -- cmpd_legacy_cmpd_fk
 
-from rs3_from_plp_nsc n
-left outer join temp_ident_descr tid on n.nsc = tid.nsc
-left outer join temp_nsc_agg tna on n.nsc = tna.nsc
-left outer join temp_parent_fragment tpf on n.nsc = tpf.nsc
-left outer join prod_cmpd pc on n.nsc = pc.nsc
-left outer join cmpd_bio_assay cba on n.nsc = cba.id
-left outer join cmpd_inventory ci on n.nsc = ci.id
-left outer join cmpd_annotation annot on n.nsc = annot.id
-left outer join nsc_to_load ntl on n.nsc = ntl.nsc,
+from nsc_to_load ntl
+left outer join temp_ident_descr tid on ntl.nsc = tid.nsc
+left outer join temp_nsc_agg tna on ntl.nsc = tna.nsc
+left outer join temp_parent_fragment tpf on ntl.nsc = tpf.nsc
+left outer join prod_cmpd pc on ntl.nsc = pc.nsc
+left outer join cmpd_bio_assay cba on ntl.nsc = cba.id
+left outer join cmpd_inventory ci on ntl.nsc = ci.id
+left outer join cmpd_annotation annot on ntl.nsc = annot.id,
 
 nsc_cmpd_type nct
 

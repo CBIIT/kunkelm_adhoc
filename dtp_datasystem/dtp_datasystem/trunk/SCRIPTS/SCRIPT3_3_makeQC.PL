@@ -133,7 +133,11 @@ foreach my $outerTbl (@outerCategories){
 			my $sth = $dbh->prepare($sql);
 			$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 			
-		}
+		} else {
+
+      print "Identity comparison.  Overlap not determined.\n";
+
+    }
 	}			
 }
 

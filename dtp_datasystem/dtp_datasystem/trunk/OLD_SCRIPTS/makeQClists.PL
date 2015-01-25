@@ -23,7 +23,7 @@ my $tempSql;
 #   ##  #    #  #   #   #
 #    #   ####   #    #  ######
 
-$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like 'QC SAMPLE LIST%')];
+$tempSql = qq[delete from cmpd_list_member where cmpd_list_fk in (select id from cmpd_list where list_name like 'QC%')];
 my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
@@ -110,7 +110,7 @@ while (@row = $sth->fetchrow_array) {  # retrieve one row
 	select
 	
 	$cmpdListId,
-	'QC SAMPLE LIST $row[0] $row[1] $row[2]',
+	'QC $row[0] $row[1] $row[2]',
 	now(),
 	'kunkelm',
 	'kunkelm',

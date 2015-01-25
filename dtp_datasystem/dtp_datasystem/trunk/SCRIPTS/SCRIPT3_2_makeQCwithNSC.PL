@@ -193,6 +193,13 @@ print "$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
+my $sql = qq[
+vacuum analyze qc_with_nsc
+];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+
 # clean up
 $dbh->disconnect();
 

@@ -28,8 +28,13 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## #    #  #    #  #       #    #             #    #    #  #    #  #       #
 ##  ####   #    #  #       #####  #######     #    #    #  #####   ######  ######
 
+my $tempSql = qq[truncate table cmpd_table];
+print "$tempSql\n\n";
+my $sth = $dbh->prepare($tempSql);
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
 my $tempSql = qq[drop table if exists temp_formatted_strings];
-#print "$tempSql\n\n";
+print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
@@ -55,20 +60,19 @@ left outer join cmpd_targets2nsc_cmpds targ2c on (targ2c.nsc_cmpds_fk = nsc.id) 
 group by 
 nsc.id, 
 nsc.nsc];
-#print "$tempSql\n\n";
+print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-
 my $tempSql = qq[create index tfs_nsc on temp_formatted_strings(nsc)];
-#print "$tempSql\n\n";
+print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## temp_formatted_fragments
 
 my $tempSql = qq[drop table if exists temp_formatted_fragments];
-#print "$tempSql\n\n";
+print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
@@ -89,14 +93,79 @@ select nsc from nsc_to_load
 group by 
 nsc.id, 
 nsc.nsc];
-#print "$tempSql\n\n";
+print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tff_nsc on temp_formatted_fragments(nsc)];
-#print "$tempSql\n\n";
+print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my @sqlList = ();
+
+# INDEXES to speed up the joins below...
+push @sqlList, qq[
+drop index if exists cf_cfsf
+];
+push @sqlList, qq[
+drop index if exists cf_cfpcf
+];
+push @sqlList, qq[
+drop index if exists cf_ncfk
+];
+push @sqlList, qq[
+drop index if exists nc_nctf
+];
+push @sqlList, qq[
+drop index if exists nc_cpff
+];
+push @sqlList, qq[
+drop index if exists nc_cbaf
+];
+push @sqlList, qq[
+drop index if exists nc_cif
+];
+push @sqlList, qq[
+drop index if exists nc_caf
+];
+push @sqlList, qq[
+drop index if exists nc_clcf
+];
+
+push @sqlList, qq[
+create index cf_cfsf on cmpd_fragment(cmpd_fragment_structure_fk)
+]; 
+push @sqlList, qq[
+create index cf_cfpcf on cmpd_fragment(cmpd_fragment_p_chem_fk)
+]; 
+push @sqlList, qq[
+create index cf_ncfk on cmpd_fragment(nsc_cmpd_fk)
+];
+push @sqlList, qq[
+create index nc_nctf on nsc_cmpd(nsc_cmpd_type_fk)
+];        
+push @sqlList, qq[
+create index nc_cpff on nsc_cmpd(cmpd_parent_fragment_fk)
+];  
+push @sqlList, qq[
+create index nc_cbaf on nsc_cmpd(cmpd_bio_assay_fk)
+];        
+push @sqlList, qq[
+create index nc_cif on nsc_cmpd(cmpd_inventory_fk)
+];        
+push @sqlList, qq[
+create index nc_caf on nsc_cmpd(cmpd_annotation_fk)
+];       
+push @sqlList, qq[
+create index nc_clcf on nsc_cmpd(cmpd_legacy_cmpd_fk)
+];  
+
+foreach my $sql(@sqlList){
+  print "$sql\n";
+  my $sth = $dbh->prepare($sql);
+  $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+}
 
 # have to break up these inserts into sets of 100k
 
@@ -317,7 +386,7 @@ foreach my $pair(@highLowPairs){
 	and nsc.nsc <= $highVal
 	]; 
 	
-	#print "$tempSql\n\n";
+	print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	

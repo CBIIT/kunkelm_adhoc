@@ -1,0 +1,14 @@
+Get a list of all currently active connections on the Postgres server. Run the query below on the server:
+
+SELECT * FROM pg_stat_activity ORDER BY client_addr ASC, query_start ASC
+
+Each row in the results table corresponds to a postgres process. Find the row for the process you want to kill by looking at the ‘current_query’ column.
+
+Record the process id. You can find it in the ‘procpid’ column from the row that contains the query you want to kill.
+
+Kill the process by running the following query (replace ‘<pid>’ with the process id you found in step 3):
+
+SELECT pg_cancel_backend(<pid>)
+
+Reload the query from step 1 to confirm that the process is gone.
+

@@ -21,6 +21,19 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
+##                      _         _                 
+##  _ __ ___  _   _ ___| |_    __| |_ __ ___  _ __  
+## | '_ ` _ \| | | / __| __|  / _` | '__/ _ \| '_ \ 
+## | | | | | | |_| \__ \ |_  | (_| | | | (_) | |_) |
+## |_| |_| |_|\__,_|___/\__|  \__,_|_|  \___/| .__/ 
+##                                           |_|    
+##                      _             _       _          __ _          _   _ 
+##   ___ ___  _ __  ___| |_ _ __ __ _(_)_ __ | |_ ___   / _(_)_ __ ___| |_| |
+##  / __/ _ \| '_ \/ __| __| '__/ _` | | '_ \| __/ __| | |_| | '__/ __| __| |
+## | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \ |  _| | |  \__ \ |_|_|
+##  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/ |_| |_|_|  |___/\__(_)
+## 
+
 ## #    #  #    #  #    #  ######
 ## ##   #  #    #  #   #   #
 ## # #  #  #    #  ####    #####
@@ -114,15 +127,28 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 my @sqlList = ();
 
 push @sqlList, qq[
-drop index if exists pc_nci60_nsc; create index pc_nci60_nsc on prod_count_nci60(nsc)
+drop index if exists prod_count_nci60_nsc
 ];
 
 push @sqlList, qq[
-drop index if exists pc_hf_nsc; create index pc_hf_nsc on prod_count_hf(nsc)
+create index prod_count_nci60_nsc on prod_count_nci60(nsc)
 ];
 
 push @sqlList, qq[
-drop index if exists pc_xeno_nsc; create index pc_xeno_nsc on prod_count_xeno(nsc)
+drop index if exists prod_count_hf_nsc
+];
+
+push @sqlList, qq[
+create index prod_count_hf_nsc on prod_count_hf(nsc)
+];
+
+
+push @sqlList, qq[
+drop index if exists prod_count_xeno_nsc
+];
+
+push @sqlList, qq[
+create index prod_count_xeno_nsc on prod_count_xeno(nsc)
 ];
 
 push @sqlList, qq[
@@ -130,17 +156,29 @@ drop table if exists prod_bio_counts
 ];
 
 push @sqlList, qq[
+vacuum analyze prod_count_nci60
+];
+
+push @sqlList, qq[
+vacuum analyze prod_count_hf
+];
+
+push @sqlList, qq[
+vacuum analyze prod_count_xeno
+];
+
+push @sqlList, qq[
 create table prod_bio_counts 
 as 
 select 
-nfoj.nsc, 
+ntl.nsc, 
 pc_nci60.the_count as prod_count_nci60, 
 pc_hf.the_count as prod_count_hf, 
 pc_xeno.the_count as prod_count_xeno 
-from nsc_for_outer_join nfoj
-left outer join prod_count_nci60 pc_nci60 on nfoj.nsc = pc_nci60.nsc 
-left outer join prod_count_hf pc_hf on nfoj.nsc = pc_hf.nsc 
-left outer join prod_count_xeno pc_xeno on nfoj.nsc = pc_xeno.nsc
+from nsc_to_load ntl
+left outer join prod_count_nci60 pc_nci60 on ntl.nsc = pc_nci60.nsc 
+left outer join prod_count_hf pc_hf on ntl.nsc = pc_hf.nsc 
+left outer join prod_count_xeno pc_xeno on ntl.nsc = pc_xeno.nsc
 ];
 
 push @sqlList, qq[
@@ -148,7 +186,7 @@ insert into cmpd_bio_assay(id, nci60, hf, xeno)
 select nsc, prod_count_nci60, prod_count_hf, prod_count_xeno 
 from prod_bio_counts 
 where nsc in (
-select nsc from nsc_for_outer_join
+select nsc from nsc_to_load
 )
 ]; 
 
@@ -179,7 +217,7 @@ insert into cmpd_inventory(id, inventory)
 select nsc, inventory 
 from prod_inventory 
 where nsc in (
-select nsc from nsc_for_outer_join
+select nsc from nsc_to_load
 )
 ]; 
 
@@ -217,7 +255,7 @@ select nsc, array_to_string(array_agg(atomarray), ',') as labels
 from rs3_from_plp_frags
 where atomarray is not null
 and nsc in (
-select nsc from nsc_for_outer_join
+select nsc from nsc_to_load
 )
 group by nsc
 ]; 
@@ -232,15 +270,15 @@ mtxt,
 pseudo_atoms
 )
 select
-nfoj.nsc,
+ntl.nsc,
 null,
 null,
 null,
 pm.mtxt,
 t.labels
-from nsc_for_outer_join nfoj
-left outer join prod_mtxt pm on nfoj.nsc = pm.nsc
-left outer join temp t on nfoj.nsc = t.nsc
+from nsc_to_load ntl
+left outer join prod_mtxt pm on ntl.nsc = pm.nsc
+left outer join temp t on ntl.nsc = t.nsc
 ];
 
 push @sqlList, qq[
@@ -292,7 +330,7 @@ as
 select distinct chem_name_type
 from prod_chem_name
 where nsc in (
-select nsc from nsc_for_outer_join
+select nsc from nsc_to_load
 )
 ]; 
 
@@ -318,7 +356,7 @@ n.nsc as nsc_cmpds_fk,
 chem_name, 
 chem_name_type, 
 t.id as cmpd_alias_type_fk
-from prod_chem_name cn, cmpd_alias_type t, nsc_for_outer_join n
+from prod_chem_name cn, cmpd_alias_type t, nsc_to_load n
 where cn.chem_name_type = t.alias_type
 and cn.nsc = n.nsc
 ]; 
@@ -361,7 +399,7 @@ as
 select distinct project_code, description
 from prod_projects
 where nsc in (
-select nsc from nsc_for_outer_join
+select nsc from nsc_to_load
 )
 ]; 
 
@@ -379,7 +417,7 @@ push @sqlList, qq[
 create table temp
 as
 select pp.nsc, pp.project_code, nsc.nsc as nsc_cmpds_fk, cp.id as cmpd_projects_fk
-from prod_projects pp, nsc_for_outer_join nsc, cmpd_project cp
+from prod_projects pp, nsc_to_load nsc, cmpd_project cp
 where pp.nsc = nsc.nsc
 and pp.project_code = cp.project_code
 ]; 
@@ -417,7 +455,7 @@ select distinct plate_set
 from prod_plated_sets
 where plate_set is not null
 and nsc in (
-select nsc from nsc_for_outer_join
+select nsc from nsc_to_load
 )
 ]; 
 
@@ -435,7 +473,7 @@ push @sqlList, qq[
 create table temp
 as
 select pps.nsc, pps.plate_set, n.nsc as nsc_cmpds_fk, p.id as cmpd_plates_fk
-from prod_plated_sets pps, nsc_for_outer_join n, cmpd_plate p
+from prod_plated_sets pps, nsc_to_load n, cmpd_plate p
 where pps.nsc = n.nsc
 and pps.plate_set = p.plate_name
 ];
@@ -473,7 +511,7 @@ push @sqlList, qq[
 ##from prod_targets
 ##where target is not null
 ##and nsc in (
-##select nsc from nsc_for_outer_join
+##select nsc from nsc_to_load
 ##)
 ##]; 
 ##
@@ -495,7 +533,7 @@ push @sqlList, qq[
 ##where pt.nsc = n.nsc
 ##and pt.target = ct.target
 ##and pt.nsc in (
-##select nsc from nsc_for_outer_join
+##select nsc from nsc_to_load
 ##)
 ##];
 ##
@@ -532,7 +570,7 @@ push @sqlList, qq[
 ##from prod_plated_sets
 ##where plate_set is not null
 ##and nsc in (
-##select nsc from nsc_for_outer_join
+##select nsc from nsc_to_load
 ##)
 ##]; 
 ##
@@ -550,7 +588,7 @@ push @sqlList, qq[
 ##create table temp
 ##as
 ##select pps.nsc, pps.plate_set, n.nsc as nsc_cmpds_fk, p.id as cmpd_plates_fk
-##from prod_plated_sets pps, nsc_for_outer_join n, cmpd_plate p
+##from prod_plated_sets pps, nsc_to_load n, cmpd_plate p
 ##where pps.nsc = n.nsc
 ##and pps.plate_set = p.plate_name
 ##];
