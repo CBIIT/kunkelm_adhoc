@@ -109,7 +109,7 @@ public class ListContentBean implements Serializable {
   public ListContentBean() {
   }
 
-  public void doClear(){
+  public void doClear() {
     this.drugNames = new ArrayList<String>();
     this.aliases = new ArrayList<String>();
     this.cases = new ArrayList<String>();
@@ -119,51 +119,60 @@ public class ListContentBean implements Serializable {
     this.plates = new ArrayList<String>();
     this.targets = new ArrayList<String>();
   }
-  
-  public void printCriteriaLists(){
-    
-    System.out.println("drugNames");
-    for (String s : this.drugNames){
-      System.out.println("-------->" + s + "<--------");      
+
+  public void printCriteriaLists() {
+
+    System.out.println("aliasTextArea: " + this.aliasTextArea);
+    System.out.println("casTextArea: " + this.casTextArea);
+    System.out.println("cmpdNamedSetTextArea: " + this.cmpdNamedSetTextArea);
+    System.out.println("drugNameTextArea: " + this.drugNameTextArea);
+    System.out.println("nscTextArea: " + this.nscTextArea);
+    System.out.println("plateTextArea: " + this.plateTextArea);
+    System.out.println("targetTextArea: " + this.targetTextArea);
+    System.out.println("projectCodeTextArea: " + this.projectCodeTextArea);
+
+    System.out.println("aliases:");
+    for (String s : this.aliases) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("aliases");
-    for (String s : this.aliases){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("cases:");
+    for (String s : this.cases) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("cases");
-    for (String s : this.cases){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("cmpdNamedSets:");
+    for (String s : this.cmpdNamedSets) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("cmpdNamedSets");
-    for (String s : this.cmpdNamedSets){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("drugNames:");
+    for (String s : this.drugNames) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("nscs");
-    for (String s : this.nscs){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("nscs:");
+    for (String s : this.nscs) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("projectCodes");
-    for (String s : this.projectCodes){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("plates:");
+    for (String s : this.plates) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("plates");
-    for (String s : this.plates){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("projectCodes:");
+    for (String s : this.projectCodes) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
-    System.out.println("targets");
-    for (String s : this.targets){
-      System.out.println("-------->" + s + "<--------");      
+
+    System.out.println("targets:");
+    for (String s : this.targets) {
+      System.out.println("-------->" + s + "<--------");
     }
-    
+
   }
-  
+
   public void printPchemCriteria() {
     // QC on pChemBean, etc.
     System.out.println("QC on settings for molecularPropertiesCriteriaBean");

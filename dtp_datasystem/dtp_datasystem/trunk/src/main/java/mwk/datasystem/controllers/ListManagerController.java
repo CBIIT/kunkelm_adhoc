@@ -137,8 +137,7 @@ public class ListManagerController implements Serializable {
     FacesMessage msg = new FacesMessage("List Edited", ((CmpdListVO) event.getObject()).getId().toString());
     FacesContext.getCurrentInstance().addMessage(null, msg);
 
-    HelperCmpdList helper = new HelperCmpdList();
-    helper.updateCmpdList((CmpdListVO) event.getObject(), this.sessionController.getLoggedUser());
+    HelperCmpdList.updateCmpdList((CmpdListVO) event.getObject(), this.sessionController.getLoggedUser());
 
   }
 
@@ -166,9 +165,8 @@ public class ListManagerController implements Serializable {
     this.availableLists = new ArrayList<CmpdListVO>();
 
     try {
-
-      HelperCmpdList helper = new HelperCmpdList();
-      List<CmpdListVO> justFetchedLists = helper.showAvailableCmpdLists(this.sessionController.getLoggedUser());
+      
+      List<CmpdListVO> justFetchedLists = HelperCmpdList.showAvailableCmpdLists(this.sessionController.getLoggedUser());
 
       //
       // check for change in size of lists
@@ -262,8 +260,7 @@ public class ListManagerController implements Serializable {
 
     System.out.println("Entering performLoadList(CmpdListVO clVO)");
 
-    HelperCmpdList helper = new HelperCmpdList();
-    CmpdListVO voList = helper.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
     clVO.setCmpdListMembers(voList.getCmpdListMembers());
 
     return "/webpages/activeListTable?faces-redirect=true";
@@ -272,11 +269,9 @@ public class ListManagerController implements Serializable {
 
   public String performMakeListPublic() {
 
-    HelperCmpdList helper = new HelperCmpdList();
-
     // only if owner
     if (this.activeList.getListOwner().equals(this.sessionController.getLoggedUser())) {
-      helper.makeCmpdListPublic(this.activeList.getCmpdListId(), this.sessionController.getLoggedUser());
+      HelperCmpdList.makeCmpdListPublic(this.activeList.getCmpdListId(), this.sessionController.getLoggedUser());
       this.activeList.setShareWith("PUBLIC");
     }
 
@@ -321,8 +316,7 @@ public class ListManagerController implements Serializable {
     System.out.println("Now in performDeleteList in listManagerController.");
     // only if owner
     if (this.listForDelete.getListOwner().equals(this.sessionController.getLoggedUser())) {
-      HelperCmpdList helper = new HelperCmpdList();
-      helper.deleteCmpdListByCmpdListId(this.listForDelete.getCmpdListId(), this.sessionController.getLoggedUser());
+      HelperCmpdList.deleteCmpdListByCmpdListId(this.listForDelete.getCmpdListId(), this.sessionController.getLoggedUser());
       this.availableLists.remove(this.listForDelete);
     }
 

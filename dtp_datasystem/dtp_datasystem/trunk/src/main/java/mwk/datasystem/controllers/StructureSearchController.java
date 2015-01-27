@@ -72,14 +72,10 @@ public class StructureSearchController implements Serializable {
   private CmpdListVO listToSearch;
 
   public String performExactMatchSearch() {
+    
+    List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(this.smilesFromEditor);
 
-    HelperStructure strcHelper = new HelperStructure();
-
-    List<Integer> nscIntList = strcHelper.findNSCsByExactMatch(this.smilesFromEditor);
-
-    HelperCmpd cmpdHelper = new HelperCmpd();
-
-    List<CmpdVO> structureSearchResults = cmpdHelper.getCmpdsByNsc(nscIntList, this.sessionController.getLoggedUser());
+    List<CmpdVO> structureSearchResults = HelperCmpd.getCmpdsByNsc(nscIntList, this.sessionController.getLoggedUser());
 
     List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
 
@@ -108,9 +104,7 @@ public class StructureSearchController implements Serializable {
 
     this.smilesFromEditor = smilesFromCtab(this.ctabFromEditor);
 
-    HelperStructure strcHelper = new HelperStructure();
-
-    List<Integer> nscIntList = strcHelper.findNSCsBySmilesSubstructure(this.smilesFromEditor);
+        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromEditor);
 
     System.out.println("Size of nscIntList: " + nscIntList.size());
 
@@ -119,14 +113,12 @@ public class StructureSearchController implements Serializable {
     if (this.listName == null || this.listName.length() == 0) {
       this.listName = "structureSearchResults " + now.toString();
     }
-
-    HelperCmpd cmpdHelper = new HelperCmpd();
-    Long cmpdListId = cmpdHelper.createCmpdListByNscs(this.listName, nscIntList, this.smilesFromEditor, this.sessionController.getLoggedUser());
+    
+    Long cmpdListId = HelperCmpd.createCmpdListByNscs(this.listName, nscIntList, this.smilesFromEditor, this.sessionController.getLoggedUser());
 
     // have to fetch the list so that the compound details will be populated
-    // 
-    HelperCmpdList listHelper = new HelperCmpdList();
-    CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
     listManagerController.getAvailableLists().add(clVO);
     listManagerController.setActiveList(clVO);
@@ -139,9 +131,7 @@ public class StructureSearchController implements Serializable {
 
     System.out.println("Now in performSubstructureSearch()");
 
-    HelperStructure strcHelper = new HelperStructure();
-
-    List<Integer> nscIntList = strcHelper.findNSCsBySmilesSubstructure(this.smilesFromEditor);
+    List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromEditor);
 
     System.out.println("Size of nscIntList: " + nscIntList.size());
 
@@ -151,13 +141,11 @@ public class StructureSearchController implements Serializable {
       this.listName = "structureSearchResults " + now.toString();
     }
 
-    HelperCmpd cmpdHelper = new HelperCmpd();
-    Long cmpdListId = cmpdHelper.createCmpdListByNscs(this.listName, nscIntList, this.smilesFromEditor, this.sessionController.getLoggedUser());
+    Long cmpdListId = HelperCmpd.createCmpdListByNscs(this.listName, nscIntList, this.smilesFromEditor, this.sessionController.getLoggedUser());
 
     // have to fetch the list so that the compound details will be populated
     // 
-    HelperCmpdList listHelper = new HelperCmpdList();
-    CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
     listManagerController.getAvailableLists().add(clVO);
     listManagerController.setActiveList(clVO);
@@ -193,12 +181,9 @@ public class StructureSearchController implements Serializable {
     System.out.println("smilesString: " + this.smilesFromEditor);
     System.out.println("smartsString: " + smartsString);
 
-    HelperStructure strcHelper = new HelperStructure();
-
-    List<Integer> nscIntList = strcHelper.findNSCsBySmartsSubstructure(smartsString);
-
-    HelperCmpd cmpdHelper = new HelperCmpd();
-    List<CmpdVO> cmpds = cmpdHelper.getCmpdsByNsc(nscIntList, this.sessionController.getLoggedUser());
+    List<Integer> nscIntList = HelperStructure.findNSCsBySmartsSubstructure(smartsString);
+    
+    List<CmpdVO> cmpds = HelperCmpd.getCmpdsByNsc(nscIntList, this.sessionController.getLoggedUser());
 
     List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
 
@@ -335,11 +320,9 @@ public class StructureSearchController implements Serializable {
 
   public String performLoadEditorByNsc() {
 
-    HelperCmpd helper = new HelperCmpd();
-
     Integer nscInt = Integer.valueOf(this.nscForLoad);
 
-    CmpdVO cVO = helper.getSingleCmpdByNsc(nscInt, this.sessionController.getLoggedUser());
+    CmpdVO cVO = HelperCmpd.getSingleCmpdByNsc(nscInt, this.sessionController.getLoggedUser());
 
     if (cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi().isEmpty()) {
       this.smilesForLoad = null;

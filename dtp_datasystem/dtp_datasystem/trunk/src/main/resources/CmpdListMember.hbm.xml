@@ -20,8 +20,8 @@
             <column name="LIST_MEMBER_COMMENT" not-null="false" unique="true" sql-type="CHARACTER VARYING(1024)"/>
             <type name="java.lang.String"/>
         </property>
-        <!--MWK changed cascade="delete" to cascade="none" many-to-one name="cmpd" class="mwk.datasystem.domain.CmpdImpl" cascade="delete" foreign-key="CMPD_LIST_MEMBER_CMPD_FKC" not-null="true" lazy="proxy" fetch="select"-->
-        <many-to-one name="cmpd" class="mwk.datasystem.domain.CmpdImpl" cascade="none" foreign-key="CMPD_LIST_MEMBER_CMPD_FKC" not-null="true" lazy="proxy" fetch="select">
+        <!--MWK lazy="false" fetch="join" -->
+        <many-to-one name="cmpd" class="mwk.datasystem.domain.CmpdImpl" cascade="none" foreign-key="CMPD_LIST_MEMBER_CMPD_FKC" not-null="true" lazy="false" fetch="join">
             <column name="CMPD_FK" not-null="true" sql-type="BIGINT"/>
         </many-to-one>
         <many-to-one name="cmpdList" class="mwk.datasystem.domain.CmpdListImpl" cascade="none" foreign-key="CMPD_LIST_MEMBER_CMPD_LIST_FKC" not-null="true" lazy="proxy" fetch="select">

@@ -27,6 +27,7 @@ import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
 import org.hibernate.FetchMode;
+import org.hibernate.Query;
 
 /**
  *
@@ -36,7 +37,7 @@ public class HelperCmpdList {
 
   public static final Boolean DEBUG = Boolean.TRUE;
 
-  public CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
+  public static CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
 
     CmpdList rtn = CmpdList.Factory.newInstance();
 
@@ -109,7 +110,7 @@ public class HelperCmpdList {
    * @param currentUser
    * @return
    */
-  public CmpdListVO deNovoCmpdListFromAdHocCmpds(ArrayList<AdHocCmpd> adHocCmpdList, String listName, String currentUser) {
+  public static CmpdListVO deNovoCmpdListFromAdHocCmpds(ArrayList<AdHocCmpd> adHocCmpdList, String listName, String currentUser) {
 
     Random randomGenerator = new Random();
 
@@ -205,7 +206,7 @@ public class HelperCmpdList {
       // writes to CmpdTable so that subsequent fetch will work
       List<CmpdVO> cList = HelperCmpdTable.adHocCmpdsToCmpdTable(adHocCmpdList);
 
-      clVO = this.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, currentUser);
+      clVO = getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, currentUser);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -218,7 +219,7 @@ public class HelperCmpdList {
 
   }
 
-  public CmpdListVO getCmpdListByCmpdListId(Long cmpdListId, Boolean includeListMembers, String currentUser) {
+  public static CmpdListVO getCmpdListByCmpdListId(Long cmpdListId, Boolean includeListMembers, String currentUser) {
 
     CmpdListVO rtnVO = new CmpdListVO();
     CmpdList entityCL = null;
@@ -293,7 +294,7 @@ public class HelperCmpdList {
 
   }
 
-  public List<CmpdListVO> showAvailableCmpdLists(String currentUser) {
+  public static List<CmpdListVO> showAvailableCmpdLists(String currentUser) {
 
     List<CmpdListVO> voList = new ArrayList<CmpdListVO>();
     List<CmpdList> entityList = null;
@@ -325,7 +326,7 @@ public class HelperCmpdList {
 
   }
 
-  public void updateCmpdList(CmpdListVO cL, String currentUser) {
+  public static void updateCmpdList(CmpdListVO cL, String currentUser) {
 
     Session session = null;
     Transaction tx = null;
@@ -370,7 +371,7 @@ public class HelperCmpdList {
 
   }
 
-  public void makeCmpdListPublic(Long cmpdListId, String currentUser) {
+  public static void makeCmpdListPublic(Long cmpdListId, String currentUser) {
 
     Session session = null;
     Transaction tx = null;
@@ -401,7 +402,7 @@ public class HelperCmpdList {
 
   }
 
-  public void deleteCmpdListByCmpdListId(Long cmpdListId, String currentUser) {
+   public static void deleteCmpdListByCmpdListId(Long cmpdListId, String currentUser) {
 
     Session session = null;
     Transaction tx = null;
@@ -415,76 +416,71 @@ public class HelperCmpdList {
       Criteria clCrit = session.createCriteria(CmpdList.class);
       clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
       clCrit.add(Restrictions.eq("listOwner", currentUser));
+      // can NOT delete a PUBLIC list
       clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
       CmpdList target = (CmpdList) clCrit.uniqueResult();
 
+      Long actualListId = target.getId();
+
       Collection<CmpdListMember> clml = target.getCmpdListMembers();
 
-      //have to programatically determine whether any ad_hoc_cmpds
-      //and delete those
-      Long cmpdId;
       ArrayList<Long> cmpdIdsForDelete = new ArrayList<Long>();
 
       for (CmpdListMember clm : clml) {
 
-        // check ownership ?
-        if (clm.getCmpdList().getListOwner().equals(currentUser)) {
+        Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
 
-          Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
+        if (DEBUG) {
+          System.out.println("c.getClass() is: " + c.getClass());
+        }
+
+        // NSC compounds -> just delete the list member
+        if (c instanceof NscCmpdImpl) {
 
           if (DEBUG) {
-            System.out.println("c.getClass() is: " + c.getClass());
-          }
-
-          // NSC compounds -> just delete the list member
-          if (c instanceof NscCmpdImpl) {
-
-            if (DEBUG) {
-              System.out.println("c.getClass() is: " + c.getClass() + " only deleting clm");
-            }
-
-            session.delete(clm);
-
-          } else {
-
-            session.delete(clm);
-
-            // cmpdIdsForDelete.add(c.getId());
-            if (DEBUG) {
-              System.out.println("c.getClass() is: " + c.getClass() + " also deleting cmpd");
-            }
-
-            // AND delete the AdHocCmpd
-            session.delete(c);
-
+            System.out.println("c.getClass() is: " + c.getClass() + " only deleting clm");
           }
 
         } else {
-          System.out.println(currentUser + " doesn't own list containing listMember: " + clm.getId());
+
+          if (DEBUG) {
+            System.out.println("c.getClass() is: " + c.getClass() + " also deleting cmpd");
+          }
+
+          cmpdIdsForDelete.add(c.getId());
+
         }
 
       }
 
-      // MWK TODO handle ownership of AdHocCmpds?
-//            if (cmpdIdsForDelete.size() > 0) {
-//
-//                // find and delete those cmpd with join to ahc
-//                Criteria ahcCriteria = session.createCriteria(AdHocCmpd.class);
-//                ahcCriteria.add(Restrictions.in("id", cmpdIdsForDelete));
-//
-//                List<AdHocCmpd> ahcList = (List<AdHocCmpd>) ahcCriteria.list();
-//
-//                for (AdHocCmpd ahc : ahcList) {
-//                    session.delete(ahc);
-//                }
-//
-//            }
-      // delete the CmpdList        
-      session.delete(target);
+      // delete the cmpdListMembers
+      Query q = session.createSQLQuery("delete from cmpd_list_member where cmpd_list_fk = :clId");
+      q.setParameter("clId", actualListId);
+      q.executeUpdate();
+
+      // if there were any adHocCmpds, delete them
+      if (!cmpdIdsForDelete.isEmpty()) {
+        
+        q = session.createSQLQuery("delete from ad_hoc_cmpd where id in (:idList)");
+        q.setParameterList("idList", cmpdIdsForDelete);
+        q.executeUpdate();
+        
+        // also delete from cmpd_table
+        
+        q = session.createSQLQuery("delete from cmpd_table where id in (:idList)");
+        q.setParameterList("idList", cmpdIdsForDelete);
+        q.executeUpdate();        
+        
+      }
+
+      // delete the cmpdList
+      q = session.createSQLQuery("delete from cmpd_list where id = :clId");
+      q.setParameter("clId", actualListId);
+      q.executeUpdate();
 
       tx.commit();
-
+      
     } catch (Exception e) {
       e.printStackTrace();
       tx.rollback();
@@ -493,4 +489,5 @@ public class HelperCmpdList {
     }
 
   }
+
 }

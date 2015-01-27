@@ -134,13 +134,9 @@ public class ListContentController implements Serializable {
   //
   public String performDeleteFromActiveList() {
 
-    HelperCmpdListMember helper = new HelperCmpdListMember();
+    HelperCmpdListMember.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
 
-    helper.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
-
-    // now fetch the list        
-    HelperCmpdList listHelper = new HelperCmpdList();
-    CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(this.listManagerController.getActiveList().getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.listManagerController.getActiveList().getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
     this.listManagerController.setActiveList(clVO);
 
@@ -153,22 +149,18 @@ public class ListContentController implements Serializable {
 
   public String performCreateNewListFromSelectedListMembers() {
 
-    HelperCmpdListMember clmHelper = new HelperCmpdListMember();
-
     // first, create an empty list
-    Long cmpdListId = clmHelper.createEmptyList(this.listName, this.sessionController.getLoggedUser());
+    Long cmpdListId = HelperCmpdListMember.createEmptyList(this.listName, this.sessionController.getLoggedUser());
 
     System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
 
-    // fetch the list   
-    HelperCmpdList listHelper = new HelperCmpdList();
-    CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
     // append the selected
-    clmHelper.appendCmpdListMembers(clVO, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+    HelperCmpdListMember.appendCmpdListMembers(clVO, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
 
     // have to UPDATE the list   
-    CmpdListVO updatedClVO = listHelper.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
     // have to add to the session
     // and move to the new list        
@@ -181,13 +173,9 @@ public class ListContentController implements Serializable {
 
   public String performAppendSelectedToExistingList() {
 
-    HelperCmpdListMember helper = new HelperCmpdListMember();
+    HelperCmpdListMember.appendCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
 
-    helper.appendCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
-
-    // have to UPDATE the list   
-    HelperCmpdList listHelper = new HelperCmpdList();
-    CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
     this.listManagerController.setActiveList(clVO);
 
@@ -232,12 +220,10 @@ public class ListContentController implements Serializable {
 
       ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
 
-      HelperCmpdList listHelper = new HelperCmpdList();
-
-      CmpdListVO clVO_sparse = listHelper.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
 
       // new fetch the list
-      CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
       this.listManagerController.getAvailableLists().add(clVO);
       this.listManagerController.setActiveList(clVO);
@@ -286,12 +272,10 @@ public class ListContentController implements Serializable {
 
       ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
 
-      HelperCmpdList listHelper = new HelperCmpdList();
-
-      CmpdListVO clVO_sparse = listHelper.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
 
       // new fetch the list
-      CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
       this.listManagerController.getAvailableLists().add(clVO);
       this.listManagerController.setActiveList(clVO);
@@ -314,9 +298,9 @@ public class ListContentController implements Serializable {
     int i;
 
     String delimiters = "[\\n\\r\\t\\s,]+";
-    
+
     QueryObject qo = new QueryObject();
-    
+
     splitStrings = this.listContentBean.getNscTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
       fixedString = splitStrings[i].replaceAll("[^0-9]", "");
@@ -327,49 +311,63 @@ public class ListContentController implements Serializable {
 
     splitStrings = this.listContentBean.getCasTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getCases().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getCases().add(splitStrings[i]);
+      }
     }
 
     splitStrings = this.listContentBean.getProjectCodeTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getProjectCodes().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getProjectCodes().add(splitStrings[i]);
+      }
     }
 
     splitStrings = this.listContentBean.getDrugNameTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getDrugNames().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getDrugNames().add(splitStrings[i]);
+      }
     }
 
     splitStrings = this.listContentBean.getAliasTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getAliases().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getAliases().add(splitStrings[i]);
+      }
     }
 
     splitStrings = this.listContentBean.getPlateTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getPlates().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getPlates().add(splitStrings[i]);
+      }
     }
 
     splitStrings = this.listContentBean.getTargetTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getTargets().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getTargets().add(splitStrings[i]);
+      }
     }
 
     splitStrings = this.listContentBean.getCmpdNamedSetTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      qo.getCmpdNamedSets().add(splitStrings[i]);
+      if (splitStrings[i].length() > 0) {
+        qo.getCmpdNamedSets().add(splitStrings[i]);
+      }
     }
-    
+
+    System.out.println("Content of listContentBean:");
     this.listContentBean.printCriteriaLists();
+    System.out.println("Content of QueryObject:");
+    qo.printCriteriaLists();
 
-    HelperCmpd cmpdHelper = new HelperCmpd();
+    System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
+    Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, qo, null, this.sessionController.getLoggedUser());
 
-    System.out.println("Calling createCmpdLIstByNscs in HelperCmpd from performCreateListBySearch in ListContentController.");
-    Long cmpdListId = cmpdHelper.createCmpdListByListContentBean(this.listName, qo, null, this.sessionController.getLoggedUser());
-
-    // now fetch the list        
-    HelperCmpdList listHelper = new HelperCmpdList();
-    CmpdListVO clVO = listHelper.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    // now fetch the list            
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
     this.listManagerController.getAvailableLists().add(clVO);
     this.listManagerController.setActiveList(clVO);
@@ -411,4 +409,5 @@ public class ListContentController implements Serializable {
     this.targetList = targetList;
   }
     // </editor-fold>
+
 }

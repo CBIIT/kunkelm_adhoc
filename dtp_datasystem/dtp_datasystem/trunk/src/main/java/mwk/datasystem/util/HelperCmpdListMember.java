@@ -36,14 +36,14 @@ public class HelperCmpdListMember {
 
   private static Boolean DEBUG = Boolean.TRUE;
 
-  public void deleteCmpdListMembers(
+  public static void deleteCmpdListMembers(
           CmpdListVO targetList,
           List<CmpdListMemberVO> forDelete,
           String currentUser) {
 
-    ArrayList<Long> idsForDelete = new ArrayList<Long>();
+    ArrayList<Long> clmIdsForDelete = new ArrayList<Long>();
     for (CmpdListMemberVO clmVO : forDelete) {
-      idsForDelete.add(clmVO.getId());
+      clmIdsForDelete.add(clmVO.getId());
     }
 
     Session session = null;
@@ -59,47 +59,39 @@ public class HelperCmpdListMember {
       Criteria clCrit = session.createCriteria(CmpdList.class);
       clCrit.add(Restrictions.eq("cmpdListId", targetList.getCmpdListId()));
       clCrit.add(Restrictions.eq("listOwner", currentUser));
+      // can NOT delete PUBLIC 
       clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
       CmpdList target = (CmpdList) clCrit.uniqueResult();
 
       Criteria clmCriteria = session.createCriteria(CmpdListMember.class);
-      clmCriteria.add(Restrictions.in("id", idsForDelete));
+      clmCriteria.add(Restrictions.in("id", clmIdsForDelete));
 
       List<CmpdListMember> clml = clmCriteria.list();
-
-      //have to programatically determine whether any ad_hoc_cmpds
-      //and delete those
-      Long cmpdId;
+      
+      
       ArrayList<Long> cmpdIdsForDelete = new ArrayList<Long>();
 
       for (CmpdListMember clm : clml) {
 
-        // check ownership ?
-        if (clm.getCmpdList().getListOwner().equals(currentUser)) {
+        Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
 
-          Cmpd c = Unproxy.initializeAndUnproxy(clm.getCmpd());
+        if (DEBUG) {
+          System.out.println("c.getClass() is: " + c.getClass());
+        }
 
-          if (DEBUG) {
-            System.out.println("c.getClass() is: " + c.getClass());
-          }
+        // NSC compounds -> just delete the list member
+        if (c instanceof NscCmpdImpl) {
 
-          System.out.println("OUTSIDE of if(DEBUG) c.getClass() is: " + c.getClass());
-
-          // NSC compounds -> just delete the list member
-          if (c instanceof NscCmpdImpl) {
-
-            session.delete(clm);
-
-          } else {
-
-            session.delete(clm);
-            session.delete(c);
-
-          }
+          session.delete(clm);
 
         } else {
-          System.out.println(currentUser + " doesn't own list containing listMember: " + clm.getId());
+          
+          cmpdIdsForDelete.add(c.getId());
+
+          session.delete(clm);
+          session.delete(c);
+
         }
 
       }
@@ -144,7 +136,7 @@ public class HelperCmpdListMember {
 
   }
 
-  public void appendCmpdListMembers(
+  public static void appendCmpdListMembers(
           CmpdListVO targetList,
           List<CmpdListMemberVO> forAppend,
           String currentUser) {
@@ -382,7 +374,7 @@ public class HelperCmpdListMember {
     }
   }
 
-  public Long createEmptyList(
+  public static Long createEmptyList(
           String listName,
           String currentUser) {
 
@@ -409,9 +401,9 @@ public class HelperCmpdListMember {
         randomId = -1 * randomId;
       }
       cmpdListId = new Long(randomId);
-      
+
       System.out.println("in HelperCmpdListMember cmpdListId: " + cmpdListId);
-      
+
       rtn = cmpdListId;
 
       tx = session.beginTransaction();
@@ -423,11 +415,11 @@ public class HelperCmpdListMember {
       cl.setListName(listName);
       cl.setDateCreated(ts);
       cl.setListOwner(currentUser);
-      cl.setShareWith(currentUser);      
+      cl.setShareWith(currentUser);
       cl.setCountListMembers(Integer.valueOf(0));
-      
+
       session.persist(cl);
-      
+
       tx.commit();
 
     } catch (Exception e) {
@@ -443,7 +435,7 @@ public class HelperCmpdListMember {
   }
 
   // modification of the CODE FROM appendMethod
-  public Long createListFromCmpdListMembers(
+  public static Long createListFromCmpdListMembers(
           List<CmpdListMemberVO> clmToBeCreated,
           String listName,
           String currentUser) {
@@ -655,4 +647,5 @@ public class HelperCmpdListMember {
 
     return rtn;
   }
+
 }

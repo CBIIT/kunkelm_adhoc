@@ -9,7 +9,10 @@
        
     <!-- MWK local copy modified to remove generator on id -->        
     <mapping resource="CmpdTable.hbm.xml"/>        
-        
+    
+    <!-- MWK local copy modified for subselect on CmpdListMembers -->  
+    <mapping resource="CmpdList.hbm.xml"/>
+            
     <!-- MWK local copy modified to change cascade to none from clm to cmpd -->        
     <mapping resource="CmpdListMember.hbm.xml"/>
 
@@ -18,9 +21,8 @@
                     
     <mapping resource="Cmpd.hbm.xml"/>
        
-    <!-- androMDA mappings -->
+    <!-- androMDA mappings -->   
     
-    <mapping resource="mwk/datasystem/domain/CmpdList.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/RdkitMol.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdAlias.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdAliasType.hbm.xml"/>

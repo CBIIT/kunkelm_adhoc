@@ -9484,6 +9484,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/g
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/structureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdListMember.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdTable.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/deployment.properties -text

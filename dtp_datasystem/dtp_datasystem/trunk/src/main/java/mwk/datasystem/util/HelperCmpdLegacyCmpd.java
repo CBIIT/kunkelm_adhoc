@@ -49,7 +49,7 @@ public class HelperCmpdLegacyCmpd {
 
     }
     
-    public CmpdLegacyCmpdVO getLegacyCmpdByNsc(Integer nsc, String currentUser) {
+    public static CmpdLegacyCmpdVO getLegacyCmpdByNsc(Integer nsc, String currentUser) {
 
         //MWK TODO this doesn't call currentUser
 

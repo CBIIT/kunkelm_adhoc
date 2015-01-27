@@ -47,18 +47,19 @@ push @datasystemTableList, "nsc_cmpd";
 push @datasystemTableList, "nsc_cmpd_type";
 push @datasystemTableList, "rdkit_mol";
 # ancillary tables that need to be kept around
-push @datasystemTableList, "nsc_to_load";
-push @datasystemTableList, "missing_nsc";
-push @datasystemTableList, "missing_nsc_frags";
-push @datasystemTableList, "problem_nsc";
 push @datasystemTableList, "create_constraint_statements";
 push @datasystemTableList, "drop_constraint_statements";
 push @datasystemTableList, "frag_stats";
 push @datasystemTableList, "frag_stats_with_totals";
+push @datasystemTableList, "nsc_to_load";
+push @datasystemTableList, "missing_nsc";
+push @datasystemTableList, "missing_nsc_frags";
+push @datasystemTableList, "problem_nsc";
 push @datasystemTableList, "qc";
 push @datasystemTableList, "qc_overlap";
 push @datasystemTableList, "qc_with_nsc";
 push @datasystemTableList, "qc_ct";
+push @datasystemTableList, "rdkit_validity";
 
 my @categoryCriteriaList;
 

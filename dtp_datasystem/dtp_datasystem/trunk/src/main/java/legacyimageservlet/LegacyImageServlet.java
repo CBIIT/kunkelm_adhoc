@@ -96,9 +96,8 @@ public class LegacyImageServlet extends HttpServlet {
         byte[] byteArray = getTextImage("NSC not an Integer or no structure for NSC");
 
         if (nscInt != null) {
-
-            HelperCmpdLegacyCmpd helper = new HelperCmpdLegacyCmpd();
-            CmpdLegacyCmpdVO rtn = helper.getLegacyCmpdByNsc(nscInt, "PUBLIC");
+            
+            CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");
 
             // have to catch nulls and empties...
             if (rtn != null && rtn.getJpg512() != null && rtn.getJpg512().length > 0) {

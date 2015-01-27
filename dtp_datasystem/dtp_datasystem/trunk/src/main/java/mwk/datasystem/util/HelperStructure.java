@@ -30,7 +30,7 @@ import mwk.datasystem.vo.CmpdVO;
  */
 public class HelperStructure {
 
-    public List<Integer> findNSCsByExactMatch(String smiles) {
+    public static List<Integer> findNSCsByExactMatch(String smiles) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
@@ -60,7 +60,7 @@ public class HelperStructure {
         return nscList;
     }
 
-    public List<Integer> findNSCsBySmilesSubstructure(String substructureSmiles) {
+    public static List<Integer> findNSCsBySmilesSubstructure(String substructureSmiles) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
@@ -91,7 +91,7 @@ public class HelperStructure {
         return nscList;
     }
 
-    public List<Integer> findNSCsByCtabSubstructure(String substrcutureCtab) {
+    public static List<Integer> findNSCsByCtabSubstructure(String substrcutureCtab) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
@@ -128,7 +128,7 @@ public class HelperStructure {
     }
 
     
-    public List<Integer> findNSCsBySmartsSubstructure(String substructureSmiles) {
+    public static List<Integer> findNSCsBySmartsSubstructure(String substructureSmiles) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
@@ -158,7 +158,7 @@ public class HelperStructure {
         return nscList;
     }
 
-    public List<Integer> findNSCsByDiceSimilarity(String structureSmiles, Double similarityCutoff) {
+    public static List<Integer> findNSCsByDiceSimilarity(String structureSmiles, Double similarityCutoff) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
@@ -193,7 +193,7 @@ public class HelperStructure {
         return nscList;
     }
 
-    public List<Integer> findNSCsByTanimotoSimilarity(String structureSmiles, Double similarityCutoff) {
+    public static List<Integer> findNSCsByTanimotoSimilarity(String structureSmiles, Double similarityCutoff) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
