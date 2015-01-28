@@ -7,7 +7,7 @@ use Time::HiRes qw(time);
 use POSIX qw(strftime);
 
 use lib('./');
-use CATEGORYPARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
+use DATA_SYSTEM_BUILD_PARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
 use DBI;
 

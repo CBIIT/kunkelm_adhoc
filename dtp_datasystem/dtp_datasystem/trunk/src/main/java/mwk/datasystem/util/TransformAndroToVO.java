@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import mwk.datasystem.domain.CmpdAnnotation;
+import mwk.datasystem.domain.CmpdKnownSalt;
 import mwk.datasystem.domain.CmpdLegacyCmpd;
 import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdPlate;
@@ -34,6 +35,7 @@ import mwk.datasystem.vo.CmpdBioAssayVO;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdFragmentStructureVO;
 import mwk.datasystem.vo.CmpdFragmentVO;
+import mwk.datasystem.vo.CmpdKnownSaltVO;
 import mwk.datasystem.vo.CmpdLegacyCmpdVO;
 import mwk.datasystem.vo.CmpdVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
@@ -51,6 +53,22 @@ public class TransformAndroToVO {
 
   public static final Boolean DEBUG = Boolean.FALSE;
   //
+  
+  public static CmpdKnownSaltVO toCmpdKnownSaltVO(CmpdKnownSalt entityIn){    
+    CmpdKnownSaltVO rtn = new CmpdKnownSaltVO();    
+    if (entityIn != null){  
+      rtn.setId(entityIn.getId());
+      rtn.setCountOccurences(entityIn.getCountOccurences());
+      rtn.setSaltComment(entityIn.getSaltComment());
+      rtn.setCanSmi(entityIn.getCanSmi());
+      rtn.setCanTaut(entityIn.getCanTaut());
+      rtn.setCanTautStripStereo(entityIn.getCanTautStripStereo());
+      rtn.setSaltMf(entityIn.getSaltMf());
+      rtn.setSaltMw(entityIn.getSaltMw());
+      rtn.setSaltName(entityIn.getSaltName());      
+    }
+    return rtn;
+  }
 
   public static CmpdAliasVO toCmpdAliasVO(CmpdAlias entityIn) {
     CmpdAliasVO rtn = new CmpdAliasVO();

@@ -3,6 +3,7 @@ grant select, insert, update, delete on ad_hoc_cmpd_fragment to datasystem_user;
 grant select, insert, update, delete on ad_hoc_cmpd_fragment_p_chem to datasystem_user;    
 grant select, insert, update, delete on ad_hoc_cmpd_fragment_structure to datasystem_user; 
 grant select, insert, update, delete on cmpd to datasystem_user; 
+grant select, insert, update, delete on cmpd_known_salt to datasystem_user; 
 grant select, insert, update, delete on cmpd_table to datasystem_user; 
 
 grant select on cmpd_alias to datasystem_user;                     

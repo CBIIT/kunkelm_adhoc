@@ -20,16 +20,28 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ##################################################################
 ##################################################################
 
-# get the distinct column headers
+# the targets in qc are like:
+# count nsc inv&nci60
+# mf with . inventory
+# mw DIFF 1 inventory
+
+# get the targets as distinct column headers
 
 my $tempSql = qq[select distinct target from qc order by 1];
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+my $targ;
+$sth->bind_columns(\$targ);
 
 my @identList;	
-while(my $ref = $sth->fetchrow_hashref()) {		
-	push (@identList, $ref->{"target"});
+
+while($sth->fetch()){
+  push @identList, $targ;
 }
+
+#while(my $ref = $sth->fetchrow_hashref()) {		
+#	push (@identList, $ref->{"target"});
+#}
 
 # run the crosstab
 
@@ -44,6 +56,9 @@ AS ct(
 source varchar(32),
 ];
 
+# the datatypes for the crosstab fields
+
+# for managing commas
 my $lastIdent = $identList[$#identList];
 
 foreach my $thisIdent(@identList){		

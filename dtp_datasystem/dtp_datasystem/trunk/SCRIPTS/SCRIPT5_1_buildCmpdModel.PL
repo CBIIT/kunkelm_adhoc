@@ -7,7 +7,7 @@ use Time::HiRes qw(time);
 use POSIX qw(strftime);
 
 use lib('./');
-use CATEGORYPARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
+use DATA_SYSTEM_BUILD_PARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
 use DBI;
 
@@ -32,12 +32,14 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## #    ##         #     #         #   #           #      
 ## #     #          #####          #    #          #######
 
+# do NOT nuke cmpd_known_salt
+# it is loaded early in the build process	
+
 my @tablesToNuke = (
 	"cmpd",                         
 	"cmpd_fragment",                
 	"cmpd_fragment_p_chem",         
 	"cmpd_fragment_structure",
-	"cmpd_known_salt",              
 	"cmpd_list",                    
 	"cmpd_list_member",
 	"cmpd_related",                 

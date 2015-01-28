@@ -19,7 +19,12 @@
             </generator>
         </id>
      
-        <joined-subclass lazy="false" name="mwk.datasystem.domain.NscCmpdImpl" table="NSC_CMPD" dynamic-insert="false" dynamic-update="false" abstract="false">
+        <joined-subclass lazy="false" 
+                         name="mwk.datasystem.domain.NscCmpdImpl" 
+                         table="NSC_CMPD" 
+                         dynamic-insert="false" 
+                         dynamic-update="false" 
+                         abstract="false">
             <key foreign-key="NSC_CMPDIFKC">
                 <column name="ID" sql-type="BIGINT"/>
             </key>
@@ -214,7 +219,12 @@
         
         <!-- MWK 12Jan2015 lazy=false-->
         
-        <joined-subclass lazy="false" name="mwk.datasystem.domain.AdHocCmpdImpl" table="AD_HOC_CMPD" dynamic-insert="false" dynamic-update="false" abstract="false">
+        <joined-subclass lazy="false" 
+                         name="mwk.datasystem.domain.AdHocCmpdImpl" 
+                         table="AD_HOC_CMPD" 
+                         dynamic-insert="false" 
+                         dynamic-update="false" 
+                         abstract="false">
             <key foreign-key="AD_HOC_CMPDIFKC">
                 <column name="ID" sql-type="BIGINT"/>
             </key>

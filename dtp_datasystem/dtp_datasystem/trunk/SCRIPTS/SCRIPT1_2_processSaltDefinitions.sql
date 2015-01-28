@@ -50,24 +50,47 @@ drop sequence if exists cmpd_known_salt_seq;
 
 create sequence cmpd_known_salt_seq;
 
---                    Table "public.cmpd_known_salt"
---             Column             |          Type           | Modifiers 
-----------------------------------+-------------------------+-----------
--- id                             | bigint                  | not null
--- can_smi               | character varying(1024) | 
--- can_taut      | character varying(1024) | 
--- can_taut_strip_stereo | character varying(1024) | 
--- salt_name                      | character varying(1024) | 
--- salt_mf                        | character varying(1024) | 
--- salt_mw                        | double precision        | 
---Indexes:
---    "cmpd_known_salt_pkey" PRIMARY KEY, btree (id)
 
 delete from cmpd_known_salt;
 
-insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
-select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0;
+insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment)
+select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0, 'no salt';
 
-insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw)
-select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight
+insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment)
+select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight, sources
 from unique_salts;
+
+alter table cmpd_known_salt add fixed varchar;
+
+update cmpd_known_salt set fixed = replace(salt_name, '#', '');
+update cmpd_known_salt set salt_name = fixed;
+update cmpd_known_salt set fixed = btrim(salt_name, ' ');
+update cmpd_known_salt set salt_name = fixed;
+
+
+update cmpd_known_salt set fixed = regexp_replace(salt_comment, 'Schrodinger (\S+)ic salt', 'Schr \1');
+update cmpd_known_salt set salt_comment = fixed;
+update cmpd_known_salt set fixed = regexp_replace(salt_comment, 'Schrodinger solvent', 'Schr solv');
+update cmpd_known_salt set salt_comment = fixed;
+
+update cmpd_known_salt set fixed = replace(salt_comment, 'from NCGCCanonicalForm.java', 'NCGC');
+
+update cmpd_known_salt set salt_comment = fixed;
+
+drop table if exists salt_with_count;
+
+create table salt_with_count
+as
+select salt_id, count(*) as the_count
+from cmpd_known_salt cks, rs3_from_plp_frags frag
+where cks.id = frag.salt_id
+group by salt_id;
+
+update cmpd_known_salt cks
+set count_occurences = swc.the_count
+from salt_with_count swc
+where cks.id = swc.salt_id;
+
+update cmpd_known_salt
+set count_occurences = 0
+where count_occurences is null;

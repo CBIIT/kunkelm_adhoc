@@ -1,4 +1,4 @@
-package CATEGORYPARAMETERS;
+package DATA_SYSTEM_BUILD_PARAMETERS;
 
 use strict;
 use Exporter;

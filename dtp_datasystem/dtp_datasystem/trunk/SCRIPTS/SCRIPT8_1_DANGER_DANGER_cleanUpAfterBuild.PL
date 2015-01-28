@@ -7,7 +7,7 @@ use Time::HiRes qw(time);
 use POSIX qw(strftime);
 
 use lib('./');
-use CATEGORYPARAMETERS qw(getDatasystemTableList getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
+use DATA_SYSTEM_BUILD_PARAMETERS qw(getDatasystemTableList getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
 use DBI;
 
@@ -18,7 +18,6 @@ print "start: $startDate\n";
 
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
-
 
 my @expectedTables = getDatasystemTableList();
 my @foundTables = ();

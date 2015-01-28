@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import mwk.datasystem.domain.AdHocCmpdFragment;
+import mwk.datasystem.domain.CmpdImpl;
 import mwk.datasystem.domain.NscCmpdImpl;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -402,7 +403,7 @@ public class HelperCmpdList {
 
   }
 
-   public static void deleteCmpdListByCmpdListId(Long cmpdListId, String currentUser) {
+  public static void deleteCmpdListByCmpdListId(Long cmpdListId, String currentUser) {
 
     Session session = null;
     Transaction tx = null;
@@ -425,7 +426,7 @@ public class HelperCmpdList {
 
       Collection<CmpdListMember> clml = target.getCmpdListMembers();
 
-      ArrayList<Long> cmpdIdsForDelete = new ArrayList<Long>();
+      ArrayList<Long> adHocCmpdIdForDelete = new ArrayList<Long>();
 
       for (CmpdListMember clm : clml) {
 
@@ -448,7 +449,7 @@ public class HelperCmpdList {
             System.out.println("c.getClass() is: " + c.getClass() + " also deleting cmpd");
           }
 
-          cmpdIdsForDelete.add(c.getId());
+          adHocCmpdIdForDelete.add(c.getId());
 
         }
 
@@ -460,18 +461,19 @@ public class HelperCmpdList {
       q.executeUpdate();
 
       // if there were any adHocCmpds, delete them
-      if (!cmpdIdsForDelete.isEmpty()) {
-        
-        q = session.createSQLQuery("delete from ad_hoc_cmpd where id in (:idList)");
-        q.setParameterList("idList", cmpdIdsForDelete);
-        q.executeUpdate();
+      if (!adHocCmpdIdForDelete.isEmpty()) {
+
+        // for SANITY, use session.delete
+        for (Long id: adHocCmpdIdForDelete){
+          Cmpd c = (Cmpd) session.load(CmpdImpl.class, id);
+          session.delete(c);          
+        }
         
         // also delete from cmpd_table
-        
         q = session.createSQLQuery("delete from cmpd_table where id in (:idList)");
-        q.setParameterList("idList", cmpdIdsForDelete);
-        q.executeUpdate();        
-        
+        q.setParameterList("idList", adHocCmpdIdForDelete);
+        q.executeUpdate();
+
       }
 
       // delete the cmpdList
@@ -480,7 +482,7 @@ public class HelperCmpdList {
       q.executeUpdate();
 
       tx.commit();
-      
+
     } catch (Exception e) {
       e.printStackTrace();
       tx.rollback();

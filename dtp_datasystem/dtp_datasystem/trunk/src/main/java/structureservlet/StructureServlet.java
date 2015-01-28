@@ -28,6 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecule;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.renderer.AtomContainerRenderer;
+import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.font.AWTFontManager;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
@@ -170,13 +171,13 @@ public class StructureServlet extends HttpServlet {
             Rectangle diagram = renderer.calculateDiagramBounds(theMol);
             renderer.setZoomToFit(drawArea.width, drawArea.height, diagram.width, diagram.height);
 
-//            RendererModel model = renderer.getRenderer2DModel();
-//
-//            if (!selection.isEmpty()) {
-//                model.set(ExternalHighlightGenerator.ExternalHighlightDistance.class, (double) 12);
-//                model.set(RendererModel.ExternalHighlightColor.class, Color.PINK);
-//                model.setExternalSelectedPart(selection);
-//            }
+            RendererModel model = renderer.getRenderer2DModel();
+
+            if (!selection.isEmpty()) {
+                model.set(ExternalHighlightGenerator.ExternalHighlightDistance.class, (double) 12);
+                model.set(RendererModel.ExternalHighlightColor.class, Color.PINK);
+                model.setExternalSelectedPart(selection);
+            }
 
             Graphics2D g2 = (Graphics2D) image.getGraphics();
 
