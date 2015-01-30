@@ -125,7 +125,7 @@ group by 1, 2, 3, 4 order by 5 desc
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
-my $valCanSmi, $validCanTaut, $validCanTautStripStereo;
+my $valCanSmi; my $validCanTaut; my $validCanTautStripStereo;
 $sth -> bind_columns(\$valCanSmi, \$validCanTaut, \$validCanTautStripStereo);
 print "valCanSmi validCanTaut validCanTautStripStereo\n";
 while ($sth->fetch()){
