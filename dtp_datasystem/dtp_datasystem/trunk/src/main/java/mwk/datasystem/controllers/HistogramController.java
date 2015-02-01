@@ -18,15 +18,14 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.mwkcharting.Histogram;
 import mwk.datasystem.mwkcharting.HistogramBin;
-import mwk.datasystem.util.ExtendedCartesianChartModel;
 import mwk.datasystem.util.HistogramChartUtil;
 import mwk.datasystem.util.ScatterPlotChartUtil;
 import mwk.datasystem.vo.CmpdListMemberVO;
-import org.primefaces.component.chart.bar.BarChart;
-import org.primefaces.component.chart.line.LineChart;
+import org.primefaces.component.chart.Chart;
 import org.primefaces.event.ItemSelectEvent;
-import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 
 /**
  *
@@ -55,7 +54,7 @@ public class HistogramController implements Serializable {
   }
 
   private List<Histogram> histoModel;
-  private ArrayList<ExtendedCartesianChartModel> scatterPlotModel;
+  private ArrayList<LineChartModel> scatterPlotModel;
   private List<String> parametersPchem;
 
   private String histogramSizeString;
@@ -76,10 +75,6 @@ public class HistogramController implements Serializable {
     this.structureSize = 200;
 
   }
-  
-  public String placeholderAction(){
-    return null;
-  }
 
   //
   public void itemSelectHistogram(ItemSelectEvent event) {
@@ -89,13 +84,18 @@ public class HistogramController implements Serializable {
     NumberFormat nf = new DecimalFormat();
     nf.setMaximumFractionDigits(2);
 
-    BarChart selectedBarChart = (BarChart) event.getSource();
+    Object eventSrc = event.getSource();
 
-    CartesianChartModel selectedModel = (CartesianChartModel) selectedBarChart.getValue();
+    System.out.println("eventSrc is: " + eventSrc.getClass().toString());
 
-    ChartSeries selectedSeries = selectedModel.getSeries().get(event.getSeriesIndex());
+    Chart eventChart = (Chart) event.getSource();
 
-    String histogramIdent = selectedBarChart.getTitle();
+    BarChartModel bcm = (BarChartModel) eventChart.getModel();
+
+    // CartesianChartModel selectedModel = (CartesianChartModel) selectedBarChart.getValue();
+    ChartSeries selectedSeries = bcm.getSeries().get(event.getSeriesIndex());
+
+    String histogramIdent = bcm.getTitle();
 
     Set<Object> keySet = selectedSeries.getData().keySet();
 
@@ -106,7 +106,6 @@ public class HistogramController implements Serializable {
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
-    
     FacesMessage msg = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "Item selected ",
             "Event Item Index: " + event.getItemIndex()
@@ -156,25 +155,24 @@ public class HistogramController implements Serializable {
 
     NumberFormat nf = new DecimalFormat();
     nf.setMaximumFractionDigits(2);
-    
-    LineChart selectedLineChart = (LineChart) event.getSource();
 
-    CartesianChartModel selectedModel = (CartesianChartModel) selectedLineChart.getValue();
+    Chart eventChart = (Chart) event.getSource();
 
-    ChartSeries selectedSeries = selectedModel.getSeries().get(event.getSeriesIndex());
+    LineChartModel lcm = (LineChartModel) eventChart.getModel();
 
-    String lineChartTitle = selectedLineChart.getTitle();
+    ChartSeries selectedSeries = lcm.getSeries().get(event.getSeriesIndex());
+
+    String lineChartTitle = lcm.getTitle();
 
     Set<Object> keySet = selectedSeries.getData().keySet();
-    
+
     Double[] keyArray = keySet.toArray(new Double[keySet.size()]);
 
     Double pointIdent = keyArray[event.getItemIndex()];
-    
+
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
-    
     FacesMessage msg = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "Item selected ",
             "Event Item Index: " + event.getItemIndex()
@@ -186,8 +184,10 @@ public class HistogramController implements Serializable {
 
   }
 
-  
   public String renderHistoAndScatter() {
+    
+    // reset the selections
+    listManagerController.setSelectedActiveListMembers(new ArrayList<CmpdListMemberVO>());
 
     System.out.println("Entering renderHistoAndScatter()");
 
@@ -207,7 +207,7 @@ public class HistogramController implements Serializable {
 
   }
 
-    // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+  // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
   public String getHistogramSizeString() {
     return histogramSizeString;
   }
@@ -233,7 +233,7 @@ public class HistogramController implements Serializable {
   }
 
   public Integer getHistogramSize() {
-    
+
     if (this.histogramSizeString == null || this.histogramSizeString.equals("medium")) {
       this.histogramSize = 300;
     } else if (this.histogramSizeString.equals("small")) {
@@ -250,10 +250,9 @@ public class HistogramController implements Serializable {
 //  public void setHistogramSize(Integer histogramSize) {
 //    this.histogramSize = histogramSize;
 //  }
-
   public Integer getScatterPlotSize() {
-    
-      if (this.scatterPlotSizeString == null || this.scatterPlotSizeString.equals("medium")) {
+
+    if (this.scatterPlotSizeString == null || this.scatterPlotSizeString.equals("medium")) {
       this.scatterPlotSize = 300;
     } else if (this.scatterPlotSizeString.equals("small")) {
       this.scatterPlotSize = 150;
@@ -262,17 +261,16 @@ public class HistogramController implements Serializable {
     } else {
       this.scatterPlotSize = 300;
     }
-      
+
     return scatterPlotSize;
   }
 
 //  public void setScatterPlotSize(Integer scatterPlotSize) {
 //    this.scatterPlotSize = scatterPlotSize;
 //  }
-
   public Integer getStructureSize() {
-    
-       if (this.structureSizeString == null || this.structureSizeString.equals("medium")) {
+
+    if (this.structureSizeString == null || this.structureSizeString.equals("medium")) {
       this.structureSize = 200;
     } else if (this.structureSizeString.equals("small")) {
       this.structureSize = 100;
@@ -281,7 +279,7 @@ public class HistogramController implements Serializable {
     } else {
       this.structureSize = 200;
     }
-    
+
     return structureSize;
   }
 
@@ -297,11 +295,11 @@ public class HistogramController implements Serializable {
     this.histoModel = histoModel;
   }
 
-  public ArrayList<ExtendedCartesianChartModel> getScatterPlotModel() {
+  public ArrayList<LineChartModel> getScatterPlotModel() {
     return scatterPlotModel;
   }
 
-  public void setScatterPlotModel(ArrayList<ExtendedCartesianChartModel> scatterPlotModel) {
+  public void setScatterPlotModel(ArrayList<LineChartModel> scatterPlotModel) {
     this.scatterPlotModel = scatterPlotModel;
   }
 

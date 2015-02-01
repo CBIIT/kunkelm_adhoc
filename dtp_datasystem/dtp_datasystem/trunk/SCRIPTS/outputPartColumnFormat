@@ -1,0 +1,119 @@
+
+		<p:column headerText="molecularWeight" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="molecularFormula" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}" />
+		</p:column>
+		
+		<p:column headerText="logD" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.logD}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.logD}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="countHydBondAcceptors" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}" />
+		</p:column>
+		
+		<p:column headerText="countHydBondDonors" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}" />
+		</p:column>
+		
+		<p:column headerText="surfaceArea" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="solubility" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.solubility}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.solubility}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="countRings" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRings}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRings}" />
+		</p:column>
+		
+		<p:column headerText="countAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countBonds}" />
+		</p:column>
+		
+		<p:column headerText="countSingleBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countSingleBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countSingleBonds}" />
+		</p:column>
+		
+		<p:column headerText="countDoubleBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countDoubleBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countDoubleBonds}" />
+		</p:column>
+		
+		<p:column headerText="countTripleBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countTripleBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countTripleBonds}" />
+		</p:column>
+		
+		<p:column headerText="countRotatableBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRotatableBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRotatableBonds}" />
+		</p:column>
+		
+		<p:column headerText="countHydrogenAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydrogenAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydrogenAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countMetalAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countMetalAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countMetalAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countHeavyAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHeavyAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHeavyAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countPositiveAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countPositiveAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countPositiveAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countNegativeAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countNegativeAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countNegativeAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countRingBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingBonds}" />
+		</p:column>
+		
+		<p:column headerText="countStereoAtoms" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoAtoms}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoAtoms}" />
+		</p:column>
+		
+		<p:column headerText="countStereoBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoBonds}" />
+		</p:column>
+		
+		<p:column headerText="countRingAssemblies" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingAssemblies}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingAssemblies}" />
+		</p:column>
+		
+		<p:column headerText="countAromaticBonds" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticBonds}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticBonds}" />
+		</p:column>
+		
+		<p:column headerText="countAromaticRings" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticRings}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticRings}" />
+		</p:column>
+		
+		<p:column headerText="formalCharge" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.formalCharge}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.formalCharge}" />
+		</p:column>
+		
+		<p:column headerText="theALogP" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		

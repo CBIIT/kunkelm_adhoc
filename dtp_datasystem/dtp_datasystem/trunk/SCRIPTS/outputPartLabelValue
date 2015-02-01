@@ -1,0 +1,92 @@
+
+		<p:outputLabel value="molecularWeight"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		
+		<p:outputLabel value="molecularFormula"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}" />
+		
+		<p:outputLabel value="logD"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.logD}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		
+		<p:outputLabel value="countHydBondAcceptors"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}" />
+		
+		<p:outputLabel value="countHydBondDonors"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}" />
+		
+		<p:outputLabel value="surfaceArea"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		
+		<p:outputLabel value="solubility"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.solubility}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		
+		<p:outputLabel value="countRings"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRings}" />
+		
+		<p:outputLabel value="countAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAtoms}" />
+		
+		<p:outputLabel value="countBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countBonds}" />
+		
+		<p:outputLabel value="countSingleBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countSingleBonds}" />
+		
+		<p:outputLabel value="countDoubleBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countDoubleBonds}" />
+		
+		<p:outputLabel value="countTripleBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countTripleBonds}" />
+		
+		<p:outputLabel value="countRotatableBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRotatableBonds}" />
+		
+		<p:outputLabel value="countHydrogenAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydrogenAtoms}" />
+		
+		<p:outputLabel value="countMetalAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countMetalAtoms}" />
+		
+		<p:outputLabel value="countHeavyAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHeavyAtoms}" />
+		
+		<p:outputLabel value="countPositiveAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countPositiveAtoms}" />
+		
+		<p:outputLabel value="countNegativeAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countNegativeAtoms}" />
+		
+		<p:outputLabel value="countRingBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingBonds}" />
+		
+		<p:outputLabel value="countStereoAtoms"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoAtoms}" />
+		
+		<p:outputLabel value="countStereoBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoBonds}" />
+		
+		<p:outputLabel value="countRingAssemblies"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingAssemblies}" />
+		
+		<p:outputLabel value="countAromaticBonds"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticBonds}" />
+		
+		<p:outputLabel value="countAromaticRings"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticRings}" />
+		
+		<p:outputLabel value="formalCharge"/>                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.formalCharge}" />
+		
+		<p:outputLabel value="theALogP"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		

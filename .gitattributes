@@ -9422,8 +9422,14 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT7_recreateConstraints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT8_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT9_exportToAccord.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formatPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQClists.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartAddToColumnModelList -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartColumnFormat -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartLabelValue -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.12Jan2015.xml -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
@@ -9432,6 +9438,7 @@ dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.4.19/cd
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.5.8/cdk-1.5.8.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17-sources.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.1.9/primefaces-5.1.9.jar -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
@@ -9541,6 +9548,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragments
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistograms.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTableDynamicColumns.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable_allColumns.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text

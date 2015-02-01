@@ -9,11 +9,13 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import mwk.datasystem.util.ExtendedCartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 
 /**
  *
@@ -26,7 +28,7 @@ public class Histogram {
   private AdaptiveHistogram ah;
   private Collection<CmpdListMemberVO> clmColl;
   private ArrayList<HistogramBin> binList;
-  private ExtendedCartesianChartModel chartModel;
+  private BarChartModel chartModel;
 
   public Histogram(String titleIn, String propertyNameIn, Collection<CmpdListMemberVO> clmListIn, AdaptiveHistogram ahIn) {
 
@@ -41,9 +43,9 @@ public class Histogram {
     this.ah = ahIn;
     this.clmColl = clmListIn;
     this.binList = new ArrayList<HistogramBin>();
-    this.chartModel = new ExtendedCartesianChartModel();
+    this.chartModel = new BarChartModel();
 
-//    parse the ah and create a list of bins
+    // parse the ah and create a list of bins
     // for discrete distributions, minCut and maxCut are the same
     if (this.propertyName.equals("hba") || this.propertyName.equals("hbd")) {
 
@@ -63,11 +65,12 @@ public class Histogram {
       for (int pct = 0; pct < 100; pct += 5) {
 
         // to ACTUALLY bin the min and max values (because of rounding errors, have to add an underflow and overflow
+        // experience shows that 0.05 isn't sufficient, bump up to 0.1
         if (pct == 0) {
-          HistogramBin bin = new HistogramBin(ah.getValueForPercentile(0) - 0.05 * ah.getValueForPercentile(0), ah.getValueForPercentile(5));
+          HistogramBin bin = new HistogramBin(ah.getValueForPercentile(0) - 0.10 * ah.getValueForPercentile(0), ah.getValueForPercentile(5));
           this.binList.add(bin);
         } else if (pct == 95) {
-          HistogramBin bin = new HistogramBin(ah.getValueForPercentile(95), ah.getValueForPercentile(100) + 0.05 * ah.getValueForPercentile(100));
+          HistogramBin bin = new HistogramBin(ah.getValueForPercentile(95), ah.getValueForPercentile(100) + 0.10 * ah.getValueForPercentile(100));
           this.binList.add(bin);
         } else {
           HistogramBin bin = new HistogramBin(ah.getValueForPercentile(pct), ah.getValueForPercentile(pct + 5));
@@ -88,10 +91,33 @@ public class Histogram {
       putInAppropriateBin(clmVO);
     }
 
-        // generate the chart
+    // generate the chart
     // there are two series, count and countSelected
-    this.chartModel = new ExtendedCartesianChartModel();
+    this.chartModel = new BarChartModel();
     this.chartModel.setTitle(this.title);
+    this.chartModel.setExtender("histogramExtender");
+    this.chartModel.setShowDatatip(true);
+    this.chartModel.setBarPadding(1);
+    this.chartModel.setBarMargin(1);
+    
+    Axis xAxis = this.chartModel.getAxis(AxisType.X);
+    xAxis.setTickAngle(-90);
+    
+    this.chartModel.setStacked(true);
+    
+//    <p:barChart value="#{histo.chartModel}"
+//                            title="#{histo.chartModel.title}"                      
+//                            extender="histogramExtender"
+//                            zoom="false"
+//                            showDatatip="true"
+//                            
+//                            barPadding="1"
+//                            barMargin="1"
+//                            xaxisAngle="-90"
+//                            animate="true"
+//                            stacked="true">
+    
+    
 
     ChartSeries countSeries = new ChartSeries("count");
     ChartSeries countSelectedSeries = new ChartSeries("countSelected");
@@ -134,6 +160,9 @@ public class Histogram {
   }
 
   private void putInAppropriateBin(CmpdListMemberVO clmVO) {
+    
+    NumberFormat nf2 = new DecimalFormat();
+    nf2.setMaximumFractionDigits(2);
 
     double val = getProperty(clmVO);
 
@@ -150,7 +179,7 @@ public class Histogram {
       if (!found) {
         System.out.println("No bin found in putInAppropriateBin: " + val + " for property: " + this.propertyName);
         for (HistogramBin b : binList) {
-          System.out.println(" bin minCut, maxCut: " + b.getMinCut() + " " + b.getMaxCut());
+          System.out.println(" bin minCut, maxCut: " + nf2.format(b.getMinCut()) + " " + nf2.format(b.getMaxCut()));
         }
       }
     }
@@ -256,11 +285,11 @@ public class Histogram {
     this.binList = binList;
   }
 
-  public ExtendedCartesianChartModel getChartModel() {
+  public BarChartModel getChartModel() {
     return chartModel;
   }
 
-  public void setChartModel(ExtendedCartesianChartModel chartModel) {
+  public void setChartModel(BarChartModel chartModel) {
     this.chartModel = chartModel;
   }
 }

@@ -62,7 +62,62 @@
 
     <p:spacer height="20" width="100%"/>
 
+    <p:accordionPanel>
+      <p:tab title="Cmpd Parameters">
+        <p:selectManyCheckbox id="cmpdGrid"
+                              value="#{listManagerController.selectedCmpdParameters}" 
+                              layout="grid" 
+                              columns="5">
+          <f:selectItems value="#{listManagerController.availableCmpdParameters}" 
+                         var="cmpdParam" 
+                         itemLabel="#{cmpdParam}" 
+                         itemValue="#{cmpdParam}" />
+        </p:selectManyCheckbox>
+      </p:tab>
+      <p:tab title="PChem Parameters">        
+        <p:selectManyCheckbox id="physChemGrid"
+                              value="#{listManagerController.selectedPChemParameters}" 
+                              layout="grid" 
+                              columns="5">
+          <f:selectItems value="#{listManagerController.availablePChemParameters}" 
+                         var="pChemParam" 
+                         itemLabel="#{pChemParam}" 
+                         itemValue="#{pChemParam}" />
+        </p:selectManyCheckbox>
+      </p:tab>
+      <p:tab title="Structure Parameters">
+        <p:selectManyCheckbox id="structureGrid"
+                              value="#{listManagerController.selectedStructureParameters}" 
+                              layout="grid" 
+                              columns="5">
+          <f:selectItems value="#{listManagerController.availableStructureParameters}" 
+                         var="strucParam" 
+                         itemLabel="#{strucParam}" 
+                         itemValue="#{strucParam}" />
+        </p:selectManyCheckbox>
+      </p:tab>
+      <p:tab title="BioData Parameters">
+        <p:selectManyCheckbox id="bioDataGrid"
+                              value="#{listManagerController.selectedBioDataParameters}" 
+                              layout="grid" 
+                              columns="5">
+          <f:selectItems value="#{listManagerController.availableBioDataParameters}" 
+                         var="bioDatParam" 
+                         itemLabel="#{bioDatParam}" 
+                         itemValue="#{bioDatParam}" />
+        </p:selectManyCheckbox>
+      </p:tab>
+    </p:accordionPanel>
+
+    <p:commandButton action="#{listManagerController.performUpdateColumns()}" 
+                     value="Update" 
+                     icon="ui-icon-refresh" 
+                     oncomplete="PF('activeListTblWidgetVar').clearFilters()"/>
+
+    <p:spacer height="20" width="100%"/>
+
     <p:dataTable  id="activeListTbl"
+                  widgetVar="activeListTblWidgetVar"
                   var="listMember" 
                   value="#{listManagerController.activeList.cmpdListMembers}" 
                   rows="50"                        
@@ -78,13 +133,17 @@
       <p:ajax event="rowUnselect" listener="#{listContentController.onRowDeSelect}" />
 
       <f:facet name="header">                
-        <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>                    
+        <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
       </f:facet>
+
       <p:column headerText="All"
-                resizable="true" 
-                selectionMode="multiple" 
+                resizable="true" selectionMode="multiple" 
                 style="width:4%" 
                 exportable="false"/>
+
+      <p:column headerText="Comment" resizable="true">                                
+        <h:outputText value="#{listMember.listMemberComment}"/>
+      </p:column>   
 
       <p:column headerText="Click for details" resizable="true">
 
@@ -103,39 +162,20 @@
                         url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
         </h:graphicImage>
 
-        <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-          <h:graphicImage alt="png-fragment-structure"
-                          width="75" height="75"
-                          id="structureImg"
-                          url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(fragSmiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
-          </h:graphicImage>
-        </p:dataGrid>
-
       </p:column>
 
-      <p:column headerText="conf" resizable="true" sortBy="#{listMember.cmpd.conf}">                                
-        <h:outputText value="#{listMember.cmpd.conf}"/>
-      </p:column>  
-
-      <!--
-
       <p:column headerText="adHocCmpdId" resizable="true" sortBy="#{listMember.cmpd.adHocCmpdId}">                                
-          <h:outputText value="#{listMember.cmpd.adHocCmpdId}"/>
+        <h:outputText value="#{listMember.cmpd.adHocCmpdId}"/>
       </p:column>  
 
       <p:column headerText="originalAdHocCmpdId" resizable="true" sortBy="#{listMember.cmpd.originalAdHocCmpdId}">                                
-          <h:outputText value="#{listMember.cmpd.originalAdHocCmpdId}"/>
+        <h:outputText value="#{listMember.cmpd.originalAdHocCmpdId}"/>
       </p:column>  
 
       <p:column headerText="nscCmpdId" resizable="true" sortBy="#{listMember.cmpd.nscCmpdId}">                                
-          <h:outputText value="#{listMember.cmpd.nscCmpdId}"/>
+        <h:outputText value="#{listMember.cmpd.nscCmpdId}"/>
       </p:column>  
 
-      -->
-
-      <p:column headerText="Comment" resizable="true">                                
-        <h:outputText value="#{listMember.listMemberComment}"/>
-      </p:column>             
 
       <p:column headerText="NSC Cmpd Type" resizable="true"
                 filterBy="#{listMember.cmpd.nscCmpdType}"
@@ -147,7 +187,7 @@
                 resizable="true" 
                 sortBy="#{listMember.cmpd.countCmpdFragments}">                                
         <h:outputText value="#{listMember.cmpd.countCmpdFragments}"/>
-      </p:column>                         
+      </p:column>    
 
       <p:column headerText="NSC" resizable="true" sortBy="#{listMember.cmpd.nsc}">                                
         <h:outputText value="#{listMember.cmpd.nsc}"/>
@@ -161,27 +201,23 @@
         <h:outputText value="#{listMember.cmpd.name}"/>                
       </p:column>     
 
-      <p:column headerText="Fragments" 
-                resizable="true"> 
-
-        <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-          <h:graphicImage alt="png-fragment-structure"
-                          width="75" height="75"
-                          id="structureImg"
-                          url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(fragSmiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
-          </h:graphicImage>
-        </p:dataGrid>
-
+      <p:column headerText="Inventory" resizable="true" sortBy="#{listMember.cmpd.inventory}">                                
+        <h:outputText value="#{listMember.cmpd.inventory}"/>
       </p:column>
 
-      <p:column headerText="PseudoAtoms" 
-                resizable="true"> 
-        <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}"/>                
+      <p:column headerText="NCI60" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.nci60}">                
+        <f:facet name="header">                
+          <h:outputText value="NCI60"/>                
+        </f:facet>              
+        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.nci60}"/>
       </p:column>
 
-      <p:column headerText="Mtxt" 
-                resizable="true">             
-        <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}"/>
+      <p:column headerText="HF" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.hf}">                
+        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.hf}"/>
+      </p:column>
+
+      <p:column headerText="XENO" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.xeno}">                
+        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.xeno}"/>
       </p:column>
 
       <p:column headerText="Aliases" resizable="true">                
@@ -208,56 +244,18 @@
         </p:scrollPanel>
       </p:column>   
 
-      <p:column headerText="Inventory" resizable="true" sortBy="#{listMember.cmpd.inventory}">                                
-        <h:outputText value="#{listMember.cmpd.inventory}"/>
-      </p:column>
+      <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
 
-      <p:column headerText="NCI60" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.nci60}">                
-        <f:facet name="header">                
-          <h:outputText value="NCI60"/>                
-        </f:facet>              
-        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.nci60}"/>
-      </p:column>
-
-      <p:column headerText="HF" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.hf}">                
-        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.hf}"/>
-      </p:column>
-
-      <p:column headerText="XENO" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.xeno}">                
-        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.xeno}"/>
-      </p:column>
-
-      <p:column headerText="MF" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}"/>
-      </p:column>
-
-      <p:column headerText="MW" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
-          <f:convertNumber pattern="#0.00" />
-        </h:outputText>
-      </p:column>
-
-      #{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}
-
-      <p:column headerText="aLogP" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP}">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
-          <f:convertNumber pattern="#0.00" />
-        </h:outputText>
-      </p:column>
-
-      <p:column headerText="HBA" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}"/>
-      </p:column>
-
-      <p:column headerText="HBD" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}"/>
-      </p:column>
-
-      <p:column headerText="SA" resizable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
-          <f:convertNumber pattern="#0.00" />
-        </h:outputText>
-      </p:column>
+      <p:columns value="#{listManagerController.physChemColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{physchem[column.property]}" 
+                 filterBy="#{physchem[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{physchem[column.property]}" />
+      </p:columns>
 
       <p:column headerText="SMILES" resizable="true">                
         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}">

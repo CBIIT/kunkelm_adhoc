@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -16,8 +17,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.vo.CmpdFragmentVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
@@ -60,6 +61,7 @@ public class ListManagerController implements Serializable {
   private CmpdListVO agnosticList;
   //
   private CmpdListVO activeList;
+
   // Are these still needed, or are the ones in ListContentController sufficient?     
   private CmpdListMemberVO selectedActiveListMember;
   private List<CmpdListMemberVO> selectedActiveListMembers;
@@ -73,9 +75,295 @@ public class ListManagerController implements Serializable {
   private CmpdListMemberVO selectedTempListMember;
   private List<CmpdListMemberVO> selectedTempListMembers;
 
+// #####    #   #  #    #    ##    #    #     #     ####
+// #    #    # #   ##   #   #  #   ##  ##     #    #    #
+// #    #     #    # #  #  #    #  # ## #     #    #
+// #    #     #    #  # #  ######  #    #     #    #
+// #    #     #    #   ##  #    #  #    #     #    #    #
+// #####      #    #    #  #    #  #    #     #     ####
+//
+//
+// #####    ####   #    #  ######  #    #
+// #    #  #    #  #    #  #       ##  ##
+// #    #  #       ######  #####   # ## #
+// #####   #       #    #  #       #    #
+// #       #    #  #    #  #       #    #
+// #        ####   #    #  ######  #    #
+//
+//
+//  ####    ####   #       #    #  #    #  #    #   ####
+// #    #  #    #  #       #    #  ##  ##  ##   #  #
+// #       #    #  #       #    #  # ## #  # #  #   ####
+// #       #    #  #       #    #  #    #  #  # #       #
+// #    #  #    #  #       #    #  #    #  #   ##  #    #
+//  ####    ####   ######   ####   #    #  #    #   ####
+  private List<String> availablePChemParameters;
+  private List<String> selectedPChemParameters;
+  private static HashMap<String, String> VALID_PCHEM_KEYS;
+  private List<ColumnModel> physChemColumns;
+
+  private List<String> availableStructureParameters;
+  private List<String> selectedStructureParameters;
+  private static HashMap<String, String> VALID_STRUCTURE_KEYS;
+  private List<ColumnModel> structureColumns;
+
+  private List<String> availableCmpdParameters;
+  private List<String> selectedCmpdParameters;
+  private static HashMap<String, String> VALID_CMPD_KEYS;
+  private List<ColumnModel> cmpdColumns;
+
+  private List<String> availableBioDataParameters;
+  private List<String> selectedBioDataParameters;
+  private static HashMap<String, String> VALID_BIODATA_KEYS;
+  private List<ColumnModel> biodataColumns;
+
+  // called from init
+  private void setupForDynamicPChemColumns() {
+
+    // pChem
+    HashMap<String, String> hm = new HashMap<String, String>();
+    hm.put("Molecular Weight", "molecularWeight");
+    hm.put("Molecular Formula", "molecularFormula");
+    hm.put("logD", "logD");
+    hm.put("Count H Bond Acceptors", "countHydBondAcceptors");
+    hm.put("Count H Bond Donors", "countHydBondDonors");
+    hm.put("SurfaceArea", "surfaceArea");
+    hm.put("Solubility", "solubility");
+    hm.put("Count Rings", "countRings");
+    hm.put("Count Atoms", "countAtoms");
+    hm.put("Count Bonds", "countBonds");
+    hm.put("Count Single Bonds", "countSingleBonds");
+    hm.put("Count Double Bonds", "countDoubleBonds");
+    hm.put("Count Triple Bonds", "countTripleBonds");
+    hm.put("Count Rotatable Bonds", "countRotatableBonds");
+    hm.put("Count Hydrogen Atoms", "countHydrogenAtoms");
+    hm.put("Count Metal Atoms", "countMetalAtoms");
+    hm.put("Count Heavy Atoms", "countHeavyAtoms");
+    hm.put("Count Positive Atoms", "countPositiveAtoms");
+    hm.put("Count Negative Atoms", "countNegativeAtoms");
+    hm.put("Count Ring Bonds", "countRingBonds");
+    hm.put("Count Stereo Atoms", "countStereoAtoms");
+    hm.put("Count Stereo Bonds", "countStereoBonds");
+    hm.put("Count Ring Assemblies", "countRingAssemblies");
+    hm.put("Count Aromatic Bonds", "countAromaticBonds");
+    hm.put("Count Aromatic Rings", "countAromaticRings");
+    hm.put("Formal Charge", "formalCharge");
+    hm.put("aLogP", "theALogP");
+
+    this.VALID_PCHEM_KEYS = hm;
+
+    this.availablePChemParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availablePChemParameters, null);
+
+    // Structure
+    hm = new HashMap<String, String>();
+    hm.put("Canonical Smiles", "canSmi");
+    hm.put("Canonical Tautomer", "canTaut");
+    hm.put("Canonical Tautomer, Strip Stereo", "canTautStripStero");
+    hm.put("InChI", "inchi");
+    hm.put("InChI Auxilliary", "inchiAux");
+
+    this.VALID_STRUCTURE_KEYS = hm;
+
+    this.availableStructureParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availableStructureParameters, null);
+
+    // cmpd
+    hm = new HashMap<String, String>();
+    hm.put("adHocCmpdId", "adHocCmpdId");
+    hm.put("originalAdHocCmpdId", "originalAdHocCmpdId");
+    hm.put("nscCmpdId", "nscCmpdId");
+    hm.put("NSC", "nsc");
+    hm.put("Name", "name");
+    hm.put("Inventory", "inventory");
+    hm.put("Aliases", "aliases");
+    hm.put("Projects", "projects");
+    hm.put("Plates", "plates");
+    hm.put("Prefix", "prefix");
+    hm.put("Conf", "conf");
+    hm.put("Distribution", "distribution");
+    hm.put("CAS", "cas");
+    hm.put("Count Fragments", "countFragments");
+
+    this.VALID_CMPD_KEYS = hm;
+
+    this.availableCmpdParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availableCmpdParameters, null);
+
+    // biodata
+    hm = new HashMap<String, String>();
+    hm.put("NCI60", "listMember.cmpd.cmpdBioAssay.nci60");
+    hm.put("HF", "listMember.cmpd.cmpdBioAssay.hf");
+    hm.put("XENO", "listMember.cmpd.cmpdBioAssay.xeno");
+    
+    this.VALID_BIODATA_KEYS = hm;
+    
+    this.availableBioDataParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availableBioDataParameters, null);
+
+  }
+
+  private void createDynamicColumns() {
+
+    this.physChemColumns = new ArrayList<ColumnModel>();
+
+    for (String columnKey : this.selectedPChemParameters) {
+
+      String key = columnKey.trim();
+
+      if (VALID_PCHEM_KEYS.containsKey(key)) {
+        this.physChemColumns.add(new ColumnModel(key, VALID_PCHEM_KEYS.get(key)));
+      }
+    }
+  }
+
+  public String performUpdateColumns() throws Exception {
+
+    try {
+
+      //reset table state
+      UIComponent table = FacesContext.getCurrentInstance().getViewRoot().findComponent(":datasystemForm:activeListTbl");
+      table.setValueExpression("sortBy", null);
+
+      //update physChemColumns
+      createDynamicColumns();
+
+    } catch (Exception e) {
+      System.out.println("Exception in performUpdateColumns");
+      e.printStackTrace();
+      throw e;
+    }
+
+    return "/webpages/activeListTableDynamicColumns.xhtml?faces-redirect=true";
+
+  }
+
+  static public class ColumnModel implements Serializable {
+
+    private String header;
+    private String property;
+
+    public ColumnModel(String header, String property) {
+      this.header = header;
+      this.property = property;
+    }
+
+    public String getHeader() {
+      return header;
+    }
+
+    public String getProperty() {
+      return property;
+    }
+
+  }
+
+  public List<String> getAvailablePChemParameters() {
+    return availablePChemParameters;
+  }
+
+  public void setAvailablePChemParameters(List<String> availablePChemParameters) {
+    this.availablePChemParameters = availablePChemParameters;
+  }
+
+  public List<String> getSelectedPChemParameters() {
+    return selectedPChemParameters;
+  }
+
+  public void setSelectedPChemParameters(List<String> selectedPChemParameters) {
+    this.selectedPChemParameters = selectedPChemParameters;
+  }
+
+  public List<ColumnModel> getPhysChemColumns() {
+    return physChemColumns;
+  }
+
+  public void setPhysChemColumns(List<ColumnModel> physChemColumns) {
+    this.physChemColumns = physChemColumns;
+  }
+
+  public List<String> getAvailableStructureParameters() {
+    return availableStructureParameters;
+  }
+
+  public void setAvailableStructureParameters(List<String> availableStructureParameters) {
+    this.availableStructureParameters = availableStructureParameters;
+  }
+
+  public List<String> getSelectedStructureParameters() {
+    return selectedStructureParameters;
+  }
+
+  public void setSelectedStructureParameters(List<String> selectedStructureParameters) {
+    this.selectedStructureParameters = selectedStructureParameters;
+  }
+
+  public List<ColumnModel> getStructureColumns() {
+    return structureColumns;
+  }
+
+  public void setStructureColumns(List<ColumnModel> structureColumns) {
+    this.structureColumns = structureColumns;
+  }
+
+  public List<String> getAvailableCmpdParameters() {
+    return availableCmpdParameters;
+  }
+
+  public void setAvailableCmpdParameters(List<String> availableCmpdParameters) {
+    this.availableCmpdParameters = availableCmpdParameters;
+  }
+
+  public List<String> getSelectedCmpdParameters() {
+    return selectedCmpdParameters;
+  }
+
+  public void setSelectedCmpdParameters(List<String> selectedCmpdParameters) {
+    this.selectedCmpdParameters = selectedCmpdParameters;
+  }
+
+  public List<ColumnModel> getCmpdColumns() {
+    return cmpdColumns;
+  }
+
+  public void setCmpdColumns(List<ColumnModel> cmpdColumns) {
+    this.cmpdColumns = cmpdColumns;
+  }
+
+  public List<String> getAvailableBioDataParameters() {
+    return availableBioDataParameters;
+  }
+
+  public void setAvailableBioDataParameters(List<String> availableBioDataParameters) {
+    this.availableBioDataParameters = availableBioDataParameters;
+  }
+
+  public List<String> getSelectedBioDataParameters() {
+    return selectedBioDataParameters;
+  }
+
+  public void setSelectedBioDataParameters(List<String> selectedBioDataParameters) {
+    this.selectedBioDataParameters = selectedBioDataParameters;
+  }
+
+  public List<ColumnModel> getBiodataColumns() {
+    return biodataColumns;
+  }
+
+  public void setBiodataColumns(List<ColumnModel> biodataColumns) {
+    this.biodataColumns = biodataColumns;
+  }
+  
+// ######  #    #  #####            ####    ####   #        ####
+// #       ##   #  #    #          #    #  #    #  #       #
+// #####   # #  #  #    #          #       #    #  #        ####
+// #       #  # #  #    #          #       #    #  #            #
+// #       #   ##  #    #          #    #  #    #  #       #    #
+// ######  #    #  #####            ####    ####   ######   ####
   @PostConstruct
   public void init() {
     this.performUpdateAvailableLists();
+    this.setupForDynamicPChemColumns();
   }
 
   public ListManagerController() {
@@ -165,7 +453,7 @@ public class ListManagerController implements Serializable {
     this.availableLists = new ArrayList<CmpdListVO>();
 
     try {
-      
+
       List<CmpdListVO> justFetchedLists = HelperCmpdList.showAvailableCmpdLists(this.sessionController.getLoggedUser());
 
       //
@@ -325,12 +613,11 @@ public class ListManagerController implements Serializable {
   }
 
   /**
-   * 
+   *
    * @param smiles
    * @param title
    * @return
-   * @throws Exception 
-   * used to render structure images for postProcessXLS
+   * @throws Exception used to render structure images for postProcessXLS
    */
   public byte[] getStructureImage(String smiles, String title) throws Exception {
 
@@ -571,5 +858,6 @@ public class ListManagerController implements Serializable {
   public void setSelectedActiveListMembers(List<CmpdListMemberVO> selectedActiveListMembers) {
     this.selectedActiveListMembers = selectedActiveListMembers;
   }
-    // </editor-fold>
+  // </editor-fold>
+
 }

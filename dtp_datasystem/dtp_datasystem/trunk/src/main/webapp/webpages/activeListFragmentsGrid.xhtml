@@ -11,7 +11,7 @@
 
   <ui:define name="content">
 
-    <ui:include src="/webpages/templates/active_list_nav.xhtml"/>
+    <ui:remove><ui:include src="/webpages/templates/active_list_nav.xhtml"/></ui:remove>
 
     <p:fieldset legend="Testing Select from Grid Layouts">  
       <p:commandButton action="#{listContentController.performMySelect()}"       

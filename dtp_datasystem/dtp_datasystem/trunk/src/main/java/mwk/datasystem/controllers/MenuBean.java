@@ -5,11 +5,14 @@
  */
 package mwk.datasystem.controllers;
 
+import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuElement;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -18,93 +21,149 @@ import org.primefaces.model.menu.MenuModel;
  */
 @ManagedBean
 @SessionScoped
-public class MenuBean {
+public class MenuBean implements Serializable {
 
-    private MenuModel model;
+  private MenuModel model;
 
-    public MenuBean() {
+  public MenuBean() {
 
-        try {
+    try {
 
-            model = new DefaultMenuModel();
+      model = new DefaultMenuModel();
 
-            //First submenu
-            DefaultSubMenu firstSubmenu = new DefaultSubMenu("Data System Navigation");
+      DefaultMenuItem item = new DefaultMenuItem();
 
-            DefaultMenuItem item = new DefaultMenuItem();
+      //First submenu
+      DefaultSubMenu datSysNav = new DefaultSubMenu("Data System Navigation");
+      datSysNav.setIcon("fa-navicon");
+      datSysNav.setId("datasystemNavMenu");
 
-            item = new DefaultMenuItem("Available Lists");
-            item.setAjax(false);
-            item.setOutcome("/webpages/availableLists?faces-redirect=true");
-            firstSubmenu.addElement(item);
+      item = new DefaultMenuItem("Show Available Lists");
+      item.setIcon("fa-eye");
+      item.setAjax(false);
+      item.setOutcome("/webpages/availableLists?faces-redirect=true");
+      datSysNav.addElement(item);
 
-            item = new DefaultMenuItem("Active List");
-            item.setAjax(false);
-            item.setOutcome("/webpages/activeListTable?faces-redirect=true");
-            firstSubmenu.addElement(item);
+      item = new DefaultMenuItem("Go To Active List");
+      item.setIcon("fa-list");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListTable?faces-redirect=true");
+      datSysNav.addElement(item);
 
-            item = new DefaultMenuItem("Create List");
-            item.setAjax(false);
-            item.setOutcome("/webpages/createList?faces-redirect=true");
-            firstSubmenu.addElement(item);
+      item = new DefaultMenuItem("Create List by Search");
+      item.setIcon("fa-search");
+      item.setAjax(false);
+      item.setOutcome("/webpages/createList?faces-redirect=true");
+      datSysNav.addElement(item);
 
-            item = new DefaultMenuItem("Upload List");
-            item.setAjax(false);
-            item.setOutcome("/webpages/uploadList?faces-redirect=true");
-            firstSubmenu.addElement(item);
+      item = new DefaultMenuItem("Create List from File Upload");
+      item.setIcon("fa-upload");
+      item.setAjax(false);      
+      item.setOutcome("/webpages/uploadList?faces-redirect=true");
+      datSysNav.addElement(item);
 
-            item = new DefaultMenuItem("List Logic");
-            item.setAjax(false);
-            item.setOutcome("/webpages/listLogic?faces-redirect=true");
-            firstSubmenu.addElement(item);
+      item = new DefaultMenuItem("List Logic");
+      item.setAjax(false);
+      item.setOutcome("/webpages/listLogic?faces-redirect=true");
+      datSysNav.addElement(item);
 
-            item = new DefaultMenuItem("chemDoodle");
-            item.setAjax(false);
-            item.setOutcome("/webpages/chemDoodle?faces-redirect=true");
-            firstSubmenu.addElement(item);
-            
-//            <p
-//            :menuitem ajax = "true" 
-//            action = "#{saltController.performListAllSalts()}"
-//            value = "Salts Workbench" /
-//                    > <p
-//            :menuitem ajax = "false"
-//            action = "#{sessionController.logout()}"
-//            value = "Logout" /
-//                    > 
-            
-            model.addElement(firstSubmenu);
+      item = new DefaultMenuItem("Create List by Structure Search");
+      item.setIcon("fa-search");
+      item.setAjax(false);
+      item.setOutcome("/webpages/chemDoodle?faces-redirect=true");
+      datSysNav.addElement(item);
 
-            //Second submenu
-            DefaultSubMenu secondSubmenu = new DefaultSubMenu("Dynamic Actions");
+      item = new DefaultMenuItem("Salts Workbench");
+      item.setIcon("fa-cogs");
+      item.setCommand("#{saltController.handleListAllSalts}");
+      datSysNav.addElement(item);
 
-            item = new DefaultMenuItem("Save");
-            item.setIcon("ui-icon-disk");
-            item.setCommand("#{menuBean.save}");
-            item.setUpdate("msgs");
-            secondSubmenu.addElement(item);
+      model.addElement(datSysNav);
 
-            item = new DefaultMenuItem("Delete");
-            item.setIcon("ui-icon-close");
-            item.setCommand("#{menuBean.delete}");
-            item.setAjax(false);
-            secondSubmenu.addElement(item);
+      // ActiveList
+      DefaultSubMenu actLisNav = new DefaultSubMenu("Active List Navigation");
+      actLisNav.setIcon("fa-bicycle");
+      datSysNav.setId("actLisNav");
 
-            item = new DefaultMenuItem("Redirect");
-            item.setIcon("ui-icon-search");
-            item.setCommand("#{menuBean.redirect}");
-            secondSubmenu.addElement(item);
+      item = new DefaultMenuItem("View as Table");
+      item.setIcon("fa-table");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListTable?faces-redirect=true");
+      actLisNav.addElement(item);
 
-            model.addElement(secondSubmenu);
+      item = new DefaultMenuItem("View as Table with Fragments");
+      item.setIcon("fa-table");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListFragmentsTable?faces-redirect=true");
+      actLisNav.addElement(item);
 
-        } catch (Exception e) {
-            System.out.println("Exception in MenuBean");
-            e.printStackTrace();
+      item = new DefaultMenuItem("View as Form");
+      item.setIcon("fa-square-o");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListForm?faces-redirect=true");
+      actLisNav.addElement(item);
+
+      item = new DefaultMenuItem("View As Grid");
+      item.setIcon("fa-th");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListGrid?faces-redirect=true");
+      actLisNav.addElement(item);
+
+      item = new DefaultMenuItem("View as Grid with Fragments");
+      item.setIcon("fa-th");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListFragmentsGrid?faces-redirect=true");
+      actLisNav.addElement(item);
+
+      item = new DefaultMenuItem("Histograms and ScatterPlots");
+      item.setIcon("fa-bar-chart");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListHistograms?faces-redirect=true");
+      actLisNav.addElement(item);
+
+      model.addElement(actLisNav);
+
+      // top-level logout
+      item = new DefaultMenuItem("Logout");
+      item.setCommand("#{sessionController.handleLogout}");
+      model.addElement(item);
+
+    } catch (Exception e) {
+      System.out.println("Exception in MenuBean");
+      e.printStackTrace();
+    }
+
+    manipulateModel();
+
+  }
+
+  public MenuModel getModel() {
+    return model;
+  }
+
+  private void manipulateModel() {
+
+    List<MenuElement> menuElementList = this.model.getElements();
+
+    for (MenuElement me : menuElementList) {
+      System.out.println("me: " + me.getId());
+      System.out.println("me: " + me.getClass().getName());
+
+      if (me instanceof DefaultSubMenu) {
+        DefaultSubMenu dsm = (DefaultSubMenu) me;
+        if (dsm.getLabel().equals("datSysNav")) {
+          System.out.println("This is datSysNav");
+        } else if (dsm.getLabel().equals("actLisNav")) {
+          System.out.println("This is actLisNav");
+        } else {
+          System.out.println("This is some other submenu");
+          System.out.println(dsm.getLabel());
         }
 
+      }
+
     }
 
-    public MenuModel getModel() {
-        return model;
-    }
+  }
+
 }

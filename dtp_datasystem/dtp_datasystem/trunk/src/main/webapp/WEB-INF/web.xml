@@ -14,7 +14,6 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-    
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -23,17 +22,16 @@
     <servlet>
         <servlet-name>StructureServlet</servlet-name>
         <servlet-class>structureservlet.StructureServlet</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>LegacyImageServlet</servlet-name>
         <servlet-class>legacyimageservlet.LegacyImageServlet</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
         <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StructureServlet</servlet-name>
         <url-pattern>/StructureServlet</url-pattern>
@@ -42,7 +40,6 @@
         <servlet-name>LegacyImageServlet</servlet-name>
         <url-pattern>/LegacyImageServlet</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30
@@ -88,7 +85,6 @@
     <security-role>
         <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
     </security-role>
-    
     <!--  
   	<Realm className="org.apache.catalina.realm.JNDIRealm" 
 				debug="10"				

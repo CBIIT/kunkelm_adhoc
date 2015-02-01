@@ -10,6 +10,9 @@
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
 my $t = time;
 my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
@@ -100,22 +103,29 @@ CmpdLegacyCmpd cmpdLegacyCmpd;
 ";
 
 
-open ( JAVAPART, ">JAVAPART") or die "Can't open JAVAPART\n";
-open ( FORMPART, ">FORMPART") or die "Can't open FORMPART\n";
-open ( OUTPUTPARTCOLUMNS, ">OUTPUTPARTCOLUMNS") or die "Can't open OUTPUTPARTCOLUMNS\n";
-open ( OUTPUTPARTLABELVALUE, ">OUTPUTPARTLABELVALUE") or die "Can't open OUTPUTPARTLABELVALUE\n";
-open ( HIBERNATEPART, ">HIBERNATEPART") or die "Can't open HIBERNATEPART\n";
+open ( javaPart, ">javaPart") or die "Can't open javaPart\n";
+open ( formatPart, ">formatPart") or die "Can't open formatPart\n";
+open ( outputPartColumnFormat, ">outputPartColumnFormat") or die "Can't open outputPartColumnFormat\n";
+open ( outputPartLabelValue, ">outputPartLabelValue") or die "Can't open outputPartLabelValue\n";
+open ( outputPartAddToColumnModelList, ">outputPartAddToColumnModelList") or die "Can't open outputPartAddToColumnModelList\n";
+open ( hibernatePart, ">hibernatePart") or die "Can't open hibernatePart\n";
 
 #--------------------------------------------------------------------
 #--------------------------------------------------------------------
 #--------------------------------------------------------------------
+
+my @cumulativeFieldNames = ();
 
 print "$pChemVars\n";
 
 chomp($pChemVars);
+
 my @lines = split(/;/, $pChemVars);
+
 foreach my $line(@lines){
+	
 	chomp($line);
+	
 	my @splitLine = split(/\s/, $line);
 	my $varType = $splitLine[1];
 	my $varName = $splitLine[2];
@@ -125,10 +135,10 @@ foreach my $line(@lines){
 		
 		print "---------min_$varName max_$varName\n";
 		
-		print JAVAPART "private $varType min_$varName;\n";
-		print JAVAPART "private $varType max_$varName;\n";
+		print javaPart "private $varType min_$varName;\n";
+		print javaPart "private $varType max_$varName;\n";
 		
-		print FORMPART qq[
+		print formatPart qq[
 		<p:panel header="$varName" style="display:inline-block;border: none;">
 		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
 		<br/>
@@ -140,18 +150,24 @@ foreach my $line(@lines){
 		</p:panel>
 		];	
 		
-		print OUTPUTPARTCOLUMNS qq[
+		print outputPartColumnFormat qq[
 		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
 		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
 		</p:column>
 		];
 		
-		print OUTPUTPARTLABELVALUE qq[
+		print outputPartLabelValue qq[
 		<p:outputLabel value="$varName"/>                
 		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
 		];
 		
-		print HIBERNATEPART qq[		
+		print outputPartAddToColumnModelList qq[
+		hm.put("$varName", "listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName");
+		];
+		
+		push @cumulativeFieldNames, qq["$varName"];
+		
+		print hibernatePart qq[		
 		if (this.min_$varName != null && this.max_$varName != null){
 		// between
 		} else if (this.min_$varName != null){
@@ -165,10 +181,10 @@ foreach my $line(@lines){
 		
 		print "---------min_$varName max_$varName\n";
 		
-		print JAVAPART "private $varType min_$varName;\n";
-		print JAVAPART "private $varType max_$varName;\n";
+		print javaPart "private $varType min_$varName;\n";
+		print javaPart "private $varType max_$varName;\n";
 		
-		print FORMPART qq[
+		print formatPart qq[
 		<p:panel header="$varName" style="display:inline-block;border: none;">
 		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
 		<br/>
@@ -180,7 +196,7 @@ foreach my $line(@lines){
 		</p:panel>
 		];
 		
-		print OUTPUTPARTCOLUMNS qq[
+		print outputPartColumnFormat qq[
 		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
 		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
 		<f:convertNumber pattern="#0.00" />
@@ -188,14 +204,20 @@ foreach my $line(@lines){
 		</p:column>
 		];
 		
-		print OUTPUTPARTLABELVALUE qq[
+		print outputPartLabelValue qq[
 		<p:outputLabel value="$varName"/>
 		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
 		<f:convertNumber pattern="#0.00" />
 		</h:outputText>
 		];
 		
-		print HIBERNATEPART qq[		
+		print outputPartAddToColumnModelList qq[
+		hm.put("$varName", "listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName");
+		];
+		
+		push @cumulativeFieldNames, qq["$varName"];
+		
+		print hibernatePart qq[		
 		if (this.min_$varName != null && this.max_$varName != null){
 		// between
 		} else if (this.min_$varName != null){
@@ -208,9 +230,9 @@ foreach my $line(@lines){
 	} elsif ($varType eq "String"){
 		
 		print "---------$varName\n";
-		print JAVAPART "private $varType $varName;\n";
+		print javaPart "private $varType $varName;\n";
 		
-		print FORMPART qq[
+		print formatPart qq[
 		<p:panel header="$varName" style="display:inline-block;border: none;">
 		<h:outputLabel for="$varName\_id" value="$varName"/>
 		<br/>
@@ -218,18 +240,24 @@ foreach my $line(@lines){
 		</p:panel>
 		];
 		
-		print OUTPUTPARTCOLUMNS qq[
+		print outputPartColumnFormat qq[
 		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
 		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
 		</p:column>
 		];
 		
-		print OUTPUTPARTLABELVALUE qq[
+		print outputPartLabelValue qq[
 		<p:outputLabel value="$varName"/>
 		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
 		];
 		
-		print HIBERNATEPART qq[		
+		print outputPartAddToColumnModelList qq[
+		hm.put("$varName", "listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName");
+		];
+		
+		push @cumulativeFieldNames, qq["$varName"];
+		
+		print hibernatePart qq[		
 		if (this.$varName != null){
 		// eq
 		}
@@ -240,14 +268,17 @@ foreach my $line(@lines){
 	
 }
 
+print outputPartAddToColumnModelList join(',', @cumulativeFieldNames);
+
 #print "$strcVars\n";
 #print "$nscCmpdVars\n";
 
-close JAVAPART;
-close FORMPART;
-close OUTPUTPARTCOLUMNS;
-close OUTPUTPARTLABELVALUE;
-close HIBERNATEPART;
+close javaPart;
+close formatPart;
+close outputPartColumnFormat;
+close outputPartLabelValue;
+close outputPartAddToColumnModelList;
+close hibernatePart;
 
 $t = time;
 my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
