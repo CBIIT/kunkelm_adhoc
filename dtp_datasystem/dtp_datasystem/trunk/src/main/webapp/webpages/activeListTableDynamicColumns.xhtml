@@ -145,31 +145,34 @@
           <p:column rowspan="2" headerText="All" />
           <p:column rowspan="2" headerText="Comment" />
           <p:column rowspan="2" headerText="Structure" />
-          <p:column colspan="#{fn:length(listManagerController.selectedCmpdParameters)}" headerText="Cmpd" />
-          <p:column colspan="#{fn:length(listManagerController.selectedStructureParameters)}" headerText="Structure" />
-          <p:column colspan="#{fn:length(listManagerController.selectedPChemParameters)}" headerText="pChem" />
-          <p:column colspan="#{fn:length(listManagerController.selectedBioDataParameters)}" headerText="BioData" />
+          <p:column rendered="#{!empty listManagerController.selectedCmpdParameters}"
+                    colspan="#{fn:length(listManagerController.selectedCmpdParameters)}" 
+                    headerText="Cmpd" />
+          <p:column rendered="#{!empty listManagerController.selectedStructureParameters}"
+                    colspan="#{fn:length(listManagerController.selectedStructureParameters)}" 
+                    headerText="Structure" />
+          <p:column rendered="#{!empty listManagerController.selectedPChemParameters}"
+                    colspan="#{fn:length(listManagerController.selectedPChemParameters)}" 
+                    headerText="pChem" />
+          <p:column rendered="#{!empty listManagerController.selectedBioDataParameters}"
+                    colspan="#{fn:length(listManagerController.selectedBioDataParameters)}" 
+                    headerText="BioData" />
         </p:row>
         <p:row>
-          <p:column headerText="no cmpd params" rendered="#{empty listManagerController.selectedCmpdParameters}" />
-
+          
           <ui:repeat value="#{listManagerController.selectedCmpdParameters}" var="scp">
             <p:column headerText="#{scp}" />
           </ui:repeat>
 
-          <p:column headerText="no strc params" rendered="#{empty listManagerController.selectedStructureParameters}" />
-
+          
           <ui:repeat value="#{listManagerController.selectedStructureParameters}" var="ssp">
             <p:column headerText="#{ssp}" />
           </ui:repeat>
 
-          <p:column headerText="no pChem params" rendered="#{empty listManagerController.selectedPChemParameters}" />
-
+          
           <ui:repeat value="#{listManagerController.selectedPChemParameters}" var="spcp">
             <p:column headerText="#{spcp}" />
           </ui:repeat>
-
-          <p:column headerText="no biodata params" rendered="#{empty listManagerController.selectedBioDataParameters}" />
 
           <ui:repeat value="#{listManagerController.selectedBioDataParameters}" var="sbdp">
             <p:column headerText="#{sbdp}" />
@@ -207,8 +210,6 @@
       </p:column>      
 
       <c:set var="cmpd" value="#{listMember.cmpd}" />
-      
-      <p:column rendered="#{empty listManagerController.selectedCmpdParameters}" />
 
       <p:columns resizable="true"  
                  value="#{listManagerController.cmpdColumns}" 
@@ -223,8 +224,6 @@
       </p:columns>
 
       <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
-
-      <p:column rendered="#{empty listManagerController.selectedStructureParameters}" />
       
       <p:columns resizable="true" 
                  value="#{listManagerController.structureColumns}" 
@@ -239,8 +238,6 @@
       </p:columns>
 
       <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
-
-      <p:column rendered="#{empty listManagerController.selectedPChemParameters}" />
       
       <p:columns resizable="true" 
                  value="#{listManagerController.physChemColumns}" 
@@ -255,8 +252,6 @@
       </p:columns>
 
       <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
-
-      <p:column rendered="#{empty listManagerController.selectedBioDataParameters}" />
       
       <p:columns resizable="true" 
                  value="#{listManagerController.biodataColumns}" 
