@@ -21,3 +21,14 @@
     color: black !important;
     background-color: white !important;
 }
+
+/* menus size by content */
+
+ul.ui-menu-child {
+    white-space: nowrap;
+    width: auto !important;
+}
+
+.ui-menuitem-text {
+    padding-left: 10px;
+}

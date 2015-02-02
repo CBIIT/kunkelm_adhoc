@@ -13,12 +13,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.MethodExpression;
+import javax.el.ValueExpression;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.vo.CmpdFragmentVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
@@ -32,6 +38,7 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.primefaces.component.export.DataExporter;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -99,28 +106,29 @@ public class ListManagerController implements Serializable {
 //  ####    ####   ######   ####   #    #  #    #   ####
   private List<String> availablePChemParameters;
   private List<String> selectedPChemParameters;
-  private static HashMap<String, String> VALID_PCHEM_KEYS;
+  private static HashMap<String, String> valid_physchem_keys;
   private List<ColumnModel> physChemColumns;
 
   private List<String> availableStructureParameters;
   private List<String> selectedStructureParameters;
-  private static HashMap<String, String> VALID_STRUCTURE_KEYS;
+  private static HashMap<String, String> valid_strc_keys;
   private List<ColumnModel> structureColumns;
 
   private List<String> availableCmpdParameters;
   private List<String> selectedCmpdParameters;
-  private static HashMap<String, String> VALID_CMPD_KEYS;
+  private static HashMap<String, String> valid_cmpd_keys;
   private List<ColumnModel> cmpdColumns;
 
   private List<String> availableBioDataParameters;
   private List<String> selectedBioDataParameters;
-  private static HashMap<String, String> VALID_BIODATA_KEYS;
+  private static HashMap<String, String> valid_bio_keys;
   private List<ColumnModel> biodataColumns;
 
   // called from init
   private void setupForDynamicPChemColumns() {
 
     // pChem
+    //
     HashMap<String, String> hm = new HashMap<String, String>();
     hm.put("Molecular Weight", "molecularWeight");
     hm.put("Molecular Formula", "molecularFormula");
@@ -150,12 +158,13 @@ public class ListManagerController implements Serializable {
     hm.put("Formal Charge", "formalCharge");
     hm.put("aLogP", "theALogP");
 
-    this.VALID_PCHEM_KEYS = hm;
+    this.valid_physchem_keys = hm;
 
     this.availablePChemParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availablePChemParameters, null);
 
     // Structure
+    //
     hm = new HashMap<String, String>();
     hm.put("Canonical Smiles", "canSmi");
     hm.put("Canonical Tautomer", "canTaut");
@@ -163,12 +172,13 @@ public class ListManagerController implements Serializable {
     hm.put("InChI", "inchi");
     hm.put("InChI Auxilliary", "inchiAux");
 
-    this.VALID_STRUCTURE_KEYS = hm;
+    this.valid_strc_keys = hm;
 
     this.availableStructureParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availableStructureParameters, null);
 
     // cmpd
+    //
     hm = new HashMap<String, String>();
     hm.put("adHocCmpdId", "adHocCmpdId");
     hm.put("originalAdHocCmpdId", "originalAdHocCmpdId");
@@ -183,21 +193,22 @@ public class ListManagerController implements Serializable {
     hm.put("Conf", "conf");
     hm.put("Distribution", "distribution");
     hm.put("CAS", "cas");
-    hm.put("Count Fragments", "countFragments");
+    hm.put("Count Fragments", "countCmpdFragments");
 
-    this.VALID_CMPD_KEYS = hm;
+    this.valid_cmpd_keys = hm;
 
     this.availableCmpdParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availableCmpdParameters, null);
 
     // biodata
+    //
     hm = new HashMap<String, String>();
-    hm.put("NCI60", "listMember.cmpd.cmpdBioAssay.nci60");
-    hm.put("HF", "listMember.cmpd.cmpdBioAssay.hf");
-    hm.put("XENO", "listMember.cmpd.cmpdBioAssay.xeno");
-    
-    this.VALID_BIODATA_KEYS = hm;
-    
+    hm.put("NCI60", "nci60");
+    hm.put("HF", "hf");
+    hm.put("XENO", "xeno");
+
+    this.valid_bio_keys = hm;
+
     this.availableBioDataParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availableBioDataParameters, null);
 
@@ -206,15 +217,37 @@ public class ListManagerController implements Serializable {
   private void createDynamicColumns() {
 
     this.physChemColumns = new ArrayList<ColumnModel>();
-
     for (String columnKey : this.selectedPChemParameters) {
-
       String key = columnKey.trim();
-
-      if (VALID_PCHEM_KEYS.containsKey(key)) {
-        this.physChemColumns.add(new ColumnModel(key, VALID_PCHEM_KEYS.get(key)));
+      if (valid_physchem_keys.containsKey(key)) {
+        this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
       }
     }
+    
+    this.structureColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedStructureParameters) {
+      String key = columnKey.trim();
+      if (valid_strc_keys.containsKey(key)) {
+        this.structureColumns.add(new ColumnModel(key, valid_strc_keys.get(key)));
+      }
+    }
+    
+    this.cmpdColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedCmpdParameters) {
+      String key = columnKey.trim();
+      if (valid_cmpd_keys.containsKey(key)) {
+        this.cmpdColumns.add(new ColumnModel(key, valid_cmpd_keys.get(key)));
+      }
+    }
+    
+    this.biodataColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedBioDataParameters) {
+      String key = columnKey.trim();
+      if (valid_bio_keys.containsKey(key)) {
+        this.biodataColumns.add(new ColumnModel(key, valid_bio_keys.get(key)));
+      }
+    }
+    
   }
 
   public String performUpdateColumns() throws Exception {
@@ -254,6 +287,65 @@ public class ListManagerController implements Serializable {
 
     public String getProperty() {
       return property;
+    }
+
+  }
+
+  public void handleExcelExport(ActionEvent event) {
+    handleAnyExport(event, "xls");
+  }
+
+  public void handlePdfExport(ActionEvent event) {
+    handleAnyExport(event, "pdf");
+  }
+
+  public void handleCsvExport(ActionEvent event) {
+    handleAnyExport(event, "csv");
+  }
+
+  public void handleXmlExport(ActionEvent event) {
+    handleAnyExport(event, "xml");
+  }
+
+  private void handleAnyExport(ActionEvent event, String exportType) {
+
+    try {
+
+      FacesContext fc = FacesContext.getCurrentInstance();
+      Application application = fc.getApplication();
+      ExpressionFactory ef = application.getExpressionFactory();
+      ELContext elc = fc.getELContext();
+
+      ValueExpression target = ef.createValueExpression(elc, ":datasystemForm:activeListTbl", String.class);
+      ValueExpression type = ef.createValueExpression(elc, exportType, String.class);
+      ValueExpression fileName = ef.createValueExpression(elc, "datasystemDataExport", String.class);
+      ValueExpression pageOnly = ef.createValueExpression(elc, "true", String.class);
+      ValueExpression selectionOnly = ef.createValueExpression(elc, "false", String.class);
+      ValueExpression encoding = ef.createValueExpression(elc, "UTF-8", String.class);
+      MethodExpression preProcessor = FacesAccessor.createMethodExpression("#{eventManager.preProcessor}", Void.class, new Class[2]);
+      MethodExpression postProcessor = FacesAccessor.createMethodExpression("#{eventManager.postProcessor}", Void.class, new Class[2]);
+
+//    DataExporter de = new DataExporter(target,
+//            type,
+//            fileName,
+//            pageOnly,
+//            selectionOnly,
+//            encoding,
+//            preProcessor,
+//            postProcessor);
+      DataExporter exporter = new DataExporter(target,
+              type,
+              fileName,
+              pageOnly,
+              selectionOnly,
+              encoding,
+              null,
+              null);
+
+      exporter.processAction(event);
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
   }
@@ -353,7 +445,7 @@ public class ListManagerController implements Serializable {
   public void setBiodataColumns(List<ColumnModel> biodataColumns) {
     this.biodataColumns = biodataColumns;
   }
-  
+
 // ######  #    #  #####            ####    ####   #        ####
 // #       ##   #  #    #          #    #  #    #  #       #
 // #####   # #  #  #    #          #       #    #  #        ####

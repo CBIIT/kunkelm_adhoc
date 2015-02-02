@@ -52,7 +52,13 @@
             <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
           </ui:remove>
 
-          <p:menubar model="#{menuBean.model}"/>
+          <p:menubar model="#{menuBean.model}">
+            <f:facet name="options">
+              <p:commandButton ajax="false"
+                     action="#{sessionController.logout()}"
+                     value="Logout"/>
+            </f:facet>
+          </p:menubar>
 
           <p:spacer height="20" width="100%" />
 

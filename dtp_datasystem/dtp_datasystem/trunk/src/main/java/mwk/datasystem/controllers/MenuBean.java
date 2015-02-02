@@ -33,100 +33,142 @@ public class MenuBean implements Serializable {
 
       DefaultMenuItem item = new DefaultMenuItem();
 
-      //First submenu
-      DefaultSubMenu datSysNav = new DefaultSubMenu("Data System Navigation");
-      datSysNav.setIcon("fa-navicon");
-      datSysNav.setId("datasystemNavMenu");
+      // Data System Navigation
+      //
+      DefaultSubMenu datSysOps = new DefaultSubMenu("Data System Operations");
+      datSysOps.setIcon("fa fa-navicon");
+      datSysOps.setId("datSysOps");
+      datSysOps.setStyle("width: 20%;");
 
       item = new DefaultMenuItem("Show Available Lists");
-      item.setIcon("fa-eye");
+      item.setIcon("fa fa-eye");
       item.setAjax(false);
       item.setOutcome("/webpages/availableLists?faces-redirect=true");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
       item = new DefaultMenuItem("Go To Active List");
-      item.setIcon("fa-list");
+      item.setIcon("fa fa-list");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListTable?faces-redirect=true");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
-      item = new DefaultMenuItem("Create List by Search");
-      item.setIcon("fa-search");
+      item = new DefaultMenuItem("New List by Search");
+      item.setIcon("fa fa-search");
       item.setAjax(false);
       item.setOutcome("/webpages/createList?faces-redirect=true");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
-      item = new DefaultMenuItem("Create List from File Upload");
-      item.setIcon("fa-upload");
-      item.setAjax(false);      
+      item = new DefaultMenuItem("New List from File");
+      item.setIcon("fa fa-upload");
+      item.setAjax(false);
       item.setOutcome("/webpages/uploadList?faces-redirect=true");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
       item = new DefaultMenuItem("List Logic");
+      item.setIcon("fa fa-lightbulb-o");
       item.setAjax(false);
       item.setOutcome("/webpages/listLogic?faces-redirect=true");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
-      item = new DefaultMenuItem("Create List by Structure Search");
-      item.setIcon("fa-search");
+      item = new DefaultMenuItem("New List by Structure");
+      item.setIcon("fa fa-search");
       item.setAjax(false);
       item.setOutcome("/webpages/chemDoodle?faces-redirect=true");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
       item = new DefaultMenuItem("Salts Workbench");
-      item.setIcon("fa-cogs");
+      item.setIcon("fa fa-cogs");
       item.setCommand("#{saltController.handleListAllSalts}");
-      datSysNav.addElement(item);
+      datSysOps.addElement(item);
 
-      model.addElement(datSysNav);
+      model.addElement(datSysOps);
 
-      // ActiveList
+      // Active List Navigation
+      //
       DefaultSubMenu actLisNav = new DefaultSubMenu("Active List Navigation");
-      actLisNav.setIcon("fa-bicycle");
-      datSysNav.setId("actLisNav");
+      actLisNav.setIcon("fa fa-bicycle");
+      actLisNav.setId("actLisNav");
+      actLisNav.setStyle("width: 20%;");
 
-      item = new DefaultMenuItem("View as Table");
-      item.setIcon("fa-table");
+      item = new DefaultMenuItem("Table");
+      item.setIcon("fa fa-table");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListTable?faces-redirect=true");
       actLisNav.addElement(item);
+      
+       item = new DefaultMenuItem("Table, Dynamic Columns");
+      item.setIcon("fa fa-table");
+      item.setAjax(false);
+      item.setOutcome("/webpages/activeListTableDynamicColumns?faces-redirect=true");
+      actLisNav.addElement(item);
 
-      item = new DefaultMenuItem("View as Table with Fragments");
-      item.setIcon("fa-table");
+      item = new DefaultMenuItem("Table, with Fragments");
+      item.setIcon("fa fa-table");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListFragmentsTable?faces-redirect=true");
       actLisNav.addElement(item);
 
-      item = new DefaultMenuItem("View as Form");
-      item.setIcon("fa-square-o");
+      item = new DefaultMenuItem("Form");
+      item.setIcon("fa fa-square-o");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListForm?faces-redirect=true");
       actLisNav.addElement(item);
 
-      item = new DefaultMenuItem("View As Grid");
-      item.setIcon("fa-th");
+      item = new DefaultMenuItem("Grid");
+      item.setIcon("fa fa-th");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListGrid?faces-redirect=true");
       actLisNav.addElement(item);
 
-      item = new DefaultMenuItem("View as Grid with Fragments");
-      item.setIcon("fa-th");
+      item = new DefaultMenuItem("Grid, with Fragments");
+      item.setIcon("fa fa-th");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListFragmentsGrid?faces-redirect=true");
       actLisNav.addElement(item);
 
       item = new DefaultMenuItem("Histograms and ScatterPlots");
-      item.setIcon("fa-bar-chart");
+      item.setIcon("fa fa-bar-chart");
       item.setAjax(false);
       item.setOutcome("/webpages/activeListHistograms?faces-redirect=true");
       actLisNav.addElement(item);
 
       model.addElement(actLisNav);
 
-      // top-level logout
-      item = new DefaultMenuItem("Logout");
-      item.setCommand("#{sessionController.handleLogout}");
-      model.addElement(item);
+      // Export
+      //
+      DefaultSubMenu exporters = new DefaultSubMenu("Export Data");
+      exporters.setIcon("fa fa-download");
+      exporters.setId("exporters");
+      exporters.setStyle("width: 20%;");
+
+      item = new DefaultMenuItem("Export to Excel");
+      item.setIcon("fa fa-file-excel-o");
+      item.setAjax(false);
+      item.setCommand("#{listManagerController.handleExcelExport}");
+      exporters.addElement(item);
+            
+      item = new DefaultMenuItem("Export to CSV");
+      item.setIcon("fa fa-file-text-o");
+      item.setAjax(false);
+      item.setCommand("#{listManagerController.handleCsvExport}");
+      exporters.addElement(item);
+      
+      item = new DefaultMenuItem("Export Structures ");
+      item.setIcon("fa fa-file-text-o");
+      item.setAjax(true);
+      item.setOnclick("structuresAsGridImage()");
+      exporters.addElement(item);      
+      
+      model.addElement(exporters);
+            
+//      // Logout
+//      //
+//      item = new DefaultMenuItem("Logout");
+//      item.setId("logout");
+//      item.setIcon("fa fa-chain-broken");
+//      item.setCommand("#{sessionController.handleLogout}");
+//      
+//      model.addElement(item);
 
     } catch (Exception e) {
       System.out.println("Exception in MenuBean");
@@ -151,13 +193,13 @@ public class MenuBean implements Serializable {
 
       if (me instanceof DefaultSubMenu) {
         DefaultSubMenu dsm = (DefaultSubMenu) me;
-        if (dsm.getLabel().equals("datSysNav")) {
-          System.out.println("This is datSysNav");
-        } else if (dsm.getLabel().equals("actLisNav")) {
+        if (dsm.getId().equals("datSysOps")) {
+          System.out.println("This is datSysOps");
+        } else if (dsm.getId().equals("actLisNav")) {
           System.out.println("This is actLisNav");
         } else {
           System.out.println("This is some other submenu");
-          System.out.println(dsm.getLabel());
+          System.out.println(dsm.getId());
         }
 
       }

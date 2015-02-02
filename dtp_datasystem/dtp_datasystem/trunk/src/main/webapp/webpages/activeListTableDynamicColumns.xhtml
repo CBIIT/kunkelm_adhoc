@@ -13,39 +13,43 @@
 
     <ui:remove><ui:include src="/webpages/templates/active_list_nav.xhtml"/></ui:remove>
 
-    <p:fieldset legend="Export All Data">  
+    <ui:remove>
 
-      <p:commandButton ajax="false" value="Export to Excel">
-        <p:dataExporter type="xls" 
-                        target="activeListTbl" 
-                        fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
-      </p:commandButton>
+      <p:fieldset legend="Export All Data">  
 
-      <p:spacer width="20"/>
+        <p:commandButton ajax="false" value="Export to Excel">
+          <p:dataExporter type="xls" 
+                          target="activeListTbl" 
+                          fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
+        </p:commandButton>
 
-      <p:commandButton ajax="false" value="Export as CSV">  
-        <p:dataExporter type="csv" 
-                        target="activeListTbl" 
-                        fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />
-      </p:commandButton> 
+        <p:spacer width="20"/>
 
-      <p:spacer width="20"/>
+        <p:commandButton ajax="false" value="Export as CSV">  
+          <p:dataExporter type="csv" 
+                          target="activeListTbl" 
+                          fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />
+        </p:commandButton> 
 
-      <p:commandButton ajax="false" value="Export to Excel with Structure Images">
-        <p:dataExporter type="xls" 
-                        target="activeListTbl" 
-                        postProcessor="#{listManagerController.postProcessXLS}"
-                        fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
-      </p:commandButton>
+        <p:spacer width="20"/>
 
-      <p:spacer width="20"/>
+        <p:commandButton ajax="false" value="Export to Excel with Structure Images">
+          <p:dataExporter type="xls" 
+                          target="activeListTbl" 
+                          postProcessor="#{listManagerController.postProcessXLS}"
+                          fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
+        </p:commandButton>
 
-      <p:commandButton onclick="structuresAsGridImage();" 
-                       value="Image of bare structures as grid" /> 
+        <p:spacer width="20"/>
 
-    </p:fieldset>
+        <p:commandButton onclick="structuresAsGridImage();" 
+                         value="Image of bare structures as grid" /> 
 
-    <p:spacer height="20" width="100%"/>
+      </p:fieldset>
+
+      <p:spacer height="20" width="100%"/>
+
+    </ui:remove>
 
     <p:panel rendered="${!empty listManagerController.activeList.anchorSmiles}">
 
@@ -122,7 +126,7 @@
                   value="#{listManagerController.activeList.cmpdListMembers}" 
                   rows="50"                        
                   paginator="true"
-                  resizableColumns="false"
+                  resizableColumns="true"
                   paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
                   rowsPerPageTemplate="50,100,250,500"
                   selection="#{listContentController.selectedActiveListMembers}"
@@ -135,6 +139,44 @@
       <f:facet name="header">                
         <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
       </f:facet>
+
+      <p:columnGroup type="header">
+        <p:row>
+          <p:column rowspan="2" headerText="All" />
+          <p:column rowspan="2" headerText="Comment" />
+          <p:column rowspan="2" headerText="Structure" />
+          <p:column colspan="#{fn:length(listManagerController.selectedCmpdParameters)}" headerText="Cmpd" />
+          <p:column colspan="#{fn:length(listManagerController.selectedStructureParameters)}" headerText="Structure" />
+          <p:column colspan="#{fn:length(listManagerController.selectedPChemParameters)}" headerText="pChem" />
+          <p:column colspan="#{fn:length(listManagerController.selectedBioDataParameters)}" headerText="BioData" />
+        </p:row>
+        <p:row>
+          <p:column headerText="no cmpd params" rendered="#{empty listManagerController.selectedCmpdParameters}" />
+
+          <ui:repeat value="#{listManagerController.selectedCmpdParameters}" var="scp">
+            <p:column headerText="#{scp}" />
+          </ui:repeat>
+
+          <p:column headerText="no strc params" rendered="#{empty listManagerController.selectedStructureParameters}" />
+
+          <ui:repeat value="#{listManagerController.selectedStructureParameters}" var="ssp">
+            <p:column headerText="#{ssp}" />
+          </ui:repeat>
+
+          <p:column headerText="no pChem params" rendered="#{empty listManagerController.selectedPChemParameters}" />
+
+          <ui:repeat value="#{listManagerController.selectedPChemParameters}" var="spcp">
+            <p:column headerText="#{spcp}" />
+          </ui:repeat>
+
+          <p:column headerText="no biodata params" rendered="#{empty listManagerController.selectedBioDataParameters}" />
+
+          <ui:repeat value="#{listManagerController.selectedBioDataParameters}" var="sbdp">
+            <p:column headerText="#{sbdp}" />
+          </ui:repeat>
+          
+        </p:row>
+      </p:columnGroup>
 
       <p:column headerText="All"
                 resizable="true" selectionMode="multiple" 
@@ -162,91 +204,46 @@
                         url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
         </h:graphicImage>
 
-      </p:column>
+      </p:column>      
 
-      <p:column headerText="adHocCmpdId" resizable="true" sortBy="#{listMember.cmpd.adHocCmpdId}">                                
-        <h:outputText value="#{listMember.cmpd.adHocCmpdId}"/>
-      </p:column>  
+      <c:set var="cmpd" value="#{listMember.cmpd}" />
+      
+      <p:column rendered="#{empty listManagerController.selectedCmpdParameters}" />
 
-      <p:column headerText="originalAdHocCmpdId" resizable="true" sortBy="#{listMember.cmpd.originalAdHocCmpdId}">                                
-        <h:outputText value="#{listMember.cmpd.originalAdHocCmpdId}"/>
-      </p:column>  
+      <p:columns resizable="true"  
+                 value="#{listManagerController.cmpdColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{cmpd[column.property]}" 
+                 filterBy="#{cmpd[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{cmpd[column.property]}" />
+      </p:columns>
 
-      <p:column headerText="nscCmpdId" resizable="true" sortBy="#{listMember.cmpd.nscCmpdId}">                                
-        <h:outputText value="#{listMember.cmpd.nscCmpdId}"/>
-      </p:column>  
+      <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
 
-
-      <p:column headerText="NSC Cmpd Type" resizable="true"
-                filterBy="#{listMember.cmpd.nscCmpdType}"
-                filterMatchMode="contains">                                
-        <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
-      </p:column>             
-
-      <p:column headerText="Count Fragments" 
-                resizable="true" 
-                sortBy="#{listMember.cmpd.countCmpdFragments}">                                
-        <h:outputText value="#{listMember.cmpd.countCmpdFragments}"/>
-      </p:column>    
-
-      <p:column headerText="NSC" resizable="true" sortBy="#{listMember.cmpd.nsc}">                                
-        <h:outputText value="#{listMember.cmpd.nsc}"/>
-      </p:column>             
-
-      <p:column headerText="Name" 
-                resizable="true" 
-                sortBy="#{listMember.cmpd.name}" 
-                filterBy="#{listMember.cmpd.name}"
-                filterMatchMode="contains">                
-        <h:outputText value="#{listMember.cmpd.name}"/>                
-      </p:column>     
-
-      <p:column headerText="Inventory" resizable="true" sortBy="#{listMember.cmpd.inventory}">                                
-        <h:outputText value="#{listMember.cmpd.inventory}"/>
-      </p:column>
-
-      <p:column headerText="NCI60" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.nci60}">                
-        <f:facet name="header">                
-          <h:outputText value="NCI60"/>                
-        </f:facet>              
-        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.nci60}"/>
-      </p:column>
-
-      <p:column headerText="HF" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.hf}">                
-        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.hf}"/>
-      </p:column>
-
-      <p:column headerText="XENO" resizable="true" sortBy="#{listMember.cmpd.cmpdBioAssay.xeno}">                
-        <h:outputText value="#{listMember.cmpd.cmpdBioAssay.xeno}"/>
-      </p:column>
-
-      <p:column headerText="Aliases" resizable="true">                
-        <p:scrollPanel style="width:250px;height:100px"> 
-          <p:dataList value="#{listMember.cmpd.aliases}" var="n" itemType="disc" type="ordered">  
-            <h:outputText value="#{n}"/>                
-          </p:dataList>
-        </p:scrollPanel>
-      </p:column>   
-
-      <p:column headerText="Projects" resizable="true">                
-        <p:scrollPanel style="width:250px;height:100px"> 
-          <p:dataList value="#{listMember.cmpd.projects}" var="n" itemType="disc" type="ordered">  
-            <h:outputText value="#{n}"/>                
-          </p:dataList>
-        </p:scrollPanel>
-      </p:column>   
-
-      <p:column headerText="Plates" resizable="true">                
-        <p:scrollPanel style="width:250px;height:100px"> 
-          <p:dataList value="#{listMember.cmpd.plates}" var="n" itemType="disc" type="ordered">  
-            <h:outputText value="#{n}"/>                
-          </p:dataList>
-        </p:scrollPanel>
-      </p:column>   
+      <p:column rendered="#{empty listManagerController.selectedStructureParameters}" />
+      
+      <p:columns resizable="true" 
+                 value="#{listManagerController.structureColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{strc[column.property]}" 
+                 filterBy="#{strc[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{strc[column.property]}" />
+      </p:columns>
 
       <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
 
-      <p:columns value="#{listManagerController.physChemColumns}" 
+      <p:column rendered="#{empty listManagerController.selectedPChemParameters}" />
+      
+      <p:columns resizable="true" 
+                 value="#{listManagerController.physChemColumns}" 
                  var="column" 
                  columnIndexVar="colIndex" 
                  sortBy="#{physchem[column.property]}" 
@@ -257,10 +254,21 @@
         <h:outputText value="#{physchem[column.property]}" />
       </p:columns>
 
-      <p:column headerText="SMILES" resizable="true">                
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}">
-        </h:outputText>
-      </p:column>
+      <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
+
+      <p:column rendered="#{empty listManagerController.selectedBioDataParameters}" />
+      
+      <p:columns resizable="true" 
+                 value="#{listManagerController.biodataColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{biodat[column.property]}" 
+                 filterBy="#{biodat[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{biodat[column.property]}" />
+      </p:columns>
 
     </p:dataTable>
 
