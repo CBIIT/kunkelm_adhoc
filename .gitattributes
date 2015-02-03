@@ -9434,8 +9434,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.12Jan2015.xml -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.4.19/cdk-1.4.19.jar -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/1.5.8/cdk-1.5.8.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17-sources.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.1.9/primefaces-5.1.9.jar -text
@@ -9489,10 +9487,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformA
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformCmpdTableToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/elements/WedgeLineElement.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/elements/WigglyLineElement.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/org/openscience/cdk/renderer/generators/ExternalHighlightGenerator.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/structureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text
