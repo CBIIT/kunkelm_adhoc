@@ -4,25 +4,11 @@
  */
 package mwk.datasystem.util;
 
-import java.sql.PreparedStatement;
-import mwk.datasystem.domain.Cmpd;
-import mwk.datasystem.domain.CmpdList;
-import mwk.datasystem.domain.CmpdListMember;
-import mwk.datasystem.domain.CmpdTable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import javax.xml.datatype.XMLGregorianCalendar;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
-import mwk.datasystem.vo.CmpdListVO;
-import mwk.datasystem.vo.CmpdVO;
 
 /**
  *

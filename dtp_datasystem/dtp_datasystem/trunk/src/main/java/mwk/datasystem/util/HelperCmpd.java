@@ -302,7 +302,8 @@ public class HelperCmpd {
 
   public static CmpdVO getSingleCmpdByNsc(Integer nsc, String currentUser) {
 
-    //MWK TODO this doesn't call currentUser
+    //MWK TODO this doesn't call currentUser!
+    
     CmpdVO rtn = new CmpdVO();
 
     Session session = null;

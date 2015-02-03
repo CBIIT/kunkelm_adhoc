@@ -713,7 +713,6 @@ public class ListManagerController implements Serializable {
    */
   public byte[] getStructureImage(String smiles, String title) throws Exception {
 
-    String servletString = "notSet";
     java.net.URL servletURL = null;
 
     java.net.HttpURLConnection servletConn = null;

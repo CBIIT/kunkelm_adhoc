@@ -139,6 +139,8 @@
       <f:facet name="header">                
         <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
       </f:facet>
+      
+      <ui:remove>
 
       <p:columnGroup type="header">
         <p:row>
@@ -181,8 +183,11 @@
         </p:row>
       </p:columnGroup>
 
+      </ui:remove>
+      
       <p:column headerText="All"
-                resizable="true" selectionMode="multiple" 
+                resizable="true" 
+                selectionMode="multiple" 
                 style="width:4%" 
                 exportable="false"/>
 
