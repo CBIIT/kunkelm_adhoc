@@ -9464,7 +9464,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Sal
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SessionController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/StructureSearchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/ParkingLot.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/SCRIPT7_gsonFragments.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/Histogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/HistogramBin.java -text
@@ -9487,6 +9486,11 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformA
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformCmpdTableToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Depiction.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionGenerator.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Main.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MolInput.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text

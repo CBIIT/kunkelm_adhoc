@@ -4,46 +4,40 @@
  */
 package mwk.datasystem.util;
 
-import mwk.datasystem.domain.AdHocCmpd;
-import mwk.datasystem.domain.AdHocCmpdFragment;
-import mwk.datasystem.domain.AdHocCmpdFragmentPChem;
-import mwk.datasystem.domain.AdHocCmpdFragmentStructure;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+import mwk.datasystem.domain.AdHocCmpd;
+import mwk.datasystem.domain.AdHocCmpdFragment;
+import mwk.datasystem.domain.AdHocCmpdFragmentPChem;
+import mwk.datasystem.domain.AdHocCmpdFragmentStructure;
 import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IMolecule;
-import org.openscience.cdk.interfaces.IMoleculeSet;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Writer;
-import org.openscience.cdk.io.iterator.IteratingMDLReader;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.io.iterator.IteratingSMILESReader;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
@@ -87,12 +81,12 @@ public class MoleculeParser {
             int countMol = 0;
 
             while (reader.hasNext()) {
-               
-                IMolecule mol = (IMolecule) reader.next();
+
+                IAtomContainer mol = reader.next();
                 countMol++;
 
                 System.out.println("Processing countMol: " + countMol);
-               
+
                 AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, smilesFile.getName(), countMol);
 
                 cmpdList.add(ahc);
@@ -117,7 +111,7 @@ public class MoleculeParser {
 
             FileInputStream fis = new FileInputStream(sdFile);
 
-            IteratingMDLReader reader = new IteratingMDLReader(fis, DefaultChemObjectBuilder.getInstance());
+            IteratingSDFReader reader = new IteratingSDFReader(fis, DefaultChemObjectBuilder.getInstance());
 
             reader.setReaderMode(IChemObjectReader.Mode.STRICT);
             reader.setSkip(true);
@@ -126,7 +120,7 @@ public class MoleculeParser {
 
             while (reader.hasNext()) {
 
-                IMolecule mol = (IMolecule) reader.next();
+                IAtomContainer mol = reader.next();
                 countMol++;
 
                 AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, sdFile.getName(), countMol);
@@ -144,13 +138,13 @@ public class MoleculeParser {
         return cmpdList;
     }
 
-    private AdHocCmpd moleculeToAdHocCmpd(IMolecule mol, String fileName, int countMol) {
+    private AdHocCmpd moleculeToAdHocCmpd(IAtomContainer mol, String fileName, int countMol) {
 
         AdHocCmpd ahc = AdHocCmpd.Factory.newInstance();
 
         try {
 
-            ArrayList<IMolecule> cdkFragList = new ArrayList<IMolecule>();
+            ArrayList<IAtomContainer> cdkFragList = new ArrayList<IAtomContainer>();
 
             if (ConnectivityChecker.isConnected(mol)) {
                 if (doCheckForPseudoAtoms(mol)) {
@@ -158,20 +152,18 @@ public class MoleculeParser {
                     cdkFragList.add(mol);
                 }
             } else {
-                IMoleculeSet setOfFragments = ConnectivityChecker.partitionIntoMolecules(mol);
-                for (int fragCnt = 0; fragCnt < setOfFragments.getMoleculeCount(); fragCnt++) {
-                    if (doCheckForPseudoAtoms(setOfFragments.getMolecule(fragCnt))) {
+                IAtomContainerSet setOfFragments = ConnectivityChecker.partitionIntoMolecules(mol);
+                for (int fragCnt = 0; fragCnt < setOfFragments.getAtomContainerCount(); fragCnt++) {
+                    if (doCheckForPseudoAtoms(setOfFragments.getAtomContainer(fragCnt))) {
                     } else {
-                        cdkFragList.add(setOfFragments.getMolecule(fragCnt));
+                        cdkFragList.add(setOfFragments.getAtomContainer(fragCnt));
                     }
                 }
             }
 
             // set name if found, not zero-length and not placeholder (".")
-
 //            System.out.println("In moleculeToAdHocCmpd");
 //            System.out.println(mol.toString());
-
             Object nameObj = mol.getProperty("Name");
             Object nameDbObj = mol.getProperty("SMIdbNAME");
             Object cmpdIdObj = mol.getProperty("Compound ID");
@@ -201,7 +193,7 @@ public class MoleculeParser {
 
             Set<AdHocCmpdFragment> fragSet = new HashSet<AdHocCmpdFragment>();
 
-            for (IMolecule iMol : cdkFragList) {
+            for (IAtomContainer iMol : cdkFragList) {
 
                 try {
 //                    CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(iMol.getBuilder());
@@ -211,11 +203,10 @@ public class MoleculeParser {
 //                        IAtomType type = matcher.findMatchingAtomType(iMol, atom);
 //                        AtomTypeManipulator.configure(atom, type);
 //                    }
-                   
+
                     // MWK 04Sept2014, trying this instead
-                   
                     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
-                   
+
                     CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
                     hAdder.addImplicitHydrogens(iMol);
 
@@ -245,7 +236,7 @@ public class MoleculeParser {
 
     }
 
-    private AdHocCmpdFragmentPChem doCalcs(IMolecule im) throws Exception {
+    private AdHocCmpdFragmentPChem doCalcs(IAtomContainer im) throws Exception {
 
         AdHocCmpdFragmentPChem pchemRtn = AdHocCmpdFragmentPChem.Factory.newInstance();
 
@@ -287,7 +278,6 @@ public class MoleculeParser {
 //System.out.println("Value of psa is:" + rtn.psa);
 //System.out.println("Value of mf is:" + rtn.mf);
 //System.out.println("Value of mw is:" + rtn.mw);
-
         return pchemRtn;
 
     }
@@ -297,7 +287,7 @@ public class MoleculeParser {
      * @param im
      * @return
      */
-    private static boolean doCheckForPseudoAtoms(IMolecule im) {
+    private static boolean doCheckForPseudoAtoms(IAtomContainer im) {
         boolean rtn = false;
         for (int atomCnt = 0; atomCnt
                 < im.getAtomCount(); atomCnt++) {
@@ -333,7 +323,6 @@ public class MoleculeParser {
             System.out.println("Could not extract: " + paramName + " in parseDescriptorValue in CompoundRegistrationControllerImpl");
             return "notFound";
 
-
         }
     }
 
@@ -346,7 +335,7 @@ public class MoleculeParser {
      * @return
      * @throws Exception
      */
-    public AdHocCmpdFragmentStructure doStructureStrings(IMolecule im) throws Exception {
+    public AdHocCmpdFragmentStructure doStructureStrings(IAtomContainer im) throws Exception {
 
         AdHocCmpdFragmentStructure rtn = AdHocCmpdFragmentStructure.Factory.newInstance();
 
@@ -379,5 +368,3 @@ public class MoleculeParser {
         return rtn;
     }
 }
-
-

@@ -34,380 +34,380 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class ListContentController implements Serializable {
 
-  static final long serialVersionUID = -8653468638698142855l;
+    static final long serialVersionUID = -8653468638698142855l;
 
-  // reach-through to sessionController
-  @ManagedProperty(value = "#{sessionController}")
-  private SessionController sessionController;
+    // reach-through to sessionController
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
 
-  public void setSessionController(SessionController sessionController) {
-    this.sessionController = sessionController;
-  }
-
-  // reach-through to listManagerController
-  @ManagedProperty(value = "#{listManagerController}")
-  private ListManagerController listManagerController;
-
-  public void setListManagerController(ListManagerController listManagerController) {
-    this.listManagerController = listManagerController;
-  }
-
-  // reach-through to listContentBean
-  @ManagedProperty(value = "#{listContentBean}")
-  private ListContentBean listContentBean;
-
-  public void setListContentBean(ListContentBean listContentBean) {
-    this.listContentBean = listContentBean;
-  }
-
-  private String listName;
-  UploadedFile uploadedFile;
-  List<CmpdListMemberVO> selectedActiveListMembers;
-  CmpdListVO targetList;
-
-  public void onRowSelect(SelectEvent evt) {
-
-    try {
-
-      CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
-
-      System.out.println("Select: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-
-      clmVO.setIsSelected(Boolean.TRUE);
-
-    } catch (Exception e) {
-      e.printStackTrace();
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
     }
 
-  }
+    // reach-through to listManagerController
+    @ManagedProperty(value = "#{listManagerController}")
+    private ListManagerController listManagerController;
 
-  public void onRowDeSelect(SelectEvent evt) {
-
-    try {
-
-      CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
-
-      System.out.println("Delect: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-
-      clmVO.setIsSelected(Boolean.FALSE);
-
-    } catch (Exception e) {
-      e.printStackTrace();
+    public void setListManagerController(ListManagerController listManagerController) {
+        this.listManagerController = listManagerController;
     }
 
-  }
+    // reach-through to listContentBean
+    @ManagedProperty(value = "#{listContentBean}")
+    private ListContentBean listContentBean;
 
-  /**
-   *
-   * @return For checkboxes outside of dataTable
-   */
-  public String performMySelect() {
-
-    StringBuilder msgBuilder = new StringBuilder();
-
-    // check the activeList for selectedMembers        
-    if (this.selectedActiveListMembers == null) {
-      msgBuilder.append("selectedActiveListMembers is null.  new ArrayList().");
-      System.out.println("selectedActiveListMembers is null.  new ArrayList().");
-      this.selectedActiveListMembers = new ArrayList<CmpdListMemberVO>();
-    } else {
-      msgBuilder.append("selectedActiveListMembers is NOT null.  list.clear().");
-      System.out.println("selectedActiveListMembers is NOT null.  list.clear().");
-      this.selectedActiveListMembers.clear();
+    public void setListContentBean(ListContentBean listContentBean) {
+        this.listContentBean = listContentBean;
     }
 
-    for (CmpdListMemberVO clmVO : this.listManagerController.getActiveList().getCmpdListMembers()) {
-      if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-        msgBuilder.append("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-        System.out.println("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-        this.selectedActiveListMembers.add(clmVO);
-      }
+    private String listName;
+    UploadedFile uploadedFile;
+    List<CmpdListMemberVO> selectedActiveListMembers;
+    CmpdListVO targetList;
+
+    public void onRowSelect(SelectEvent evt) {
+
+        try {
+
+            CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
+
+            System.out.println("Select: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
+
+            clmVO.setIsSelected(Boolean.TRUE);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    FacesMessage msg = new FacesMessage("Selected List Members: ", msgBuilder.toString());
-    FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void onRowDeSelect(SelectEvent evt) {
 
-    return "/webpages/activeListTable?faces-redirect=true";
+        try {
 
-  }
+            CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
 
-  //
-  public String performDeleteFromActiveList() {
+            System.out.println("Delect: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
 
-    HelperCmpdListMember.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+            clmVO.setIsSelected(Boolean.FALSE);
 
-    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.listManagerController.getActiveList().getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    this.listManagerController.setActiveList(clVO);
+    }
 
-    return "/webpages/activeListTable?faces-redirect=true";
-  }
+    /**
+     *
+     * @return For checkboxes outside of dataTable
+     */
+    public String performMySelect() {
 
-  public String performCreateNewListFromActiveList() {
-    return null;
-  }
+        StringBuilder msgBuilder = new StringBuilder();
 
-  public String performCreateNewListFromSelectedListMembers() {
+        // check the activeList for selectedMembers        
+        if (this.selectedActiveListMembers == null) {
+            msgBuilder.append("selectedActiveListMembers is null.  new ArrayList().");
+            System.out.println("selectedActiveListMembers is null.  new ArrayList().");
+            this.selectedActiveListMembers = new ArrayList<CmpdListMemberVO>();
+        } else {
+            msgBuilder.append("selectedActiveListMembers is NOT null.  list.clear().");
+            System.out.println("selectedActiveListMembers is NOT null.  list.clear().");
+            this.selectedActiveListMembers.clear();
+        }
 
-    // first, create an empty list
-    Long cmpdListId = HelperCmpdListMember.createEmptyList(this.listName, this.sessionController.getLoggedUser());
+        for (CmpdListMemberVO clmVO : this.listManagerController.getActiveList().getCmpdListMembers()) {
+            if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
+                msgBuilder.append("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
+                System.out.println("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
+                this.selectedActiveListMembers.add(clmVO);
+            }
+        }
 
-    System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
+        FacesMessage msg = new FacesMessage("Selected List Members: ", msgBuilder.toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 
-    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+        return "/webpages/activeListTable?faces-redirect=true";
 
-    // append the selected
-    HelperCmpdListMember.appendCmpdListMembers(clVO, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+    }
 
-    // have to UPDATE the list   
-    CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    //
+    public String performDeleteFromActiveList() {
+
+        HelperCmpdListMember.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.listManagerController.getActiveList().getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+
+        this.listManagerController.setActiveList(clVO);
+
+        return "/webpages/activeListTable?faces-redirect=true";
+    }
+
+    public String performCreateNewListFromActiveList() {
+        return null;
+    }
+
+    public String performCreateNewListFromSelectedListMembers() {
+
+        // first, create an empty list
+        Long cmpdListId = HelperCmpdListMember.createEmptyList(this.listName, this.sessionController.getLoggedUser());
+
+        System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
+
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+
+        // append the selected
+        HelperCmpdListMember.appendCmpdListMembers(clVO, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+
+        // have to UPDATE the list   
+        CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
     // have to add to the session
-    // and move to the new list        
-    this.listManagerController.getAvailableLists().add(updatedClVO);
-    this.listManagerController.setActiveList(updatedClVO);
+        // and move to the new list        
+        this.listManagerController.getAvailableLists().add(updatedClVO);
+        this.listManagerController.setActiveList(updatedClVO);
 
-    return "/webpages/activeListTable?faces-redirect=true";
+        return "/webpages/activeListTable?faces-redirect=true";
 
-  }
-
-  public String performAppendSelectedToExistingList() {
-
-    HelperCmpdListMember.appendCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
-
-    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
-
-    this.listManagerController.setActiveList(clVO);
-
-    // is this really the way to do this?
-    this.listManagerController.performUpdateAvailableLists();
-
-    return "/webpages/activeListTable?faces-redirect=true";
-
-  }
-
-  public String performSmilesFileUpload() {
-
-    try {
-
-      Random randomGenerator = new Random();
-
-      String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.uploadedFile.getFileName());
-
-      System.out.println(" fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize() + " realPath: " + realPath);
-
-      File systemFile = new File(realPath);
-
-      FileOutputStream fos = new FileOutputStream(systemFile, false);
-
-      byte[] byteArray = IOUtils.toByteArray(this.uploadedFile.getInputstream());
-
-      fos.write(byteArray);
-
-      fos.flush();
-      fos.close();
-
-      FacesMessage msg = new FacesMessage(
-              FacesMessage.SEVERITY_INFO,
-              "Uploaded File",
-              "fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize());
-
-      FacesContext.getCurrentInstance().addMessage(null, msg);
-
-      MoleculeParser mp = new MoleculeParser();
-
-      File smilesFile = new File(realPath);
-
-      ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
-
-      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
-
-      // new fetch the list
-      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
-
-      this.listManagerController.getAvailableLists().add(clVO);
-      this.listManagerController.setActiveList(clVO);
-
-      System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
-
-    } catch (Exception e) {
-      e.printStackTrace();
     }
 
-    return "/webpages/activeListTable?faces-redirect=true";
+    public String performAppendSelectedToExistingList() {
 
-  }
+        HelperCmpdListMember.appendCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
 
-  public String performFileUpload() {
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
-    try {
+        this.listManagerController.setActiveList(clVO);
 
-      Random randomGenerator = new Random();
+        // is this really the way to do this?
+        this.listManagerController.performUpdateAvailableLists();
 
-      String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.uploadedFile.getFileName());
+        return "/webpages/activeListTable?faces-redirect=true";
 
-      System.out.println(" fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize() + " realPath: " + realPath);
-
-      File systemFile = new File(realPath);
-
-      FileOutputStream fos = new FileOutputStream(systemFile, false);
-
-      byte[] byteArray = IOUtils.toByteArray(this.uploadedFile.getInputstream());
-
-      fos.write(byteArray);
-
-      fos.flush();
-      fos.close();
-
-      FacesMessage msg = new FacesMessage(
-              FacesMessage.SEVERITY_INFO,
-              "Uploaded File",
-              "fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize());
-
-      FacesContext.getCurrentInstance().addMessage(null, msg);
-
-      MoleculeParser mp = new MoleculeParser();
-
-      File sdFile = new File(realPath);
-
-      ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
-
-      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
-
-      // new fetch the list
-      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
-
-      this.listManagerController.getAvailableLists().add(clVO);
-      this.listManagerController.setActiveList(clVO);
-
-      System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
-
-    } catch (Exception e) {
-      e.printStackTrace();
     }
 
-    return "/webpages/activeListTable?faces-redirect=true";
+    public String performSmilesFileUpload() {
 
-  }
+        try {
 
-  public String performCreateListBySearch() {
+            Random randomGenerator = new Random();
 
-    // parse text areas
-    String[] splitStrings = null;
-    String fixedString = null;
-    int i;
+            String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.uploadedFile.getFileName());
 
-    String delimiters = "[\\n\\r\\t\\s,]+";
+            System.out.println(" fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize() + " realPath: " + realPath);
 
-    QueryObject qo = new QueryObject();
+            File systemFile = new File(realPath);
 
-    splitStrings = this.listContentBean.getNscTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      fixedString = splitStrings[i].replaceAll("[^0-9]", "");
-      if (fixedString.length() > 0) {
-        qo.getNscs().add(fixedString);
-      }
+            FileOutputStream fos = new FileOutputStream(systemFile, false);
+
+            byte[] byteArray = IOUtils.toByteArray(this.uploadedFile.getInputstream());
+
+            fos.write(byteArray);
+
+            fos.flush();
+            fos.close();
+
+            FacesMessage msg = new FacesMessage(
+                    FacesMessage.SEVERITY_INFO,
+                    "Uploaded File",
+                    "fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize());
+
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            MoleculeParser mp = new MoleculeParser();
+
+            File smilesFile = new File(realPath);
+
+            ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
+
+            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+
+            // new fetch the list
+            CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+
+            this.listManagerController.getAvailableLists().add(clVO);
+            this.listManagerController.setActiveList(clVO);
+
+            System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "/webpages/activeListTable?faces-redirect=true";
+
     }
 
-    splitStrings = this.listContentBean.getCasTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getCases().add(splitStrings[i]);
-      }
+    public String performFileUpload() {
+
+        try {
+
+            Random randomGenerator = new Random();
+
+            String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.uploadedFile.getFileName());
+
+            System.out.println(" fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize() + " realPath: " + realPath);
+
+            File systemFile = new File(realPath);
+
+            FileOutputStream fos = new FileOutputStream(systemFile, false);
+
+            byte[] byteArray = IOUtils.toByteArray(this.uploadedFile.getInputstream());
+
+            fos.write(byteArray);
+
+            fos.flush();
+            fos.close();
+
+            FacesMessage msg = new FacesMessage(
+                    FacesMessage.SEVERITY_INFO,
+                    "Uploaded File",
+                    "fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize());
+
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            MoleculeParser mp = new MoleculeParser();
+
+            File sdFile = new File(realPath);
+
+            ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
+
+            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+
+            // new fetch the list
+            CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+
+            this.listManagerController.getAvailableLists().add(clVO);
+            this.listManagerController.setActiveList(clVO);
+
+            System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "/webpages/activeListTable?faces-redirect=true";
+
     }
 
-    splitStrings = this.listContentBean.getProjectCodeTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getProjectCodes().add(splitStrings[i]);
-      }
+    public String performCreateListBySearch() {
+
+        // parse text areas
+        String[] splitStrings = null;
+        String fixedString = null;
+        int i;
+
+        String delimiters = "[\\n\\r\\t\\s,]+";
+
+        QueryObject qo = new QueryObject();
+
+        splitStrings = this.listContentBean.getNscTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            fixedString = splitStrings[i].replaceAll("[^0-9]", "");
+            if (fixedString.length() > 0) {
+                qo.getNscs().add(fixedString);
+            }
+        }
+
+        splitStrings = this.listContentBean.getCasTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getCases().add(splitStrings[i]);
+            }
+        }
+
+        splitStrings = this.listContentBean.getProjectCodeTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getProjectCodes().add(splitStrings[i]);
+            }
+        }
+
+        splitStrings = this.listContentBean.getDrugNameTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getDrugNames().add(splitStrings[i]);
+            }
+        }
+
+        splitStrings = this.listContentBean.getAliasTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getAliases().add(splitStrings[i]);
+            }
+        }
+
+        splitStrings = this.listContentBean.getPlateTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getPlates().add(splitStrings[i]);
+            }
+        }
+
+        splitStrings = this.listContentBean.getTargetTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getTargets().add(splitStrings[i]);
+            }
+        }
+
+        splitStrings = this.listContentBean.getCmpdNamedSetTextArea().split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+            if (splitStrings[i].length() > 0) {
+                qo.getCmpdNamedSets().add(splitStrings[i]);
+            }
+        }
+
+        System.out.println("Content of listContentBean:");
+        this.listContentBean.printCriteriaLists();
+        System.out.println("Content of QueryObject:");
+        qo.printCriteriaLists();
+
+        System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
+        Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, qo, null, this.sessionController.getLoggedUser());
+
+        // now fetch the list            
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+
+        this.listManagerController.getAvailableLists().add(clVO);
+        this.listManagerController.setActiveList(clVO);
+
+        return "/webpages/activeListTable?faces-redirect=true";
+
     }
 
-    splitStrings = this.listContentBean.getDrugNameTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getDrugNames().add(splitStrings[i]);
-      }
+    // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+    public String getListName() {
+        return listName;
     }
 
-    splitStrings = this.listContentBean.getAliasTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getAliases().add(splitStrings[i]);
-      }
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
-    splitStrings = this.listContentBean.getPlateTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getPlates().add(splitStrings[i]);
-      }
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
     }
 
-    splitStrings = this.listContentBean.getTargetTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getTargets().add(splitStrings[i]);
-      }
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
     }
 
-    splitStrings = this.listContentBean.getCmpdNamedSetTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        qo.getCmpdNamedSets().add(splitStrings[i]);
-      }
+    public List<CmpdListMemberVO> getSelectedActiveListMembers() {
+        return selectedActiveListMembers;
     }
 
-    System.out.println("Content of listContentBean:");
-    this.listContentBean.printCriteriaLists();
-    System.out.println("Content of QueryObject:");
-    qo.printCriteriaLists();
+    public void setSelectedActiveListMembers(List<CmpdListMemberVO> selectedActiveListMembers) {
+        this.selectedActiveListMembers = selectedActiveListMembers;
+    }
 
-    System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
-    Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, qo, null, this.sessionController.getLoggedUser());
+    public CmpdListVO getTargetList() {
+        return targetList;
+    }
 
-    // now fetch the list            
-    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
-
-    this.listManagerController.getAvailableLists().add(clVO);
-    this.listManagerController.setActiveList(clVO);
-
-    return "/webpages/activeListTable?faces-redirect=true";
-
-  }
-
-  // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-  public String getListName() {
-    return listName;
-  }
-
-  public void setListName(String listName) {
-    this.listName = listName;
-  }
-
-  public UploadedFile getUploadedFile() {
-    return uploadedFile;
-  }
-
-  public void setUploadedFile(UploadedFile uploadedFile) {
-    this.uploadedFile = uploadedFile;
-  }
-
-  public List<CmpdListMemberVO> getSelectedActiveListMembers() {
-    return selectedActiveListMembers;
-  }
-
-  public void setSelectedActiveListMembers(List<CmpdListMemberVO> selectedActiveListMembers) {
-    this.selectedActiveListMembers = selectedActiveListMembers;
-  }
-
-  public CmpdListVO getTargetList() {
-    return targetList;
-  }
-
-  public void setTargetList(CmpdListVO targetList) {
-    this.targetList = targetList;
-  }
+    public void setTargetList(CmpdListVO targetList) {
+        this.targetList = targetList;
+    }
     // </editor-fold>
 
 }

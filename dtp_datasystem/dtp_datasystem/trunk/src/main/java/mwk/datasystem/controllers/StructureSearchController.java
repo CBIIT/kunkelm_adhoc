@@ -23,10 +23,11 @@ import mwk.datasystem.util.HelperStructure;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.Molecule;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.io.MDLV2000Writer;
@@ -218,7 +219,9 @@ public class StructureSearchController implements Serializable {
     try {
 
       SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-      Molecule molecule = (Molecule) sp.parseSmiles(smiles);
+      // Molecule molecule = (Molecule) sp.parseSmiles(smiles);
+      
+      IAtomContainer molecule = sp.parseSmiles(smiles);
 
       try {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
@@ -237,7 +240,7 @@ public class StructureSearchController implements Serializable {
       AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
       FixBondOrdersTool fbot = new FixBondOrdersTool();
-      molecule = (Molecule) fbot.kekuliseAromaticRings(molecule);
+      molecule = fbot.kekuliseAromaticRings(molecule);
 
       StructureDiagramGenerator sdg = new StructureDiagramGenerator();
       sdg.setMolecule(molecule);
@@ -248,7 +251,7 @@ public class StructureSearchController implements Serializable {
         ex.printStackTrace();
       }
 
-      Molecule fixedMol = (Molecule) sdg.getMolecule();
+      IAtomContainer fixedMol = sdg.getMolecule();
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       MDLV2000Writer ctabWriter = new MDLV2000Writer(baos);
@@ -268,7 +271,7 @@ public class StructureSearchController implements Serializable {
 
     String rtn = "";
 
-    Molecule mol = new Molecule();
+    IAtomContainer mol  = new AtomContainer();
 
     try {
 
@@ -293,7 +296,7 @@ public class StructureSearchController implements Serializable {
       AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
       FixBondOrdersTool fbot = new FixBondOrdersTool();
-      mol = (Molecule) fbot.kekuliseAromaticRings(mol);
+      mol = fbot.kekuliseAromaticRings(mol);
 
       StructureDiagramGenerator sdg = new StructureDiagramGenerator();
       sdg.setMolecule(mol);
@@ -304,7 +307,7 @@ public class StructureSearchController implements Serializable {
         ex.printStackTrace();
       }
 
-      Molecule fixedMol = (Molecule) sdg.getMolecule();
+      IAtomContainer fixedMol = sdg.getMolecule();
 
       SmilesGenerator sg = new SmilesGenerator();
       sg.setUseAromaticityFlag(true);
