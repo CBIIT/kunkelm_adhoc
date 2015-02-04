@@ -216,7 +216,7 @@
                                 height="#{histogramController.structureSize}"
                                 id="selectedStructureImg"
                                 class="selectedListMemberStructureImage"                          
-                                url='/StructureServlet?structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
+                                url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
                 </h:graphicImage> 
 
               </ui:repeat>

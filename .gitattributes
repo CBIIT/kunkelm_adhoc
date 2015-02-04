@@ -9432,7 +9432,9 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartColumnFormat -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartLabelValue -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.12Jan2015.xml -text
+dtp_datasystem/dtp_datasystem/trunk/lib/cdk-1.5.10-javadoc.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
+dtp_datasystem/dtp_datasystem/trunk/lib/primefaces-5.1.9-apidocs.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17-sources.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/4.0.17/primefaces-4.0.17.jar -text
@@ -9488,9 +9490,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformX
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Depiction.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionGenerator.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MolInput.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/RequestParameters.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServletMain.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text

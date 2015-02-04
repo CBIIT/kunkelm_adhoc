@@ -55,7 +55,7 @@
 
       <h:graphicImage alt="activeListAnchorSmiles"
                       width="200" height="200"
-                      url='/StructureServlet?structureDim=200&amp;title=listAnchorSmiles&amp;smiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                      url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=listAnchorSmiles&amp;smiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
       </h:graphicImage>
 
     </p:panel>
@@ -243,7 +243,7 @@
         <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
           <h:graphicImage alt="png-structure-with-highlighted-substructure-image"
                           width="75" height="75"
-                          url='/StructureServlet?structureDim=75&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                          url='/StructureServlet?color-atoms=true&amp;structureDim=75&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
           </h:graphicImage>
           <f:setPropertyActionListener value="#{listMember}"   
                                        target="#{listManagerController.selectedActiveListMember}" />  
@@ -252,7 +252,7 @@
         <h:graphicImage style="display: none;" alt="png-structure-with-highlighted-substructure-image"
                         width="200" height="200"
                         id="structureImg"
-                        url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                        url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
         </h:graphicImage>
 
       </p:column>

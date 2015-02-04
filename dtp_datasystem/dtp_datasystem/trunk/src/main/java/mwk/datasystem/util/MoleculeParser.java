@@ -46,156 +46,156 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 public class MoleculeParser {
 
-    InChIGeneratorFactory INCHI_FACTORY;
-    SmilesGenerator SMILES_GENERATOR;
-    MDLV2000Writer MDL_WRITER;
-    SaturationChecker SATURATION_CHECKER;
+  InChIGeneratorFactory INCHI_FACTORY;
+  SmilesGenerator SMILES_GENERATOR;
+  MDLV2000Writer MDL_WRITER;
+  SaturationChecker SATURATION_CHECKER;
 
-    public MoleculeParser() {
+  public MoleculeParser() {
 
-        try {
+    try {
 
-            INCHI_FACTORY = InChIGeneratorFactory.getInstance();
-            SMILES_GENERATOR = new SmilesGenerator();
-            MDL_WRITER = new MDLV2000Writer();
-            SATURATION_CHECKER = new SaturationChecker();
+      INCHI_FACTORY = InChIGeneratorFactory.getInstance();
+      SMILES_GENERATOR = new SmilesGenerator();
+      MDL_WRITER = new MDLV2000Writer();
+      SATURATION_CHECKER = new SaturationChecker();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    public ArrayList<AdHocCmpd> parseSMILESFile(File smilesFile) {
+  }
 
-        ArrayList<AdHocCmpd> cmpdList = new ArrayList<AdHocCmpd>();
+  public ArrayList<AdHocCmpd> parseSMILESFile(File smilesFile) {
 
-        try {
+    ArrayList<AdHocCmpd> cmpdList = new ArrayList<AdHocCmpd>();
 
-            FileInputStream fis = new FileInputStream(smilesFile);
+    try {
 
-            IteratingSMILESReader reader = new IteratingSMILESReader(fis, DefaultChemObjectBuilder.getInstance());
+      FileInputStream fis = new FileInputStream(smilesFile);
 
-            reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+      IteratingSMILESReader reader = new IteratingSMILESReader(fis, DefaultChemObjectBuilder.getInstance());
 
-            int countMol = 0;
+      reader.setReaderMode(IChemObjectReader.Mode.STRICT);
 
-            while (reader.hasNext()) {
+      int countMol = 0;
 
-                IAtomContainer mol = reader.next();
-                countMol++;
+      while (reader.hasNext()) {
 
-                System.out.println("Processing countMol: " + countMol);
+        IAtomContainer mol = reader.next();
+        countMol++;
 
-                AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, smilesFile.getName(), countMol);
+        System.out.println("Processing countMol: " + countMol);
 
-                cmpdList.add(ahc);
+        AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, smilesFile.getName(), countMol);
 
-            }
+        cmpdList.add(ahc);
 
-            System.out.println("Processed: " + countMol + " molecules");
+      }
 
-        } catch (Exception e) {
-            System.out.println("Exception in parseSMILESFile in MoleculeParser: " + e);
-            e.printStackTrace();
-        }
+      System.out.println("Processed: " + countMol + " molecules");
 
-        return cmpdList;
+    } catch (Exception e) {
+      System.out.println("Exception in parseSMILESFile in MoleculeParser: " + e);
+      e.printStackTrace();
     }
 
-    public ArrayList<AdHocCmpd> parseSDF(File sdFile) {
+    return cmpdList;
+  }
 
-        ArrayList<AdHocCmpd> cmpdList = new ArrayList<AdHocCmpd>();
+  public ArrayList<AdHocCmpd> parseSDF(File sdFile) {
 
-        try {
+    ArrayList<AdHocCmpd> cmpdList = new ArrayList<AdHocCmpd>();
 
-            FileInputStream fis = new FileInputStream(sdFile);
+    try {
 
-            IteratingSDFReader reader = new IteratingSDFReader(fis, DefaultChemObjectBuilder.getInstance());
+      FileInputStream fis = new FileInputStream(sdFile);
 
-            reader.setReaderMode(IChemObjectReader.Mode.STRICT);
-            reader.setSkip(true);
+      IteratingSDFReader reader = new IteratingSDFReader(fis, DefaultChemObjectBuilder.getInstance());
 
-            Integer countMol = Integer.valueOf(0);
+      reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+      reader.setSkip(true);
 
-            while (reader.hasNext()) {
+      Integer countMol = Integer.valueOf(0);
 
-                IAtomContainer mol = reader.next();
-                countMol++;
+      while (reader.hasNext()) {
 
-                AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, sdFile.getName(), countMol);
+        IAtomContainer mol = reader.next();
+        countMol++;
 
-                cmpdList.add(ahc);
+        AdHocCmpd ahc = this.moleculeToAdHocCmpd(mol, sdFile.getName(), countMol);
 
-            }
+        cmpdList.add(ahc);
 
-            System.out.println("Processed: " + countMol.toString() + " molecules");
+      }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+      System.out.println("Processed: " + countMol.toString() + " molecules");
 
-        return cmpdList;
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    private AdHocCmpd moleculeToAdHocCmpd(IAtomContainer mol, String fileName, int countMol) {
+    return cmpdList;
+  }
 
-        AdHocCmpd ahc = AdHocCmpd.Factory.newInstance();
+  private AdHocCmpd moleculeToAdHocCmpd(IAtomContainer mol, String fileName, int countMol) {
 
-        try {
+    AdHocCmpd ahc = AdHocCmpd.Factory.newInstance();
 
-            ArrayList<IAtomContainer> cdkFragList = new ArrayList<IAtomContainer>();
+    try {
 
-            if (ConnectivityChecker.isConnected(mol)) {
-                if (doCheckForPseudoAtoms(mol)) {
-                } else {
-                    cdkFragList.add(mol);
-                }
-            } else {
-                IAtomContainerSet setOfFragments = ConnectivityChecker.partitionIntoMolecules(mol);
-                for (int fragCnt = 0; fragCnt < setOfFragments.getAtomContainerCount(); fragCnt++) {
-                    if (doCheckForPseudoAtoms(setOfFragments.getAtomContainer(fragCnt))) {
-                    } else {
-                        cdkFragList.add(setOfFragments.getAtomContainer(fragCnt));
-                    }
-                }
-            }
+      ArrayList<IAtomContainer> cdkFragList = new ArrayList<IAtomContainer>();
 
-            // set name if found, not zero-length and not placeholder (".")
+      if (ConnectivityChecker.isConnected(mol)) {
+        if (doCheckForPseudoAtoms(mol)) {
+        } else {
+          cdkFragList.add(mol);
+        }
+      } else {
+        IAtomContainerSet setOfFragments = ConnectivityChecker.partitionIntoMolecules(mol);
+        for (int fragCnt = 0; fragCnt < setOfFragments.getAtomContainerCount(); fragCnt++) {
+          if (doCheckForPseudoAtoms(setOfFragments.getAtomContainer(fragCnt))) {
+          } else {
+            cdkFragList.add(setOfFragments.getAtomContainer(fragCnt));
+          }
+        }
+      }
+
+      // set name if found, not zero-length and not placeholder (".")
 //            System.out.println("In moleculeToAdHocCmpd");
 //            System.out.println(mol.toString());
-            Object nameObj = mol.getProperty("Name");
-            Object nameDbObj = mol.getProperty("SMIdbNAME");
-            Object cmpdIdObj = mol.getProperty("Compound ID");
+      Object nameObj = mol.getProperty("Name");
+      Object nameDbObj = mol.getProperty("SMIdbNAME");
+      Object cmpdIdObj = mol.getProperty("Compound ID");
 
-            System.out.println("CDKConstants.TITLE: " + CDKConstants.TITLE);
+      System.out.println("CDKConstants.TITLE: " + CDKConstants.TITLE);
 
-            Object titleObj = mol.getProperty(CDKConstants.TITLE);
+      Object titleObj = mol.getProperty(CDKConstants.TITLE);
 
-            String nameStr = null;
+      String nameStr = null;
 
-            if (nameObj != null) {
-                nameStr = nameObj.toString();
-            } else if (nameDbObj != null) {
-                nameStr = nameDbObj.toString();
-            } else if (cmpdIdObj != null) {
-                nameStr = cmpdIdObj.toString();
-            } else if (titleObj != null) {
-                nameStr = titleObj.toString();
-            }
+      if (nameObj != null) {
+        nameStr = nameObj.toString();
+      } else if (nameDbObj != null) {
+        nameStr = nameDbObj.toString();
+      } else if (cmpdIdObj != null) {
+        nameStr = cmpdIdObj.toString();
+      } else if (titleObj != null) {
+        nameStr = titleObj.toString();
+      }
 
-            if (nameStr == null || nameStr.length() == 0 || nameStr.equals(".")) {
-                nameStr = fileName + countMol;
-            }
+      if (nameStr == null || nameStr.length() == 0 || nameStr.equals(".")) {
+        nameStr = fileName + countMol;
+      }
 
-            System.out.println("Setting adHocCmpd name to: " + nameStr);
-            ahc.setName(nameStr);
+      System.out.println("Setting adHocCmpd name to: " + nameStr);
+      ahc.setName(nameStr);
 
-            Set<AdHocCmpdFragment> fragSet = new HashSet<AdHocCmpdFragment>();
+      Set<AdHocCmpdFragment> fragSet = new HashSet<AdHocCmpdFragment>();
 
-            for (IAtomContainer iMol : cdkFragList) {
+      for (IAtomContainer iMol : cdkFragList) {
 
-                try {
+        try {
 //                    CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(iMol.getBuilder());
 //                    Iterator<IAtom> atoms = iMol.atoms().iterator();
 //                    while (atoms.hasNext()) {
@@ -204,73 +204,73 @@ public class MoleculeParser {
 //                        AtomTypeManipulator.configure(atom, type);
 //                    }
 
-                    // MWK 04Sept2014, trying this instead
-                    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
+          // MWK 04Sept2014, trying this instead
+          AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(iMol);
 
-                    CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
-                    hAdder.addImplicitHydrogens(iMol);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
-
-                AdHocCmpdFragmentStructure cfs = doStructureStrings(iMol);
-                frag.setAdHocCmpdFragmentStructure(cfs);
-
-                AdHocCmpdFragmentPChem cfpc = doCalcs(iMol);
-                frag.setAdHocCmpdFragmentPChem(cfpc);
-
-                fragSet.add(frag);
-
-            }
-
-            ahc.setAdHocCmpdFragments(fragSet);
+          CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(iMol.getBuilder());
+          hAdder.addImplicitHydrogens(iMol);
 
         } catch (Exception e) {
-            e.printStackTrace();
+          e.printStackTrace();
         }
 
-        return ahc;
+        AdHocCmpdFragment frag = AdHocCmpdFragment.Factory.newInstance();
 
+        AdHocCmpdFragmentStructure cfs = doStructureStrings(iMol);
+        frag.setAdHocCmpdFragmentStructure(cfs);
+
+        AdHocCmpdFragmentPChem cfpc = doCalcs(iMol);
+        frag.setAdHocCmpdFragmentPChem(cfpc);
+
+        fragSet.add(frag);
+
+      }
+
+      ahc.setAdHocCmpdFragments(fragSet);
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    private AdHocCmpdFragmentPChem doCalcs(IAtomContainer im) throws Exception {
+    return ahc;
 
-        AdHocCmpdFragmentPChem pchemRtn = AdHocCmpdFragmentPChem.Factory.newInstance();
+  }
 
-        DescriptorValue result = null;
-        String paramName = null;
-        String parsedResult = null;
+  private AdHocCmpdFragmentPChem doCalcs(IAtomContainer im) throws Exception {
 
-        ALOGPDescriptor the_ALOGPDescriptor = new ALOGPDescriptor();
-        result = the_ALOGPDescriptor.calculate(im);
-        paramName = "ALogP";
-        parsedResult = parseDescriptorValue(result, paramName);
-        pchemRtn.setTheALogP(Double.valueOf(parsedResult));
+    AdHocCmpdFragmentPChem pchemRtn = AdHocCmpdFragmentPChem.Factory.newInstance();
 
-        HBondAcceptorCountDescriptor the_HBondAcceptorCountDescriptor = new HBondAcceptorCountDescriptor();
-        result = the_HBondAcceptorCountDescriptor.calculate(im);
-        paramName = "nHBAcc";
-        parsedResult = parseDescriptorValue(result, paramName);
-        pchemRtn.setCountHydBondAcceptors(Integer.parseInt(parsedResult));
+    DescriptorValue result = null;
+    String paramName = null;
+    String parsedResult = null;
 
-        HBondDonorCountDescriptor the_HBondDonorCountDescriptor = new HBondDonorCountDescriptor();
-        result = the_HBondDonorCountDescriptor.calculate(im);
-        paramName = "nHBDon";
-        parsedResult = parseDescriptorValue(result, paramName);
-        pchemRtn.setCountHydBondDonors(Integer.parseInt(parsedResult));
+    ALOGPDescriptor the_ALOGPDescriptor = new ALOGPDescriptor();
+    result = the_ALOGPDescriptor.calculate(im);
+    paramName = "ALogP";
+    parsedResult = parseDescriptorValue(result, paramName);
+    pchemRtn.setTheALogP(Double.valueOf(parsedResult));
 
-        IMolecularFormula formula = im.getBuilder().newInstance(IMolecularFormula.class);
-        MolecularFormulaManipulator.getMolecularFormula(im, formula);
-        pchemRtn.setMolecularFormula(MolecularFormulaManipulator.getString(formula).trim());
+    HBondAcceptorCountDescriptor the_HBondAcceptorCountDescriptor = new HBondAcceptorCountDescriptor();
+    result = the_HBondAcceptorCountDescriptor.calculate(im);
+    paramName = "nHBAcc";
+    parsedResult = parseDescriptorValue(result, paramName);
+    pchemRtn.setCountHydBondAcceptors(Integer.parseInt(parsedResult));
 
-        WeightDescriptor the_WeightDescriptor = new WeightDescriptor();
-        result = the_WeightDescriptor.calculate(im);
-        paramName = "MW";
-        parsedResult = parseDescriptorValue(result, paramName);
-        pchemRtn.setMolecularWeight(Double.valueOf(parsedResult));
+    HBondDonorCountDescriptor the_HBondDonorCountDescriptor = new HBondDonorCountDescriptor();
+    result = the_HBondDonorCountDescriptor.calculate(im);
+    paramName = "nHBDon";
+    parsedResult = parseDescriptorValue(result, paramName);
+    pchemRtn.setCountHydBondDonors(Integer.parseInt(parsedResult));
+
+    IMolecularFormula formula = im.getBuilder().newInstance(IMolecularFormula.class);
+    MolecularFormulaManipulator.getMolecularFormula(im, formula);
+    pchemRtn.setMolecularFormula(MolecularFormulaManipulator.getString(formula).trim());
+
+    WeightDescriptor the_WeightDescriptor = new WeightDescriptor();
+    result = the_WeightDescriptor.calculate(im);
+    paramName = "MW";
+    parsedResult = parseDescriptorValue(result, paramName);
+    pchemRtn.setMolecularWeight(Double.valueOf(parsedResult));
 
 //System.out.println("Value of alogp is:" + rtn.alogp);
 //System.out.println("Value of hba is:" + rtn.hba);
@@ -278,93 +278,94 @@ public class MoleculeParser {
 //System.out.println("Value of psa is:" + rtn.psa);
 //System.out.println("Value of mf is:" + rtn.mf);
 //System.out.println("Value of mw is:" + rtn.mw);
-        return pchemRtn;
+    return pchemRtn;
 
+  }
+
+  /**
+   *
+   * @param im
+   * @return
+   */
+  private static boolean doCheckForPseudoAtoms(IAtomContainer im) {
+    boolean rtn = false;
+    for (int atomCnt = 0; atomCnt
+            < im.getAtomCount(); atomCnt++) {
+      Atom thisAtom = (Atom) im.getAtom(atomCnt);
+      if (thisAtom instanceof PseudoAtom) {
+        rtn = true;
+      }
     }
+    return rtn;
+  }
 
-    /**
-     *
-     * @param im
-     * @return
-     */
-    private static boolean doCheckForPseudoAtoms(IAtomContainer im) {
-        boolean rtn = false;
-        for (int atomCnt = 0; atomCnt
-                < im.getAtomCount(); atomCnt++) {
-            Atom thisAtom = (Atom) im.getAtom(atomCnt);
-            if (thisAtom instanceof PseudoAtom) {
-                rtn = true;
-            }
-        }
-        return rtn;
-    }
-
-    /**
-     *
-     * @param dv
-     * @param paramName
-     * @return
-     */
-    private static String parseDescriptorValue(DescriptorValue dv, String paramName) {
-        int paramIndex = -1;
-        String[] names = dv.getNames();
-        for (int i = 0; i
-                < names.length; i++) {
+  /**
+   *
+   * @param dv
+   * @param paramName
+   * @return
+   */
+  private static String parseDescriptorValue(DescriptorValue dv, String paramName) {
+    int paramIndex = -1;
+    String[] names = dv.getNames();
+    for (int i = 0; i
+            < names.length; i++) {
 //System.out.print(names[i] + ", ");
-            if (names[i].equals(paramName)) {
-                paramIndex = i;
-            }
-        }
-        String resultString = dv.getValue().toString();
-        String[] splitString = resultString.split(",");
-        if (paramIndex > -1) {
-            return splitString[paramIndex];
-        } else {
-            System.out.println("Could not extract: " + paramName + " in parseDescriptorValue in CompoundRegistrationControllerImpl");
-            return "notFound";
-
-        }
+      if (names[i].equals(paramName)) {
+        paramIndex = i;
+      }
     }
+    String resultString = dv.getValue().toString();
+    String[] splitString = resultString.split(",");
+    if (paramIndex > -1) {
+      return splitString[paramIndex];
+    } else {
+      System.out.println("Could not extract: " + paramName + " in parseDescriptorValue in CompoundRegistrationControllerImpl");
+      return "notFound";
 
-    /**
-     *
-     * @param im
-     * @param inchiFactory
-     * @param smilesGenerator
-     * @param mdlWriter
-     * @return
-     * @throws Exception
-     */
-    public AdHocCmpdFragmentStructure doStructureStrings(IAtomContainer im) throws Exception {
+    }
+  }
 
-        AdHocCmpdFragmentStructure rtn = AdHocCmpdFragmentStructure.Factory.newInstance();
+  /**
+   *
+   * @param im
+   * @param inchiFactory
+   * @param smilesGenerator
+   * @param mdlWriter
+   * @return
+   * @throws Exception
+   */
+  public AdHocCmpdFragmentStructure doStructureStrings(IAtomContainer im) throws Exception {
 
-        rtn.setCanSmi(SMILES_GENERATOR.createSMILES(im));
+    AdHocCmpdFragmentStructure rtn = AdHocCmpdFragmentStructure.Factory.newInstance();
 
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            MDL_WRITER.setWriter(baos);
-            MDL_WRITER.writeMolecule(im);
-            rtn.setCtab(baos.toString());
-        } catch (Exception e) {
+    rtn.setCanSmi(SMILES_GENERATOR.createSMILES(im));
+
+    try {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      MDL_WRITER.setWriter(baos);
+      MDL_WRITER.writeMolecule(im);
+      rtn.setCtab(baos.toString());
+    } catch (Exception e) {
 //intended to silence any exception
 //caused by R groups and/or PseudoAtoms
-        }
-        try {
-            InChIGenerator gen = INCHI_FACTORY.getInChIGenerator(im);
-            INCHI_RET ret = gen.getReturnStatus();
-            if (ret == INCHI_RET.WARNING) {
+    }
+    try {
+      InChIGenerator gen = INCHI_FACTORY.getInChIGenerator(im);
+      INCHI_RET ret = gen.getReturnStatus();
+      if (ret == INCHI_RET.WARNING) {
 //System.out.println("InChI warning: " + gen.getMessage());
-            } else if (ret != INCHI_RET.OKAY) {
+      } else if (ret != INCHI_RET.OKAY) {
 //throw new CDKException("InChI failed: " + ret.toString() + " [" + gen.getMessage() + "]");
-            }
-            rtn.setInchi(gen.getInchi());
-            rtn.setInchiAux(gen.getAuxInfo());
-        } catch (Exception e) {
+      }
+      rtn.setInchi(gen.getInchi());
+      rtn.setInchiAux(gen.getAuxInfo());
+    } catch (Exception e) {
 //intended to silence any Inchi-related exceptions
 //caused by R groups and/or PseudoAtoms
-        }
-
-        return rtn;
     }
+
+    return rtn;
+  }
+
 }

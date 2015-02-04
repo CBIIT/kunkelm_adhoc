@@ -36,7 +36,7 @@
 
       <h:graphicImage alt="activeListAnchorSmiles"
                       width="200" height="200"
-                      url='/StructureServlet?structureDim=200&amp;title=listAnchorSmiles&amp;smiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                      url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=listAnchorSmiles&amp;smiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
       </h:graphicImage>
 
     </p:panel>
@@ -69,14 +69,14 @@
           <h:graphicImage alt="png-structure-with-highlighted-substructure-image"
                           width="200" height="200"
                           id="structureImg"
-                          url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                          url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
           </h:graphicImage>
 
           <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
             <h:graphicImage alt="png-fragment-structure"
                             width="75" height="75"
                             id="structureImg"
-                            url='/StructureServlet?structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(fragSmiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
+                            url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{listMember.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(fragSmiles)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>              
             </h:graphicImage>
           </p:dataGrid>
 
