@@ -17,13 +17,6 @@
 
     <p:commandButton ajax="false" 
                      disabled="#{empty listManagerController.activeList}" 
-                     action="/webpages/activeListFragmentsTable?faces-redirect=true"
-                     value="Fragments Table"/>
-
-    <p:spacer width="20"/>
-
-    <p:commandButton ajax="false" 
-                     disabled="#{empty listManagerController.activeList}" 
                      action="/webpages/activeListForm?faces-redirect=true"
                      value="Form"/>
 
@@ -33,13 +26,6 @@
                      disabled="#{empty listManagerController.activeList}"
                      action="/webpages/activeListGrid?faces-redirect=true"
                      value="Grid"/>        
-
-    <p:spacer width="20"/>
-
-    <p:commandButton ajax="false" 
-                     disabled="#{empty listManagerController.activeList}"
-                     action="/webpages/activeListFragmentsGrid?faces-redirect=true"
-                     value="Fragments Grid"/>  
 
     <p:spacer width="20"/>
 

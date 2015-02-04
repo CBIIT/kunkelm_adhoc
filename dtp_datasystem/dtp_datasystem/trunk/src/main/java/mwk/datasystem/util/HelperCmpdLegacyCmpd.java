@@ -79,108 +79,48 @@ public class HelperCmpdLegacyCmpd {
 
   }
 
-  public static CmpdLegacyCmpdVO insertLegacyCmpds() {
-
-    CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
-
-    Session session = null;
-    Transaction tx = null;
-
-    try {
-
-      session = HibernateUtil.getSessionFactory().openSession();
-
-      tx = session.beginTransaction();
-
-      List<Integer> nscIntList = Arrays.asList(new Integer[]{163027, 401005, 705701});
-
-      for (Integer nsc : nscIntList) {
-
-        CmpdLegacyCmpd clc = new CmpdLegacyCmpdImpl();
-
-        clc.setId(nsc.longValue());
-        clc.setMolecularFormula("filler");
-        clc.setMolecularWeight(-10101d);
-
-        byte[] img = getStructureImage("CCCC=C=CCCC", "fake SMILES");
-
-        clc.setJpg512(img);
-
-        session.persist(clc);
-
-      }
-
-      tx.commit();
-
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
-    }
-
-    return rtn;
-
-  }
-
-  public static byte[] getStructureImage(String smiles, String title) throws Exception {
-
-    java.net.URL servletURL = null;
-
-    java.net.HttpURLConnection servletConn = null;
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-    try {
-
-      servletURL = new java.net.URL("http://localhost:8080/datasystem/StructureServlet");
-
-      servletConn = (java.net.HttpURLConnection) servletURL.openConnection();
-      servletConn.setDoInput(true);
-      servletConn.setDoOutput(true);
-      servletConn.setUseCaches(false);
-      servletConn.setRequestMethod("POST");
-      servletConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-      java.io.DataOutputStream outStream = new java.io.DataOutputStream(servletConn.getOutputStream());
-
-      outStream.writeBytes("smiles=" + URLEncoder.encode(smiles, "UTF-8"));
-
-      if (title != null) {
-        outStream.writeBytes("&title=" + URLEncoder.encode(title, "UTF-8"));
-      }
-
-      outStream.flush();
-      outStream.close();
-
-      if (servletConn.getResponseCode() != servletConn.HTTP_OK) {
-        throw new Exception("Exception from StructureServlet in getStructureImage in ListManagerController: " + servletConn.getResponseMessage());
-      }
-
-//      String tempString = new String();
-//      java.io.BufferedReader theReader = new java.io.BufferedReader(new InputStreamReader(servletConn.getInputStream()));
-//      while ((tempString = theReader.readLine()) != null) {
-//        returnString += tempString;
+//  public static CmpdLegacyCmpdVO insertLegacyCmpds() {
+//
+//    CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
+//
+//    Session session = null;
+//    Transaction tx = null;
+//
+//    try {
+//
+//      session = HibernateUtil.getSessionFactory().openSession();
+//
+//      tx = session.beginTransaction();
+//
+//      List<Integer> nscIntList = Arrays.asList(new Integer[]{163027, 401005, 705701});
+//
+//      for (Integer nsc : nscIntList) {
+//
+//        CmpdLegacyCmpd clc = new CmpdLegacyCmpdImpl();
+//
+//        clc.setId(nsc.longValue());
+//        clc.setMolecularFormula("filler");
+//        clc.setMolecularWeight(-10101d);
+//
+//        byte[] img = getStructureImage("CCCC=C=CCCC", "fake SMILES");
+//
+//        clc.setJpg512(img);
+//
+//        session.persist(clc);
+//
 //      }
-      InputStream is = servletConn.getInputStream();
-
-      byte[] buf = new byte[1000];
-      for (int nChunk = is.read(buf); nChunk != -1; nChunk = is.read(buf)) {
-        baos.write(buf, 0, nChunk);
-      }
-
-    } catch (Exception e) {
-      System.out.println("Exception in getStructureImage in ListManagerController " + e);
-      e.printStackTrace();
-      throw new Exception(e);
-    } finally {
-      servletConn.disconnect();
-      servletConn = null;
-    }
-
-    baos.flush();
-    return baos.toByteArray();
-
-  }
+//
+//      tx.commit();
+//
+//    } catch (Exception e) {
+//      tx.rollback();
+//      e.printStackTrace();
+//    } finally {
+//      session.close();
+//    }
+//
+//    return rtn;
+//
+//  }
 
 }

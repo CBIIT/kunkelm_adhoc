@@ -9543,13 +9543,9 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionTimeOut.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragmentsGrid.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListFragmentsTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistograms.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTableDynamicColumns.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable_allColumns.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListForm.xhtml -text
@@ -9563,10 +9559,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogExportImage.x
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogHistograms.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogSelectedListMembers.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails_ORIGINAL.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/loginFailed.html -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/parkingLot.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltWorkbench.xhtml -text

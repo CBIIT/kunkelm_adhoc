@@ -62,6 +62,166 @@ public class StructureServlet extends HttpServlet {
     }
     return rtn;
   }
+  
+//   private byte[] renderImage(String incomingTitleString, String smiles, String querySmiles, Integer structureDim) throws Exception {
+//
+//        byte[] byteArray = new byte[0];
+//
+//        try {
+//
+//            // parse mol
+//            IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+//            SmilesParser sp = new SmilesParser(builder);
+//
+//            IMolecule theMol = sp.parseSmiles(smiles);
+//
+//            // try to deduce bonds for ring systems
+//            // flag is false by default, only changed if deduce is successful
+//            // used below to determine generator for image (BondGen if successful, otherwise RingGen
+//            //boolean ableToDeduceBonds = false;
+//            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(theMol);
+//
+//            FixBondOrdersTool fbot = new FixBondOrdersTool();
+//            theMol = fbot.kekuliseAromaticRings(theMol);
+//
+//            // generate coordinates
+//            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+//            sdg.setMolecule(theMol);
+//
+//            // NEED TO CATCH org.openscience.cdk.exception.CDKException: Molecule not connected.      
+//            try {
+//                sdg.generateCoordinates();
+//            } catch (Exception e) {
+//                System.out.println(e);
+//                System.out.println(smiles);
+//                throw e;
+//            }
+//
+//            theMol = sdg.getMolecule();
+//
+//            // set up for rendering
+//            Rectangle drawArea = new Rectangle(structureDim, structureDim);
+//            Image image = new BufferedImage(structureDim, structureDim, BufferedImage.TYPE_INT_RGB);
+//
+//            List<IGenerator<IAtomContainer>> generators = new ArrayList<IGenerator<IAtomContainer>>();
+//            
+//            generators.add(new BasicSceneGenerator());            
+//            generators.add(new ExternalHighlightGenerator());
+//            generators.add(new BasicAtomGenerator());
+//            generators.add(new BasicBondGenerator());
+//
+////            // only add RingGenerator if deduceBonds was unsuccessful
+////            if (!ableToDeduceBonds) {
+////                //generators.add(new RingGenerator());
+////            }
+//
+//            AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
+//            
+//            renderer.setup(theMol, drawArea);
+//
+//            IAtomContainer selection = new AtomContainer();
+//
+//            if (querySmiles != null && querySmiles.length() > 0) {
+//
+//                SMARTSQueryTool queryTool = new SMARTSQueryTool(querySmiles);
+//                queryTool.matches(theMol);
+//
+//                if (queryTool.countMatches() > 0) {
+//                    List<List<Integer>> mappings = queryTool.getUniqueMatchingAtoms();
+//                    for (List<Integer> mapping : mappings) {
+//                        for (Integer i : mapping) {
+//                            IAtom theAtom = theMol.getAtom(i);
+//                            selection.addAtom(theAtom);
+//                        }
+//                    }
+//
+//                    // go through theMol and find the bonds that include other selection atoms
+//                    for (int bondCnt = 0; bondCnt <= theMol.getBondCount() - 1; bondCnt++) {
+//                        IBond b = theMol.getBond(bondCnt);
+//                        IAtom a1 = b.getAtom(0);
+//                        IAtom a2 = b.getAtom(1);
+//                        if (selection.contains(a1) && selection.contains(a2)) {
+//                            selection.addBond(b);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            // calculate zoom to fit
+//            Rectangle diagram = renderer.calculateDiagramBounds(theMol);
+//            renderer.setZoomToFit(drawArea.width, drawArea.height, diagram.width, diagram.height);
+//
+////            RendererModel model = renderer.getRenderer2DModel();
+////
+////            if (!selection.isEmpty()) {
+////                model.set(ExternalHighlightGenerator.ExternalHighlightDistance.class, (double) 12);
+////                model.set(RendererModel.ExternalHighlightColor.class, Color.PINK);
+////                model.setExternalSelectedPart(selection);
+////            }
+//
+//            Graphics2D g2 = (Graphics2D) image.getGraphics();
+//
+//            g2.setColor(Color.WHITE);
+//
+//            g2.fillRect(0, 0, structureDim, structureDim);
+//
+//            // render title if specified      
+//            if (incomingTitleString != null && incomingTitleString.length() > 0) {
+//
+//                String[] titleArray;
+//
+//                if (incomingTitleString.contains("xxx")) {
+//                    titleArray = incomingTitleString.split("xxx");
+//                } else {
+//                    titleArray = new String[1];
+//                    titleArray[0] = incomingTitleString;
+//                }
+//
+//                int referenceSize = Math.round(structureDim / 10);
+//
+//                Font font = new Font("sans-serif", Font.PLAIN, referenceSize);
+//
+//                for (int tCnt = 0; tCnt < titleArray.length; tCnt++) {
+//
+//                    String curTitle = titleArray[tCnt];
+//
+//                    int titleLength = curTitle.length() * referenceSize;
+//
+//                    //g2.setPaint(Color.pink);
+//                    //g2.fill(new Rectangle.Double(0, tCnt * referenceSize, titleLength, referenceSize));
+//                    g2.setFont(font);
+//                    g2.setPaint(Color.LIGHT_GRAY);
+//
+//                    g2.drawString(curTitle, 0, (tCnt + 1) * referenceSize);
+//
+//                }
+//
+//            }
+//
+//            renderer.paint(theMol, new AWTDrawVisitor(g2));
+//
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//
+//            ImageIO.write((RenderedImage) image, "png", baos);
+//
+//            baos.flush();
+//            baos.close();
+//
+//            byteArray = baos.toByteArray();
+//
+//        } catch (Exception e) {
+//
+//            // if ANYTHING goes wrong, just return simple message
+//            byteArray = getTextImage("Unable to render structure image.");
+//
+//            //e.printStackTrace();
+//            throw new Exception("Exception in renderImage: " + e);
+//
+//        }
+//
+//        return byteArray;
+//
+//    }
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

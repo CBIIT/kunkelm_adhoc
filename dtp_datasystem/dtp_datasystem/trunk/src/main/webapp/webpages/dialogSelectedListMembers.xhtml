@@ -40,7 +40,7 @@
           <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
                           alt="png-structure-image"
                           width="200" height="200"
-                          id="selectedStructureImg"
+                          id="selectedstrcImg"
                           class="selectedListMemberStructureImage"                          
                           url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
           </h:graphicImage> 

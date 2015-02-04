@@ -2,7 +2,7 @@
 
 function structuresAsGridImage(){
   
-    var images = $("[id$='structureImg']");
+    var images = $("[id$='strcImg']");
   
     var theCanvas = document.createElement('canvas');
 
@@ -74,7 +74,7 @@ function structuresAsGridImage(){
 
 function imageGridFromSubstructures(){
   
-    var images = $("[id$='structureImg']");
+    var images = $("[id$='strcImg']");
   
     var theCanvas = document.createElement('canvas');
 
