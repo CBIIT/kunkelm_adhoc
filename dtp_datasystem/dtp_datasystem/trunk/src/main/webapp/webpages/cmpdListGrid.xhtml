@@ -41,9 +41,9 @@
 
                 <p:selectBooleanCheckbox value="#{cmpd.isSelected}" />
 
-                <h:graphicImage alt="structure image with highlighted substructure"
+                <h:graphicImage alt="Chemical Structure of Parent Fragment"
                                 width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                
+                                styleClass="parentStructure"
                                 url='#{sessionController.getCmpdStrcUrl(cmpd, listManagerController.activeList.anchorSmiles)}'>              
                 </h:graphicImage>
 

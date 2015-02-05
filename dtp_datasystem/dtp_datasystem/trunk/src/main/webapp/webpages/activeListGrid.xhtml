@@ -34,9 +34,9 @@
 
             <br/>
 
-            <h:graphicImage alt="activeListAnchorSmiles"
+            <h:graphicImage alt="Chemical Structure of List Anchor"
                             width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                            id="ancSmi"
+                            styleClass="anchorStructure"
                             url='#{sessionController.getSmilesStrcUrl(listManagerController.activeList.anchorSmiles)}'>              
             </h:graphicImage>
 
@@ -67,16 +67,17 @@
 
                     <p:selectBooleanCheckbox value="#{listMember.isSelected}" />
 
-                    <h:graphicImage alt="structure image with highlighted substructure"
+                    <h:graphicImage alt="Chemical Structure of Parent Fragment"
                                     width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                    id="strcImg"
+                                    styleClass="parentStructure"
                                     url='#{sessionController.getCmpdStrcUrl(listMember.cmpd, listManagerController.activeList.anchorSmiles)}'>              
                     </h:graphicImage>
 
 
                     <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
 
-                        <h:graphicImage alt="png-fragment-structure"
+                        <h:graphicImage alt="Chemical Structure of Compound Fragment"
+                                        styleClass="fragmentStructure"
                                         width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"                                        
                                         url='#{sessionController.getSmilesStrcUrl(fragSmiles)}'>              
                         </h:graphicImage>

@@ -147,7 +147,8 @@
             </p:column>
 
             <p:column colspan="2">        
-                <h:graphicImage alt="structure image with highlighted substructure"
+                <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                                styleClass="parentStructure"
                                 width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"                                
                                 url='#{sessionController.getCmpdStrcUrl(the_cmpd, listManagerController.activeList.anchorSmiles)}'>              
                 </h:graphicImage>

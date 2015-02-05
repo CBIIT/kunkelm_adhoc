@@ -57,9 +57,9 @@
 
             <br/>
 
-            <h:graphicImage alt="activeListAnchorSmiles"
+            <h:graphicImage alt="Chemical Structure of List Anchor"
                             width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                            id="ancSmi"
+                            styleClass="anchorStructure"
                             url='#{sessionController.getSmilesStrcUrl(listManagerController.activeList.anchorSmiles)}'>              
             </h:graphicImage>
 
@@ -199,9 +199,9 @@
             <p:column headerText="Parent - Click for Details" resizable="true">
 
                 <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
-                    <h:graphicImage alt="structure image with highlighted substructure"
+                    <h:graphicImage alt="Chemical Structure of Parent Fragment"
                                     width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                    
+                                    styleClass="parentStructure"
                                     url='#{sessionController.getCmpdStrcUrl(listMember.cmpd, listManagerController.activeList.anchorSmiles)}'>              
                     </h:graphicImage>
 
@@ -213,9 +213,9 @@
 
             <p:column headerText="Fragments" rendered="#{sessionController.showFrags}">
                 <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-                    <h:graphicImage alt="fragmentStructure"
+                    <h:graphicImage alt="Chemical Structure of Compound Fragment"
                                     width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                    
+                                    styleClass="fragmentStructure"
                                     url='#{sessionController.getSmilesStrcUrl(fragSmiles)}'>              
                     </h:graphicImage>
                 </p:dataGrid>

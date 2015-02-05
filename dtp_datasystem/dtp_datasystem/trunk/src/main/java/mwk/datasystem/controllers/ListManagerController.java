@@ -267,7 +267,7 @@ public class ListManagerController implements Serializable {
       throw e;
     }
 
-    return "/webpages/activeListTableDynamicColumns.xhtml?faces-redirect=true";
+    return "/webpages/activeListTable.xhtml?faces-redirect=true";
 
   }
 

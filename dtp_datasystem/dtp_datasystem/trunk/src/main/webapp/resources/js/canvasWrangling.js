@@ -2,7 +2,9 @@
 
 function structuresAsGridImage(){
   
-    var images = $("[id$='strcImg']");
+    // var images = $("[id$='strcImg']");
+    
+    var images = $('.parentStructure');
   
     var theCanvas = document.createElement('canvas');
 
@@ -59,12 +61,12 @@ function structuresAsGridImage(){
     imag.src = theCanvas.toDataURL();
 
     imag.onload=function(){
-  
+      
         $("[id='datasystemForm:exportableImageOutputPanel']").empty();
         $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
     
-        $("[id='datasystemForm:exportableImageOutputPanel']").empty();
-        $("[id='datasystemForm:exportableImageOutputPanel']").append(imag);
+        $("[id='exportableImageOutputPanel']").empty();
+        $("[id='exportableImageOutputPanel']").append(imag);
         
     }
     

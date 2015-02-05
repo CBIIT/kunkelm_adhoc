@@ -72,9 +72,9 @@
             <p:column headerText="Click for details" resizable="true">
 
                 <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
-                    <h:graphicImage alt="activeListAnchorSmiles"
+                    <h:graphicImage alt="Chemical Structure of List Anchor"
                                     width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                    
+                                    styleClass="anchorStructure"
                                     url='#{sessionController.getCmpdStrcUrl(cmpd)}'>              
                     </h:graphicImage>
 
@@ -83,9 +83,9 @@
                                                  target="#{listLogicController.selectedCmpd}" />  
                 </p:commandLink>
 
-                <h:graphicImage alt="structure image with highlighted substructure"
+                <h:graphicImage alt="Chemical Structure of Parent Fragment"
                                 width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                
+                                styleClass="parentStructure"
                                 url='#{sessionController.getCmpdStrcUrl(cmpd, listManagerController.activeList.anchorSmiles)}'>              
                 </h:graphicImage>
 

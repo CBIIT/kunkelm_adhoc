@@ -88,6 +88,7 @@ public class SessionController implements Serializable {
     }
 
     public String getCmpdStrcUrl(CmpdVO cVO) {
+        System.out.println("IN getCmpdStrcUrl(CmpdVO)");
         return getCmpdStrcUrl(cVO, null);
     }
 
@@ -95,6 +96,8 @@ public class SessionController implements Serializable {
 
         String rtn = "";
 
+        System.out.println("IN getCmpdStrcUrl(CmpdVO, querySmiles)");
+        
         if (cVO != null) {
 
             StringBuilder sb = new StringBuilder();
@@ -153,7 +156,7 @@ public class SessionController implements Serializable {
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
-            System.out.println("CmpdVO is null in getCmpdStrcUrl");
+            System.out.println("CmpdVO is null in getCmpdStrcUrl in SessionController");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");

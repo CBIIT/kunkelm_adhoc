@@ -57,16 +57,26 @@
                 <f:selectItem itemLabel="psa" itemValue="psa" />  
               </p:selectManyCheckbox>
               
+              <p:selectManyButton value="#{histogramController.parametersPchem}" >  
+                <f:selectItem itemLabel="mw" itemValue="mw" />  
+                <f:selectItem itemLabel="hba" itemValue="hba" />  
+                <f:selectItem itemLabel="hbd" itemValue="hbd" />  
+                <f:selectItem itemLabel="alogp" itemValue="alogp" />  
+                <f:selectItem itemLabel="logd" itemValue="logd" />  
+                <f:selectItem itemLabel="sa" itemValue="sa" />  
+                <f:selectItem itemLabel="psa" itemValue="psa" />  
+              </p:selectManyButton>
+
               <p:spacer height="20" width="100%" />
 
-              
+
               <p:commandButton ajax="true" 
                                disabled="#{empty listManagerController.activeList}"
                                value="HISTOGRAMS"
                                icon="ui-icon-image"
                                action="#{histogramController.renderHistoAndScatter()}"
                                update=":histogramsForm:HistogramsDialog,:scatterPlotsForm:ScatterPlotsDialog,:selectedListMembersForm:SelectedListMembersDialog" />   
-              
+
             </p:outputPanel>
 
           </h:form>
@@ -177,7 +187,8 @@
 
             <p:outputPanel id="SelectedListMembersDialog">
 
-              <p:commandButton onclick="imageGridFromAllSelectedStructures();" value="All structures as image grid" />
+              <p:commandButton onclick="structuresAsGridImage();" 
+                               value="All structures as image grid" />
 
               <br/>
 
@@ -211,12 +222,11 @@
                          var="clm">
 
                 <h:graphicImage rendered="#{!empty clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
-                                alt="png-structure-image"
+                                alt="Chemical Structure of Parent Fragment"
                                 width="#{histogramController.structureSize}" 
                                 height="#{histogramController.structureSize}"
-                                id="selectedstrcImg"
-                                class="selectedListMemberStructureImage"                          
-                                url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
+                                styleClass="parentStructure"                                
+                                url='#{sessionController.getCmpdStrcUrl(clm.cmpd)}'>              
                 </h:graphicImage> 
 
               </ui:repeat>
@@ -228,6 +238,8 @@
         </p:layoutUnit>
 
       </p:layout>
+
+      <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
     </h:body>
 
