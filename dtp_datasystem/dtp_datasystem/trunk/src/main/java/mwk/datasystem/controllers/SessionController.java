@@ -35,6 +35,8 @@ public class SessionController implements Serializable {
     private Integer strcDim;
     // 
     private Boolean showFrags;
+    //
+    private Boolean showAnchor;
 
     @PostConstruct
     public void init() {
@@ -85,6 +87,7 @@ public class SessionController implements Serializable {
         }
         System.out.println("selectedStrcSize is: " + this.selectedStrcSize);
         System.out.println("showFrags is: " + this.showFrags);
+        System.out.println("showAnchor is: " + this.showAnchor);
     }
 
     public String getCmpdStrcUrl(CmpdVO cVO) {
@@ -126,7 +129,13 @@ public class SessionController implements Serializable {
 
             if (this.selectedStrcOptions.contains("TTL")) {
                 sb.append("&title=");
-                sb.append(urlEncode(cVO.getIdentifierString()));
+                if (cVO.getPrefix() != null && cVO.getNsc() != null){
+                sb.append(urlEncode(cVO.getPrefix() + cVO.getNsc()));
+                } else if (cVO.getName() != null){
+                    sb.append(urlEncode(cVO.getName()));
+                } else {
+                    sb.append("Can't determine title from cmpdVO.");
+                }
             }
 
             if (this.selectedStrcOptions.contains("CLR")) {
@@ -277,4 +286,12 @@ public class SessionController implements Serializable {
         this.showFrags = showFrags;
     }
 
+    public Boolean getShowAnchor() {
+        return showAnchor;
+    }
+
+    public void setShowAnchor(Boolean showAnchor) {
+        this.showAnchor = showAnchor;
+    }
+    
 }

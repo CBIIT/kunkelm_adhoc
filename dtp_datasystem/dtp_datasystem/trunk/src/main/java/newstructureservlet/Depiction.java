@@ -1,8 +1,9 @@
 package newstructureservlet;
 
-
 import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
 import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
+import java.awt.Color;
+import java.awt.Font;
 import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
@@ -19,7 +20,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -137,18 +137,43 @@ final class Depiction {
      * @return The generated image.
      */
     BufferedImage toBufferedImage(double scale) {
-        return toBufferedImage(width() * scale, height() * scale);
+        // MWK modified
+        return toBufferedImage(width() * scale, height() * scale, null);
     }
 
     // private BufferedImage toBufferedImage(double width, double height) {
-    // MWK trying PUBLIC access to this....
-    BufferedImage toBufferedImage(double width, double height) {
+    // MWK made access public, added String[] for titles
+    BufferedImage toBufferedImage(double width, double height, String titleString) {
+
         BufferedImage img = new BufferedImage((int) (margin + width + margin),
                 (int) (margin + height + margin),
                 BufferedImage.TYPE_3BYTE_BGR);
         Graphics2D g2 = img.createGraphics();
         g2.setBackground(parameters.get(BasicSceneGenerator.BackgroundColor.class));
         g2.clearRect(0, 0, img.getWidth(), img.getHeight());
+
+        if (titleString != null) {
+            String[] titleArray;
+            if (titleString.contains("xxx")) {
+                titleArray = titleString.split("xxx");
+            } else {
+                titleArray = new String[1];
+                titleArray[0] = titleString;
+            }
+
+            final Font font = new Font("Verdana", Font.PLAIN, (int) height / 10);
+            g2.setFont(font);
+            g2.setPaint(Color.LIGHT_GRAY);
+
+            // set slightly higher than the font size        
+            int referenceSize = (int) ((height / 10) + 0.1 * (height / 10));
+
+            for (int tCnt = 0; tCnt < titleArray.length; tCnt++) {
+                String curTitle = titleArray[tCnt];
+                g2.drawString(curTitle, 0, (tCnt + 1) * referenceSize);
+            }
+        }
+
         draw(new AWTDrawVisitor(g2),
                 new Rectangle2D.Double(margin, margin, width, height));
         g2.dispose();

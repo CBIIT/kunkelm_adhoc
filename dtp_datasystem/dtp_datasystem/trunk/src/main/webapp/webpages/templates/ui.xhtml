@@ -54,6 +54,13 @@
 
                     <p:menubar model="#{menuBean.model}">
                         <f:facet name="options">
+                            <p:selectBooleanButton value="#{sessionController.showAnchor}" 
+                                                   onLabel="ANCHOR" 
+                                                   onIcon="ui-icon-check" 
+                                                   offLabel="ANCHOR"                                                    
+                                                   offIcon="ui-icon-close">
+                                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+                            </p:selectBooleanButton>
                             <p:selectBooleanButton value="#{sessionController.showFrags}" 
                                                    onLabel="FRAGS" 
                                                    onIcon="ui-icon-check" 
@@ -88,7 +95,6 @@
 
                 </p:panel>
 
-                <ui:include src="/webpages/dialogExportImage.xhtml"/>
                 <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
                 <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
                 <ui:include src="/webpages/dialogHistograms.xhtml"/>
@@ -97,6 +103,8 @@
 
             </h:form>
 
+            <ui:include src="/webpages/dialogExportImage.xhtml"/>
+                            
             <p:blockUI block=":datasystemForm"
                        widgetVar="searchingBUI">
                 <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  

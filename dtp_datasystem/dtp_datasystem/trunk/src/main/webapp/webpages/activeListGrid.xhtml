@@ -19,14 +19,18 @@
                              value="Testing Select from Grid Layouts" /> 
         </p:fieldset>
 
-        <p:spacer height="20" width="100%"/>
+        <ui:remove>
 
-        <p:fieldset legend="Export Structure Images">  
-            <p:commandButton onclick="structuresAsGridImage();" 
-                             value="Image of bare structures as grid" /> 
-        </p:fieldset>
+            <p:spacer height="20" width="100%"/>
 
-        <p:spacer height="20" width="100%"/>
+            <p:fieldset legend="Export Structure Images">  
+                <p:commandButton onclick="structuresAsGridImage();" 
+                                 value="Image of bare structures as grid" /> 
+            </p:fieldset>
+
+            <p:spacer height="20" width="100%"/>
+
+        </ui:remove>
 
         <p:panel rendered="${!empty listManagerController.activeList.anchorSmiles}">
 
@@ -74,14 +78,12 @@
                     </h:graphicImage>
 
 
-                    <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-
+                    <p:dataGrid rendered="#{sessionController.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
                         <h:graphicImage alt="Chemical Structure of Compound Fragment"
                                         styleClass="fragmentStructure"
                                         width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"                                        
                                         url='#{sessionController.getSmilesStrcUrl(fragSmiles)}'>              
                         </h:graphicImage>
-
                     </p:dataGrid>
 
                     <h:outputText value="NSC CmpdType"/>

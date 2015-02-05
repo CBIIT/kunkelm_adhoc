@@ -17,10 +17,12 @@
 
         <ui:remove><ui:include src="/webpages/templates/active_list_nav.xhtml"/></ui:remove>
 
-        <p:fieldset legend="Export Structure Images">  
-            <p:commandButton onclick="structuresAsGridImage();" 
-                             value="Image of bare structures as grid" /> 
-        </p:fieldset>
+        <ui:remove>
+            <p:fieldset legend="Export Structure Images">  
+                <p:commandButton onclick="structuresAsGridImage();" 
+                                 value="Image of bare structures as grid" /> 
+            </p:fieldset>
+        </ui:remove>
 
         <p:spacer height="20" width="100%"/>
 
