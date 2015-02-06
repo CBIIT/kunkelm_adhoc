@@ -8,8 +8,8 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <c:set var="the_cmpd" value="#{listMember.cmpd}"/>
-
-    <ui:include src="/webpages/shared_cmpdDetails.xhtml"/>
+  <ui:include src="/webpages/shared_cmpdDetails.xhtml">
+    <ui:param name="the_cmpd" value="#{listMember.cmpd}" />
+  </ui:include>
 
 </ui:composition>

@@ -14,12 +14,12 @@
                widgetVar="cmpdDetailDlg"> 
 
         <p:outputPanel id="CmpdDetailsDialogPanel">
-
-            <c:set var="the_cmpd" value="#{listLogicController.selectedCmpd}"/>
-            
+ 
             #{listLogicController.selectedCmpd.cmpdFragments}
             
-            <ui:include src="/webpages/shared_cmpdDetails.xhtml"/>            
+            <ui:include src="/webpages/shared_cmpdDetails.xhtml">
+              <ui:param name="the_cmpd" value="#{listLogicController.selectedCmpd}" />
+            </ui:include>         
 
         </p:outputPanel>
 

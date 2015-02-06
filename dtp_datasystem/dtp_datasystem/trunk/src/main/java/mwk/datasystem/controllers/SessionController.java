@@ -25,273 +25,273 @@ import mwk.datasystem.vo.CmpdVO;
 @SessionScoped
 public class SessionController implements Serializable {
 
-    static final long serialVersionUID = -8653468638698142855l;
-    //    
-    private String loggedUser;
-    //
-    private List<String> selectedStrcOptions;
-    private String selectedStrcSize;
-    //
-    private Integer strcDim;
-    // 
-    private Boolean showFrags;
-    //
-    private Boolean showAnchor;
+  static final long serialVersionUID = -8653468638698142855l;
+  //    
+  private String loggedUser;
+  //
+  private List<String> selectedStrcOptions;
+  private String selectedStrcSize;
+  //
+  private Integer strcDim;
+  // 
+  private Boolean showFrags;
+  //
+  private Boolean showAnchor;
 
-    @PostConstruct
-    public void init() {
-        if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
-            this.loggedUser = "PUBLIC";
-        } else {
-            this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-            if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("NCI DCTD_PLP_DEVELOPER")) {
-                this.loggedUser = "DTP_" + this.loggedUser;
-            }
-        }
+  @PostConstruct
+  public void init() {
+    if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
+      this.loggedUser = "PUBLIC";
+    } else {
+      this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+      if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("NCI DCTD_PLP_DEVELOPER")) {
+        this.loggedUser = "DTP_" + this.loggedUser;
+      }
+    }
 
-        this.selectedStrcOptions = new ArrayList<String>();
-        this.selectedStrcSize = "MED";
+    this.selectedStrcOptions = new ArrayList<String>();
+    this.selectedStrcSize = "MED";
+    this.strcDim = Integer.valueOf(200);
+    this.showFrags = Boolean.TRUE;
+  }
+
+  public SessionController() {
+    if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
+      this.loggedUser = "PUBLIC";
+    } else {
+      this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+    }
+  }
+
+  public String logout() {
+    System.out.println("Now in logout in SessionController");
+    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    return "/webpages/availableLists.xhtml?faces-redirect=true";
+  }
+
+  public void handleLogout() {
+    String rtn = this.logout();
+    FacesContext ctx = FacesContext.getCurrentInstance();
+    ExternalContext extCtx = ctx.getExternalContext();
+    String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/availableLists.xhtml"));
+    try {
+      extCtx.redirect(url);
+    } catch (IOException ioe) {
+      throw new FacesException(ioe);
+    }
+  }
+
+  public void handleStrcOptions() {
+    for (String s : this.selectedStrcOptions) {
+      System.out.println("selectedStrcOptions includes: " + s);
+    }
+    System.out.println("selectedStrcSize is: " + this.selectedStrcSize);
+    System.out.println("showFrags is: " + this.showFrags);
+    System.out.println("showAnchor is: " + this.showAnchor);
+  }
+
+  public String getCmpdStrcUrl(CmpdVO cVO) {
+//        System.out.println("In getCmpdStrcUrl(CmpdVO)");
+    return getCmpdStrcUrl(cVO, null);
+
+  }
+
+  public String getCmpdStrcUrl(CmpdVO cVO, String querySmiles) {
+
+    String rtn = "";
+
+//        System.out.println("In getCmpdStrcUrl(CmpdVO, querySmiles)");
+    if (cVO != null) {
+
+      StringBuilder sb = new StringBuilder();
+
+      this.strcDim = Integer.valueOf(200);
+      if (this.selectedStrcSize.equals("SM")) {
+        this.strcDim = Integer.valueOf(100);
+      } else if (this.selectedStrcSize.equals("MED")) {
         this.strcDim = Integer.valueOf(200);
-        this.showFrags = Boolean.TRUE;
-    }
+      } else if (this.selectedStrcSize.equals("LG")) {
+        this.strcDim = Integer.valueOf(400);
+      } else if (this.selectedStrcSize.equals("JUMBO")) {
+        this.strcDim = Integer.valueOf(800);
+      }
 
-    public SessionController() {
-        if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
-            this.loggedUser = "PUBLIC";
+      sb.append("/StructureServlet?structureDim=");
+      sb.append(this.strcDim);
+
+      if (cVO.getParentFragment() != null && cVO.getParentFragment().getCmpdFragmentStructure() != null && cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi() != null) {
+        sb.append("&smiles=");
+        sb.append(urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
+      } else if (cVO.getNsc() != null) {
+        sb.append("&nsc=");
+        sb.append(cVO.getNsc());
+      }
+
+      if (this.selectedStrcOptions.contains("TTL")) {
+        sb.append("&title=");
+        if (cVO.getPrefix() != null && cVO.getNsc() != null) {
+          sb.append(urlEncode(cVO.getPrefix() + cVO.getNsc()));
+        } else if (cVO.getName() != null) {
+          sb.append(urlEncode(cVO.getName()));
         } else {
-            this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+          sb.append("Can't determine title from cmpdVO.");
         }
-    }
+      }
 
-    public String logout() {
-        System.out.println("Now in logout in SessionController");
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "/webpages/availableLists.xhtml?faces-redirect=true";
-    }
+      if (this.selectedStrcOptions.contains("CLR")) {
+        sb.append("&color-atoms=true");
+      }
 
-    public void handleLogout() {
-        String rtn = this.logout();
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        ExternalContext extCtx = ctx.getExternalContext();
-        String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/availableLists.xhtml"));
-        try {
-            extCtx.redirect(url);
-        } catch (IOException ioe) {
-            throw new FacesException(ioe);
+      if (this.selectedStrcOptions.contains("NUM")) {
+        sb.append("&atom-numbers=true");
+      }
+
+      if (this.selectedStrcOptions.contains("KEK")) {
+        sb.append("&kekule=true");
+      }
+
+      if (this.selectedStrcOptions.contains("HLT")) {
+        if (querySmiles != null && querySmiles.length() > 0) {
+          sb.append("&querySmiles=");
+          sb.append(urlEncode(querySmiles));
         }
+      }
+
+      rtn = sb.toString();
+
+    } else {
+
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("CmpdVO is null in getCmpdStrcUrl in SessionController");
+      System.out.println("querySmiles is: " + querySmiles);
+//      new Exception().printStackTrace();
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+      System.out.println("--------------------------------------------------------------------");
+
     }
 
-    public void handleStrcOptions() {
-        for (String s : this.selectedStrcOptions) {
-            System.out.println("selectedStrcOptions includes: " + s);
-        }
-        System.out.println("selectedStrcSize is: " + this.selectedStrcSize);
-        System.out.println("showFrags is: " + this.showFrags);
-        System.out.println("showAnchor is: " + this.showAnchor);
+//        System.out.println("getCmpdStrcUrl() in SessionController: ");
+//        System.out.println(rtn);
+    return rtn;
+  }
+
+  public String getSmilesStrcUrl(String smiles) {
+    return getSmilesStrcUrl(smiles, null, null);
+  }
+
+  public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
+
+    String rtn = "";
+
+    StringBuilder sb = new StringBuilder();
+
+    this.strcDim = Integer.valueOf(200);
+    if (this.selectedStrcSize.equals("SM")) {
+      this.strcDim = Integer.valueOf(100);
+    } else if (this.selectedStrcSize.equals("MED")) {
+      this.strcDim = Integer.valueOf(200);
+    } else if (this.selectedStrcSize.equals("LG")) {
+      this.strcDim = Integer.valueOf(400);
+    } else if (this.selectedStrcSize.equals("JUMBO")) {
+      this.strcDim = Integer.valueOf(800);
     }
 
-    public String getCmpdStrcUrl(CmpdVO cVO) {
-        System.out.println("IN getCmpdStrcUrl(CmpdVO)");
-        return getCmpdStrcUrl(cVO, null);
+    sb.append("/StructureServlet?structureDim=");
+    sb.append(this.strcDim);
+
+    if (smiles != null && smiles.length() > 0) {
+      sb.append("&smiles=");
+      sb.append(urlEncode(smiles));
     }
 
-    public String getCmpdStrcUrl(CmpdVO cVO, String querySmiles) {
-
-        String rtn = "";
-
-        System.out.println("IN getCmpdStrcUrl(CmpdVO, querySmiles)");
-        
-        if (cVO != null) {
-
-            StringBuilder sb = new StringBuilder();
-
-            this.strcDim = Integer.valueOf(200);
-            if (this.selectedStrcSize.equals("SM")) {
-                this.strcDim = Integer.valueOf(100);
-            } else if (this.selectedStrcSize.equals("MED")) {
-                this.strcDim = Integer.valueOf(200);
-            } else if (this.selectedStrcSize.equals("LG")) {
-                this.strcDim = Integer.valueOf(400);
-            } else if (this.selectedStrcSize.equals("JUMBO")) {
-                this.strcDim = Integer.valueOf(800);
-            }
-
-            sb.append("/StructureServlet?structureDim=");
-            sb.append(this.strcDim);
-
-            if (cVO.getParentFragment() != null && cVO.getParentFragment().getCmpdFragmentStructure() != null && cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi() != null) {
-                sb.append("&smiles=");
-                sb.append(urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
-            } else if (cVO.getNsc() != null) {
-                sb.append("&nsc=");
-                sb.append(cVO.getNsc());
-            }
-
-            if (this.selectedStrcOptions.contains("TTL")) {
-                sb.append("&title=");
-                if (cVO.getPrefix() != null && cVO.getNsc() != null){
-                sb.append(urlEncode(cVO.getPrefix() + cVO.getNsc()));
-                } else if (cVO.getName() != null){
-                    sb.append(urlEncode(cVO.getName()));
-                } else {
-                    sb.append("Can't determine title from cmpdVO.");
-                }
-            }
-
-            if (this.selectedStrcOptions.contains("CLR")) {
-                sb.append("&color-atoms=true");
-            }
-
-            if (this.selectedStrcOptions.contains("NUM")) {
-                sb.append("&atom-numbers=true");
-            }
-
-            if (this.selectedStrcOptions.contains("KEK")) {
-                sb.append("&kekule=true");
-            }
-
-            if (this.selectedStrcOptions.contains("HLT")) {
-                if (querySmiles != null && querySmiles.length() > 0) {
-                    sb.append("&querySmiles=");
-                    sb.append(urlEncode(querySmiles));
-                }
-            }
-
-            rtn = sb.toString();
-
-        } else {
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("CmpdVO is null in getCmpdStrcUrl in SessionController");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-        }
-
-        System.out.println("getCmpdStrcUrl() in SessionController: ");
-        System.out.println(rtn);
-
-        return rtn;
+    if (this.selectedStrcOptions.contains("HLT")) {
+      if (querySmiles != null && querySmiles.length() > 0) {
+        sb.append("&querySmiles=");
+        sb.append(urlEncode(querySmiles));
+      }
     }
 
-    
-    
-    public String getSmilesStrcUrl(String smiles) {
-        return getSmilesStrcUrl(smiles, null, null);
+    if (this.selectedStrcOptions.contains("TTL")) {
+      sb.append("&title=");
+      sb.append(urlEncode(title));
     }
 
-    public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
-
-        String rtn = "";
-
-        StringBuilder sb = new StringBuilder();
-
-        this.strcDim = Integer.valueOf(200);
-        if (this.selectedStrcSize.equals("SM")) {
-            this.strcDim = Integer.valueOf(100);
-        } else if (this.selectedStrcSize.equals("MED")) {
-            this.strcDim = Integer.valueOf(200);
-        } else if (this.selectedStrcSize.equals("LG")) {
-            this.strcDim = Integer.valueOf(400);
-        } else if (this.selectedStrcSize.equals("JUMBO")) {
-            this.strcDim = Integer.valueOf(800);
-        }
-
-        sb.append("/StructureServlet?structureDim=");
-        sb.append(this.strcDim);
-
-        if (smiles != null && smiles.length() > 0) {
-            sb.append("&smiles=");
-            sb.append(urlEncode(smiles));
-        }
-
-        if (this.selectedStrcOptions.contains("HLT")) {
-            if (querySmiles != null && querySmiles.length() > 0) {
-                sb.append("&querySmiles=");
-                sb.append(urlEncode(querySmiles));
-            }
-        }
-
-        if (this.selectedStrcOptions.contains("TTL")) {
-            sb.append("&title=");
-            sb.append(urlEncode(title));
-        }
-
-        if (this.selectedStrcOptions.contains("CLR")) {
-            sb.append("&color-atoms=true");
-        }
-
-        if (this.selectedStrcOptions.contains("NUM")) {
-            sb.append("&atom-numbers=true");
-        }
-
-        if (this.selectedStrcOptions.contains("KEK")) {
-            sb.append("&kekule=true");
-        }
-
-        rtn = sb.toString();
-
-        System.out.println("getCmpdStrcUrl() in SessionController: ");
-        System.out.println(rtn);
-
-        return rtn;
+    if (this.selectedStrcOptions.contains("CLR")) {
+      sb.append("&color-atoms=true");
     }
 
-    public static String urlEncode(String in) {
-        String rtn = "";
-        try {
-            rtn = URLEncoder.encode(in, "UTF-8");
-        } catch (Exception e) {
-        }
-        return rtn;
+    if (this.selectedStrcOptions.contains("NUM")) {
+      sb.append("&atom-numbers=true");
     }
 
-    public String getLoggedUser() {
-        return this.loggedUser;
+    if (this.selectedStrcOptions.contains("KEK")) {
+      sb.append("&kekule=true");
     }
 
-    public List<String> getSelectedStrcOptions() {
-        return selectedStrcOptions;
-    }
+    rtn = sb.toString();
 
-    public void setSelectedStrcOptions(List<String> selectedStrcOptions) {
-        this.selectedStrcOptions = selectedStrcOptions;
-    }
+//        System.out.println("getSmilesStrcUrl() in SessionController: ");
+//        System.out.println(rtn);
+    return rtn;
+  }
 
-    public String getSelectedStrcSize() {
-        return selectedStrcSize;
+  public static String urlEncode(String in) {
+    String rtn = "";
+    try {
+      rtn = URLEncoder.encode(in, "UTF-8");
+    } catch (Exception e) {
     }
+    return rtn;
+  }
 
-    public void setSelectedStrcSize(String selectedStrcSize) {
-        this.selectedStrcSize = selectedStrcSize;
-    }
+  public String getLoggedUser() {
+    return this.loggedUser;
+  }
 
-    public Integer getStrcDim() {
-        return strcDim;
-    }
+  public List<String> getSelectedStrcOptions() {
+    return selectedStrcOptions;
+  }
 
-    public void setStrcDim(Integer strcDim) {
-        this.strcDim = strcDim;
-    }
+  public void setSelectedStrcOptions(List<String> selectedStrcOptions) {
+    this.selectedStrcOptions = selectedStrcOptions;
+  }
 
-    public Boolean getShowFrags() {
-        return showFrags;
-    }
+  public String getSelectedStrcSize() {
+    return selectedStrcSize;
+  }
 
-    public void setShowFrags(Boolean showFrags) {
-        this.showFrags = showFrags;
-    }
+  public void setSelectedStrcSize(String selectedStrcSize) {
+    this.selectedStrcSize = selectedStrcSize;
+  }
 
-    public Boolean getShowAnchor() {
-        return showAnchor;
-    }
+  public Integer getStrcDim() {
+    return strcDim;
+  }
 
-    public void setShowAnchor(Boolean showAnchor) {
-        this.showAnchor = showAnchor;
-    }
-    
+  public void setStrcDim(Integer strcDim) {
+    this.strcDim = strcDim;
+  }
+
+  public Boolean getShowFrags() {
+    return showFrags;
+  }
+
+  public void setShowFrags(Boolean showFrags) {
+    this.showFrags = showFrags;
+  }
+
+  public Boolean getShowAnchor() {
+    return showAnchor;
+  }
+
+  public void setShowAnchor(Boolean showAnchor) {
+    this.showAnchor = showAnchor;
+  }
+
 }

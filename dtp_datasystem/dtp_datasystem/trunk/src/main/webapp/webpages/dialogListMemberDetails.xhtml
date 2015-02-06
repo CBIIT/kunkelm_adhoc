@@ -18,8 +18,9 @@
 
       <p:outputPanel id="ListMemberDetailsDialogPanel">
 
-        <c:set var="listMember" value="#{listManagerController.selectedActiveListMember}"/>
-        <ui:include src="/webpages/listMemberDetails.xhtml"/>            
+        <ui:include src="/webpages/listMemberDetails.xhtml">            
+          <ui:param name="listMember" value="#{listManagerController.selectedActiveListMember}"/>
+        </ui:include>
 
       </p:outputPanel>
 

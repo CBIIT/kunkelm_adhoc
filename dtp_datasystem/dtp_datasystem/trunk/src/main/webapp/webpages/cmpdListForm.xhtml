@@ -32,9 +32,9 @@
                 <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Compounds"/>
             </f:facet>                                             
 
-            <c:set var="the_cmpd" value="#{cmpd}"/>
-
-            <ui:include src="/webpages/shared_cmpdDetails.xhtml"/>
+            <ui:include src="/webpages/shared_cmpdDetails.xhtml">
+              <ui:param name="the_cmpd" value="#{cmpd}" />
+            </ui:include>
 
         </p:dataGrid>
 

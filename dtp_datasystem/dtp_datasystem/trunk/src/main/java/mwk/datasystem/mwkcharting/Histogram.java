@@ -30,7 +30,10 @@ public class Histogram {
   private ArrayList<HistogramBin> binList;
   private BarChartModel chartModel;
 
-  public Histogram(String titleIn, String propertyNameIn, Collection<CmpdListMemberVO> clmListIn, AdaptiveHistogram ahIn) {
+  public Histogram(String titleIn,
+          String propertyNameIn,
+          Collection<CmpdListMemberVO> clmListIn,
+          AdaptiveHistogram ahIn) {
 
     NumberFormat intf = new DecimalFormat();
     intf.setParseIntegerOnly(true);
@@ -52,6 +55,14 @@ public class Histogram {
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
 
+      double mwkMin = ah.getMinValue();
+      double mwkMax = ah.getMaxValue();
+
+      System.out.println(this.propertyName + " min by pctl: " + min + " max by pctl: " + max);
+      System.out.println(this.propertyName + "      mwkMin: " + mwkMin + "      mwkMax: " + mwkMax);
+
+      System.out.println();
+
       int intMin = (int) Math.floor(min);
       int intMax = (int) Math.ceil(max);
 
@@ -62,10 +73,20 @@ public class Histogram {
 
     } else {
 
+      double min = ah.getValueForPercentile(0);
+      double max = ah.getValueForPercentile(100);
+
+      double mwkMin = ah.getMinValue();
+      double mwkMax = ah.getMaxValue();
+
+      System.out.println(this.propertyName + " min by pctl: " + min + " max by pctl: " + max);
+      System.out.println(this.propertyName + "      mwkMin: " + mwkMin + "      mwkMax: " + mwkMax);
+      System.out.println();
+
       for (int pct = 0; pct < 100; pct += 5) {
 
-        // to ACTUALLY bin the min and max values (because of rounding errors, have to add an underflow and overflow
-        // experience shows that 0.05 isn't sufficient, bump up to 0.1
+        // to ACTUALLY bin the min and max values (because of rounding errors, have to 
+        // add set NegativeInfinity and 
         if (pct == 0) {
           HistogramBin bin = new HistogramBin(ah.getValueForPercentile(0) - 0.10 * ah.getValueForPercentile(0), ah.getValueForPercentile(5));
           this.binList.add(bin);
@@ -82,11 +103,11 @@ public class Histogram {
     }
 
 //    DEBUG bins
-//    for (HistogramBin hb : this.binList) {
-//      System.out.println("bin minCut, maxCut: " + hb.getMinCut() + " " + hb.getMaxCut());
-//    }
+    for (HistogramBin hb : this.binList) {
+      System.out.println("bin minCut, maxCut: " + hb.getMinCut() + " " + hb.getMaxCut());
+    }
     
-        // go through the list and add to the bins
+    // go through the list and add to the bins
     for (CmpdListMemberVO clmVO : this.clmColl) {
       putInAppropriateBin(clmVO);
     }
@@ -99,12 +120,12 @@ public class Histogram {
     this.chartModel.setShowDatatip(true);
     this.chartModel.setBarPadding(1);
     this.chartModel.setBarMargin(1);
-    
+
     Axis xAxis = this.chartModel.getAxis(AxisType.X);
     xAxis.setTickAngle(-90);
-    
+
     this.chartModel.setStacked(true);
-    
+
 //    <p:barChart value="#{histo.chartModel}"
 //                            title="#{histo.chartModel.title}"                      
 //                            extender="histogramExtender"
@@ -116,15 +137,12 @@ public class Histogram {
 //                            xaxisAngle="-90"
 //                            animate="true"
 //                            stacked="true">
-    
-    
-
     ChartSeries countSeries = new ChartSeries("count");
     ChartSeries countSelectedSeries = new ChartSeries("countSelected");
 
     for (HistogramBin bin : this.binList) {
 
-            // for discrete distributions minCut = maxCut = binVal;
+      // for discrete distributions minCut = maxCut = binVal;
       String label = "notSet";
 
       if (bin.getMinCut() == bin.getMaxCut()) {
@@ -160,16 +178,16 @@ public class Histogram {
   }
 
   private void putInAppropriateBin(CmpdListMemberVO clmVO) {
-    
+
     NumberFormat nf2 = new DecimalFormat();
     nf2.setMaximumFractionDigits(2);
 
     double val = getProperty(clmVO);
 
+    boolean found = false;
     if (!Double.isNaN(val)) {
-      boolean found = false;
       for (HistogramBin b : binList) {
-                // each bin returns a boolean 
+        // each bin returns a boolean 
         // continue until the right bin
         if (b.add(clmVO, val)) {
           found = true;
@@ -188,7 +206,7 @@ public class Histogram {
 
   public double getProperty(CmpdListMemberVO clmVO) {
 
-        // these are hard-coded since reflection is problematic...
+    // these are hard-coded since reflection is problematic...
     double rtn = Double.NaN;
 
     CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
@@ -292,4 +310,5 @@ public class Histogram {
   public void setChartModel(BarChartModel chartModel) {
     this.chartModel = chartModel;
   }
+
 }
