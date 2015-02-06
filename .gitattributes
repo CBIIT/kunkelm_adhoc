@@ -9467,6 +9467,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java 
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/SCRIPT7_gsonFragments.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/Histogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/HistogramBin.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/HistogramDataInterface.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/PropertyUtilities.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogram.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogramBin.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/AddDimensionedImage.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Comparators.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ExtendedCartesianChartModel.java -text
@@ -9485,12 +9489,12 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ScatterPlo
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformAndroToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformCmpdTableToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TwoDHashMap.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Depiction.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionGenerator.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MolInput.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServletMain.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text

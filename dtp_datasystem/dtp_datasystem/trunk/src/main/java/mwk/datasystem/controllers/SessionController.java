@@ -50,9 +50,11 @@ public class SessionController implements Serializable {
     }
 
     this.selectedStrcOptions = new ArrayList<String>();
+    this.selectedStrcOptions.add("TTL");
+    this.selectedStrcOptions.add("CLR");
     this.selectedStrcSize = "MED";
     this.strcDim = Integer.valueOf(200);
-    this.showFrags = Boolean.TRUE;
+    this.showFrags = Boolean.FALSE;
   }
 
   public SessionController() {

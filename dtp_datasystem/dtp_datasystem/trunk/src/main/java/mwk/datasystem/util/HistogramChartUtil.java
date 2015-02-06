@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import mwk.datasystem.mwkcharting.Histogram;
+import mwk.datasystem.mwkcharting.PropertyUtilities;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 
@@ -20,111 +21,78 @@ import mwk.datasystem.vo.CmpdListMemberVO;
  */
 public class HistogramChartUtil {
 
-  public static final Boolean DEBUG = Boolean.FALSE;
+    public static final Boolean DEBUG = Boolean.TRUE;
 
-  public static List<Histogram> doHistograms(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
+    public static List<Histogram> doHistograms(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
 
-    if (DEBUG) {
-      System.out.println("In HistogramChartUtil.doHistograms()");
-      System.out.println("Size of incomding: " + incoming.size());
-    }
-
-    ArrayList<Histogram> rtn = new ArrayList<Histogram>();
-
-    // Histograms looked up by property
-    HashMap<String, AdaptiveHistogram> ahMap = new HashMap<String, AdaptiveHistogram>();
-
-    // initialize the ah map
-    for (String propertyName : propertyNameList) {
-      ahMap.put(propertyName, new AdaptiveHistogram());
-    }
-
-    for (CmpdListMemberVO clmVO : incoming) {
-
-      CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
-
-      // these are hard-coded since reflection is problematic...
-      if (propertyNameList.contains("alogp")) {
         if (DEBUG) {
-          System.out.println("Processing param alogp.");
+            System.out.println("In HistogramChartUtil.doHistograms()");
+            System.out.println("Size of incomding: " + incoming.size());
         }
-        if (pchemVO.getTheALogP() != null) {
-          if (!Float.isNaN(pchemVO.getTheALogP().floatValue())) {
-            ahMap.get("alogp").addValue(pchemVO.getTheALogP().floatValue());
-          }
-        }
-      }
 
-      if (propertyNameList.contains("logd")) {
-        if (DEBUG) {
-          System.out.println("Processing param logd.");
-        }
-        if (pchemVO.getLogD() != null) {
-          if (!Float.isNaN(pchemVO.getLogD().floatValue())) {
-            ahMap.get("logd").addValue(pchemVO.getLogD().floatValue());
-          }
-        }
-      }
+        ArrayList<Histogram> rtn = new ArrayList<Histogram>();
 
-      if (propertyNameList.contains("hba")) {
-        if (DEBUG) {
-          System.out.println("Processing param hba.");
-        }
-        if (pchemVO.getCountHydBondAcceptors() != null) {
-          if (!Float.isNaN(pchemVO.getCountHydBondAcceptors())) {
-            ahMap.get("hba").addValue(pchemVO.getCountHydBondAcceptors());
-          }
-        }
-      }
+        // Histograms looked up by property
+        HashMap<String, AdaptiveHistogram> ahMap = new HashMap<String, AdaptiveHistogram>();
 
-      if (propertyNameList.contains("hbd")) {
-        if (DEBUG) {
-          System.out.println("Processing param hbd.");
+        // initialize the ah map
+        for (String propertyName : propertyNameList) {
+            ahMap.put(propertyName, new AdaptiveHistogram());
         }
-        if (pchemVO.getCountHydBondDonors() != null) {
-          if (!Float.isNaN(pchemVO.getCountHydBondDonors())) {
-            ahMap.get("hbd").addValue(pchemVO.getCountHydBondDonors());
-          }
-        }
-      }
 
-      if (propertyNameList.contains("sa")) {
-        if (DEBUG) {
-          System.out.println("Processing param sa.");
-        }
-        if (pchemVO.getSurfaceArea() != null) {
-          if (!Float.isNaN(pchemVO.getSurfaceArea().floatValue())) {
-            ahMap.get("sa").addValue(pchemVO.getSurfaceArea().floatValue());
-          }
-        }
-      }
+        for (CmpdListMemberVO clmVO : incoming) {
 
-      if (propertyNameList.contains("mw")) {
-        if (DEBUG) {
-          System.out.println("Processing param mw.");
-        }
-        if (pchemVO.getMolecularWeight() != null) {
-          if (!Float.isNaN(pchemVO.getMolecularWeight().floatValue())) {
-            ahMap.get("mw").addValue(pchemVO.getMolecularWeight().floatValue());
-          }
-        }
-      }
+            // these are hard-coded since reflection is problematic...
+            if (propertyNameList.contains("alogp")) {
+                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "alogp"))) {
+                    ahMap.get("alogp").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "alogp"));
+                }
+            }
 
-    }
+            if (propertyNameList.contains("logd")) {
+                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "logd"))) {
+                    ahMap.get("logd").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "logd"));
+                }
+            }
+
+            if (propertyNameList.contains("hba")) {
+                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "hba"))) {
+                    ahMap.get("hba").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "hba"));
+                }
+            }
+
+            if (propertyNameList.contains("hbd")) {
+                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "hbd"))) {
+                    ahMap.get("hbd").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "hbd"));
+                }
+            }
+
+            if (propertyNameList.contains("sa")) {
+                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "sa"))) {
+                    ahMap.get("sa").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "sa"));
+                }
+            }
+
+            if (propertyNameList.contains("mw")) {
+                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "mw"))) {
+                    ahMap.get("mw").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "mw"));
+                }
+            }
+
+        }
 
     // MWK 07Dec2014 adding sort step
-    
-    ArrayList<String> sortList = new ArrayList<String>(ahMap.keySet());
-    Collections.sort(sortList);
-    
-    for (String key : sortList) {
-      String title = key;
-      Histogram h = new Histogram(title, key, incoming, ahMap.get(key));
-      rtn.add(h);
+        ArrayList<String> sortList = new ArrayList<String>(ahMap.keySet());
+        Collections.sort(sortList);
+
+        for (String key : sortList) {
+            String title = key;
+            Histogram h = new Histogram(title, key, incoming, ahMap.get(key));
+            rtn.add(h);
+        }
+
+        return rtn;
+
     }
 
-    return rtn;
-
-  }
-  
- }
+}

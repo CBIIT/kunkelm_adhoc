@@ -133,12 +133,12 @@ public class ApplicationScopeBean implements Serializable {
 //        }
 //
 //      }
-      //alias
-      Criteria aliasCrit = session.createCriteria(CmpdAlias.class);
-      List<CmpdAlias> aliasResultList = (List<CmpdAlias>) aliasCrit.list();
-      for (CmpdAlias al : aliasResultList) {
-        aliasSet.add(al.getAlias());
-      }
+//      //alias
+//      Criteria aliasCrit = session.createCriteria(CmpdAlias.class);
+//      List<CmpdAlias> aliasResultList = (List<CmpdAlias>) aliasCrit.list();
+//      for (CmpdAlias al : aliasResultList) {
+//        aliasSet.add(al.getAlias());
+//      }
 
       //cmpdNamedSet
       Criteria cmpdNamedSetCrit = session.createCriteria(CmpdNamedSet.class);
@@ -180,11 +180,11 @@ public class ApplicationScopeBean implements Serializable {
 //        this.drugNameItems.add(new SelectItem(s, s));
 //      }
 //alias
-      ArrayList<String> aliasList = new ArrayList<String>(aliasSet);
-      Collections.sort(aliasList);
-      for (String s : aliasList) {
-        this.aliasItems.add(new SelectItem(s, s));
-      }
+//      ArrayList<String> aliasList = new ArrayList<String>(aliasSet);
+//      Collections.sort(aliasList);
+//      for (String s : aliasList) {
+//        this.aliasItems.add(new SelectItem(s, s));
+//      }
 
 //cas
 //      ArrayList<String> casList = new ArrayList<String>(casSet);

@@ -7,14 +7,14 @@ package mwk.datasystem.mwkcharting;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import mwk.datasystem.vo.CmpdListMemberVO;
+
 
 /**
  *
  * @author mwkunkel bins can be either discrete or continuous if discrete then
  * the bin value is matched
  */
-public class HistogramBin {
+public class TemplatedHistogramBin<T extends HistogramDataInterface> {
 
     private String label;
     private int count;
@@ -23,10 +23,10 @@ public class HistogramBin {
     private double maxCut;
     private double minVal;
     private double maxVal;
-    private ArrayList<CmpdListMemberVO> binList;
+    private ArrayList<T> binList;
 
     // a continuous bin must have min and max specified up front
-    public HistogramBin(double min, double max, String label) {
+    public TemplatedHistogramBin(double min, double max, String label) {
 
         this.label=label;
         //
@@ -39,7 +39,7 @@ public class HistogramBin {
         this.minVal = Double.MAX_VALUE;
         this.maxVal = Double.MIN_VALUE;
         //
-        this.binList = new ArrayList<CmpdListMemberVO>();
+        this.binList = new ArrayList<T>();
     }
 
     public void debugBin() {
@@ -50,7 +50,7 @@ public class HistogramBin {
         System.out.println("debug bin: minCut: " + nf2.format(this.minCut) + " maxCut: " + nf2.format(this.maxCut) + " count: " + this.count + " countSelected: " + this.countSelected);
     }
 
-    public boolean add(CmpdListMemberVO incoming, double val) {
+    public boolean add(T incoming, double val) {
 
         //System.out.println("Value of incoming.getIsSelected() is: " + incoming.getIsSelected());
         boolean rtn = false;
@@ -132,11 +132,11 @@ public class HistogramBin {
         this.maxVal = maxVal;
     }
 
-    public ArrayList<CmpdListMemberVO> getBinList() {
+    public ArrayList<T> getBinList() {
         return binList;
     }
 
-    public void setBinList(ArrayList<CmpdListMemberVO> binList) {
+    public void setBinList(ArrayList<T> binList) {
         this.binList = binList;
     }
 
