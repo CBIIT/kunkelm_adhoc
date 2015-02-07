@@ -5,6 +5,9 @@
  */
 package mwk.datasystem.mwkcharting;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 
@@ -14,66 +17,112 @@ import mwk.datasystem.vo.CmpdListMemberVO;
  */
 public class PropertyUtilities {
 
-    public static float getPropertyAsFloat(CmpdListMemberVO clmVO, String propertyName) {
+  private static List<String> knownStrProps;
+  private static List<String> knownIntProps;
+  private static List<String> knownDblProps;
 
-        Double dblRtn = Double.NaN;
+  static {
+    knownStrProps = new ArrayList<String>(Arrays.asList(new String[]{"prefix"}));
+    knownIntProps = new ArrayList<String>(Arrays.asList(new String[]{"nsc", "hba", "hbd"}));
+    knownDblProps = new ArrayList<String>(Arrays.asList(new String[]{"alogp", "logd", "sa", "mw"}));
+  }
 
-        CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
+  public static Boolean knownStringProperty(String propertyName) {
+    return (knownStrProps.contains(propertyName));
+  }
 
-        if (propertyName.equals("alogp")) {
-            if (pchemVO.getTheALogP() != null) {
-                if (!Double.isNaN(pchemVO.getTheALogP())) {
-                    dblRtn = pchemVO.getTheALogP();
-                }
-            }
+  public static Boolean knownIntegerProperty(String propertyName) {
+    return (knownIntProps.contains(propertyName));
+  }
+
+  public static Boolean knownDoubleProperty(String propertyName) {
+    return (knownDblProps.contains(propertyName));
+  }
+
+  public static String getStringProperty(CmpdListMemberVO clmVO, String propertyName) {
+
+    String rtn = null;
+
+    if (knownStringProperty(propertyName)) {
+      if (propertyName.equals("prefix")) {
+        if (clmVO.getCmpd() != null && clmVO.getCmpd().getPrefix() != null) {
+          rtn = clmVO.getCmpd().getPrefix();
         }
+      }
+    }
 
-        if (propertyName.equals("logd")) {
-            if (pchemVO.getLogD() != null) {
-                if (!Double.isNaN(pchemVO.getLogD())) {
-                    dblRtn = pchemVO.getLogD();
-                }
-            }
-        }
+    return rtn;
 
-        if (propertyName.equals("hba")) {
-            if (pchemVO.getCountHydBondAcceptors() != null) {
-                if (!Double.isNaN(pchemVO.getCountHydBondAcceptors())) {
-                    dblRtn = pchemVO.getCountHydBondAcceptors().doubleValue();
-                }
-            }
-        }
+  }
 
-        if (propertyName.equals("hbd")) {
-            if (pchemVO.getCountHydBondDonors() != null) {
-                if (!Double.isNaN(pchemVO.getCountHydBondDonors())) {
-                    dblRtn = pchemVO.getCountHydBondDonors().doubleValue();
-                }
-            }
-        }
+  public static Integer getIntegerProperty(CmpdListMemberVO clmVO, String propertyName) {
 
-        if (propertyName.equals("sa")) {
-            if (pchemVO.getSurfaceArea() != null) {
-                if (!Double.isNaN(pchemVO.getSurfaceArea())) {
-                    dblRtn = pchemVO.getSurfaceArea();
-                }
-            }
-        }
+    Integer rtn = null;
 
-        if (propertyName.equals("mw")) {
-            if (pchemVO.getMolecularWeight() != null) {
-                if (!Double.isNaN(pchemVO.getMolecularWeight())) {
-                    dblRtn = pchemVO.getMolecularWeight();
-                }
-            }
-        }
+    if (knownIntegerProperty(propertyName)) {
 
-        if (Double.isNaN(dblRtn)) {
-            return Float.NaN;
-        } else {
-            return dblRtn.floatValue();
+      if (propertyName.equals("nsc")) {
+        if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
+          rtn = clmVO.getCmpd().getNsc();
         }
+      }
+
+      CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
+
+      if (propertyName.equals("hba")) {
+        if (pchemVO.getCountHydBondAcceptors() != null) {
+          rtn = pchemVO.getCountHydBondAcceptors();
+        }
+      }
+
+      if (propertyName.equals("hbd")) {
+        if (pchemVO.getCountHydBondDonors() != null) {
+          rtn = pchemVO.getCountHydBondDonors();
+        }
+      }
 
     }
+
+    return rtn;
+
+  }
+
+  public static Double getDoubleProperty(CmpdListMemberVO clmVO, String propertyName) {
+
+    Double rtn = null;
+
+    if (knownDoubleProperty(propertyName)) {
+
+      CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
+
+      if (propertyName.equals("alogp")) {
+        if (pchemVO.getTheALogP() != null) {
+          rtn = pchemVO.getTheALogP();
+        }
+      }
+
+      if (propertyName.equals("logd")) {
+        if (pchemVO.getLogD() != null) {
+          rtn = pchemVO.getLogD();
+        }
+      }
+
+      if (propertyName.equals("sa")) {
+        if (pchemVO.getSurfaceArea() != null) {
+          rtn = pchemVO.getSurfaceArea();
+        }
+      }
+
+      if (propertyName.equals("mw")) {
+        if (pchemVO.getMolecularWeight() != null) {
+          rtn = pchemVO.getMolecularWeight();
+        }
+      }
+
+    }
+
+    return rtn;
+
+  }
 
 }

@@ -10,8 +10,9 @@
  See the License for the specific language governing permissions and 
  limitations under the License.
  */
-package com.flaptor.hist4j;
+package com.flaptor.hist4j.mwkdbl;
 
+import com.flaptor.hist4j.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class AdaptiveHistogram implements Serializable {
   public AdaptiveHistogram() {
     root = null;
     reset();
-   }
+  }
 
   /**
    * Erases all data from the histogram.
@@ -58,12 +59,13 @@ public class AdaptiveHistogram implements Serializable {
    *
    * @param value the data point to add.
    */
-  public synchronized void addValue(float value) {
+  public synchronized void addValue(double value) {
     totalCount++;
     if (null == root) {
       root = new HistogramDataNode();
     }
     root = root.addValue(this, value);
+
   }
 
   /**
@@ -74,7 +76,7 @@ public class AdaptiveHistogram implements Serializable {
    * @return the number of data points stored in the same bucket as the
    * reference point.
    */
-  public long getCount(float value) {
+  public long getCount(double value) {
     long count = 0;
     if (root != null) {
       count = root.getCount(value);
@@ -88,7 +90,7 @@ public class AdaptiveHistogram implements Serializable {
    * @param value the reference data point.
    * @return the cumulative density function for the reference point.
    */
-  public long getAccumCount(float value) {
+  public long getAccumCount(double value) {
     long count = 0;
     if (root != null) {
       count = root.getAccumCount(value);
@@ -102,13 +104,13 @@ public class AdaptiveHistogram implements Serializable {
    * @param percentile the percentile at which the data set is split.
    * @return the data point that splits the data set at the given percentile.
    */
-  public float getValueForPercentile(int percentile) {
+  public double getValueForPercentile(int percentile) {
     long targetAccumCount = (totalCount * percentile) / 100;
-    Float value = new Float(0);
+    Double value = new Double(0);
     if (root != null) {
       value = root.getValueForAccumCount(new long[]{0, targetAccumCount});
     }
-    return (value != null) ? value.floatValue() : 0;
+    return (value != null) ? value.doubleValue() : 0;
   }
 
   /**
@@ -136,7 +138,7 @@ public class AdaptiveHistogram implements Serializable {
      * @param value the input value.
      * @return the resulting converted value.
      */
-    float convertValue(float value);
+    double convertValue(double value);
 
   }
 
@@ -146,14 +148,14 @@ public class AdaptiveHistogram implements Serializable {
    * @param targetMin the target new minimum value.
    * @param targetMax the target new maximum value.
    */
-  public void normalize(float targetMin, float targetMax) {
+  public void normalize(double targetMin, double targetMax) {
     if (root != null) {
-      final float min = getValueForPercentile(0);
-      final float max = getValueForPercentile(100);
-      final float m = (targetMax - targetMin) * ((max > min) ? 1 / (max - min) : 1);
-      final float b = targetMin;
+      final double min = getValueForPercentile(0);
+      final double max = getValueForPercentile(100);
+      final double m = (targetMax - targetMin) * ((max > min) ? 1 / (max - min) : 1);
+      final double b = targetMin;
       root.apply(new ValueConversion() {
-        public float convertValue(float value) {
+        public double convertValue(double value) {
           return m * (value - min) + b;
         }
       });

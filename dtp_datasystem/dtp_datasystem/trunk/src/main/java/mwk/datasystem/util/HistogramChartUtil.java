@@ -4,7 +4,7 @@
  */
 package mwk.datasystem.util;
 
-import com.flaptor.hist4j.AdaptiveHistogram;
+import com.flaptor.hist4j.mwkdbl.AdaptiveHistogram;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,38 +44,38 @@ public class HistogramChartUtil {
 
             // these are hard-coded since reflection is problematic...
             if (propertyNameList.contains("alogp")) {
-                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "alogp"))) {
-                    ahMap.get("alogp").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "alogp"));
+                if (PropertyUtilities.getDoubleProperty(clmVO, "alogp") != null) {
+                    ahMap.get("alogp").addValue(PropertyUtilities.getDoubleProperty(clmVO, "alogp"));
                 }
             }
 
             if (propertyNameList.contains("logd")) {
-                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "logd"))) {
-                    ahMap.get("logd").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "logd"));
+                if (PropertyUtilities.getDoubleProperty(clmVO, "logd") != null) {
+                    ahMap.get("logd").addValue(PropertyUtilities.getDoubleProperty(clmVO, "logd"));
                 }
             }
 
             if (propertyNameList.contains("hba")) {
-                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "hba"))) {
-                    ahMap.get("hba").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "hba"));
+                if (PropertyUtilities.getIntegerProperty(clmVO, "hba")!=null) {
+                    ahMap.get("hba").addValue(PropertyUtilities.getIntegerProperty(clmVO, "hba"));
                 }
             }
 
             if (propertyNameList.contains("hbd")) {
-                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "hbd"))) {
-                    ahMap.get("hbd").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "hbd"));
+                if (PropertyUtilities.getIntegerProperty(clmVO, "hbd")!= null) {
+                    ahMap.get("hbd").addValue(PropertyUtilities.getIntegerProperty(clmVO, "hbd"));
                 }
             }
 
             if (propertyNameList.contains("sa")) {
-                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "sa"))) {
-                    ahMap.get("sa").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "sa"));
+                if (PropertyUtilities.getDoubleProperty(clmVO, "sa") != null) {
+                    ahMap.get("sa").addValue(PropertyUtilities.getDoubleProperty(clmVO, "sa"));
                 }
             }
 
             if (propertyNameList.contains("mw")) {
-                if (!Double.isNaN(PropertyUtilities.getPropertyAsFloat(clmVO, "mw"))) {
-                    ahMap.get("mw").addValue(PropertyUtilities.getPropertyAsFloat(clmVO, "mw"));
+                if (PropertyUtilities.getDoubleProperty(clmVO, "mw")!= null) {
+                    ahMap.get("mw").addValue(PropertyUtilities.getDoubleProperty(clmVO, "mw"));
                 }
             }
 

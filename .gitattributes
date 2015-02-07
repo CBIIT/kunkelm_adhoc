@@ -9444,10 +9444,15 @@ dtp_datasystem/dtp_datasystem/trunk/processedSalts.txt -text
 dtp_datasystem/dtp_datasystem/trunk/rawSaltDefinitions.txt -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/AdaptiveHistogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/Cell.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/Histogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/HistogramDataNode.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/HistogramForkNode.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/HistogramNode.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/AdaptiveHistogram.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/Cell.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/HistogramDataNode.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/HistogramForkNode.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/HistogramNode.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/package-info.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/package-info.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImageServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
@@ -9471,6 +9476,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/His
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/PropertyUtilities.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogramBin.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedPropertyUtilities.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/AddDimensionedImage.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Comparators.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ExtendedCartesianChartModel.java -text
@@ -9486,6 +9492,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HibernateU
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HistogramChartUtil.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/MoleculeParser.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ScatterPlotChartUtil.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/SerializeDeSerialize.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformAndroToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformCmpdTableToVO.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text

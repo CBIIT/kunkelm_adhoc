@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
@@ -20,6 +21,7 @@ import mwk.datasystem.mwkcharting.Histogram;
 import mwk.datasystem.mwkcharting.HistogramBin;
 import mwk.datasystem.util.HistogramChartUtil;
 import mwk.datasystem.util.ScatterPlotChartUtil;
+import mwk.datasystem.util.SerializeDeSerialize;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import org.primefaces.component.chart.Chart;
 import org.primefaces.event.ItemSelectEvent;
@@ -200,6 +202,7 @@ public class HistogramController implements Serializable {
         this.histoModel = HistogramChartUtil.doHistograms(listManagerController.getActiveList().getCmpdListMembers(), this.parametersPchem);
         this.scatterPlotModel = ScatterPlotChartUtil.generateScatter(listManagerController.getActiveList().getCmpdListMembers(), this.parametersPchem);
 
+      
     }
 
     public void itemSelectScatterPlot(ItemSelectEvent event) {
@@ -238,6 +241,11 @@ public class HistogramController implements Serializable {
     }
 
     public String renderHistoAndScatter() {
+      
+        // serialize the data
+        
+        SerializeDeSerialize<Collection<CmpdListMemberVO>> sds = new SerializeDeSerialize<Collection<CmpdListMemberVO>>("/tmp/clmVOlist.ser");
+        sds.serialize(listManagerController.getActiveList().getCmpdListMembers());
 
         // reset the selections
         listManagerController.setSelectedActiveListMembers(new ArrayList<CmpdListMemberVO>());
