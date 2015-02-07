@@ -75,6 +75,8 @@ public class Histogram {
 
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
+      
+      System.out.println(this.propertyName + " min: " + min + " max:" + max);
 
       for (int pct = 0; pct < 100; pct += 5) {
 
@@ -137,8 +139,6 @@ public class Histogram {
     xAxis.setTickAngle(-90);
 
     this.chartModel.setStacked(true);
-
-    this.chartModel.setLegendPosition("ne");
 
     ChartSeries countSeries = new ChartSeries("count");
     ChartSeries countSelectedSeries = new ChartSeries("countSelected");

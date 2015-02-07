@@ -9575,6 +9575,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/loginFailed.html -t
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/parkingLot.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_manip.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text

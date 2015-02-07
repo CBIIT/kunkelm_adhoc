@@ -5,13 +5,17 @@
 package mwk.datasystem.main;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import mwk.datasystem.domain.AdHocCmpd;
 import mwk.datasystem.domain.CmpdLegacyCmpd;
 import mwk.datasystem.domain.CmpdLegacyCmpdImpl;
 import mwk.datasystem.util.HibernateUtil;
+import mwk.datasystem.util.MoleculeParser;
 import mwk.datasystem.vo.CmpdLegacyCmpdVO;
 import newstructureservlet.MolInput;
 import org.hibernate.Session;
@@ -27,7 +31,17 @@ public class Main {
   public static void main(String[] args) {
 
     // insertLegacyCmpds();
-    testCtabParse();
+    // testCtabParse();
+    testMoleculeParser();
+
+  }
+
+  public static void testMoleculeParser() {
+    MoleculeParser mp = new MoleculeParser();
+
+    File sdFile = new File("/home/mwkunkel/tiny.sdf");
+
+    ArrayList<AdHocCmpd> ahcList = mp.parseSDF(sdFile);
 
   }
 

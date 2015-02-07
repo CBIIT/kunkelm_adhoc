@@ -23,8 +23,8 @@
 
     <p:outputPanel id="HistogramsDialog">
 
-      <p:dataGrid rendered="#{histogramController.scatterPlotModel != null}" 
-                  value="#{histogramController.scatterPlotModel}" 
+      <p:dataGrid rendered="#{histogramController.scatterPlotList != null}" 
+                  value="#{histogramController.scatterPlotList}" 
                   var="scat" 
                   columns="3">     
 
@@ -32,8 +32,8 @@
 
       </p:dataGrid>
 
-      <p:dataGrid rendered="#{histogramController.histoModel != null}"
-                  value="#{histogramController.histoModel}" 
+      <p:dataGrid rendered="#{histogramController.histogramList != null}"
+                  value="#{histogramController.histogramList}" 
                   var="histo" 
                   columns="3">      
 

@@ -110,8 +110,7 @@ public class MenuBean implements Serializable {
 
             item = new DefaultMenuItem("Histograms and ScatterPlots");
             item.setIcon("fa fa-bar-chart");
-            item.setAjax(false);
-            item.setOutcome("/webpages/activeListHistograms?faces-redirect=true");
+            item.setCommand("#{histogramController.handleLoadActiveList}");
             actLisNav.addElement(item);
 
             model.addElement(actLisNav);

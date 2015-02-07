@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -196,6 +197,8 @@ public class ListManagerController implements Serializable {
     hm.put("Count Fragments", "countCmpdFragments");
 
     this.valid_cmpd_keys = hm;
+    
+    this.selectedCmpdParameters = new ArrayList<String>(Arrays.asList(new String[]{"nsc", "name", "conf", "distribution",}));
 
     this.availableCmpdParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availableCmpdParameters, null);

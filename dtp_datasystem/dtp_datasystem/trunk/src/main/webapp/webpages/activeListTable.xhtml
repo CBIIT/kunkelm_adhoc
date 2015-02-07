@@ -9,274 +9,247 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <ui:remove><ui:include src="/webpages/templates/active_list_nav.xhtml"/></ui:remove>
+    <ui:include src="/webpages/templates/active_list_manip.xhtml"/>
 
-        <ui:remove>
+    <p:panel rendered="${!empty listManagerController.activeList.anchorSmiles}">
 
-            <p:fieldset legend="Export All Data">  
+      <h:outputText value="anchorSmiles: ${listManagerController.activeList.anchorSmiles}"/>
 
-                <p:commandButton ajax="false" value="Export to Excel">
-                    <p:dataExporter type="xls" 
-                                    target="activeListTbl" 
-                                    fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
-                </p:commandButton>
+      <br/>
 
-                <p:spacer width="20"/>
+      <h:graphicImage alt="Chemical Structure of List Anchor"
+                      width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
+                      styleClass="anchorStructure"
+                      url='#{sessionController.getSmilesStrcUrl(listManagerController.activeList.anchorSmiles)}'>              
+      </h:graphicImage>
 
-                <p:commandButton ajax="false" value="Export as CSV">  
-                    <p:dataExporter type="csv" 
-                                    target="activeListTbl" 
-                                    fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />
-                </p:commandButton> 
+    </p:panel>
 
-                <p:spacer width="20"/>
+    <p:spacer height="20" width="100%"/>
 
-                <p:commandButton ajax="false" value="Export to Excel with Structure Images">
-                    <p:dataExporter type="xls" 
-                                    target="activeListTbl" 
-                                    postProcessor="#{listManagerController.postProcessXLS}"
-                                    fileName="activeList_listId_#{listManagerController.activeList.cmpdListId}" />        
-                </p:commandButton>
+    <p:panel id="toggleable" 
+             header="Select for Display" 
+             toggleable="true" 
+             closable="true" 
+             toggleSpeed="500" 
+             closeSpeed="500" 
+             widgetVar="panel" 
+             style="margin-bottom:20px">
 
-                <p:spacer width="20"/>
+      <p:accordionPanel>
+        <p:tab title="Cmpd Parameters">
+          <p:selectManyCheckbox id="cmpdGrid"
+                                value="#{listManagerController.selectedCmpdParameters}" 
+                                layout="grid" 
+                                columns="5">
+            <f:selectItems value="#{listManagerController.availableCmpdParameters}" 
+                           var="cmpdParam" 
+                           itemLabel="#{cmpdParam}" 
+                           itemValue="#{cmpdParam}" />
+          </p:selectManyCheckbox>
+        </p:tab>
+        <p:tab title="PChem Parameters">        
+          <p:selectManyCheckbox id="physChemGrid"
+                                value="#{listManagerController.selectedPChemParameters}" 
+                                layout="grid" 
+                                columns="5">
+            <f:selectItems value="#{listManagerController.availablePChemParameters}" 
+                           var="pChemParam" 
+                           itemLabel="#{pChemParam}" 
+                           itemValue="#{pChemParam}" />
+          </p:selectManyCheckbox>
+        </p:tab>
+        <p:tab title="Structure Parameters">
+          <p:selectManyCheckbox id="structureGrid"
+                                value="#{listManagerController.selectedStructureParameters}" 
+                                layout="grid" 
+                                columns="5">
+            <f:selectItems value="#{listManagerController.availableStructureParameters}" 
+                           var="strucParam" 
+                           itemLabel="#{strucParam}" 
+                           itemValue="#{strucParam}" />
+          </p:selectManyCheckbox>
+        </p:tab>
+        <p:tab title="BioData Parameters">
+          <p:selectManyCheckbox id="bioDataGrid"
+                                value="#{listManagerController.selectedBioDataParameters}" 
+                                layout="grid" 
+                                columns="5">
+            <f:selectItems value="#{listManagerController.availableBioDataParameters}" 
+                           var="bioDatParam" 
+                           itemLabel="#{bioDatParam}" 
+                           itemValue="#{bioDatParam}" />
+          </p:selectManyCheckbox>
+        </p:tab>
+      </p:accordionPanel>
 
-                <p:commandButton onclick="structuresAsGridImage();" 
-                                 value="Image of bare structures as grid" /> 
+    </p:panel>
 
-            </p:fieldset>
+    <p:commandButton action="#{listManagerController.performUpdateColumns()}" 
+                     value="Update" 
+                     icon="ui-icon-refresh" 
+                     oncomplete="PF('activeListTblWidgetVar').clearFilters()"/>
 
-            <p:spacer height="20" width="100%"/>
+    <p:spacer height="20" width="100%"/>
 
-        </ui:remove>
+    <p:dataTable  id="activeListTbl"
+                  widgetVar="activeListTblWidgetVar"
+                  var="listMember" 
+                  value="#{listManagerController.activeList.cmpdListMembers}" 
+                  rows="50"                        
+                  paginator="true"
+                  resizableColumns="true"
+                  paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
+                  rowsPerPageTemplate="50,100,250,500"
+                  selection="#{listContentController.selectedActiveListMembers}"
+                  rowKey="#{listMember.id}"                              
+                  sortMode="multiple">  
 
-        <p:panel rendered="${!empty listManagerController.activeList.anchorSmiles}">
+      <p:ajax event="rowSelect" listener="#{listContentController.onRowSelect}" />
+      <p:ajax event="rowUnselect" listener="#{listContentController.onRowDeSelect}" />
 
-            <h:outputText value="anchorSmiles: ${listManagerController.activeList.anchorSmiles}"/>
+      <f:facet name="header">                
+        <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
+      </f:facet>
 
-            <br/>
+      <ui:remove>
 
-            <h:graphicImage alt="Chemical Structure of List Anchor"
-                            width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                            styleClass="anchorStructure"
-                            url='#{sessionController.getSmilesStrcUrl(listManagerController.activeList.anchorSmiles)}'>              
-            </h:graphicImage>
+        <p:columnGroup type="header">
+          <p:row>
+            <p:column rowspan="2" headerText="All" />
+            <p:column rowspan="2" headerText="Comment" />
+            <p:column rowspan="2" headerText="Structure" />
+            <p:column rendered="#{!empty listManagerController.selectedCmpdParameters}"
+                      colspan="#{fn:length(listManagerController.selectedCmpdParameters)}" 
+                      headerText="Cmpd" />
+            <p:column rendered="#{!empty listManagerController.selectedStructureParameters}"
+                      colspan="#{fn:length(listManagerController.selectedStructureParameters)}" 
+                      headerText="Structure" />
+            <p:column rendered="#{!empty listManagerController.selectedPChemParameters}"
+                      colspan="#{fn:length(listManagerController.selectedPChemParameters)}" 
+                      headerText="pChem" />
+            <p:column rendered="#{!empty listManagerController.selectedBioDataParameters}"
+                      colspan="#{fn:length(listManagerController.selectedBioDataParameters)}" 
+                      headerText="BioData" />
+          </p:row>
+          <p:row>
 
-        </p:panel>
+            <ui:repeat value="#{listManagerController.selectedCmpdParameters}" var="scp">
+              <p:column headerText="#{scp}" />
+            </ui:repeat>
 
-        <p:spacer height="20" width="100%"/>
+            <ui:repeat value="#{listManagerController.selectedStructureParameters}" var="ssp">
+              <p:column headerText="#{ssp}" />
+            </ui:repeat>
 
-        <p:accordionPanel>
-            <p:tab title="Cmpd Parameters">
-                <p:selectManyCheckbox id="cmpdGrid"
-                                      value="#{listManagerController.selectedCmpdParameters}" 
-                                      layout="grid" 
-                                      columns="5">
-                    <f:selectItems value="#{listManagerController.availableCmpdParameters}" 
-                                   var="cmpdParam" 
-                                   itemLabel="#{cmpdParam}" 
-                                   itemValue="#{cmpdParam}" />
-                </p:selectManyCheckbox>
-            </p:tab>
-            <p:tab title="PChem Parameters">        
-                <p:selectManyCheckbox id="physChemGrid"
-                                      value="#{listManagerController.selectedPChemParameters}" 
-                                      layout="grid" 
-                                      columns="5">
-                    <f:selectItems value="#{listManagerController.availablePChemParameters}" 
-                                   var="pChemParam" 
-                                   itemLabel="#{pChemParam}" 
-                                   itemValue="#{pChemParam}" />
-                </p:selectManyCheckbox>
-            </p:tab>
-            <p:tab title="Structure Parameters">
-                <p:selectManyCheckbox id="structureGrid"
-                                      value="#{listManagerController.selectedStructureParameters}" 
-                                      layout="grid" 
-                                      columns="5">
-                    <f:selectItems value="#{listManagerController.availableStructureParameters}" 
-                                   var="strucParam" 
-                                   itemLabel="#{strucParam}" 
-                                   itemValue="#{strucParam}" />
-                </p:selectManyCheckbox>
-            </p:tab>
-            <p:tab title="BioData Parameters">
-                <p:selectManyCheckbox id="bioDataGrid"
-                                      value="#{listManagerController.selectedBioDataParameters}" 
-                                      layout="grid" 
-                                      columns="5">
-                    <f:selectItems value="#{listManagerController.availableBioDataParameters}" 
-                                   var="bioDatParam" 
-                                   itemLabel="#{bioDatParam}" 
-                                   itemValue="#{bioDatParam}" />
-                </p:selectManyCheckbox>
-            </p:tab>
-        </p:accordionPanel>
+            <ui:repeat value="#{listManagerController.selectedPChemParameters}" var="spcp">
+              <p:column headerText="#{spcp}" />
+            </ui:repeat>
 
-        <p:commandButton action="#{listManagerController.performUpdateColumns()}" 
-                         value="Update" 
-                         icon="ui-icon-refresh" 
-                         oncomplete="PF('activeListTblWidgetVar').clearFilters()"/>
+            <ui:repeat value="#{listManagerController.selectedBioDataParameters}" var="sbdp">
+              <p:column headerText="#{sbdp}" />
+            </ui:repeat>
 
-        <p:spacer height="20" width="100%"/>
+          </p:row>
+        </p:columnGroup>
 
-        <p:dataTable  id="activeListTbl"
-                      widgetVar="activeListTblWidgetVar"
-                      var="listMember" 
-                      value="#{listManagerController.activeList.cmpdListMembers}" 
-                      rows="50"                        
-                      paginator="true"
-                      resizableColumns="true"
-                      paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
-                      rowsPerPageTemplate="50,100,250,500"
-                      selection="#{listContentController.selectedActiveListMembers}"
-                      rowKey="#{listMember.id}"                              
-                      sortMode="multiple">  
+      </ui:remove>
 
-            <p:ajax event="rowSelect" listener="#{listContentController.onRowSelect}" />
-            <p:ajax event="rowUnselect" listener="#{listContentController.onRowDeSelect}" />
+      <p:column headerText="All"
+                resizable="true" 
+                selectionMode="multiple" 
+                style="width:4%" 
+                exportable="false"/>
 
-            <f:facet name="header">                
-                <h:outputText value="List #{listManagerController.activeList.listName} with #{fn:length(listManagerController.activeList.cmpdListMembers)} Members"/>    
-            </f:facet>
+      <p:column headerText="Comment" resizable="true">                                
+        <h:outputText value="#{listMember.listMemberComment}"/>
+      </p:column>   
 
-            <ui:remove>
+      <p:column headerText="Parent - Click for Details" resizable="true">
 
-                <p:columnGroup type="header">
-                    <p:row>
-                        <p:column rowspan="2" headerText="All" />
-                        <p:column rowspan="2" headerText="Comment" />
-                        <p:column rowspan="2" headerText="Structure" />
-                        <p:column rendered="#{!empty listManagerController.selectedCmpdParameters}"
-                                  colspan="#{fn:length(listManagerController.selectedCmpdParameters)}" 
-                                  headerText="Cmpd" />
-                        <p:column rendered="#{!empty listManagerController.selectedStructureParameters}"
-                                  colspan="#{fn:length(listManagerController.selectedStructureParameters)}" 
-                                  headerText="Structure" />
-                        <p:column rendered="#{!empty listManagerController.selectedPChemParameters}"
-                                  colspan="#{fn:length(listManagerController.selectedPChemParameters)}" 
-                                  headerText="pChem" />
-                        <p:column rendered="#{!empty listManagerController.selectedBioDataParameters}"
-                                  colspan="#{fn:length(listManagerController.selectedBioDataParameters)}" 
-                                  headerText="BioData" />
-                    </p:row>
-                    <p:row>
+        <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
+          <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                          width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
+                          styleClass="parentStructure"
+                          url='#{sessionController.getCmpdStrcUrl(listMember.cmpd, listManagerController.activeList.anchorSmiles)}'>              
+          </h:graphicImage>
 
-                        <ui:repeat value="#{listManagerController.selectedCmpdParameters}" var="scp">
-                            <p:column headerText="#{scp}" />
-                        </ui:repeat>
+          <f:setPropertyActionListener value="#{listMember}"   
+                                       target="#{listManagerController.selectedActiveListMember}" />  
+        </p:commandLink>
 
-                        <ui:repeat value="#{listManagerController.selectedStructureParameters}" var="ssp">
-                            <p:column headerText="#{ssp}" />
-                        </ui:repeat>
+      </p:column>
 
-                        <ui:repeat value="#{listManagerController.selectedPChemParameters}" var="spcp">
-                            <p:column headerText="#{spcp}" />
-                        </ui:repeat>
+      <p:column headerText="Fragments" rendered="#{sessionController.showFrags}">
+        <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
+          <h:graphicImage alt="Chemical Structure of Compound Fragment"
+                          width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
+                          styleClass="fragmentStructure"
+                          url='#{sessionController.getSmilesStrcUrl(fragSmiles)}'>              
+          </h:graphicImage>
+        </p:dataGrid>
+      </p:column>      
 
-                        <ui:repeat value="#{listManagerController.selectedBioDataParameters}" var="sbdp">
-                            <p:column headerText="#{sbdp}" />
-                        </ui:repeat>
+      <c:set var="cmpd" value="#{listMember.cmpd}" />
 
-                    </p:row>
-                </p:columnGroup>
+      <p:columns resizable="true"  
+                 value="#{listManagerController.cmpdColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{cmpd[column.property]}" 
+                 filterBy="#{cmpd[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{cmpd[column.property]}" />
+      </p:columns>
 
-            </ui:remove>
+      <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
 
-            <p:column headerText="All"
-                      resizable="true" 
-                      selectionMode="multiple" 
-                      style="width:4%" 
-                      exportable="false"/>
+      <p:columns resizable="true" 
+                 value="#{listManagerController.structureColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{strc[column.property]}" 
+                 filterBy="#{strc[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{strc[column.property]}" />
+      </p:columns>
 
-            <p:column headerText="Comment" resizable="true">                                
-                <h:outputText value="#{listMember.listMemberComment}"/>
-            </p:column>   
+      <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
 
-            <p:column headerText="Parent - Click for Details" resizable="true">
+      <p:columns resizable="true" 
+                 value="#{listManagerController.physChemColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{physchem[column.property]}" 
+                 filterBy="#{physchem[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{physchem[column.property]}" />
+      </p:columns>
 
-                <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
-                    <h:graphicImage alt="Chemical Structure of Parent Fragment"
-                                    width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                    styleClass="parentStructure"
-                                    url='#{sessionController.getCmpdStrcUrl(listMember.cmpd, listManagerController.activeList.anchorSmiles)}'>              
-                    </h:graphicImage>
+      <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
 
-                    <f:setPropertyActionListener value="#{listMember}"   
-                                                 target="#{listManagerController.selectedActiveListMember}" />  
-                </p:commandLink>
+      <p:columns resizable="true" 
+                 value="#{listManagerController.biodataColumns}" 
+                 var="column" 
+                 columnIndexVar="colIndex" 
+                 sortBy="#{biodat[column.property]}" 
+                 filterBy="#{biodat[column.property]}">
+        <f:facet name="header">
+          <h:outputText value="#{column.header}" />
+        </f:facet>
+        <h:outputText value="#{biodat[column.property]}" />
+      </p:columns>
 
-            </p:column>
+    </p:dataTable>
 
-            <p:column headerText="Fragments" rendered="#{sessionController.showFrags}">
-                <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-                    <h:graphicImage alt="Chemical Structure of Compound Fragment"
-                                    width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                                    styleClass="fragmentStructure"
-                                    url='#{sessionController.getSmilesStrcUrl(fragSmiles)}'>              
-                    </h:graphicImage>
-                </p:dataGrid>
-            </p:column>      
-
-            <c:set var="cmpd" value="#{listMember.cmpd}" />
-
-            <p:columns resizable="true"  
-                       value="#{listManagerController.cmpdColumns}" 
-                       var="column" 
-                       columnIndexVar="colIndex" 
-                       sortBy="#{cmpd[column.property]}" 
-                       filterBy="#{cmpd[column.property]}">
-                <f:facet name="header">
-                    <h:outputText value="#{column.header}" />
-                </f:facet>
-                <h:outputText value="#{cmpd[column.property]}" />
-            </p:columns>
-
-            <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
-
-            <p:columns resizable="true" 
-                       value="#{listManagerController.structureColumns}" 
-                       var="column" 
-                       columnIndexVar="colIndex" 
-                       sortBy="#{strc[column.property]}" 
-                       filterBy="#{strc[column.property]}">
-                <f:facet name="header">
-                    <h:outputText value="#{column.header}" />
-                </f:facet>
-                <h:outputText value="#{strc[column.property]}" />
-            </p:columns>
-
-            <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
-
-            <p:columns resizable="true" 
-                       value="#{listManagerController.physChemColumns}" 
-                       var="column" 
-                       columnIndexVar="colIndex" 
-                       sortBy="#{physchem[column.property]}" 
-                       filterBy="#{physchem[column.property]}">
-                <f:facet name="header">
-                    <h:outputText value="#{column.header}" />
-                </f:facet>
-                <h:outputText value="#{physchem[column.property]}" />
-            </p:columns>
-
-            <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
-
-            <p:columns resizable="true" 
-                       value="#{listManagerController.biodataColumns}" 
-                       var="column" 
-                       columnIndexVar="colIndex" 
-                       sortBy="#{biodat[column.property]}" 
-                       filterBy="#{biodat[column.property]}">
-                <f:facet name="header">
-                    <h:outputText value="#{column.header}" />
-                </f:facet>
-                <h:outputText value="#{biodat[column.property]}" />
-            </p:columns>
-
-        </p:dataTable>
-
-    </ui:define>
+  </ui:define>
 
 </ui:composition>

@@ -5,17 +5,21 @@
  */
 package mwk.datasystem.controllers;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.mwkcharting.Histogram;
 import mwk.datasystem.mwkcharting.HistogramBin;
@@ -37,340 +41,386 @@ import org.primefaces.model.chart.LineChartModel;
 @SessionScoped
 public class HistogramController implements Serializable {
 
-    static final long serialVersionUID = -8653468638698142855l;
+  static final long serialVersionUID = -8653468638698142855l;
 
-    // reach-through to sessionController
-    @ManagedProperty(value = "#{sessionController}")
-    private SessionController sessionController;
+  // reach-through to sessionController
+  @ManagedProperty(value = "#{sessionController}")
+  private SessionController sessionController;
 
-    public void setSessionController(SessionController sessionController) {
-        this.sessionController = sessionController;
+  public void setSessionController(SessionController sessionController) {
+    this.sessionController = sessionController;
+  }
+
+  // reach-through to listManagerController
+  @ManagedProperty(value = "#{listManagerController}")
+  private ListManagerController listManagerController;
+
+  public void setListManagerController(ListManagerController listManagerController) {
+    this.listManagerController = listManagerController;
+  }
+
+  private List<Histogram> histogramList;
+  private ArrayList<LineChartModel> scatterPlotList;
+  private List<String> parametersPchem;
+
+  private String histogramSizeString;
+  private String scatterPlotSizeString;
+  private String structureSizeString;
+
+  private Integer histogramSize;
+  private Integer scatterPlotSize;
+  private Integer structureSize;
+
+  private List<CmpdListMemberVO> cmpdListMembers;
+  private List<CmpdListMemberVO> selectedCmpdListMembers;
+  
+  public HistogramController() {
+
+    this.histogramList = new ArrayList<Histogram>();
+    this.scatterPlotList = new ArrayList<LineChartModel>();
+
+    this.parametersPchem = new ArrayList<String>(Arrays.asList(new String[]{"mw", "hba", "hbd", "sa"}));
+
+    this.histogramSizeString = "medium";
+    this.scatterPlotSizeString = "medium";
+    this.structureSizeString = "medium";
+    this.histogramSize = 300;
+    this.scatterPlotSize = 300;
+    this.structureSize = 200;
+
+    this.cmpdListMembers = new ArrayList<CmpdListMemberVO>();
+    this.selectedCmpdListMembers = new ArrayList<CmpdListMemberVO>();
+
+  }
+
+  //
+  public void handleLoadActiveList() {
+
+    String rtn = performLoadActiveList();
+
+    FacesContext ctx = FacesContext.getCurrentInstance();
+
+    ExternalContext extCtx = ctx.getExternalContext();
+
+    String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/activeListHistograms.xhtml"));
+
+    try {
+      extCtx.redirect(url);
+    } catch (IOException ioe) {
+      throw new FacesException(ioe);
     }
 
-    // reach-through to listManagerController
-    @ManagedProperty(value = "#{listManagerController}")
-    private ListManagerController listManagerController;
+  }
 
-    public void setListManagerController(ListManagerController listManagerController) {
-        this.listManagerController = listManagerController;
+  public String performLoadActiveList() {
+
+    this.cmpdListMembers = new ArrayList<CmpdListMemberVO>(listManagerController.getActiveList().getCmpdListMembers());
+    this.selectedCmpdListMembers = new ArrayList<CmpdListMemberVO>();
+
+    renderHistoAndScatter();
+
+    return "/webpages/activeListHistograms?faces-redirect=true";
+  }
+
+  public String performClearSelections() {
+
+    for (CmpdListMemberVO clmVO : this.cmpdListMembers) {
+      clmVO.setIsSelected(Boolean.FALSE);
     }
 
-    private List<Histogram> histoModel;
-    private ArrayList<LineChartModel> scatterPlotModel;
-    private List<String> parametersPchem;
+    this.selectedCmpdListMembers.clear();
+    
+    renderHistoAndScatter();
 
-    private String histogramSizeString;
-    private String scatterPlotSizeString;
-    private String structureSizeString;
+    return "/webpages/activeListHistograms?faces-redirect=true";
+  }
 
-    private Integer histogramSize;
-    private Integer scatterPlotSize;
-    private Integer structureSize;
+  //
+  public void itemSelectHistogram(ItemSelectEvent event) {
 
-    public HistogramController() {
+    System.out.println("Now in itemSelectHistogram in HistogramController");
 
-        this.histogramSizeString = "medium";
-        this.scatterPlotSizeString = "medium";
-        this.structureSizeString = "medium";
-        this.histogramSize = 300;
-        this.scatterPlotSize = 300;
-        this.structureSize = 200;
+    Object eventSrc = event.getSource();
 
-    }
+    System.out.println("eventSrc is: " + eventSrc.getClass().toString());
 
-    //
-    public void itemSelectHistogram(ItemSelectEvent event) {
+    Chart eventChart = (Chart) event.getSource();
+    BarChartModel bcm = (BarChartModel) eventChart.getModel();
+    String histoTitle = bcm.getTitle();
+    int seriesIdx = event.getSeriesIndex();
+    ChartSeries selSeries = bcm.getSeries().get(seriesIdx);
+    String seriesLabel = selSeries.getLabel();
+    Set<Object> keySet = selSeries.getData().keySet();
+    String[] keyArray = keySet.toArray(new String[keySet.size()]);
+    int itemIdx = event.getItemIndex();
+    String histoBarLabel = keyArray[itemIdx];
 
-        System.out.println("Now in itemSelectHistogram in HistogramController");
-
-        Object eventSrc = event.getSource();
-
-        System.out.println("eventSrc is: " + eventSrc.getClass().toString());
-
-        Chart eventChart = (Chart) event.getSource();
-
-        BarChartModel bcm = (BarChartModel) eventChart.getModel();
-
-        String histoTitle = bcm.getTitle();
-        
-        ChartSeries selSeries = bcm.getSeries().get(event.getSeriesIndex());
-        
-        String seriesLabel = selSeries.getLabel();
-
-        Set<Object> keySet = selSeries.getData().keySet();
-
-        String[] keyArray = keySet.toArray(new String[keySet.size()]);
-
-        String histoBarLabel = keyArray[event.getItemIndex()];
-        
-        
-        
     //--------------------------------------------------------------------------
-        //--------------------------------------------------------------------------
-        //--------------------------------------------------------------------------
-        FacesMessage msg = new FacesMessage(
-                FacesMessage.SEVERITY_INFO, "Item selected ",
-                "Event Item Index: " + event.getItemIndex()
-                + "\n" + ", Series Index: " + event.getSeriesIndex()
-                + "\n" + ", Histogram Ident: " + histoTitle
-                + "\n" + ", Histogram Bar Ident: " + histoBarLabel);
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    String details = "Event Item Index: " + itemIdx
+            + ", Histogram Title: " + histoTitle
+            + ", Series Index: " + seriesIdx
+            + ", Series Label: " + seriesLabel
+            + ", Histogram Bar Ident: " + histoBarLabel;
 
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    FacesMessage fm = new FacesMessage();
+    fm.setDetail(details);
+    fm.setSummary("In itemSelectHistogram: ");
+    fm.setSeverity(FacesMessage.SEVERITY_INFO);
 
-        // fetch the included compounds using the indexes
-        Histogram selHisto = null;
+    FacesContext fctx = FacesContext.getCurrentInstance();
+    fctx.addMessage(null, fm);
 
-        boolean found = false;
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    // find the source histogram
+    Histogram selHisto = null;
 
-        for (Histogram h : this.histoModel) {
-            if (h.getPropertyName().equals(histoTitle)) {
-                selHisto = h;
-                found = true;
-                break;
-            }
+    boolean found = false;
+
+    for (Histogram h : this.histogramList) {
+      if (h.getPropertyName().equals(histoTitle)) {
+        selHisto = h;
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      System.out.println("Couldn't find histogram for property: " + histoTitle);
+    }
+
+    // get the appropriate bin
+    HistogramBin curBin = selHisto.getBinList().get(itemIdx);
+
+    System.out.println("histogramBarLabel: " + histoBarLabel);
+    curBin.debugBin();
+
+    if (curBin.getBinList() == null || curBin.getBinList().isEmpty()) {
+      System.out.println("curBin has an empty binList");
+      System.out.println("event.itemIndex: " + itemIdx);
+      selHisto.debugBins();
+    }
+
+    ArrayList<CmpdListMemberVO> allMembers = curBin.getBinList();
+    ArrayList<CmpdListMemberVO> selectedMembers = new ArrayList<CmpdListMemberVO>();
+    for (CmpdListMemberVO clmVO : curBin.getBinList()) {
+      if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
+        selectedMembers.add(clmVO);
+      }
+    }
+
+    // if click on series 0 => this was the selected (red) bar;
+    // so remove only selectedMembers from the bin
+    // if click on series 1 => this was the full (blue) bar;
+    // so add those IF not previously selected
+    if (seriesIdx == 0) {
+
+      for (CmpdListMemberVO clmVO : selectedMembers) {
+        if (this.selectedCmpdListMembers.contains(clmVO)) {
+          clmVO.setIsSelected(Boolean.FALSE);
+          this.selectedCmpdListMembers.remove(clmVO);
         }
-
-        if (!found) {
-            System.out.println("Couldn't find histogram for property: " + histoTitle);
+      }
+      
+    } else {
+      
+      for (CmpdListMemberVO clmVO : allMembers) {
+        if (!this.selectedCmpdListMembers.contains(clmVO)) {
+          clmVO.setIsSelected(Boolean.TRUE);
+          this.selectedCmpdListMembers.add(clmVO);
         }
-        
-        //--------------------DEBUG
-        
-        System.out.println("HistogramBins: ");
-        System.out.println("size: " + selHisto.getBinList().size());        
-        for (HistogramBin hb : selHisto.getBinList()){
-            hb.debugBin();
-        }
-        
-        System.out.println("BarChart bars: ");
-        System.out.println("selSeries label: " + seriesLabel);
-        System.out.println("size: " + keyArray.length);
-        for (int i = 0; i < keyArray.length; i++){
-            System.out.println(keyArray[i]);
-        }
-                
-        //--------------------DEBUG
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-        // get the appropriate bin
-        HistogramBin curBin = selHisto.getBinList().get(event.getItemIndex());
-        
-        System.out.println("histogramBarLabel: " + histoBarLabel);
-        curBin.debugBin();
-
-        if (curBin.getBinList() == null || curBin.getBinList().isEmpty()) {
-            System.out.println("curBin has an empty binList");
-            System.out.println("event.itemIndex: " + event.getItemIndex());
-            selHisto.debugBins();
-        }
-
-        ArrayList<CmpdListMemberVO> clmList = curBin.getBinList();
-
-        // reset flags on all listMembers in selectedList    
-        for (CmpdListMemberVO clmVO : listManagerController.getActiveList().getCmpdListMembers()) {
-            clmVO.setIsSelected(Boolean.FALSE);
-        }
-
-        // this is the new selection
-        listManagerController.setSelectedActiveListMembers(clmList);
-
-        // which needs updating
-        for (CmpdListMemberVO clmVO : listManagerController.getSelectedActiveListMembers()) {
-            clmVO.setIsSelected(new Boolean(Boolean.TRUE));
-        }
-
-        // regenerate the histoModel
-        this.histoModel = HistogramChartUtil.doHistograms(listManagerController.getActiveList().getCmpdListMembers(), this.parametersPchem);
-        this.scatterPlotModel = ScatterPlotChartUtil.generateScatter(listManagerController.getActiveList().getCmpdListMembers(), this.parametersPchem);
-
+      }
       
     }
 
-    public void itemSelectScatterPlot(ItemSelectEvent event) {
+    // regenerate the histogramList
+    this.histogramList = HistogramChartUtil.doHistograms(this.cmpdListMembers, this.parametersPchem);
+    this.scatterPlotList = ScatterPlotChartUtil.generateScatter(this.cmpdListMembers, this.parametersPchem);
 
-        System.out.println("Now in itemSelectScatterPlot in HistogramController");
+  }
 
-        NumberFormat nf = new DecimalFormat();
-        nf.setMaximumFractionDigits(2);
+  public void itemSelectScatterPlot(ItemSelectEvent event) {
 
-        Chart eventChart = (Chart) event.getSource();
+    System.out.println("Now in itemSelectScatterPlot in HistogramController");
 
-        LineChartModel lcm = (LineChartModel) eventChart.getModel();
+    NumberFormat nf = new DecimalFormat();
+    nf.setMaximumFractionDigits(2);
 
-        ChartSeries selectedSeries = lcm.getSeries().get(event.getSeriesIndex());
-
-        String lineChartTitle = lcm.getTitle();
-
-        Set<Object> keySet = selectedSeries.getData().keySet();
-
-        Double[] keyArray = keySet.toArray(new Double[keySet.size()]);
-
-        Double pointIdent = keyArray[event.getItemIndex()];
+    Chart eventChart = (Chart) event.getSource();
+    LineChartModel lcm = (LineChartModel) eventChart.getModel();
+    int seriesIdx = event.getSeriesIndex();
+    ChartSeries selectedSeries = lcm.getSeries().get(seriesIdx);
+    String lineChartTitle = lcm.getTitle();
+    Set<Object> keySet = selectedSeries.getData().keySet();
+    Double[] keyArray = keySet.toArray(new Double[keySet.size()]);
+    int itemIdx = event.getItemIndex();
+    Double pointIdent = keyArray[itemIdx];
 
     //--------------------------------------------------------------------------
-        //--------------------------------------------------------------------------
-        //--------------------------------------------------------------------------
-        FacesMessage msg = new FacesMessage(
-                FacesMessage.SEVERITY_INFO, "Item selected ",
-                "Event Item Index: " + event.getItemIndex()
-                + "\n" + ", seriesIndex: " + event.getSeriesIndex()
-                + "\n" + ", lineChartIdent: " + lineChartTitle
-                + "\n" + ", pointIdent: " + pointIdent);
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    FacesMessage msg = new FacesMessage(
+            FacesMessage.SEVERITY_INFO, "Item selected ",
+            "Event Item Index: " + itemIdx
+            + "\n" + ", seriesIndex: " + seriesIdx
+            + "\n" + ", lineChartIdent: " + lineChartTitle
+            + "\n" + ", pointIdent: " + pointIdent);
 
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    FacesContext.getCurrentInstance().addMessage(null, msg);
 
+  }
+
+  public String renderHistoAndScatter() {
+
+    System.out.println("Entering renderHistoAndScatter()");
+
+    for (String s : this.parametersPchem) {
+      System.out.println("Selected pChemParam: " + s);
     }
 
-    public String renderHistoAndScatter() {
-      
-        // serialize the data
-        
-        SerializeDeSerialize<Collection<CmpdListMemberVO>> sds = new SerializeDeSerialize<Collection<CmpdListMemberVO>>("/tmp/clmVOlist.ser");
-        sds.serialize(listManagerController.getActiveList().getCmpdListMembers());
-
-        // reset the selections
-        listManagerController.setSelectedActiveListMembers(new ArrayList<CmpdListMemberVO>());
-
-        System.out.println("Entering renderHistoAndScatter()");
-
-        for (String s : this.parametersPchem) {
-            System.out.println("Selected pChemParam: " + s);
-        }
-
-        this.histoModel = HistogramChartUtil.doHistograms(listManagerController.getActiveList().getCmpdListMembers(), this.parametersPchem);
-        this.scatterPlotModel = ScatterPlotChartUtil.generateScatter(listManagerController.getActiveList().getCmpdListMembers(), this.parametersPchem);
-
-        System.out.println("Count of histograms: " + this.histoModel.size());
-        System.out.println("Count of scatterplots: " + this.scatterPlotModel.size());
-
-        listManagerController.setSelectedActiveListMembers(new ArrayList<CmpdListMemberVO>());
-
-        return null;
-
+    // serialize the data
+    // SerializeDeSerialize<Collection<CmpdListMemberVO>> sds = new SerializeDeSerialize<Collection<CmpdListMemberVO>>("/tmp/clmVOlist.ser");
+    // sds.serialize(this.cmpdListMembers);
+    // reset the selections
+    
+    for (CmpdListMemberVO clmVO : this.cmpdListMembers) {
+      clmVO.setIsSelected(Boolean.FALSE);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-    public String getHistogramSizeString() {
-        return histogramSizeString;
+    this.selectedCmpdListMembers.clear();
+    
+    this.histogramList = HistogramChartUtil.doHistograms(this.cmpdListMembers, this.parametersPchem);
+    this.scatterPlotList = ScatterPlotChartUtil.generateScatter(this.cmpdListMembers, this.parametersPchem);
+
+    System.out.println("Count of histograms: " + this.histogramList.size());
+    System.out.println("Count of scatterplots: " + this.scatterPlotList.size());
+
+    return null;
+
+  }
+
+  // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+  public String getHistogramSizeString() {
+    return histogramSizeString;
+  }
+
+  public void setHistogramSizeString(String histogramSizeString) {
+    this.histogramSizeString = histogramSizeString;
+  }
+
+  public String getScatterPlotSizeString() {
+    return scatterPlotSizeString;
+  }
+
+  public void setScatterPlotSizeString(String scatterPlotSizeString) {
+    this.scatterPlotSizeString = scatterPlotSizeString;
+  }
+
+  public String getStructureSizeString() {
+    return structureSizeString;
+  }
+
+  public void setStructureSizeString(String structureSizeString) {
+    this.structureSizeString = structureSizeString;
+  }
+
+  public Integer getHistogramSize() {
+
+    if (this.histogramSizeString == null || this.histogramSizeString.equals("medium")) {
+      this.histogramSize = 300;
+    } else if (this.histogramSizeString.equals("small")) {
+      this.histogramSize = 150;
+    } else if (this.histogramSizeString.equals("large")) {
+      this.histogramSize = 450;
+    } else {
+      this.histogramSize = 300;
     }
 
-    public void setHistogramSizeString(String histogramSizeString) {
-        this.histogramSizeString = histogramSizeString;
-    }
-
-    public String getScatterPlotSizeString() {
-        return scatterPlotSizeString;
-    }
-
-    public void setScatterPlotSizeString(String scatterPlotSizeString) {
-        this.scatterPlotSizeString = scatterPlotSizeString;
-    }
-
-    public String getStructureSizeString() {
-        return structureSizeString;
-    }
-
-    public void setStructureSizeString(String structureSizeString) {
-        this.structureSizeString = structureSizeString;
-    }
-
-    public Integer getHistogramSize() {
-
-        if (this.histogramSizeString == null || this.histogramSizeString.equals("medium")) {
-            this.histogramSize = 300;
-        } else if (this.histogramSizeString.equals("small")) {
-            this.histogramSize = 150;
-        } else if (this.histogramSizeString.equals("large")) {
-            this.histogramSize = 450;
-        } else {
-            this.histogramSize = 300;
-        }
-
-        return histogramSize;
-    }
+    return histogramSize;
+  }
 
 //  public void setHistogramSize(Integer histogramSize) {
 //    this.histogramSize = histogramSize;
 //  }
-    public Integer getScatterPlotSize() {
+  public Integer getScatterPlotSize() {
 
-        if (this.scatterPlotSizeString == null || this.scatterPlotSizeString.equals("medium")) {
-            this.scatterPlotSize = 300;
-        } else if (this.scatterPlotSizeString.equals("small")) {
-            this.scatterPlotSize = 150;
-        } else if (this.scatterPlotSizeString.equals("large")) {
-            this.scatterPlotSize = 450;
-        } else {
-            this.scatterPlotSize = 300;
-        }
-
-        return scatterPlotSize;
+    if (this.scatterPlotSizeString == null || this.scatterPlotSizeString.equals("medium")) {
+      this.scatterPlotSize = 300;
+    } else if (this.scatterPlotSizeString.equals("small")) {
+      this.scatterPlotSize = 150;
+    } else if (this.scatterPlotSizeString.equals("large")) {
+      this.scatterPlotSize = 450;
+    } else {
+      this.scatterPlotSize = 300;
     }
+
+    return scatterPlotSize;
+  }
 
 //  public void setScatterPlotSize(Integer scatterPlotSize) {
 //    this.scatterPlotSize = scatterPlotSize;
 //  }
-    public Integer getStructureSize() {
+  public Integer getStructureSize() {
 
-        if (this.structureSizeString == null || this.structureSizeString.equals("medium")) {
-            this.structureSize = 200;
-        } else if (this.structureSizeString.equals("small")) {
-            this.structureSize = 100;
-        } else if (this.structureSizeString.equals("large")) {
-            this.structureSize = 300;
-        } else {
-            this.structureSize = 200;
-        }
-
-        return structureSize;
+    if (this.structureSizeString == null || this.structureSizeString.equals("medium")) {
+      this.structureSize = 200;
+    } else if (this.structureSizeString.equals("small")) {
+      this.structureSize = 100;
+    } else if (this.structureSizeString.equals("large")) {
+      this.structureSize = 300;
+    } else {
+      this.structureSize = 200;
     }
 
-    public void setStructureSize(Integer structureSize) {
-        this.structureSize = structureSize;
-    }
+    return structureSize;
+  }
 
-    public List<Histogram> getHistoModel() {
-        return histoModel;
-    }
+  public void setStructureSize(Integer structureSize) {
+    this.structureSize = structureSize;
+  }
 
-    public void setHistoModel(List<Histogram> histoModel) {
-        this.histoModel = histoModel;
-    }
+  public List<Histogram> getHistogramList() {
+    return histogramList;
+  }
 
-    public ArrayList<LineChartModel> getScatterPlotModel() {
-        return scatterPlotModel;
-    }
+  public void setHistogramList(List<Histogram> histogramList) {
+    this.histogramList = histogramList;
+  }
 
-    public void setScatterPlotModel(ArrayList<LineChartModel> scatterPlotModel) {
-        this.scatterPlotModel = scatterPlotModel;
-    }
+  public ArrayList<LineChartModel> getScatterPlotList() {
+    return scatterPlotList;
+  }
 
-    public List<String> getParametersPchem() {
-        return parametersPchem;
-    }
+  public void setScatterPlotList(ArrayList<LineChartModel> scatterPlotList) {
+    this.scatterPlotList = scatterPlotList;
+  }
 
-    public void setParametersPchem(List<String> parametersPchem) {
-        this.parametersPchem = parametersPchem;
-    }
+  public List<String> getParametersPchem() {
+    return parametersPchem;
+  }
+
+  public void setParametersPchem(List<String> parametersPchem) {
+    this.parametersPchem = parametersPchem;
+  }
+
+  public List<CmpdListMemberVO> getCmpdListMembers() {
+    return cmpdListMembers;
+  }
+
+  public void setCmpdListMembers(List<CmpdListMemberVO> cmpdListMembers) {
+    this.cmpdListMembers = cmpdListMembers;
+  }
+
+  public List<CmpdListMemberVO> getSelectedCmpdListMembers() {
+    return selectedCmpdListMembers;
+  }
+
+  public void setSelectedCmpdListMembers(List<CmpdListMemberVO> selectedCmpdListMembers) {
+    this.selectedCmpdListMembers = selectedCmpdListMembers;
+  }
 
       // </editor-fold>
 }
