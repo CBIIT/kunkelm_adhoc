@@ -9,54 +9,56 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
+  <ui:remove>
+    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+  </ui:remove>
+
+  <ui:define name="content">
+
+    <ui:remove><ui:include src="/webpages/templates/active_list_nav.xhtml"/></ui:remove>
+
     <ui:remove>
-        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+      <p:fieldset legend="Export Structure Images">  
+        <p:commandButton onclick="structuresAsGridImage();" 
+                         value="Image of bare structures as grid" /> 
+      </p:fieldset>
     </ui:remove>
 
-    <ui:define name="content">
+    <p:spacer height="20" width="100%"/>
 
-        <ui:remove><ui:include src="/webpages/templates/active_list_nav.xhtml"/></ui:remove>
+    <p:panel header="List Anchor Structure"
+             rendered="#{sessionController.showAnchor and !empty listManagerController.activeList.anchorSmiles}">
 
-        <ui:remove>
-            <p:fieldset legend="Export Structure Images">  
-                <p:commandButton onclick="structuresAsGridImage();" 
-                                 value="Image of bare structures as grid" /> 
-            </p:fieldset>
-        </ui:remove>
+      <h:outputText value="anchorSmiles: ${listManagerController.activeList.anchorSmiles}"/>
 
-        <p:spacer height="20" width="100%"/>
+      <br/>
 
-        <p:panel rendered="${!empty listManagerController.activeList.anchorSmiles}">
+      <h:graphicImage alt="Chemical Structure of List Anchor"
+                      width="#{sessionController.strcDim}" 
+                      height="#{sessionController.strcDim}"
+                      styleClass="anchorStructure"
+                      url='#{sessionController.getSmilesStrcUrl(listManagerController.activeList.anchorSmiles)}'>              
+      </h:graphicImage>
 
-            <h:outputText value="anchorSmiles: ${listManagerController.activeList.anchorSmiles}"/>
+    </p:panel>
 
-            <br/>
+    <p:dataGrid var="listMember" 
+                value="#{listManagerController.activeList.cmpdListMembers}"                                     
+                columns="1"  
+                rows="1" 
+                paginator="true"  
+                paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">  
 
-            <h:graphicImage alt="Chemical Structure of List Anchor"
-                            width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
-                            styleClass="anchorStructure"
-                            url='#{sessionController.getSmilesStrcUrl(listManagerController.activeList.anchorSmiles)}'>              
-            </h:graphicImage>
+      <f:facet name="header">  
+        <p:row>  
+          <p:column>List Contains: #{fn:length(listManagerController.activeList.cmpdListMembers)} Cmpds</p:column>  
+        </p:row>                                              
+      </f:facet>
 
-        </p:panel>
+      <ui:include src="/webpages/listMemberDetails.xhtml"/>
 
-        <p:dataGrid var="listMember" 
-                    value="#{listManagerController.activeList.cmpdListMembers}"                                     
-                    columns="1"  
-                    rows="1" 
-                    paginator="true"  
-                    paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">  
+    </p:dataGrid>
 
-            <f:facet name="header">  
-                <p:row>  
-                    <p:column>List Contains: #{fn:length(listManagerController.activeList.cmpdListMembers)} Cmpds</p:column>  
-                </p:row>                                              
-            </f:facet>
-
-            <ui:include src="/webpages/listMemberDetails.xhtml"/>
-
-        </p:dataGrid>
-
-    </ui:define>
+  </ui:define>
 
 </ui:composition>

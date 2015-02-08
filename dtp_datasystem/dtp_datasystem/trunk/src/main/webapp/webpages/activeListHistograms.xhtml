@@ -64,6 +64,8 @@
 
               <h:outputText style="font-size: 200%;" value="List #{listManagerController.activeList.listName} with #{fn:length(histogramController.cmpdListMembers)} Members"/>
 
+              <br/>
+              
               <p:selectManyButton value="#{histogramController.parametersPchem}" >  
                 <f:selectItem itemLabel="mw" itemValue="mw" />  
                 <f:selectItem itemLabel="hba" itemValue="hba" />  
@@ -105,6 +107,11 @@
 
             <p:outputPanel id="HistogramsPanel">
 
+              <p:commandButton disabled="false"                                 
+                               type="button"
+                               value="All Histograms as Image" 
+                               onclick="addAllCharts('widgetHistogramChart', null)"/>                
+
               <p:selectOneRadio value="#{histogramController.histogramSizeString}">
                 <f:selectItem itemLabel="small" itemValue="small" />  
                 <f:selectItem itemLabel="medium" itemValue="medium" />  
@@ -122,11 +129,14 @@
 
               <ui:repeat rendered="#{histogramController.histogramList != null}"
                          value="#{histogramController.histogramList}" 
-                         var="histo">      
+                         var="histo"
+                         varStatus="histoIdx">    
+
 
                 <p:chart type="bar" 
                          model="#{histo.chartModel}" 
-                         style="display: inline-block; height: #{histogramController.histogramSize}px; width: #{histogramController.histogramSize}px">
+                         style="display: inline-block; height: #{histogramController.histogramSize}px; width: #{histogramController.histogramSize}px"
+                         widgetVar="widgetHistogramChart#{histoIdx.index}">
 
                   <p:ajax event="itemSelect" 
                           immediate="true" 
@@ -151,6 +161,11 @@
 
             <p:outputPanel id="ScatterPlotsPanel">
 
+              <p:commandButton disabled="false"                                 
+                               type="button"
+                               value="All Scatter Plots as Image" 
+                               onclick="addAllCharts('widgetScatterPlotChart', '#{fn:length(histogramController.parametersPchem)}')"/>                
+
               <p:selectOneRadio value="#{histogramController.scatterPlotSizeString}">
                 <f:selectItem itemLabel="small" itemValue="small" />  
                 <f:selectItem itemLabel="medium" itemValue="medium" />  
@@ -169,11 +184,13 @@
               <p:dataGrid columns="#{fn:length(histogramController.parametersPchem)}"
                           rendered="#{histogramController.scatterPlotList != null}" 
                           value="#{histogramController.scatterPlotList}" 
-                          var="scat">      
+                          var="scat" 
+                          rowIndexVar="scatPlotIdx">      
 
                 <p:chart type="line" 
                          model="#{scat}" 
-                         style="display: inline-block; height: #{histogramController.scatterPlotSize}px; width: #{histogramController.scatterPlotSize}px" >
+                         style="display: inline-block; height: #{histogramController.scatterPlotSize}px; width: #{histogramController.scatterPlotSize}px" 
+                         widgetVar="widgetScatterPlotChart#{scatPlotIdx}">
 
                   <p:ajax event="itemSelect" 
                           immediate="true" 
@@ -223,7 +240,6 @@
                             value="NO SELECTED COMPOUNDS"
                             style="font-size: 200%;" />
 
-
               <h:outputText rendered="#{!empty histogramController.selectedCmpdListMembers}"
                             value="Selected List Members with #{fn:length(histogramController.selectedCmpdListMembers)} selected"
                             style="font-size: 200%;" />
@@ -240,6 +256,12 @@
                                 height="#{histogramController.structureSize}"
                                 styleClass="parentStructure"                                
                                 url='#{sessionController.getCmpdStrcUrl(clm.cmpd, "calling from activeListHistograms.xhtml")}'>              
+
+                  <p:ajax event="click" 
+                          immediate="true" 
+                          process="@this"
+                          listener="#{histogramController.itemSelectChemicalStructure(clm.cmpd.nsc)}"/>   
+
                 </h:graphicImage> 
 
               </ui:repeat>

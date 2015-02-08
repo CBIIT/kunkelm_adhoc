@@ -54,45 +54,52 @@
 
           <p:menubar model="#{menuBean.model}">
             <f:facet name="options">
+
               <p:commandButton ajax="false"
                                action="#{sessionController.logout()}"
                                value="Logout"/>
+
             </f:facet>
           </p:menubar>
 
-          <p:menubar >
-            <f:facet name="options">
-              <p:selectBooleanButton value="#{sessionController.showAnchor}" 
-                                     onLabel="ANCHOR" 
-                                     onIcon="ui-icon-check" 
-                                     offLabel="ANCHOR"                                                    
-                                     offIcon="ui-icon-close">
-                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-              </p:selectBooleanButton>
-              <p:selectBooleanButton value="#{sessionController.showFrags}" 
-                                     onLabel="FRAGMENTS" 
-                                     onIcon="ui-icon-check" 
-                                     offLabel="FRAGS"                                                    
-                                     offIcon="ui-icon-close">
-                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-              </p:selectBooleanButton>
-              <p:selectManyButton value="#{sessionController.selectedStrcOptions}">                                                
-                <f:selectItem itemLabel="TTL" itemValue="TTL" />
-                <f:selectItem itemLabel="CLR" itemValue="CLR" />
-                <f:selectItem itemLabel="NUM" itemValue="NUM" />
-                <f:selectItem itemLabel="KEK" itemValue="KEK" />
-                <f:selectItem itemLabel="HLT" itemValue="HLT" />
-                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-              </p:selectManyButton>
-              <p:selectOneButton value="#{sessionController.selectedStrcSize}">
-                <f:selectItem itemLabel="SM" itemValue="SM" />
-                <f:selectItem itemLabel="MED" itemValue="MED" />
-                <f:selectItem itemLabel="LG" itemValue="LG" />
-                <f:selectItem itemLabel="JUMBO" itemValue="JUMBO" />
-                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-              </p:selectOneButton>
-            </f:facet>
-          </p:menubar>
+          <p:spacer height="20" width="100%" />
+
+          <p:fieldset legend="Chemical Structure Display Options">
+
+            <p:selectBooleanButton value="#{sessionController.showAnchor}" 
+                                   onLabel="ANCHOR" 
+                                   onIcon="fa fa-eye" 
+                                   offLabel="ANCHOR"                                                    
+                                   offIcon="fa fa-eye-slash">
+              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+            </p:selectBooleanButton>
+
+            <p:selectBooleanButton value="#{sessionController.showFrags}" 
+                                   onLabel="FRAGMENTS" 
+                                   onIcon="fa fa-eye" 
+                                   offLabel="FRAGS"                                                    
+                                   offIcon="fa fa-eye-slash">
+              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+            </p:selectBooleanButton>
+
+            <p:selectManyButton value="#{sessionController.selectedStrcOptions}">                                                
+              <f:selectItem itemLabel="TTL" itemValue="TTL" />
+              <f:selectItem itemLabel="CLR" itemValue="CLR" />
+              <f:selectItem itemLabel="NUM" itemValue="NUM" />
+              <f:selectItem itemLabel="KEK" itemValue="KEK" />
+              <f:selectItem itemLabel="HLT" itemValue="HLT" />
+              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+            </p:selectManyButton>
+
+            <p:selectOneButton value="#{sessionController.selectedStrcSize}">
+              <f:selectItem itemLabel="SM" itemValue="SM" />
+              <f:selectItem itemLabel="MED" itemValue="MED" />
+              <f:selectItem itemLabel="LG" itemValue="LG" />
+              <f:selectItem itemLabel="JUMBO" itemValue="JUMBO" />
+              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+            </p:selectOneButton>
+
+          </p:fieldset>
 
           <p:spacer height="20" width="100%" />
 

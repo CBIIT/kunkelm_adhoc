@@ -56,7 +56,7 @@ public class Histogram {
     this.binList = new ArrayList<HistogramBin>();
     this.chartModel = new BarChartModel();
 
-        // parse the ah and create a list of bins
+    // parse the ah and create a list of bins
     // for discrete distributions, minCut and maxCut are the same
     if (this.propertyName.equals("hba") || this.propertyName.equals("hbd")) {
 
@@ -75,7 +75,7 @@ public class Histogram {
 
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
-      
+
       System.out.println(this.propertyName + " min: " + min + " max:" + max);
 
       for (int pct = 0; pct < 100; pct += 5) {
@@ -84,10 +84,15 @@ public class Histogram {
 
           double mn = ah.getValueForPercentile(0) - 0.10 * ah.getValueForPercentile(0);
           double mx = ah.getValueForPercentile(5);
-          String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+
+          // String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+          String lbl = nf2.format(mn + ((mx - mn) / 2));
 
           HistogramBin bin = new HistogramBin(mn, mx, lbl);
 
+          // have to intercept no-width bins
+          // AdaptiveHistogram is OK with these,
+          // but the PrimeFaces chart model will have problems
           if (mn != mx) {
             this.binList.add(bin);
           }
@@ -96,9 +101,15 @@ public class Histogram {
 
           double mn = ah.getValueForPercentile(95);
           double mx = ah.getValueForPercentile(100) + 0.10 * ah.getValueForPercentile(100);
-          String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+
+          // String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+          String lbl = nf2.format(mn + ((mx - mn) / 2));
 
           HistogramBin bin = new HistogramBin(mn, mx, lbl);
+
+          // have to intercept no-width bins
+          // AdaptiveHistogram is OK with these,
+          // but the PrimeFaces chart model will have problems
           if (mn != mx) {
             this.binList.add(bin);
           }
@@ -107,7 +118,9 @@ public class Histogram {
 
           double mn = ah.getValueForPercentile(pct);
           double mx = ah.getValueForPercentile(pct + 5);
-          String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+
+          // String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+          String lbl = nf2.format(mn + ((mx - mn) / 2));
 
           HistogramBin bin = new HistogramBin(mn, mx, lbl);
           if (mn != mx) {
@@ -125,7 +138,7 @@ public class Histogram {
       putInAppropriateBin(clmVO);
     }
 
-        // generate the chart
+    // generate the chart
     // there are two series, count and countSelected
     this.chartModel = new BarChartModel();
     this.chartModel.setTitle(this.title);
@@ -177,18 +190,26 @@ public class Histogram {
     Double val = null;
 
     if (PropertyUtilities.knownIntegerProperty(this.propertyName)) {
-      val = PropertyUtilities.getIntegerProperty(clmVO, this.propertyName).doubleValue();
+      if (PropertyUtilities.getIntegerProperty(clmVO, this.propertyName) != null) {
+        val = PropertyUtilities.getIntegerProperty(clmVO, this.propertyName).doubleValue();
+      } else {
+        System.out.println(this.propertyName + " was null in getIntegerProperty for NSC: " + clmVO.getCmpd().getNsc());
+      }
     }
 
     if (PropertyUtilities.knownDoubleProperty(this.propertyName)) {
-      val = PropertyUtilities.getDoubleProperty(clmVO, this.propertyName);
+      if (PropertyUtilities.getDoubleProperty(clmVO, this.propertyName) != null) {
+        val = PropertyUtilities.getDoubleProperty(clmVO, this.propertyName);
+      } else {
+        System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + clmVO.getCmpd().getNsc());
+      }
     }
 
     boolean found = false;
 
     if (val != null) {
       for (HistogramBin b : binList) {
-                // each bin returns a boolean 
+        // each bin returns a boolean 
         // continue until the right bin
         if (b.add(clmVO, val)) {
           found = true;

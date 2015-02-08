@@ -79,7 +79,9 @@
                 <h:outputText value="#{list.cmpdListId}" />  
             </p:column> 
 
-            <p:column headerText="ListName" resizable="true" sortBy="#{list.listName}"
+            <p:column headerText="ListName"  width="200px"
+                      resizable="true" 
+                      sortBy="#{list.listName}"
                       filterBy="#{list.listName}"
                       filterMatchMode="contains">       
                 <p:cellEditor>

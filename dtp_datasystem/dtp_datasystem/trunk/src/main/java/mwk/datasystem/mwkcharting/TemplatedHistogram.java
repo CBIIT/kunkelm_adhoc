@@ -9,8 +9,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.primefaces.model.chart.ChartSeries;
-import mwk.datasystem.vo.CmpdFragmentPChemVO;
+import mwk.datasystem.vo.CmpdListMemberVO;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -84,7 +83,9 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
           double mn = ah.getValueForPercentile(0) - 0.10 * ah.getValueForPercentile(0);
           double mx = ah.getValueForPercentile(5);
-          String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+
+          // String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+          String lbl = nf2.format(mn + ((mx - mn) / 2));
 
           TemplatedHistogramBin<T> bin = new TemplatedHistogramBin<T>(mn, mx, lbl);
 
@@ -96,7 +97,9 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
           double mn = ah.getValueForPercentile(95);
           double mx = ah.getValueForPercentile(100) + 0.10 * ah.getValueForPercentile(100);
-          String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+
+          // String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+          String lbl = nf2.format(mn + ((mx - mn) / 2));
 
           TemplatedHistogramBin<T> bin = new TemplatedHistogramBin<T>(mn, mx, lbl);
           if (mn != mx) {
@@ -107,7 +110,9 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
           double mn = ah.getValueForPercentile(pct);
           double mx = ah.getValueForPercentile(pct + 5);
-          String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+
+          // String lbl = nf2.format(mn) + " to " + nf2.format(mx);
+          String lbl = nf2.format(mn + ((mx - mn) / 2));
 
           TemplatedHistogramBin<T> bin = new TemplatedHistogramBin<T>(mn, mx, lbl);
           if (mn != mx) {
@@ -178,14 +183,28 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
     TemplatedPropertyUtilities<T> propUtils = new TemplatedPropertyUtilities<T>();
 
+    String nscString = "not an NSC";
+    if (t instanceof CmpdListMemberVO){
+      CmpdListMemberVO clmVO = (CmpdListMemberVO)t;
+      nscString = clmVO.getCmpd().getNsc().toString();
+    }
+    
     Double val = null;
 
     if (propUtils.knownIntegerProperty(this.propertyName)) {
-      val = propUtils.getIntegerProperty(t, this.propertyName).doubleValue();
+      if (propUtils.getIntegerProperty(t, propertyName) != null) {
+        val = propUtils.getIntegerProperty(t, this.propertyName).doubleValue();
+      } else {
+        System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + nscString);
+      }
     }
 
     if (propUtils.knownDoubleProperty(this.propertyName)) {
-      val = propUtils.getDoubleProperty(t, this.propertyName);
+      if (propUtils.getDoubleProperty(t, propertyName) != null) {
+        val = propUtils.getDoubleProperty(t, this.propertyName);
+      } else {
+        System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + nscString);
+      }
     }
 
     boolean found = false;
@@ -202,7 +221,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
     } else {
       System.out.println("val is null for " + this.getPropertyName() + " for NSC: " + propUtils.getIntegerProperty(t, "nsc"));
     }
-    
+
     if (!found) {
       System.out.println("No bin found in putInAppropriateBin: " + val + " for property: " + this.propertyName);
       for (TemplatedHistogramBin<T> b : binList) {

@@ -273,6 +273,24 @@ public class HistogramController implements Serializable {
 
   }
 
+    public void itemSelectChemicalStructure(String identifierString) {
+
+    System.out.println("Now in itemSelectChemicalStructure in HistogramController");
+
+    NumberFormat nf = new DecimalFormat();
+    nf.setMaximumFractionDigits(2);
+    
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    FacesMessage msg = new FacesMessage(
+            FacesMessage.SEVERITY_INFO, "Item selected ",
+            "Event identifierString: " + identifierString);
+
+    FacesContext.getCurrentInstance().addMessage(null, msg);
+
+  }
+  
   public String renderHistoAndScatter() {
 
     System.out.println("Entering renderHistoAndScatter()");

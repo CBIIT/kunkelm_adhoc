@@ -184,10 +184,17 @@ public class SessionController implements Serializable {
   }
 
   public String getSmilesStrcUrl(String smiles) {
+
+    System.out.println("In getSmilesStrcUrl(smiles)");
+    System.out.println("smiles is: " + smiles);
+
     return getSmilesStrcUrl(smiles, null, null);
   }
 
   public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
+
+    System.out.println("In getSmilesStrcUrl(smiles, querySmiles, title)");
+    System.out.println("smiles is: " + smiles);
 
     String rtn = "";
 
@@ -238,8 +245,9 @@ public class SessionController implements Serializable {
 
     rtn = sb.toString();
 
-//        System.out.println("getSmilesStrcUrl() in SessionController: ");
-//        System.out.println(rtn);
+    System.out.println("getSmilesStrcUrl() in SessionController: ");
+    System.out.println("rtn from getSmilesStrcUrl is: " + rtn);
+
     return rtn;
   }
 
