@@ -22,7 +22,7 @@ public class PropertyUtilities {
   private static List<String> knownDblProps;
 
   static {
-    knownStrProps = new ArrayList<String>(Arrays.asList(new String[]{"prefix"}));
+    knownStrProps = new ArrayList<String>(Arrays.asList(new String[]{"prefix", "name"}));
     knownIntProps = new ArrayList<String>(Arrays.asList(new String[]{"nsc", "hba", "hbd"}));
     knownDblProps = new ArrayList<String>(Arrays.asList(new String[]{"alogp", "logd", "sa", "mw"}));
   }
@@ -43,6 +43,14 @@ public class PropertyUtilities {
 
     String rtn = null;
 
+    if (knownStringProperty(propertyName)) {
+      if (propertyName.equals("name")) {
+        if (clmVO.getCmpd() != null && clmVO.getCmpd().getName() != null) {
+          rtn = clmVO.getCmpd().getPrefix();
+        }
+      }
+    }
+    
     if (knownStringProperty(propertyName)) {
       if (propertyName.equals("prefix")) {
         if (clmVO.getCmpd() != null && clmVO.getCmpd().getPrefix() != null) {

@@ -1,11 +1,8 @@
 package newstructureservlet;
 
 import java.io.ByteArrayInputStream;
-import net.sf.jniinchi.INCHI_RET;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
-import org.openscience.cdk.inchi.InChIGeneratorFactory;
-import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -41,18 +38,18 @@ public class MolInput {
     }
   }
 
-  public static IAtomContainer fromInChI(String inchi) {
-    try {
-      InChIGeneratorFactory icipar = InChIGeneratorFactory.getInstance();
-      InChIToStructure itos = icipar.getInChIToStructure(inchi, bldr);
-      if (itos.getReturnStatus() != INCHI_RET.OKAY && itos.getReturnStatus() != INCHI_RET.WARNING) {
-        throw new IllegalArgumentException("Invalid InChI:" + itos.getMessage());
-      }
-      return layout(itos.getAtomContainer());
-    } catch (CDKException e) {
-      throw new IllegalArgumentException("Invalid InChI:" + e.getMessage());
-    }
-  }
+//  public static IAtomContainer fromInChI(String inchi) {
+//    try {
+//      InChIGeneratorFactory icipar = InChIGeneratorFactory.getInstance();
+//      InChIToStructure itos = icipar.getInChIToStructure(inchi, bldr);
+//      if (itos.getReturnStatus() != INCHI_RET.OKAY && itos.getReturnStatus() != INCHI_RET.WARNING) {
+//        throw new IllegalArgumentException("Invalid InChI:" + itos.getMessage());
+//      }
+//      return layout(itos.getAtomContainer());
+//    } catch (CDKException e) {
+//      throw new IllegalArgumentException("Invalid InChI:" + e.getMessage());
+//    }
+//  }
 
   public static IAtomContainer fromName(String name) {
     return fromSmiles(opsin.parseToSmiles(name));

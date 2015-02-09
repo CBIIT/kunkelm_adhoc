@@ -4,12 +4,13 @@
  */
 package mwk.datasystem.mwkcharting;
 
-import com.flaptor.hist4j.AdaptiveHistogram;
+import com.flaptor.hist4j.mwkdbl.AdaptiveHistogram;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import mwk.datasystem.vo.CmpdListMemberVO;
+import mwk.datasystem.vo.HistogramDataInterface;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -145,8 +146,6 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
     this.chartModel.setStacked(true);
 
-    this.chartModel.setLegendPosition("ne");
-
     ChartSeries countSeries = new ChartSeries("count");
     ChartSeries countSelectedSeries = new ChartSeries("countSelected");
 
@@ -183,10 +182,10 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
     TemplatedPropertyUtilities<T> propUtils = new TemplatedPropertyUtilities<T>();
 
-    String nscString = "not an NSC";
-    if (t instanceof CmpdListMemberVO){
-      CmpdListMemberVO clmVO = (CmpdListMemberVO)t;
-      nscString = clmVO.getCmpd().getNsc().toString();
+    String nameString = "name not defined";
+    
+    if (propUtils.getStringProperty(t, "name") != null){
+      nameString = propUtils.getStringProperty(t, "name");
     }
     
     Double val = null;
@@ -195,7 +194,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
       if (propUtils.getIntegerProperty(t, propertyName) != null) {
         val = propUtils.getIntegerProperty(t, this.propertyName).doubleValue();
       } else {
-        System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + nscString);
+        System.out.println(this.propertyName + " was null in getDoubleProperty for name: " + nameString);
       }
     }
 
@@ -203,7 +202,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
       if (propUtils.getDoubleProperty(t, propertyName) != null) {
         val = propUtils.getDoubleProperty(t, this.propertyName);
       } else {
-        System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + nscString);
+        System.out.println(this.propertyName + " was null in getDoubleProperty for name: " + nameString);
       }
     }
 
@@ -219,10 +218,11 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
         }
       }
     } else {
-      System.out.println("val is null for " + this.getPropertyName() + " for NSC: " + propUtils.getIntegerProperty(t, "nsc"));
+      System.out.println("val is null for " + this.getPropertyName() + " for name: " + nameString);
     }
 
-    if (!found) {
+    // only print if the reason it wasn't found is 'cuz it was null...
+    if (!found && val != null) {
       System.out.println("No bin found in putInAppropriateBin: " + val + " for property: " + this.propertyName);
       for (TemplatedHistogramBin<T> b : binList) {
         System.out.println(" bin minCut, maxCut: " + nf2.format(b.getMinCut()) + " " + nf2.format(b.getMaxCut()));

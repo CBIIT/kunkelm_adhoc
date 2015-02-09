@@ -7,6 +7,7 @@ package mwk.datasystem.mwkcharting;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import mwk.datasystem.vo.HistogramDataInterface;
 
 
 /**

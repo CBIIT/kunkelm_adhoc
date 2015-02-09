@@ -11,7 +11,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.faces.FacesException;
@@ -21,11 +20,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import mwk.datasystem.mwkcharting.Histogram;
-import mwk.datasystem.mwkcharting.HistogramBin;
+import mwk.datasystem.mwkcharting.TemplatedHistogram;
+import mwk.datasystem.mwkcharting.TemplatedHistogramBin;
 import mwk.datasystem.util.HistogramChartUtil;
 import mwk.datasystem.util.ScatterPlotChartUtil;
-import mwk.datasystem.util.SerializeDeSerialize;
+import mwk.datasystem.util.TemplatedHistogramChartUtil;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import org.primefaces.component.chart.Chart;
 import org.primefaces.event.ItemSelectEvent;
@@ -59,7 +58,7 @@ public class HistogramController implements Serializable {
     this.listManagerController = listManagerController;
   }
 
-  private List<Histogram> histogramList;
+  private List<TemplatedHistogram<CmpdListMemberVO>> histogramList;
   private ArrayList<LineChartModel> scatterPlotList;
   private List<String> parametersPchem;
 
@@ -73,10 +72,10 @@ public class HistogramController implements Serializable {
 
   private List<CmpdListMemberVO> cmpdListMembers;
   private List<CmpdListMemberVO> selectedCmpdListMembers;
-  
+
   public HistogramController() {
 
-    this.histogramList = new ArrayList<Histogram>();
+    this.histogramList = new ArrayList<TemplatedHistogram<CmpdListMemberVO>>();
     this.scatterPlotList = new ArrayList<LineChartModel>();
 
     this.parametersPchem = new ArrayList<String>(Arrays.asList(new String[]{"mw", "hba", "hbd", "sa"}));
@@ -129,7 +128,7 @@ public class HistogramController implements Serializable {
     }
 
     this.selectedCmpdListMembers.clear();
-    
+
     renderHistoAndScatter();
 
     return "/webpages/activeListHistograms?faces-redirect=true";
@@ -176,11 +175,11 @@ public class HistogramController implements Serializable {
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
     // find the source histogram
-    Histogram selHisto = null;
+    TemplatedHistogram<CmpdListMemberVO> selHisto = null;
 
     boolean found = false;
 
-    for (Histogram h : this.histogramList) {
+    for (TemplatedHistogram<CmpdListMemberVO> h : this.histogramList) {
       if (h.getPropertyName().equals(histoTitle)) {
         selHisto = h;
         found = true;
@@ -193,7 +192,7 @@ public class HistogramController implements Serializable {
     }
 
     // get the appropriate bin
-    HistogramBin curBin = selHisto.getBinList().get(itemIdx);
+    TemplatedHistogramBin<CmpdListMemberVO> curBin = selHisto.getBinList().get(itemIdx);
 
     System.out.println("histogramBarLabel: " + histoBarLabel);
     curBin.debugBin();
@@ -224,20 +223,20 @@ public class HistogramController implements Serializable {
           this.selectedCmpdListMembers.remove(clmVO);
         }
       }
-      
+
     } else {
-      
+
       for (CmpdListMemberVO clmVO : allMembers) {
         if (!this.selectedCmpdListMembers.contains(clmVO)) {
           clmVO.setIsSelected(Boolean.TRUE);
           this.selectedCmpdListMembers.add(clmVO);
         }
       }
-      
+
     }
 
     // regenerate the histogramList
-    this.histogramList = HistogramChartUtil.doHistograms(this.cmpdListMembers, this.parametersPchem);
+    this.histogramList = TemplatedHistogramChartUtil.doHistograms(this.cmpdListMembers, this.parametersPchem);
     this.scatterPlotList = ScatterPlotChartUtil.generateScatter(this.cmpdListMembers, this.parametersPchem);
 
   }
@@ -251,10 +250,12 @@ public class HistogramController implements Serializable {
 
     Chart eventChart = (Chart) event.getSource();
     LineChartModel lcm = (LineChartModel) eventChart.getModel();
+    String lineChartTitle = lcm.getTitle();
     int seriesIdx = event.getSeriesIndex();
     ChartSeries selectedSeries = lcm.getSeries().get(seriesIdx);
-    String lineChartTitle = lcm.getTitle();
+    String seriesLabel = selectedSeries.getLabel();
     Set<Object> keySet = selectedSeries.getData().keySet();
+    
     Double[] keyArray = keySet.toArray(new Double[keySet.size()]);
     int itemIdx = event.getItemIndex();
     Double pointIdent = keyArray[itemIdx];
@@ -265,21 +266,22 @@ public class HistogramController implements Serializable {
     FacesMessage msg = new FacesMessage(
             FacesMessage.SEVERITY_INFO, "Item selected ",
             "Event Item Index: " + itemIdx
-            + "\n" + ", seriesIndex: " + seriesIdx
-            + "\n" + ", lineChartIdent: " + lineChartTitle
-            + "\n" + ", pointIdent: " + pointIdent);
+            + ", ScatterPlot Title: " + lineChartTitle
+            + ", seriesIndex: " + seriesIdx
+            + ", Series Label: " + seriesLabel
+            + ", pointIdent: " + pointIdent);
 
     FacesContext.getCurrentInstance().addMessage(null, msg);
 
   }
 
-    public void itemSelectChemicalStructure(String identifierString) {
+  public void itemSelectChemicalStructure(String identifierString) {
 
     System.out.println("Now in itemSelectChemicalStructure in HistogramController");
 
     NumberFormat nf = new DecimalFormat();
     nf.setMaximumFractionDigits(2);
-    
+
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
@@ -290,7 +292,7 @@ public class HistogramController implements Serializable {
     FacesContext.getCurrentInstance().addMessage(null, msg);
 
   }
-  
+
   public String renderHistoAndScatter() {
 
     System.out.println("Entering renderHistoAndScatter()");
@@ -303,14 +305,13 @@ public class HistogramController implements Serializable {
     // SerializeDeSerialize<Collection<CmpdListMemberVO>> sds = new SerializeDeSerialize<Collection<CmpdListMemberVO>>("/tmp/clmVOlist.ser");
     // sds.serialize(this.cmpdListMembers);
     // reset the selections
-    
     for (CmpdListMemberVO clmVO : this.cmpdListMembers) {
       clmVO.setIsSelected(Boolean.FALSE);
     }
 
     this.selectedCmpdListMembers.clear();
-    
-    this.histogramList = HistogramChartUtil.doHistograms(this.cmpdListMembers, this.parametersPchem);
+
+    this.histogramList = TemplatedHistogramChartUtil.doHistograms(this.cmpdListMembers, this.parametersPchem);
     this.scatterPlotList = ScatterPlotChartUtil.generateScatter(this.cmpdListMembers, this.parametersPchem);
 
     System.out.println("Count of histograms: " + this.histogramList.size());
@@ -400,11 +401,11 @@ public class HistogramController implements Serializable {
     this.structureSize = structureSize;
   }
 
-  public List<Histogram> getHistogramList() {
+  public List<TemplatedHistogram<CmpdListMemberVO>> getHistogramList() {
     return histogramList;
   }
 
-  public void setHistogramList(List<Histogram> histogramList) {
+  public void setHistogramList(List<TemplatedHistogram<CmpdListMemberVO>> histogramList) {
     this.histogramList = histogramList;
   }
 

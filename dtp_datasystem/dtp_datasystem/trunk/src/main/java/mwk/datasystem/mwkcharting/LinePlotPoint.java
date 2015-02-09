@@ -9,6 +9,6 @@ package mwk.datasystem.mwkcharting;
  *
  * @author mwkunkel
  */
-public interface HistogramDataInterface<T> {    
-    public Boolean getIsSelected();    
+public class LinePlotPoint {
+  
 }

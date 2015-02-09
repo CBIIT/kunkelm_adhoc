@@ -30,8 +30,8 @@ public class TemplatedPropertyUtilities<T> {
 
         String rtn = null;
         
-        System.out.println("In getIntegerProperty T t");
-        System.out.println("t.getClass().getName: " + t.getClass().getName());
+//        System.out.println("In getStringProperty T t");
+//        System.out.println("t.getClass().getName: " + t.getClass().getName());
 
         if (t instanceof CmpdListMemberVO){
           CmpdListMemberVO clmVO = (CmpdListMemberVO) t;
@@ -47,8 +47,8 @@ public class TemplatedPropertyUtilities<T> {
 
         Integer rtn = null;
         
-        System.out.println("In getIntegerProperty T t");
-        System.out.println("t.getClass().getName: " + t.getClass().getName());
+//        System.out.println("In getIntegerProperty T t");
+//        System.out.println("t.getClass().getName: " + t.getClass().getName());
 
         if (t instanceof CmpdListMemberVO){
           CmpdListMemberVO clmVO = (CmpdListMemberVO) t;
@@ -63,8 +63,8 @@ public class TemplatedPropertyUtilities<T> {
 
         Double rtn = null;
         
-        System.out.println("In getDoubleProperty T t");
-        System.out.println("t.getClass().getName: " + t.getClass().getName());
+//        System.out.println("In getDoubleProperty T t");
+//        System.out.println("t.getClass().getName: " + t.getClass().getName());
 
         if (t instanceof CmpdListMemberVO){
           CmpdListMemberVO clmVO = (CmpdListMemberVO) t;

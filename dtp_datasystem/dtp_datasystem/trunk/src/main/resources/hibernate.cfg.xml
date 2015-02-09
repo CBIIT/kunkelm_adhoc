@@ -28,6 +28,7 @@
     <mapping resource="mwk/datasystem/domain/CmpdAliasType.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdBioAssay.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdFragment.hbm.xml"/>
+    <mapping resource="mwk/datasystem/domain/CmpdFragmentType.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdPubChemSid.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdRelated.hbm.xml"/>
     <mapping resource="mwk/datasystem/domain/CmpdRelationType.hbm.xml"/>
