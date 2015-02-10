@@ -69,9 +69,10 @@ function barChartTooltipContentEditor(str, seriesIndex, pointIndex, plot) {
 
 function tooltipContentEditor(str, seriesIndex, pointIndex, plot) {
   // display series_label, x-axis_tick, y-axis value
-  return plot.series[seriesIndex]["label"] + ", " + plot.data[seriesIndex][pointIndex];
-  // return plot.series[seriesIndex]["label"];
-
+  // something is wrong witht this...
+  // return plot.series[seriesIndex]["label"] + ", " + plot.data[seriesIndex][pointIndex];
+  // and I'm not sure about this one
+  return plot.series[seriesIndex]["label"];
 }
 
 function barChartTooltipContentEditor(str, seriesIndex, pointIndex, plot) {
