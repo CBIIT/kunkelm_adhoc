@@ -6,161 +6,165 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui">
 
-  <f:view contentType="text/html">
+    <f:view contentType="text/html">
 
-    <h:head>
-      <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-        <title>Data System Project</title>
-      </f:facet>
-
-      <noscript>
-        <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
-      </noscript>
-
-      <h:outputScript library="js" name="dctdDataSystem.js"/>                
-      <h:outputScript library="js" name="canvasWrangling.js"/>
-      <h:outputStylesheet library="css" name="my.css"/>
-
-    </h:head>
-
-    <h:body>
-
-      <h:form id="datasystemForm" enctype="multipart/form-data">
-
-        <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
-
-        <h:outputLink value="#centerContent">
-          <h:outputText value="Skip to Content"/>
-        </h:outputLink>
-
-        <p:panel style="display: block;" id="wholePage">
-
-          <a name="centerContent"/>
-
-          <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
-
-          <br/>
-
-          <h:outputText style="font-size: 200%;" 
-                        value="LoggedUser is: #{sessionController.loggedUser}"/>
-
-          <p:spacer height="20" width="100%" />
-
-          <ui:remove>
-            <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
-          </ui:remove>
-
-          <p:menubar model="#{menuBean.model}">
-            <f:facet name="options">
-
-              <p:commandButton ajax="false"
-                               action="#{sessionController.logout()}"
-                               value="Logout"/>
-
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>Data System Project</title>
             </f:facet>
-          </p:menubar>
 
-          <p:spacer height="20" width="100%" />
+            <noscript>
+                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
+            </noscript>
 
-          <p:fieldset legend="Chemical Structure Display Options">
+            <h:outputScript library="js" name="dctdDataSystem.js"/>                
+            <h:outputScript library="js" name="canvasWrangling.js"/>
+            <h:outputStylesheet library="css" name="my.css"/>
 
-            <p:selectBooleanButton value="#{sessionController.showAnchor}" 
-                                   onLabel="ANCHOR" 
-                                   onIcon="fa fa-eye" 
-                                   offLabel="ANCHOR"                                                    
-                                   offIcon="fa fa-eye-slash">
-              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-            </p:selectBooleanButton>
+        </h:head>
 
-            <p:selectBooleanButton value="#{sessionController.showFrags}" 
-                                   onLabel="FRAGMENTS" 
-                                   onIcon="fa fa-eye" 
-                                   offLabel="FRAGS"                                                    
-                                   offIcon="fa fa-eye-slash">
-              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-            </p:selectBooleanButton>
+        <h:body>
 
-            <p:selectManyButton value="#{sessionController.selectedStrcOptions}">                                                
-              <f:selectItem itemLabel="TTL" itemValue="TTL" />
-              <f:selectItem itemLabel="CLR" itemValue="CLR" />
-              <f:selectItem itemLabel="NUM" itemValue="NUM" />
-              <f:selectItem itemLabel="KEK" itemValue="KEK" />
-              <f:selectItem itemLabel="HLT" itemValue="HLT" />
-              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-            </p:selectManyButton>
+            <h:form id="datasystemForm" enctype="multipart/form-data">
 
-            <p:selectOneButton value="#{sessionController.selectedStrcSize}">
-              <f:selectItem itemLabel="SM" itemValue="SM" />
-              <f:selectItem itemLabel="MED" itemValue="MED" />
-              <f:selectItem itemLabel="LG" itemValue="LG" />
-              <f:selectItem itemLabel="JUMBO" itemValue="JUMBO" />
-              <p:ajax listener="#{sessionController.handleStrcOptions()}" />
-            </p:selectOneButton>
+                <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
 
-          </p:fieldset>
+                <h:outputLink value="#centerContent">
+                    <h:outputText value="Skip to Content"/>
+                </h:outputLink>
 
-          <p:spacer height="20" width="100%" />
+                <p:panel style="display: block;" id="wholePage">
 
-          <ui:insert name="content"/>
+                    <a name="centerContent"/>
 
-        </p:panel>
+                    <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
 
-        <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
-        <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
-        <ui:include src="/webpages/dialogHistograms.xhtml"/>
-        <ui:include src="/webpages/dialogSelectedListMembers.xhtml"/>
-        <ui:include src="/sessionTimeOut.xhtml"/>
+                    <br/>
 
-      </h:form>
+                    <h:outputText style="font-size: 200%;" 
+                                  value="LoggedUser is: #{sessionController.loggedUser}"/>
 
-      <ui:include src="/webpages/dialogExportImage.xhtml"/>
+                    <p:spacer height="20" width="100%" />
 
-      <p:blockUI block=":datasystemForm"
-                 widgetVar="searchingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                    <ui:remove>
+                        <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
+                    </ui:remove>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="loadingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                    <p:menubar model="#{menuBean.model}">
+                        <f:facet name="options">
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="creatingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                            <p:commandButton ajax="false"
+                                             action="#{sessionController.logout()}"
+                                             value="Logout"/>
 
-      <p:blockUI block=":datasystemForm"
-                 widgetVar="resolvingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                        </f:facet>
+                    </p:menubar>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="uploadingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                    <ui:remove>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="deletingBUI">
-        <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                        <p:spacer height="20" width="100%" />                    
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="appendingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+                        <p:fieldset legend="Chemical Structure Display Options">
 
-    </h:body>
+                            <p:selectBooleanButton value="#{sessionController.showAnchor}" 
+                                                   onLabel="ANCHOR" 
+                                                   onIcon="fa fa-eye" 
+                                                   offLabel="ANCHOR"                                                    
+                                                   offIcon="fa fa-eye-slash">
+                                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+                            </p:selectBooleanButton>
 
-  </f:view>
+                            <p:selectBooleanButton value="#{sessionController.showFrags}" 
+                                                   onLabel="FRAGMENTS" 
+                                                   onIcon="fa fa-eye" 
+                                                   offLabel="FRAGS"                                                    
+                                                   offIcon="fa fa-eye-slash">
+                                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+                            </p:selectBooleanButton>
+
+                            <p:selectManyButton value="#{sessionController.selectedStrcOptions}">                                                
+                                <f:selectItem itemLabel="TTL" itemValue="TTL" />
+                                <f:selectItem itemLabel="CLR" itemValue="CLR" />
+                                <f:selectItem itemLabel="NUM" itemValue="NUM" />
+                                <f:selectItem itemLabel="KEK" itemValue="KEK" />
+                                <f:selectItem itemLabel="HLT" itemValue="HLT" />
+                                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+                            </p:selectManyButton>
+
+                            <p:selectOneButton value="#{sessionController.selectedStrcSize}">
+                                <f:selectItem itemLabel="SM" itemValue="SM" />
+                                <f:selectItem itemLabel="MED" itemValue="MED" />
+                                <f:selectItem itemLabel="LG" itemValue="LG" />
+                                <f:selectItem itemLabel="JUMBO" itemValue="JUMBO" />
+                                <p:ajax listener="#{sessionController.handleStrcOptions()}" />
+                            </p:selectOneButton>
+
+                        </p:fieldset>
+
+                        <p:spacer height="20" width="100%" />
+
+                    </ui:remove>
+
+                    <ui:insert name="content"/>
+
+                </p:panel>
+
+                <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
+                <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
+                <ui:include src="/webpages/dialogHistograms.xhtml"/>
+                <ui:include src="/webpages/dialogSelectedListMembers.xhtml"/>
+                <ui:include src="/sessionTimeOut.xhtml"/>
+
+            </h:form>
+
+            <ui:include src="/webpages/dialogExportImage.xhtml"/>
+
+            <p:blockUI block=":datasystemForm"
+                       widgetVar="searchingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="loadingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="creatingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm"
+                       widgetVar="resolvingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="uploadingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="deletingBUI">
+                <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="appendingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+        </h:body>
+
+    </f:view>
 
 </html>

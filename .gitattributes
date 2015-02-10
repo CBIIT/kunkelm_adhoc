@@ -9458,6 +9458,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/package-inf
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImageServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CompareConnector.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FacesAccessor.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentBean.java -text

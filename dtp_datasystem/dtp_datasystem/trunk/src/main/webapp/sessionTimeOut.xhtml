@@ -5,103 +5,107 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-  <ui:remove>
-    
-    References to concept and javascript, etc. on this page
-    
-    http://stackoverflow.com/questions/19097565/alert-when-the-session-expires-with-primefaces
-    http://murygin.wordpress.com/2012/11/29/jsf-primefaces-session-timeout-handling/
-    timeout="#{session.maxInactiveInterval * 1000 - 125000}"
+    <ui:remove>
 
-    This is from primefaces manual...
-    
-    <h:form>
-      <p:growl id="messages" showDetail="true" sticky="true" />
+        References to concept and javascript, etc. on this page
 
-      <p:idleMonitor timeout="#{session.maxInactiveInterval * 1000 - 125000}">
-        <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messages" />
-        <p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messages" />
-      </p:idleMonitor>
-    </h:form>
-
-  </ui:remove>
-
-
-  <ui:composition>
-    <h:form prependId="false">
-      <p:idleMonitor
+        http://stackoverflow.com/questions/19097565/alert-when-the-session-expires-with-primefaces
+        http://murygin.wordpress.com/2012/11/29/jsf-primefaces-session-timeout-handling/
         timeout="#{session.maxInactiveInterval * 1000 - 125000}"
-        onidle="startIdleMonitor()"
-        onactive="timeoutDialog.hide()" />
 
-      <p:dialog id="timeoutSession"
-                header="Session Expiring Message"
-                widgetVar="timeoutDialog"
-                showEffect="fade" hideEffect="fade"
-                modal="true"
-                width="800"
-                height="600"
-                closable="false"
-                draggable="false"
-                resizable="false"
-                appendTo="@(body)"
-                onHide="stopCount()"
-                onShow="doTimer()">
+        This is from primefaces manual...
 
-        <p>
-          <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
-          <p:panel>
-            Logoff Soon Message 1
-            <span id="dialog-countdown" style="font-weight: bold"></span>
-            Logoff Soon Message 2
-          </p:panel>
-        </p>
-        <br />
-        <p style="font-weight: bold;">Moving the cursor or any keyboard activity will maintain the session.</p>
-      </p:dialog>
-      <p:remoteCommand name="keepAlive" actionListener="#{auth.keepSessionAlive}" />
-    </h:form>
-    <script type="text/javascript">
+        <h:form>
+            <p:growl id="messages" showDetail="true" sticky="true" />
 
-      var TIME = 10; // in seconds
-      var countTimer = TIME;
-      var processTimer;
-      var timer_is_on = 0;
-      var redirectPage = "#{request.contextPath}/viewExpired.xhtml";
+            <p:idleMonitor timeout="#{session.maxInactiveInterval * 1000 - 125000}">
+                <p:ajax event="idle" listener="#{idleMonitorView.onIdle}" update="messages" />
+                <p:ajax event="active" listener="#{idleMonitorView.onActive}" update="messages" />
+            </p:idleMonitor>
+        </h:form>
 
-      var countDownDiv = "dialog-countdown";
-      var txtCountDown = null;
-      if (!txtCountDown)
-        txtCountDown = document.getElementById(countDownDiv);
+    </ui:remove>
 
-      function startIdleMonitor() {
-        countTimer = TIME;
-        txtCountDown.innerHTML = countTimer;
-        timeoutDialog.show();
-      }
-      function timedCount() {
-        txtCountDown.innerHTML = countTimer;
-        if (countTimer == 0) {
-          stopCount();
-          window.location.href = redirectPage;
-          return;
-        }
-        countTimer = countTimer - 1;
-        processTimer = setTimeout("timedCount()", 1000);
-      }
-      function doTimer() {
-        if (!timer_is_on) {
-          timer_is_on = 1;
-          timedCount();
-        }
-      }
-      function stopCount() {
-        clearTimeout(processTimer);
-        timer_is_on = 0;
-        keepAlive();
-      }
-    </script>
 
-  </ui:composition>
+    <ui:composition>
+        <h:form prependId="false">
+            <p:idleMonitor
+                timeout="#{session.maxInactiveInterval * 1000 - 125000}"
+                onidle="startIdleMonitor()"
+                onactive="PF('timeoutDialog').hide()" />
+
+            <p:dialog id="timeoutSession"
+                      header="Session Expiring Message"
+                      widgetVar="timeoutDialog"
+                      showEffect="fade" 
+                      hideEffect="fade"
+                      modal="true"
+                      width="800"
+                      height="600"
+                      closable="false"
+                      draggable="false"
+                      resizable="false"
+                      appendTo="@(body)"
+                      onHide="stopCount()"
+                      onShow="doTimer()">
+
+                <p>
+                    <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
+                    <p:panel>
+                        Logoff Soon Message 1
+                        <span id="dialog-countdown" style="font-weight: bold"></span>
+                        Logoff Soon Message 2
+                    </p:panel>
+                </p>
+                <br />
+                <p style="font-weight: bold;">Moving the cursor or any keyboard activity will maintain the session.</p>
+            </p:dialog>
+            <p:remoteCommand name="keepAlive" actionListener="#{auth.keepSessionAlive}" />
+        </h:form>
+        <script type="text/javascript">
+
+            var TIME = 10; // in seconds
+            var countTimer = TIME;
+            var processTimer;
+            var timer_is_on = 0;
+            var redirectPage = "#{request.contextPath}/viewExpired.xhtml";
+            var countDownDiv = "dialog-countdown";
+            var txtCountDown = null;
+
+            if (!txtCountDown)
+                txtCountDown = document.getElementById(countDownDiv);
+
+            function startIdleMonitor() {
+                countTimer = TIME;
+                txtCountDown.innerHTML = countTimer;
+                PF('timeoutDialog').show();
+            }
+
+            function timedCount() {
+                txtCountDown.innerHTML = countTimer;
+                if (countTimer == 0) {
+                    stopCount();
+                    window.location.href = redirectPage;
+                    return;
+                }
+                countTimer = countTimer - 1;
+                processTimer = setTimeout("timedCount()", 1000);
+            }
+
+            function doTimer() {
+                if (!timer_is_on) {
+                    timer_is_on = 1;
+                    timedCount();
+                }
+            }
+
+            function stopCount() {
+                clearTimeout(processTimer);
+                timer_is_on = 0;
+                keepAlive();
+            }
+        </script>
+
+    </ui:composition>
 
 </html>

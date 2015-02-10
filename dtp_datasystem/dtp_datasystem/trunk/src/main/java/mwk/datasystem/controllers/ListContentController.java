@@ -6,14 +6,17 @@ package mwk.datasystem.controllers;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.domain.AdHocCmpd;
 import mwk.datasystem.util.HelperCmpd;
@@ -162,7 +165,7 @@ public class ListContentController implements Serializable {
         // have to UPDATE the list   
         CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
-    // have to add to the session
+        // have to add to the session
         // and move to the new list        
         this.listManagerController.getAvailableLists().add(updatedClVO);
         this.listManagerController.setActiveList(updatedClVO);
@@ -184,6 +187,44 @@ public class ListContentController implements Serializable {
 
         return "/webpages/activeListTable?faces-redirect=true";
 
+    }
+
+    public String performConnectToLandingSpotfire() {
+
+        StringBuilder sb = new StringBuilder();
+
+        boolean isFirst = true;
+
+        for (CmpdListMemberVO clmVO : this.selectedActiveListMembers) {
+            if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
+                if (!isFirst) {
+                    sb.append("xxx");
+                }
+                sb.append(clmVO.getCmpd().getNsc());
+                isFirst = false;
+            }
+        }
+
+        String siteString = "http://localhost:8080/sarcomacompare/landingSpotfire.xhtml";
+        String paramString = "landingSpotfireNscSet=" + sb.toString();
+        String urlString = siteString + "?" + paramString;
+
+//        landingSpotfireNscSet
+//        landingSpotfireEndpointSet
+//        landingSpotfireIncludeExperiments
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extCtx = ctx.getExternalContext();
+
+        System.out.println("Generated URL is: " + urlString);
+
+        try {
+            extCtx.redirect(urlString);
+        } catch (IOException ioe) {
+            throw new FacesException(ioe);
+        }
+
+        return null;
+        
     }
 
     public String performSmilesFileUpload() {
