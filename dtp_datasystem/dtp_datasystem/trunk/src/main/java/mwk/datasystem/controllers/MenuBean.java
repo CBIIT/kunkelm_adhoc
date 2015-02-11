@@ -126,31 +126,31 @@ public class MenuBean implements Serializable {
 
       model.addElement(actLisNav);
 
-      // Active List Manipulation
-      DefaultSubMenu actLisManip = new DefaultSubMenu("Active List Manipulation");
-      actLisManip.setIcon("fa fa-wrench");
-      actLisManip.setId("exporters");
-      actLisManip.setStyle("width: 20%;");
-
-      item = new DefaultMenuItem("Delete Selected");
-      item.setTitle("setTitle test for Delete Selected");
-      item.setIcon("fa fa-cut");
-      item.setCommand("");
-      actLisManip.addElement(item);
-
-      item = new DefaultMenuItem("Selected to New List");
-      item.setTitle("setTitle test for Selected copied to New List");
-      item.setIcon("fa fa-copy");
-      item.setCommand("");
-      actLisManip.addElement(item);
-
-      item = new DefaultMenuItem("Selected added to Existing List");
-      item.setTitle("setTitle test for Selected added to Existing List");
-      item.setIcon("fa fa-plus");
-      item.setCommand("");
-      actLisManip.addElement(item);
-      
-      model.addElement(actLisManip);
+//      // Active List Manipulation
+//      DefaultSubMenu actLisManip = new DefaultSubMenu("Active List Manipulation");
+//      actLisManip.setIcon("fa fa-wrench");
+//      actLisManip.setId("exporters");
+//      actLisManip.setStyle("width: 20%;");
+//
+//      item = new DefaultMenuItem("Delete Selected");
+//      item.setTitle("setTitle test for Delete Selected");
+//      item.setIcon("fa fa-cut");
+//      item.setCommand("");
+//      actLisManip.addElement(item);
+//
+//      item = new DefaultMenuItem("Selected to New List");
+//      item.setTitle("setTitle test for Selected copied to New List");
+//      item.setIcon("fa fa-copy");
+//      item.setCommand("");
+//      actLisManip.addElement(item);
+//
+//      item = new DefaultMenuItem("Selected added to Existing List");
+//      item.setTitle("setTitle test for Selected added to Existing List");
+//      item.setIcon("fa fa-plus");
+//      item.setCommand("");
+//      actLisManip.addElement(item);
+//      
+//      model.addElement(actLisManip);
 
       // Export
       //

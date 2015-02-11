@@ -24,121 +24,127 @@ import org.primefaces.model.chart.LineChartModel;
  */
 public class ScatterPlotChartUtil {
 
-  public static ArrayList<LineChartModel> generateScatter(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
+    public static ArrayList<LineChartModel> generateScatter(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
 
     // MWK 07Dec2014 added sort step to propertyNameList
-    // MWK 30Jan2015 refactoring to LineChartModel
-    ArrayList<String> sortList = new ArrayList<String>(propertyNameList);
-    Collections.sort(sortList);
+        // MWK 30Jan2015 refactoring to LineChartModel
+        ArrayList<String> sortList = new ArrayList<String>(propertyNameList);
+        Collections.sort(sortList);
 
-    ArrayList<LineChartModel> scatChartList = new ArrayList<LineChartModel>();
+        ArrayList<LineChartModel> scatChartList = new ArrayList<LineChartModel>();
 
-    try {
+        try {
 
-      for (int outerCnt = 0; outerCnt < sortList.size(); outerCnt++) {
+            for (int outerCnt = 0; outerCnt < sortList.size(); outerCnt++) {
 
-        String outerParam = sortList.get(outerCnt);
+                String outerParam = sortList.get(outerCnt);
 
-        for (int innterCnt = 0; innterCnt < sortList.size(); innterCnt++) {
+                for (int innterCnt = 0; innterCnt < sortList.size(); innterCnt++) {
 
-          LineChartModel thisModel = new LineChartModel();
+                    LineChartModel thisModel = new LineChartModel();
 
-          String innerParam = sortList.get(innterCnt);
+                    String innerParam = sortList.get(innterCnt);
 
-          thisModel.setTitle(outerParam + " vs " + innerParam);
-          thisModel.setExtender("scatterPlotExtender");
-          thisModel.setZoom(true);
+                    thisModel.setTitle(outerParam + " vs " + innerParam);
+                    thisModel.setExtender("scatterPlotExtender");
+                    thisModel.setZoom(true);
 
-          Axis xAxis = thisModel.getAxis(AxisType.X);
-          xAxis.setLabel(innerParam);
-          xAxis.setTickAngle(-90);
+                    Axis xAxis = thisModel.getAxis(AxisType.X);
+                    xAxis.setLabel(innerParam);
+                    xAxis.setTickAngle(-90);
 
-          Axis yAxis = thisModel.getAxis(AxisType.Y);
-          yAxis.setLabel(outerParam);
+                    Axis yAxis = thisModel.getAxis(AxisType.Y);
+                    yAxis.setLabel(outerParam);
 
-          ChartSeries series = new ChartSeries();
-          series.setLabel(outerParam + " vs " + innerParam);
+                    ChartSeries series = new ChartSeries();
+                    series.setLabel(outerParam + " vs " + innerParam);
 
-          ChartSeries selectedSeries = new ChartSeries();
-          selectedSeries.setLabel(outerParam + " vs " + innerParam + " selected");
+                    ChartSeries selectedSeries = new ChartSeries();
+                    selectedSeries.setLabel(outerParam + " vs " + innerParam + " selected");
 
-          NumberFormat nf = new DecimalFormat();
-          nf.setMaximumFractionDigits(2);
+                    NumberFormat nf = new DecimalFormat();
+                    nf.setMaximumFractionDigits(2);
 
-          for (CmpdListMemberVO clmVO : incoming) {
+                    for (CmpdListMemberVO clmVO : incoming) {
 
-            if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
-              CmpdFragmentPChemVO pChem = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
+                        if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
+                            CmpdFragmentPChemVO pChem = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
-              Double xProp = getProperty(clmVO, innerParam);
-              Double yProp = getProperty(clmVO, outerParam);
+                            Double xProp = getProperty(clmVO, innerParam);
+                            Double yProp = getProperty(clmVO, outerParam);
 
-              if (xProp != null && yProp != null) {
-                if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                  selectedSeries.set(xProp, yProp);
-                } else {                  
-                  series.set(xProp, yProp);
+                            if (xProp != null && yProp != null) {
+                                if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
+                                    selectedSeries.set(xProp, yProp);
+                                } else {
+                                    series.set(xProp, yProp);
+                                }
+                            }
+                        }
+                    }
+
+                    if (!series.getData().isEmpty()) {
+                        thisModel.addSeries(series);
+                    }
+
+                    if (!selectedSeries.getData().isEmpty()) {
+                        thisModel.addSeries(selectedSeries);
+                    }
+
+                    scatChartList.add(thisModel);
+
                 }
-              }
+
             }
-          }
 
-          if (!series.getData().isEmpty()) {
-            thisModel.addSeries(series);
-          }
-
-          if (!selectedSeries.getData().isEmpty()) {
-            thisModel.addSeries(selectedSeries);
-          }
-
-          scatChartList.add(thisModel);
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-      }
+        return scatChartList;
 
-    } catch (Exception e) {
-      e.printStackTrace();
     }
 
-    return scatChartList;
+    public static Double getProperty(CmpdListMemberVO clmVO, String propertyName) {
 
-  }
+        // these are hard-coded since reflection is problematic...
+        Double rtn = null;
 
-  public static Double getProperty(CmpdListMemberVO clmVO, String propertyName) {
+        CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
-    // these are hard-coded since reflection is problematic...
-    Double rtn = null;
+        // these are hard-coded since reflection is problematic...
+        if (propertyName.equals("alogp")) {
+            rtn = PropertyUtilities.getDoubleProperty(clmVO, "alogp");
+        }
 
-    CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
+        if (propertyName.equals("logd")) {
+            rtn = PropertyUtilities.getDoubleProperty(clmVO, "logd");
+        }
 
-    // these are hard-coded since reflection is problematic...
-    if (propertyName.equals("alogp")) {
-      rtn = PropertyUtilities.getDoubleProperty(clmVO, "alogp");
+        if (propertyName.equals("hba")) {
+            Integer tempRtn = PropertyUtilities.getIntegerProperty(clmVO, "hba");
+            if (tempRtn != null) {
+                rtn = tempRtn.doubleValue();
+            }
+        }
+
+        if (propertyName.equals("hbd")) {
+            Integer tempRtn = PropertyUtilities.getIntegerProperty(clmVO, "hbd");
+            if (tempRtn != null) {
+                rtn = tempRtn.doubleValue();
+            }
+        }
+
+        if (propertyName.equals("sa")) {
+            rtn = PropertyUtilities.getDoubleProperty(clmVO, "sa");
+        }
+
+        if (propertyName.equals("mw")) {
+            rtn = PropertyUtilities.getDoubleProperty(clmVO, "mw");
+        }
+
+        return rtn;
+
     }
-
-    if (propertyName.equals("logd")) {
-      rtn = PropertyUtilities.getDoubleProperty(clmVO, "logd");
-    }
-
-    if (propertyName.equals("hba")) {
-      rtn = PropertyUtilities.getIntegerProperty(clmVO, "hba").doubleValue();
-    }
-
-    if (propertyName.equals("hbd")) {
-      rtn = PropertyUtilities.getIntegerProperty(clmVO, "hbd").doubleValue();
-    }
-
-    if (propertyName.equals("sa")) {
-      rtn = PropertyUtilities.getDoubleProperty(clmVO, "sa");
-    }
-
-    if (propertyName.equals("mw")) {
-      rtn = PropertyUtilities.getDoubleProperty(clmVO, "mw");
-    }
-
-    return rtn;
-
-  }
 
 }
