@@ -25,6 +25,8 @@ public class TemplatedHistogramChartUtil {
 
     public static List<TemplatedHistogram<CmpdListMemberVO>> doHistograms(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
 
+        // 
+      
         if (DEBUG) {
             System.out.println("In HistogramChartUtil.doHistograms()");
             System.out.println("Size of incomding: " + incoming.size());

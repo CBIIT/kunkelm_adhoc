@@ -26,24 +26,30 @@ public class ScatterPlotChartUtil {
 
     public static ArrayList<LineChartModel> generateScatter(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
 
-    // MWK 07Dec2014 added sort step to propertyNameList
+        // MWK 07Dec2014 added sort step to propertyNameList
         // MWK 30Jan2015 refactoring to LineChartModel
-        ArrayList<String> sortList = new ArrayList<String>(propertyNameList);
-        Collections.sort(sortList);
-
+        // MWK 11Feb2015 adding sorts to try to keep relative orders constant
+        // within the series
+      
+        ArrayList<String> sortedPropertyNames = new ArrayList<String>(propertyNameList);
+        Collections.sort(sortedPropertyNames);
+        
+        ArrayList<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>(incoming);
+        Collections.sort(clmList);
+        
         ArrayList<LineChartModel> scatChartList = new ArrayList<LineChartModel>();
 
         try {
 
-            for (int outerCnt = 0; outerCnt < sortList.size(); outerCnt++) {
+            for (int outerCnt = 0; outerCnt < sortedPropertyNames.size(); outerCnt++) {
 
-                String outerParam = sortList.get(outerCnt);
+                String outerParam = sortedPropertyNames.get(outerCnt);
 
-                for (int innterCnt = 0; innterCnt < sortList.size(); innterCnt++) {
+                for (int innterCnt = 0; innterCnt < sortedPropertyNames.size(); innterCnt++) {
 
                     LineChartModel thisModel = new LineChartModel();
-
-                    String innerParam = sortList.get(innterCnt);
+                    
+                    String innerParam = sortedPropertyNames.get(innterCnt);
 
                     thisModel.setTitle(outerParam + " vs " + innerParam);
                     thisModel.setExtender("scatterPlotExtender");
@@ -58,27 +64,32 @@ public class ScatterPlotChartUtil {
 
                     ChartSeries series = new ChartSeries();
                     series.setLabel(outerParam + " vs " + innerParam);
-
+                    
                     ChartSeries selectedSeries = new ChartSeries();
                     selectedSeries.setLabel(outerParam + " vs " + innerParam + " selected");
 
                     NumberFormat nf = new DecimalFormat();
                     nf.setMaximumFractionDigits(2);
 
-                    for (CmpdListMemberVO clmVO : incoming) {
+                    for (CmpdListMemberVO clmVO : clmList) {
 
                         if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
+                          
                             CmpdFragmentPChemVO pChem = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
                             Double xProp = getProperty(clmVO, innerParam);
                             Double yProp = getProperty(clmVO, outerParam);
 
+                            String lbl = clmVO.getCmpd().getName() + " " + xProp + " " + yProp;
+                                                        
                             if (xProp != null && yProp != null) {
                                 if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                                    selectedSeries.set(xProp, yProp);
+                                    selectedSeries.set(xProp, yProp, clmVO.getCmpd().getName());
                                 } else {
-                                    series.set(xProp, yProp);
+                                    series.set(xProp, yProp, clmVO.getCmpd().getName());
                                 }
+                            } else {
+                                // DO I NEED TO DO SOMETHING with this to keep plots in synch?
                             }
                         }
                     }

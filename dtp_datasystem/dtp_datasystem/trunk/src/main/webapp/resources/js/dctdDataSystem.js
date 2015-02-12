@@ -18,13 +18,13 @@ function inspectWidgets() {
 }
 
 function enumerateWidgets() {
-  for (var propertyName in PrimeFaces.widgets) {    
-    console.log("Found widget: " + propertyName); 
-    if (propertyName.lastIndexOf('widgetHistogramChart', 0) === 0){
+  for (var propertyName in PrimeFaces.widgets) {
+    console.log("Found widget: " + propertyName);
+    if (propertyName.lastIndexOf('widgetHistogramChart', 0) === 0) {
       console.log(propertyName + ' is a histogramChart ------------------');
     }
     console.log(PrimeFaces.widgets[propertyName]);
-  }    
+  }
 }
 
 
@@ -72,7 +72,11 @@ function tooltipContentEditor(str, seriesIndex, pointIndex, plot) {
   // something is wrong witht this...
   // return plot.series[seriesIndex]["label"] + ", " + plot.data[seriesIndex][pointIndex];
   // and I'm not sure about this one
-  return plot.series[seriesIndex]["label"];
+  //return plot.series[seriesIndex]["label"];
+  
+  // labels are the third element in these arrays
+  return 'seriesIndex: ' + seriesIndex + ' pointIndex: ' + pointIndex + ' ' + plot.data[seriesIndex][pointIndex][2];
+  
 }
 
 function barChartTooltipContentEditor(str, seriesIndex, pointIndex, plot) {
@@ -96,10 +100,16 @@ function histogramExtender() {
 }
 
 function scatterPlotExtender() {
+	
+	console.log(this.cfg);
+	
   this.cfg.seriesColors = ["blue", "red"];
   this.cfg.seriesDefaults = {
     showLine: false,
-    showMarker: true
+    showMarker: true,
+    pointLabels: {
+      show: true
+    }
   };
   this.cfg.highlighter = {
     show: true,

@@ -205,6 +205,7 @@ public class HistogramController implements Serializable {
 
     ArrayList<CmpdListMemberVO> allMembers = curBin.getBinList();
     ArrayList<CmpdListMemberVO> selectedMembers = new ArrayList<CmpdListMemberVO>();
+    
     for (CmpdListMemberVO clmVO : curBin.getBinList()) {
       if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
         selectedMembers.add(clmVO);
@@ -254,11 +255,16 @@ public class HistogramController implements Serializable {
     int seriesIdx = event.getSeriesIndex();
     ChartSeries selectedSeries = lcm.getSeries().get(seriesIdx);
     String seriesLabel = selectedSeries.getLabel();
-    Set<Object> keySet = selectedSeries.getData().keySet();
     
-    Double[] keyArray = keySet.toArray(new Double[keySet.size()]);
     int itemIdx = event.getItemIndex();
-    Double pointIdent = keyArray[itemIdx];
+        
+    //Set<Object> keySet = selectedSeries.getData().keySet();
+    //Double[] keyArray = keySet.toArray(new Double[keySet.size()]);    
+    //Double pointIdent = keyArray[itemIdx];
+    
+    ArrayList<String> labelList = new ArrayList<String>(selectedSeries.getDataLabels().values());
+    
+    String pointLabel = labelList.get(event.getItemIndex());
 
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
@@ -269,7 +275,7 @@ public class HistogramController implements Serializable {
             + ", ScatterPlot Title: " + lineChartTitle
             + ", seriesIndex: " + seriesIdx
             + ", Series Label: " + seriesLabel
-            + ", pointIdent: " + pointIdent);
+            + ", pointLabel: " + pointLabel);
 
     FacesContext.getCurrentInstance().addMessage(null, msg);
 
