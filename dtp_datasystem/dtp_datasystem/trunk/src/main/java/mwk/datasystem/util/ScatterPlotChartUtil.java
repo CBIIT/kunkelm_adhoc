@@ -9,14 +9,15 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import mwk.datasystem.mwkcharting.PropertyUtilities;
-import org.primefaces.model.chart.ChartSeries;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
@@ -28,15 +29,12 @@ public class ScatterPlotChartUtil {
 
         // MWK 07Dec2014 added sort step to propertyNameList
         // MWK 30Jan2015 refactoring to LineChartModel
-        // MWK 11Feb2015 adding sorts to try to keep relative orders constant
-        // within the series
-      
         ArrayList<String> sortedPropertyNames = new ArrayList<String>(propertyNameList);
         Collections.sort(sortedPropertyNames);
-        
+
         ArrayList<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>(incoming);
         Collections.sort(clmList);
-        
+
         ArrayList<LineChartModel> scatChartList = new ArrayList<LineChartModel>();
 
         try {
@@ -47,62 +45,85 @@ public class ScatterPlotChartUtil {
 
                 for (int innterCnt = 0; innterCnt < sortedPropertyNames.size(); innterCnt++) {
 
-                    LineChartModel thisModel = new LineChartModel();
-                    
+                    LineChartModel scatPlotMdl = new LineChartModel();
+
                     String innerParam = sortedPropertyNames.get(innterCnt);
 
-                    thisModel.setTitle(outerParam + " vs " + innerParam);
-                    thisModel.setExtender("scatterPlotExtender");
-                    thisModel.setZoom(true);
-
-                    Axis xAxis = thisModel.getAxis(AxisType.X);
+                    scatPlotMdl.setTitle(outerParam + " vs " + innerParam);
+                    scatPlotMdl.setExtender("scatterPlotExtender");
+                    scatPlotMdl.setZoom(true);
+                    Axis xAxis = scatPlotMdl.getAxis(AxisType.X);
                     xAxis.setLabel(innerParam);
                     xAxis.setTickAngle(-90);
-
-                    Axis yAxis = thisModel.getAxis(AxisType.Y);
+                    Axis yAxis = scatPlotMdl.getAxis(AxisType.Y);
                     yAxis.setLabel(outerParam);
-
-                    ChartSeries series = new ChartSeries();
-                    series.setLabel(outerParam + " vs " + innerParam);
                     
-                    ChartSeries selectedSeries = new ChartSeries();
-                    selectedSeries.setLabel(outerParam + " vs " + innerParam + " selected");
-
+                    LineChartSeries chSer = new LineChartSeries();
+                    chSer.setLabel(outerParam + " vs " + innerParam);
+                    chSer.setShowLine(false);
+                    chSer.setShowMarker(true);
+                    
+                    LineChartSeries selChSer = new LineChartSeries();
+                    selChSer.setLabel(outerParam + " vs " + innerParam + " selected");
+                    selChSer.setShowLine(false);
+                    selChSer.setShowMarker(true);
+                                        
                     NumberFormat nf = new DecimalFormat();
                     nf.setMaximumFractionDigits(2);
 
+                    // MWK 12Feb2015 - have to pre-sort the data so that
+                    // I don't step on the default setting of sortData in jqPlot
+                    ArrayList<XYProp> serPropList = new ArrayList<XYProp>();
+                    ArrayList<XYProp> selSerPropList = new ArrayList<XYProp>();
+                                        
                     for (CmpdListMemberVO clmVO : clmList) {
 
                         if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
-                          
+
                             CmpdFragmentPChemVO pChem = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
                             Double xProp = getProperty(clmVO, innerParam);
                             Double yProp = getProperty(clmVO, outerParam);
 
-                            String lbl = clmVO.getCmpd().getName() + " " + xProp + " " + yProp;
-                                                        
+                            // create lists of XYProp for sorting
                             if (xProp != null && yProp != null) {
                                 if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                                    selectedSeries.set(xProp, yProp, clmVO.getCmpd().getName());
+                                    XYProp p = new XYProp(xProp, yProp, clmVO.getCmpd().getName());
+                                    selSerPropList.add(p);
                                 } else {
-                                    series.set(xProp, yProp, clmVO.getCmpd().getName());
+                                    XYProp p = new XYProp(xProp, yProp, clmVO.getCmpd().getName());
+                                    serPropList.add(p);
                                 }
-                            } else {
-                                // DO I NEED TO DO SOMETHING with this to keep plots in synch?
                             }
                         }
                     }
 
-                    if (!series.getData().isEmpty()) {
-                        thisModel.addSeries(series);
+                    // sort the lists
+                    Collections.sort(selSerPropList);
+                    Collections.sort(serPropList);
+
+                    // write the series
+                    int ptIdx = 0;
+                    int selPtIdx = 0;
+
+                    for (XYProp xyp : serPropList) {                        
+                        chSer.set(xyp.xProp, xyp.yProp, xyp.label);
+                    }
+                    
+                    for (XYProp xyp: selSerPropList){
+                        
+                        selChSer.set(xyp.xProp, xyp.yProp, xyp.label);
                     }
 
-                    if (!selectedSeries.getData().isEmpty()) {
-                        thisModel.addSeries(selectedSeries);
+                    if (!chSer.getData().isEmpty()) {
+                        scatPlotMdl.addSeries(chSer);
                     }
 
-                    scatChartList.add(thisModel);
+                    if (!selChSer.getData().isEmpty()) {
+                        scatPlotMdl.addSeries(selChSer);
+                    }
+
+                    scatChartList.add(scatPlotMdl);
 
                 }
 

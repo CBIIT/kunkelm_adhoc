@@ -262,21 +262,21 @@ public class HistogramController implements Serializable {
     //Double[] keyArray = keySet.toArray(new Double[keySet.size()]);    
     //Double pointIdent = keyArray[itemIdx];
     
-    ArrayList<String> labelList = new ArrayList<String>(selectedSeries.getDataLabels().values());
-    
+    ArrayList<String> labelList = new ArrayList<String>(selectedSeries.getDataLabels().values());    
     String pointLabel = labelList.get(event.getItemIndex());
 
-    //--------------------------------------------------------------------------
-    //--------------------------------------------------------------------------
-    //--------------------------------------------------------------------------
+//    FacesMessage msg = new FacesMessage(
+//            FacesMessage.SEVERITY_INFO, "Item selected ",
+//            "Event Item Index: " + itemIdx
+//            + ", ScatterPlot Title: " + lineChartTitle
+//            + ", seriesIndex: " + seriesIdx
+//            + ", Series Label: " + seriesLabel
+//            + ", pointLabel: " + pointLabel);
+    
     FacesMessage msg = new FacesMessage(
-            FacesMessage.SEVERITY_INFO, "Item selected ",
-            "Event Item Index: " + itemIdx
-            + ", ScatterPlot Title: " + lineChartTitle
-            + ", seriesIndex: " + seriesIdx
-            + ", Series Label: " + seriesLabel
-            + ", pointLabel: " + pointLabel);
-
+            FacesMessage.SEVERITY_INFO, "ScatterPlot ItemSelectEvent: ",
+            "ser: " + seriesIdx + ", item: " + itemIdx + " " + pointLabel);
+            
     FacesContext.getCurrentInstance().addMessage(null, msg);
 
   }

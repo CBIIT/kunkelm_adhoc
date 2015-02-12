@@ -9502,6 +9502,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformC
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TransformXMLGregorianCalendar.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/TwoDHashMap.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/XYProp.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Depiction.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionGenerator.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MolInput.java -text

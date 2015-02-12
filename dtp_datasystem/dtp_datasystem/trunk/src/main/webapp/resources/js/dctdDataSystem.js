@@ -1,30 +1,30 @@
 function exportChart(widget) {
-  console.log("In exportChart.");
-  console.log("widget is: " + widget);
-  console.log("Calling enumerateWidgets()");
-  enumerateWidgets();
-  $("[id='exportableImageOutputPanel']").empty();
-  $("[id='exportableImageOutputPanel']").append(widget.exportAsImage());
-  PF('exportImageDlg').show();
+    console.log("In exportChart.");
+    console.log("widget is: " + widget);
+    console.log("Calling enumerateWidgets()");
+    enumerateWidgets();
+    $("[id='exportableImageOutputPanel']").empty();
+    $("[id='exportableImageOutputPanel']").append(widget.exportAsImage());
+    PF('exportImageDlg').show();
 }
 
 function inspectWidgets() {
-  for (var propertyName in PrimeFaces.widgets) {
-    if (PrimeFaces.widgets[propertyName] instanceof PrimeFaces.widget.SelectBooleanCheckbox) {
-      PrimeFaces.widgets[propertyName].check();// to check       
-      PrimeFaces.widgets[propertyName].jq; //jQuery reference
+    for (var propertyName in PrimeFaces.widgets) {
+        if (PrimeFaces.widgets[propertyName] instanceof PrimeFaces.widget.SelectBooleanCheckbox) {
+            PrimeFaces.widgets[propertyName].check();// to check       
+            PrimeFaces.widgets[propertyName].jq; //jQuery reference
+        }
     }
-  }
 }
 
 function enumerateWidgets() {
-  for (var propertyName in PrimeFaces.widgets) {
-    console.log("Found widget: " + propertyName);
-    if (propertyName.lastIndexOf('widgetHistogramChart', 0) === 0) {
-      console.log(propertyName + ' is a histogramChart ------------------');
+    for (var propertyName in PrimeFaces.widgets) {
+        console.log("Found widget: " + propertyName);
+        if (propertyName.lastIndexOf('widgetHistogramChart', 0) === 0) {
+            console.log(propertyName + ' is a histogramChart ------------------');
+        }
+        console.log(PrimeFaces.widgets[propertyName]);
     }
-    console.log(PrimeFaces.widgets[propertyName]);
-  }
 }
 
 
@@ -32,59 +32,60 @@ function enumerateWidgets() {
 
 function getMolFromEditor() {
 
-  //alert('in getMolFromEditor()');
+    //alert('in getMolFromEditor()');
 
-  var mol = sketcher.getMolecule();
-  var stringMol = ChemDoodle.writeMOL(mol);
-  document.getElementById('datasystemForm:ctabfromeditor').value = stringMol;
+    var mol = sketcher.getMolecule();
+    var stringMol = ChemDoodle.writeMOL(mol);
+    document.getElementById('datasystemForm:ctabfromeditor').value = stringMol;
 
 }
 
 function loadEditorFromMol() {
 
-  //alert('in loadEditorFromMol()');
+    //alert('in loadEditorFromMol()');
 
-  var ctab = document.getElementById('datasystemForm:ctabforload').value;
+    var ctab = document.getElementById('datasystemForm:ctabforload').value;
 
-  //replace car rtn with \n
-  var replStr = String.fromCharCode(92, 110);
-  var fixed = ctab.replace(/[\n\r|\r|\n]/g, '\n');
+    //replace car rtn with \n
+    var replStr = String.fromCharCode(92, 110);
+    var fixed = ctab.replace(/[\n\r|\r|\n]/g, '\n');
 
-  // have to prepend a line for ChemDoodle molecule from mol file
-  var prepended = 'prepended line\n' + fixed;
+    // have to prepend a line for ChemDoodle molecule from mol file
+    var prepended = 'prepended line\n' + fixed;
 
-  var mol = ChemDoodle.readMOL(prepended);
+    var mol = ChemDoodle.readMOL(prepended);
 
-  if (mol) {
-    sketcher.loadMolecule(mol);
-  } else {
-    alert('NSC not found or no parent fragment defined.');
-  }
+    if (mol) {
+        sketcher.loadMolecule(mol);
+    } else {
+        alert('NSC not found or no parent fragment defined.');
+    }
 
 }
 
 function barChartTooltipContentEditor(str, seriesIndex, pointIndex, plot) {
-  return plot.axes.yaxis.ticks[pointIndex];
+    return plot.axes.yaxis.ticks[pointIndex];
 }
 
 function tooltipContentEditor(str, seriesIndex, pointIndex, plot) {
-  // display series_label, x-axis_tick, y-axis value
-  // something is wrong witht this...
-  // return plot.series[seriesIndex]["label"] + ", " + plot.data[seriesIndex][pointIndex];
-  // and I'm not sure about this one
-  //return plot.series[seriesIndex]["label"];
-  
-  // labels are the third element in these arrays
-  return 'seriesIndex: ' + seriesIndex + ' pointIndex: ' + pointIndex + ' ' + plot.data[seriesIndex][pointIndex][2];
-  
+    // display series_label, x-axis_tick, y-axis value
+    // something is wrong witht this...
+    // return plot.series[seriesIndex]["label"] + ", " + plot.data[seriesIndex][pointIndex];
+    // and I'm not sure about this one
+    //return plot.series[seriesIndex]["label"];
+
+    // labels are the third element in these arrays
+    //return 'seriesIndex: ' + seriesIndex + ' pointIndex: ' + pointIndex + ' ' + plot.data[seriesIndex][pointIndex][2];
+    return plot.data[seriesIndex][pointIndex][2];
+
 }
 
 function barChartTooltipContentEditor(str, seriesIndex, pointIndex, plot) {
-  return plot.axes.yaxis.ticks[pointIndex];
+    return plot.axes.yaxis.ticks[pointIndex];
 }
 
 function histogramExtender() {
-  this.cfg.seriesColors = ["red", "blue"];
+    this.cfg.seriesColors = ["red", "blue"];
 //  this.cfg.highlighter = {
 //    show: true,
 //    sizeAdjust: 25,
@@ -100,26 +101,33 @@ function histogramExtender() {
 }
 
 function scatterPlotExtender() {
-	
-	console.log(this.cfg);
-	
-  this.cfg.seriesColors = ["blue", "red"];
-  this.cfg.seriesDefaults = {
-    showLine: false,
-    showMarker: true,
-    pointLabels: {
-      show: true
+
+    // console.log(this.cfg);
+
+    // this.cfg.seriesColors = ["blue", "red"];
+
+    this.cfg.seriesDefaults = {
+        showLine: false,
+        showMarker: true,
+        pointLabels: {
+            show: false
+        }
+    };
+
+    this.cfg.highlighter = {
+        show: true,
+        sizeAdjust: 25,
+        //lineWidthAdjust: 25,
+        tooltipLocation: 'e',
+        bringSeriesToFront: true,
+        //useAxesFormatters: true,
+        tooltipContentEditor: tooltipContentEditor,
+        //tooltipAxes: 'y',
+        showMarker: true
+    };
+
+    this.cfg.cursor = {
+        show: true,
+        tooltipLocation: 'sw'
     }
-  };
-  this.cfg.highlighter = {
-    show: true,
-    sizeAdjust: 25,
-    //lineWidthAdjust: 25,
-    tooltipLocation: 'e',
-    bringSeriesToFront: true,
-    //useAxesFormatters: true,
-    tooltipContentEditor: tooltipContentEditor,
-    //tooltipAxes: 'y',
-    showMarker: true
-  };
 }
