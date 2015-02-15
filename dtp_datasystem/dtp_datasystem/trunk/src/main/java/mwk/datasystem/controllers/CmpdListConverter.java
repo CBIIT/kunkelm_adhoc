@@ -20,7 +20,6 @@ import mwk.datasystem.vo.CmpdListVO;
  * @author mwkunkel
  */
 //@FacesConverter(value = "cmpdListConverter")
-
 @ManagedBean
 @SessionScoped
 public class CmpdListConverter implements Converter, Serializable {
@@ -40,15 +39,13 @@ public class CmpdListConverter implements Converter, Serializable {
         if (submittedValue.trim().equals("")) {
 
             //
-
         } else {
-            
+
             try {
-              
+
                 // THIS COULD FAIL FOR LISTS WITH THE SAME NAME
                 // SINCE IT RETURNS THE FIRST MATCH
-
-                for (CmpdListVO clVO : this.listManagerController.getAvailableLists()) {
+                for (CmpdListVO clVO : listManagerController.getListManagerBean().availableLists) {
                     if (clVO.getListName().equals(submittedValue)) {
                         rtn = clVO;
                         break;
@@ -64,11 +61,11 @@ public class CmpdListConverter implements Converter, Serializable {
     }
 
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-         
+
         String rtn = "";
 
         if (modelValue == null) {
-            
+
         } else if (modelValue instanceof CmpdListVO) {
             rtn = ((CmpdListVO) modelValue).getListName();
         } else {
@@ -77,4 +74,5 @@ public class CmpdListConverter implements Converter, Serializable {
 
         return rtn;
     }
+
 }

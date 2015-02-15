@@ -147,10 +147,11 @@
             </p:column>
 
             <p:column colspan="2">        
-                <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                <h:graphicImage rendered="#{!empty the_cmpd}"
+                                alt="Chemical Structure of Parent Fragment"
                                 styleClass="unassignedClass"
-                                width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"                                
-                                url='#{sessionController.getCmpdStrcUrl(the_cmpd)}'>              
+                                width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"                                
+                                url='#{configurationBean.getCmpdStrcUrl(the_cmpd)}'>              
                 </h:graphicImage>
             </p:column>
 

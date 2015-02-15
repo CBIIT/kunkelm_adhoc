@@ -113,7 +113,7 @@ public class HistogramController implements Serializable {
 
   public String performLoadActiveList() {
 
-    this.cmpdListMembers = new ArrayList<CmpdListMemberVO>(listManagerController.getActiveList().getCmpdListMembers());
+    this.cmpdListMembers = new ArrayList<CmpdListMemberVO>(listManagerController.getListManagerBean().activeList.getCmpdListMembers());
     this.selectedCmpdListMembers = new ArrayList<CmpdListMemberVO>();
 
     renderHistoAndScatter();

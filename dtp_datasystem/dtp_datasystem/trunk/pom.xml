@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>2015.02.11</version>
+    <version>2015.02.15</version>
     <packaging>war</packaging>
     <name>datasystem</name>
     <properties>
@@ -184,23 +184,6 @@
             <version>5.1.11-MWK</version>      
         </dependency>  
         
-        <!--
-        <dependency>
-            <groupId>org.openscience</groupId>
-            <artifactId>cdk</artifactId>
-            <version>1.4.19</version>          
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>           
-        </dependency>
-        -->
         <dependency>
             <groupId>hist4j</groupId>
             <artifactId>hist4j</artifactId>

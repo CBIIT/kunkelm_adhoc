@@ -53,13 +53,14 @@ public class StructureSearchController implements Serializable {
     this.sessionController = sessionController;
   }
 
-  // reach-through to listManagerController
-  @ManagedProperty(value = "#{listManagerController}")
-  private ListManagerController listManagerController;
+   // reach-through to listManagerController
+    @ManagedProperty(value = "#{listManagerController}")
+    private ListManagerController listManagerController;
 
-  public void setListManagerController(ListManagerController listManagerController) {
-    this.listManagerController = listManagerController;
-  }
+    public void setListManagerController(ListManagerController listManagerController) {
+        this.listManagerController = listManagerController;
+    }
+
 
   private String nscForLoad;
   private String smilesForLoad;
@@ -93,7 +94,7 @@ public class StructureSearchController implements Serializable {
 
     clVO.setCmpdListMembers(clmList);
 
-    this.listManagerController.setTempList(clVO);
+    listManagerController.getListManagerBean().tempList = clVO;
 
     return null;
 
@@ -121,8 +122,8 @@ public class StructureSearchController implements Serializable {
     
     CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
-    listManagerController.getAvailableLists().add(clVO);
-    listManagerController.setActiveList(clVO);
+    listManagerController.getListManagerBean().availableLists.add(clVO);
+    listManagerController.getListManagerBean().activeList = clVO;
 
     return "/webpages/activeListTable.xhtml?faces-redirect=true";
 
@@ -148,8 +149,8 @@ public class StructureSearchController implements Serializable {
     // 
     CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
-    listManagerController.getAvailableLists().add(clVO);
-    listManagerController.setActiveList(clVO);
+    listManagerController.getListManagerBean().availableLists.add(clVO);
+    listManagerController.getListManagerBean().activeList = clVO;
 
     return "/webpages/activeListTable.xhtml?faces-redirect=true";
 
@@ -201,7 +202,7 @@ public class StructureSearchController implements Serializable {
 
     clVO.setCmpdListMembers(clmList);
 
-    this.listManagerController.setTempList(clVO);
+    listManagerController.getListManagerBean().tempList = clVO;
 
     return null;
 

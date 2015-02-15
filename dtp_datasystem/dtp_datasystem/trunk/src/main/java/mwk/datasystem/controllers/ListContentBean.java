@@ -7,7 +7,6 @@ package mwk.datasystem.controllers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.event.SelectEvent;
@@ -21,7 +20,7 @@ import org.primefaces.event.SelectEvent;
 public class ListContentBean implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
-
+  
   private List<String> drugNames;
   private List<String> aliases;
   private List<String> cases;
@@ -94,22 +93,11 @@ public class ListContentBean implements Serializable {
   private Double min_theALogP;
   private Double max_theALogP;
 
-  @PostConstruct
-  public void init() {
-    this.drugNames = new ArrayList<String>();
-    this.aliases = new ArrayList<String>();
-    this.cases = new ArrayList<String>();
-    this.cmpdNamedSets = new ArrayList<String>();
-    this.nscs = new ArrayList<String>();
-    this.projectCodes = new ArrayList<String>();
-    this.plates = new ArrayList<String>();
-    this.targets = new ArrayList<String>();
-  }
-
   public ListContentBean() {
+      reset();
   }
 
-  public void doClear() {
+  public void reset() {
     this.drugNames = new ArrayList<String>();
     this.aliases = new ArrayList<String>();
     this.cases = new ArrayList<String>();

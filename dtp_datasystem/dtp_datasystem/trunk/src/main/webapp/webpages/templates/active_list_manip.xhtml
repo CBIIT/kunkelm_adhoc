@@ -23,7 +23,7 @@
                        onstart="PF('deletingBUI').show();"
                        oncomplete="PF('deletingBUI').hide();"
                        style="width: 100%;">
-        <f:setPropertyActionListener value="#{listManagerController.activeList}"   
+        <f:setPropertyActionListener value="#{listManagerController.listManagerBean.activeList}"   
                                      target="#{listContentController.targetList}" />  
       </p:commandButton>
       <p:column />

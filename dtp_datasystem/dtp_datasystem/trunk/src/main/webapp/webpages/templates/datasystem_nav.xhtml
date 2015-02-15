@@ -15,7 +15,7 @@
     <p:spacer width="20"/>
 
     <p:commandButton ajax="false" 
-                     disabled="#{empty listManagerController.activeList.cmpdListMembers}"
+                     disabled="#{empty listManagerController.listManagerBean.activeList.cmpdListMembers}"
                      action="/webpages/activeListTable?faces-redirect=true"
                      value="Active List"/>
 

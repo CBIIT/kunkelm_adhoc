@@ -104,7 +104,7 @@ function scatterPlotExtender() {
 
     // console.log(this.cfg);
 
-    // this.cfg.seriesColors = ["blue", "red"];
+    this.cfg.seriesColors = ["blue", "red"];
 
     this.cfg.seriesDefaults = {
         showLine: false,

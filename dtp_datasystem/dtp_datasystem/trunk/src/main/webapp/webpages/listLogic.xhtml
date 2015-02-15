@@ -16,7 +16,7 @@
                                  converter="#{cmpdListConverter}"                                 
                                  value="#{listLogicController.listA}">  
                     <f:selectItem itemLabel="Select One" itemValue="" />  
-                    <f:selectItems value="#{listManagerController.availableLists}"
+                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}"
                                    var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
                 </p:selectOneMenu>  
             
@@ -28,7 +28,7 @@
                                  converter="#{cmpdListConverter}"                                 
                                  value="#{listLogicController.listB}">  
                     <f:selectItem itemLabel="Select One" itemValue="" />  
-                    <f:selectItems value="#{listManagerController.availableLists}"                    
+                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}"                    
                     var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
                     
                 </p:selectOneMenu>  

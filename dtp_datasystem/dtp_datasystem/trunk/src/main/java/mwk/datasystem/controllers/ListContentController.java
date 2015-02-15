@@ -55,12 +55,14 @@ public class ListContentController implements Serializable {
         this.listManagerController = listManagerController;
     }
 
-    // reach-through to listContentBean
-    @ManagedProperty(value = "#{listContentBean}")
     private ListContentBean listContentBean;
 
-    public void setListContentBean(ListContentBean listContentBean) {
-        this.listContentBean = listContentBean;
+    public ListContentBean getListContentBean() {
+        return listContentBean;
+    }
+
+    public ListContentController() {
+        this.listContentBean = new ListContentBean();
     }
 
     private String listName;
@@ -119,7 +121,7 @@ public class ListContentController implements Serializable {
             this.selectedActiveListMembers.clear();
         }
 
-        for (CmpdListMemberVO clmVO : this.listManagerController.getActiveList().getCmpdListMembers()) {
+        for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().activeList.getCmpdListMembers()) {
             if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
                 msgBuilder.append("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
                 System.out.println("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
@@ -139,9 +141,9 @@ public class ListContentController implements Serializable {
 
         HelperCmpdListMember.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
 
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.listManagerController.getActiveList().getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
-        this.listManagerController.setActiveList(clVO);
+        listManagerController.getListManagerBean().activeList = clVO;
 
         return "/webpages/activeListTable?faces-redirect=true";
     }
@@ -165,10 +167,10 @@ public class ListContentController implements Serializable {
         // have to UPDATE the list   
         CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
-        // have to add to the session
+    // have to add to the session
         // and move to the new list        
-        this.listManagerController.getAvailableLists().add(updatedClVO);
-        this.listManagerController.setActiveList(updatedClVO);
+        listManagerController.getListManagerBean().availableLists.add(updatedClVO);
+        listManagerController.getListManagerBean().activeList = updatedClVO;
 
         return "/webpages/activeListTable?faces-redirect=true";
 
@@ -180,10 +182,10 @@ public class ListContentController implements Serializable {
 
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
-        this.listManagerController.setActiveList(clVO);
+        listManagerController.getListManagerBean().activeList = clVO;
 
         // is this really the way to do this?
-        this.listManagerController.performUpdateAvailableLists();
+        listManagerController.performUpdateAvailableLists();
 
         return "/webpages/activeListTable?faces-redirect=true";
 
@@ -224,7 +226,7 @@ public class ListContentController implements Serializable {
         }
 
         return null;
-        
+
     }
 
     public String performSmilesFileUpload() {
@@ -266,8 +268,8 @@ public class ListContentController implements Serializable {
             // new fetch the list
             CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
-            this.listManagerController.getAvailableLists().add(clVO);
-            this.listManagerController.setActiveList(clVO);
+            listManagerController.getListManagerBean().availableLists.add(clVO);
+            listManagerController.getListManagerBean().activeList = clVO;
 
             System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
 
@@ -318,8 +320,8 @@ public class ListContentController implements Serializable {
             // new fetch the list
             CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
-            this.listManagerController.getAvailableLists().add(clVO);
-            this.listManagerController.setActiveList(clVO);
+            listManagerController.getListManagerBean().availableLists.add(clVO);
+            listManagerController.getListManagerBean().activeList = clVO;
 
             System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
 
@@ -410,8 +412,8 @@ public class ListContentController implements Serializable {
         // now fetch the list            
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
-        this.listManagerController.getAvailableLists().add(clVO);
-        this.listManagerController.setActiveList(clVO);
+        listManagerController.getListManagerBean().availableLists.add(clVO);
+        listManagerController.getListManagerBean().activeList = clVO;
 
         return "/webpages/activeListTable?faces-redirect=true";
 

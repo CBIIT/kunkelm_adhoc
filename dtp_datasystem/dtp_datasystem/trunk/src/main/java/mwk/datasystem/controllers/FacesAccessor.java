@@ -21,6 +21,7 @@ import javax.faces.event.MethodExpressionActionListener;
 public class FacesAccessor {
 
   public static Object getManagedBean(final String beanName) {
+      
     FacesContext fc = FacesContext.getCurrentInstance();
     Object bean;
 

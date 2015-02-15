@@ -40,9 +40,9 @@
 
             <p:column headerText="CanSmi Structure">
                 <h:graphicImage alt="Chemical Structure of List Anchor"
-                            width="#{sessionController.strcDim}" height="#{sessionController.strcDim}"
+                            width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"
                             styleClass="anchorStructure"
-                            url='#{sessionController.getSmilesStrcUrl(salt.canSmi, null, null)}'>              
+                            url='#{configurationBean.getSmilesStrcUrl(salt.canSmi, null, null)}'>              
             </h:graphicImage>
             </p:column>
 

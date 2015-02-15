@@ -25,9 +25,9 @@
 
       <p:commandButton onclick="imageGridFromAllSelectedStructures();" value="All structures as image grid" /> 
 
-      <h:outputText value="Selected List Members with #{fn:length(listManagerController.selectedActiveListMembers)} selected"/>
+      <h:outputText value="Selected List Members with #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} selected"/>
 
-      <p:dataGrid value="#{listManagerController.selectedActiveListMembers}"
+      <p:dataGrid value="#{listManagerController.listManagerBean.selectedActiveListMembers}"
                   var="clm" 
                   columns="7">
 
@@ -42,7 +42,7 @@
                           width="200" height="200"
                           id="selectedstrcImg"
                           styleClass="unassignedClass"
-                          url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.activeList.anchorSmiles)}'>
+                          url='/StructureServlet?color-atoms=true&amp;structureDim=200&amp;title=#{clm.cmpd.name}&amp;smiles=#{applicationScopeBean.urlEncode(clm.cmpd.parentFragment.cmpdFragmentStructure.canSmi)}&amp;querySmiles=#{applicationScopeBean.urlEncode(listManagerController.listManagerBean.activeList.anchorSmiles)}'>
           </h:graphicImage> 
 
         </p:panelGrid>

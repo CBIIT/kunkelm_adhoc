@@ -19,7 +19,7 @@
       <p:outputPanel id="ListMemberDetailsDialogPanel">
 
         <ui:include src="/webpages/listMemberDetails.xhtml">            
-          <ui:param name="listMember" value="#{listManagerController.selectedActiveListMember}"/>
+          <ui:param name="listMember" value="#{listManagerController.listManagerBean.selectedActiveListMember}"/>
         </ui:include>
 
       </p:outputPanel>

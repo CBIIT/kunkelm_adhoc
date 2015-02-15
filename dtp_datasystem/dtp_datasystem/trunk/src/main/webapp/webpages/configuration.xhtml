@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:fieldset legend="Chemical Structure Display Options" 
+                    style="width: 100%; display: inline-block;">
+
+            <p:selectBooleanCheckbox id="boolAnchor"
+                                     value="#{configurationBean.showAnchor}" />                
+            <p:outputLabel for="boolAnchor" value="Show Anchor Structure" />
+
+            <p:selectBooleanCheckbox id="boolFrags"
+                                     value="#{configurationBean.showFrags}" />
+            <p:outputLabel for="boolFrags" value="Show Fragments" />
+
+            <p:selectManyCheckbox value="#{configurationBean.selectedStrcOptions}">                                                
+                <f:selectItem itemLabel="Show Title" itemValue="TTL" />
+                <f:selectItem itemLabel="Color Atoms" itemValue="CLR" />
+                <f:selectItem itemLabel="Number Atoms" itemValue="NUM" />
+                <f:selectItem itemLabel="Kekulize" itemValue="KEK" />
+                <f:selectItem itemLabel="Highlight Substructure" itemValue="HLT" />
+            </p:selectManyCheckbox>
+
+            <p:selectOneRadio value="#{configurationBean.selectedStrcSize}">
+                <f:selectItem itemLabel="Small" itemValue="SM" />
+                <f:selectItem itemLabel="Medium" itemValue="MED" />
+                <f:selectItem itemLabel="Large" itemValue="LG" />
+                <f:selectItem itemLabel="Jumbo" itemValue="JUMBO" />
+            </p:selectOneRadio>
+
+        </p:fieldset>
+
+        <p:fieldset legend="Cmpd Parameters"
+                    style="width: 100%; display: inline-block;">
+            <p:selectManyCheckbox id="cmpdGrid"
+                                  value="#{configurationBean.selectedCmpdParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{configurationBean.availableCmpdParameters}" 
+                               var="cmpdParam" 
+                               itemLabel="#{cmpdParam}" 
+                               itemValue="#{cmpdParam}" />
+            </p:selectManyCheckbox>
+        </p:fieldset>
+
+        <p:fieldset legend="PChem Parameters"
+                    style="width: 100%; display: inline-block;">        
+            <p:selectManyCheckbox id="physChemGrid"
+                                  value="#{configurationBean.selectedPChemParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{configurationBean.availablePChemParameters}" 
+                               var="pChemParam" 
+                               itemLabel="#{pChemParam}" 
+                               itemValue="#{pChemParam}" />
+            </p:selectManyCheckbox>
+        </p:fieldset>
+
+        <p:fieldset legend="Structure Parameters"
+                    style="width: 100%; display: inline-block;">
+            <p:selectManyCheckbox id="structureGrid"
+                                  value="#{configurationBean.selectedStructureParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{configurationBean.availableStructureParameters}" 
+                               var="strucParam" 
+                               itemLabel="#{strucParam}" 
+                               itemValue="#{strucParam}" />
+            </p:selectManyCheckbox>
+        </p:fieldset>
+
+        <p:fieldset legend="BioData Parameters"
+                    style="width: 100%; display: inline-block;">
+            <p:selectManyCheckbox id="bioDataGrid"
+                                  value="#{configurationBean.selectedBioDataParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{configurationBean.availableBioDataParameters}" 
+                               var="bioDatParam" 
+                               itemLabel="#{bioDatParam}" 
+                               itemValue="#{bioDatParam}" />
+            </p:selectManyCheckbox>
+        </p:fieldset>
+
+        <p:commandButton action="#{configurationBean.performUpdateColumns()}" 
+                         value="Update" 
+                         icon="ui-icon-refresh" 
+                         oncomplete="PF('activeListTblWidgetVar').clearFilters()"/>
+
+    </ui:define>
+
+</ui:composition>

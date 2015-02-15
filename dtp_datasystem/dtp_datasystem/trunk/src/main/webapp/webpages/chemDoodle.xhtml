@@ -80,7 +80,7 @@
         <p:selectOneMenu id="selectListToSearch"
                          converter="#{cmpdListConverter}"                                 
                          value="#{structureSearchController.listToSearch}">            
-          <f:selectItems value="#{listManagerController.availableLists}" 
+          <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
                          var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
         </p:selectOneMenu>  
       

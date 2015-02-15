@@ -82,6 +82,13 @@ public class MenuBean implements Serializable {
       item.setOutcome("/webpages/chemDoodle?faces-redirect=true");
       datSysOps.addElement(item);
 
+      item = new DefaultMenuItem("Configure Display Options");
+      item.setTitle("setTitle test for Configure Display Options");
+      item.setIcon("fa fa-check-square-o");
+      item.setAjax(false);
+      item.setOutcome("/webpages/configuration?faces-redirect=true");
+      datSysOps.addElement(item);
+      
       item = new DefaultMenuItem("Salts Workbench");
       item.setTitle("setTitle test for Salts Workbench");
       item.setIcon("fa fa-cogs");

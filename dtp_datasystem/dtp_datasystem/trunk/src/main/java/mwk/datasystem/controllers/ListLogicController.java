@@ -33,7 +33,7 @@ import org.hibernate.Transaction;
 public class ListLogicController implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
-
+  
   private static final Boolean DEBUG = Boolean.FALSE;
   //
   private CmpdListVO listA;
@@ -64,8 +64,8 @@ public class ListLogicController implements Serializable {
 
   public String performListLogic() {
 
-    CmpdListVO aList = this.listManagerController.performLoadList(this.listA.getCmpdListId());
-    CmpdListVO bList = this.listManagerController.performLoadList(this.listB.getCmpdListId());
+    CmpdListVO aList = listManagerController.performLoadList(this.listA.getCmpdListId());
+    CmpdListVO bList = listManagerController.performLoadList(this.listB.getCmpdListId());
 
     // overlap is based on a.nsc = b.nsc OR a.originalAdHocCmpdId = b.originalAdHocCmpdId
     HashMap<Integer, CmpdVO> nscMap = new HashMap<Integer, CmpdVO>();

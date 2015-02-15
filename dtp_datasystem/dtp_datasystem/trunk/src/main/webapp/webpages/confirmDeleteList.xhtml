@@ -16,23 +16,23 @@
             <p:panelGrid columns="2">
 
                 <h:outputText value="List Name"/>
-                <h:outputText value="#{listManagerController.listForDelete.listName}"/>
+                <h:outputText value="#{listManagerController.listManagerBean.listForDelete.listName}"/>
 
                 <h:outputText value="Share With"/>
-                <h:outputText value="#{listManagerController.listForDelete.shareWith}"/>
+                <h:outputText value="#{listManagerController.listManagerBean.listForDelete.shareWith}"/>
 
                 <h:outputText value="List Owner:"/>
-                <h:outputText value="#{listManagerController.listForDelete.listOwner}"/>
+                <h:outputText value="#{listManagerController.listManagerBean.listForDelete.listOwner}"/>
 
                 <h:outputText value="CmpdListId"/>
-                <h:outputText value="#{listManagerController.listForDelete.cmpdListId}"/>
+                <h:outputText value="#{listManagerController.listManagerBean.listForDelete.cmpdListId}"/>
 
                 <h:outputText value="Count List Members"/>
-                <h:outputText value="#{listManagerController.listForDelete.countListMembers}"/>
+                <h:outputText value="#{listManagerController.listManagerBean.listForDelete.countListMembers}"/>
 
             </p:panelGrid>
 
-            <p:outputLabel value="Are you sure you want to delete #{listManagerController.listForDelete.listName} ?" style="font-size: 2em; color: red;"/>
+            <p:outputLabel value="Are you sure you want to delete #{listManagerController.listManagerBean.listForDelete.listName} ?" style="font-size: 2em; color: red;"/>
 
             <br/>
             
