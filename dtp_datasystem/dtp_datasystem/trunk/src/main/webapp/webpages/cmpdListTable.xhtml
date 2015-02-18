@@ -73,9 +73,9 @@
 
                 <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
                     <h:graphicImage alt="Chemical Structure of List Anchor"
-                                    width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"
+                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                     styleClass="anchorStructure"
-                                    url='#{configurationBean.getCmpdStrcUrl(cmpd)}'>              
+                                    url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd)}'>              
                     </h:graphicImage>
 
 
@@ -84,9 +84,9 @@
                 </p:commandLink>
 
                 <h:graphicImage alt="Chemical Structure of Parent Fragment"
-                                width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"
+                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                 styleClass="parentStructure"
-                                url='#{configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                                url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                 </h:graphicImage>
 
             </p:column>

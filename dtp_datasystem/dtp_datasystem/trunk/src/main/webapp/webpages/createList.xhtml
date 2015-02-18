@@ -95,7 +95,7 @@
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completensc}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentController.getListContentBean().appendTonscTextArea}" 
+                    listener="#{listContentController.appendTonscTextArea}" 
                     update=":datasystemForm:nscTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
@@ -109,7 +109,7 @@
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completedrugName}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentController.getListContentBean().appendTodrugNameTextArea}" 
+                    listener="#{listContentController.appendTodrugNameTextArea}" 
                     update=":datasystemForm:drugNameTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
@@ -123,7 +123,7 @@
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completealias}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentController.getListContentBean().appendToaliasTextArea}" 
+                    listener="#{listContentController.appendToaliasTextArea}" 
                     update=":datasystemForm:aliasTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
@@ -137,7 +137,7 @@
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completecas}">
             <p:ajax event="itemSelect" 
-                    listener="#{listContentController.getListContentBean().appendTocasTextArea}" 
+                    listener="#{listContentController.appendTocasTextArea}" 
                     update=":datasystemForm:casTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
@@ -153,7 +153,7 @@
                         minQueryLength="3"                                    
                         completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
           <p:ajax event="itemSelect" 
-                  listener="#{listContentController.getListContentBean().appendTocmpdNamedSetTextArea}" 
+                  listener="#{listContentController.appendTocmpdNamedSetTextArea}" 
                   update=":datasystemForm:cmpdNamedSetTextArea_id"/>  
         </p:autoComplete>                
       </p:panel>
@@ -167,7 +167,7 @@
                         minQueryLength="3"                                    
                         completeMethod="#{applicationScopeBean.completeprojectCode}">
           <p:ajax event="itemSelect" 
-                  listener="#{listContentController.getListContentBean().appendToprojectCodeTextArea}" 
+                  listener="#{listContentController.appendToprojectCodeTextArea}" 
                   update=":datasystemForm:projectCodeTextArea_id"/>  
         </p:autoComplete>                
       </p:panel>
@@ -181,7 +181,7 @@
                         minQueryLength="3"                                    
                         completeMethod="#{applicationScopeBean.completeplate}">
           <p:ajax event="itemSelect" 
-                  listener="#{listContentController.getListContentBean().appendToplateTextArea}" 
+                  listener="#{listContentController.appendToplateTextArea}" 
                   update=":datasystemForm:plateTextArea_id"/>  
         </p:autoComplete>                
       </p:panel>
@@ -195,7 +195,7 @@
                         minQueryLength="3"                                    
                         completeMethod="#{applicationScopeBean.completetarget}">
           <p:ajax event="itemSelect" 
-                  listener="#{listContentController.getListContentBean().appendTotargetTextArea}" 
+                  listener="#{listContentController.appendTotargetTextArea}" 
                   update=":datasystemForm:targetTextArea_id"/>  
         </p:autoComplete>                
       </p:panel>

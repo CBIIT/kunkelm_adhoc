@@ -12,17 +12,17 @@
     <ui:define name="content">
 
         <p:panel header="List Anchor Structure"
-                 rendered="#{configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
+                 rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
             <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
 
             <br/>
 
             <h:graphicImage alt="Chemical Structure of List Anchor"
-                            width="#{configurationBean.strcDim}" 
-                            height="#{configurationBean.strcDim}"
+                            width="#{sessionController.configurationBean.strcDim}" 
+                            height="#{sessionController.configurationBean.strcDim}"
                             styleClass="anchorStructure"
-                            url='#{configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                            url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
             </h:graphicImage>
 
         </p:panel>
@@ -110,34 +110,34 @@
                         <p:column rowspan="2" headerText="All" />
                         <p:column rowspan="2" headerText="Comment" />
                         <p:column rowspan="2" headerText="Structure" />
-                        <p:column rendered="#{!empty configurationBean.selectedCmpdParameters}"
-                                  colspan="#{fn:length(configurationBean.selectedCmpdParameters)}" 
+                        <p:column rendered="#{!empty sessionController.configurationBean.selectedCmpdParameters}"
+                                  colspan="#{fn:length(sessionController.configurationBean.selectedCmpdParameters)}" 
                                   headerText="Cmpd" />
-                        <p:column rendered="#{!empty configurationBean.selectedStructureParameters}"
-                                  colspan="#{fn:length(configurationBean.selectedStructureParameters)}" 
+                        <p:column rendered="#{!empty sessionController.configurationBean.selectedStructureParameters}"
+                                  colspan="#{fn:length(sessionController.configurationBean.selectedStructureParameters)}" 
                                   headerText="Structure" />
-                        <p:column rendered="#{!empty configurationBean.selectedPChemParameters}"
-                                  colspan="#{fn:length(configurationBean.selectedPChemParameters)}" 
+                        <p:column rendered="#{!empty sessionController.configurationBean.selectedPChemParameters}"
+                                  colspan="#{fn:length(sessionController.configurationBean.selectedPChemParameters)}" 
                                   headerText="pChem" />
-                        <p:column rendered="#{!empty configurationBean.selectedBioDataParameters}"
-                                  colspan="#{fn:length(configurationBean.selectedBioDataParameters)}" 
+                        <p:column rendered="#{!empty sessionController.configurationBean.selectedBioDataParameters}"
+                                  colspan="#{fn:length(sessionController.configurationBean.selectedBioDataParameters)}" 
                                   headerText="BioData" />
                     </p:row>
                     <p:row>
 
-                        <ui:repeat value="#{configurationBean.selectedCmpdParameters}" var="scp">
+                        <ui:repeat value="#{sessionController.configurationBean.selectedCmpdParameters}" var="scp">
                             <p:column headerText="#{scp}" />
                         </ui:repeat>
 
-                        <ui:repeat value="#{configurationBean.selectedStructureParameters}" var="ssp">
+                        <ui:repeat value="#{sessionController.configurationBean.selectedStructureParameters}" var="ssp">
                             <p:column headerText="#{ssp}" />
                         </ui:repeat>
 
-                        <ui:repeat value="#{configurationBean.selectedPChemParameters}" var="spcp">
+                        <ui:repeat value="#{sessionController.configurationBean.selectedPChemParameters}" var="spcp">
                             <p:column headerText="#{spcp}" />
                         </ui:repeat>
 
-                        <ui:repeat value="#{configurationBean.selectedBioDataParameters}" var="sbdp">
+                        <ui:repeat value="#{sessionController.configurationBean.selectedBioDataParameters}" var="sbdp">
                             <p:column headerText="#{sbdp}" />
                         </ui:repeat>
 
@@ -160,9 +160,9 @@
 
                 <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
                     <h:graphicImage alt="Chemical Structure of Parent Fragment"
-                                    width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"
+                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                     styleClass="parentStructure"
-                                    url='#{configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                                    url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                     </h:graphicImage>
 
                     <f:setPropertyActionListener value="#{listMember}"   
@@ -171,12 +171,12 @@
 
             </p:column>
 
-            <p:column headerText="Fragments" rendered="#{configurationBean.showFrags}">
+            <p:column headerText="Fragments" rendered="#{sessionController.configurationBean.showFrags}">
                 <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
                     <h:graphicImage alt="Chemical Structure of Compound Fragment"
-                                    width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"
+                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                     styleClass="fragmentStructure"
-                                    url='#{configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
+                                    url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
                     </h:graphicImage>
                 </p:dataGrid>
             </p:column>    
@@ -193,7 +193,7 @@
             <c:set var="cmpd" value="#{listMember.cmpd}" />
 
             <p:columns resizable="true"  
-                       value="#{configurationBean.cmpdColumns}" 
+                       value="#{sessionController.configurationBean.cmpdColumns}" 
                        var="column" 
                        columnIndexVar="colIndex" 
                        sortBy="#{cmpd[column.property]}" 
@@ -207,7 +207,7 @@
             <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
 
             <p:columns resizable="true" 
-                       value="#{configurationBean.structureColumns}" 
+                       value="#{sessionController.configurationBean.structureColumns}" 
                        var="column" 
                        columnIndexVar="colIndex" 
                        sortBy="#{strc[column.property]}" 
@@ -221,7 +221,7 @@
             <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
 
             <p:columns resizable="true" 
-                       value="#{configurationBean.physChemColumns}" 
+                       value="#{sessionController.configurationBean.physChemColumns}" 
                        var="column" 
                        columnIndexVar="colIndex" 
                        sortBy="#{physchem[column.property]}" 
@@ -235,7 +235,7 @@
             <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
 
             <p:columns resizable="true" 
-                       value="#{configurationBean.biodataColumns}" 
+                       value="#{sessionController.configurationBean.biodataColumns}" 
                        var="column" 
                        columnIndexVar="colIndex" 
                        sortBy="#{biodat[column.property]}" 

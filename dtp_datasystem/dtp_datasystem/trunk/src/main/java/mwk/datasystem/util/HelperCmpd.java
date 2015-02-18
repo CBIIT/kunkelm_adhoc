@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.xml.datatype.XMLGregorianCalendar;
-import mwk.datasystem.controllers.QueryObject;
+import mwk.datasystem.controllers.SearchCriteriaBean;
 import mwk.datasystem.domain.CmpdImpl;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -117,7 +117,7 @@ public class HelperCmpd {
 
   public static Long createCmpdListFromQueryObject(
           String listName,
-          QueryObject qo,
+          SearchCriteriaBean qo,
           String smilesString,
           String currentUser) {
 

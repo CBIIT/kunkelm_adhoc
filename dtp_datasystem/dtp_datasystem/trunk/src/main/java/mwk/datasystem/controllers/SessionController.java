@@ -23,8 +23,8 @@ import javax.faces.context.FacesContext;
 public class SessionController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
-
     private String loggedUser;
+    protected ConfigurationBean configurationBean;
 
     @PostConstruct
     public void init() {
@@ -39,6 +39,8 @@ public class SessionController implements Serializable {
                 this.loggedUser = "DTP_" + this.loggedUser;
             }
         }
+
+        configurationBean = new ConfigurationBean();
     }
 
     public SessionController() {
@@ -54,6 +56,8 @@ public class SessionController implements Serializable {
         } catch (Exception e) {
 
         }
+
+        configurationBean = new ConfigurationBean();
     }
 
     public String logout() {
@@ -87,4 +91,12 @@ public class SessionController implements Serializable {
         return this.loggedUser;
     }
 
+    public ConfigurationBean getConfigurationBean() {
+        return configurationBean;
+    }
+
+    public void setConfigurationBean(ConfigurationBean configurationBean) {
+        this.configurationBean = configurationBean;
+    }
+    
 }

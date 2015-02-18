@@ -9462,14 +9462,13 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Cmp
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FacesAccessor.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/MenuBean.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/QueryObject.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SaltController.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SearchCriteriaBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SessionController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/StructureSearchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/WindowPopper.java -text

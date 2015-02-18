@@ -55,14 +55,14 @@ public class ListContentController implements Serializable {
         this.listManagerController = listManagerController;
     }
 
-    private ListContentBean listContentBean;
+    private SearchCriteriaBean listContentBean;
 
-    public ListContentBean getListContentBean() {
+    public SearchCriteriaBean getListContentBean() {
         return listContentBean;
     }
 
     public ListContentController() {
-        this.listContentBean = new ListContentBean();
+        this.listContentBean = new SearchCriteriaBean();
     }
 
     private String listName;
@@ -311,72 +311,72 @@ public class ListContentController implements Serializable {
 
         String delimiters = "[\\n\\r\\t\\s,]+";
 
-        QueryObject qo = new QueryObject();
+        SearchCriteriaBean lCntntBean = new SearchCriteriaBean();
 
         splitStrings = this.listContentBean.getNscTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].replaceAll("[^0-9]", "");
             if (fixedString.length() > 0) {
-                qo.getNscs().add(fixedString);
+                lCntntBean.getNscs().add(fixedString);
             }
         }
 
         splitStrings = this.listContentBean.getCasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getCases().add(splitStrings[i]);
+                lCntntBean.getCases().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getProjectCodeTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getProjectCodes().add(splitStrings[i]);
+                lCntntBean.getProjectCodes().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getDrugNameTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getDrugNames().add(splitStrings[i]);
+                lCntntBean.getDrugNames().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getAliasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getAliases().add(splitStrings[i]);
+                lCntntBean.getAliases().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getPlateTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getPlates().add(splitStrings[i]);
+                lCntntBean.getPlates().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getTargetTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getTargets().add(splitStrings[i]);
+                lCntntBean.getTargets().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getCmpdNamedSetTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                qo.getCmpdNamedSets().add(splitStrings[i]);
+                lCntntBean.getCmpdNamedSets().add(splitStrings[i]);
             }
         }
 
         System.out.println("Content of listContentBean:");
         this.listContentBean.printCriteriaLists();
         System.out.println("Content of QueryObject:");
-        qo.printCriteriaLists();
+        lCntntBean.printCriteriaLists();
 
         System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
-        Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, qo, null, this.sessionController.getLoggedUser());
+        Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, lCntntBean, null, this.sessionController.getLoggedUser());
 
         // now fetch the list            
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
@@ -413,5 +413,69 @@ public class ListContentController implements Serializable {
         this.targetList = targetList;
     }
     // </editor-fold>
+
+    public void appendToaliasTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getAliasTextArea() == null) {
+            listContentBean.setAliasTextArea("");
+        }
+        listContentBean.setAliasTextArea(item + " " + listContentBean.getAliasTextArea());
+    }
+
+    public void appendTotargetTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getTargetTextArea() == null) {
+            listContentBean.setTargetTextArea("");
+        }
+        listContentBean.setTargetTextArea(item + " " + listContentBean.getTargetTextArea());
+    }
+
+    public void appendToprojectCodeTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getProjectCodeTextArea() == null) {
+            listContentBean.setProjectCodeTextArea("");
+        }
+        listContentBean.setProjectCodeTextArea(item + " " + listContentBean.getProjectCodeTextArea());
+    }
+
+    public void appendToplateTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getPlateTextArea() == null) {
+            listContentBean.setPlateTextArea("");
+        }
+        listContentBean.setPlateTextArea(item + " " + listContentBean.getPlateTextArea());
+    }
+
+    public void appendTocasTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getCasTextArea() == null) {
+            listContentBean.setCasTextArea("");
+        }
+        listContentBean.setCasTextArea(item + " " + listContentBean.getCasTextArea());
+    }
+
+    public void appendTodrugNameTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getDrugNameTextArea() == null) {
+            listContentBean.setDrugNameTextArea("");
+        }
+        listContentBean.setDrugNameTextArea(item + " " + listContentBean.getDrugNameTextArea());
+    }
+
+    public void appendTonscTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getNscTextArea() == null) {
+            listContentBean.setNscTextArea("");
+        }
+        listContentBean.setNscTextArea(item + " " + listContentBean.getNscTextArea());
+    }
+
+    public void appendTocmpdNamedSetTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+        Object item = event.getObject();
+        if (listContentBean.getCmpdNamedSetTextArea() == null) {
+            listContentBean.setCmpdNamedSetTextArea("");
+        }
+        listContentBean.setCmpdNamedSetTextArea(item + " " + listContentBean.getCmpdNamedSetTextArea());
+    }
 
 }

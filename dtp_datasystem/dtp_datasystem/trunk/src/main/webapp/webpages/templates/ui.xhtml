@@ -68,7 +68,7 @@
 
                         <p:fieldset legend="Chemical Structure Display Options">
 
-                            <p:selectBooleanButton value="#{configurationBean.showAnchor}" 
+                            <p:selectBooleanButton value="#{sessionController.configurationBean.showAnchor}" 
                                                    onLabel="ANCHOR" 
                                                    onIcon="fa fa-eye" 
                                                    offLabel="ANCHOR"                                                    
@@ -76,7 +76,7 @@
                                 <p:ajax listener="#{sessionController.handleStrcOptions()}" />
                             </p:selectBooleanButton>
 
-                            <p:selectBooleanButton value="#{configurationBean.showFrags}" 
+                            <p:selectBooleanButton value="#{sessionController.configurationBean.showFrags}" 
                                                    onLabel="FRAGMENTS" 
                                                    onIcon="fa fa-eye" 
                                                    offLabel="FRAGS"                                                    

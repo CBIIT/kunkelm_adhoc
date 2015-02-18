@@ -150,8 +150,8 @@
                 <h:graphicImage rendered="#{!empty the_cmpd}"
                                 alt="Chemical Structure of Parent Fragment"
                                 styleClass="unassignedClass"
-                                width="#{configurationBean.strcDim}" height="#{configurationBean.strcDim}"                                
-                                url='#{configurationBean.getCmpdStrcUrl(the_cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                                url='#{sessionController.configurationBean.getCmpdStrcUrl(the_cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                 </h:graphicImage>
             </p:column>
 

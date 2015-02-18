@@ -29,17 +29,17 @@
     
     
     <p:panel header="List Anchor Structure"
-             rendered="#{configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
+             rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
       <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
 
       <br/>
 
       <h:graphicImage alt="Chemical Structure of List Anchor"
-                      width="#{configurationBean.strcDim}" 
-                      height="#{configurationBean.strcDim}"
+                      width="#{sessionController.configurationBean.strcDim}" 
+                      height="#{sessionController.configurationBean.strcDim}"
                       styleClass="anchorStructure"
-                      url='#{configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                      url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
       </h:graphicImage>
 
     </p:panel>

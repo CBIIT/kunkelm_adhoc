@@ -21,12 +21,8 @@ import mwk.datasystem.vo.CmpdVO;
  *
  * @author mwkunkel
  */
-@ManagedBean
-@SessionScoped
-public class ConfigurationBean implements Serializable {
+public class ConfigurationBean {
 
-    static final long serialVersionUID = -8653468638698142855l;
-    
 //       _       _           _               _   _                 
 //  __ _| | ___ | |__   __ _| |   ___  _ __ | |_(_) ___  _ __  ___ 
 // / _` | |/ _ \| '_ \ / _` | |  / _ \| '_ \| __| |/ _ \| '_ \/ __|
