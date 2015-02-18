@@ -9399,6 +9399,7 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CANCEL_POSTGRES_PROCESS.txt -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/DATA_SYSTEM_BUILD_PARAMETERS.pm -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MAKE_CATEGORIES.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/SCRIPT0_1_constraintsManagerment.PL -text
@@ -9507,7 +9508,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Unproxy.ja
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/XYProp.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/Depiction.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionGenerator.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MolInput.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MoleculeWrangling.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
@@ -9563,7 +9564,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistograms.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistogramsORIGINAL.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
@@ -9581,7 +9581,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDet
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogSelectedListMembers.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/loginFailed.html -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/parkingLot.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text

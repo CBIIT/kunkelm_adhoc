@@ -95,6 +95,7 @@ public class ConfigurationBean implements Serializable {
         selectedStrcOptions = new ArrayList<String>();
         selectedStrcOptions.add("TTL");
         selectedStrcOptions.add("CLR");
+        selectedStrcOptions.add("HLT");
         selectedStrcSize = "MED";
         strcDim = Integer.valueOf(200);
 
@@ -190,7 +191,7 @@ public class ConfigurationBean implements Serializable {
         initArr = new String[]{"Molecular Weight", "Molecular Formula", "logD", "CountH Bond Acceptors", "Count H BondDonors"};
         selectedPChemParameters.addAll(Arrays.asList(initArr));
 
-        // no structures by default
+        // default is no structures 
         selectedBioDataParameters = new ArrayList<String>();
         initArr = new String[]{"NCI60", "HF", "XENO"};
         selectedBioDataParameters.addAll(Arrays.asList(initArr));

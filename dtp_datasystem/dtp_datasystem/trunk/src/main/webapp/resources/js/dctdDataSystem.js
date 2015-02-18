@@ -111,6 +111,9 @@ function scatterPlotExtender() {
         showMarker: true,
         pointLabels: {
             show: false
+        },
+        markerOptions:{
+        	size: 5
         }
     };
 
@@ -126,8 +129,8 @@ function scatterPlotExtender() {
         showMarker: true
     };
 
-    this.cfg.cursor = {
-        show: true,
-        tooltipLocation: 'sw'
-    }
+//    this.cfg.cursor = {
+//        show: true,
+//        tooltipLocation: 'sw'
+//    }
 }

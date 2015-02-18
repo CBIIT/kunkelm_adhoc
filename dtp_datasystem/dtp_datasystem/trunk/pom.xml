@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>org.openscience.cdk</groupId>
-            <artifactId>cdk-bundle</artifactId>
+            <artifactId>cdk</artifactId>
             <version>1.5.10</version>
         </dependency>
         <dependency>

@@ -66,8 +66,7 @@ public class ListContentController implements Serializable {
     }
 
     private String listName;
-    UploadedFile uploadedFile;
-    List<CmpdListMemberVO> selectedActiveListMembers;
+    UploadedFile uploadedFile;    
     CmpdListVO targetList;
 
     public void onRowSelect(SelectEvent evt) {
@@ -106,40 +105,10 @@ public class ListContentController implements Serializable {
      *
      * @return For checkboxes outside of dataTable
      */
-    public String performMySelect() {
-
-        StringBuilder msgBuilder = new StringBuilder();
-
-        // check the activeList for selectedMembers        
-        if (this.selectedActiveListMembers == null) {
-            msgBuilder.append("selectedActiveListMembers is null.  new ArrayList().");
-            System.out.println("selectedActiveListMembers is null.  new ArrayList().");
-            this.selectedActiveListMembers = new ArrayList<CmpdListMemberVO>();
-        } else {
-            msgBuilder.append("selectedActiveListMembers is NOT null.  list.clear().");
-            System.out.println("selectedActiveListMembers is NOT null.  list.clear().");
-            this.selectedActiveListMembers.clear();
-        }
-
-        for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().activeList.getCmpdListMembers()) {
-            if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                msgBuilder.append("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-                System.out.println("selected: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-                this.selectedActiveListMembers.add(clmVO);
-            }
-        }
-
-        FacesMessage msg = new FacesMessage("Selected List Members: ", msgBuilder.toString());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        return "/webpages/activeListTable?faces-redirect=true";
-
-    }
-
-    //
+    
     public String performDeleteFromActiveList() {
 
-        HelperCmpdListMember.deleteCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+        HelperCmpdListMember.deleteCmpdListMembers(this.targetList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), this.sessionController.getLoggedUser());
 
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
@@ -162,7 +131,7 @@ public class ListContentController implements Serializable {
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
         // append the selected
-        HelperCmpdListMember.appendCmpdListMembers(clVO, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+        HelperCmpdListMember.appendCmpdListMembers(clVO, listManagerController.getListManagerBean().getSelectedActiveListMembers(), this.sessionController.getLoggedUser());
 
         // have to UPDATE the list   
         CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
@@ -178,7 +147,7 @@ public class ListContentController implements Serializable {
 
     public String performAppendSelectedToExistingList() {
 
-        HelperCmpdListMember.appendCmpdListMembers(this.targetList, this.selectedActiveListMembers, this.sessionController.getLoggedUser());
+        HelperCmpdListMember.appendCmpdListMembers(this.targetList, listManagerController.getListManagerBean().selectedActiveListMembers, this.sessionController.getLoggedUser());
 
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
 
@@ -197,7 +166,7 @@ public class ListContentController implements Serializable {
 
         boolean isFirst = true;
 
-        for (CmpdListMemberVO clmVO : this.selectedActiveListMembers) {
+        for (CmpdListMemberVO clmVO : this.listManagerController.getListManagerBean().selectedActiveListMembers){
             if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
                 if (!isFirst) {
                     sb.append("xxx");
@@ -434,14 +403,6 @@ public class ListContentController implements Serializable {
 
     public void setUploadedFile(UploadedFile uploadedFile) {
         this.uploadedFile = uploadedFile;
-    }
-
-    public List<CmpdListMemberVO> getSelectedActiveListMembers() {
-        return selectedActiveListMembers;
-    }
-
-    public void setSelectedActiveListMembers(List<CmpdListMemberVO> selectedActiveListMembers) {
-        this.selectedActiveListMembers = selectedActiveListMembers;
     }
 
     public CmpdListVO getTargetList() {

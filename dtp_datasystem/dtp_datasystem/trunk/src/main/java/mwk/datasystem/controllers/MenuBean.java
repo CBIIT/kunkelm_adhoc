@@ -54,11 +54,18 @@ public class MenuBean implements Serializable {
       item.setOutcome("/webpages/activeListTable?faces-redirect=true");
       datSysOps.addElement(item);
 
-      item = new DefaultMenuItem("New List by Search");
-      item.setTitle("setTitle test for New List by Search");
+      item = new DefaultMenuItem("New List by Parameters");
+      item.setTitle("setTitle test for New List by Parameters");
       item.setIcon("fa fa-search");
       item.setAjax(false);
       item.setOutcome("/webpages/createList?faces-redirect=true");
+      datSysOps.addElement(item);
+      
+       item = new DefaultMenuItem("New List by Structure");
+      item.setTitle("setTitle test for New List by Structure");
+      item.setIcon("fa fa-search");
+      item.setAjax(false);
+      item.setOutcome("/webpages/chemDoodle?faces-redirect=true");
       datSysOps.addElement(item);
 
       item = new DefaultMenuItem("New List from File");
@@ -74,14 +81,7 @@ public class MenuBean implements Serializable {
       item.setAjax(false);
       item.setOutcome("/webpages/listLogic?faces-redirect=true");
       datSysOps.addElement(item);
-
-      item = new DefaultMenuItem("New List by Structure");
-      item.setTitle("setTitle test for New List by Structure");
-      item.setIcon("fa fa-search");
-      item.setAjax(false);
-      item.setOutcome("/webpages/chemDoodle?faces-redirect=true");
-      datSysOps.addElement(item);
-
+     
       item = new DefaultMenuItem("Configure Display Options");
       item.setTitle("setTitle test for Configure Display Options");
       item.setIcon("fa fa-check-square-o");
@@ -182,7 +182,7 @@ public class MenuBean implements Serializable {
 
       item = new DefaultMenuItem("Export Structures ");
       item.setTitle("setTitle test for Export Structures ");
-      item.setIcon("fa fa-file-text-o");
+      item.setIcon("fa fa-camera-retro");
       item.setAjax(true);
       item.setOnclick("structuresAsGridImage()");
       exporters.addElement(item);

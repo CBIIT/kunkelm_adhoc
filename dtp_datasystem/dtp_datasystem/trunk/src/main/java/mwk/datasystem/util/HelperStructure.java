@@ -15,6 +15,8 @@ import org.hibernate.Transaction;
  * @author mwkunkel
  */
 public class HelperStructure {
+    
+    public final static String limitClause = " limit 2000";
 
     public static List<Integer> findNSCsByExactMatch(String smiles) {
 
@@ -27,7 +29,7 @@ public class HelperStructure {
 
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String sqlQuery = "select nsc from rdkit_mol where '" + smiles + "' @= mol";
+            String sqlQuery = "select nsc from rdkit_mol where '" + smiles + "' @= mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);
@@ -57,7 +59,7 @@ public class HelperStructure {
 
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "' <@ mol";
+            String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "' <@ mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);
@@ -77,7 +79,7 @@ public class HelperStructure {
         return nscList;
     }
 
-    public static List<Integer> findNSCsByCtabSubstructure(String substrcutureCtab) {
+    public static List<Integer> findNSCsByCtabSubstructure(String substructureCtab) {
 
         ArrayList<Integer> nscList = new ArrayList<Integer>();
 
@@ -87,13 +89,10 @@ public class HelperStructure {
         try {
 
             session = HibernateUtil.getSessionFactory().openSession();
-
-// select rdk.nsc 
-// from rdkit_mol rdk, rs3_from_plp_frags frags 
-// where frags.nsc = 743380
-// --and mol_from_ctab(frags.ctab) <@ rdk.mol;
             
-            String sqlQuery = "select nsc from rdkit_mol where mol_from_ctab(" + substrcutureCtab + "::cstring) <@ mol";
+            //String sqlQuery = "select nsc from rdkit_mol where mol_from_ctab('" + substructureCtab + "'::cstring) <@ mol " + limitClause;
+            
+            String sqlQuery = "select nsc from rdkit_mol where mol_from_ctab(cast('" + substructureCtab + "' as cstring)) <@ mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);
@@ -112,7 +111,6 @@ public class HelperStructure {
 
         return nscList;
     }
-
     
     public static List<Integer> findNSCsBySmartsSubstructure(String substructureSmiles) {
 
@@ -125,7 +123,7 @@ public class HelperStructure {
 
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String sqlQuery = "select nsc from rdkit_mol  where cast('" + substructureSmiles + "' as qmol) <@ mol";
+            String sqlQuery = "select nsc from rdkit_mol  where cast('" + substructureSmiles + "' as qmol) <@ mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);
@@ -161,7 +159,7 @@ public class HelperStructure {
             Query q = session.createSQLQuery(sqlQuery);
             q.executeUpdate();
 
-            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) # morganbv and fps.id = rdkit_mol.id";
+            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) # morganbv and fps.id = rdkit_mol.id " + limitClause;
 
             q = session.createSQLQuery(sqlQuery);
             List resultList = q.list();
@@ -197,7 +195,7 @@ public class HelperStructure {
             Query q = session.createSQLQuery(sqlQuery);
             q.executeUpdate();
 
-            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) % morganbv and fps.id = rdkit_mol.id";
+            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) % morganbv and fps.id = rdkit_mol.id " + limitClause;
 
             q = session.createSQLQuery(sqlQuery);
             List resultList = q.list();

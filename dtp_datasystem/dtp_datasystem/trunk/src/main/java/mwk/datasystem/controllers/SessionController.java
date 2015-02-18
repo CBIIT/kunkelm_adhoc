@@ -28,9 +28,9 @@ public class SessionController implements Serializable {
 
     @PostConstruct
     public void init() {
-        
+
         System.out.println("In @PostConstruct init() in SessionController");
-        
+
         if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
             this.loggedUser = "PUBLIC";
         } else {
@@ -42,10 +42,17 @@ public class SessionController implements Serializable {
     }
 
     public SessionController() {
-        if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
-            this.loggedUser = "PUBLIC";
-        } else {
-            this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+
+        this.loggedUser = "PUBLIC";
+
+        try {
+            if (FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() == null) {
+                this.loggedUser = "PUBLIC";
+            } else {
+                this.loggedUser = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+            }
+        } catch (Exception e) {
+
         }
     }
 

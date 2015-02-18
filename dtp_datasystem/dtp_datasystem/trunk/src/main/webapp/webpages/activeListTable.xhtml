@@ -179,7 +179,16 @@
                                     url='#{configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
                     </h:graphicImage>
                 </p:dataGrid>
-            </p:column>      
+            </p:column>    
+            
+            <p:column headerText="mtxt">
+                #{listMember.cmpd.cmpdAnnotation.mtxt}
+            </p:column>
+            
+            <p:column headerText="pseudo atoms">
+                #{listMember.cmpd.cmpdAnnotation.pseudoAtoms}
+            </p:column>
+            
 
             <c:set var="cmpd" value="#{listMember.cmpd}" />
 

@@ -13,10 +13,10 @@
             <title>DTP DataSystem Login</title>
         </h:head>
 
-        <h:body>
+        <h:body onload="document.login.j_username.focus()">
 
             <h:form id="login" 
-                    onsubmit="document.getElementById('login').action='j_security_check';" 
+                    onsubmit="document.getElementById('login').action = 'j_security_check';" 
                     prependId="false">
 
                 <p:outputLabel style="font-size: 200%;" value="Please login." />
@@ -30,11 +30,11 @@
                     <br/>                    
                     <p:inputText tabindex="2" type="password" required="true" id="j_password" />                  
                 </p:fieldset>
-                
+
                 <p:spacer height="20" width="100%"/>
 
                 <p:commandButton id="login_button" value="Login" ajax="false"/>
-                
+
             </h:form>
 
         </h:body>

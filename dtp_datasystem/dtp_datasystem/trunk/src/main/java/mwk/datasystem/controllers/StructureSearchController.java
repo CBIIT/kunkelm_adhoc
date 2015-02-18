@@ -5,12 +5,9 @@
  */
 package mwk.datasystem.controllers;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,37 +20,23 @@ import mwk.datasystem.util.HelperStructure;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
-import org.openscience.cdk.layout.StructureDiagramGenerator;
-import org.openscience.cdk.smiles.FixBondOrdersTool;
-import org.openscience.cdk.smiles.SmilesGenerator;
-import org.openscience.cdk.smiles.SmilesParser;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+import newstructureservlet.MoleculeWrangling;
 
 @ManagedBean
 @SessionScoped
 public class StructureSearchController implements Serializable {
 
-  static final long serialVersionUID = -8653468638698142855l;
+    static final long serialVersionUID = -8653468638698142855l;
 
-  // reach-through to sessionController
-  @ManagedProperty(value = "#{sessionController}")
-  private SessionController sessionController;
+    // reach-through to sessionController
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
 
-  public void setSessionController(SessionController sessionController) {
-    this.sessionController = sessionController;
-  }
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
-   // reach-through to listManagerController
+    // reach-through to listManagerController
     @ManagedProperty(value = "#{listManagerController}")
     private ListManagerController listManagerController;
 
@@ -61,350 +44,276 @@ public class StructureSearchController implements Serializable {
         this.listManagerController = listManagerController;
     }
 
+    private String nscForLoad;
+    private String ctabForLoad;
+    private String smilesForLoad;
 
-  private String nscForLoad;
-  private String smilesForLoad;
-  private String ctabForLoad;
+    private String ctabFromEditor;
+    private String smilesFromCtabFromEditor;
 
-  private String smilesFromEditor;
-  private String ctabFromEditor;
+    private String listName;
 
-  private String listName;
+    private CmpdListVO listToSearch;
 
-  private CmpdListVO listToSearch;
-
-  public String performExactMatchSearch() {
-    
-    List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(this.smilesFromEditor);
-
-    List<CmpdVO> structureSearchResults = HelperCmpd.getCmpdsByNsc(nscIntList, this.sessionController.getLoggedUser());
-
-    List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
-
-    for (CmpdVO cVO : structureSearchResults) {
-      CmpdListMemberVO clmVO = new CmpdListMemberVO();
-      clmVO.setCmpd(cVO);
-      clmList.add(clmVO);
+    public StructureSearchController() {
     }
 
-    CmpdListVO clVO = new CmpdListVO();
+    public String performExactMatchSearch() {
 
-    clVO.setListName("Exact Match Search Results");
-    clVO.setListOwner(this.sessionController.getLoggedUser());
+        List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(smilesFromCtabFromEditor);
 
-    clVO.setCmpdListMembers(clmList);
+        List<CmpdVO> structureSearchResults = HelperCmpd.getCmpdsByNsc(nscIntList, sessionController.getLoggedUser());
 
-    listManagerController.getListManagerBean().tempList = clVO;
+        List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
 
-    return null;
-
-  }
-
-  public String performSubstructureSearchCtab() {
-
-    System.out.println("Now in performSubstructureSearchCtab()");
-
-    this.smilesFromEditor = smilesFromCtab(this.ctabFromEditor);
-
-        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromEditor);
-
-    System.out.println("Size of nscIntList: " + nscIntList.size());
-
-    Date now = new Date();
-
-    if (this.listName == null || this.listName.length() == 0) {
-      this.listName = "structureSearchResults " + now.toString();
-    }
-    
-    Long cmpdListId = HelperCmpd.createCmpdListByNscs(this.listName, nscIntList, this.smilesFromEditor, this.sessionController.getLoggedUser());
-
-    // have to fetch the list so that the compound details will be populated
-    
-    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
-
-    listManagerController.getListManagerBean().availableLists.add(clVO);
-    listManagerController.getListManagerBean().activeList = clVO;
-
-    return "/webpages/activeListTable.xhtml?faces-redirect=true";
-
-  }
-
-  public String performSubstructureSearch() {
-
-    System.out.println("Now in performSubstructureSearch()");
-
-    List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromEditor);
-
-    System.out.println("Size of nscIntList: " + nscIntList.size());
-
-    Date now = new Date();
-
-    if (this.listName == null || this.listName.length() == 0) {
-      this.listName = "structureSearchResults " + now.toString();
-    }
-
-    Long cmpdListId = HelperCmpd.createCmpdListByNscs(this.listName, nscIntList, this.smilesFromEditor, this.sessionController.getLoggedUser());
-
-    // have to fetch the list so that the compound details will be populated
-    // 
-    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
-
-    listManagerController.getListManagerBean().availableLists.add(clVO);
-    listManagerController.getListManagerBean().activeList = clVO;
-
-    return "/webpages/activeListTable.xhtml?faces-redirect=true";
-
-  }
-
-  public String performSmartsSearch() {
-
-    String smartsString = this.smilesFromEditor;
-
-    // double bonds to any bond
-    smartsString = smartsString.replaceAll("=", "~");
-
-    // disguise chlorine as HIDDEN (no "C" or "c"), replace C and c then restore chlorine
-    smartsString = smartsString.replaceAll("Cl", "HIDDEN").replaceAll("C", "[#6]").replaceAll("c", "[#6]").replaceAll("HIDDEN", "Cl");
-
-    // same exercise for nitrogen, oxygen, sulfur, phosphorus, but no need to disguise other elements
-    smartsString = smartsString.replaceAll("N", "[#7]").replaceAll("n", "[#7]");
-    smartsString = smartsString.replaceAll("O", "[#8]").replaceAll("o", "[#8]");
-
-    smartsString = smartsString.replaceAll("P", "[#15]").replaceAll("p", "[#15]");
-    smartsString = smartsString.replaceAll("S", "[#16]").replaceAll("s", "[#16]");
-
-    FacesMessage msg = new FacesMessage(
-            FacesMessage.SEVERITY_INFO,
-            "SMILES string and SMARTS string: ",
-            smilesFromEditor + " " + smartsString);
-
-    FacesContext.getCurrentInstance().addMessage(null, msg);
-
-    System.out.println("smilesString: " + this.smilesFromEditor);
-    System.out.println("smartsString: " + smartsString);
-
-    List<Integer> nscIntList = HelperStructure.findNSCsBySmartsSubstructure(smartsString);
-    
-    List<CmpdVO> cmpds = HelperCmpd.getCmpdsByNsc(nscIntList, this.sessionController.getLoggedUser());
-
-    List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
-
-    for (CmpdVO cVO : cmpds) {
-      CmpdListMemberVO clmVO = new CmpdListMemberVO();
-      clmVO.setCmpd(cVO);
-      clmList.add(clmVO);
-    }
-
-    CmpdListVO clVO = new CmpdListVO();
-
-    clVO.setListName("SMARTS Search Results");
-    clVO.setListOwner(this.sessionController.getLoggedUser());
-
-    clVO.setCmpdListMembers(clmList);
-
-    listManagerController.getListManagerBean().tempList = clVO;
-
-    return null;
-
-  }
-
-  /**
-   *
-   * @param smiles
-   * @return Helper method for loading ctab UNTIL ctabs are stored in cmpd_table
-   */
-  public static String ctabFromSmiles(String smiles) {
-
-    String rtn = "";
-
-    try {
-
-      SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-      // Molecule molecule = (Molecule) sp.parseSmiles(smiles);
-      
-      IAtomContainer molecule = sp.parseSmiles(smiles);
-
-      try {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-        Iterator<IAtom> atoms = molecule.atoms().iterator();
-        while (atoms.hasNext()) {
-          IAtom atom = atoms.next();
-          IAtomType type = matcher.findMatchingAtomType(molecule, atom);
-          AtomTypeManipulator.configure(atom, type);
+        for (CmpdVO cVO : structureSearchResults) {
+            CmpdListMemberVO clmVO = new CmpdListMemberVO();
+            clmVO.setCmpd(cVO);
+            clmList.add(clmVO);
         }
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
-        hAdder.addImplicitHydrogens(molecule);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
 
-      AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CmpdListVO clVO = new CmpdListVO();
 
-      FixBondOrdersTool fbot = new FixBondOrdersTool();
-      molecule = fbot.kekuliseAromaticRings(molecule);
+        clVO.setListName("Exact Match Search Results");
+        clVO.setListOwner(sessionController.getLoggedUser());
 
-      StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-      sdg.setMolecule(molecule);
+        clVO.setCmpdListMembers(clmList);
 
-      try {
-        sdg.generateCoordinates();
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
+        listManagerController.getListManagerBean().tempList = clVO;
 
-      IAtomContainer fixedMol = sdg.getMolecule();
+        return null;
 
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      MDLV2000Writer ctabWriter = new MDLV2000Writer(baos);
-      ctabWriter.write(fixedMol);
-      ctabWriter.close();
-      baos.close();
-
-      rtn = baos.toString();
-
-    } catch (Exception e) {
-      e.printStackTrace();
     }
-    return rtn;
-  }
 
-  private String smilesFromCtab(String ctab) {
+    public String performSubstructureSearchCtab() {
 
-    String rtn = "";
+        System.out.println("Now in performSubstructureSearchCtab()");
 
-    IAtomContainer mol  = new AtomContainer();
+        // aromaticity set to true so that 
+        // SMARTSPattern.match() will work during structure display
+        smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
+               
+        List<Integer> nscIntList = HelperStructure.findNSCsByCtabSubstructure(ctabFromEditor);
 
-    try {
+        System.out.println("Size of nscIntList: " + nscIntList.size());
 
-      MDLV2000Reader mdlReader = new MDLV2000Reader(new ByteArrayInputStream(ctab.getBytes()));
-      mdlReader.read(mol);
+        Date now = new Date();
 
-      // have to fix this up...
-      try {
-        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
-        Iterator<IAtom> atoms = mol.atoms().iterator();
-        while (atoms.hasNext()) {
-          IAtom atom = atoms.next();
-          IAtomType type = matcher.findMatchingAtomType(mol, atom);
-          AtomTypeManipulator.configure(atom, type);
+        if (listName == null || listName.length() == 0) {
+            listName = "structureSearchResults " + now.toString();
         }
-        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(mol.getBuilder());
-        hAdder.addImplicitHydrogens(mol);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
 
-      AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, smilesFromCtabFromEditor, sessionController.getLoggedUser());
 
-      FixBondOrdersTool fbot = new FixBondOrdersTool();
-      mol = fbot.kekuliseAromaticRings(mol);
+        // have to fetch the list so that the compound details will be populated
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
-      StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-      sdg.setMolecule(mol);
+        listManagerController.getListManagerBean().availableLists.add(clVO);
+        listManagerController.getListManagerBean().activeList = clVO;
 
-      try {
-        sdg.generateCoordinates();
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-
-      IAtomContainer fixedMol = sdg.getMolecule();
-
-      SmilesGenerator sg = new SmilesGenerator();
-      sg.setUseAromaticityFlag(true);
-      rtn = sg.createSMILES(mol);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    return rtn;
-
-  }
-
-  public String performLoadEditorByNsc() {
-
-    Integer nscInt = Integer.valueOf(this.nscForLoad);
-
-    CmpdVO cVO = HelperCmpd.getSingleCmpdByNsc(nscInt, this.sessionController.getLoggedUser());
-
-    if (cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi().isEmpty()) {
-      this.smilesForLoad = null;
-      this.ctabForLoad = null;
-    } else {
-
-      String smiles = cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi();
-      this.smilesForLoad = smiles;
-
-      String ctab = cVO.getParentFragment().getCmpdFragmentStructure().getCtab();
-
-      if (ctab != null) {
-        this.ctabForLoad = ctab;
-      } else {
-        this.ctabForLoad = ctabFromSmiles(smiles);
-      }
+        return "/webpages/activeListTable.xhtml?faces-redirect=true";
 
     }
 
-    return null;
-  }
+    public String performSubstructureSearch() {
 
-  // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-  public String getSmilesFromEditor() {
-    return smilesFromEditor;
-  }
+        System.out.println("Now in performSubstructureSearch()");
 
-  public void setSmilesFromEditor(String smilesFromEditor) {
-    this.smilesFromEditor = smilesFromEditor;
-  }
+        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(smilesFromCtabFromEditor);
 
-  public String getCtabFromEditor() {
-    return ctabFromEditor;
-  }
+        System.out.println("Size of nscIntList: " + nscIntList.size());
 
-  public void setCtabFromEditor(String ctabFromEditor) {
-    this.ctabFromEditor = ctabFromEditor;
-  }
+        Date now = new Date();
 
-  public String getListName() {
-    return listName;
-  }
+        if (listName == null || listName.length() == 0) {
+            listName = "structureSearchResults " + now.toString();
+        }
 
-  public void setListName(String listName) {
-    this.listName = listName;
-  }
+        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, smilesFromCtabFromEditor, sessionController.getLoggedUser());
 
-  public String getNscForLoad() {
-    return nscForLoad;
-  }
+        // have to fetch the list so that the compound details will be populated
+        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
-  public void setNscForLoad(String nscForLoad) {
-    this.nscForLoad = nscForLoad;
-  }
+        listManagerController.getListManagerBean().availableLists.add(clVO);
+        listManagerController.getListManagerBean().activeList = clVO;
 
-  public String getCtabForLoad() {
-    return ctabForLoad;
-  }
+        return "/webpages/activeListTable.xhtml?faces-redirect=true";
 
-  public void setCtabForLoad(String ctabForLoad) {
-    this.ctabForLoad = ctabForLoad;
-  }
+    }
 
-  public String getSmilesForLoad() {
-    return smilesForLoad;
-  }
+    public String performSmartsSearch() {
 
-  public void setSmilesForLoad(String smilesForLoad) {
-    this.smilesForLoad = smilesForLoad;
-  }
+        String smartsString = smilesFromCtabFromEditor;
 
-  public CmpdListVO getListToSearch() {
-    return listToSearch;
-  }
+        // double bonds to any bond
+        smartsString = smartsString.replaceAll("=", "~");
 
-  public void setListToSearch(CmpdListVO listToSearch) {
-    this.listToSearch = listToSearch;
-  }
+        // disguise chlorine as HIDDEN (no "C" or "c"), replace C and c then restore chlorine
+        smartsString = smartsString.replaceAll("Cl", "HIDDEN").replaceAll("C", "[#6]").replaceAll("c", "[#6]").replaceAll("HIDDEN", "Cl");
+
+        // same exercise for nitrogen, oxygen, sulfur, phosphorus, but no need to disguise other elements
+        smartsString = smartsString.replaceAll("N", "[#7]").replaceAll("n", "[#7]");
+        smartsString = smartsString.replaceAll("O", "[#8]").replaceAll("o", "[#8]");
+
+        smartsString = smartsString.replaceAll("P", "[#15]").replaceAll("p", "[#15]");
+        smartsString = smartsString.replaceAll("S", "[#16]").replaceAll("s", "[#16]");
+
+        FacesMessage msg = new FacesMessage(
+                FacesMessage.SEVERITY_INFO,
+                "SMILES string and SMARTS string: ",
+                smilesFromCtabFromEditor + " " + smartsString);
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        System.out.println("smilesString: " + smilesFromCtabFromEditor);
+        System.out.println("smartsString: " + smartsString);
+
+        List<Integer> nscIntList = HelperStructure.findNSCsBySmartsSubstructure(smartsString);
+
+        List<CmpdVO> cmpds = HelperCmpd.getCmpdsByNsc(nscIntList, sessionController.getLoggedUser());
+
+        List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
+
+        for (CmpdVO cVO : cmpds) {
+            CmpdListMemberVO clmVO = new CmpdListMemberVO();
+            clmVO.setCmpd(cVO);
+            clmList.add(clmVO);
+        }
+
+        CmpdListVO clVO = new CmpdListVO();
+
+        clVO.setListName("SMARTS Search Results");
+        clVO.setListOwner(sessionController.getLoggedUser());
+
+        clVO.setCmpdListMembers(clmList);
+
+        listManagerController.getListManagerBean().tempList = clVO;
+
+        return null;
+
+    }
+
+    public String performLoadEditorByNsc() {
+
+        System.out.println("In performLoadEditorByNsc in StructureSearchController");
+
+        ctabForLoad = "";
+        smilesForLoad = "";
+
+        // MWK 16Feb2015 calls to local methods which delegate to MolInput
+        Integer nscInt = null;
+
+        try {
+            nscInt = Integer.parseInt(nscForLoad);
+        } catch (NumberFormatException e) {
+        }
+
+        if (nscInt != null) {
+
+            CmpdVO cVO = HelperCmpd.getSingleCmpdByNsc(nscInt, sessionController.getLoggedUser());
+
+            String ctab = null;
+            String smiles = null;
+
+            try {
+                ctab = cVO.getParentFragment().getCmpdFragmentStructure().getCtab();
+            } catch (Exception e) {
+
+            }
+
+            try {
+                smiles = cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi();
+            } catch (Exception e) {
+
+            }
+
+            if (ctab != null) {
+
+                ctabForLoad = ctab;
+
+                if (smiles != null) {
+                    smilesForLoad = smiles;
+                } else {
+                    smilesForLoad = MoleculeWrangling.toSmilesFromCtab(ctabForLoad, true);
+                }
+
+            } else if (smiles != null) {
+
+                smilesForLoad = smiles;
+                ctabForLoad = MoleculeWrangling.toCtabFromSmiles(smiles);
+
+            } else {
+
+                ctabForLoad = "No ctab or smiles for : " + nscForLoad;
+                smilesForLoad = "No ctab or smiles for : " + nscForLoad;
+
+            }
+        } else {
+
+            ctabForLoad = "Not a valid NSC: " + nscForLoad;
+            smilesForLoad = "NOo a valid NSC: " + nscForLoad;
+
+        }
+
+        return null;
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+    public String getNscForLoad() {
+        return nscForLoad;
+    }
+
+    public void setNscForLoad(String nscForLoad) {
+        this.nscForLoad = nscForLoad;
+    }
+
+    public String getSmilesForLoad() {
+        return smilesForLoad;
+    }
+
+    public void setSmilesForLoad(String smilesForLoad) {
+        this.smilesForLoad = smilesForLoad;
+    }
+
+    public String getCtabForLoad() {
+        return ctabForLoad;
+    }
+
+    public void setCtabForLoad(String ctabForLoad) {
+        this.ctabForLoad = ctabForLoad;
+    }
+
+    public String getSmilesFromCtabFromEditor() {
+        return smilesFromCtabFromEditor;
+    }
+
+    public void setSmilesFromCtabFromEditor(String smilesFromCtabFromEditor) {
+        this.smilesFromCtabFromEditor = smilesFromCtabFromEditor;
+    }
+
+    public String getCtabFromEditor() {
+        return ctabFromEditor;
+    }
+
+    public void setCtabFromEditor(String ctabFromEditor) {
+        this.ctabFromEditor = ctabFromEditor;
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+    public CmpdListVO getListToSearch() {
+        return listToSearch;
+    }
+
+    public void setListToSearch(CmpdListVO listToSearch) {
+        this.listToSearch = listToSearch;
+    }
 
     // </editor-fold>  
 }
