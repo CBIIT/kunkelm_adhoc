@@ -9437,6 +9437,8 @@ dtp_datasystem/dtp_datasystem/trunk/lib/cdk-1.5.10-javadoc.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/hist4j-master.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/primefaces-5.1.9-apidocs.zip -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/cdk/1.5.10/cdk-1.5.10.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.1.11-MWK/primefaces-5.1.11-MWK.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.1.9/primefaces-5.1.9.jar -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
@@ -9587,6 +9589,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/uploadList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/welcomePrimefaces.xhtml -text
 dtp_pptp/trunk/CHANGELOG -text
 dtp_pptp/trunk/nb-configuration.xml -text
 dtp_pptp/trunk/pom.xml -text
