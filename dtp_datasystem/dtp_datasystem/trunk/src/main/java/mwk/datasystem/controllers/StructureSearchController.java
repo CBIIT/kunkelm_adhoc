@@ -92,7 +92,7 @@ public class StructureSearchController implements Serializable {
         // aromaticity set to true so that 
         // SMARTSPattern.match() will work during structure display
         smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
-               
+
         List<Integer> nscIntList = HelperStructure.findNSCsByCtabSubstructure(ctabFromEditor);
 
         System.out.println("Size of nscIntList: " + nscIntList.size());
@@ -110,6 +110,8 @@ public class StructureSearchController implements Serializable {
 
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
+
+        sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable.xhtml?faces-redirect=true";
 
@@ -136,6 +138,8 @@ public class StructureSearchController implements Serializable {
 
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
+
+        sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable.xhtml?faces-redirect=true";
 

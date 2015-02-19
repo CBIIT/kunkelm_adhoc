@@ -114,6 +114,8 @@ public class ListContentController implements Serializable {
 
         listManagerController.getListManagerBean().activeList = clVO;
 
+        sessionController.configurationBean.performUpdateColumns();
+        
         return "/webpages/activeListTable?faces-redirect=true";
     }
 
@@ -140,7 +142,9 @@ public class ListContentController implements Serializable {
         // and move to the new list        
         listManagerController.getListManagerBean().availableLists.add(updatedClVO);
         listManagerController.getListManagerBean().activeList = updatedClVO;
-
+        
+sessionController.configurationBean.performUpdateColumns();
+        
         return "/webpages/activeListTable?faces-redirect=true";
 
     }
@@ -153,7 +157,6 @@ public class ListContentController implements Serializable {
 
         listManagerController.getListManagerBean().activeList = clVO;
 
-        // is this really the way to do this?
         listManagerController.performUpdateAvailableLists();
 
         return "/webpages/activeListTable?faces-redirect=true";
@@ -246,6 +249,8 @@ public class ListContentController implements Serializable {
             e.printStackTrace();
         }
 
+        sessionController.configurationBean.performUpdateColumns();
+        
         return "/webpages/activeListTable?faces-redirect=true";
 
     }
@@ -297,6 +302,8 @@ public class ListContentController implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";
 
@@ -383,6 +390,8 @@ public class ListContentController implements Serializable {
 
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
+        
+        sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";
 

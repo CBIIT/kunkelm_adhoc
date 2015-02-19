@@ -81,7 +81,7 @@ public class ConfigurationBean {
     protected List<ColumnModel> biodataColumns;
 
     public ConfigurationBean() {
-        
+
         reset();
 
         showFrags = Boolean.FALSE;
@@ -251,14 +251,13 @@ public class ConfigurationBean {
 
     }
 
-    public String performUpdateColumns() throws Exception {
+    public String performUpdateColumns() {
 
         try {
             createDynamicColumns();
         } catch (Exception e) {
             System.out.println("Exception in performUpdateColumns");
             e.printStackTrace();
-            throw e;
         }
 
         return "/webpages/activeListTable.xhtml?faces-redirect=true";

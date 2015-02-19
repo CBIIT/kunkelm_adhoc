@@ -13,7 +13,7 @@
             <title>DTP DataSystem Login</title>
         </h:head>
 
-        <h:body>
+        <h:body onload="document.login.j_username.focus()">
 
             <h:form id="login" 
                     onsubmit="document.getElementById('login').action='j_security_check';" 

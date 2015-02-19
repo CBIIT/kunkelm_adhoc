@@ -11,8 +11,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -64,6 +62,12 @@ public class ListManagerController implements Serializable {
         return listManagerBean;
     }
 
+    @PostConstruct
+    public void init() {
+        this.listManagerBean = new ListManagerBean();
+        performUpdateAvailableLists();
+    }
+    
     public ListManagerController() {
         this.listManagerBean = new ListManagerBean();
         performUpdateAvailableLists();
@@ -85,6 +89,7 @@ public class ListManagerController implements Serializable {
         handleAnyExport(event, "xml");
     }
 
+    // called from menuBar commands
     private void handleAnyExport(ActionEvent event, String exportType) {
 
         try {
@@ -125,46 +130,6 @@ public class ListManagerController implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    /**
-     * Nubbin while trying to allow checkbox select in dataGrid
-     *
-     * @param o1
-     * @param o2
-     * @return
-     */
-    public int mySelectedSort(Object o1, Object o2) {
-
-        int rtn = 0;
-
-        if (o1 == null) {
-            o1 = Boolean.FALSE;
-        }
-        if (o2 == null) {
-            o2 = Boolean.FALSE;
-        }
-
-        Boolean sel1 = (Boolean) o1;
-        Boolean sel2 = (Boolean) o2;
-
-        if (sel1) {
-            if (sel2) {
-                rtn = 0;
-            } else {
-                rtn = 1;
-            }
-        } else {
-            if (sel2) {
-                rtn = -1;
-            } else {
-                rtn = 0;
-            }
-        }
-
-        //System.out.println("sel1, sel2: " + sel1 + " " + sel2 + " rtn is: " + rtn);
-        return rtn;
 
     }
 
@@ -217,20 +182,8 @@ public class ListManagerController implements Serializable {
 
         try {
 
-            if (sessionController == null) {
-                System.out.println("SessionController is null in performUpdateAvailableLists.");
-                System.out.println("Trying to retrieve SessionController through FacesAccessor");
-                sessionController = (SessionController) FacesAccessor.getManagedBean("sessionController");
-                if (sessionController == null) {
-                    System.out.println("Unable to get SessionController through FacesAccessor");
-                } else {
-                    System.out.println("SessionController found with loggedUser: " + sessionController.getLoggedUser());
-                }
-            }
-
             List<CmpdListVO> justFetchedLists = HelperCmpdList.showAvailableCmpdLists(this.sessionController.getLoggedUser());
 
-            //
             // check for change in size of lists
             // null out the listMembers if there has been a change to force
             // re-load next time it is called
@@ -290,19 +243,8 @@ public class ListManagerController implements Serializable {
         System.out.println("Entering performLoadSelectedList()");
 
         performLoadList(listManagerBean.activeList);
-        
-        // apply any configuration here?
-        
-        ConfigurationBean cb = (ConfigurationBean) FacesAccessor.getManagedBean("configurationBean");
-        if (cb != null){            
-            try {
-                cb.performUpdateColumns();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        } else {
-            System.out.println("Unable to get ConfigurationBean with FacesAccessor in performLoadSelectedList in ListManagerController");
-        }
+
+        sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable.xhtml?faces-redirect=true";
     }
@@ -338,6 +280,8 @@ public class ListManagerController implements Serializable {
         CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
         clVO.setCmpdListMembers(voList.getCmpdListMembers());
 
+        sessionController.configurationBean.performUpdateColumns();
+        
         return "/webpages/activeListTable?faces-redirect=true";
 
     }

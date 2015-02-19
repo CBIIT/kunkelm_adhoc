@@ -103,49 +103,6 @@
                 <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>    
             </f:facet>
 
-            <ui:remove>
-
-                <p:columnGroup type="header">
-                    <p:row>
-                        <p:column rowspan="2" headerText="All" />
-                        <p:column rowspan="2" headerText="Comment" />
-                        <p:column rowspan="2" headerText="Structure" />
-                        <p:column rendered="#{!empty sessionController.configurationBean.selectedCmpdParameters}"
-                                  colspan="#{fn:length(sessionController.configurationBean.selectedCmpdParameters)}" 
-                                  headerText="Cmpd" />
-                        <p:column rendered="#{!empty sessionController.configurationBean.selectedStructureParameters}"
-                                  colspan="#{fn:length(sessionController.configurationBean.selectedStructureParameters)}" 
-                                  headerText="Structure" />
-                        <p:column rendered="#{!empty sessionController.configurationBean.selectedPChemParameters}"
-                                  colspan="#{fn:length(sessionController.configurationBean.selectedPChemParameters)}" 
-                                  headerText="pChem" />
-                        <p:column rendered="#{!empty sessionController.configurationBean.selectedBioDataParameters}"
-                                  colspan="#{fn:length(sessionController.configurationBean.selectedBioDataParameters)}" 
-                                  headerText="BioData" />
-                    </p:row>
-                    <p:row>
-
-                        <ui:repeat value="#{sessionController.configurationBean.selectedCmpdParameters}" var="scp">
-                            <p:column headerText="#{scp}" />
-                        </ui:repeat>
-
-                        <ui:repeat value="#{sessionController.configurationBean.selectedStructureParameters}" var="ssp">
-                            <p:column headerText="#{ssp}" />
-                        </ui:repeat>
-
-                        <ui:repeat value="#{sessionController.configurationBean.selectedPChemParameters}" var="spcp">
-                            <p:column headerText="#{spcp}" />
-                        </ui:repeat>
-
-                        <ui:repeat value="#{sessionController.configurationBean.selectedBioDataParameters}" var="sbdp">
-                            <p:column headerText="#{sbdp}" />
-                        </ui:repeat>
-
-                    </p:row>
-                </p:columnGroup>
-
-            </ui:remove>
-
             <p:column headerText="All"
                       resizable="true" 
                       selectionMode="multiple" 
@@ -180,15 +137,15 @@
                     </h:graphicImage>
                 </p:dataGrid>
             </p:column>    
-            
+
             <p:column headerText="mtxt">
                 #{listMember.cmpd.cmpdAnnotation.mtxt}
             </p:column>
-            
+
             <p:column headerText="pseudo atoms">
                 #{listMember.cmpd.cmpdAnnotation.pseudoAtoms}
             </p:column>
-            
+
 
             <c:set var="cmpd" value="#{listMember.cmpd}" />
 
