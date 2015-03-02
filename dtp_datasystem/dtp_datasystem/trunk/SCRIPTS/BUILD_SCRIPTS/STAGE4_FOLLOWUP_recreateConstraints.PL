@@ -19,8 +19,6 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0});
 
-# TO DROP CONSTRAINTS
-
 my $sql = qq[
 select stmt from create_constraint_statements
 ];

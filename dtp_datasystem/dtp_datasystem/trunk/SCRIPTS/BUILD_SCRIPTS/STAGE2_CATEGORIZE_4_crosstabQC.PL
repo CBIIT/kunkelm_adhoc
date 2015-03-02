@@ -53,7 +53,7 @@ select * from crosstab(
 	'select distinct target from qc order by 1'
 )
 AS ct(
-source varchar(32),
+source varchar,
 ];
 
 # the datatypes for the crosstab fields

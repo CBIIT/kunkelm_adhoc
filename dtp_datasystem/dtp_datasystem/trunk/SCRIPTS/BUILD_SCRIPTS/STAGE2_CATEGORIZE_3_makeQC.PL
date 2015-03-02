@@ -87,59 +87,40 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 ## \___/ \_/ \___|_|  |_|\__,_| .__/ 
 ##                            |_|    
 
-my @outerCategories;
-my @innerCategories;
+## 28Feb2015 reworked to be NOT INSANE!
+## 
 
-foreach my $thisCategory (@allCategories){
-	push (@outerCategories, $thisCategory);
-	push (@innerCategories, $thisCategory);
-}
+my $sql = qq[
+drop table if exists temp
+];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+
+my $sql = qq[
+create table temp as select nsc from qc_with_nsc group by nsc having count(distinct source) > 1
+];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my $sql = qq[
 drop table if exists qc_overlap
 ];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
-$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my $sql = qq[
-create table qc_overlap (source varchar(1024), target varchar(1024), the_count int)
+create table qc_overlap 
+as 
+select t.nsc, qc.source
+from temp t, qc_with_nsc qc
+where t.nsc = qc.nsc
 ];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
-$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-
-foreach my $outerTbl (@outerCategories){
-	
-	foreach my $innerTbl (@innerCategories){
-		
-		print "$outerTbl $innerTbl \n";
-		
-		if ($outerTbl ne $innerTbl){
-			
-			my $sql = qq[
-			insert into qc_overlap
-			select '$outerTbl', '$innerTbl',
-			count(i.*)
-			from (
-			select nsc from $outerTbl
-			intersect
-			select nsc from $innerTbl
-			) as i
-			];
-			
-			print "$sql\n";
-			
-			my $sth = $dbh->prepare($sql);
-			$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-			
-		} else {
-
-      print "Identity comparison.  Overlap not determined.\n";
-
-    }
-	}			
-}
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 # clean up
 $dbh->disconnect();

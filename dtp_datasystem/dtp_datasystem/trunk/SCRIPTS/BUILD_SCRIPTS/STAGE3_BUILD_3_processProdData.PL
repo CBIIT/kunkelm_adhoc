@@ -251,9 +251,9 @@ drop table if exists temp
 push @sqlList, qq[
 create table temp
 as
-select nsc, array_to_string(array_agg(atomarray), ',') as labels
+select nsc, array_to_string(array_agg(labelarray), ',') as labels
 from rs3_from_plp_frags
-where atomarray is not null
+where labelarray is not null
 and nsc in (
 select nsc from nsc_to_load
 )

@@ -40,6 +40,7 @@ my @tablesToNuke = (
 	"cmpd_fragment",                
 	"cmpd_fragment_p_chem",         
 	"cmpd_fragment_structure",
+	"cmpd_fragment_type",
 	"cmpd_list",                    
 	"cmpd_list_member",
 	"cmpd_related",                 
@@ -78,19 +79,33 @@ foreach my $cmpdType(@cmpdTypes){
 }
 
 my $tempSql = qq[
-	drop index if exists nsc_cmpd_type_cmpd_type
+drop index if exists nsc_cmpd_type_cmpd_type
 ];	
-	my $sth = $dbh->prepare($tempSql);
-	print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 
-	my $tempSql = qq[
-	create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
+my $tempSql = qq[
+create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
 ];	
-	my $sth = $dbh->prepare($tempSql);
-	print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+# set up for cmpd_fragment_type;
+
+my $tempSql = qq[insert into cmpd_fragment_type(id, fragment_type, fragment_type_description)
+values (1, 'not yet categorized', 'placeholder, eventually parent, salt, largest, etc.')
+];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+
+
+
+
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
@@ -188,7 +203,8 @@ num_aromaticrings,
 formalcharge,             
 alogp 
 from rs3_from_plp_frags
-where can_smi != '[RH]' 
+-- where can_smi != '[RH]'
+where labelarray is null
 and nsc in (
 select nsc from nsc_to_load
 )];
@@ -227,7 +243,8 @@ can_smi,
 can_taut,
 can_taut_strip_stereo 
 from rs3_from_plp_frags frags, rs3_from_plp_ctab ctab
-where can_smi != '[RH]'
+--where can_smi != '[RH]'
+where labelarray is null
 and frags.nsc in (
 select nsc from nsc_to_load
 )
@@ -253,6 +270,7 @@ my $tempSql = qq[
 insert into cmpd_fragment(
 id,
 stoichiometry,
+cmpd_fragment_type_fk,
 cmpd_fragment_structure_fk,
 cmpd_known_salt_fk,
 cmpd_fragment_p_chem_fk,
@@ -261,12 +279,14 @@ nsc_cmpd_fk
 select
 fragmentindex,
 1.0,
+1, -- hard coded insert of cmpd_fragment_type id = 1
 fragmentindex,
-null, --cmpd_known_salt_fk,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+salt_id,
 fragmentindex,
 nsc
 from rs3_from_plp_frags 
-where can_smi != '[RH]'
+--where can_smi != '[RH]'
+where labelarray is null
 and nsc in (
 select nsc from nsc_to_load
 )];
@@ -308,11 +328,11 @@ select nsc from nsc_to_load
 and (nsc, fragmentindex) in  
 (
 
-select nsc, fragmentindex from no_lbl_one_strc_no_salt
+select nsc, fragmentindex from no_lbl_one_strc_no_rgrp_no_salt
 
 union
 
-select nsc, fragmentindex from no_lbl_two_strc_one_salt where salt_smiles is null
+select nsc, fragmentindex from no_lbl_two_strc_no_rgrp_one_salt where salt_smiles is null
 
 )];
 
@@ -380,7 +400,7 @@ foreach my $categ (@categories){
 	print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-		
+	
 }
 
 my $tempSql = qq[create index tid_nsc on temp_ident_descr(nsc)];
@@ -416,7 +436,8 @@ sum(molecular_weight) as molecular_weight,
 array_to_string(array_agg(molecular_formula), '.') as molecular_formula
 from 
 rs3_from_plp_frags
-where can_smi != '[RH]'
+--where can_smi != '[RH]'
+where labelarray is null
 and nsc in (
 select nsc from nsc_to_load    
 )

@@ -92,7 +92,7 @@ create table rdkit_fail
 as 
 select ct.nsc, ct.can_smi, molecular_formula
 from cmpd_table ct, rdkit_validity v 
-where rs3.nsc = v.nsc
+where ct.nsc = v.nsc
 and v.valid_can_smi = 'f'
 ];
 
@@ -122,9 +122,11 @@ select valid_can_smi, valid_can_taut, valid_can_taut_strip_stereo, valid_ctab, c
 from rdkit_validity 
 group by 1, 2, 3, 4 order by 5 desc
 ];
+
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+
 my $valCanSmi; my $validCanTaut; my $validCanTautStripStereo;
 $sth -> bind_columns(\$valCanSmi, \$validCanTaut, \$validCanTautStripStereo);
 print "valCanSmi validCanTaut validCanTautStripStereo\n";

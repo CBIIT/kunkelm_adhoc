@@ -12,20 +12,14 @@
 -- #    #  #    #              #   #    #  #    #  #          #
 -- #####   #####                #   ####    ####   #          #
 
--- frags are TAB delimited
+\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_400k_frags.csv csv header null as ''
+\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_remainder_frags.csv csv header null as ''
 
-\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_400k_frags.txt csv header delimiter as E'\t' null as ''
-\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_remainder_frags.txt csv header delimiter as E'\t' null as ''
+\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_400k_nsc.csv csv header null as ''
+\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_remainder_nsc.csv csv header null as ''
 
--- nscs are TAB delimited
-
-\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_400k_nsc.txt csv header delimiter as E'\t'
-\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_remainder_nsc.txt csv header delimiter as E'\t'
-
--- ctabs are COMMA delimited
-
-\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_400k_ctab.txt csv header null as ''
-\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_remainder_ctab.txt csv header null as ''
+\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_400k_ctab.csv csv header null as ''
+\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_remainder_ctab.csv csv header null as ''
 
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
@@ -70,6 +64,14 @@ vacuum analyze rs3_from_plp_ctab;
 --  ####   #       #####   #    #     #    ######
 --
 --
+-- ######  #####     ##     ####
+-- #       #    #   #  #   #    #
+-- #####   #    #  #    #  #
+-- #       #####   ######  #  ###
+-- #       #   #   #    #  #    #
+-- #       #    #  #    #   ####
+--
+--
 --  ####     ##    #        #####   ####
 -- #        #  #   #          #    #
 --  ####   #    #  #          #     ####
@@ -85,3 +87,44 @@ update rs3_from_plp_frags
 set salt_smiles = cmpd_known_salt.can_taut_strip_stereo, salt_id = cmpd_known_salt.id
 from cmpd_known_salt
 where rs3_from_plp_frags.can_taut_strip_stereo = cmpd_known_salt.can_taut_strip_stereo;
+
+-- #    #  #####   #####     ##     #####  ######
+-- #    #  #    #  #    #   #  #      #    #
+-- #    #  #    #  #    #  #    #     #    #####
+-- #    #  #####   #    #  ######     #    #
+-- #    #  #       #    #  #    #     #    #
+--  ####   #       #####   #    #     #    ######
+--
+--
+-- #    #  #    #   ####   #    #  #    #
+-- #   #   ##   #  #    #  #    #  ##   #
+-- ####    # #  #  #    #  #    #  # #  #
+-- #  #    #  # #  #    #  # ## #  #  # #
+-- #   #   #   ##  #    #  ##  ##  #   ##
+-- #    #  #    #   ####   #    #  #    #
+--
+--
+--  ####     ##    #        #####   ####
+-- #        #  #   #          #    #
+--  ####   #    #  #          #     ####
+--      #  ######  #          #         #
+-- #    #  #    #  #          #    #    #
+--  ####   #    #  ######     #     ####
+
+drop table if exists salt_with_count;
+
+create table salt_with_count
+as
+select cks.id, count(*) as the_count
+from cmpd_known_salt cks, rs3_from_plp_frags frag
+where cks.id = frag.salt_id
+group by cks.id;
+
+update cmpd_known_salt cks
+set count_occurences = swc.the_count
+from salt_with_count swc
+where cks.id = swc.id;
+
+update cmpd_known_salt
+set count_occurences = 0
+where count_occurences is null;

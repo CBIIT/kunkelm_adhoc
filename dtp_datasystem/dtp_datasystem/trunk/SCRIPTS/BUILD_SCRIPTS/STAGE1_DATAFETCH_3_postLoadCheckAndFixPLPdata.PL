@@ -88,11 +88,6 @@ print "ctabRemain_minFragIdx: $ctabRemain_minFragIdx ctabRemain_maxFragIdx: $cta
 ##where nsc > 400000;
 ##
 
-
-
-
-
-
 # clean up
 $dbh->disconnect();
 

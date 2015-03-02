@@ -42,14 +42,13 @@ array_to_string(array_agg(distinct source), ',') as sources
 from processed_salts
 group by 1, 2, 3, 4, 5 order by 2 desc;
 
-create index unique_salts_can_taut_strip_stereop_stereo on unique_salts(can_taut_strip_stereop_stereo);
+create index unique_salts_can_taut_strip_stereo on unique_salts(can_taut_strip_stereo);
 
 vacuum analyze unique_salts;
 
 drop sequence if exists cmpd_known_salt_seq;
 
 create sequence cmpd_known_salt_seq;
-
 
 delete from cmpd_known_salt;
 
@@ -67,7 +66,6 @@ update cmpd_known_salt set salt_name = fixed;
 update cmpd_known_salt set fixed = btrim(salt_name, ' ');
 update cmpd_known_salt set salt_name = fixed;
 
-
 update cmpd_known_salt set fixed = regexp_replace(salt_comment, 'Schrodinger (\S+)ic salt', 'Schr \1');
 update cmpd_known_salt set salt_comment = fixed;
 update cmpd_known_salt set fixed = regexp_replace(salt_comment, 'Schrodinger solvent', 'Schr solv');
@@ -77,20 +75,3 @@ update cmpd_known_salt set fixed = replace(salt_comment, 'from NCGCCanonicalForm
 
 update cmpd_known_salt set salt_comment = fixed;
 
-drop table if exists salt_with_count;
-
-create table salt_with_count
-as
-select salt_id, count(*) as the_count
-from cmpd_known_salt cks, rs3_from_plp_frags frag
-where cks.id = frag.salt_id
-group by salt_id;
-
-update cmpd_known_salt cks
-set count_occurences = swc.the_count
-from salt_with_count swc
-where cks.id = swc.salt_id;
-
-update cmpd_known_salt
-set count_occurences = 0
-where count_occurences is null;

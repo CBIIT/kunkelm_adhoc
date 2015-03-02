@@ -16,8 +16,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.util.HelperCmpdKnownSalt;
+import mwk.datasystem.vo.CmpdFragmentVO;
 import mwk.datasystem.vo.CmpdKnownSaltVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdVO;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -27,14 +29,14 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @SessionScoped
-public class SaltController implements Serializable {
+public class FragmentsWorkbenchController implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
-
-  private List<CmpdKnownSaltVO> salts;
-  private List<CmpdKnownSaltVO> filteredSalts;
-  private CmpdKnownSaltVO selectedSalt;
-
+  
+  private CmpdVO cmpd;
+  private List<CmpdFragmentVO> fragments;
+  private CmpdFragmentVO selectedFragment;
+  
   public void handleListAllSalts() {
 
     String rtn = performListAllSalts();
@@ -55,10 +57,9 @@ public class SaltController implements Serializable {
 
   public String performListAllSalts() {
 
-    this.salts = new ArrayList<CmpdKnownSaltVO>();
-    this.salts = HelperCmpdKnownSalt.loadAllSalts();
-
-    return "/webpages/saltWorkbench?faces-redirect=true";
+    this.fragments = new ArrayList<CmpdFragmentVO>();
+    
+    return "/webpages/fragmentsWorkbench?faces-redirect=true";
 
   }
 
@@ -90,28 +91,5 @@ public class SaltController implements Serializable {
 
   }
 
-  public List<CmpdKnownSaltVO> getSalts() {
-    return salts;
-  }
-
-  public void setSalts(List<CmpdKnownSaltVO> salts) {
-    this.salts = salts;
-  }
-
-  public List<CmpdKnownSaltVO> getFilteredSalts() {
-    return filteredSalts;
-  }
-
-  public void setFilteredSalts(List<CmpdKnownSaltVO> filteredSalts) {
-    this.filteredSalts = filteredSalts;
-  }
-
-  public CmpdKnownSaltVO getSelectedSalt() {
-    return selectedSalt;
-  }
-
-  public void setSelectedSalt(CmpdKnownSaltVO selectedSalt) {
-    this.selectedSalt = selectedSalt;
-  }
-
+  
 }

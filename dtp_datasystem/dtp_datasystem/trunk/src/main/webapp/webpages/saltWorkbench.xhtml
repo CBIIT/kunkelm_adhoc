@@ -15,20 +15,20 @@
                      resizableColumns="true"
                      editable="true"                      
                      var="salt"
-                     value="#{saltController.salts}"
-                     filteredValue="#{saltController.filteredSalts}"
+                     value="#{saltsWorkbenchController.salts}"
+                     filteredValue="#{saltsWorkbenchController.filteredSalts}"
                      paginator="true" 
                      rows="10" 
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                      rowsPerPageTemplate="10,25,50">
 
             <f:facet name="header">  
-                #{fn:length(saltController.salts)} Known Salts
+                #{fn:length(saltsWorkbenchController.salts)} Known Salts
             </f:facet>
 
-            <p:ajax event="rowEdit" listener="#{saltController.onRowEdit}" update=":datasystemForm:msgs" />
-            <p:ajax event="rowEditCancel" listener="#{saltController.onRowCancel}" update=":datasystemForm:msgs" />
-            <p:ajax event="cellEdit" listener="#{saltController.onCellEdit}" update=":datasystemForm:msgs" />
+            <p:ajax event="rowEdit" listener="#{saltsWorkbenchController.onRowEdit}" update=":datasystemForm:msgs" />
+            <p:ajax event="rowEditCancel" listener="#{saltsWorkbenchController.onRowCancel}" update=":datasystemForm:msgs" />
+            <p:ajax event="cellEdit" listener="#{saltsWorkbenchController.onCellEdit}" update=":datasystemForm:msgs" />
 
             <p:column style="width:32px">
                 <p:rowEditor />
@@ -40,10 +40,10 @@
 
             <p:column headerText="CanSmi Structure">
                 <h:graphicImage alt="Chemical Structure of List Anchor"
-                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                            styleClass="anchorStructure"
-                            url='#{sessionController.configurationBean.getSmilesStrcUrl(salt.canSmi, null, null)}'>              
-            </h:graphicImage>
+                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                                styleClass="anchorStructure"
+                                url='#{sessionController.configurationBean.getSmilesStrcUrl(salt.canSmi, null, null)}'>              
+                </h:graphicImage>
             </p:column>
 
             <p:column headerText="saltName">              

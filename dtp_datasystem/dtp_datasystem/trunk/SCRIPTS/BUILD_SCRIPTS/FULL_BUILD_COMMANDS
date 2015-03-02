@@ -1,0 +1,25 @@
+pre-build, schema-create.sql from the datasystemuml project
+
+perl STAGE0_SETUP_1_constraintsManagement.PL
+perl STAGE0_SETUP_2_dropConstraints.PL
+
+psql -a -d datasystemdb < STAGE1_DATAFETCH_0_processSaltDefinitions.sql
+perl STAGE1_DATAFETCH_1_checkPLPfiles.PL
+psql -a -d datasystemdb < STAGE1_DATAFETCH_2_loadPLPfiles.sql
+perl STAGE1_DATAFETCH_3_postLoadCheckAndFixPLPdata.PL
+psql -a -d datasystemdb < STAGE1_DATAFETCH_4_ALTERNATE_FetchFromProdFromFiles.sql
+# STAGE1_DATAFETCH_4_FetchFromProd
+
+perl STAGE2_CATEGORIZE_1_doLblStrcFrags.PL
+perl STAGE2_CATEGORIZE_2_makeQCwithNSC.PL
+perl STAGE2_CATEGORIZE_3_makeQC.PL
+perl STAGE2_CATEGORIZE_4_crosstabQC.PL
+perl STAGE2_CATEGORIZE_5_nscToLoad.PL
+
+perl STAGE3_BUILD_1_buildCmpdModel.PL
+perl STAGE3_BUILD_2_buildCmpdTableFromCmpdModel.PL
+perl STAGE3_BUILD_3_processProdData.PL
+perl STAGE3_BUILD_4_loadRDkit.PL
+
+perl STAGE4_FOLLOWUP_recreateConstraints.PL
+# STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL

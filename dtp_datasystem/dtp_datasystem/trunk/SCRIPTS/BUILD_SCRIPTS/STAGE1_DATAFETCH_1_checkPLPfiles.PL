@@ -65,20 +65,20 @@ my $dropFragTableSql = "drop table if exists rs3_from_plp_frags";
 my $createFragTableSql = qq[
 create table rs3_from_plp_frags(
 NSC int,
-MF varchar(4096),
+MF varchar,
 MW double precision,
-CAS varchar(4096),
-Name varchar(4096),
-Comment varchar(4096),
+CAS varchar,
+Name varchar,
+Comment varchar,
 fragmentIndex int,
-atomArray varchar(4096),
-smiles varchar(4096),
-can_smi varchar(4096),
-can_taut varchar(4096),
-can_taut_strip_stereo varchar(4096),
-InChI varchar(4096),
+labelArray varchar,
+smiles varchar,
+can_smi varchar,
+can_taut varchar,
+can_taut_strip_stereo varchar,
+InChI varchar,
 InChI_AuxInfo text,
-Molecular_Formula varchar(4096),
+Molecular_Formula varchar,
 Molecular_Weight double precision,
 Num_Atoms int,
 Num_Bonds int,
@@ -106,9 +106,9 @@ Molecular_Solubility double precision,
 Molecular_SurfaceArea double precision,
 Num_H_Acceptors int,
 Num_H_Donors int,
-CanonicalTautomer varchar(4096),
+CanonicalTautomer varchar,
 NumberOfTautomers int,
-BadValenceAtoms varchar(4096)
+InChI_Message varchar
 )
 ];
 
@@ -122,7 +122,7 @@ my @fragColumnNames = (
 	"Name",
 	"Comment",
 	"fragmentIndex",
-	"atomArray",
+	"labelArray",
 	"smiles",
 	"can_smi",
 	"can_taut",
@@ -159,14 +159,14 @@ my @fragColumnNames = (
 	"Num_H_Donors",
 	"CanonicalTautomer",
 	"NumberOfTautomers",
-	"BadValenceAtoms"
+	"InChI_Message"
 	);
 
 my $overallFragOK = 0;
 
 foreach my $fragFileBase(@fragFileList){
 	
-	my $fragFileName = "/home/mwkunkel/$fragFileBase.txt";
+	my $fragFileName = "/home/mwkunkel/$fragFileBase.csv";
 	
 	# open the frag input file and make sure that the first line matches the expected fragFileHeaders
 	
@@ -177,7 +177,7 @@ foreach my $fragFileBase(@fragFileList){
 	$firstLine =~ s/[\r\n]//g;
 	
 	# print "firstLine: $firstLine\n";
-	my @fragFileHeaders = split(/\t/, $firstLine);
+	my @fragFileHeaders = split(/,/, $firstLine);
 	
 	# print join(",", @fragColumnNames);
 	# print "\n";
@@ -254,12 +254,12 @@ my $dropNscTableSql = "drop table if exists rs3_from_plp_nsc";
 my $createNscTableSql = qq[
 create table rs3_from_plp_nsc(
 NSC int,
-MF varchar(4096),
+MF varchar,
 MW double precision,
-CAS varchar(4096),
-Name varchar(4096),
-Comment varchar(4096),
-Molecular_Formula varchar(4096),
+CAS varchar,
+Name varchar,
+Comment varchar,
+Molecular_Formula varchar,
 Molecular_Weight double precision,
 Num_Atoms int,
 Num_Bonds int,
@@ -268,7 +268,9 @@ Num_PositiveAtoms int,
 Num_NegativeAtoms int,
 Num_Fragments int,
 Num_MetalAtoms int,
-FormalCharge int
+FormalCharge int,
+smiles varchar,
+can_smi varchar
 )
 ];
 
@@ -288,14 +290,16 @@ my @nscColumnNames = (
 	"Num_NegativeAtoms",
 	"Num_Fragments",
 	"Num_MetalAtoms",
-	"FormalCharge"
+	"FormalCharge",
+	"Smiles",
+	"Canonical_Smiles"
 	);
 
 my $overallNscOK = 0;
 
 foreach my $nscFileBase(@nscFileList){
 	
-	my $nscFileName = "/home/mwkunkel/$nscFileBase.txt";
+	my $nscFileName = "/home/mwkunkel/$nscFileBase.csv";
 	
 	# open the nsc input file and make sure that the first line matches the expected nscFileHeaders
 	
@@ -306,12 +310,12 @@ foreach my $nscFileBase(@nscFileList){
 	$firstLine =~ s/[\r\n]//g;
 	
 	# print "firstLine: $firstLine\n";
-	my @nscFileHeaders = split(/\t/, $firstLine);
+	my @nscFileHeaders = split(/,/, $firstLine);
 	
-	# print join(",", @nscColumnNames);
-	# print "\n";
-	# print join(",", @nscFileHeaders);
-	# print "\n";
+	print join(",", @nscColumnNames);
+	print "\n";
+	print join(",", @nscFileHeaders);
+	print "\n";
 	
 	my $equals = 0;
 	
@@ -398,7 +402,7 @@ my $overallCtabOK = 0;
 
 foreach my $ctabFileBase (@ctabFileList){
 	
-	my $ctabFileName = "/home/mwkunkel/$ctabFileBase.txt";
+	my $ctabFileName = "/home/mwkunkel/$ctabFileBase.csv";
 	my $ctabTableName = "$ctabFileBase";
 	
 	# open the ctab input file and make sure that the first line matches the expected ctabFileHeaders
