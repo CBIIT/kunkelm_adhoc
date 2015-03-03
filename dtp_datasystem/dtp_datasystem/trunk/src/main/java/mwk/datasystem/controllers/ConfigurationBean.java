@@ -285,17 +285,17 @@ public class ConfigurationBean {
     }
 
     public void handleStrcOptions() {
-        for (String s : selectedStrcOptions) {
-            System.out.println("selectedStrcOptions includes: " + s);
-        }
-        System.out.println("selectedStrcSize is: " + selectedStrcSize);
-        System.out.println("showFrags is: " + showFrags);
-        System.out.println("showAnchor is: " + showAnchor);
+//        for (String s : selectedStrcOptions) {
+//            System.out.println("selectedStrcOptions includes: " + s);
+//        }
+//        System.out.println("selectedStrcSize is: " + selectedStrcSize);
+//        System.out.println("showFrags is: " + showFrags);
+//        System.out.println("showAnchor is: " + showAnchor);
     }
 
     public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
-        System.out.println("In getSmilesStrcUrl(smiles, querySmiles, title)");
-        System.out.println("smiles is: " + smiles);
+        // System.out.println("In getSmilesStrcUrl(smiles, querySmiles, title)");
+        // System.out.println("smiles is: " + smiles);
         String rtn = "";
         StringBuilder sb = new StringBuilder();
         strcDim = Integer.valueOf(200);
@@ -334,14 +334,14 @@ public class ConfigurationBean {
             sb.append("&kekule=true");
         }
         rtn = sb.toString();
-        System.out.println("getSmilesStrcUrl() in SessionController: ");
-        System.out.println("rtn from getSmilesStrcUrl is: " + rtn);
+        // System.out.println("getSmilesStrcUrl() in SessionController: ");
+        // System.out.println("rtn from getSmilesStrcUrl is: " + rtn);
         return rtn;
     }
 
     public String getSmilesStrcUrl(String smiles) {
-        System.out.println("In getSmilesStrcUrl(smiles)");
-        System.out.println("smiles is: " + smiles);
+        // System.out.println("In getSmilesStrcUrl(smiles)");
+        // System.out.println("smiles is: " + smiles);
         return getSmilesStrcUrl(smiles, null, null);
     }
 

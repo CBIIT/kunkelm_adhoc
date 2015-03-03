@@ -2,8 +2,14 @@ grant select, insert, update, delete on ad_hoc_cmpd to datasystem_user;
 grant select, insert, update, delete on ad_hoc_cmpd_fragment to datasystem_user;           
 grant select, insert, update, delete on ad_hoc_cmpd_fragment_p_chem to datasystem_user;    
 grant select, insert, update, delete on ad_hoc_cmpd_fragment_structure to datasystem_user; 
+-- These SHOULD only set to allow modifications while doing quality control
 grant select, insert, update, delete on cmpd to datasystem_user; 
+grant select, insert, update, delete on cmpd_fragment to datasystem_user;                  
 grant select, insert, update, delete on cmpd_known_salt to datasystem_user; 
+
+grant select, insert, update, delete on cmpd_list to datasystem_user;                      
+grant select, insert, update, delete on cmpd_list_member to datasystem_user;               
+
 grant select, insert, update, delete on cmpd_table to datasystem_user; 
 
 grant select on cmpd_alias to datasystem_user;                     
@@ -11,14 +17,12 @@ grant select on cmpd_alias_type to datasystem_user;
 grant select on cmpd_aliases2nsc_cmpds to datasystem_user;         
 grant select on cmpd_annotation to datasystem_user;                
 grant select on cmpd_bio_assay to datasystem_user;                 
-grant select on cmpd_fragment to datasystem_user;                  
 grant select on cmpd_fragment_p_chem to datasystem_user;           
 grant select on cmpd_fragment_structure to datasystem_user;        
+grant select on cmpd_fragment_type to datasystem_user;  
 grant select on cmpd_inventory to datasystem_user;                 
 grant select on cmpd_known_salt to datasystem_user;                
 grant select on cmpd_legacy_cmpd to datasystem_user;               
-grant select, insert, update, delete on cmpd_list to datasystem_user;                      
-grant select, insert, update, delete on cmpd_list_member to datasystem_user;               
 grant select on cmpd_named_set to datasystem_user;                 
 grant select on cmpd_named_sets2nsc_cmpds to datasystem_user;      
 grant select on cmpd_plate to datasystem_user;                     
@@ -28,8 +32,7 @@ grant select on cmpd_projects2nsc_cmpds to datasystem_user;
 grant select on cmpd_pub_chem_sid to datasystem_user;              
 grant select on cmpd_pub_chem_sids2nsc_cmpds to datasystem_user;   
 grant select on cmpd_related to datasystem_user;                   
-grant select on cmpd_relation_type to datasystem_user;             
-                   
+grant select on cmpd_relation_type to datasystem_user;    
 grant select on cmpd_target to datasystem_user;                    
 grant select on cmpd_targets2nsc_cmpds to datasystem_user;         
 grant select on create_constraint_statements to datasystem_user;   

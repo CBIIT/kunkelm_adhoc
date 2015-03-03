@@ -43,7 +43,7 @@ public class SaltsWorkbenchController implements Serializable {
 
     ExternalContext extCtx = ctx.getExternalContext();
     
-    String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/saltWorkbench.xhtml"));
+    String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/saltsWorkbench.xhtml"));
     
     try {
       extCtx.redirect(url);
@@ -58,7 +58,7 @@ public class SaltsWorkbenchController implements Serializable {
     this.salts = new ArrayList<CmpdKnownSaltVO>();
     this.salts = HelperCmpdKnownSalt.loadAllSalts();
 
-    return "/webpages/saltWorkbench?faces-redirect=true";
+    return "/webpages/saltsWorkbench?faces-redirect=true";
 
   }
 

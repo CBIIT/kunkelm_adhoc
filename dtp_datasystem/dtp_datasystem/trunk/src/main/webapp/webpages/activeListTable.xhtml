@@ -11,6 +11,9 @@
 
     <ui:define name="content">
 
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+
         <p:panel header="List Anchor Structure"
                  rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
@@ -129,7 +132,7 @@
             </p:column>
 
             <p:column headerText="Fragments" rendered="#{sessionController.configurationBean.showFrags}">
-                <p:dataGrid columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
+                <p:dataGrid columns="1" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
                     <h:graphicImage alt="Chemical Structure of Compound Fragment"
                                     width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                     styleClass="fragmentStructure"

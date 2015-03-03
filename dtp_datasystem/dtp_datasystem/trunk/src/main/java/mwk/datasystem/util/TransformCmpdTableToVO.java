@@ -71,7 +71,7 @@ public class TransformCmpdTableToVO {
 
     try {
       for (CmpdList nl : entityListIn) {
-        returnList.add(toCmpdListVO(nl, includeListMembers));
+        returnList.add(translateCmpdList(nl, includeListMembers));
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -80,14 +80,16 @@ public class TransformCmpdTableToVO {
 
   }
 
-  private static CmpdFragmentVO toCmpdFragmentVO(CmpdTable entityIn) {
+  private static CmpdFragmentVO translateCmpdFragment(CmpdTable entityIn) {
 
     CmpdFragmentVO rtn = new CmpdFragmentVO();
+    
+    // Does NOT propagate to CmpdTable rtn.setComment(entityIn.getComment());
 
     try {
       rtn.setId(entityIn.getId());
-      rtn.setCmpdFragmentStructure(toCmpdFragmentStructureVO(entityIn));
-      rtn.setCmpdFragmentPChem(toCmpdFragmentPChemVO(entityIn));
+      rtn.setCmpdFragmentStructure(translateCmpdFragmentStructure(entityIn));
+      rtn.setCmpdFragmentPChem(translateCmpdFragmentPChem(entityIn));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -96,7 +98,7 @@ public class TransformCmpdTableToVO {
 
   }
 
-  private static CmpdFragmentPChemVO toCmpdFragmentPChemVO(CmpdTable entityIn) {
+  private static CmpdFragmentPChemVO translateCmpdFragmentPChem(CmpdTable entityIn) {
 
     CmpdFragmentPChemVO rtn = new CmpdFragmentPChemVO();
 
@@ -140,7 +142,7 @@ public class TransformCmpdTableToVO {
 
   }
 
-  private static CmpdFragmentStructureVO toCmpdFragmentStructureVO(CmpdTable entityIn) {
+  private static CmpdFragmentStructureVO translateCmpdFragmentStructure(CmpdTable entityIn) {
 
     CmpdFragmentStructureVO rtn = new CmpdFragmentStructureVO();
 
@@ -164,7 +166,7 @@ public class TransformCmpdTableToVO {
 
   }
 
-  public static CmpdAnnotationVO toCmpdAnnotationVO(CmpdTable entityIn) {
+  public static CmpdAnnotationVO translateCmpdAnnotation(CmpdTable entityIn) {
 
     CmpdAnnotationVO rtn = new CmpdAnnotationVO();
 
@@ -178,7 +180,7 @@ public class TransformCmpdTableToVO {
 
   }
 
-  private static CmpdBioAssayVO toCmpdBioAssayVO(CmpdTable entityIn) {
+  private static CmpdBioAssayVO translateCmpdBioAssay(CmpdTable entityIn) {
 
     CmpdBioAssayVO rtn = new CmpdBioAssayVO();
 
@@ -193,9 +195,11 @@ public class TransformCmpdTableToVO {
     return rtn;
   }
 
-  public static CmpdVO toCmpdVO(CmpdTable entityIn) {
+  public static CmpdVO translateCmpd(CmpdTable entityIn) {
 
     CmpdVO cmpdVO = new CmpdVO();
+    
+    // Does NOT propagate to CmpdTable cmpdVO.setComment(entityIn.getComment());
 
     try {
 
@@ -224,9 +228,9 @@ public class TransformCmpdTableToVO {
       cmpdVO.setConf(entityIn.getConf());
       cmpdVO.setCas(entityIn.getCas());
 
-      cmpdVO.setCmpdBioAssay(toCmpdBioAssayVO(entityIn));
+      cmpdVO.setCmpdBioAssay(translateCmpdBioAssay(entityIn));
 
-      cmpdVO.setParentFragment(toCmpdFragmentVO(entityIn));
+      cmpdVO.setParentFragment(translateCmpdFragment(entityIn));
 
       cmpdVO.setInventory(entityIn.getInventory());
 
@@ -246,7 +250,7 @@ public class TransformCmpdTableToVO {
       
       cmpdVO.setCountCmpdFragments(cmpdVO.getCmpdFragmentSmilesStrings().size());
 
-      cmpdVO.setCmpdAnnotation(toCmpdAnnotationVO(entityIn));
+      cmpdVO.setCmpdAnnotation(translateCmpdAnnotation(entityIn));
 
       cmpdVO.setSaltMf(entityIn.getSaltMf());
       cmpdVO.setSaltMw(entityIn.getSaltMw());
@@ -266,12 +270,12 @@ public class TransformCmpdTableToVO {
   public static List<CmpdVO> translateListOfCmpdTables(List<CmpdTable> entityListIn) {
     List<CmpdVO> returnList = new ArrayList<CmpdVO>();
     for (CmpdTable cv : entityListIn) {
-      returnList.add(toCmpdVO(cv));
+      returnList.add(translateCmpd(cv));
     }
     return returnList;
   }
 
-  public static CmpdListVO toCmpdListVO(CmpdList entityList, Boolean includeListMembers) {
+  public static CmpdListVO translateCmpdList(CmpdList entityList, Boolean includeListMembers) {
 
     CmpdListVO rtn = new CmpdListVO();
 
@@ -299,7 +303,7 @@ public class TransformCmpdTableToVO {
         Collection<CmpdListMember> entityColl = entityList.getCmpdListMembers();
 
         for (CmpdListMember lm : entityColl) {
-          voList.add(toCmpdListMemberVO(lm));
+          voList.add(translateCmpdListMember(lm));
         }
 
         rtn.setCmpdListMembers(voList);
@@ -313,7 +317,7 @@ public class TransformCmpdTableToVO {
 
   }
 
-  public static CmpdListMemberVO toCmpdListMemberVO(CmpdListMember entityIn) {
+  public static CmpdListMemberVO translateCmpdListMember(CmpdListMember entityIn) {
 
     CmpdListMemberVO rtn = new CmpdListMemberVO();
 

@@ -247,7 +247,7 @@ public class HelperCmpdList {
       entityCL = (CmpdList) clCrit.uniqueResult();
 
       // just populate the top-level stuff
-      rtnVO = TransformCmpdTableToVO.toCmpdListVO(entityCL, includeListMembers);
+      rtnVO = TransformCmpdTableToVO.translateCmpdList(entityCL, includeListMembers);
 
       // HashMap for holding cmpdId numbers and their respective CmpdListMemberVO
       // for resolution AFTER fetching CmpdTable by cmpdIdList
@@ -259,7 +259,7 @@ public class HelperCmpdList {
       for (CmpdListMember clm : entityCL.getCmpdListMembers()) {
         cmpdId = (Long) session.getIdentifier(clm.getCmpd());
         cmpdIdList.add(cmpdId);
-        map.put(cmpdId, TransformCmpdTableToVO.toCmpdListMemberVO(clm));
+        map.put(cmpdId, TransformCmpdTableToVO.translateCmpdListMember(clm));
       }
 
       // fetch a list of cmpdTable
@@ -271,7 +271,7 @@ public class HelperCmpdList {
 
         for (CmpdTable cv : entityCVlist) {
           // translate to VO
-          CmpdVO cVO = TransformCmpdTableToVO.toCmpdVO(cv);
+          CmpdVO cVO = TransformCmpdTableToVO.translateCmpd(cv);
           // add the VO to appropriate HashMap (CellLineMemberVO)        
           map.get(cVO.getId()).setCmpd(cVO);
         }

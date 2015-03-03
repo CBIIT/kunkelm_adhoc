@@ -11,6 +11,9 @@
 
     <ui:define name="content">
 
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+
         <p:panel header="List Anchor Structure"
                  rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
@@ -38,63 +41,68 @@
                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                     rowsPerPageTemplate="80,160,240,320">  
 
-                <f:facet name="header">                
-                    <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>    
-                </f:facet>
+            <f:facet name="header">                
+                <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>    
+            </f:facet>
 
-                <p:panel>
+            <p:panel>
 
-                    <p:panelGrid columns="1" style="width: 25%;">
+                <p:panelGrid columns="1" style="width: 25%;">
 
-                        <f:facet name="header"> 
-                            <h:outputText value="#{listMember.cmpd.name}"/>
-                        </f:facet> 
+                    <f:facet name="header"> 
+                        <h:outputText value="#{listMember.cmpd.name}"/>
+                    </f:facet> 
 
-                        <p:selectBooleanCheckbox value="#{listMember.isSelected}" />
+                    <p:selectBooleanCheckbox value="#{listMember.isSelected}" />
 
-                        <h:graphicImage alt="Chemical Structure of Parent Fragment"
-                                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                                        styleClass="parentStructure"
-                                        url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                    <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                                    styleClass="parentStructure"
+                                    url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                    </h:graphicImage>
+
+
+                    <p:dataGrid rendered="#{sessionController.configurationBean.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
+                        <h:graphicImage alt="Chemical Structure of Compound Fragment"
+                                        styleClass="fragmentStructure"
+                                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
+                                        url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
                         </h:graphicImage>
+                    </p:dataGrid>
 
+                    <p:row>
+                        <h:outputText value="NSC CmpdType: " />
+                        <h:outputText value="#{listMember.cmpd.nscCmpdType}" style="font-weight: bold;"/>                    
+                    </p:row>
+                    <p:row>
+                        <h:outputText value="Count Fragments: "/>                      
+                        <h:outputText value="#{listMember.cmpd.countCmpdFragments}0" style="font-weight: bold;"/>
+                    </p:row>
+                    <p:row>
+                        <h:outputText value="PSEUDO ATOMS: " />
+                        <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}" style="font-weight: bold;"/>
+                    </p:row>
+                    <p:row>
+                        <h:outputText value="MTXT: " />
+                        <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}" style="font-weight: bold;"/>
+                    </p:row>
 
-                        <p:dataGrid rendered="#{sessionController.configurationBean.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-                            <h:graphicImage alt="Chemical Structure of Compound Fragment"
-                                            styleClass="fragmentStructure"
-                                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
-                                            url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
-                            </h:graphicImage>
-                        </p:dataGrid>
+                    <f:facet name="footer">
+                        <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">  
+                            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                            <f:setPropertyActionListener value="#{listMember}"   
+                                                         target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                        </p:commandLink>
 
-                        <p:row>
-                            <h:outputText value="NSC CmpdType: " />
-                            <h:outputText value="#{listMember.cmpd.nscCmpdType}" style="font-weight: bold;"/>                    
-                        </p:row>
-                        <p:row>
-                            <h:outputText value="Count Fragments: "/>                      
-                            <h:outputText value="#{listMember.cmpd.countCmpdFragments}0" style="font-weight: bold;"/>
-                        </p:row>
-                        <p:row>
-                            <h:outputText value="PSEUDO ATOMS: " />
-                            <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}" style="font-weight: bold;"/>
-                        </p:row>
-                        <p:row>
-                            <h:outputText value="MTXT: " />
-                            <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}" style="font-weight: bold;"/>
-                        </p:row>
+                        <p:commandButton ajax="false" 
+                                         value="Fragments Workbench"
+                                         action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}" />
 
-                        <f:facet name="footer">
-                            <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">  
-                                <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
-                                <f:setPropertyActionListener value="#{listMember}"   
-                                                             target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                            </p:commandLink>
-                        </f:facet> 
+                    </f:facet> 
 
-                    </p:panelGrid>
+                </p:panelGrid>
 
-                </p:panel>
+            </p:panel>
 
         </p:dataGrid>
 

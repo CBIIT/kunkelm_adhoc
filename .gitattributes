@@ -9583,9 +9583,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogExportImage.x
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogHistograms.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogSelectedListMembers.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltWorkbench.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_manip.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_nav.xhtml -text

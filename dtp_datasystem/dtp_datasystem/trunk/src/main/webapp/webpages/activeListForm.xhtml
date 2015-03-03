@@ -9,45 +9,48 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-  <ui:remove>
-    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-  </ui:remove>
+    <ui:remove>
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+    </ui:remove>
 
-  <ui:define name="content">
+    <ui:define name="content">
 
-    <p:panel header="List Anchor Structure"
-             rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
 
-      <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
+        <p:panel header="List Anchor Structure"
+                 rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
-      <br/>
+            <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
 
-      <h:graphicImage alt="Chemical Structure of List Anchor"
-                      width="#{sessionController.configurationBean.strcDim}" 
-                      height="#{sessionController.configurationBean.strcDim}"
-                      styleClass="anchorStructure"
-                      url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-      </h:graphicImage>
+            <br/>
 
-    </p:panel>
+            <h:graphicImage alt="Chemical Structure of List Anchor"
+                            width="#{sessionController.configurationBean.strcDim}" 
+                            height="#{sessionController.configurationBean.strcDim}"
+                            styleClass="anchorStructure"
+                            url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+            </h:graphicImage>
 
-    <p:dataGrid var="listMember" 
-                value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}"                                     
-                columns="1"  
-                rows="1" 
-                paginator="true"  
-                paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">  
+        </p:panel>
 
-      <f:facet name="header">  
-        <p:row>  
-          <p:column>List Contains: #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Cmpds</p:column>  
-        </p:row>                                              
-      </f:facet>
+        <p:dataGrid var="listMember" 
+                    value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}"                                     
+                    columns="1"  
+                    rows="1" 
+                    paginator="true"  
+                    paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">  
 
-      <ui:include src="/webpages/listMemberDetails.xhtml"/>
+            <f:facet name="header">  
+                <p:row>  
+                    <p:column>List Contains: #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Cmpds</p:column>  
+                </p:row>                                              
+            </f:facet>
 
-    </p:dataGrid>
+            <ui:include src="/webpages/listMemberDetails.xhtml"/>
 
-  </ui:define>
+        </p:dataGrid>
+
+    </ui:define>
 
 </ui:composition>

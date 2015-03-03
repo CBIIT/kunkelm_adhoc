@@ -120,7 +120,7 @@ public class HelperCmpdTable {
 
             for (CmpdTable ct : ctList) {
 
-                CmpdVO ctVO = TransformCmpdTableToVO.toCmpdVO(ct);
+                CmpdVO ctVO = TransformCmpdTableToVO.translateCmpd(ct);
 
                 rtn.add(ctVO);
 

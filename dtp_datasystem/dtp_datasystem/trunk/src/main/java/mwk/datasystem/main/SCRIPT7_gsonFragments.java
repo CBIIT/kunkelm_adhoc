@@ -82,7 +82,7 @@ public class SCRIPT7_gsonFragments {
                 entCnt++;
 
                 CmpdFragment cf = (CmpdFragment) entities.get()[0];
-                CmpdFragmentVO cfVO = TransformAndroToVO.toCmpdFragmentVO(cf);
+                CmpdFragmentVO cfVO = TransformAndroToVO.translateCmpdFragment(cf);
 
                 String json = gson.toJson(cfVO);
 
@@ -187,7 +187,7 @@ public class SCRIPT7_gsonFragments {
 
                     for (CmpdFragment cf : nscc.getCmpdFragments()) {
 
-                        CmpdFragmentVO cfVO = TransformAndroToVO.toCmpdFragmentVO(cf);
+                        CmpdFragmentVO cfVO = TransformAndroToVO.translateCmpdFragment(cf);
                         cfList.add(cfVO);
 
                         String json = gson.toJson(cfVO);
@@ -210,7 +210,7 @@ public class SCRIPT7_gsonFragments {
 
                     ArrayList<CmpdAliasVO> aliasList = new ArrayList<CmpdAliasVO>();
                     for (CmpdAlias ca : nscc.getCmpdAliases()) {
-                        CmpdAliasVO caVO = TransformAndroToVO.toCmpdAliasVO(ca);
+                        CmpdAliasVO caVO = TransformAndroToVO.translateCmpdAlias(ca);
                         aliasList.add(caVO);
                     }
 
@@ -226,7 +226,7 @@ public class SCRIPT7_gsonFragments {
 
                     ArrayList<CmpdTargetVO> targetList = new ArrayList<CmpdTargetVO>();
                     for (CmpdTarget ct : nscc.getCmpdTargets()) {
-                        CmpdTargetVO ctVO = TransformAndroToVO.toCmpdTargetVO(ct);
+                        CmpdTargetVO ctVO = TransformAndroToVO.translateCmpdTarget(ct);
                         targetList.add(ctVO);
                     }
 
@@ -242,7 +242,7 @@ public class SCRIPT7_gsonFragments {
 
                     ArrayList<CmpdNamedSetVO> setList = new ArrayList<CmpdNamedSetVO>();
                     for (CmpdNamedSet cs : nscc.getCmpdNamedSets()) {
-                        CmpdNamedSetVO csVO = TransformAndroToVO.toCmpdNamedSetVO(cs);
+                        CmpdNamedSetVO csVO = TransformAndroToVO.translateCmpdNamedSet(cs);
                         setList.add(csVO);
                     }
 
@@ -258,7 +258,7 @@ public class SCRIPT7_gsonFragments {
 
                     ArrayList<CmpdProjectVO> projectList = new ArrayList<CmpdProjectVO>();
                     for (CmpdProject cp : nscc.getCmpdProjects()) {
-                        CmpdProjectVO cpVO = TransformAndroToVO.toCmpdProjectVO(cp);
+                        CmpdProjectVO cpVO = TransformAndroToVO.translateCmpdProject(cp);
                         projectList.add(cpVO);
                     }
 
@@ -274,7 +274,7 @@ public class SCRIPT7_gsonFragments {
 
                     ArrayList<CmpdPlateVO> plateList = new ArrayList<CmpdPlateVO>();
                     for (CmpdPlate cp : nscc.getCmpdPlates()) {
-                        CmpdPlateVO cpVO = TransformAndroToVO.toCmpdPlateVO(cp);
+                        CmpdPlateVO cpVO = TransformAndroToVO.translateCmpdPlate(cp);
                         plateList.add(cpVO);
                     }
 
