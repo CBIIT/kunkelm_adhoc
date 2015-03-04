@@ -1,7 +1,5 @@
 package newstructureservlet;
 
-import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
-import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
 import java.awt.Color;
 import java.awt.Font;
 import org.openscience.cdk.geometry.GeometryUtil;
@@ -180,97 +178,97 @@ final class Depiction {
         return img;
     }
 
-    /**
-     * Convert the depiction to PDF. The depiction is scaled to match the
-     * recommended bond length of the ACS 1996 style.
-     *
-     * @return content of the PDF
-     * @see #toPdf(double, double)
-     */
-    String toPdf() {
-        return toPdf(1d);
-    }
-
-    /**
-     * Convert the depiction to PDF.
-     *
-     * @param scale resize the image by this amount
-     * @return content of the PDF
-     * @see #toPdf(double, double)
-     */
-    String toPdf(double scale) {
-        return toPdf(scale * ACS_1996_BOND_LENGTH_MM,
-                scale * ACS_1996_MARGIN_MM);
-    }
-
-    /**
-     * Convert the depiction to PDF. The bond lengths are rescaled to be an
-     * appropriate length in 'mm'.
-     *
-     * @param bondLengthInMM the length of a bond (in mm)
-     * @param marginInMM the width of a margin (in mm)
-     * @return content of the PDF
-     */
-    String toPdf(double bondLengthInMM, double marginInMM) {
-        final double rescale = rescaleForBondLength(bondLengthInMM);
-        return toPdf(width() * rescale, height() * rescale, marginInMM);
-    }
-
-    private String toPdf(double width, double height, double margin) {
-        Graphics2D g2 = new PDFGraphics2D(0, 0,
-                margin + width + margin,
-                margin + height + margin);
-        draw(AWTDrawVisitor.forVectorGraphics(g2),
-                new Rectangle2D.Double(margin, margin, width, height));
-        g2.dispose();
-        return g2.toString();
-    }
-
-    /**
-     * Convert the depiction to SVG. The depiction is scaled to match the
-     * recommended bond length of the ACS 1996 style.
-     *
-     * @return content of the SVG
-     * @see #toPdf(double, double)
-     */
-    String toSvg() {
-        return toSvg(1d);
-    }
-
-    /**
-     * Convert the depiction to SVG.
-     *
-     * @param scale resize the image by this amount
-     * @return content of the SVG
-     * @see #toPdf(double, double)
-     */
-    String toSvg(double scale) {
-        return toSvg(scale * ACS_1996_BOND_LENGTH_MM,
-                scale * ACS_1996_MARGIN_MM);
-    }
-
-    /**
-     * Convert the depiction to SVG. The bond lengths are rescaled to be an
-     * appropriate length in 'mm'.
-     *
-     * @param bondLengthInMM the length of a bond (in mm)
-     * @param marginInMM the width of a margin (in mm)
-     * @return content of the SVG
-     */
-    String toSvg(double bondLengthInMM, double marginInMM) {
-        final double rescale = rescaleForBondLength(bondLengthInMM);
-        return toSvg(width() * rescale, height() * rescale, marginInMM);
-    }
-
-    private String toSvg(double width, double height, double margin) {
-        Graphics2D g2 = new SVGGraphics2D(0, 0,
-                margin + width + margin,
-                margin + height + margin);
-        draw(AWTDrawVisitor.forVectorGraphics(g2),
-                new Rectangle2D.Double(margin, margin, width, height));
-        g2.dispose();
-        return g2.toString();
-    }
+//    /**
+//     * Convert the depiction to PDF. The depiction is scaled to match the
+//     * recommended bond length of the ACS 1996 style.
+//     *
+//     * @return content of the PDF
+//     * @see #toPdf(double, double)
+//     */
+//    String toPdf() {
+//        return toPdf(1d);
+//    }
+//
+//    /**
+//     * Convert the depiction to PDF.
+//     *
+//     * @param scale resize the image by this amount
+//     * @return content of the PDF
+//     * @see #toPdf(double, double)
+//     */
+////    String toPdf(double scale) {
+////        return toPdf(scale * ACS_1996_BOND_LENGTH_MM,
+////                scale * ACS_1996_MARGIN_MM);
+////    }
+////
+////    /**
+////     * Convert the depiction to PDF. The bond lengths are rescaled to be an
+////     * appropriate length in 'mm'.
+////     *
+////     * @param bondLengthInMM the length of a bond (in mm)
+////     * @param marginInMM the width of a margin (in mm)
+////     * @return content of the PDF
+////     */
+////    String toPdf(double bondLengthInMM, double marginInMM) {
+////        final double rescale = rescaleForBondLength(bondLengthInMM);
+////        return toPdf(width() * rescale, height() * rescale, marginInMM);
+////    }
+////
+////    private String toPdf(double width, double height, double margin) {
+////        Graphics2D g2 = new PDFGraphics2D(0, 0,
+////                margin + width + margin,
+////                margin + height + margin);
+////        draw(AWTDrawVisitor.forVectorGraphics(g2),
+////                new Rectangle2D.Double(margin, margin, width, height));
+////        g2.dispose();
+////        return g2.toString();
+////    }
+//
+//    /**
+//     * Convert the depiction to SVG. The depiction is scaled to match the
+//     * recommended bond length of the ACS 1996 style.
+//     *
+//     * @return content of the SVG
+//     * @see #toPdf(double, double)
+//     */
+//    String toSvg() {
+//        return toSvg(1d);
+//    }
+//
+//    /**
+//     * Convert the depiction to SVG.
+//     *
+//     * @param scale resize the image by this amount
+//     * @return content of the SVG
+//     * @see #toPdf(double, double)
+//     */
+//    String toSvg(double scale) {
+//        return toSvg(scale * ACS_1996_BOND_LENGTH_MM,
+//                scale * ACS_1996_MARGIN_MM);
+//    }
+//
+//    /**
+//     * Convert the depiction to SVG. The bond lengths are rescaled to be an
+//     * appropriate length in 'mm'.
+//     *
+//     * @param bondLengthInMM the length of a bond (in mm)
+//     * @param marginInMM the width of a margin (in mm)
+//     * @return content of the SVG
+//     */
+//    String toSvg(double bondLengthInMM, double marginInMM) {
+//        final double rescale = rescaleForBondLength(bondLengthInMM);
+//        return toSvg(width() * rescale, height() * rescale, marginInMM);
+//    }
+//
+//    private String toSvg(double width, double height, double margin) {
+//        Graphics2D g2 = new SVGGraphics2D(0, 0,
+//                margin + width + margin,
+//                margin + height + margin);
+//        draw(AWTDrawVisitor.forVectorGraphics(g2),
+//                new Rectangle2D.Double(margin, margin, width, height));
+//        g2.dispose();
+//        return g2.toString();
+//    }
 
     private double rescaleForBondLength(double length) {
         return length / parameters.get(BasicSceneGenerator.BondLength.class);

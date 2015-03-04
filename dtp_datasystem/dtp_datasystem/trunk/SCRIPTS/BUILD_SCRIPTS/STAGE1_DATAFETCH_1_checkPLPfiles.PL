@@ -312,10 +312,10 @@ foreach my $nscFileBase(@nscFileList){
 	# print "firstLine: $firstLine\n";
 	my @nscFileHeaders = split(/,/, $firstLine);
 	
-	print join(",", @nscColumnNames);
-	print "\n";
-	print join(",", @nscFileHeaders);
-	print "\n";
+	# print join(",", @nscColumnNames);
+	# print "\n";
+	# print join(",", @nscFileHeaders);
+	# print "\n";
 	
 	my $equals = 0;
 	

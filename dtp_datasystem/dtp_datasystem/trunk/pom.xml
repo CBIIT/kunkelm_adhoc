@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>2015.03.02</version>
+    <version>2015.03.04</version>
     <packaging>war</packaging>
     <name>datasystem</name>
     <properties>
@@ -259,6 +259,8 @@
             </properties>
         </profile>        
     </profiles>
+    
+    <!--
     <repositories> 
         <repository>
             <id>java.net-Public</id>
@@ -291,4 +293,45 @@
             <name>Repository for library PrimeFaces-maven-lib</name>
         </repository>
     </repositories>
+    -->
+
+    <repositories>                  
+        <repository>  
+            <id>nci-nexus</id>  
+            <name>NCI Nexus</name>  
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <layout>default</layout>  
+        </repository>                
+        <repository>
+            <id>central</id>
+            <name>Internal Mirror of Central Repository</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>               
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib/repository</url>
+        </repository>           
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Internal Mirror of Central Plugins Repository</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
 </project>
