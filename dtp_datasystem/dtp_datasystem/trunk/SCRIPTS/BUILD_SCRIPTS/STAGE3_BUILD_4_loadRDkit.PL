@@ -97,13 +97,13 @@ and v.valid_can_smi = 'f'
 ];
 
 push @sqlList, qq[
-create index rdkf_fragmentindex on rdkit_fail(fragmentindex)
+create index rdkf_nsc on rdkit_fail(nsc)
 ];
 
 push @sqlList, qq["drop table if exists rdkit_diff"];
 
 push @sqlList, qq[
-create rdkit_diff 
+create table rdkit_diff 
 as 
 select mol, mol_from_ctab 
 from rdkit_mol 

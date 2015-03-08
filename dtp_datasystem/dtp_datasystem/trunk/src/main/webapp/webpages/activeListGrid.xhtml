@@ -76,7 +76,7 @@
                     </p:row>
                     <p:row>
                         <h:outputText value="Count Fragments: "/>                      
-                        <h:outputText value="#{listMember.cmpd.countCmpdFragments}0" style="font-weight: bold;"/>
+                        <h:outputText value="#{listMember.cmpd.countCmpdFragments}" style="font-weight: bold;"/>
                     </p:row>
                     <p:row>
                         <h:outputText value="PSEUDO ATOMS: " />
@@ -88,14 +88,18 @@
                     </p:row>
 
                     <f:facet name="footer">
-                        <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">  
-                            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+                        <p:commandButton icon="fa fa-eye"
+                                         update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                         oncomplete="PF('listMemberDetailDlg').show();" 
+                                         value="View Detail" title="View Compound Details Dialog">  
                             <f:setPropertyActionListener value="#{listMember}"   
                                                          target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                        </p:commandLink>
+                        </p:commandButton>
 
                         <p:commandButton ajax="false" 
+                                         icon="fa fa-wrench"
                                          value="Fragments Workbench"
+                                         title="This compound to Fragments Workbench"
                                          action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}" />
 
                     </f:facet> 

@@ -10,6 +10,22 @@
                 template="/webpages/templates/ui.xhtml">
 
     <ui:define name="content">
+        
+        <p:panel>
+            
+            <f:facet name="header">
+                <h:outputText value="Kekule Image of Legacy Compound" />
+            </f:facet>
+            
+            <h:graphicImage alt="Kekule Image of Legacy Compound"
+                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                            styleClass="unassignedClass"                                                                                        
+                            url='/LegacyImageServlet?nsc=#{fragmentsWorkbenchController.cmpd.nsc}'>                                          
+            </h:graphicImage>
+            
+        </p:panel>
+        
+            
 
         <p:dataTable id="fragments"
                      resizableColumns="true"
@@ -37,7 +53,7 @@
             <p:column headerText="comment" sortBy="#{frag.comment}">                      
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{frag.comment}" /></f:facet>
-                    <f:facet name="input"><p:inputText value="#{frag.comment}" style="width:100%"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{frag.comment}"/></f:facet>
                 </p:cellEditor>  
             </p:column>
 
@@ -54,7 +70,7 @@
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{frag.stoichiometry}" /></f:facet>
                     <f:facet name="input">
-                        <h:selectOneMenu value="#{frag.stoichiometry}" style="width:100%">
+                        <h:selectOneMenu value="#{frag.stoichiometry}">
                             <f:selectItem itemValue="3" itemLabel="3"/>
                             <f:selectItem itemValue="2" itemLabel="2"/>
                             <f:selectItem itemValue="1" itemLabel="1"/>

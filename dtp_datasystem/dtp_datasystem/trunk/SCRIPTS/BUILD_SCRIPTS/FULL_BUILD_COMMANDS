@@ -16,9 +16,13 @@ perl STAGE2_CATEGORIZE_3_makeQC.PL
 perl STAGE2_CATEGORIZE_4_crosstabQC.PL
 perl STAGE2_CATEGORIZE_5_nscToLoad.PL
 
+# processProdData moved up so that it will be available when inserts are first made to nsc_cmpd
+# updates on nsc_cmpd were going DOG SLOW
+
+perl STAGE3_BUILD_0_processProdData.PL
 perl STAGE3_BUILD_1_buildCmpdModel.PL
 perl STAGE3_BUILD_2_buildCmpdTableFromCmpdModel.PL
-perl STAGE3_BUILD_3_processProdData.PL
+
 perl STAGE3_BUILD_4_loadRDkit.PL
 
 perl STAGE4_FOLLOWUP_recreateConstraints.PL

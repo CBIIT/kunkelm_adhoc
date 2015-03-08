@@ -9415,9 +9415,11 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_2_ma
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_3_makeQC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_4_crosstabQC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_5_nscToLoad.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_0_processProdData.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_1_buildCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_2_buildCmpdTableFromCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_3_processProdData.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_3_processProdData.PL.ORIGINAL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_4_loadRDkit.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_recreateConstraints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
@@ -9433,6 +9435,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartAddToColumnModelList -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartColumnFormat -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartLabelValue -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
+dtp_datasystem/dtp_datasystem/trunk/datasystem.08March2015.xml -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.19Feb2015.xml -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/hist4j/hist4j/0.1/hist4j-0.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-common/0.1/datasystem-common-0.1-sources.jar -text
@@ -9446,6 +9449,7 @@ dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/dtp_datasystem/trunk/processedSalts.txt -text
+dtp_datasystem/dtp_datasystem/trunk/qc_ct.06March2015.csv -text
 dtp_datasystem/dtp_datasystem/trunk/qc_ct.27Feb2015.csv -text
 dtp_datasystem/dtp_datasystem/trunk/rawSaltDefinitions.txt -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/AdaptiveHistogram.java -text
@@ -9477,8 +9481,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Sea
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SessionController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/StructureSearchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/WindowPopper.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/LoadKekuleRenderedImages.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/SCRIPT7_gsonFragments.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/Histogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/HistogramBin.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlot.java -text

@@ -84,9 +84,9 @@ foreach my $thisCategory (@allCategories){
 	my $sql = qq[
 	create table temp 
 	as
-	select nsc, mf, mw, sum(molecular_weight) as fw
+	select nsc, mf, molecular_formula, mw, sum(molecular_weight) as fw
 	from $thisCategory
-	group by 1, 2, 3
+	group by 1, 2, 3, 4
 	];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);

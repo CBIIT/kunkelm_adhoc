@@ -203,13 +203,11 @@ f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw,
 f.count_frags as count_frags,
 lbl.count_frags as count_lbl,
 strc.count_frags as count_strc,
-rgrp.count_frags as count_rgrp,
 (lbl.count_frags + strc.count_frags) as total_type_frags
 from
 count_frags f
 left outer join count_lbl_frags lbl on f.nsc = lbl.nsc
 left outer join count_strc_frags strc on f.nsc = strc.nsc
-left outer join count_rgrp_frags rgrp on f.nsc = rgrp.nsc
 left outer join count_salt_frags salt on f.nsc = salt.nsc
 where f.count_frags != lbl.count_frags + strc.count_frags
 ];
@@ -230,13 +228,11 @@ f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw,
 CASE when f.count_frags is null THEN 0 ELSE f.count_frags END as count_frags,
 CASE when lbl.count_frags is null THEN 0 ELSE lbl.count_frags END as count_lbl,
 CASE when strc.count_frags is null THEN 0 ELSE strc.count_frags END as count_strc,
-CASE when rgrp.count_frags is null THEN 0 ELSE rgrp.count_frags END as count_rgrp,
 CASE when salt.count_frags is null THEN 0 ELSE salt.count_frags END as salt
 from
 count_frags f
 left outer join count_lbl_frags lbl on f.nsc = lbl.nsc
 left outer join count_strc_frags strc on f.nsc = strc.nsc
-left outer join count_rgrp_frags rgrp on f.nsc = rgrp.nsc
 left outer join count_salt_frags salt on f.nsc = salt.nsc
 ];
 
@@ -297,7 +293,7 @@ foreach my $thisInfo (@infoList){
 	
   print $thisInfo . "\n";
   
-  my ($category, $count_frags, $count_lbl, $count_strc,	$count_rgrp, $count_salt) = split(/ /, $thisInfo);
+  my ($category, $count_frags, $count_lbl, $count_strc,	$count_salt) = split(/ /, $thisInfo);
   
   # set up here for UNION join to find missing NSC
   push (@unionStmtList, "select nsc from " . $category);
@@ -324,7 +320,6 @@ foreach my $thisInfo (@infoList){
   and fs.count_frags $count_frags
   and fs.count_lbl $count_lbl
   and fs.count_strc $count_strc
-  and fs.count_rgrp $count_rgrp
   and fs.salt $count_salt
   ];
   my $sth = $dbh->prepare($tempSql);

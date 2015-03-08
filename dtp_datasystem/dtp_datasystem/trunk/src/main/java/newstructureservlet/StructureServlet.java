@@ -151,25 +151,20 @@ public class StructureServlet extends HttpServlet {
                         .set(StandardGenerator.AtomColor.class, new CDK2DAtomColors());
             }
 
-//                generator.getRendererModel2D()
-//                        .set(StandardGenerator.StrokeRatio.class, Double.parseDouble(cmdln.getOptionValue("sts", "1")));
             generator.getRendererModel2D()
                     .set(StandardGenerator.StrokeRatio.class, 1d);
 
-            // highlight smarts pattern?
+            // highlight SMARTS pattern?
             if (querySmiles != null && querySmiles.length() > 0) {
 
-                try {
-                    // QueryAtomContainer qac = SMARTSParser.parse(querySmiles, DefaultChemObjectBuilder.getInstance());
-
+                try {                    
                     highlightSmartsPattern(container, Color.RED, querySmiles);
                 } catch (Exception e) {
                     System.out.println("querySmiles was not null and not zero length, but SMARTSParser.parse(querySmiles) threw Exception");
                     System.out.println("querySmiles: " + querySmiles);
                     e.printStackTrace();
                 }
-
-                highlightSmartsPattern(container, Color.RED, querySmiles);
+                
             }
 
             if (request.getParameter("atom-numbers") != null) {
@@ -188,6 +183,7 @@ public class StructureServlet extends HttpServlet {
             ImageIO.write(bufImg, "png", baos);
             baos.flush();
             baos.close();
+            
             byte[] byteArray = baos.toByteArray();
 
             response.setContentType("image/png");
@@ -201,8 +197,16 @@ public class StructureServlet extends HttpServlet {
             response.getOutputStream().close();
 
         } else {
-
-            byte[] byteArray = getTextImage("NSC or SMILES must be specified");
+            
+            // if no smiles, but have a title, use the title for the textImage
+            
+            byte[] byteArray = null;
+            
+            if (title != null){
+                byteArray = getTextImage(title);
+            } else {
+                byteArray = getTextImage("NSC or SMILES must be specified");
+            }
 
             response.setContentType("image/png");
             response.setContentLength(byteArray.length);

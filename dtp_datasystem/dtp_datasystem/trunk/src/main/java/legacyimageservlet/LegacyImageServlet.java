@@ -74,36 +74,29 @@ public class LegacyImageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String nscString = null;
-
-        List<String> smilesList = null;
+        Integer nscInt = null;
+        byte[] byteArray = null;
 
         if (request.getParameter("nsc") != null) {
             nscString = request.getParameter("nsc");
-        }
-
-        // fail by default
-        Integer nscInt = null;
-
-        if (nscString != null && nscString.length() > 0) {
-            try {
-                nscInt = Integer.parseInt(nscString);
-            } catch (Exception e) {
-
+            if (nscString != null && nscString.length() > 0) {
+                try {
+                    nscInt = Integer.parseInt(nscString);
+                } catch (Exception e) {
+                    byteArray = getTextImage(nscString + " is not an Integer");
+                }
             }
+        } else {
+            byteArray = getTextImage("NSC was not specified");
         }
-
-        // fail by default
-        byte[] byteArray = getTextImage("NSC not an Integer or no structure for NSC");
 
         if (nscInt != null) {
-            
-            CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");
-
-            // have to catch nulls and empties...
+            CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");            
             if (rtn != null && rtn.getJpg512() != null && rtn.getJpg512().length > 0) {
                 byteArray = rtn.getJpg512();
+            } else {
+                byteArray = getTextImage("No legacy image for NSC: " + nscInt);
             }
-
         }
 
         response.setContentType("image/png");
@@ -154,6 +147,6 @@ public class LegacyImageServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "PNG graphic image, 200X200, for a specified nsc number or smiles string";
+        return "Legacy Kekule-rendered image by NSC.";
     }// </editor-fold>
 }

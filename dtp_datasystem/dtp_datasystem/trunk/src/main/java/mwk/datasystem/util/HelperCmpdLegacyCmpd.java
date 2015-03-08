@@ -5,9 +5,6 @@
 package mwk.datasystem.util;
 
 import com.google.gson.Gson;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import mwk.datasystem.domain.CmpdLegacyCmpd;
@@ -24,103 +21,95 @@ import mwk.datasystem.vo.CmpdLegacyCmpdVO;
  */
 public class HelperCmpdLegacyCmpd {
 
-  public static String makeGson(CmpdLegacyCmpdVO hmm) {
+    public static String makeGson(CmpdLegacyCmpdVO hmm) {
 
-    String rtn = "";
-    Gson gson = new Gson();
-    String json = gson.toJson(hmm);
+        String rtn = "";
+        Gson gson = new Gson();
+        String json = gson.toJson(hmm);
 
-    rtn = json;
+        rtn = json;
 
-    return rtn;
+        return rtn;
 
-  }
-
-  public static String parseGson(String gsonStr) {
-
-    String rtn = "";
-    Gson gson = new Gson();
-
-    CmpdLegacyCmpdVO obj = gson.fromJson(gsonStr, CmpdLegacyCmpdVO.class);
-
-    return rtn;
-
-  }
-
-  public static CmpdLegacyCmpdVO getLegacyCmpdByNsc(Integer nsc, String currentUser) {
-
-    //MWK TODO this doesn't call currentUser
-    CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
-
-    Session session = null;
-    Transaction tx = null;
-
-    try {
-
-      session = HibernateUtil.getSessionFactory().openSession();
-
-      tx = session.beginTransaction();
-      Criteria cmpdCrit = session.createCriteria(CmpdLegacyCmpd.class);
-      cmpdCrit.add(Restrictions.eq("id", nsc.longValue()));
-      CmpdLegacyCmpd cmpdLegacyCmpd = (CmpdLegacyCmpd) cmpdCrit.uniqueResult();
-
-      rtn = TransformAndroToVO.translateCmpdLegacyCmpd(cmpdLegacyCmpd);
-
-      tx.commit();
-
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
 
-    return rtn;
+    public static String parseGson(String gsonStr) {
 
-  }
+        String rtn = "";
+        Gson gson = new Gson();
 
-//  public static CmpdLegacyCmpdVO insertLegacyCmpds() {
-//
-//    CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
-//
-//    Session session = null;
-//    Transaction tx = null;
-//
-//    try {
-//
-//      session = HibernateUtil.getSessionFactory().openSession();
-//
-//      tx = session.beginTransaction();
-//
-//      List<Integer> nscIntList = Arrays.asList(new Integer[]{163027, 401005, 705701});
-//
-//      for (Integer nsc : nscIntList) {
-//
-//        CmpdLegacyCmpd clc = new CmpdLegacyCmpdImpl();
-//
-//        clc.setId(nsc.longValue());
-//        clc.setMolecularFormula("filler");
-//        clc.setMolecularWeight(-10101d);
-//
-//        byte[] img = getStructureImage("CCCC=C=CCCC", "fake SMILES");
-//
-//        clc.setJpg512(img);
-//
-//        session.persist(clc);
-//
-//      }
-//
-//      tx.commit();
-//
-//    } catch (Exception e) {
-//      tx.rollback();
-//      e.printStackTrace();
-//    } finally {
-//      session.close();
-//    }
-//
-//    return rtn;
-//
-//  }
+        CmpdLegacyCmpdVO obj = gson.fromJson(gsonStr, CmpdLegacyCmpdVO.class);
+
+        return rtn;
+
+    }
+
+    public static CmpdLegacyCmpdVO getLegacyCmpdByNsc(Integer nsc, String currentUser) {
+
+        //MWK TODO this doesn't call currentUser
+        CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
+
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            tx = session.beginTransaction();
+            
+            Criteria cmpdCrit = session.createCriteria(CmpdLegacyCmpd.class);
+            cmpdCrit.add(Restrictions.eq("nsc", nsc));
+            
+            CmpdLegacyCmpd cmpdLegacyCmpd = (CmpdLegacyCmpd) cmpdCrit.uniqueResult();
+
+            rtn = TransformAndroToVO.translateCmpdLegacyCmpd(cmpdLegacyCmpd);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return rtn;
+
+    }
+
+    public static CmpdLegacyCmpdVO insertLegacyCmpds(Integer nsc, byte[] imageBytes) {
+
+        CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
+
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+
+            tx = session.beginTransaction();
+
+            CmpdLegacyCmpd clc = CmpdLegacyCmpd.Factory.newInstance();
+
+            // id is set by hibernate sequence generator clc.setId(nsc.longValue());
+            clc.setNsc(nsc);            
+            clc.setJpg512(imageBytes);
+
+            session.save(clc);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return rtn;
+
+    }
 
 }

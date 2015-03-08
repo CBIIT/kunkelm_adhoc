@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>2015.03.04</version>
+    <version>2015.03.08</version>
     <packaging>war</packaging>
     <name>datasystem</name>
     <properties>
@@ -23,11 +23,13 @@
             <artifactId>opsin-core</artifactId>
             <version>1.6.0</version>
         </dependency>
+        <!-- MWK while experimenting with NEXUS
         <dependency>
             <groupId>de.erichseifert.vectorgraphics2d</groupId>
             <artifactId>VectorGraphics2D</artifactId>
             <version>0.9.1</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk</artifactId>

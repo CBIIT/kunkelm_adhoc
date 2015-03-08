@@ -10,24 +10,51 @@
                 template="/webpages/templates/ui.xhtml">
 
     <ui:define name="content">
+
+        <p:spacer height="20" width="100%" />
+
+        <p:fieldset legend="General Display Options" 
+                    style="width: 100%; display: inline-block;">
+
+            <p:selectBooleanButton id="boolAnchor"
+                                   value="#{sessionController.configurationBean.showAnchor}" 
+                                   onLabel="CLICK TO HIDE" 
+                                   onIcon="fa fa-eye" 
+                                   offLabel="CLICK TO SHOW" 
+                                   offIcon="fa fa-eye-slash"/>                
+            <p:outputLabel for="boolAnchor" value="Show Anchor Structure" />
+
+            <p:spacer height="20" width="100%"/>
+
+            <p:selectBooleanButton id="boolFrags"
+                                   value="#{sessionController.configurationBean.showFrags}" 
+                                   onLabel="CLICK TO HIDE" 
+                                   onIcon="fa fa-eye" 
+                                   offLabel="CLICK TO SHOW" 
+                                   offIcon="fa fa-eye-slash"/>
+
+            <p:outputLabel for="boolFrags" value="Show Fragments" />
+
+            <p:spacer height="20" width="100%"/>
+
+            <p:selectBooleanButton id="boolQc"
+                                   value="#{sessionController.configurationBean.showQc}" 
+                                   onLabel="CLICK TO HIDE" 
+                                   onIcon="fa fa-eye" 
+                                   offLabel="CLICK TO SHOW" 
+                                   offIcon="fa fa-eye-slash" />
+
+            <p:outputLabel for="boolQc" value="Show MTXT and LABELS" />
+
+            <p:spacer height="20" width="100%"/>
+
+        </p:fieldset>
         
         <p:spacer height="20" width="100%" />
 
-        <p:fieldset legend="Chemical Structure Display Options" 
+        <p:fieldset legend="Chemical Structure Rendering Options" 
                     style="width: 100%; display: inline-block;">
 
-            <p:selectBooleanCheckbox id="boolAnchor"
-                                     value="#{sessionController.configurationBean.showAnchor}" />                
-            <p:outputLabel for="boolAnchor" value="Show Anchor Structure" />
-
-            <p:selectBooleanCheckbox id="boolFrags"
-                                     value="#{sessionController.configurationBean.showFrags}" />
-            <p:outputLabel for="boolFrags" value="Show Fragments" />
-
-            <p:selectBooleanCheckbox id="boolQc"
-                                     value="#{sessionController.configurationBean.showQc}" />
-            <p:outputLabel for="boolQc" value="Show MTXT and LABELS" />
-            
             <p:selectManyCheckbox value="#{sessionController.configurationBean.selectedStrcOptions}">                                                
                 <f:selectItem itemLabel="Show Title" itemValue="TTL" />
                 <f:selectItem itemLabel="Color Atoms" itemValue="CLR" />
@@ -46,7 +73,7 @@
         </p:fieldset>
 
         <p:spacer height="20" width="100%" />
-        
+
         <p:fieldset legend="Cmpd Parameters"
                     style="width: 100%; display: inline-block;">
             <p:selectManyCheckbox id="cmpdGrid"
@@ -59,7 +86,7 @@
                                itemValue="#{cmpdParam}" />
             </p:selectManyCheckbox>
         </p:fieldset>
-        
+
         <p:spacer height="20" width="100%" />
 
         <p:fieldset legend="PChem Parameters"
@@ -76,7 +103,7 @@
         </p:fieldset>
 
         <p:spacer height="20" width="100%" />
-        
+
         <p:fieldset legend="Structure Parameters"
                     style="width: 100%; display: inline-block;">
             <p:selectManyCheckbox id="structureGrid"
@@ -91,7 +118,7 @@
         </p:fieldset>
 
         <p:spacer height="20" width="100%" />
-        
+
         <p:fieldset legend="BioData Parameters"
                     style="width: 100%; display: inline-block;">
             <p:selectManyCheckbox id="bioDataGrid"
@@ -106,7 +133,7 @@
         </p:fieldset>
 
         <p:spacer height="20" width="100%" />
-        
+
         <p:commandButton action="#{sessionController.configurationBean.performUpdateColumns()}" 
                          value="Update" 
                          icon="ui-icon-refresh" 

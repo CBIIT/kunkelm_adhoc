@@ -114,15 +114,15 @@ public class ConfigurationBean {
 
         this.valid_cmpd_keys = hm;
 
-        this.selectedCmpdParameters = new ArrayList<String>(Arrays.asList(new String[]{"nsc", "name", "conf", "distribution",}));
-
         this.availableCmpdParameters = new ArrayList<String>(hm.keySet());
-        Collections.sort(this.availableCmpdParameters, null);
+        // Collections.sort(this.availableCmpdParameters, null);
 
         // pChem
         hm = new HashMap<String, String>();
         hm.put("Molecular Weight", "molecularWeight");
         hm.put("Molecular Formula", "molecularFormula");
+        hm.put("Formal Charge", "formalCharge");
+        hm.put("aLogP", "theALogP");
         hm.put("logD", "logD");
         hm.put("Count H Bond Acceptors", "countHydBondAcceptors");
         hm.put("Count H Bond Donors", "countHydBondDonors");
@@ -146,13 +146,11 @@ public class ConfigurationBean {
         hm.put("Count Ring Assemblies", "countRingAssemblies");
         hm.put("Count Aromatic Bonds", "countAromaticBonds");
         hm.put("Count Aromatic Rings", "countAromaticRings");
-        hm.put("Formal Charge", "formalCharge");
-        hm.put("aLogP", "theALogP");
 
         this.valid_physchem_keys = hm;
 
         this.availablePChemParameters = new ArrayList<String>(hm.keySet());
-        Collections.sort(this.availablePChemParameters, null);
+        // Collections.sort(this.availablePChemParameters, null);
 
         // Structure
         hm = new HashMap<String, String>();
@@ -165,7 +163,7 @@ public class ConfigurationBean {
         this.valid_strc_keys = hm;
 
         this.availableStructureParameters = new ArrayList<String>(hm.keySet());
-        Collections.sort(this.availableStructureParameters, null);
+        // Collections.sort(this.availableStructureParameters, null);
 
         // biodata
         hm = new HashMap<String, String>();
@@ -176,20 +174,20 @@ public class ConfigurationBean {
         this.valid_bio_keys = hm;
 
         this.availableBioDataParameters = new ArrayList<String>(hm.keySet());
-        Collections.sort(this.availableBioDataParameters, null);
+        // Collections.sort(this.availableBioDataParameters, null);
 
         // defaults
         selectedCmpdParameters = new ArrayList<String>();
-        String[] initArr = new String[]{"Prefix", "NSC", "Conf", "Distribution"};
+        String[] initArr = new String[]{"NSC", "Inventory"};
         selectedCmpdParameters.addAll(Arrays.asList(initArr));
 
         selectedPChemParameters = new ArrayList<String>();
-        initArr = new String[]{"Molecular Weight", "Molecular Formula", "logD", "CountH Bond Acceptors", "Count H BondDonors"};
+        initArr = new String[]{"Molecular Weight", "Molecular Formula"};
         selectedPChemParameters.addAll(Arrays.asList(initArr));
 
         // default is no structures 
         selectedBioDataParameters = new ArrayList<String>();
-        initArr = new String[]{"NCI60", "HF", "XENO"};
+        initArr = new String[]{"NCI60"};
         selectedBioDataParameters.addAll(Arrays.asList(initArr));
 
     }
@@ -395,6 +393,7 @@ public class ConfigurationBean {
             }
             rtn = sb.toString();
         } else {
+            
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
@@ -406,6 +405,7 @@ public class ConfigurationBean {
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
+            
         }
         return rtn;
     }

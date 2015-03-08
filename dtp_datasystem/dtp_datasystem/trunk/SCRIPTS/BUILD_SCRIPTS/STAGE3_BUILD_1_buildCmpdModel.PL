@@ -70,17 +70,19 @@ foreach my $cmpdType(@cmpdTypes){
 	$typeCnt++;
 	my $tempSql = qq[
 	insert into nsc_cmpd_type (id, nsc_cmpd_type, cmpd_type_description) 
-	values ( $typeCnt, '$cmpdType', '$cmpdType' )];
+	values ( $typeCnt, '$cmpdType', '$cmpdType' )
+	];
 	
-	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
+	my $sth = $dbh->prepare($tempSql);
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
 my $tempSql = qq[
 drop index if exists nsc_cmpd_type_cmpd_type
-];	
+];
+
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
@@ -89,6 +91,7 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 my $tempSql = qq[
 create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
 ];	
+
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
@@ -98,14 +101,10 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 my $tempSql = qq[insert into cmpd_fragment_type(id, fragment_type, fragment_type_description)
 values (1, 'not yet categorized', 'placeholder, eventually parent, salt, largest, etc.')
 ];
+
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-
-
-
-
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
@@ -203,13 +202,13 @@ num_aromaticrings,
 formalcharge,             
 alogp 
 from rs3_from_plp_frags
--- where can_smi != '[RH]'
 where labelarray is null
 and nsc in (
 select nsc from nsc_to_load
 )];
-print "$tempSql\n\n";
+
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
@@ -223,6 +222,11 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ##      #     #    #####   #    #  #          #    #    #  #####   #
 ## #    #     #    #   #   #    #  #    #     #    #    #  #   #   #
 ##  ####      #    #    #   ####    ####      #     ####   #    #  ######
+
+$t = time;
+my $currentDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$currentDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "start inserts to cmpd_fragment_structure: $currentDate\n";
 
 my $tempSql = qq[
 insert into cmpd_fragment_structure (
@@ -243,16 +247,20 @@ can_smi,
 can_taut,
 can_taut_strip_stereo 
 from rs3_from_plp_frags frags, rs3_from_plp_ctab ctab
---where can_smi != '[RH]'
 where labelarray is null
 and frags.nsc in (
 select nsc from nsc_to_load
 )
 and frags.fragmentindex = ctab.fragmentindex];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+$t = time;
+my $currentDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$currentDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "finish inserts to cmpd_fragment_structure: $currentDate\n";
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -285,14 +293,13 @@ salt_id,
 fragmentindex,
 nsc
 from rs3_from_plp_frags 
---where can_smi != '[RH]'
 where labelarray is null
 and nsc in (
 select nsc from nsc_to_load
 )];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
@@ -311,8 +318,8 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
 my $tempSql = qq[drop table if exists temp_parent_fragment];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # only UNAMBIGUOUS parents
@@ -328,22 +335,23 @@ select nsc from nsc_to_load
 and (nsc, fragmentindex) in  
 (
 
-select nsc, fragmentindex from no_lbl_one_strc_no_rgrp_no_salt
+select nsc, fragmentindex from no_lbl_one_strc_no_salt
 
 union
 
-select nsc, fragmentindex from no_lbl_two_strc_no_rgrp_one_salt where salt_smiles is null
+-- this little bit of weirdness is to fetch the NOT-salt fragment
+select nsc, fragmentindex from no_lbl_two_strc_one_salt where salt_smiles is null 
 
 )];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tpf_nsc on temp_parent_fragment(nsc)];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
@@ -369,8 +377,8 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
 my $tempSql = qq[drop table if exists temp_ident_descr];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
@@ -380,8 +388,8 @@ identifier_string varchar(1024),
 descriptor_string varchar(1024)
 )];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## cycle through the categories
@@ -397,16 +405,16 @@ foreach my $categ (@categories){
 	select distinct nsc from $categ where nsc in (select nsc from nsc_to_load)
 	) as uni];
 	
-	print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
+	print "$tempSql\n\n";
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
 my $tempSql = qq[create index tid_nsc on temp_ident_descr(nsc)];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
@@ -422,8 +430,9 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## #    #   ####    ####           #    #   ####    ####
 
 my $tempSql = qq[drop table if exists temp_nsc_agg];
-print "$tempSql\n\n";
+
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
@@ -436,21 +445,20 @@ sum(molecular_weight) as molecular_weight,
 array_to_string(array_agg(molecular_formula), '.') as molecular_formula
 from 
 rs3_from_plp_frags
---where can_smi != '[RH]'
 where labelarray is null
 and nsc in (
 select nsc from nsc_to_load    
 )
 group by nsc];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tna_nsc on temp_nsc_agg(nsc)];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
@@ -464,17 +472,6 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## #  # #       #  #               #       #    #  #####   #    #
 ## #   ##  #    #  #    #          #    #  #    #  #       #    #
 ## #    #   ####    ####  #######   ####   #    #  #       #####
-
-##vacuum analyze rs3_from_plp_nsc;
-##vacuum analyze temp_parent_fragment;
-##vacuum analyze prod_cmpd;
-##vacuum analyze cmpd_bio_assay;
-##vacuum analyze cmpd_inventory;
-##vacuum analyze cmpd_annotation;
-##vacuum analyze temp_nsc_agg;
-##vacuum analyze temp_ident_descr;
-##vacuum analyze nsc_to_load;
-##vacuum analyze nsc_cmpd_type;
 
 my $tempSql = qq[
 insert into nsc_cmpd(
@@ -505,21 +502,21 @@ ntl.nsc,
 ntl.nsc,
 'S',
 ntl.nsc,
-pc.conf,
-pc.distribution_code,
+CASE WHEN pc.conf IS NULL THEN 'unknown' ELSE pc.conf END,
+CASE WHEN pc.distribution_code IS NULL THEN 'unknown' ELSE pc.distribution_code END,
 pc.cas,
 tna.count_fragments,
-'fake', --n.discreet,!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-tid.identifier_string, --identifier_string,
-tid.descriptor_string, --descriptor_string,
+'unknown',		-- CASE when pc.discreet IS NULL THEN 'unknown' ELSE pc.discreet END,
+tid.identifier_string,
+tid.descriptor_string,
 tna.molecular_weight,
 tna.molecular_formula,
-nct.id, --nsc_cmpd_type_fk
-tpf.fragmentindex, --cmpd_parent_fragment_fk
-cba.id, --cmpd_bio_assay_fk,
-ci.id, --cmpd_inventory_fk,
-annot.id, --cmpd_annotation_fk,
-null -- cmpd_legacy_cmpd_fk
+nct.id, 		-- nsc_cmpd_type_fk
+tpf.fragmentindex, 	-- cmpd_parent_fragment_fk
+cba.id, 		-- cmpd_bio_assay_fk,
+ci.id, 			-- cmpd_inventory_fk,
+annot.id, 		-- cmpd_annotation_fk,
+null 			-- cmpd_legacy_cmpd_fk
 
 from nsc_to_load ntl
 left outer join temp_ident_descr tid on ntl.nsc = tid.nsc
@@ -534,8 +531,8 @@ nsc_cmpd_type nct
 
 where ntl.cmpd_type = nct.nsc_cmpd_type];
 
-print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
@@ -551,8 +548,9 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ##  ####   #    #  #       #####
 
 my $tempSql = qq[insert into cmpd(id) select nsc from nsc_to_load];
-print "$tempSql\n\n";
+
 my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 

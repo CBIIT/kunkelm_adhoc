@@ -106,11 +106,14 @@ public class TransformAndroToVO {
         CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
 
         rtn.setId(entityIn.getId());
-        rtn.setNsc(entityIn.getId().intValue());
+        rtn.setNsc(entityIn.getNsc());
         rtn.setCtab(entityIn.getCtab());
         rtn.setJpg512(entityIn.getJpg512());
         rtn.setMolecularFormula(entityIn.getMolecularFormula());
         rtn.setMolecularWeight(entityIn.getMolecularWeight());
+        rtn.setInventory(entityIn.getInventory());
+        rtn.setCountNci60(entityIn.getCountNci60());
+        rtn.setMtxt(entityIn.getMtxt());
 
         return rtn;
     }
@@ -310,10 +313,7 @@ public class TransformAndroToVO {
     public static CmpdVO translateCmpd(Cmpd entityIn) {
 
         CmpdVO rtn = new CmpdVO();
-
-    // This, I think, is leftover from earlier version of Hibernate Cmpd entityIn = Unproxy.initializeAndUnproxy(incomingCmpd);
-        // System.out.println("incomingCmpd in toCmpdVO is class: " + entityIn.getClass().getName());
-        
+       
         rtn.setComment(entityIn.getComment());
 
         if (entityIn instanceof NscCmpdImpl) {
@@ -347,14 +347,14 @@ public class TransformAndroToVO {
                 }
 
                 rtn.setCountCmpdFragments(nscc.getCountFragments());
-
-//                cmpdVO.setIsSelected(nscc.getIsSelected());
-//                cmpdVO.setSaltSmiles(nscc.getSaltSmiles()); 
-//                cmpdVO.setSaltName(nscc.getSaltName());
-//                cmpdVO.setSaltMf(nscc.getSaltMf());
-//                cmpdVO.setSaltMw(nscc.getSaltMw());
-//                cmpdVO.setParentStoichiometry(nscc.getParentStoichiometry());
-//                cmpdVO.setSaltStoichiometry(nscc.getSaltStoichiometry());
+                
+//                rtn.setSaltSmiles(nscc.getSaltSmiles()); 
+//                rtn.setSaltName(nscc.getSaltName());
+//                rtn.setSaltMf(nscc.getSaltMf());
+//                rtn.setSaltMw(nscc.getSaltMw());
+//                rtn.setParentStoichiometry(nscc.getParentStoichiometry());
+//                rtn.setSaltStoichiometry(nscc.getSaltStoichiometry());
+                
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());
