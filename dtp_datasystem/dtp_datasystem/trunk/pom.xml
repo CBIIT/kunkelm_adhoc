@@ -171,12 +171,12 @@
         <dependency>
             <groupId>mwk.datasystem</groupId>
             <artifactId>datasystem-common</artifactId>
-            <version>0.1</version>      
+            <version>20150309</version>      
         </dependency>
         <dependency>
             <groupId>mwk.datasystem</groupId>
             <artifactId>datasystem-core</artifactId>
-            <version>0.1</version>
+            <version>20150309</version>
             <exclusions>
                 <exclusion>
                     <artifactId>hibernate-validator-legacy</artifactId>
