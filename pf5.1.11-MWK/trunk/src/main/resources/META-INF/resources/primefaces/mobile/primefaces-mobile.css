@@ -1,0 +1,100 @@
+/** Panel **/
+.ui-panel-m .ui-panel-m-titlebar-icon {
+    top: 50%;
+    margin-top: -15px;
+}
+
+.ui-panel-m .ui-panel-m-titlebar {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit; 
+    border-style: solid;
+    border-width: 1px;
+}
+
+.ui-panel-m .ui-panel-m-content {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    border-style: solid;
+    border-width: 1px;
+    border-top-width: 0;
+}
+
+/** Growl **/
+.ui-growl-message {
+    padding: 0.5em;
+}
+
+.ui-growl-summary {
+    font-weight: bold;
+}
+
+.ui-growl-detail {
+    font-weight: normal;
+}
+
+.ui-growl-item.ui-grid-a > .ui-block-a {
+    width: 20%;
+}
+
+.ui-growl-item.ui-grid-a > .ui-block-b {
+    width: 80%;
+}
+
+/** Dialog **/
+.ui-dialog-container {
+    display: none;
+}
+
+/** Calendar **/
+.ui-calendar-inline .ui-input-text {
+    display: none;
+}
+
+/** DataTable **/
+.ui-table {
+    table-layout: fixed;
+}
+
+.ui-table th.ui-sortable-column {
+    position: relative;
+}
+
+.ui-table tr.ui-bar-b {
+    border: 0 none;
+    font-weight: normal;
+}
+
+.ui-datatable .ui-paginator .ui-controlgroup,
+.ui-datagrid .ui-paginator .ui-controlgroup,
+.ui-datalist .ui-paginator .ui-controlgroup {
+    margin: 0;
+    padding: 0.1em 0em;
+    text-align: center;
+}
+
+@media ( max-width: 35em ) {
+    
+    .ui-paginator .ui-paginator-page {
+        display: none;
+    }
+    
+}
+
+/** DataGrid **/
+.ui-datagrid .ui-datagrid-header,
+.ui-datagrid .ui-datagrid-footer {
+    text-align: center;
+}
+
+/** DataList **/
+.ui-datalist .ui-listview  {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ui-datalist.ui-datalist-topbar .ui-listview > li.ui-first-child, 
+.ui-datalist.ui-datalist-topbar .ui-listview > li.ui-first-child > a.ui-btn,
+.ui-datalist.ui-datalist-bottombar .ui-listview > li.ui-last-child, 
+.ui-datalist.ui-datalist-bottombar .ui-listview > li.ui-last-child > a.ui-btn {
+    border-radius: 0;
+}
