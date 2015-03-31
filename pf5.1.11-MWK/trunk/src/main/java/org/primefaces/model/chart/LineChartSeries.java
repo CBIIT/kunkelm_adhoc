@@ -21,16 +21,19 @@ import java.io.Writer;
 public class LineChartSeries extends ChartSeries {
 
     private String markerStyle = "filledCircle";
-    private String linePattern = "solid";
+    // MWK
+    private String linePattern = "dotted";
+    // MWK
     private String color = "black";
-    
+
     private boolean showLine = true;
     private boolean showMarker = true;
     private boolean fill = false;
     private double fillAlpha = 1;
     private boolean disableStack;
 
-    public LineChartSeries() {}
+    public LineChartSeries() {
+    }
 
     public LineChartSeries(String title) {
         super(title);
@@ -75,11 +78,12 @@ public class LineChartSeries extends ChartSeries {
     public void setShowMarker(boolean showMarker) {
         this.showMarker = showMarker;
     }
-    
+
     @Override
     public boolean isFill() {
         return fill;
     }
+
     public void setFill(boolean fill) {
         this.fill = fill;
     }
@@ -91,7 +95,7 @@ public class LineChartSeries extends ChartSeries {
     public void setFillAlpha(double fillAlpha) {
         this.fillAlpha = fillAlpha;
     }
-    
+
     public boolean isDisableStack() {
         return disableStack;
     }
@@ -107,26 +111,43 @@ public class LineChartSeries extends ChartSeries {
 
     @Override
     public void encode(Writer writer) throws IOException {
-        
+
         String renderer = this.getRenderer();
         AxisType xaxis = this.getXaxis();
         AxisType yaxis = this.getYaxis();
-        
+
         writer.write("{");
         writer.write("label:'" + this.getLabel() + "'");
         writer.write(",renderer: $.jqplot." + renderer);
-        
-        if(xaxis != null) writer.write(",xaxis:\"" + xaxis + "\"");
-        if(yaxis != null) writer.write(",yaxis:\"" + yaxis + "\"");
-        if(disableStack) writer.write(",disableStack:true");
-        
-        if(fill) {
+
+        if (xaxis != null) {
+            writer.write(",xaxis:\"" + xaxis + "\"");
+        }
+        if (yaxis != null) {
+            writer.write(",yaxis:\"" + yaxis + "\"");
+        }
+        if (disableStack) {
+            writer.write(",disableStack:true");
+        }
+
+        if (fill) {
             writer.write(",fill:true");
             writer.write(",fillAlpha:" + this.getFillAlpha());
         }
 
         writer.write(",showLine:" + this.isShowLine());
-        writer.write(",markerOptions:{show:" + this.isShowMarker()+ ", style:'" + this.getMarkerStyle() + "'}");
+
+        //MWK
+        // jqPlot custom line patterns are arrays and should 
+        // be rendered WITHOUT single quotes
+        if (this.getLinePattern().startsWith("[")) {
+            writer.write(",linePattern:" + this.getLinePattern());
+        } else {
+            writer.write(",linePattern:'" + this.getLinePattern() + "'");
+        }
+        writer.write(",color:'" + this.getColor() + "'");
+
+        writer.write(",markerOptions:{show:" + this.isShowMarker() + ", style:'" + this.getMarkerStyle() + "'}");
 
         writer.write("}");
     }

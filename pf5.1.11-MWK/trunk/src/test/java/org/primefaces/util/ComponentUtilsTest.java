@@ -23,7 +23,6 @@ import javax.faces.component.UINamingContainer;
 import javax.faces.component.UIOutput;
 
 import org.junit.Test;
-import org.primefaces.component.commandlink.CommandLink;
 
 public class ComponentUtilsTest {
 	

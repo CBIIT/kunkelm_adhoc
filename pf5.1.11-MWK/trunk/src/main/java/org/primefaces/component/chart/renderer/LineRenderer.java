@@ -27,91 +27,92 @@ import org.primefaces.util.ComponentUtils;
 
 public class LineRenderer extends CartesianPlotRenderer {
 
-  @Override
-  protected void encodeData(FacesContext context, Chart chart) throws IOException {
-    ResponseWriter writer = context.getResponseWriter();
-    CartesianChartModel model = (CartesianChartModel) chart.getModel();
+    @Override
+    protected void encodeData(FacesContext context, Chart chart) throws IOException {
+        ResponseWriter writer = context.getResponseWriter();
+        CartesianChartModel model = (CartesianChartModel) chart.getModel();
 
-    writer.write(",data:[");
-    for (Iterator<ChartSeries> it = model.getSeries().iterator(); it.hasNext();) {
-      
-      ChartSeries series = it.next();
+        writer.write(",data:[");
+        for (Iterator<ChartSeries> it = model.getSeries().iterator(); it.hasNext();) {
 
-      writer.write("[");
-      for (Iterator<Object> x = series.getData().keySet().iterator(); x.hasNext();) {
-        Object xValue = x.next();
-        Number yValue = series.getData().get(xValue);
-        //MWK 
-        String lblStr = series.getDataLabels().get(xValue);
-        String label = (lblStr != null) ? "\"" + ComponentUtils.escapeText(lblStr) + "\"": "null";        
-                
-        String yValueAsString = (yValue != null) ? yValue.toString() : "null";
+            ChartSeries series = it.next();
 
-        writer.write("[");
+            writer.write("[");
+            for (Iterator<Object> x = series.getData().keySet().iterator(); x.hasNext();) {
+                Object xValue = x.next();
+                Number yValue = series.getData().get(xValue);
+                //MWK 
+                String lblStr = series.getDataLabels().get(xValue);
+                String label = (lblStr != null) ? "\"" + ComponentUtils.escapeText(lblStr) + "\"" : "null";
 
-        if (xValue instanceof String) {
-          writer.write("\"" + ComponentUtils.escapeText(xValue.toString()) + "\"," + yValueAsString);
-        } else {
-          // MWK
-          writer.write(xValue + "," + yValueAsString + "," + label);
+                String yValueAsString = (yValue != null) ? yValue.toString() : "null";
+
+                writer.write("[");
+
+                if (xValue instanceof String) {
+                    writer.write("\"" + ComponentUtils.escapeText(xValue.toString()) + "\"," + yValueAsString);
+                } else {
+                    // MWK
+                    writer.write(xValue + "," + yValueAsString + "," + label);
+                }
+
+                writer.write("]");
+
+                if (x.hasNext()) {
+                    writer.write(",");
+                }
+            }
+            writer.write("]");
+
+            if (it.hasNext()) {
+                writer.write(",");
+            }
+        }
+        writer.write("]");
+    }
+
+    @Override
+    protected void encodeOptions(FacesContext context, Chart chart) throws IOException {
+        super.encodeOptions(context, chart);
+
+        ResponseWriter writer = context.getResponseWriter();
+        LineChartModel model = (LineChartModel) chart.getModel();
+
+        writer.write(",series:[");
+
+        for (Iterator<ChartSeries> it = model.getSeries().iterator(); it.hasNext();) {
+            ChartSeries series = (ChartSeries) it.next();
+            series.encode(writer);
+
+            if (it.hasNext()) {
+                writer.write(",");
+            }
         }
 
         writer.write("]");
 
-        if (x.hasNext()) {
-          writer.write(",");
+        if (model.isStacked()) {
+            writer.write(",stackSeries:true");
         }
-      }
-      writer.write("]");
+        if (model.isBreakOnNull()) {
+            writer.write(",breakOnNull:true");
+        }
+        if (model.isZoom()) {
+            writer.write(",zoom:true");
+        }
+        if (model.isAnimate()) {
+            writer.write(",animate:true");
+        }
+        if (model.isShowPointLabels()) {
+            writer.write(",showPointLabels:true");
+        }
 
-      if (it.hasNext()) {
-        writer.write(",");
-      }
+        if (model.isShowDatatip()) {
+            writer.write(",datatip:true");
+            if (model.getDatatipFormat() != null) {
+                writer.write(",datatipFormat:\"" + model.getDatatipFormat() + "\"");
+            }
+        }
     }
-    writer.write("]");
-  }
-
-  @Override
-  protected void encodeOptions(FacesContext context, Chart chart) throws IOException {
-    super.encodeOptions(context, chart);
-
-    ResponseWriter writer = context.getResponseWriter();
-    LineChartModel model = (LineChartModel) chart.getModel();
-
-    writer.write(",series:[");
-    for (Iterator<ChartSeries> it = model.getSeries().iterator(); it.hasNext();) {
-      ChartSeries series = (ChartSeries) it.next();
-      series.encode(writer);
-
-      if (it.hasNext()) {
-        writer.write(",");
-      }
-    }
-
-    writer.write("]");
-
-    if (model.isStacked()) {
-      writer.write(",stackSeries:true");
-    }
-    if (model.isBreakOnNull()) {
-      writer.write(",breakOnNull:true");
-    }
-    if (model.isZoom()) {
-      writer.write(",zoom:true");
-    }
-    if (model.isAnimate()) {
-      writer.write(",animate:true");
-    }
-    if (model.isShowPointLabels()) {
-      writer.write(",showPointLabels:true");
-    }
-
-    if (model.isShowDatatip()) {
-      writer.write(",datatip:true");
-      if (model.getDatatipFormat() != null) {
-        writer.write(",datatipFormat:\"" + model.getDatatipFormat() + "\"");
-      }
-    }
-  }
 
 }
