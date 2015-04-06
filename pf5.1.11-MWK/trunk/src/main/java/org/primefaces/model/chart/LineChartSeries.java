@@ -21,11 +21,12 @@ import java.io.Writer;
 public class LineChartSeries extends ChartSeries {
 
     private String markerStyle = "filledCircle";
+    
     // MWK
-    private String linePattern = "dotted";
+    // private String linePattern = "dotted";
+    // private String color = "black";
     // MWK
-    private String color = "black";
-
+    
     private boolean showLine = true;
     private boolean showMarker = true;
     private boolean fill = false;
@@ -47,21 +48,21 @@ public class LineChartSeries extends ChartSeries {
         this.markerStyle = markerStyle;
     }
 
-    public String getLinePattern() {
-        return linePattern;
-    }
-
-    public void setLinePattern(String linePattern) {
-        this.linePattern = linePattern;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
+//    public String getLinePattern() {
+//        return linePattern;
+//    }
+//
+//    public void setLinePattern(String linePattern) {
+//        this.linePattern = linePattern;
+//    }
+//
+//    public String getColor() {
+//        return color;
+//    }
+//
+//    public void setColor(String color) {
+//        this.color = color;
+//    }
 
     public boolean isShowLine() {
         return showLine;
@@ -140,12 +141,12 @@ public class LineChartSeries extends ChartSeries {
         //MWK
         // jqPlot custom line patterns are arrays and should 
         // be rendered WITHOUT single quotes
-        if (this.getLinePattern().startsWith("[")) {
-            writer.write(",linePattern:" + this.getLinePattern());
-        } else {
-            writer.write(",linePattern:'" + this.getLinePattern() + "'");
-        }
-        writer.write(",color:'" + this.getColor() + "'");
+//        if (this.getLinePattern().startsWith("[")) {
+//            writer.write(",linePattern:" + this.getLinePattern());
+//        } else {
+//            writer.write(",linePattern:'" + this.getLinePattern() + "'");
+//        }
+//        writer.write(",color:'" + this.getColor() + "'");
 
         writer.write(",markerOptions:{show:" + this.isShowMarker() + ", style:'" + this.getMarkerStyle() + "'}");
 
