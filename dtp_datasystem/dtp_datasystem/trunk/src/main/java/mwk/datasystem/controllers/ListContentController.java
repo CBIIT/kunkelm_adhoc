@@ -423,7 +423,7 @@ sessionController.configurationBean.performUpdateColumns();
     }
     // </editor-fold>
 
-    public void appendToaliasTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendToaliasTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getAliasTextArea() == null) {
             listContentBean.setAliasTextArea("");
@@ -431,7 +431,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setAliasTextArea(item + " " + listContentBean.getAliasTextArea());
     }
 
-    public void appendTotargetTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendTotargetTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getTargetTextArea() == null) {
             listContentBean.setTargetTextArea("");
@@ -439,7 +439,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setTargetTextArea(item + " " + listContentBean.getTargetTextArea());
     }
 
-    public void appendToprojectCodeTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendToprojectCodeTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getProjectCodeTextArea() == null) {
             listContentBean.setProjectCodeTextArea("");
@@ -447,7 +447,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setProjectCodeTextArea(item + " " + listContentBean.getProjectCodeTextArea());
     }
 
-    public void appendToplateTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendToplateTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getPlateTextArea() == null) {
             listContentBean.setPlateTextArea("");
@@ -455,7 +455,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setPlateTextArea(item + " " + listContentBean.getPlateTextArea());
     }
 
-    public void appendTocasTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendTocasTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getCasTextArea() == null) {
             listContentBean.setCasTextArea("");
@@ -463,7 +463,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setCasTextArea(item + " " + listContentBean.getCasTextArea());
     }
 
-    public void appendTodrugNameTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendTodrugNameTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getDrugNameTextArea() == null) {
             listContentBean.setDrugNameTextArea("");
@@ -471,7 +471,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setDrugNameTextArea(item + " " + listContentBean.getDrugNameTextArea());
     }
 
-    public void appendTonscTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendTonscTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getNscTextArea() == null) {
             listContentBean.setNscTextArea("");
@@ -479,7 +479,7 @@ sessionController.configurationBean.performUpdateColumns();
         listContentBean.setNscTextArea(item + " " + listContentBean.getNscTextArea());
     }
 
-    public void appendTocmpdNamedSetTextArea(SelectEvent event, SearchCriteriaBean listContentBean) {
+    public void appendTocmpdNamedSetTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (listContentBean.getCmpdNamedSetTextArea() == null) {
             listContentBean.setCmpdNamedSetTextArea("");

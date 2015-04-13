@@ -45,6 +45,7 @@ public class HelperCmpd {
 
             tx = session.beginTransaction();
             Criteria c = session.createCriteria(CmpdFragment.class);
+            c.setMaxResults(2000);
             c.add(Restrictions.eq("id", cfVO.getId()));
 
             CmpdFragment cfEntity = (CmpdFragment) c.uniqueResult();
@@ -90,6 +91,7 @@ public class HelperCmpd {
             tx = session.beginTransaction();
 
             Criteria c = session.createCriteria(Cmpd.class);
+            c.setMaxResults(2000);
 
             c.add(Restrictions.eq("nsc", id));
 
@@ -138,6 +140,7 @@ public class HelperCmpd {
             tx = session.beginTransaction();
 
             Criteria c = session.createCriteria(Cmpd.class);
+            c.setMaxResults(2000);
             c.add(Restrictions.in("nsc", nscIntList));
             List<Cmpd> cmpdList = (List<Cmpd>) c.list();
 
@@ -226,6 +229,8 @@ public class HelperCmpd {
 
             Criteria c = session.createCriteria(Cmpd.class)
                     .setProjection(Projections.property("id"));
+            
+            c.setMaxResults(2000);
 
             Disjunction disj = Restrictions.disjunction();
 
@@ -344,6 +349,7 @@ public class HelperCmpd {
 
             tx = session.beginTransaction();
             Criteria cmpdCrit = session.createCriteria(Cmpd.class);
+            cmpdCrit.setMaxResults(2000);
             cmpdCrit.add(Restrictions.in("nsc", nscIntList));
             List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
 
@@ -358,6 +364,7 @@ public class HelperCmpd {
 // fetch a list of cmpdViews
             Criteria cvCrit = session.createCriteria(CmpdTable.class);
             cvCrit.add(Restrictions.in("id", cmpdIdList));
+            cvCrit.setMaxResults(2000);
             List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
             for (CmpdTable cv : entityCVlist) {
@@ -392,12 +399,14 @@ public class HelperCmpd {
 
             tx = session.beginTransaction();
             Criteria cmpdCrit = session.createCriteria(Cmpd.class);
+            cmpdCrit.setMaxResults(2000);
             cmpdCrit.add(Restrictions.eq("nsc", nsc));
             Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
 
             Long cmpdId = (Long) session.getIdentifier(cmpd);
 
             Criteria cvCrit = session.createCriteria(CmpdTable.class);
+            cvCrit.setMaxResults(2000);
             cvCrit.add(Restrictions.eq("id", cmpdId));
             CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
 

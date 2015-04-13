@@ -30,6 +30,8 @@ import mwk.datasystem.vo.CmpdVO;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
 
+// MWK TODO do these need setMaxResults or will that percolate from fetchers elsewhere?
+
 /**
  *
  * @author mwkunkel
