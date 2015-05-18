@@ -92,7 +92,7 @@ public class MenuBean implements Serializable {
       item = new DefaultMenuItem("Salts Workbench");
       item.setTitle("setTitle test for Salts Workbench");
       item.setIcon("fa fa-cogs");
-      item.setCommand("#{saltController.handleListAllSalts}");
+      item.setCommand("#{saltsWorkbenchController.handleListAllSalts}");
       datSysOps.addElement(item);
 
       model.addElement(datSysOps);

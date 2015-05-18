@@ -40,6 +40,7 @@ count(*),
 array_to_string(array_agg(distinct name), ',') as names, 
 array_to_string(array_agg(distinct source), ',') as sources 
 from processed_salts
+
 group by 1, 2, 3, 4, 5 order by 2 desc;
 
 create index unique_salts_can_taut_strip_stereo on unique_salts(can_taut_strip_stereo);
@@ -57,7 +58,8 @@ select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt
 
 insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment)
 select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight, sources
-from unique_salts;
+from unique_salts
+where sources not like '%olvent%';
 
 alter table cmpd_known_salt add fixed varchar;
 

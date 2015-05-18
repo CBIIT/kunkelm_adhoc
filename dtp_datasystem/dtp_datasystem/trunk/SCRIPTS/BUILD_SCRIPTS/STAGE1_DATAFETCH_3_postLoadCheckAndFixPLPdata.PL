@@ -77,7 +77,7 @@ print "fragsRemain_minFragIdx: $fragsRemain_minFragIdx fragsRemain_maxFragIdx: $
 print "ctab400_minFragIdx: $ctab400_minFragIdx ctab400_maxFragIdx: $ctab400_maxFragIdx\n";
 print "ctabRemain_minFragIdx: $ctabRemain_minFragIdx ctabRemain_maxFragIdx: $ctabRemain_maxFragIdx\n";
 
-## -- update the fragmentindex to fix problems
+## -- only update the fragmentindex if problems were found
 ##
 ##update rs3_from_plp_frags
 ##set fragmentindex = fragmentindex + 1000000
