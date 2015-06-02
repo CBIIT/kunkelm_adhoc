@@ -9673,6 +9673,17 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/uploadList.xhtml -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/CHANGELOG -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/build.xml -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/firstReleaseFileManagement.sql -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/manifest.mf -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/build-impl.xml -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/genfiles.properties -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/project.properties -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/project.xml -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/src/microxenoparsers/Main.java -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/src/microxenoparsers/SecondRelease.java -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/uploadAndResolveAffyData.sql -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/maven-jsf-plugin/1.3.2/_maven.repositories -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/maven-jsf-plugin/1.3.2/maven-jsf-plugin-1.3.2.jar -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/maven-jsf-plugin/1.3.2/maven-jsf-plugin-1.3.2.pom -text
