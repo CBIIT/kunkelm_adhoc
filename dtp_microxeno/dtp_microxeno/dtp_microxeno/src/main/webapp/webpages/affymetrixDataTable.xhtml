@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="Search Criteria" />
+    </ui:define>
+
+    <ui:define name="content">
+
+        <p:dataTable value="#{microXenoController.affymetrixDataList}"
+                     sortMode="multiple"
+                     var="dat">
+
+            <p:column headerText="ProbeSetId"
+                      sortBy="#{dat.affymetrixIdentifier.probeSetId}"
+                      filterBy="#{dat.affymetrixIdentifier.probeSetId}">
+                <h:outputText value="#{dat.affymetrixIdentifier.probeSetId}" />
+            </p:column>
+            
+            <p:column headerText="Genecard"
+                      sortBy="#{dat.affymetrixIdentifier.genecard}"
+                      filterBy="#{dat.affymetrixIdentifier.genecard}">
+                <h:outputText value="#{dat.affymetrixIdentifier.genecard}" />
+            </p:column>
+
+            <p:column headerText="Tumor"
+                      sortBy="#{dat.tumor.tumorName}"
+                      filterBy="#{dat.tumor.tumorName}">
+                <h:outputText value="#{dat.tumor.tumorName}" />
+            </p:column>
+
+            <p:column headerText="Tumor Type"
+                      sortBy="#{dat.tumor.tumorType}"
+                      filterBy="#{dat.tumor.tumorType}">
+                <h:outputText value="#{dat.tumor.tumorType}" />
+            </p:column>
+
+            <p:column headerText="Passage"
+                      sortBy="#{dat.passage}"
+                      filterBy="#{dat.passage}">
+                <h:outputText value="#{dat.passage}" />
+            </p:column>
+
+            <p:column headerText="Replicate"
+                      sortBy="#{dat.replicate}"
+                      filterBy="#{dat.replicate}">
+                <h:outputText value="#{dat.replicate}" />
+            </p:column>                
+
+            <p:column headerText="Value"
+                      sortBy="#{dat.value}">
+                <h:outputText value="#{dat.value}" />
+            </p:column>
+
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    
+    <!-- androMDA-generated mappings -->
+    <!-- MWK 01June2015 For joinedClasses in AffymetrixData and Tumor modified from proxy,select to false,join -->
+    <mapping resource="mwk/microxeno/domain/AffymetrixData.hbm.xml"/>
+    <mapping resource="mwk/microxeno/domain/AffymetrixIdentifier.hbm.xml"/>
+    <mapping resource="mwk/microxeno/domain/FlatData.hbm.xml"/>
+    <mapping resource="mwk/microxeno/domain/Tumor.hbm.xml"/>
+    <mapping resource="mwk/microxeno/domain/TumorType.hbm.xml"/>
+
+  </session-factory>
+</hibernate-configuration>

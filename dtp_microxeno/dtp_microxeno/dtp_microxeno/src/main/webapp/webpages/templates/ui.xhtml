@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>MicroXeno Project</title>
+            </f:facet>
+
+            <noscript>
+
+                <font color="red">
+                    <h1>This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</h1>
+                </font>
+
+                <style type="text/css">
+                    #microXenoForm { display:none; }
+                </style>
+
+            </noscript>
+
+            <h:outputScript library="js" name="sarcomaJavaScript.js"/>
+            <h:outputScript library="js" name="canvasWrangling.js"/>
+            <h:outputScript library="js" name="verticalHeader.js"/>
+
+            <ui:remove>
+                Only on pages with mean graphs  
+                <h:outputScript library="js" name="jqplot.canvasOverlay.js"/>
+            </ui:remove>
+
+            <h:outputStylesheet library="css" name="my.css" />
+
+        </h:head>
+
+        <h:body>
+
+            <h:form id="microXenoForm">
+
+                <p:growl id="growl" showDetail="true" sticky="true" />  
+
+                <h:outputLink style="color: transparent;" value="#centerContent">
+                    <h:outputText value="Skip to Content"/>
+                </h:outputLink>
+
+                <p:panel style="display: block;" id="wholePage">
+
+
+
+                    <a name="centerContent"/>
+
+                    <p:panel id="centerContent" style="display: block;">
+
+                        <ui:include src="/webpages/templates/site_nav.xhtml"/>
+
+                        <ui:insert name="content"/>
+
+                    </p:panel>
+
+                </p:panel>
+
+            </h:form>
+
+             <ui:include src="/webpages/dialogExportImage.xhtml"/>
+
+        </h:body>
+
+    </f:view>
+
+</html>

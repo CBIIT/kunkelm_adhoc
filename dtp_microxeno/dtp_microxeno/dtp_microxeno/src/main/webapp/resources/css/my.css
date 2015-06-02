@@ -1,0 +1,107 @@
+.ui-commandlink:focus{
+    color: red !important; 
+    font-size: xx-large !important; 
+    /* text-decoration: underline !important; */
+    border: dotted !important;
+}
+
+.ui-button:focus{
+    color: red !important; 
+    font-size: xx-large !important; 
+    /* text-decoration: underline !important; */
+    border: dotted !important;
+}
+
+.ui-autocomplete-input:focus{
+    color: red !important; 
+    font-size: xx-large !important; 
+    /* text-decoration: underline !important; */
+    border: dotted !important;
+}
+
+a:focus { 
+    color: red !important; 
+    font-size: xx-large !important; 
+    text-decoration:underline !important; 
+    border: dotted !important;
+}
+
+a:active {
+    font-weight: bold; 
+    /* text-decoration: underline; */
+}
+
+textarea:focus { 
+    border-width: thick; 
+    border-color: red;}
+
+/* MWK no fieldset border to try to tidy pages */    
+.ui-fieldset {
+    border: none;
+}    
+
+/* MWK so that fieldset legends don't look like buttons */
+.ui-fieldset .ui-fieldset-legend {
+    background-color: transparent;
+}
+
+/* adding hard-coded color to overcome weird column value colors on heat maps */
+.ui-datatable th, .ui-datatable tfoot td {
+    margin: 0px;
+    overflow: hidden;
+    padding: 0px;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #C4C4C4 !important;
+}
+
+.jqplot-yaxis-label {
+    margin-right: 10px;
+    /*text-align: center;*/
+    font-size: 11pt;
+    position: absolute;
+    color: red;
+}
+
+
+table.jqplot-cursor-tooltip {
+    border: 1px solid #cccccc;
+    font-size: 0.75em;
+    color: black;
+}
+
+.jqplot-cursor-tooltip {
+    border: 1px solid #cccccc;
+    font-size: 0.75em;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 1);
+    padding: 1px;
+    color: black;
+}
+
+/* MWK borderless panels */
+.borderlessPanelGrid tr, .borderlessPanelGrid td {
+    border:none !important;
+}
+
+/* MWK unpadded table for heatMap */
+.unpaddedTable {
+    border-spacing: 0px;
+}
+
+/* Styles for rotateTableCellContent plugin*/
+table div.rotated {
+    -webkit-transform:rotate(270deg);
+    -moz-transform:rotate(270deg);
+    writing-mode:tb-rl;
+    white-space:nowrap;
+}
+
+thead th {
+    vertical-align:top;
+}
+
+table .vertical {
+    white-space:nowrap;
+    background-color:white;
+}

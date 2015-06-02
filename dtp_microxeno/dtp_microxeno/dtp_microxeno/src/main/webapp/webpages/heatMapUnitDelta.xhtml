@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:outputLink style="color: transparent; font-size: xx-small;" value="#afterExportData">
+        <h:outputText value="Skip Export Data"/>
+    </h:outputLink>
+
+    <p:fieldset legend="Export Data or Images">
+
+        <p:commandButton ajax="false" value="Export to Excel">
+            <p:dataExporter type="xls" target="exportableHeatMapTbl" fileName="heatMapUnitDeltaData" />    
+        </p:commandButton>
+
+        <p:commandButton ajax="false" value="Export as CSV">  
+            <p:dataExporter type="csv" target="exportableHeatMapTbl" fileName="heatMapUnitDeltaData" />  
+        </p:commandButton> 
+
+        <p:commandButton type="button" 
+                         value="Image VERTICAL" 
+                         onclick="exportHeatMap(#{heatMap.gson}, false, true)"/>  
+
+        <p:commandButton type="button" 
+                         value="Image HORIZONTAL" 
+                         onclick="exportHeatMap(#{heatMap.gson}, true, true)"/>  
+
+    </p:fieldset>
+
+    <a id="afterExportData" tabindex="-1" />
+
+    <a id="justBeforePageContent" tabindex="-1"/>
+
+    <p:fieldset legend="Page Instructions">        
+
+        <p:panelGrid>
+            <p:row>
+                <p:column>
+                    <h:outputText value="#{heatMap.greenUnitDeltaValue}"/>
+                </p:column>
+                <p:column style="background-color: green">
+                </p:column>        
+            </p:row>
+            <p:row>
+                <p:column>
+                    <h:outputText value="#{heatMap.yellowUnitDeltaValue}"/>
+                </p:column>
+                <p:column style="background-color: yellow">
+                </p:column>        
+            </p:row>
+            <p:row>
+                <p:column>
+                    <h:outputText value="#{heatMap.redUnitDeltaValue}"/>
+                </p:column>
+                <p:column style="background-color: red">
+                </p:column>        
+            </p:row>
+            <p:row>
+                <p:column>
+                    <h:outputText value="NO DATA"/>
+                </p:column>
+                <p:column style="background-color: black">
+                </p:column>        
+            </p:row>
+        </p:panelGrid>
+
+        <h:outputLabel for="heatMapTbl" 
+                       style="font-size: 200%;" 
+                       value="#{heatMapDataType} With #{fn:length(heatMap.gridXheaderList)} columns and #{fn:length(heatMap.gridYheaderList)} rows" />
+
+        <p:dataTable id="heatMapTbl"                     
+                     var="row" 
+                     rowIndexVar="rowIndex"                 
+                     value="#{heatMap.gridYheaderList}"       
+                     style="width:#{fn:length(heatMap.gridXheaderList) * 50 + 200}px;">  
+
+            <p:columns width="200"
+                       value="#{heatMap.gridXheaderList[0]}"                                   
+                       var="thisFakeCol"
+                       columnIndexVar="fakeColIdx"
+                       style="background-color: #{heatMap.gridYheaderList[rowIndex].rgbColor}">
+
+                <f:facet name="header">  
+                    <h:outputText value="Table cells are colored by #{heatMap.dataType2}"
+                                  style="white-space: pre-line;"/>
+                </f:facet>
+
+                <p:commandLink action="#{sarcomaController.performCellLineSelect(heatMap.gridYheaderList[rowIndex].label1)}"
+                               value="#{heatMap.gridYheaderList[rowIndex].label2} #{heatMap.gridYheaderList[rowIndex].label1}"/>
+
+            </p:columns>
+
+            <p:columns width="50"
+                       value="#{heatMap.gridXheaderList}"                                   
+                       var="thisCol" 
+                       columnIndexVar="colIndex"
+                       style="background-color: #{heatMap.gridXY[colIndex][rowIndex].unitDeltaColor}">
+
+                <f:facet name="header">
+
+                    <p:panelGrid columns="1">
+                     
+                        <h:outputText value="#{heatMap.gridXheaderList[colIndex].label1} #{heatMap.gridXheaderList[colIndex].label2} unitDeltaValue" 
+                                      class="vertical"/>  
+
+                    </p:panelGrid>
+
+                </f:facet>
+
+                <ui:remove>
+                    commandLink if this is NSC data, otherwise just output text
+                </ui:remove>
+
+                <p:commandLink rendered="#{fn:startsWith(heatMap.gridXheaderList[colIndex].identString, 'NSC_')}"
+                               action="#{sarcomaController.renderConcResp}">                    
+                    <h:outputText value="#{heatMap.gridXY[colIndex][rowIndex].unitDeltaValue}">
+                        <f:convertNumber pattern="#.##"/>
+                    </h:outputText>
+                    <f:param name="nsc" value="#{heatMap.gridXheaderList[colIndex].label1}"/>
+                    <f:param name="cellLineName" value="#{heatMap.gridYheaderList[rowIndex].label1}"/>
+                </p:commandLink>
+
+                <h:outputText rendered="#{!fn:startsWith(heatMap.gridXheaderList[colIndex].identString, 'NSC_')}"
+                              value="#{heatMap.gridXY[colIndex][rowIndex].unitDeltaValue}">
+                    <f:convertNumber pattern="#.##"/>
+                </h:outputText>
+
+
+            </p:columns>
+
+        </p:dataTable>
+
+    </p:fieldset>
+
+    <p:dataTable id="exportableHeatMapTbl"                     
+                 var="row" 
+                 rowIndexVar="rowIndex"                 
+                 value="#{heatMap.gridYheaderList}"       
+                 style="display: none;">  
+
+        <p:column width="200">
+            <f:facet name="header">  
+                <h:outputText value="#{heatMap.dataType2}"/>
+            </f:facet>            
+            <h:outputText value="#{heatMap.gridYheaderList[rowIndex].label1} #{heatMap.gridYheaderList[rowIndex].label2}"/>
+        </p:column>
+
+        <p:columns width="50"
+                   value="#{heatMap.gridXheaderList}"                                   
+                   var="thisCol" 
+                   columnIndexVar="colIndex">
+
+            <f:facet name="header">
+                <h:outputText value="#{heatMap.gridXheaderList[colIndex].label1} #{heatMap.gridXheaderList[colIndex].label2} unitDeltaValue"/>
+            </f:facet>
+            <h:outputText value="#{heatMap.gridXY[colIndex][rowIndex].unitDeltaValue}">
+                <f:convertNumber pattern="#.##"/>
+            </h:outputText>
+
+        </p:columns>
+
+    </p:dataTable>
+
+</ui:composition>

@@ -1,0 +1,20 @@
+select
+        this_.ID as ID2_0_,
+        this_.PROBE_SET_ID as PROBE2_2_0_,
+        this_.ACCESSION as ACCESSION2_0_,
+        this_.GENECARD as GENECARD2_0_,
+        this_.TUMOR_NAME as TUMOR5_2_0_,
+        this_.TUMOR_TYPE as TUMOR6_2_0_,
+        this_.EA_ID as EA7_2_0_,
+        this_.PASSAGE as PASSAGE2_0_,
+        this_.REPLICATE as REPLICATE2_0_,
+        this_.VALUE as VALUE2_0_ 
+    from
+        FLAT_DATA this_ 
+    where
+        this_.TUMOR_NAME in (
+            'poohbah','donkie'
+        ) 
+        and this_.GENECARD in (
+            'poobah','donkie'
+        )

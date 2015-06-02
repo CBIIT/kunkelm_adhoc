@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:outputLink style="color: transparent; font-size: xx-small;" 
+                  value="#justBeforePageContent">
+        <h:outputText value="Skip To Page Content"/>
+    </h:outputLink>
+
+    <h:outputLink style="color: transparent; font-size: xx-small;" 
+                  value="#afterSiteNavigation">
+        <h:outputText value="Skip Site Navigation"/>
+    </h:outputLink>
+
+    <p:fieldset legend="Site Navigation">
+
+        <p:commandButton ajax="false"
+                         style="color: blue;" 
+                         action="/documentation.xhtml?faces-redirect=true"
+                         value="Project Documentation" />
+
+        <p:commandButton ajax="false"
+                         style="color: blue;" 
+                         action="/downloads.xhtml?faces-redirect=true"
+                         value="Data Downloads" />
+
+        <br/>
+
+        <p:commandButton ajax="false"                         
+                         action="/webpages/searchCriteria.xhtml?faces-redirect=true"
+                         value="Home/Search Page"/>
+
+        <p:commandButton ajax="false"
+                         action="/webpages/affymetrixDataTable.xhtml?faces-redirect=true"
+                         value="Raw Data"/>
+
+        <p:commandButton ajax="false"
+                         action="/webpages/passageAverageDataTable.xhtml?faces-redirect=true"
+                         value="Passage Aggregate Data"/>
+
+        <p:commandButton ajax="false"
+                         action="/webpages/affyHeatMap.xhtml?faces-redirect=true"
+                         value="Heat Map"/>        
+
+         <p:commandButton ajax="false"
+                         action="/webpages/affyHeatMapUnitDelta.xhtml?faces-redirect=true"
+                         value="Heat Map Unit Delta"/> 
+        
+    </p:fieldset>
+
+    <a id="afterSiteNavigation" tabindex="-1" />
+
+</ui:composition>
