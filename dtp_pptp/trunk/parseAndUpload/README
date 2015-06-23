@@ -1,0 +1,66 @@
+To upload the raw mouse data files:
+
+----------File editing:
+
+Export from .xls files as .csv stats page from stats workbook, censored page from results workbook, response summary page from results workbook and event times from event times workbook.
+
+Insert a comment symbol ('#') as the first character in the column headers row and in any empty rows.
+
+Convert all tab delimiters to commas.
+
+Empty fields require a . placeholder.   i.e.   ,,,   needs to be   ,.,.,.   
+
+Trim all blank spaces.
+
+There are at least five different layouts for the stats files with various added/missing columns.   The .java files have the differences hard-coded by compound.   
+
+File names and locations:
+
+The files should be in a subdirectory csvFiles. The file names for compound 0501 are 0501stats.csv, 0501censored.csv, 0501events.csv, 0501responsesummary.csv 
+
+----------Java processing:
+
+Run the callJavaParsers.sh script file.  This calls the three separate java programs which parse the spreadsheet .csv files into a partially-normalized format for uploading to Postgres.
+
+The output files are written to the csvFiles subdirectory and have a .processed extension.
+
+For each of the different .processed files (stats, censored, etc) a single big rollup file is created.
+
+----------Postgres upload and processing:
+
+Generate database from pptp model.
+
+Populate the "type" tables by running the script restoreKeyTables.sql   This uses the various table.dump files to insert all 
+of the data for creation and resolution of foreign keys for compounds, cell lines, mice, etc.
+
+Create the "master" table by running createMasterLookup.sql.  This resolves together many of the identifier files to
+simplify determining the foreign keys among the various data tables.
+
+Run the UploadAndResolveCompoundData.sql postgres script
+
+----------processing Affymetrix data
+
+Run shell script processAffy.sh
+
+Concatenate all of the processed files to one file: big.processed
+
+uploadAndResolveAffyData.sql
+
+
+
+
+---------------------------DATA Export for reimport into dedicated COMPARE
+
+Run script exportAffyDataToCompare.sql to generate a series of files that can be imported
+into Oracle version of COMPARE.
+
+Upload order is important for foreign-key constraints:
+
+export_cell_line.csv
+export_test_result_type.csv
+export_vector_ident.csv
+export_mol_targ_ident.csv
+export_vector.csv
+
+
+

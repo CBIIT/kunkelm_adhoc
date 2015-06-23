@@ -6,7 +6,7 @@ package mwk.pptp.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import mwk.pptp.androdomain.CellLineGroup;
+import mwk.pptp.domain.CellLineGroup;
 import mwk.pptp.vo.CellLineGroupVO;
 import mwk.pptp.vo.CellLineGroupWithMouseGroupsWithMousesVO;
 import mwk.pptp.vo.MouseGraphShuttleVO;

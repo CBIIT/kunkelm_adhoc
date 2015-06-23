@@ -2,27 +2,27 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <mapping resource="AffyData.hbm.xml"/>
-    <mapping resource="AffyIdentifierType.hbm.xml"/>
-    <mapping resource="CellLineGroup.hbm.xml"/>
-    <mapping resource="CellLineMaster.hbm.xml"/>
-    <mapping resource="CellLineType.hbm.xml"/>
-    <mapping resource="CellType.hbm.xml"/>
-    <mapping resource="CompoundMaster.hbm.xml"/>
-    <mapping resource="CompoundType.hbm.xml"/>
-    <mapping resource="ConcentrationUnitType.hbm.xml"/>
-    <mapping resource="GroupRoleType.hbm.xml"/>
-    <mapping resource="ImplantSiteType.hbm.xml"/>
-    <mapping resource="MouseCrosstab.hbm.xml"/>
-    <mapping resource="MouseGroup.hbm.xml"/>
-    <mapping resource="Mouse.hbm.xml"/>
-    <mapping resource="MouseType.hbm.xml"/>
-    <mapping resource="MtdStudy.hbm.xml"/>
-    <mapping resource="PanelType.hbm.xml"/>
-    <mapping resource="RetestType.hbm.xml"/>
-    <mapping resource="ScheduleType.hbm.xml"/>
-    <mapping resource="Summary.hbm.xml"/>
-    <mapping resource="TreatmentRouteType.hbm.xml"/>
-    <mapping resource="VehicleType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/AffyData.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/AffyIdentifierType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/CellLineGroup.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/CellLineMaster.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/CellLineType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/CellType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/CompoundMaster.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/CompoundType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/ConcentrationUnitType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/GroupRoleType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/ImplantSiteType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/MouseCrosstab.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/MouseGroup.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/Mouse.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/MouseType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/MtdStudy.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/PanelType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/RetestType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/ScheduleType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/Summary.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/TreatmentRouteType.hbm.xml"/>
+    <mapping resource="mwk/pptp/domain/VehicleType.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

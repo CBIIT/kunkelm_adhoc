@@ -41,8 +41,8 @@ public class Comparators {
                     .toComparison();
         }
     }
-    
-     public static class MouseSurvivalShuttleComparator implements Comparator {
+
+    public static class MouseSurvivalShuttleComparator implements Comparator {
 
         public int compare(Object o1, Object o2) {
 
@@ -54,5 +54,5 @@ public class Comparators {
                     .toComparison();
         }
     }
-    
+
 }

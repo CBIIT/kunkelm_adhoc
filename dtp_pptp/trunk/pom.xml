@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>mwk</groupId>
-    <artifactId>dtp_pptp</artifactId>
-    <version>0.1</version>
+    <artifactId>pptp</artifactId>
+    <version>20150122</version>
     <packaging>war</packaging>
 
     <name>dtp_pptp</name>
@@ -15,58 +15,6 @@
     </properties>
 
     <dependencies>
-        
-        <!--
-
-        <dependency>
-            <groupId>org.openscience</groupId>
-            <artifactId>cdk</artifactId>
-            <version>1.4.17</version>            
-            <scope>system</scope>
-            <systemPath>${filepath}/org/openscience/cdk/1.4.17/cdk-1.4.17.jar</systemPath>            
-        </dependency>
-    
-        <dependency>  
-            <groupId>com.ggasoftware</groupId>  
-            <artifactId>indigo-inchi</artifactId>  
-            <version>1.1.10</version>  
-            <scope>system</scope>
-            <systemPath>${filepath}/com/ggasoftware/indigo-inchi/1.1.10/indigo-inchi-1.1.10.jar</systemPath>            
-        </dependency>  
-        
-        <dependency>  
-            <groupId>com.ggasoftware</groupId>  
-            <artifactId>indigo</artifactId>  
-            <version>1.1.10</version>  
-            <scope>system</scope>
-            <systemPath>${filepath}/com/ggasoftware/indigo/1.1.10/indigo-1.1.10.jar</systemPath>            
-        </dependency>  
-        
-        <dependency>  
-            <groupId>com.ggasoftware</groupId>  
-            <artifactId>indigo-renderer</artifactId>  
-            <version>1.1.10</version>  
-            <scope>system</scope>
-            <systemPath>${filepath}/com/ggasoftware/indigo-renderer/1.1.10/indigo-renderer-1.1.10.jar</systemPath>            
-        </dependency>  
-        
-        <dependency>  
-            <groupId>com.ggasoftware</groupId>  
-            <artifactId>indigo-jna</artifactId>  
-            <version>1.1.10</version>  
-            <scope>system</scope>
-            <systemPath>${filepath}/com/ggasoftware/indigo-jna/1.1.10/indigo-jna-1.1.10.jar</systemPath>            
-        </dependency>  
-    
-            -->
-                            
-        <dependency>  
-            <groupId>org.primefaces</groupId>  
-            <artifactId>primefaces</artifactId>  
-            <version>3.4.2</version>
-            <type>jar</type>
-        </dependency>  
-    
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -97,14 +45,6 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.3.2.GA</version>
         </dependency>
-        
-        <!-- MWK replicate entry from below in the hierarchy
-        <dependency>
-            <groupId>javax.sql</groupId>
-            <artifactId>jdbc-stdext</artifactId>
-            <version>2.0</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
@@ -114,25 +54,13 @@
             <groupId>org.hibernate</groupId>
             <artifactId>ejb3-persistence</artifactId>
             <version>1.0.1.GA</version>
-        </dependency>      
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-distribution</artifactId>
-            <version>3.6.0.Beta2</version>
-            <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>castor</groupId>
-            <artifactId>castor</artifactId>
-            <version>1.0.2</version>
-            <type>jar</type>
-        </dependency>
+        </dependency>       
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -143,6 +71,12 @@
             <groupId>batik</groupId>
             <artifactId>batik-transcoder</artifactId>
             <version>1.6-1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.2-1002-jdbc4</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -182,41 +116,10 @@
             <type>jar</type>
         </dependency>
         
-        <!-- MWK removed 10 June 2013 before SVN
-        
         <dependency>
-            <groupId>org.indigo</groupId>
-            <artifactId>indigo</artifactId>
-            <version>1.1.10</version>
-            <type>jar</type>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.indigo</groupId>
-            <artifactId>indigo-inchi</artifactId>
-            <version>1.1.10</version>
-            <type>jar</type>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.indigo</groupId>
-            <artifactId>indigo-renderer</artifactId>
-            <version>1.1.10</version>
-            <type>jar</type>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.indigo</groupId>
-            <artifactId>jan</artifactId>
-            <version>1.1.10</version>
-            <type>jar</type>
-        </dependency>
-        
-        -->
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>8.4-702.jdbc4</version>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.1.11-MWK</version>
         </dependency>
         
         <dependency>
@@ -225,7 +128,19 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>mwk.pptp</groupId>
+            <artifactId>pptp-common</artifactId>
+            <version>0.1</version>
+        </dependency>
         
+        <dependency>
+            <groupId>mwk.pptp</groupId>
+            <artifactId>pptp-core</artifactId>
+            <version>0.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -276,12 +191,32 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/webapp/resources/properties</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
     </build>
-    <repositories>
+    
+    <repositories>         
         <repository>
             <id>unknown-jars-temp-repo</id>
             <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
-            <url>file:${project.basedir}/lib</url>
+            <url>file:${project.basedir}/lib/repository</url>
+        </repository>        
+        <repository>  
+            <id>nci-nexus</id>  
+            <name>NCI Nexus</name>  
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <layout>default</layout>  
         </repository>
     </repositories>
+    
 </project>
