@@ -30,18 +30,18 @@
                effect="fade">
 
       <p:tab title="Search Criteria">
-        <ui:include src="/pptpwebapp/searchCriteria.xhtml"/>                
+        <ui:include src="/webpages/searchCriteria.xhtml"/>                
       </p:tab>
 
       <p:tab title="Compound/Cell Line Results" disabled="#{pptpController.disbleCellLineGroups}">                        
-        <ui:include src="/pptpwebapp/cellLineGroups.xhtml"/>
+        <ui:include src="/webpages/cellLineGroups.xhtml"/>
       </p:tab>
       
     </p:tabView>
     
-    <ui:include src="/pptpwebapp/dialogMouseGraphs.xhtml" />
+    <ui:include src="/webpages/dialogMouseGraphs.xhtml" />
     
-     <ui:include src="/pptpwebapp/dialogSearchSummary.xhtml" />
+     <ui:include src="/webpages/dialogSearchSummary.xhtml" />
 
     <p:dialog widgetVar="exportImageDlg" modal="true">  
       <f:facet name="header">                  

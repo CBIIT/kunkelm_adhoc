@@ -10051,6 +10051,14 @@ dtp_pptp/trunk/src/main/webapp/resources/images/csv.png -text
 dtp_pptp/trunk/src/main/webapp/resources/images/excel.png -text
 dtp_pptp/trunk/src/main/webapp/resources/images/pdf.png -text
 dtp_pptp/trunk/src/main/webapp/resources/images/xml.png -text
+dtp_pptp/trunk/src/main/webapp/webpages/cellLineGroups.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/dialogMouseGraphs.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/dialogSearchSummary.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/mouseCharts.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/searchCriteria.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/searchCriteria_ORIGINAL.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/searchResults.xhtml -text
+dtp_pptp/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_pptp/trunk/src/main/webapp/welcomePrimefaces.xhtml -text
 dtp_pptp/trunk/uml/pptp/common/pom.xml -text
 dtp_pptp/trunk/uml/pptp/core/pom.xml -text
