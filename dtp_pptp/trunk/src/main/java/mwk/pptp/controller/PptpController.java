@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import mwk.pptp.util.Comparators.MouseDataShuttleComparator;
 import mwk.pptp.util.Comparators.MouseRTVShuttleComparator;
 import mwk.pptp.util.Comparators.MouseSurvivalShuttleComparator;
@@ -29,7 +29,7 @@ import org.primefaces.model.chart.LineChartSeries;
  * @author mwkunkel
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PptpController implements Serializable {
 
     private List<String> pptpIdentifiers;
@@ -96,7 +96,6 @@ public class PptpController implements Serializable {
     public ExtendedCartesianChartModel renderMouseData(MouseGraphShuttleVO mgShut) {
 
         //System.out.println("IN renderMouseData in pptpController");
-
         ExtendedCartesianChartModel thisModel = new ExtendedCartesianChartModel();
         thisModel.setTitle(mgShut.getCompoundName() + " " + mgShut.getCellLineName());
 
@@ -129,13 +128,11 @@ public class PptpController implements Serializable {
         }
 
         // series for each entry in the map
-
         System.out.println("Size of theMap in renderMouseData in PptpController: " + theMap.size());
 
         for (Map.Entry<String, List<MouseDataShuttleVO>> thisMap : theMap.entrySet()) {
 
             //System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
-
             // a chart series
             LineChartSeries thisSeries = new LineChartSeries();
             thisSeries.setLabel(thisMap.getKey());
@@ -190,11 +187,9 @@ public class PptpController implements Serializable {
         }
 
         // series for each entry in the map
-
         for (Map.Entry<String, List<MouseRTVShuttleVO>> thisMap : theMap.entrySet()) {
 
             //System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
-
             // a chart series
             LineChartSeries thisSeries = new LineChartSeries();
             thisSeries.setLabel(thisMap.getKey());
@@ -204,7 +199,6 @@ public class PptpController implements Serializable {
             Collections.sort(thisMap.getValue(), new MouseRTVShuttleComparator());
 
             // initialize the series with time 0 FOR SOLID TUMORS
-
             for (MouseRTVShuttleVO mds : thisMap.getValue()) {
                 thisSeries.set(mds.getDay(), mds.getRtv());
             }
@@ -243,11 +237,9 @@ public class PptpController implements Serializable {
         }
 
         // series for each entry in the map
-
         for (Map.Entry<String, List<MouseSurvivalShuttleVO>> thisMap : theMap.entrySet()) {
 
             //System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
-
             // a chart series
             LineChartSeries thisSeries = new LineChartSeries();
             thisSeries.setLabel(thisMap.getKey());
@@ -255,7 +247,7 @@ public class PptpController implements Serializable {
 
             // sort by time-to-event
             Collections.sort(thisMap.getValue(), new MouseSurvivalShuttleComparator());
-            
+
 //            proof of principle
 //            thisSeries.set(0,100);
 //            thisSeries.set(13.9,100);
@@ -268,15 +260,12 @@ public class PptpController implements Serializable {
 //            thisSeries.set(28.1,50);
 //            thisSeries.set(31.9,50);
 //            thisSeries.set(32.1,40);
-            
-            
             // start with 100% at time 0
-            
             double curPct = 100;
             double curTime = 0;
-            
+
             thisSeries.set(curTime, curPct);
-            
+
             for (MouseSurvivalShuttleVO mds : thisMap.getValue()) {
                 // connect to the next time                
                 curTime = mds.getTimeToEvent();
@@ -284,7 +273,7 @@ public class PptpController implements Serializable {
                 // it plots the most-recent data when there are multiple entries with the same x in a series
                 thisSeries.set(curTime - 0.01, curPct);
                 // drop down to the next value
-                curPct = 100 * mds.getPercentEventFree();                
+                curPct = 100 * mds.getPercentEventFree();
                 thisSeries.set(curTime, curPct);
             }
 
@@ -340,7 +329,7 @@ public class PptpController implements Serializable {
 
         this.disbleCellLineGroups = Boolean.FALSE;
 
-        return null;
+        return "/webpages/searchResults.xhtml?faces-redirect=true";
 
     }
 

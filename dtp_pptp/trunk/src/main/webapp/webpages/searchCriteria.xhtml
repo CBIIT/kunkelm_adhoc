@@ -6,120 +6,130 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
 
 
-    <h1>Search by any combination of compound pptpIdentifier or drug name, AffymetrixExon gene symbol or gene description, or SNP id (at least one).</h1>
+    <ui:define name="title">
+        <h:outputText value="Search Results" />
+    </ui:define>
 
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel value="PPTP Identifiers" for="pptpIdentifierListBox" />
-        <p:selectCheckboxMenu id="pptpIdentifierListBox" 
-                              value="#{pptpController.pptpIdentifiers}" 
-                              label="PPTP Identifiers" 
-                              filter="true" 
-                              filterMatchMode="startsWith" 
-                              panelStyle="width:220px">
-            <f:selectItems value="#{applicationScopeBean.pptpIdentifierItems}" />                    
-        </p:selectCheckboxMenu>
-    </p:panel>
+    <ui:define name="content">
 
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel for="geneListBox">
-            Gene Symbol (3+ characters for potential matches)
+        <h1>Search by any combination of compound pptpIdentifier or drug name, AffymetrixExon gene symbol or gene description, or SNP id (at least one).</h1>
+
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel value="PPTP Identifiers" for="pptpIdentifierListBox" />
+            <p:selectCheckboxMenu id="pptpIdentifierListBox" 
+                                  value="#{pptpController.pptpIdentifiers}" 
+                                  label="PPTP Identifiers" 
+                                  filter="true" 
+                                  filterMatchMode="startsWith" 
+                                  panelStyle="width:220px">
+                <br/>
+                <f:selectItems value="#{applicationScopeBean.pptpIdentifierItems}" />                    
+            </p:selectCheckboxMenu>
+        </p:panel>
+
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel for="geneListBox">
+                Gene Symbol (3+ characters for potential matches)
+                <br/>
+                ABL1, TP53, HOXA1, etc.
+            </h:outputLabel>
             <br/>
-            ABL1, TP53, HOXA1, etc.
-        </h:outputLabel>
-        <p:autoComplete  multiple="true"  
-                         scrollHeight="200"
-                         id="geneListBox" 
-                         minQueryLength="3"   
-                         value="#{pptpController.genes}" 
-                         completeMethod="#{applicationScopeBean.completeGene}"/>  
-    </p:panel>
+            <p:autoComplete  multiple="true"  
+                             scrollHeight="200"
+                             id="geneListBox" 
+                             minQueryLength="3"   
+                             value="#{pptpController.genes}" 
+                             completeMethod="#{applicationScopeBean.completeGene}"/>  
+        </p:panel>
 
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel for="snpListBox">            
-            SNP id (3+ characters for potential matches)
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel for="snpListBox">            
+                SNP id (3+ characters for potential matches)
+                <br/>
+                example1, example2, etc.
+            </h:outputLabel>
             <br/>
-            example1, example2, etc.
-        </h:outputLabel>
-        <p:autoComplete  multiple="true"  
-                         scrollHeight="200"
-                         id="snpListBox" 
-                         minQueryLength="3"   
-                         value="#{pptpController.snps}" 
-                         completeMethod="#{applicationScopeBean.completeSnp}"/>  
-    </p:panel>
+            <p:autoComplete  multiple="true"  
+                             scrollHeight="200"
+                             id="snpListBox" 
+                             minQueryLength="3"   
+                             value="#{pptpController.snps}" 
+                             completeMethod="#{applicationScopeBean.completeSnp}"/>  
+        </p:panel>
 
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel value="Drug Names" for="drugNameListBox" />
-        <p:autoComplete  multiple="true"  
-                         scrollHeight="200"
-                         id="drugNameListBox" 
-                         value="#{pptpController.drugNames}" 
-                         completeMethod="#{applicationScopeBean.completeDrugName}"/>  
-    </p:panel>
-
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel for="geneNameListBox" >
-            Gene Descriptor (3+ characters for potential matches)
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel value="Drug Names" for="drugNameListBox" />
             <br/>
-            NOT ACTIVE FOR SEARCH - DEMONSTRATION ONLY
-        </h:outputLabel>
-        <p:autoComplete  multiple="true"  
-                         scrollHeight="200"
-                         id="geneNameListBox" 
-                         minQueryLength="3"   
-                         value="#{pptpController.geneNames}" 
-                         completeMethod="#{applicationScopeBean.completeGeneName}"/>  
-    </p:panel>
+            <p:autoComplete  multiple="true"  
+                             scrollHeight="200"
+                             id="drugNameListBox" 
+                             value="#{pptpController.drugNames}" 
+                             completeMethod="#{applicationScopeBean.completeDrugName}"/>  
+        </p:panel>
 
-    <h1>The results can be restricted by any combination of cell lines or panels.</h1>
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel for="geneNameListBox" >
+                Gene Descriptor (3+ characters for potential matches)
+                <br/>
+                NOT ACTIVE FOR SEARCH - DEMONSTRATION ONLY
+            </h:outputLabel>
+            <br/>
+            <p:autoComplete  multiple="true"  
+                             scrollHeight="200"
+                             id="geneNameListBox" 
+                             minQueryLength="3"   
+                             value="#{pptpController.geneNames}" 
+                             completeMethod="#{applicationScopeBean.completeGeneName}"/>  
+        </p:panel>
 
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel value="Cell Lines" for="cellLineListBox" />
-        <p:selectCheckboxMenu  id="cellLineListBox" 
-                               value="#{pptpController.cellLines}" 
-                               label="Cell Lines" 
-                               filter="true" 
-                               filterMatchMode="contains" 
-                               panelStyle="width:220px">  
-            <f:selectItems value="#{applicationScopeBean.cellLineItems}" />
-        </p:selectCheckboxMenu>
-    </p:panel>
+        <h1>The results can be restricted by any combination of cell lines or panels.</h1>
 
-    <p:panel style="display: inline-block;border: none;">
-        <h:outputLabel value="Panels" for="cellTypeListBox" />
-        <p:selectCheckboxMenu id="cellTypeListBox" 
-                              value="#{pptpController.cellTypes}" 
-                              label="Types" 
-                              filter="true" 
-                              filterMatchMode="contains" 
-                              panelStyle="width:330px">  
-            <f:selectItems value="#{applicationScopeBean.cellTypeItems}" />
-        </p:selectCheckboxMenu>
-    </p:panel>
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel value="Cell Lines" for="cellLineListBox" />
+            <br/>
+            <p:selectCheckboxMenu  id="cellLineListBox" 
+                                   value="#{pptpController.cellLines}" 
+                                   label="Cell Lines" 
+                                   filter="true" 
+                                   filterMatchMode="contains" 
+                                   panelStyle="width:220px">  
+                <f:selectItems value="#{applicationScopeBean.cellLineItems}" />
+            </p:selectCheckboxMenu>
+        </p:panel>
 
-    <h1>Click the button to execute the SEARCH. After viewing the summary of search results, you can access available data.</h1>
+        <p:panel style="display: inline-block;border: none;">
+            <h:outputLabel value="Panels" for="cellTypeListBox" />
+            <br/>
+            <p:selectCheckboxMenu id="cellTypeListBox" 
+                                  value="#{pptpController.cellTypes}" 
+                                  label="Types" 
+                                  filter="true" 
+                                  filterMatchMode="contains" 
+                                  panelStyle="width:330px">  
+                <f:selectItems value="#{applicationScopeBean.cellTypeItems}" />
+            </p:selectCheckboxMenu>
+        </p:panel>
 
-    <p:commandButton 
-        id="searchButton" 
-        update=":myform:SearchSummaryDialog,:myform:outerTabView" 
-        action="#{pptpController.performSearch()}"
-        oncomplete="searchResultsDlg.show()" 
-        value="SEARCH"                    
-        icon="ui-icon-search"/>
+        <h1>Click the button to execute the SEARCH. After viewing the summary of search results, you can access available data.</h1>
 
-    <p:blockUI block=":myform:outerTabView" trigger=":myform:outerTabView:searchButton">  
-        SEARCHING<br />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-    </p:blockUI>
+        <p:commandButton 
+            id="searchButton" 
+            action="#{pptpController.performSearch()}"
+            value="SEARCH"                    
+            icon="ui-icon-search"/>
 
-    <p:commandButton 
-        id="resetSearchButton" 
-        update=":myform:outerTabView" 
-        action="#{pptpController.reset()}"
-        value="START OVER"/>
+        <br/>
+
+        <p:commandButton 
+            id="resetSearchButton" 
+            action="#{pptpController.reset()}"
+            value="START OVER"/>
+
+    </ui:define>
 
 </ui:composition>
 

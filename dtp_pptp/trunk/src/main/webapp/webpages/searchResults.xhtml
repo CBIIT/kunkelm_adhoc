@@ -7,15 +7,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-                template="templates/ui.xhtml">
+                template="/webpages/templates/ui.xhtml">
 
     <ui:define name="title">
         <h:outputText value="Search Results" />
     </ui:define>
 
     <ui:define name="content">
-
-    <p:outputPanel id="resultsPanel">
 
         <h:panelGrid columns="2">  
             <p:panel header="Export All Data">  
@@ -69,9 +67,7 @@
 
             <p:commandButton value="Graph Mouse Data"
                              icon="ui-icon-arrow-4-diag"
-                             action="#{pptpController.performShowGraphs()}"
-                             update=":myform:growl,:myform:MouseGraphsDialog"                     
-                             oncomplete="mouseGraphsDlg.show()">
+                             action="#{pptpController.performShowGraphs()}">
             </p:commandButton>  
 
         </p:panelGrid>
@@ -161,6 +157,6 @@
 
         </p:dataTable>
 
-    </p:outputPanel>
+    </ui:define>
 
 </ui:composition>

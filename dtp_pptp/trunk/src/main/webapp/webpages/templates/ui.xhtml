@@ -15,7 +15,7 @@
                 <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
                 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
                 <title>
-                    PPTP Project
+                    #{applicationScopeBean.projectTitle}
                     <ui:insert name="title" />
                 </title>
             </f:facet>
@@ -27,7 +27,7 @@
                 </font>
 
                 <style type="text/css">
-                    #sarcomaForm { display:none; }
+                    #pptpForm { display:none; }
                 </style>
 
             </noscript>
@@ -47,7 +47,7 @@
 
         <h:body>
 
-            <h:form id="sarcomaForm">
+            <h:form id="pptpForm">
 
                 <p:growl id="growl" showDetail="true" sticky="true" />  
 
@@ -58,20 +58,15 @@
                     <h:outputText style="display: none;color: light-gray;" 
                                   value=" #{applicationScopeBean.versionAndBuildTime}"/>
 
-                    <ui:include src="/webpages/templates/sarcoma_site_nav.xhtml"/>
-
                     <ui:insert name="content"/>
 
                 </p:panel>
-
-                <ui:include src="/webpages/dialogCumulativePlot.xhtml"/>
-                <ui:include src="/webpages/dialogSelectedPlots.xhtml"/>
 
             </h:form>
 
             <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
-            <p:blockUI widgetVar="searchingBUI" block=":sarcomaForm">
+            <p:blockUI widgetVar="searchingBUI" block=":pptpForm">
                 SEARCHING
                 <p:graphicImage name="images/ajax-loader.gif" alt="Animated image of a circle segment chasing its own tail."/>                                
             </p:blockUI>
