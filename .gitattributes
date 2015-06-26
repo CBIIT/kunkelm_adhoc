@@ -9920,7 +9920,6 @@ dtp_pptp/tags/24April2015_initialWorkingVersion/uml/pptp/pom.xml -text
 dtp_pptp/tags/24April2015_initialWorkingVersion/uml/pptp/readme.txt -text
 dtp_pptp/trunk/CHANGELOG -text
 dtp_pptp/trunk/grants.sql -text
-dtp_pptp/trunk/lib/repository/org/primefaces/primefaces/3.5.18/primefaces-3.5.18.jar -text
 dtp_pptp/trunk/nb-configuration.xml -text
 dtp_pptp/trunk/parseAndUpload/PPTPmodificationsToStandardRx.ods -text
 dtp_pptp/trunk/parseAndUpload/README -text
