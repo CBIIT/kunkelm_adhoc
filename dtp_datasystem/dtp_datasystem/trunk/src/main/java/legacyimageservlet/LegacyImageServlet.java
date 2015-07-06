@@ -8,10 +8,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStream;
 import javassist.bytecode.ByteArray;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -20,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mwk.datasystem.util.HelperCmpdLegacyCmpd;
 import mwk.datasystem.vo.CmpdLegacyCmpdVO;
+import org.openscience.cdk.renderer.font.AWTFontManager;
+import org.openscience.cdk.renderer.visitor.AWTDrawVisitor;
+import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
  *
@@ -75,7 +81,7 @@ public class LegacyImageServlet extends HttpServlet {
 
         String nscString = null;
         Integer nscInt = null;
-        byte[] byteArray = null;
+        byte[] rtnByteArray = null;
 
         if (request.getParameter("nsc") != null) {
             nscString = request.getParameter("nsc");
@@ -83,35 +89,103 @@ public class LegacyImageServlet extends HttpServlet {
                 try {
                     nscInt = Integer.parseInt(nscString);
                 } catch (Exception e) {
-                    byteArray = getTextImage(nscString + " is not an Integer");
+                    rtnByteArray = getTextImage(nscString + " is not an Integer");
                 }
             }
         } else {
-            byteArray = getTextImage("NSC was not specified");
+            rtnByteArray = getTextImage("NSC was not specified");
         }
 
         if (nscInt != null) {
-            CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");            
+            
+            System.out.println("Calling CmpdLegacyCmpdVO in LegacyImageServlet");
+            
+            CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");
+            
             if (rtn != null && rtn.getJpg512() != null && rtn.getJpg512().length > 0) {
-                byteArray = rtn.getJpg512();
+                
+                byte[] byteArray = rtn.getJpg512();
+
+                ByteArrayInputStream is = new ByteArrayInputStream(byteArray);
+                BufferedImage imgFromDb = ImageIO.read(is);
+                
+                int height = imgFromDb.getHeight();
+                int width = imgFromDb.getWidth();
+                
+                // System.out.println("bi.height" + imgFromDb.getHeight());
+                // System.out.println("bi.width" + imgFromDb.getWidth());
+                
+                BufferedImage rtnImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);                
+                Graphics2D g2 = rtnImage.createGraphics();
+                g2.drawImage(imgFromDb, 0, 0, null);
+                
+                g2.setPaint(Color.LIGHT_GRAY);
+                Font font = new Font("Verdana", Font.PLAIN, (int) height / 10);
+                g2.setFont(font);
+                
+                // set slightly higher than the font size        
+                int referenceSize = (int) ((height / 10) + 0.1 * (height / 10));
+
+                String[] titleArray = new String[]{"NSC: " + nscInt.toString()};
+
+                for (int tCnt = 0; tCnt < titleArray.length; tCnt++) {
+                    String curTitle = titleArray[tCnt];
+                    g2.drawString(curTitle, 0, (tCnt + 1) * referenceSize);
+                }
+
+                g2.dispose();
+                
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(rtnImage, "jpg", baos);
+                baos.flush();
+
+                rtnByteArray = baos.toByteArray();
+
+                baos.close();
+
             } else {
-                byteArray = getTextImage("No legacy image for NSC: " + nscInt);
+                rtnByteArray = getTextImage("No legacy image for NSC: " + nscInt);
             }
         }
 
+        // add the NSC as a title
         response.setContentType("image/png");
-        response.setContentLength(byteArray.length);
+        response.setContentLength(rtnByteArray.length);
         response.setHeader("Content-Disposition", "inline; filename=legacyStructure.png");
         response.setHeader("Expires", "0");
         response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "public");
 
-        response.getOutputStream().write(byteArray);
+        response.getOutputStream().write(rtnByteArray);
 
         response.getOutputStream().flush();
         response.getOutputStream().close();
 
     }
+    
+    /*
+    
+    http://stackoverflow.com/questions/2658554/using-graphics2d-to-overlay-text-on-a-bufferedimage-and-return-a-bufferedimage
+    
+     private BufferedImage process(BufferedImage old) {
+        int w = old.getWidth();
+        int h = old.getHeight();
+        BufferedImage img = new BufferedImage(
+                w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = img.createGraphics();
+        g2d.drawImage(old, 0, 0, null);
+        g2d.setPaint(Color.red);
+        g2d.setFont(new Font("Serif", Font.BOLD, 20));
+        String s = "Hello, world!";
+        FontMetrics fm = g2d.getFontMetrics();
+        int x = img.getWidth() - fm.stringWidth(s) - 5;
+        int y = fm.getHeight();
+        g2d.drawString(s, x, y);
+        g2d.dispose();
+        return img;
+    }
+
+    */
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

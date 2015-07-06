@@ -67,7 +67,7 @@ public class ListManagerController implements Serializable {
         this.listManagerBean = new ListManagerBean();
         performUpdateAvailableLists();
     }
-    
+
     public ListManagerController() {
         this.listManagerBean = new ListManagerBean();
         performUpdateAvailableLists();
@@ -182,7 +182,13 @@ public class ListManagerController implements Serializable {
 
         try {
 
-            List<CmpdListVO> justFetchedLists = HelperCmpdList.showAvailableCmpdLists(this.sessionController.getLoggedUser());
+            List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
+
+            if (this.sessionController != null && this.sessionController.getLoggedUser() != null) {
+                justFetchedLists = HelperCmpdList.showAvailableCmpdLists(this.sessionController.getLoggedUser());
+            } else {
+                System.out.println("this.sessionController.getLoggedUser is null in peformUpdateAvailableLists in ListManagerController");
+            }
 
             // check for change in size of lists
             // null out the listMembers if there has been a change to force
@@ -281,7 +287,7 @@ public class ListManagerController implements Serializable {
         clVO.setCmpdListMembers(voList.getCmpdListMembers());
 
         sessionController.configurationBean.performUpdateColumns();
-        
+
         return "/webpages/activeListTable?faces-redirect=true";
 
     }

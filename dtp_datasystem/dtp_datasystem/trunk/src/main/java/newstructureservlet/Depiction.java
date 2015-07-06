@@ -172,8 +172,7 @@ final class Depiction {
             }
         }
 
-        draw(new AWTDrawVisitor(g2),
-                new Rectangle2D.Double(margin, margin, width, height));
+        draw(new AWTDrawVisitor(g2), new Rectangle2D.Double(margin, margin, width, height));
         g2.dispose();
         return img;
     }

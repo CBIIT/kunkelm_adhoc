@@ -61,6 +61,20 @@
                                     url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                     </h:graphicImage>
 
+                     <p:panel>
+
+                    <f:facet name="header">
+                        <h:outputText value="Kekule Image of Legacy Compound" />
+                    </f:facet>
+
+                    <h:graphicImage alt="Kekule Image of Legacy Compound"
+                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                                    styleClass="unassignedClass"                                                                                        
+                                    url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
+                    </h:graphicImage>
+
+                </p:panel>
+                    
 
                     <p:dataGrid rendered="#{sessionController.configurationBean.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
                         <h:graphicImage alt="Chemical Structure of Compound Fragment"

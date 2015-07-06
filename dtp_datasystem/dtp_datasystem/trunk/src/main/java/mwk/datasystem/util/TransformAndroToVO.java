@@ -103,6 +103,8 @@ public class TransformAndroToVO {
 
     public static CmpdLegacyCmpdVO translateCmpdLegacyCmpd(CmpdLegacyCmpd entityIn) {
 
+        System.out.println("In translateCmpdLegacyCmpd in TransformAndroToVO");
+        
         CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
 
         rtn.setId(entityIn.getId());
@@ -145,7 +147,7 @@ public class TransformAndroToVO {
             if (entityIn.getCmpdFragmentPChem() != null) {
                 rtn.setCmpdFragmentPChem(translateCmpdFragmentPChem(entityIn.getCmpdFragmentPChem()));
             }
-
+            
         }
 
         return rtn;
@@ -333,6 +335,8 @@ public class TransformAndroToVO {
                 rtn.setConf(nscc.getConf());
                 rtn.setDiscreet(nscc.getDiscreet());
 
+                System.out.println("Just before setNscCmpdType in translateCmpd in TransformAndroToVO");
+                
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
 
                 rtn.setInventory(nscc.getCmpdInventory().getInventory());
@@ -447,7 +451,7 @@ public class TransformAndroToVO {
                     rtn.setCountCmpdFragments(rtn.getCmpdFragmentSmilesStrings().size());
 
                     if (DEBUG) {
-                        System.out.println("setting countCmpdFragments to: " + rtn.getCmpdFragmentSmilesStrings().size());
+                        System.out.println("Setting countCmpdFragments to: " + rtn.getCmpdFragmentSmilesStrings().size());
                     }
 
                 }

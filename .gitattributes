@@ -9594,6 +9594,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionG
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MoleculeWrangling.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml.BACKUP.03JULY2015 -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdListMember.hbm.xml -text

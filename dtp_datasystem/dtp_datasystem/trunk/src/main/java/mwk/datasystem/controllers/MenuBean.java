@@ -216,18 +216,19 @@ public class MenuBean implements Serializable {
     List<MenuElement> menuElementList = this.model.getElements();
 
     for (MenuElement me : menuElementList) {
-      System.out.println("me: " + me.getId());
-      System.out.println("me: " + me.getClass().getName());
+        
+      // System.out.println("me: " + me.getId());
+      // System.out.println("me: " + me.getClass().getName());
 
       if (me instanceof DefaultSubMenu) {
         DefaultSubMenu dsm = (DefaultSubMenu) me;
         if (dsm.getId().equals("datSysOps")) {
-          System.out.println("This is datSysOps");
+          // System.out.println("This is datSysOps");
         } else if (dsm.getId().equals("actLisNav")) {
-          System.out.println("This is actLisNav");
+          // System.out.println("This is actLisNav");
         } else {
-          System.out.println("This is some other submenu");
-          System.out.println(dsm.getId());
+          // System.out.println("This is some other submenu");
+          // System.out.println(dsm.getId());
         }
 
       }

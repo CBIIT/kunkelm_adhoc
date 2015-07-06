@@ -21,7 +21,9 @@ import mwk.datasystem.vo.CmpdVO;
  *
  * @author mwkunkel
  */
-public class ConfigurationBean {
+public class ConfigurationBean implements Serializable {
+
+    static final long serialVersionUID = -8653468634048142855l;
 
 //       _       _           _               _   _                 
 //  __ _| | ___ | |__   __ _| |   ___  _ __ | |_(_) ___  _ __  ___ 
@@ -393,7 +395,7 @@ public class ConfigurationBean {
             }
             rtn = sb.toString();
         } else {
-            
+
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
@@ -405,7 +407,7 @@ public class ConfigurationBean {
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
             System.out.println("--------------------------------------------------------------------");
-            
+
         }
         return rtn;
     }

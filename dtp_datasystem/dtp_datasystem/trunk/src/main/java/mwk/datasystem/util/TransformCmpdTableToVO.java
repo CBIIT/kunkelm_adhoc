@@ -40,7 +40,7 @@ import mwk.datasystem.vo.CmpdListVO;
  */
 public class TransformCmpdTableToVO {
 
-    public static final Boolean DEBUG = Boolean.TRUE;
+    public static final Boolean DEBUG = Boolean.FALSE;
 
     public static ArrayList<CmpdFragmentVO> parseFormattedFragmentsString(String fmtdString) {
 
@@ -272,7 +272,7 @@ public class TransformCmpdTableToVO {
             cmpdVO.setCmpdFragmentSmilesStrings(parseFormattedString(entityIn.getFormattedFragmentsString()));
 
             if (DEBUG) {
-                System.out.println("setting countCmpdFragments to: " + cmpdVO.getCmpdFragmentSmilesStrings().size());
+                System.out.println("Setting countCmpdFragments to: " + cmpdVO.getCmpdFragmentSmilesStrings().size());
             }
 
             cmpdVO.setCountCmpdFragments(cmpdVO.getCmpdFragmentSmilesStrings().size());

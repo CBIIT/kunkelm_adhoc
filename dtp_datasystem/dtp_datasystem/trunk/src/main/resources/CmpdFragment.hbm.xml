@@ -21,7 +21,7 @@
             <column name="COMMENT" not-null="false" unique="false" sql-type="CHARACTER VARYING(1024)"/>
             <type name="java.lang.String"/>
         </property>
-        
+
         <many-to-one name="cmpdFragmentType" class="mwk.datasystem.domain.CmpdFragmentTypeImpl" cascade="delete" foreign-key="CMPD_FRAGMENT_CMPD_FRAGMENT_TC" not-null="true" 
                      lazy="false" fetch="join">
             <column name="CMPD_FRAGMENT_TYPE_FK" not-null="true" sql-type="BIGINT"/>
