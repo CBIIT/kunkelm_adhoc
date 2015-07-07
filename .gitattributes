@@ -9516,6 +9516,10 @@ dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-cor
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-core/20150309/datasystem-core-20150309-sources.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-core/20150309/datasystem-core-20150309.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/cdk/1.5.10/cdk-1.5.10.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.2.7-MWK/_maven.repositories -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.2.7-MWK/primefaces-5.2.7-MWK.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.2.7-MWK/primefaces-5.2.7-MWK.pom -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/maven-metadata-local.xml -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text

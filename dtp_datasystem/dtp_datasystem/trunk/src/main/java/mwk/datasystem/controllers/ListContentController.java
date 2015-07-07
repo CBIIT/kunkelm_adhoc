@@ -66,7 +66,7 @@ public class ListContentController implements Serializable {
     }
 
     private String listName;
-    UploadedFile uploadedFile;    
+    UploadedFile uploadedFile;
     CmpdListVO targetList;
 
     public void onRowSelect(SelectEvent evt) {
@@ -105,7 +105,6 @@ public class ListContentController implements Serializable {
      *
      * @return For checkboxes outside of dataTable
      */
-    
     public String performDeleteFromActiveList() {
 
         HelperCmpdListMember.deleteCmpdListMembers(this.targetList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), this.sessionController.getLoggedUser());
@@ -115,7 +114,7 @@ public class ListContentController implements Serializable {
         listManagerController.getListManagerBean().activeList = clVO;
 
         sessionController.configurationBean.performUpdateColumns();
-        
+
         return "/webpages/activeListTable?faces-redirect=true";
     }
 
@@ -138,13 +137,13 @@ public class ListContentController implements Serializable {
         // have to UPDATE the list   
         CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
 
-    // have to add to the session
+        // have to add to the session
         // and move to the new list        
         listManagerController.getListManagerBean().availableLists.add(updatedClVO);
         listManagerController.getListManagerBean().activeList = updatedClVO;
-        
-sessionController.configurationBean.performUpdateColumns();
-        
+
+        sessionController.configurationBean.performUpdateColumns();
+
         return "/webpages/activeListTable?faces-redirect=true";
 
     }
@@ -169,7 +168,7 @@ sessionController.configurationBean.performUpdateColumns();
 
         boolean isFirst = true;
 
-        for (CmpdListMemberVO clmVO : this.listManagerController.getListManagerBean().selectedActiveListMembers){
+        for (CmpdListMemberVO clmVO : this.listManagerController.getListManagerBean().selectedActiveListMembers) {
             if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
                 if (!isFirst) {
                     sb.append("xxx");
@@ -250,7 +249,7 @@ sessionController.configurationBean.performUpdateColumns();
         }
 
         sessionController.configurationBean.performUpdateColumns();
-        
+
         return "/webpages/activeListTable?faces-redirect=true";
 
     }
@@ -302,7 +301,7 @@ sessionController.configurationBean.performUpdateColumns();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";
@@ -377,12 +376,13 @@ sessionController.configurationBean.performUpdateColumns();
             }
         }
 
-        System.out.println("Content of listContentBean:");
-        this.listContentBean.printCriteriaLists();
-        System.out.println("Content of QueryObject:");
-        lCntntBean.printCriteriaLists();
-
-        System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
+//        System.out.println("Content of listContentBean:");
+//        this.listContentBean.printCriteriaLists();
+//        System.out.println("Content of QueryObject:");
+//        lCntntBean.printCriteriaLists();
+//
+//        System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
+        
         Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, lCntntBean, null, this.sessionController.getLoggedUser());
 
         // now fetch the list            
@@ -390,7 +390,7 @@ sessionController.configurationBean.performUpdateColumns();
 
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
-        
+
         sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";

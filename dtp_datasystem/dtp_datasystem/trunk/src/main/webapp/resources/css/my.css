@@ -1,3 +1,17 @@
+.ui-commandlink:focus{
+    color: red !important; 
+    font-size: large !important; 
+    text-decoration: underline !important;
+    border: dotted !important;
+}
+
+.ui-button:focus{
+    color: red !important; 
+    font-size: large !important; 
+    text-decoration: underline !important;
+    border: dotted !important;
+}
+
 .ui-widget-content{
     color: black;
 }

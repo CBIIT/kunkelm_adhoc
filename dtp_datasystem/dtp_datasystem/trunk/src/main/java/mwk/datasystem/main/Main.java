@@ -61,7 +61,7 @@ public class Main {
         // testCtabParseFromDb();
         // testSdfParser();
         // testFetchList();
-        testCreateCmpdListFromQueryObject("SL-100");
+        testCreateCmpdListFromQueryObject("SL-102");
         // testSeqWrangling();
 
     }
@@ -273,7 +273,7 @@ public class Main {
 
             for (CmpdListMember clm : cl.getCmpdListMembers()) {
                 pStmt.setLong(1, clmId.longValue());
-                pStmt.setString(2, null);
+                pStmt.setString(2, "TEST INSERT " + cl.getListName());
                 pStmt.setLong(3, cl.getId());
                 pStmt.setLong(4, clm.getCmpd().getId());
                 clmId++;

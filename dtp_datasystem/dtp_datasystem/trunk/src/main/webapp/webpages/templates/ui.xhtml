@@ -48,16 +48,21 @@
 
                     <p:spacer height="20" width="100%" />
 
-                    <p:menubar model="#{menuBean.model}">
-                        <f:facet name="options">
+                    <p:menubar model="#{menuBean.model}"
+                               toggleEvent="click" >
 
-                            <p:commandButton ajax="false"
-                                             action="#{sessionController.logout()}"
-                                             value="Logout"/>
+                        <ui:remove>
 
-                        </f:facet>
+                            <f:facet name="options">
+                                <p:commandButton ajax="false"
+                                                 action="#{sessionController.logout()}"
+                                                 value="Logout"/>
+                            </f:facet>
+
+                        </ui:remove>
+
                     </p:menubar>
-                    
+
                     <ui:insert name="content"/>
 
                 </p:panel>

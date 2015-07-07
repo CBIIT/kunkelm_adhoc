@@ -57,17 +57,17 @@ public class ScatterPlotChartUtil {
                     xAxis.setTickAngle(-90);
                     Axis yAxis = scatPlotMdl.getAxis(AxisType.Y);
                     yAxis.setLabel(outerParam);
-                    
+
                     LineChartSeries chSer = new LineChartSeries();
                     chSer.setLabel(outerParam + " vs " + innerParam);
                     chSer.setShowLine(false);
                     chSer.setShowMarker(true);
-                    
+
                     LineChartSeries selChSer = new LineChartSeries();
                     selChSer.setLabel(outerParam + " vs " + innerParam + " selected");
                     selChSer.setShowLine(false);
                     selChSer.setShowMarker(true);
-                                        
+
                     NumberFormat nf = new DecimalFormat();
                     nf.setMaximumFractionDigits(2);
 
@@ -75,7 +75,7 @@ public class ScatterPlotChartUtil {
                     // I don't step on the default setting of sortData in jqPlot
                     ArrayList<XYProp> serPropList = new ArrayList<XYProp>();
                     ArrayList<XYProp> selSerPropList = new ArrayList<XYProp>();
-                                        
+
                     for (CmpdListMemberVO clmVO : clmList) {
 
                         if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
@@ -106,12 +106,12 @@ public class ScatterPlotChartUtil {
                     int ptIdx = 0;
                     int selPtIdx = 0;
 
-                    for (XYProp xyp : serPropList) {                        
+                    for (XYProp xyp : serPropList) {
                         chSer.set(xyp.xProp, xyp.yProp, xyp.label);
                     }
-                    
-                    for (XYProp xyp: selSerPropList){
-                        
+
+                    for (XYProp xyp : selSerPropList) {
+
                         selChSer.set(xyp.xProp, xyp.yProp, xyp.label);
                     }
 
