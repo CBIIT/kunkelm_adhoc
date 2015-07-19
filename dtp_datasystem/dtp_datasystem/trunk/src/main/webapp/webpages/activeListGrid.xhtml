@@ -61,20 +61,23 @@
                                     url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                     </h:graphicImage>
 
-                     <p:panel>
+                    <ui:remove>
 
-                    <f:facet name="header">
-                        <h:outputText value="Kekule Image of Legacy Compound" />
-                    </f:facet>
+                        <p:panel>
 
-                    <h:graphicImage alt="Kekule Image of Legacy Compound"
-                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
-                                    styleClass="unassignedClass"                                                                                        
-                                    url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
-                    </h:graphicImage>
+                            <f:facet name="header">
+                                <h:outputText value="Kekule Image of Legacy Compound" />
+                            </f:facet>
 
-                </p:panel>
-                    
+                            <h:graphicImage alt="Kekule Image of Legacy Compound"
+                                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                                            styleClass="unassignedClass"                                                                                        
+                                            url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
+                            </h:graphicImage>
+
+                        </p:panel>
+
+                    </ui:remove>
 
                     <p:dataGrid rendered="#{sessionController.configurationBean.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
                         <h:graphicImage alt="Chemical Structure of Compound Fragment"
@@ -105,15 +108,15 @@
                         <p:commandButton icon="fa fa-eye"
                                          update=":datasystemForm:ListMemberDetailsDialogPanel" 
                                          oncomplete="PF('listMemberDetailDlg').show();" 
-                                         value="View Detail" title="View Compound Details Dialog">  
+                                         title="Compound Details Dialog"
+                                         style="display: inline-block;">  
                             <f:setPropertyActionListener value="#{listMember}"   
                                                          target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
                         </p:commandButton>
 
                         <p:commandButton ajax="false" 
                                          icon="fa fa-wrench"
-                                         value="Fragments Workbench"
-                                         title="This compound to Fragments Workbench"
+                                         title="Fragments Workbench"
                                          action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}" />
 
                     </f:facet> 

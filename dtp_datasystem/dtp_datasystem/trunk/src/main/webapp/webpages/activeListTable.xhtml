@@ -9,10 +9,39 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="content">
+    <ui:define name="title">
+        <h:outputText value="Active List Table View" />
+    </ui:define>
 
-        <h:outputText style="font-size: 200%;" 
-                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+    <ui:define name="instructions"/>
+
+    <ui:define name="export"> 
+        <p:commandButton ajax="false" value="Export to Excel">
+            <p:dataExporter type="xls"  
+                            target="activeListTbl" 
+                            fileName="activeListTable" />  
+        </p:commandButton>
+
+        <p:commandButton ajax="false" value="Export as CSV">  
+            <p:dataExporter type="csv" 
+                            target="activeListTbl" 
+                            fileName="activeListTable" />  
+        </p:commandButton> 
+
+        <p:commandButton value="Export Structures as Image"
+                         type="button"
+                         ajax="false"
+                         onclick="structuresAsGridImage()"/>
+
+    </ui:define>
+
+    <ui:define name="alternate"/>
+
+    <ui:define name="content title">
+        <h:outputText value="#{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+    </ui:define>
+
+    <ui:define name="content">
 
         <p:panel header="List Anchor Structure"
                  rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
@@ -87,12 +116,13 @@
         </p:panel>
 
         <p:dataTable  id="activeListTbl"
+                      resizableColumns="true"
+                      tableStyle="width: auto;"                 
                       widgetVar="activeListTblWidgetVar"
                       var="listMember" 
                       value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
                       rows="50"                        
                       paginator="true"
-                      resizableColumns="true"
                       paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
                       rowsPerPageTemplate="50,100,250,500"
                       selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
@@ -142,11 +172,11 @@
             </p:column>    
 
             <p:column headerText="mtxt">
-                #{listMember.cmpd.cmpdAnnotation.mtxt}
+                <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}"/>
             </p:column>
 
             <p:column headerText="pseudo atoms">
-                #{listMember.cmpd.cmpdAnnotation.pseudoAtoms}
+                <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}"/>
             </p:column>
 
 
