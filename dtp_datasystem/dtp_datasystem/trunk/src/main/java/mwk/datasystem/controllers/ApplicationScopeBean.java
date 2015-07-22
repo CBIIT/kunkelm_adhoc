@@ -36,7 +36,7 @@ public class ApplicationScopeBean implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
     //
-    private static String projectTitle;
+    private String projectTitle;
     private String versionAndBuildTime;
     private String landingCompareUrl;
     private String landingSpotfireUrl;
@@ -358,12 +358,13 @@ public class ApplicationScopeBean implements Serializable {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-    public static String getProjectTitle() {
+    
+    public String getProjectTitle() {
         return projectTitle;
     }
 
-    public static void setProjectTitle(String projectTitle) {
-        ApplicationScopeBean.projectTitle = projectTitle;
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
     }
 
     public String getVersionAndBuildTime() {

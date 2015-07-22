@@ -268,6 +268,16 @@
                 <deploy.compare.url>http://localhost:8080/sarcomacompare</deploy.compare.url>
             </properties>
         </profile>        
+        <profile>
+            <id>oncologydrugs_local</id>
+            <properties>
+                <deploy.war.name>oncologydrugs</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/datasystemdb</deploy.db.url>
+                <deploy.db.user>datasystem_user</deploy.db.user>
+                <deploy.db.pass>datasystem_pass</deploy.db.pass>                
+                <deploy.compare.url>http://localhost:8080/sarcomacompare</deploy.compare.url>
+            </properties>
+        </profile>        
     </profiles>    
     <!--
     <repositories> 

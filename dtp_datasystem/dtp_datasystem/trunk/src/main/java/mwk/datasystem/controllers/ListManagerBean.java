@@ -31,6 +31,7 @@ public class ListManagerBean implements Serializable {
     protected List<CmpdListMemberVO> selectedTempListMembers;
     protected CmpdFragmentVO selectedCmpdFragment;
     protected List<CmpdListMemberVO> selectedActiveListMembers;
+    protected List<CmpdListMemberVO> filteredActiveListMembers;
     protected CmpdListVO tempList;
 
     /**
@@ -151,6 +152,14 @@ public class ListManagerBean implements Serializable {
 
     public void setSelectedActiveListMembers(List<CmpdListMemberVO> selectedActiveListMembers) {
         this.selectedActiveListMembers = selectedActiveListMembers;
+    }
+
+    public List<CmpdListMemberVO> getFilteredActiveListMembers() {
+        return filteredActiveListMembers;
+    }
+
+    public void setFilteredActiveListMembers(List<CmpdListMemberVO> filteredActiveListMembers) {
+        this.filteredActiveListMembers = filteredActiveListMembers;
     }
 
     public CmpdListVO getTempList() {

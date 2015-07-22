@@ -9,6 +9,34 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
+     <ui:define name="title">
+        <h:outputText value="Available Lists" />
+    </ui:define>
+
+    <ui:define name="instructions"/>
+
+    <ui:define name="export"> 
+         <p:commandButton ajax="false" value="Export to Excel">
+            <p:dataExporter type="xls"  
+                            target="availableListsTbl" 
+                            fileName="availableListsTable" />  
+        </p:commandButton>
+
+        <p:commandButton ajax="false" value="Export as CSV">  
+            <p:dataExporter type="csv" 
+                            target="availableListsTbl" 
+                            fileName="availableListsTable" />  
+        </p:commandButton> 
+    </ui:define>
+    
+    <ui:define name="alternate">
+        
+    </ui:define>
+    
+    <ui:define name="content title">
+        <h:outputText value="Available Lists" />
+    </ui:define>
+    
     <ui:define name="content">
 
         <p:commandButton value="Update Lists"
@@ -36,11 +64,12 @@
             <p:ajax event="rowEditCancel" listener="#{listManagerController.onRowCancel}" update=":datasystemForm:msgs" />
             <p:ajax event="cellEdit" listener="#{listManagerController.onCellEdit}" update=":datasystemForm:msgs" />
 
-            <p:column style="width:32px">
+            <p:column style="width:32px"
+                      exportable="false">
                 <p:rowEditor rendered="#{list.listOwner == sessionController.loggedUser &amp;&amp; list.shareWith != 'PUBLIC'}"/>
             </p:column>
 
-            <p:column>
+            <p:column exportable="false">
 
                 <p:commandLink value="VIEW"                                             
                                action="#{listManagerController.performLoadSelectedList()}"

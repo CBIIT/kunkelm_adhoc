@@ -9,14 +9,26 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:remove>
-        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-    </ui:remove>
+    <ui:define name="title">
+        <h:outputText value="Active List Form View"/>
+    </ui:define>     
+
+    <ui:define name="instructions">
+        <h:outputText value="Soring and filtering of the list can be
+                      done in the Table View.  Changes made there will 
+                      be reflected in this view."/>
+    </ui:define>        
+
+    <ui:define name="export">
+    </ui:define>        
+
+    <ui:define name="alternate"></ui:define>        
+
+    <ui:define name="content title">
+        <h:outputText value="Form View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+    </ui:define>
 
     <ui:define name="content">
-
-        <h:outputText style="font-size: 200%;" 
-                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
 
         <p:panel header="List Anchor Structure"
                  rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">

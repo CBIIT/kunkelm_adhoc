@@ -38,7 +38,7 @@
     <ui:define name="alternate"/>
 
     <ui:define name="content title">
-        <h:outputText value="#{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+        <h:outputText value="Table View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
     </ui:define>
 
     <ui:define name="content">
@@ -119,13 +119,16 @@
                       resizableColumns="true"
                       tableStyle="width: auto;"                 
                       widgetVar="activeListTblWidgetVar"
-                      var="listMember" 
+                      var="listMember"                       
                       value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
                       rows="50"                        
                       paginator="true"
-                      paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
+                      paginatorPosition="top"
+                      currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} total records"
+                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
                       rowsPerPageTemplate="50,100,250,500"
                       selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
+                      filteredValue="#{listManagerController.listManagerBean.filteredActiveListMembers}"
                       rowKey="#{listMember.id}"                              
                       sortMode="multiple">  
 
