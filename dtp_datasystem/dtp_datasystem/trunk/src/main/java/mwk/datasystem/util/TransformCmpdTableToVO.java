@@ -234,8 +234,10 @@ public class TransformCmpdTableToVO {
             cmpdVO.setNscCmpdType(entityIn.getNscCmpdType());
 
             if (DEBUG) {
-                System.out.println("In TransformCmpdTableToVO.toCmpdVo.  Setting originalAdHocCmpdId to: " + entityIn.getOriginalAdHocCmpdId());
+                System.out.println("In TransformCmpdTableToVO.toCmpdVO.");
+                System.out.println("Setting originalAdHocCmpdId to: " + entityIn.getOriginalAdHocCmpdId());
             }
+            
             cmpdVO.setOriginalAdHocCmpdId(entityIn.getOriginalAdHocCmpdId());
 
             cmpdVO.setPrefix(entityIn.getPrefix());

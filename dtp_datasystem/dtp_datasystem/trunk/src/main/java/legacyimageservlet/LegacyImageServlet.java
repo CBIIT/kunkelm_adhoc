@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -43,11 +44,11 @@ public class LegacyImageServlet extends HttpServlet {
 
         try {
 
-            BufferedImage bufferedImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            BufferedImage bufferedImg = new BufferedImage(512, 512, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2 = bufferedImg.createGraphics();
 
             g2.setPaint(Color.GRAY);
-            g2.fill(new Rectangle.Double(0, 0, 200, 200));
+            g2.fill(new Rectangle.Double(0, 0, 512, 512));
 
             Font font = new Font("sans-serif", Font.PLAIN, referenceSize);
             g2.setFont(font);
@@ -97,33 +98,31 @@ public class LegacyImageServlet extends HttpServlet {
         }
 
         if (nscInt != null) {
-            
-            System.out.println("Calling CmpdLegacyCmpdVO in LegacyImageServlet");
-            
+           
             CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");
-            
+           
             if (rtn != null && rtn.getJpg512() != null && rtn.getJpg512().length > 0) {
-                
+               
                 byte[] byteArray = rtn.getJpg512();
 
                 ByteArrayInputStream is = new ByteArrayInputStream(byteArray);
                 BufferedImage imgFromDb = ImageIO.read(is);
-                
+               
                 int height = imgFromDb.getHeight();
                 int width = imgFromDb.getWidth();
-                
-                // System.out.println("bi.height" + imgFromDb.getHeight());
-                // System.out.println("bi.width" + imgFromDb.getWidth());
-                
-                BufferedImage rtnImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);                
+               
+                System.out.println("bi.height" + imgFromDb.getHeight());
+                System.out.println("bi.width" + imgFromDb.getWidth());
+               
+                BufferedImage rtnImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);               
                 Graphics2D g2 = rtnImage.createGraphics();
                 g2.drawImage(imgFromDb, 0, 0, null);
-                
+               
                 g2.setPaint(Color.LIGHT_GRAY);
                 Font font = new Font("Verdana", Font.PLAIN, (int) height / 10);
                 g2.setFont(font);
-                
-                // set slightly higher than the font size        
+               
+                // set slightly higher than the font size       
                 int referenceSize = (int) ((height / 10) + 0.1 * (height / 10));
 
                 String[] titleArray = new String[]{"NSC: " + nscInt.toString()};
@@ -134,7 +133,7 @@ public class LegacyImageServlet extends HttpServlet {
                 }
 
                 g2.dispose();
-                
+               
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(rtnImage, "jpg", baos);
                 baos.flush();
@@ -162,11 +161,11 @@ public class LegacyImageServlet extends HttpServlet {
         response.getOutputStream().close();
 
     }
-    
+   
     /*
-    
+   
     http://stackoverflow.com/questions/2658554/using-graphics2d-to-overlay-text-on-a-bufferedimage-and-return-a-bufferedimage
-    
+   
      private BufferedImage process(BufferedImage old) {
         int w = old.getWidth();
         int h = old.getHeight();

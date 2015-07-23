@@ -159,7 +159,7 @@ public class HelperStructure {
             Query q = session.createSQLQuery(sqlQuery);
             q.executeUpdate();
 
-            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) # morganbv and fps.id = rdkit_mol.id " + limitClause;
+            sqlQuery = "select nsc from rdkit_fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) # morganbv and rdkit_fps.id = rdkit_mol.id " + limitClause;
 
             q = session.createSQLQuery(sqlQuery);
             List resultList = q.list();
@@ -195,7 +195,7 @@ public class HelperStructure {
             Query q = session.createSQLQuery(sqlQuery);
             q.executeUpdate();
 
-            sqlQuery = "select nsc from fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) % morganbv and fps.id = rdkit_mol.id " + limitClause;
+            sqlQuery = "select nsc from rdkit_fps, rdkit_mol where morganbv_fp('" + structureSmiles + "',2) % morganbv and rdkit_fps.id = rdkit_mol.id " + limitClause;
 
             q = session.createSQLQuery(sqlQuery);
             List resultList = q.list();

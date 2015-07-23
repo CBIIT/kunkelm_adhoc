@@ -126,7 +126,7 @@
                       paginatorPosition="top"
                       currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} total records"
                       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
-                      rowsPerPageTemplate="50,100,250,500"
+                      rowsPerPageTemplate="50,100,250,500,1000,2000"
                       selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
                       filteredValue="#{listManagerController.listManagerBean.filteredActiveListMembers}"
                       rowKey="#{listMember.id}"                              
@@ -182,6 +182,12 @@
                 <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}"/>
             </p:column>
 
+            <p:column headerText="nsc cmpd type"
+                      sortBy="#{listMember.cmpd.nscCmpdType}"
+                      filterBy="#{listMember.cmpd.nscCmpdType}"
+                      filterMatchMode="contains">
+                <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
+            </p:column>            
 
             <c:set var="cmpd" value="#{listMember.cmpd}" />
 

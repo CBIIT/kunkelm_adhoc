@@ -60,7 +60,7 @@ public class StructureSearchController implements Serializable {
 
     public String performExactMatchSearch() {
 
-        List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(smilesFromCtabFromEditor);
+        List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(this.smilesFromCtabFromEditor);
 
         List<CmpdVO> structureSearchResults = HelperCmpd.getCmpdsByNsc(nscIntList, sessionController.getLoggedUser());
 
@@ -91,7 +91,7 @@ public class StructureSearchController implements Serializable {
 
         // aromaticity set to true so that 
         // SMARTSPattern.match() will work during structure display
-        smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
+        this.smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
 
         List<Integer> nscIntList = HelperStructure.findNSCsByCtabSubstructure(ctabFromEditor);
 
@@ -103,7 +103,7 @@ public class StructureSearchController implements Serializable {
             listName = "structureSearchResults " + now.toString();
         }
 
-        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, smilesFromCtabFromEditor, sessionController.getLoggedUser());
+        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, this.smilesFromCtabFromEditor, sessionController.getLoggedUser());
 
         // have to fetch the list so that the compound details will be populated
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
@@ -121,7 +121,11 @@ public class StructureSearchController implements Serializable {
 
         System.out.println("Now in performSubstructureSearch()");
 
-        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(smilesFromCtabFromEditor);
+         // aromaticity set to true so that 
+        // SMARTSPattern.match() will work during structure display
+        this.smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
+        
+        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromCtabFromEditor);
 
         System.out.println("Size of nscIntList: " + nscIntList.size());
 
@@ -131,7 +135,7 @@ public class StructureSearchController implements Serializable {
             listName = "structureSearchResults " + now.toString();
         }
 
-        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, smilesFromCtabFromEditor, sessionController.getLoggedUser());
+        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, this.smilesFromCtabFromEditor, sessionController.getLoggedUser());
 
         // have to fetch the list so that the compound details will be populated
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
@@ -147,7 +151,7 @@ public class StructureSearchController implements Serializable {
 
     public String performSmartsSearch() {
 
-        String smartsString = smilesFromCtabFromEditor;
+        String smartsString = this.smilesFromCtabFromEditor;
 
         // double bonds to any bond
         smartsString = smartsString.replaceAll("=", "~");
@@ -165,11 +169,11 @@ public class StructureSearchController implements Serializable {
         FacesMessage msg = new FacesMessage(
                 FacesMessage.SEVERITY_INFO,
                 "SMILES string and SMARTS string: ",
-                smilesFromCtabFromEditor + " " + smartsString);
+                this.smilesFromCtabFromEditor + " " + smartsString);
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
-        System.out.println("smilesString: " + smilesFromCtabFromEditor);
+        System.out.println("smilesString: " + this.smilesFromCtabFromEditor);
         System.out.println("smartsString: " + smartsString);
 
         List<Integer> nscIntList = HelperStructure.findNSCsBySmartsSubstructure(smartsString);

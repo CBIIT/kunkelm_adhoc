@@ -52,7 +52,6 @@ import mwk.datasystem.vo.CmpdTargetVO;
 public class TransformAndroToVO {
 
     public static final Boolean DEBUG = Boolean.FALSE;
-  //
 
     public static CmpdKnownSaltVO translateCmpdKnownSalt(CmpdKnownSalt entityIn) {
         CmpdKnownSaltVO rtn = new CmpdKnownSaltVO();
@@ -104,18 +103,20 @@ public class TransformAndroToVO {
     public static CmpdLegacyCmpdVO translateCmpdLegacyCmpd(CmpdLegacyCmpd entityIn) {
 
         System.out.println("In translateCmpdLegacyCmpd in TransformAndroToVO");
-        
+
         CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
 
-        rtn.setId(entityIn.getId());
-        rtn.setNsc(entityIn.getNsc());
-        rtn.setCtab(entityIn.getCtab());
-        rtn.setJpg512(entityIn.getJpg512());
-        rtn.setMolecularFormula(entityIn.getMolecularFormula());
-        rtn.setMolecularWeight(entityIn.getMolecularWeight());
-        rtn.setInventory(entityIn.getInventory());
-        rtn.setCountNci60(entityIn.getCountNci60());
-        rtn.setMtxt(entityIn.getMtxt());
+        if (entityIn != null) {
+            rtn.setId(entityIn.getId());
+            rtn.setNsc(entityIn.getNsc());
+            rtn.setCtab(entityIn.getCtab());
+            rtn.setJpg512(entityIn.getJpg512());
+            rtn.setMolecularFormula(entityIn.getMolecularFormula());
+            rtn.setMolecularWeight(entityIn.getMolecularWeight());
+            rtn.setInventory(entityIn.getInventory());
+            rtn.setCountNci60(entityIn.getCountNci60());
+            rtn.setMtxt(entityIn.getMtxt());
+        }
 
         return rtn;
     }
@@ -147,7 +148,7 @@ public class TransformAndroToVO {
             if (entityIn.getCmpdFragmentPChem() != null) {
                 rtn.setCmpdFragmentPChem(translateCmpdFragmentPChem(entityIn.getCmpdFragmentPChem()));
             }
-            
+
         }
 
         return rtn;
@@ -315,7 +316,7 @@ public class TransformAndroToVO {
     public static CmpdVO translateCmpd(Cmpd entityIn) {
 
         CmpdVO rtn = new CmpdVO();
-       
+
         rtn.setComment(entityIn.getComment());
 
         if (entityIn instanceof NscCmpdImpl) {
@@ -336,7 +337,7 @@ public class TransformAndroToVO {
                 rtn.setDiscreet(nscc.getDiscreet());
 
                 System.out.println("Just before setNscCmpdType in translateCmpd in TransformAndroToVO");
-                
+
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
 
                 rtn.setInventory(nscc.getCmpdInventory().getInventory());
@@ -351,14 +352,13 @@ public class TransformAndroToVO {
                 }
 
                 rtn.setCountCmpdFragments(nscc.getCountFragments());
-                
+
 //                rtn.setSaltSmiles(nscc.getSaltSmiles()); 
 //                rtn.setSaltName(nscc.getSaltName());
 //                rtn.setSaltMf(nscc.getSaltMf());
 //                rtn.setSaltMw(nscc.getSaltMw());
 //                rtn.setParentStoichiometry(nscc.getParentStoichiometry());
 //                rtn.setSaltStoichiometry(nscc.getSaltStoichiometry());
-                
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());
@@ -431,11 +431,11 @@ public class TransformAndroToVO {
 
             } else {
 
-        // nsc_cmpd should already have a parent fragment
+                // nsc_cmpd should already have a parent fragment
                 // if not, calculation on-the-fly by size
                 ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(rtn.getCmpdFragments());
 
-        // some cmpds will have no fragments
+                // some cmpds will have no fragments
                 // or no parentFragment
                 if (fragList.size() > 0) {
                     Collections.sort(fragList, new Comparators.CmpdFragmentSizeComparator());
@@ -467,7 +467,7 @@ public class TransformAndroToVO {
             rtn.setOriginalAdHocCmpdId(ahc.getOriginalAdHocCmpdId());
             rtn.setName(ahc.getName());
 
-      // no other cmpd properties
+            // no other cmpd properties
             // no CmpdBioAssay
             Collection<AdHocCmpdFragment> fragColl = ahc.getAdHocCmpdFragments();
             ArrayList<CmpdFragmentVO> voFragColl = new ArrayList<CmpdFragmentVO>();

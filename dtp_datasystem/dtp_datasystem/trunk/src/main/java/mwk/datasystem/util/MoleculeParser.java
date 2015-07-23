@@ -113,7 +113,7 @@ public class MoleculeParser {
 
       IteratingSDFReader reader = new IteratingSDFReader(fis, DefaultChemObjectBuilder.getInstance());
 
-      reader.setReaderMode(IChemObjectReader.Mode.STRICT);
+      reader.setReaderMode(IChemObjectReader.Mode.RELAXED);
       reader.setSkip(true);
 
       Integer countMol = Integer.valueOf(0);
