@@ -75,7 +75,7 @@
         <p:dataTable resizableColumns="true"
                      id="cellLineGroupTbl"
                      filteredValue="#{pptpController.filteredCellLineGroups}"
-                     selectionMode="multiple"
+                     sortMode="multiple"
                      selection="#{pptpController.selectedCellLineGroups}"
                      var="clg"
                      value="#{pptpController.cellLineGroups}"
@@ -88,6 +88,12 @@
             <f:facet name="header">  
                 List Layout With #{fn:length(pptpController.cellLineGroups)} Cell Line Groups
             </f:facet>
+
+            <p:column headerText="All"
+                      resizable="true" 
+                      selectionMode="multiple" 
+                      style="width:4%" 
+                      exportable="false"/>
 
             <p:column>  
                 <f:facet name="header">  

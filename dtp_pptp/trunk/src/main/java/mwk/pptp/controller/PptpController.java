@@ -15,13 +15,15 @@ import javax.faces.bean.SessionScoped;
 import mwk.pptp.util.Comparators.MouseDataShuttleComparator;
 import mwk.pptp.util.Comparators.MouseRTVShuttleComparator;
 import mwk.pptp.util.Comparators.MouseSurvivalShuttleComparator;
-import mwk.pptp.util.ExtendedCartesianChartModel;
 import mwk.pptp.util.HelperCellLineGroup;
 import mwk.pptp.vo.CellLineGroupVO;
 import mwk.pptp.vo.MouseDataShuttleVO;
 import mwk.pptp.vo.MouseRTVShuttleVO;
 import mwk.pptp.vo.MouseGraphShuttleVO;
 import mwk.pptp.vo.MouseSurvivalShuttleVO;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
 /**
@@ -47,9 +49,9 @@ public class PptpController implements Serializable {
 //
     private List<MouseGraphShuttleVO> graphShuttles;
 //
-    private ExtendedCartesianChartModel mouseDataChart;
-    private ExtendedCartesianChartModel mouseRtvChart;
-    private ExtendedCartesianChartModel mouseTimesToEventChart;
+    private LineChartModel mouseDataChart;
+    private LineChartModel mouseRtvChart;
+    private LineChartModel mouseTimesToEventChart;
 
     public PptpController() {
 
@@ -93,34 +95,52 @@ public class PptpController implements Serializable {
         return null;
     }
 
-    public ExtendedCartesianChartModel renderMouseData(MouseGraphShuttleVO mgShut) {
+    public LineChartModel renderMouseData(MouseGraphShuttleVO mgShut) {
 
-        //System.out.println("IN renderMouseData in pptpController");
-        ExtendedCartesianChartModel thisModel = new ExtendedCartesianChartModel();
+        System.out.println("IN renderMouseData in pptpController");
+
+        System.out.println("mgShut.toString()");
+        System.out.println(mgShut.toString());
+
+        LineChartModel thisModel = new LineChartModel();
+
+        if (mgShut.getCompoundName() == null) {
+            System.out.println("mgShut.getCompoundName() is null");
+        }
+
+        if (mgShut.getCellLineName() == null) {
+            System.out.println("mgShut.getCellLineName() is null");
+        }
+
         thisModel.setTitle(mgShut.getCompoundName() + " " + mgShut.getCellLineName());
 
-        thisModel.setxAxisLabel("Day");
-        thisModel.setxAxisMin(0d);
+        Axis xAxis = thisModel.getAxis(AxisType.X);
+        
+        xAxis.setLabel("Day");
+        xAxis.setMin(0d);
 
         // Leukemias 
+        
+        Axis yAxis = thisModel.getAxis(AxisType.Y);
+        
         if (mgShut.getCellLine().startsWith("G")) {
-            thisModel.setyAxisLabel("Percent Human CD45");
-            thisModel.setyAxisMin(0d);
-            thisModel.setyAxisMax(25d);
+            yAxis.setLabel("Percent Human CD45");
+            yAxis.setMin(0d);
+            yAxis.setMax(25d);
         } else {
-            thisModel.setyAxisLabel("Log10 Tumor Volume (cc)");
-            thisModel.setyAxisMin(-1d);
-            thisModel.setyAxisMax(1d);
+            yAxis.setLabel("Log10 Tumor Volume (cc)");
+            yAxis.setMin(-1d);
+            yAxis.setMax(1d);
         }
 
         HashMap<String, List<MouseDataShuttleVO>> theMap = new HashMap<String, List<MouseDataShuttleVO>>();
 
         for (MouseDataShuttleVO d : mgShut.getDatas()) {
             if (theMap.containsKey(d.getGroupRole() + " " + d.getMouseNumber())) {
-                //System.out.println("Adding to existing ArrayList for: " + d.getGroupRole() + " " + d.getMouseNumber());
+                System.out.println("Adding to existing ArrayList for: " + d.getGroupRole() + " " + d.getMouseNumber());
                 theMap.get(d.getGroupRole() + " " + d.getMouseNumber()).add(d);
             } else {
-                //System.out.println("Creating new ArrayList for: " + d.getGroupRole() + " " + d.getMouseNumber());
+                System.out.println("Creating new ArrayList for: " + d.getGroupRole() + " " + d.getMouseNumber());
                 ArrayList<MouseDataShuttleVO> newList = new ArrayList<MouseDataShuttleVO>();
                 newList.add(d);
                 theMap.put(d.getGroupRole() + " " + d.getMouseNumber(), newList);
@@ -132,7 +152,8 @@ public class PptpController implements Serializable {
 
         for (Map.Entry<String, List<MouseDataShuttleVO>> thisMap : theMap.entrySet()) {
 
-            //System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
+            // System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
+            
             // a chart series
             LineChartSeries thisSeries = new LineChartSeries();
             thisSeries.setLabel(thisMap.getKey());
@@ -155,23 +176,27 @@ public class PptpController implements Serializable {
 
     }
 
-    public ExtendedCartesianChartModel renderMouseRtv(MouseGraphShuttleVO mgShut) {
+    public LineChartModel renderMouseRtv(MouseGraphShuttleVO mgShut) {
 
-        ExtendedCartesianChartModel thisModel = new ExtendedCartesianChartModel();
+        LineChartModel thisModel = new LineChartModel();
         thisModel.setTitle(mgShut.getCompoundName() + " " + mgShut.getCellLineName());
 
-        thisModel.setxAxisLabel("Day");
-        thisModel.setxAxisMin(0d);
+        Axis xAxis = thisModel.getAxis(AxisType.X);
+        
+        xAxis.setLabel("Day");
+        xAxis.setMin(0d);
 
+        Axis yAxis = thisModel.getAxis(AxisType.Y);
+        
         // Leukemias 
         if (mgShut.getCellLine().startsWith("G")) {
-            thisModel.setyAxisLabel("Median Percent Human CD45");
-            thisModel.setyAxisMin(0d);
-            thisModel.setyAxisMax(25d);
+            yAxis.setLabel("Median Percent Human CD45");
+            yAxis.setMin(0d);
+            yAxis.setMax(25d);
         } else {
-            thisModel.setyAxisLabel("Relative Median Tumor Volume");
-            thisModel.setyAxisMin(0d);
-            thisModel.setyAxisMax(4d);
+            yAxis.setLabel("Relative Median Tumor Volume");
+            yAxis.setMin(0d);
+            yAxis.setMax(4d);
         }
 
         HashMap<String, List<MouseRTVShuttleVO>> theMap = new HashMap<String, List<MouseRTVShuttleVO>>();
@@ -189,7 +214,7 @@ public class PptpController implements Serializable {
         // series for each entry in the map
         for (Map.Entry<String, List<MouseRTVShuttleVO>> thisMap : theMap.entrySet()) {
 
-            //System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
+            System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
             // a chart series
             LineChartSeries thisSeries = new LineChartSeries();
             thisSeries.setLabel(thisMap.getKey());
@@ -213,16 +238,21 @@ public class PptpController implements Serializable {
 
     }
 
-    public ExtendedCartesianChartModel renderMouseTimeToEvent(MouseGraphShuttleVO mgShut) {
+    public LineChartModel renderMouseTimeToEvent(MouseGraphShuttleVO mgShut) {
 
-        ExtendedCartesianChartModel thisModel = new ExtendedCartesianChartModel();
+        LineChartModel thisModel = new LineChartModel();
         thisModel.setTitle(mgShut.getCompoundName() + " " + mgShut.getCellLineName());
 
-        thisModel.setxAxisLabel("Day");
-        thisModel.setyAxisLabel("Percent Event Free");
-        thisModel.setxAxisMin(0d);
-        thisModel.setyAxisMin(0d);
-        thisModel.setyAxisMax(100d);
+        Axis xAxis = thisModel.getAxis(AxisType.X);        
+        
+        xAxis.setLabel("Day");        
+        xAxis.setMin(0d);
+        
+        Axis yAxis = thisModel.getAxis(AxisType.Y);
+        
+        yAxis.setLabel("Percent Event Free");        
+        yAxis.setMin(0d);
+        yAxis.setMax(100d);
 
         HashMap<String, List<MouseSurvivalShuttleVO>> theMap = new HashMap<String, List<MouseSurvivalShuttleVO>>();
 
@@ -239,7 +269,7 @@ public class PptpController implements Serializable {
         // series for each entry in the map
         for (Map.Entry<String, List<MouseSurvivalShuttleVO>> thisMap : theMap.entrySet()) {
 
-            //System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
+            System.out.println("Creating LineChartSeries for: " + thisMap.getKey());
             // a chart series
             LineChartSeries thisSeries = new LineChartSeries();
             thisSeries.setLabel(thisMap.getKey());
@@ -289,6 +319,8 @@ public class PptpController implements Serializable {
 
     public String performShowGraphs() {
 
+        System.out.println("In performShowGraphs in pptpController");
+
         List<Long> cellLineGroupIds = new ArrayList<Long>();
 
         for (CellLineGroupVO clgVO : this.selectedCellLineGroups) {
@@ -303,7 +335,7 @@ public class PptpController implements Serializable {
             System.out.println(thisG.getCellLineName() + " " + thisG.getCompoundName() + " datas:" + thisG.getDatas().size() + " survials:" + thisG.getSurvivals().size() + " RTVs:" + thisG.getRtvs().size());
         }
 
-        return null;
+        return "/webpages/mouseCharts.xhtml?faces-redirect=true";
 
     }
 
@@ -418,27 +450,27 @@ public class PptpController implements Serializable {
         return filteredCellLineGroups;
     }
 
-    public ExtendedCartesianChartModel getMouseDataChart() {
+    public LineChartModel getMouseDataChart() {
         return mouseDataChart;
     }
 
-    public void setMouseDataChart(ExtendedCartesianChartModel mouseDataChart) {
+    public void setMouseDataChart(LineChartModel mouseDataChart) {
         this.mouseDataChart = mouseDataChart;
     }
 
-    public ExtendedCartesianChartModel getMouseRtvChart() {
+    public LineChartModel getMouseRtvChart() {
         return mouseRtvChart;
     }
 
-    public void setMouseRtvChart(ExtendedCartesianChartModel mouseRtvChart) {
+    public void setMouseRtvChart(LineChartModel mouseRtvChart) {
         this.mouseRtvChart = mouseRtvChart;
     }
 
-    public ExtendedCartesianChartModel getMouseTimesToEventChart() {
+    public LineChartModel getMouseTimesToEventChart() {
         return mouseTimesToEventChart;
     }
 
-    public void setMouseTimesToEventChart(ExtendedCartesianChartModel mouseTimesToEventChart) {
+    public void setMouseTimesToEventChart(LineChartModel mouseTimesToEventChart) {
         this.mouseTimesToEventChart = mouseTimesToEventChart;
     }
 

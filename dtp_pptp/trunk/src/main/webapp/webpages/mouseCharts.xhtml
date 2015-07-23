@@ -15,19 +15,198 @@
 
     <ui:define name="content">
 
-        <h1>#{shuttle.compoundName} #{shuttle.cellLineName}</h1>
+        <p:tabView dynamic="true"
+                   cache="false"
+                   effect="fade" 
+                   value="#{pptpController.graphShuttles}"
+                   var="shuttle">
 
-        <p:chart type="line"
-                 model="#{pptpController.renderMouseData(shuttle)}"
-                 style="width:600px;height:450px"/>
+            <p:tab title="#{shuttle.compoundName} #{shuttle.cellLineName}">
 
-        <p:chart type="line"
-                 model="#{pptpController.renderMouseRtv(shuttle)}"
-                 style="width:600px;height:450px"/>
+                <h1>#{shuttle.compoundName} #{shuttle.cellLineName}</h1>
 
-        <p:chart type="line"
-                 model="#{pptpController.renderMouseTimeToEvent(shuttle)}"
-                 style="width:600px;height:450px"/>
+                <h2>Tumor Burden</h2>                
+
+                <p:panelGrid columns="2">
+
+                    <p:chart type="line"
+                             model="#{pptpController.renderMouseData(shuttle)}"
+                             style="width:600px;height:450px;display:inline-block;"/>
+
+                    <p:dataTable resizableColumns="true" 
+                                 tableStyle="width: auto;" 
+                                 id="mouseDataTbl"
+                                 var="dat"
+                                 value="#{shuttle.datas}"
+                                 paginator="true" 
+                                 rows="10" 
+                                 paginatorPosition="top"
+                                 paginatorTemplate="page: {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
+                                 rowsPerPageTemplate="10,25,50">    
+
+                        <p:column sortBy="#{dat.groupRole}">  
+                            <f:facet name="header">  
+                                <h:outputText value="GroupRole" />  
+                            </f:facet>  
+                            <h:outputText value="#{dat.groupRole}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Compound" />  
+                            </f:facet>  
+                            <h:outputText value="#{shuttle.compoundName}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="CellLine" />  
+                            </f:facet>  
+                            <h:outputText value="#{shuttle.cellLineName}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{dat.mouseNumber}">  
+                            <f:facet name="header">  
+                                <h:outputText value="MouseNumber" />  
+                            </f:facet>  
+                            <h:outputText value="#{dat.mouseNumber}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{dat.day}">  
+                            <f:facet name="header">  
+                                <h:outputText value="Day" />  
+                            </f:facet>  
+                            <h:outputText value="#{dat.day}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Value" />  
+                            </f:facet>  
+                            <h:outputText value="#{dat.value}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+
+                <h2>RTV</h2>                
+
+                <p:panelGrid columns="2">
+
+                    <p:chart type="line"
+                             model="#{pptpController.renderMouseRtv(shuttle)}"
+                             style="width:600px;height:450px;display:inline-block;"/>
+
+                    <p:dataTable resizableColumns="true"                       
+                                 tableStyle="width: auto;"
+                                 var="rtv"
+                                 value="#{shuttle.rtvs}"
+                                 paginator="true" 
+                                 rows="10" 
+                                 paginatorPosition="top"                                 
+                                 paginatorTemplate="page: {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
+                                 rowsPerPageTemplate="10,25,50">    
+
+                        <p:column sortBy="#{rtv.groupRole}">  
+                            <f:facet name="header">  
+                                <h:outputText value="Group Role" />  
+                            </f:facet>  
+                            <h:outputText value="#{rtv.groupRole}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Compound" />  
+                            </f:facet>  
+                            <h:outputText value="#{shuttle.compoundName}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="CellLine" />  
+                            </f:facet>  
+                            <h:outputText value="#{shuttle.cellLineName}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{rtv.day}">  
+                            <f:facet name="header">  
+                                <h:outputText value="Day" />  
+                            </f:facet>  
+                            <h:outputText value="#{rtv.day}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="RTV" />  
+                            </f:facet>  
+                            <h:outputText value="#{rtv.rtv}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+
+                <h2>Survival</h2>                
+
+                <p:panelGrid columns="2">
+
+                    <p:chart type="line"
+                             model="#{pptpController.renderMouseTimeToEvent(shuttle)}"
+                             style="width:600px;height:450px;display:inline-block;"/>
+
+                    <p:dataTable resizableColumns="true"                       
+                                 tableStyle="width: auto;"
+                                 var="surv"
+                                 value="#{shuttle.survivals}"
+                                 paginator="true" 
+                                 rows="10" 
+                                 paginatorPosition="top"
+                                 paginatorTemplate="page: {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
+                                 rowsPerPageTemplate="10,25,50">    
+
+                        <p:column sortBy="#{surv.groupRole}">  
+                            <f:facet name="header">  
+                                <h:outputText value="Group Role" />  
+                            </f:facet>  
+                            <h:outputText value="#{surv.groupRole}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Compound" />  
+                            </f:facet>  
+                            <h:outputText value="#{shuttle.compoundName}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="CellLine" />  
+                            </f:facet>  
+                            <h:outputText value="#{shuttle.cellLineName}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{surv.timeToEvent}">  
+                            <f:facet name="header">  
+                                <h:outputText value="Time To Event" />  
+                            </f:facet>  
+                            <h:outputText value="#{surv.timeToEvent}"/>
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Percent Event Free" />  
+                            </f:facet>  
+                            <h:outputText value="#{surv.percentEventFree}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panelGrid>
+
+            </p:tab>
+
+        </p:tabView>
 
     </ui:define>
 

@@ -158,10 +158,30 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <!-- MWK downgraded to 2.0.1 to allow maven-replacer-plugin
                 <version>2.1.1</version>
+                -->
+                <version>2.0.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${deploy.war.name}</warName>                    
+                    <webResources>                        
+                        <resource>
+                            <directory>apache</directory>                            
+                        </resource>
+                    </webResources>
                 </configuration>
+                <!-- MWK executions to allow hook by maven replacer
+                <executions>
+                    <execution>
+                        <id>prepare-war</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exploded</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -202,6 +222,22 @@
         </resources>
 
     </build>
+    
+    <profiles>
+        <profile>
+            <id>pptp_local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>                
+            </activation>     
+            <properties>
+                <deploy.war.name>pptp</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/pptpdb</deploy.db.url>
+                <deploy.db.user>pptp_user</deploy.db.user>
+                <deploy.db.pass>pptp_pass</deploy.db.pass>
+                <deploy.compare.url>http://localhost:8080/pptpcompare</deploy.compare.url>
+            </properties>
+        </profile>
+    </profiles>
     
     <repositories>         
         <repository>
