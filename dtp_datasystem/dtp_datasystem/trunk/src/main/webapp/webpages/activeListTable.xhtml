@@ -120,11 +120,11 @@
                       tableStyle="width: auto;"                 
                       widgetVar="activeListTblWidgetVar"
                       var="listMember"                       
-                      value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
+                      value="#{listManagerController.listManagerBean.filteredActiveListMembers}" 
                       rows="50"                        
                       paginator="true"
                       paginatorPosition="top"
-                      currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} total records"
+                      currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
                       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
                       rowsPerPageTemplate="50,100,250,500,1000,2000"
                       selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
@@ -250,3 +250,4 @@
     </ui:define>
 
 </ui:composition>
+

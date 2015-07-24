@@ -47,10 +47,11 @@
         </p:panel>
 
         <p:dataGrid var="listMember" 
-                    value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}"                                     
+                    value="#{listManagerController.listManagerBean.filteredActiveListMembers}"                                     
                     columns="1"  
                     rows="1" 
                     paginator="true"  
+                    currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"                
                     paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">  
 
             <f:facet name="header">  
@@ -83,6 +84,15 @@
                                     url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                     </h:graphicImage>
                 </p:panel>
+                
+                
+                    <h:outputText value="PSEUDO ATOMS: " />
+                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}" style="font-weight: bold;"/>
+
+                    <h:outputText value="MTXT: " />
+                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}" style="font-weight: bold;"/>
+
+                   
 
                 <p:dataGrid columns="3" 
                             rendered="#{sessionController.configurationBean.showFrags}" 

@@ -24,6 +24,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import mwk.datasystem.util.HelperCmpdList;
+import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -249,6 +250,8 @@ public class ListManagerController implements Serializable {
         System.out.println("Entering performLoadSelectedList()");
 
         performLoadList(listManagerBean.activeList);
+        
+        listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
 
         sessionController.configurationBean.performUpdateColumns();
 
@@ -285,7 +288,7 @@ public class ListManagerController implements Serializable {
 
         CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
         clVO.setCmpdListMembers(voList.getCmpdListMembers());
-
+        
         sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";

@@ -17,137 +17,121 @@
         <h:outputText value="Soring and filtering of the list can be
                       done in the Table View.  Changes made there will 
                       be reflected in this view."/>
-</ui:define>        
+    </ui:define>        
 
-<ui:define name="export">
-    <p:commandButton value="Export Structures as Image"
-                     type="button"
-                     ajax="false"
-                     onclick="structuresAsGridImage()"/>
-</ui:define>        
+    <ui:define name="export">
+        <p:commandButton value="Export Structures as Image"
+                         type="button"
+                         ajax="false"
+                         onclick="structuresAsGridImage()"/>
+    </ui:define>        
 
-<ui:define name="alternate"></ui:define>        
+    <ui:define name="alternate"></ui:define>        
 
-<ui:define name="content title">
-    <h:outputText value="Grid View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
-</ui:define>
+    <ui:define name="content title">
+        <h:outputText value="Grid View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+    </ui:define>
 
-<ui:define name="content">
+    <ui:define name="content">
 
-    <p:panel header="List Anchor Structure"
-             rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
+        <p:panel header="List Anchor Structure"
+                 rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
-        <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
+            <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
 
-        <br/>
+            <br/>
 
-        <h:graphicImage alt="Chemical Structure of List Anchor"
-                        width="#{sessionController.configurationBean.strcDim}" 
-                        height="#{sessionController.configurationBean.strcDim}"
-                        styleClass="anchorStructure"
-                        url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-        </h:graphicImage>
-
-    </p:panel>
-
-    <p:spacer height="20" width="100%"/>
-
-    <p:dataGrid var="listMember"
-                value="#{listManagerController.listManagerBean.filteredActiveListMembers}" 
-                id="compactGridViewDataGrid"
-                columns="8"
-                rows="80"
-                paginator="true"  
-                currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} total records"
-                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                rowsPerPageTemplate="80,160,240,320">  
-
-        <f:facet name="header">                
-            <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>    
-        </f:facet>
-
-        <p:panel>
-
-            <p:panelGrid columns="1" style="width: 25%;">
-
-                <f:facet name="header"> 
-                    <h:outputText value="#{listMember.cmpd.name}"/>
-                </f:facet> 
-
-                <p:selectBooleanCheckbox value="#{listMember.isSelected}" />
-
-                <h:graphicImage alt="Chemical Structure of Parent Fragment"
-                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                                styleClass="parentStructure"
-                                url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-                </h:graphicImage>
-
-                <ui:remove>
-
-                    <p:panel>
-
-                        <f:facet name="header">
-                            <h:outputText value="Kekule Image of Legacy Compound" />
-                        </f:facet>
-
-                        <h:graphicImage alt="Kekule Image of Legacy Compound"
-                                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
-                                        styleClass="unassignedClass"                                                                                        
-                                        url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
-                        </h:graphicImage>
-
-                    </p:panel>
-
-                </ui:remove>
-
-                <p:dataGrid rendered="#{sessionController.configurationBean.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
-                    <h:graphicImage alt="Chemical Structure of Compound Fragment"
-                                    styleClass="fragmentStructure"
-                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
-                                    url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
-                    </h:graphicImage>
-                </p:dataGrid>
-
-                <p:row>
-                    <h:outputText value="NSC CmpdType: " />
-                    <h:outputText value="#{listMember.cmpd.nscCmpdType}" style="font-weight: bold;"/>                    
-                </p:row>
-                <p:row>
-                    <h:outputText value="Count Fragments: "/>                      
-                    <h:outputText value="#{listMember.cmpd.countCmpdFragments}" style="font-weight: bold;"/>
-                </p:row>
-                <p:row>
-                    <h:outputText value="PSEUDO ATOMS: " />
-                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}" style="font-weight: bold;"/>
-                </p:row>
-                <p:row>
-                    <h:outputText value="MTXT: " />
-                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}" style="font-weight: bold;"/>
-                </p:row>
-
-                <f:facet name="footer">
-                    <p:commandButton icon="fa fa-eye"
-                                     update=":datasystemForm:ListMemberDetailsDialogPanel" 
-                                     oncomplete="PF('listMemberDetailDlg').show();" 
-                                     title="Compound Details Dialog"
-                                     style="display: inline-block;">  
-                        <f:setPropertyActionListener value="#{listMember}"   
-                                                     target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                    </p:commandButton>
-
-                    <p:commandButton ajax="false" 
-                                     icon="fa fa-wrench"
-                                     title="Fragments Workbench"
-                                     action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}" />
-
-                </f:facet> 
-
-            </p:panelGrid>
+            <h:graphicImage alt="Chemical Structure of List Anchor"
+                            width="#{sessionController.configurationBean.strcDim}" 
+                            height="#{sessionController.configurationBean.strcDim}"
+                            styleClass="anchorStructure"
+                            url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+            </h:graphicImage>
 
         </p:panel>
 
-    </p:dataGrid>
+        <p:spacer height="20" width="100%"/>
 
-</ui:define>
+        <p:dataGrid var="listMember"
+                    value="#{listManagerController.listManagerBean.filteredActiveListMembers}" 
+                    id="compactGridViewDataGrid"
+                    layout="grid"
+                    columns="6"
+                    rows="60"
+                    paginator="true"  
+                    currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                    rowsPerPageTemplate="60,120,240,360">  
+
+            <f:facet name="header">                
+                <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>    
+            </f:facet>
+
+            <p:panel>
+
+                <p:panelGrid columns="1" style="width: 100%;">
+
+                    <f:facet name="header"> 
+                        <h:outputText value="#{listMember.cmpd.name}"/>
+                    </f:facet> 
+
+                    <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                                    width="#{sessionController.configurationBean.strcDim}" 
+                                    height="#{sessionController.configurationBean.strcDim}"
+                                    styleClass="parentStructure"
+                                    url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+                    </h:graphicImage>
+
+                    <ui:remove>
+
+                        <p:panel>
+                            <f:facet name="header">
+                                <h:outputText value="Kekule Image of Legacy Compound" />
+                            </f:facet>
+                            <h:graphicImage alt="Kekule Image of Legacy Compound"
+                                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                                            styleClass="unassignedClass"                                                                                        
+                                            url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
+                            </h:graphicImage>
+                        </p:panel>
+
+                        <p:dataGrid rendered="#{sessionController.configurationBean.showFrags}" columns="3" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
+                            <h:graphicImage alt="Chemical Structure of Compound Fragment"
+                                            styleClass="fragmentStructure"
+                                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
+                                            url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
+                            </h:graphicImage>
+                        </p:dataGrid>
+
+                    </ui:remove>
+
+                    <h:outputText value="#{listMember.cmpd.nscCmpdType}" style="font-weight: bold;"/>                    
+
+                    <h:outputText value="#{listMember.cmpd.countCmpdFragments} fragment(s)" 
+                                  style="font-weight: bold;"/>
+ <f:facet name="footer">
+                        <p:commandButton icon="fa fa-eye"
+                                         update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                         oncomplete="PF('listMemberDetailDlg').show();" 
+                                         title="Compound Details Dialog"
+                                         style="display: inline-block;">  
+                            <f:setPropertyActionListener value="#{listMember}"   
+                                                         target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                        </p:commandButton>
+
+                        <p:commandButton ajax="false" 
+                                         icon="fa fa-wrench"
+                                         title="Fragments Workbench"
+                                         action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}" />
+
+                    </f:facet> 
+
+                </p:panelGrid>
+
+            </p:panel>
+
+        </p:dataGrid>
+
+    </ui:define>
 
 </ui:composition>
