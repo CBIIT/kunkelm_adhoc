@@ -90,3 +90,59 @@
 		<f:convertNumber pattern="#0.00" />
 		</h:outputText>
 		
+		<p:outputLabel value="inchi"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi}" />
+		
+		<p:outputLabel value="inchiAux"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchiAux}" />
+		
+		<p:outputLabel value="ctab"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.ctab}" />
+		
+		<p:outputLabel value="canSmi"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}" />
+		
+		<p:outputLabel value="canTaut"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTaut}" />
+		
+		<p:outputLabel value="canTautStripStereo"/>
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTautStripStereo}" />
+		
+		<p:outputLabel value="name"/>
+		<h:outputText value="#{listMember.cmpd.name}" />
+		
+		<p:outputLabel value="prefix"/>
+		<h:outputText value="#{listMember.cmpd.prefix}" />
+		
+		<p:outputLabel value="nsc"/>                
+		<h:outputText value="#{listMember.cmpd.nsc}" />
+		
+		<p:outputLabel value="conf"/>
+		<h:outputText value="#{listMember.cmpd.conf}" />
+		
+		<p:outputLabel value="distribution"/>
+		<h:outputText value="#{listMember.cmpd.distribution}" />
+		
+		<p:outputLabel value="cas"/>
+		<h:outputText value="#{listMember.cmpd.cas}" />
+		
+		<p:outputLabel value="countFragments"/>                
+		<h:outputText value="#{listMember.cmpd.countFragments}" />
+		
+		<p:outputLabel value="discreet"/>
+		<h:outputText value="#{listMember.cmpd.discreet}" />
+		
+		<p:outputLabel value="identifierString"/>
+		<h:outputText value="#{listMember.cmpd.identifierString}" />
+		
+		<p:outputLabel value="descriptorString"/>
+		<h:outputText value="#{listMember.cmpd.descriptorString}" />
+		
+		<p:outputLabel value="molecularWeight"/>
+		<h:outputText value="#{listMember.cmpd.molecularWeight}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		
+		<p:outputLabel value="molecularFormula"/>
+		<h:outputText value="#{listMember.cmpd.molecularFormula}" />
+		

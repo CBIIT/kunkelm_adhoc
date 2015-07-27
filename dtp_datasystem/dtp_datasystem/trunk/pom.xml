@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>2015.07.18</version>
+    <version>2015.07.25</version>
     <packaging>war</packaging>
     <name>datasystem</name>
     <properties>
@@ -38,8 +38,8 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <!--version>5.1.11-MWK</version-->
-            <version>5.2.7-MWK</version>
+            <version>5.1.11-MWK</version>
+            <!--version>5.2.7-MWK</version-->
         </dependency>
         <dependency>
             <groupId>javax</groupId>

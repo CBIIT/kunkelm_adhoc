@@ -117,3 +117,77 @@
 		</h:outputText>
 		</p:column>
 		
+		<p:column headerText="inchi" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi}" />
+		</p:column>
+		
+		<p:column headerText="inchiAux" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchiAux}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchiAux}" />
+		</p:column>
+		
+		<p:column headerText="ctab" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.ctab}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.ctab}" />
+		</p:column>
+		
+		<p:column headerText="canSmi" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}" />
+		</p:column>
+		
+		<p:column headerText="canTaut" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTaut}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTaut}" />
+		</p:column>
+		
+		<p:column headerText="canTautStripStereo" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTautStripStereo}">                
+		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTautStripStereo}" />
+		</p:column>
+		
+		<p:column headerText="name" resizeable="true" sortBy="#{listMember.cmpd.name}">                
+		<h:outputText value="#{listMember.cmpd.name}" />
+		</p:column>
+		
+		<p:column headerText="prefix" resizeable="true" sortBy="#{listMember.cmpd.prefix}">                
+		<h:outputText value="#{listMember.cmpd.prefix}" />
+		</p:column>
+		
+		<p:column headerText="nsc" resizeable="true" sortBy="#{listMember.cmpd.nsc}">                
+		<h:outputText value="#{listMember.cmpd.nsc}" />
+		</p:column>
+		
+		<p:column headerText="conf" resizeable="true" sortBy="#{listMember.cmpd.conf}">                
+		<h:outputText value="#{listMember.cmpd.conf}" />
+		</p:column>
+		
+		<p:column headerText="distribution" resizeable="true" sortBy="#{listMember.cmpd.distribution}">                
+		<h:outputText value="#{listMember.cmpd.distribution}" />
+		</p:column>
+		
+		<p:column headerText="cas" resizeable="true" sortBy="#{listMember.cmpd.cas}">                
+		<h:outputText value="#{listMember.cmpd.cas}" />
+		</p:column>
+		
+		<p:column headerText="countFragments" resizeable="true" sortBy="#{listMember.cmpd.countFragments}">                
+		<h:outputText value="#{listMember.cmpd.countFragments}" />
+		</p:column>
+		
+		<p:column headerText="discreet" resizeable="true" sortBy="#{listMember.cmpd.discreet}">                
+		<h:outputText value="#{listMember.cmpd.discreet}" />
+		</p:column>
+		
+		<p:column headerText="identifierString" resizeable="true" sortBy="#{listMember.cmpd.identifierString}">                
+		<h:outputText value="#{listMember.cmpd.identifierString}" />
+		</p:column>
+		
+		<p:column headerText="descriptorString" resizeable="true" sortBy="#{listMember.cmpd.descriptorString}">                
+		<h:outputText value="#{listMember.cmpd.descriptorString}" />
+		</p:column>
+		
+		<p:column headerText="molecularWeight" resizeable="true" sortBy="#{listMember.cmpd.molecularWeight}">                
+		<h:outputText value="#{listMember.cmpd.molecularWeight}">
+		<f:convertNumber pattern="#0.00" />
+		</h:outputText>
+		</p:column>
+		
+		<p:column headerText="molecularFormula" resizeable="true" sortBy="#{listMember.cmpd.molecularFormula}">                
+		<h:outputText value="#{listMember.cmpd.molecularFormula}" />
+		</p:column>
+		

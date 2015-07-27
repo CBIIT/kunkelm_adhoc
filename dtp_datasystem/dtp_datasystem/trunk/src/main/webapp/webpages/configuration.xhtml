@@ -16,33 +16,24 @@
         <p:fieldset legend="General Display Options" 
                     style="width: 100%; display: inline-block;">
 
-            <p:selectBooleanButton id="boolAnchor"
+            <p:selectBooleanCheckbox id="boolAnchor"
                                    value="#{sessionController.configurationBean.showAnchor}" 
-                                   onLabel="CLICK TO HIDE" 
-                                   onIcon="fa fa-eye" 
-                                   offLabel="CLICK TO SHOW" 
-                                   offIcon="fa fa-eye-slash"/>                
+                                   style="display: inline-block;"/>                
             <p:outputLabel for="boolAnchor" value="Show Anchor Structure" />
 
-            <p:spacer height="20" width="100%"/>
+            <p:spacer height="20" width="20"/>
 
-            <p:selectBooleanButton id="boolFrags"
+            <p:selectBooleanCheckbox id="boolFrags"
                                    value="#{sessionController.configurationBean.showFrags}" 
-                                   onLabel="CLICK TO HIDE" 
-                                   onIcon="fa fa-eye" 
-                                   offLabel="CLICK TO SHOW" 
-                                   offIcon="fa fa-eye-slash"/>
+                                   style="display: inline-block;"/>                
 
             <p:outputLabel for="boolFrags" value="Show Fragments" />
 
-            <p:spacer height="20" width="100%"/>
+            <p:spacer height="20" width="20"/>
 
-            <p:selectBooleanButton id="boolQc"
+            <p:selectBooleanCheckbox id="boolQc"
                                    value="#{sessionController.configurationBean.showQc}" 
-                                   onLabel="CLICK TO HIDE" 
-                                   onIcon="fa fa-eye" 
-                                   offLabel="CLICK TO SHOW" 
-                                   offIcon="fa fa-eye-slash" />
+                                   style="display: inline-block;"/>                
 
             <p:outputLabel for="boolQc" value="Show MTXT and LABELS" />
 

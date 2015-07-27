@@ -9452,15 +9452,6 @@ dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/StringPair.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/nsc_for_export.sql -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/writetoaccord/WriteToAccord.java -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/CREATE_VIEWS.sql -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/OLD_SCRIPT3_1_fragmentStats.PL -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/OLD_SCRIPT3_2_fragmentStatsQC.PL -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/fragment_stats.sql -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/loadCmpdModelFromPipelinePilot.sql -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/makeQClists.PL -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/processSaltDefinitions.sql -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/rs3VsStrc.sql -text
-dtp_datasystem/dtp_datasystem/trunk/OLD_SCRIPTS/util.PL -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/.~lock.combo.csv# -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/combo.csv -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text

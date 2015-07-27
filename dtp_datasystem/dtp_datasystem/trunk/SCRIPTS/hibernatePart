@@ -210,4 +210,88 @@
 		} else if (this.max_theALogP != null){
 		// lt max
 		}
+				
+		if (this.inchi != null){
+		// eq
+		}
+				
+		if (this.inchiAux != null){
+		// eq
+		}
+				
+		if (this.ctab != null){
+		// eq
+		}
+				
+		if (this.canSmi != null){
+		// eq
+		}
+				
+		if (this.canTaut != null){
+		// eq
+		}
+				
+		if (this.canTautStripStereo != null){
+		// eq
+		}
+				
+		if (this.name != null){
+		// eq
+		}
+				
+		if (this.prefix != null){
+		// eq
+		}
+				
+		if (this.min_nsc != null && this.max_nsc != null){
+		// between
+		} else if (this.min_nsc != null){
+		// gt min
+		} else if (this.max_nsc != null){
+		// lt max
+		}		
+				
+		if (this.conf != null){
+		// eq
+		}
+				
+		if (this.distribution != null){
+		// eq
+		}
+				
+		if (this.cas != null){
+		// eq
+		}
+				
+		if (this.min_countFragments != null && this.max_countFragments != null){
+		// between
+		} else if (this.min_countFragments != null){
+		// gt min
+		} else if (this.max_countFragments != null){
+		// lt max
+		}		
+				
+		if (this.discreet != null){
+		// eq
+		}
+				
+		if (this.identifierString != null){
+		// eq
+		}
+				
+		if (this.descriptorString != null){
+		// eq
+		}
+				
+		if (this.min_molecularWeight != null && this.max_molecularWeight != null){
+		// between
+		} else if (this.min_molecularWeight != null){
+		// gt min
+		} else if (this.max_molecularWeight != null){
+		// lt max
+		}
+				
+		if (this.molecularFormula != null){
+		// eq
+		}
 		

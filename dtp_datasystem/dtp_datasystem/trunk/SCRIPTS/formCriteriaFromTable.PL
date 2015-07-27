@@ -59,9 +59,7 @@ Double theALogP;
 Long id;
 ";
 
-
 my $strcVars = "	
-static final long serialVersionUID = 5944515987538010440L;
 String smiles;
 String inchi;
 String inchiAux;
@@ -116,11 +114,29 @@ open ( hibernatePart, ">hibernatePart") or die "Can't open hibernatePart\n";
 
 my @cumulativeFieldNames = ();
 
-print "$pChemVars\n";
 
-chomp($pChemVars);
 
-my @lines = split(/;/, $pChemVars);
+
+foreach my $dataSet($pChemVars, $strcVars, $nscCmpdVars){
+
+#print "$dataSet\n";
+
+chomp($dataSet);
+
+my $fetchString = '';
+
+if ($dataSet eq $pChemVars){
+    print "\n\n-------------------------This is pChemVars\n";
+    $fetchString = 'listMember.cmpd.parentFragment.cmpdFragmentPChem';
+} elsif ($dataSet eq $strcVars){
+    print "\n\n-------------------------This is strcVars\n";
+    $fetchString = 'listMember.cmpd.parentFragment.cmpdFragmentStructure';
+} elsif ($dataSet eq $nscCmpdVars){
+   print "\n\n-------------------------This is nscCmpdVars\n"; 
+    $fetchString = 'listMember.cmpd';
+}
+
+my @lines = split(/;/, $dataSet);
 
 foreach my $line(@lines){
 	
@@ -129,7 +145,7 @@ foreach my $line(@lines){
 	my @splitLine = split(/\s/, $line);
 	my $varType = $splitLine[1];
 	my $varName = $splitLine[2];
-	print "varType: $varType varName: $varName\n";
+	#print "varType: $varType varName: $varName\n";
 	
 	if ( $varType eq "Integer"){
 		
@@ -151,18 +167,18 @@ foreach my $line(@lines){
 		];	
 		
 		print outputPartColumnFormat qq[
-		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
-		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
+		<h:outputText value="#{$fetchString.$varName}" />
 		</p:column>
 		];
 		
 		print outputPartLabelValue qq[
 		<p:outputLabel value="$varName"/>                
-		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		<h:outputText value="#{$fetchString.$varName}" />
 		];
 		
 		print outputPartAddToColumnModelList qq[
-		hm.put("$varName", "listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName");
+		hm.put("$varName", "$fetchString.$varName");
 		];
 		
 		push @cumulativeFieldNames, qq["$varName"];
@@ -197,8 +213,8 @@ foreach my $line(@lines){
 		];
 		
 		print outputPartColumnFormat qq[
-		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
-		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
+		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
+		<h:outputText value="#{$fetchString.$varName}">
 		<f:convertNumber pattern="#0.00" />
 		</h:outputText>
 		</p:column>
@@ -206,13 +222,13 @@ foreach my $line(@lines){
 		
 		print outputPartLabelValue qq[
 		<p:outputLabel value="$varName"/>
-		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">
+		<h:outputText value="#{$fetchString.$varName}">
 		<f:convertNumber pattern="#0.00" />
 		</h:outputText>
 		];
 		
 		print outputPartAddToColumnModelList qq[
-		hm.put("$varName", "listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName");
+		hm.put("$varName", "$fetchString.$varName");
 		];
 		
 		push @cumulativeFieldNames, qq["$varName"];
@@ -241,18 +257,18 @@ foreach my $line(@lines){
 		];
 		
 		print outputPartColumnFormat qq[
-		<p:column headerText="$varName" resizeable="true" sortBy="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}">                
-		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
+		<h:outputText value="#{$fetchString.$varName}" />
 		</p:column>
 		];
 		
 		print outputPartLabelValue qq[
 		<p:outputLabel value="$varName"/>
-		<h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName}" />
+		<h:outputText value="#{$fetchString.$varName}" />
 		];
 		
 		print outputPartAddToColumnModelList qq[
-		hm.put("$varName", "listMember.cmpd.parentFragment.cmpdFragmentPChem.$varName");
+		hm.put("$varName", "$fetchString.$varName");
 		];
 		
 		push @cumulativeFieldNames, qq["$varName"];
@@ -265,13 +281,13 @@ foreach my $line(@lines){
 		
 		
 	}
+
 	
 }
 
 print outputPartAddToColumnModelList join(',', @cumulativeFieldNames);
 
-#print "$strcVars\n";
-#print "$nscCmpdVars\n";
+}
 
 close javaPart;
 close formatPart;

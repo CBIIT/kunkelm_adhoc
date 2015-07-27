@@ -53,3 +53,39 @@
 		
 		hm.put("theALogP", "listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP");
 		"molecularWeight","molecularFormula","logD","countHydBondAcceptors","countHydBondDonors","surfaceArea","solubility","countRings","countAtoms","countBonds","countSingleBonds","countDoubleBonds","countTripleBonds","countRotatableBonds","countHydrogenAtoms","countMetalAtoms","countHeavyAtoms","countPositiveAtoms","countNegativeAtoms","countRingBonds","countStereoAtoms","countStereoBonds","countRingAssemblies","countAromaticBonds","countAromaticRings","formalCharge","theALogP"
+		hm.put("inchi", "listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi");
+		
+		hm.put("inchiAux", "listMember.cmpd.parentFragment.cmpdFragmentStructure.inchiAux");
+		
+		hm.put("ctab", "listMember.cmpd.parentFragment.cmpdFragmentStructure.ctab");
+		
+		hm.put("canSmi", "listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi");
+		
+		hm.put("canTaut", "listMember.cmpd.parentFragment.cmpdFragmentStructure.canTaut");
+		
+		hm.put("canTautStripStereo", "listMember.cmpd.parentFragment.cmpdFragmentStructure.canTautStripStereo");
+		"molecularWeight","molecularFormula","logD","countHydBondAcceptors","countHydBondDonors","surfaceArea","solubility","countRings","countAtoms","countBonds","countSingleBonds","countDoubleBonds","countTripleBonds","countRotatableBonds","countHydrogenAtoms","countMetalAtoms","countHeavyAtoms","countPositiveAtoms","countNegativeAtoms","countRingBonds","countStereoAtoms","countStereoBonds","countRingAssemblies","countAromaticBonds","countAromaticRings","formalCharge","theALogP","inchi","inchiAux","ctab","canSmi","canTaut","canTautStripStereo"
+		hm.put("name", "listMember.cmpd.name");
+		
+		hm.put("prefix", "listMember.cmpd.prefix");
+		
+		hm.put("nsc", "listMember.cmpd.nsc");
+		
+		hm.put("conf", "listMember.cmpd.conf");
+		
+		hm.put("distribution", "listMember.cmpd.distribution");
+		
+		hm.put("cas", "listMember.cmpd.cas");
+		
+		hm.put("countFragments", "listMember.cmpd.countFragments");
+		
+		hm.put("discreet", "listMember.cmpd.discreet");
+		
+		hm.put("identifierString", "listMember.cmpd.identifierString");
+		
+		hm.put("descriptorString", "listMember.cmpd.descriptorString");
+		
+		hm.put("molecularWeight", "listMember.cmpd.molecularWeight");
+		
+		hm.put("molecularFormula", "listMember.cmpd.molecularFormula");
+		"molecularWeight","molecularFormula","logD","countHydBondAcceptors","countHydBondDonors","surfaceArea","solubility","countRings","countAtoms","countBonds","countSingleBonds","countDoubleBonds","countTripleBonds","countRotatableBonds","countHydrogenAtoms","countMetalAtoms","countHeavyAtoms","countPositiveAtoms","countNegativeAtoms","countRingBonds","countStereoAtoms","countStereoBonds","countRingAssemblies","countAromaticBonds","countAromaticRings","formalCharge","theALogP","inchi","inchiAux","ctab","canSmi","canTaut","canTautStripStereo","name","prefix","nsc","conf","distribution","cas","countFragments","discreet","identifierString","descriptorString","molecularWeight","molecularFormula"

@@ -69,38 +69,6 @@ public class ListContentController implements Serializable {
     UploadedFile uploadedFile;
     CmpdListVO targetList;
 
-    public void onRowSelect(SelectEvent evt) {
-
-        try {
-
-            CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
-
-            System.out.println("Select: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-
-            clmVO.setIsSelected(Boolean.TRUE);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void onRowDeSelect(SelectEvent evt) {
-
-        try {
-
-            CmpdListMemberVO clmVO = (CmpdListMemberVO) evt.getObject();
-
-            System.out.println("Delect: " + clmVO.getCmpd().getNsc() + " " + clmVO.getCmpd().getAdHocCmpdId());
-
-            clmVO.setIsSelected(Boolean.FALSE);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     /**
      *
      * @return For checkboxes outside of dataTable
