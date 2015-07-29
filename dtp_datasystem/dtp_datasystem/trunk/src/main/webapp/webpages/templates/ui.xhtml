@@ -56,7 +56,7 @@
 
                     <ui:include src="/webpages/templates/menubar.xhtml"/>
 
-                    <h1><ui:insert name="content title"/></h1>
+                    <h1>#{applicationScopeBean.projectTitle} <ui:insert name="content title"/></h1>
 
                     <ui:insert name="instructions"/>
 

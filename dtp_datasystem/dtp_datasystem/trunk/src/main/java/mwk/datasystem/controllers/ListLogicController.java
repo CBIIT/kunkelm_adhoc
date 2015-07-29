@@ -64,8 +64,8 @@ public class ListLogicController implements Serializable {
 
   public String performListLogic() {
 
-    CmpdListVO aList = listManagerController.performLoadList(this.listA.getCmpdListId());
-    CmpdListVO bList = listManagerController.performLoadList(this.listB.getCmpdListId());
+    CmpdListVO aList = listManagerController.fetchList(this.listA.getCmpdListId());
+    CmpdListVO bList = listManagerController.fetchList(this.listB.getCmpdListId());
 
     // overlap is based on a.nsc = b.nsc OR a.originalAdHocCmpdId = b.originalAdHocCmpdId
     HashMap<Integer, CmpdVO> nscMap = new HashMap<Integer, CmpdVO>();

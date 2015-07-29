@@ -37,12 +37,12 @@
 
             <br/>
 
-            <h:graphicImage alt="Chemical Structure of List Anchor"
+            <p:graphicImage alt="Chemical Structure of List Anchor"
                             width="#{sessionController.configurationBean.strcDim}" 
                             height="#{sessionController.configurationBean.strcDim}"
                             styleClass="anchorStructure"
                             url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-            </h:graphicImage>
+            </p:graphicImage>
 
         </p:panel>
 
@@ -60,39 +60,41 @@
                 </p:row>                                              
             </f:facet>
 
-            <p:panelGrid columns="3" style="display: inline-block;">
+            <p:panelGrid columns="2" style="display: inline-block;">
 
                 <p:panel>
                     <f:facet name="header">
                         <h:outputText value="Kekule Image of Legacy Compound" />
                     </f:facet>
-                    <h:graphicImage alt="Kekule Image of Legacy Compound"
+                    <p:graphicImage alt="Kekule Image of Legacy Compound"
                                     width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
                                     styleClass="unassignedClass"                                                                                        
                                     url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
-                    </h:graphicImage>
+                    </p:graphicImage>
                 </p:panel>
 
                 <p:panel style="display: inline-block;">
                     <f:facet name="header">
                         <h:outputText value="Parent Fragment Structure" />
                     </f:facet>
-                    <h:graphicImage rendered="#{!empty listMember.cmpd}"
+                    <p:graphicImage rendered="#{!empty listMember.cmpd}"
                                     alt="Chemical Structure of Parent Fragment"
                                     styleClass="unassignedClass"
                                     width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
                                     url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-                    </h:graphicImage>
+                    </p:graphicImage>
                 </p:panel>
-                
-                
-                    <h:outputText value="PSEUDO ATOMS: " />
-                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}" style="font-weight: bold;"/>
 
-                    <h:outputText value="MTXT: " />
-                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}" style="font-weight: bold;"/>
 
-                   
+                <h:outputText value="PSEUDO ATOMS" style="font-weight: bold;" />
+                <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}"/>
+
+                <h:outputText value="MTXT" style="font-weight: bold;"/>
+                <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}"/>
+
+                <h:outputText value="NSC Cmpd Type" style="font-weight: bold;"/>
+                <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
+
 
                 <p:dataGrid columns="3" 
                             rendered="#{sessionController.configurationBean.showFrags}" 
@@ -103,11 +105,11 @@
                         <f:facet name="header">
                             <h:outputText value="Fragment Structure"/>
                         </f:facet>
-                        <h:graphicImage alt="Chemical Structure of Compound Fragment"
+                        <p:graphicImage alt="Chemical Structure of Compound Fragment"
                                         styleClass="fragmentStructure"
                                         width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
                                         url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
-                        </h:graphicImage>
+                        </p:graphicImage>
                     </p:panel>
 
                 </p:dataGrid>
@@ -121,9 +123,32 @@
                         <p:column colspan="6">#{listMember.cmpd.name}</p:column>  
                     </p:row>  
                 </f:facet>  
-                
+
                 <p:row>  
-                    <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Biological Data (Count Experiments)</p:column>                  
+                    <p:column style="white-space: nowrap" 
+                              colspan="6" 
+                              styleClass="ui-widget-header">
+                        NSC Compound
+                    </p:column>                  
+                </p:row>
+
+                <p:row>
+                    <p:column style="font-weight:bold">Conf</p:column>
+                    <p:column>#{listMember.cmpd.conf}</p:column>
+
+                    <p:column style="font-weight:bold">Distribution</p:column>
+                    <p:column>#{listMember.cmpd.distribution}</p:column>
+
+                    <p:column style="font-weight:bold">Inventory</p:column>
+                    <p:column>#{listMember.cmpd.inventory}</p:column>
+                </p:row>
+
+                <p:row>  
+                    <p:column style="white-space: nowrap" 
+                              colspan="6" 
+                              styleClass="ui-widget-header">
+                        Biological Data (Count Experiments)
+                    </p:column>                  
                 </p:row>
 
                 <p:row>
@@ -138,7 +163,11 @@
                 </p:row>
 
                 <p:row>
-                    <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Identifiers</p:column>  
+                    <p:column style="white-space: nowrap" 
+                              colspan="6" 
+                              styleClass="ui-widget-header">
+                        Identifiers
+                    </p:column>  
                 </p:row>
 
                 <p:row>
@@ -152,15 +181,23 @@
                     <p:column/>
                 </p:row>
 
-                <p:row>
-                    <p:column style="font-weight:bold">Inventory (mg)</p:column>
-                    <p:column>#{listMember.cmpd.inventory}</p:column>
-                </p:row>
 
                 <p:row>  
-                    <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Plates</p:column>  
-                    <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Projects</p:column>                      
-                    <p:column style="white-space: nowrap" colspan="2" styleClass="ui-widget-header">Aliases</p:column>  
+                    <p:column style="white-space: nowrap" 
+                              colspan="2" 
+                              styleClass="ui-widget-header">
+                        Plates
+                    </p:column>  
+                    <p:column style="white-space: nowrap" 
+                              colspan="2" 
+                              styleClass="ui-widget-header">
+                        Projects
+                    </p:column>                      
+                    <p:column style="white-space: nowrap" 
+                              colspan="2" 
+                              styleClass="ui-widget-header">
+                        Aliases
+                    </p:column>  
                 </p:row>
 
                 <p:row>
@@ -192,7 +229,7 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="molecularWeight"/>
+                        <h:outputText style="font-weight:bold" value="molecularWeight"/>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
@@ -200,13 +237,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="molecularFormula"/>
+                        <h:outputText style="font-weight:bold" value="molecularFormula"/>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="logD"/>
+                        <h:outputText style="font-weight:bold" value="logD"/>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.logD}">
@@ -217,19 +254,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countHydBondAcceptors"/>
+                        <h:outputText style="font-weight:bold" value="countHydBondAcceptors"/>
                     </p:column>                
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countHydBondDonors"/>
+                        <h:outputText style="font-weight:bold" value="countHydBondDonors"/>
                     </p:column>                
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="surfaceArea"/>
+                        <h:outputText style="font-weight:bold" value="surfaceArea"/>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
@@ -240,7 +277,7 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="solubility"/>
+                        <h:outputText style="font-weight:bold" value="solubility"/>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.solubility}">
@@ -248,13 +285,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countRings"/>                
+                        <h:outputText style="font-weight:bold" value="countRings"/>                
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRings}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countAtoms"/>               
+                        <h:outputText style="font-weight:bold" value="countAtoms"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAtoms}" />
@@ -263,19 +300,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countBonds"/>               
+                        <h:outputText style="font-weight:bold" value="countBonds"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countBonds}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countSingleBonds"/>               
+                        <h:outputText style="font-weight:bold" value="countSingleBonds"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countSingleBonds}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countDoubleBonds"/>               
+                        <h:outputText style="font-weight:bold" value="countDoubleBonds"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countDoubleBonds}" />
@@ -284,19 +321,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countTripleBonds"/>               
+                        <h:outputText style="font-weight:bold" value="countTripleBonds"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countTripleBonds}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countRotatableBonds"/>                
+                        <h:outputText style="font-weight:bold" value="countRotatableBonds"/>                
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRotatableBonds}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countHydrogenAtoms"/>               
+                        <h:outputText style="font-weight:bold" value="countHydrogenAtoms"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHydrogenAtoms}" />
@@ -305,19 +342,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countMetalAtoms"/>               
+                        <h:outputText style="font-weight:bold" value="countMetalAtoms"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countMetalAtoms}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countHeavyAtoms"/>               
+                        <h:outputText style="font-weight:bold" value="countHeavyAtoms"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countHeavyAtoms}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countPositiveAtoms"/>               
+                        <h:outputText style="font-weight:bold" value="countPositiveAtoms"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countPositiveAtoms}" />
@@ -326,19 +363,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countNegativeAtoms"/>                
+                        <h:outputText style="font-weight:bold" value="countNegativeAtoms"/>                
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countNegativeAtoms}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countRingBonds"/>               
+                        <h:outputText style="font-weight:bold" value="countRingBonds"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingBonds}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countStereoAtoms"/>               
+                        <h:outputText style="font-weight:bold" value="countStereoAtoms"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoAtoms}" />
@@ -347,19 +384,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countStereoBonds"/>                
+                        <h:outputText style="font-weight:bold" value="countStereoBonds"/>                
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countStereoBonds}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countRingAssemblies"/>               
+                        <h:outputText style="font-weight:bold" value="countRingAssemblies"/>               
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countRingAssemblies}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="countAromaticBonds"/>              
+                        <h:outputText style="font-weight:bold" value="countAromaticBonds"/>              
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticBonds}" />
@@ -368,19 +405,19 @@
 
                 <p:row>
                     <p:column>
-                        <p:outputLabel value="countAromaticRings"/>              
+                        <h:outputText style="font-weight:bold" value="countAromaticRings"/>              
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.countAromaticRings}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="formalCharge"/>              
+                        <h:outputText style="font-weight:bold" value="formalCharge"/>              
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.formalCharge}" />
                     </p:column>
                     <p:column>
-                        <p:outputLabel value="theALogP"/>
+                        <h:outputText style="font-weight:bold" value="theALogP"/>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem.theALogP}">

@@ -9536,6 +9536,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImage
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CustomFilters.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FacesAccessor.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FragmentsWorkbenchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/GenericConverter.java -text

@@ -252,7 +252,7 @@
                                        value="#{histogramController.selectedCmpdListMembers}"
                                        var="clm">
 
-                                <h:graphicImage rendered="#{!empty clm.cmpd}"
+                                <p:graphicImage rendered="#{!empty clm.cmpd}"
                                                 alt="Chemical Structure of Parent Fragment"
                                                 width="#{histogramController.structureSize}" 
                                                 height="#{histogramController.structureSize}"
@@ -264,7 +264,7 @@
                                             process="@this"
                                             listener="#{histogramController.itemSelectChemicalStructure(clm.cmpd.nsc)}"/>   
 
-                                </h:graphicImage> 
+                                </p:graphicImage> 
 
                             </ui:repeat>
 

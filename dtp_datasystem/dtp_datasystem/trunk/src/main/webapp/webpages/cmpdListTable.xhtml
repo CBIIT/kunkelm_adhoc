@@ -73,22 +73,22 @@
             <p:column headerText="Click for details" resizable="true">
 
                 <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
-                    <h:graphicImage alt="Chemical Structure of List Anchor"
+                    <p:graphicImage alt="Chemical Structure of List Anchor"
                                     width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                     styleClass="anchorStructure"
                                     url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd)}'>              
-                    </h:graphicImage>
+                    </p:graphicImage>
 
 
                     <f:setPropertyActionListener value="#{cmpd}"   
                                                  target="#{listLogicController.selectedCmpd}" />  
                 </p:commandLink>
 
-                <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                <p:graphicImage alt="Chemical Structure of Parent Fragment"
                                 width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                 styleClass="parentStructure"
                                 url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-                </h:graphicImage>
+                </p:graphicImage>
 
             </p:column>
 

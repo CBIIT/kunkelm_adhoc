@@ -264,7 +264,6 @@ public class TransformCmpdTableToVO {
 
             cmpdVO.setInventory(entityIn.getInventory());
 
-
             cmpdVO.setAliases(parseFormattedString(entityIn.getFormattedAliasesString()));
             cmpdVO.setNamedSets(parseFormattedString(entityIn.getFormattedSetsString()));
             cmpdVO.setPlates(parseFormattedString(entityIn.getFormattedPlatesString()));
@@ -281,7 +280,8 @@ public class TransformCmpdTableToVO {
 
             cmpdVO.setCmpdFragments(parseFormattedFragmentsString(entityIn.getFormattedFragmentsString()));
 
-
+            cmpdVO.setCmpdAnnotation(translateCmpdAnnotation(entityIn));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

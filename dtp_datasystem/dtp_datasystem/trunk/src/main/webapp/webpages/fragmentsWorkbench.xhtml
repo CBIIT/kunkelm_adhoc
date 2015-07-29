@@ -17,11 +17,11 @@
                 <h:outputText value="Kekule Image of Legacy Compound" />
             </f:facet>
             
-            <h:graphicImage alt="Kekule Image of Legacy Compound"
+            <p:graphicImage alt="Kekule Image of Legacy Compound"
                             width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
                             styleClass="unassignedClass"                                                                                        
                             url='/LegacyImageServlet?nsc=#{fragmentsWorkbenchController.cmpd.nsc}'>                                          
-            </h:graphicImage>
+            </p:graphicImage>
             
         </p:panel>
         
@@ -84,11 +84,11 @@
             </p:column>
 
             <p:column headerText="CanSmi Structure">
-                <h:graphicImage alt="Chemical Structure of List Anchor"
+                <p:graphicImage alt="Chemical Structure of List Anchor"
                                 width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                 styleClass="fragmentStructure"
                                 url='#{sessionController.configurationBean.getSmilesStrcUrl(frag.cmpdFragmentStructure.canSmi, null, frag.id)}'>              
-                </h:graphicImage>
+                </p:graphicImage>
             </p:column>
 
         </p:dataTable>

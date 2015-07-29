@@ -8,7 +8,7 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <p:menubar autoDisplay="false">
+    <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('datasystem')}">
 
         <p:menuitem value="Show Available Lists"
                     icon="fa fa-eye"
@@ -101,6 +101,45 @@
                              value="Logout #{sessionController.loggedUser}"/>
 
         </f:facet>
+
+    </p:menubar>
+
+    <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('oncologydrugs')}">
+
+        <p:menuitem value="Search By Parameters"
+                    icon="fa fa-binoculars"
+                    ajax="false"
+                    action="/webpages/createList?faces-redirect=true"/>
+
+        <p:menuitem value="Search By Structure"
+                    icon="fa fa-binoculars"
+                    ajax="false"
+                    action="/webpages/chemDoodle?faces-redirect=true"/>
+
+        <p:menuitem value="View As Table"
+                    icon="fa fa-table"
+                    ajax="false"
+                    action="/webpages/activeListTable?faces-redirect=true"/>
+
+        <p:menuitem value="View As Grid"
+                    icon="fa fa-th"
+                    ajax="false"
+                    action="/webpages/activeListGrid?faces-redirect=true"/>
+
+        <p:menuitem value="View As Form"
+                    icon="fa fa-square-o"
+                    ajax="false"
+                    action="/webpages/activeListForm?faces-redirect=true"/>
+
+        <p:menuitem value="Property Explorer" 
+                    icon="fa fa-bar-chart"
+                    ajax="false"
+                    actionListener="#{histogramController.handleLoadActiveList}"/>
+
+        <p:menuitem value="Configure Display"
+                    icon="fa fa-gear"
+                    ajax="false"
+                    action="/webpages/configuration?faces-redirect=true"/>
 
     </p:menubar>
 

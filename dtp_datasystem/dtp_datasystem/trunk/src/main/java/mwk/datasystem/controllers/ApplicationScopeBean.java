@@ -15,6 +15,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.model.SelectItem;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
@@ -58,6 +59,7 @@ public class ApplicationScopeBean implements Serializable {
     public void init() {
 
         Properties props = new Properties();
+
         try {
 
             InputStream is = this.getClass().getResourceAsStream("/deployment.properties");
@@ -66,9 +68,13 @@ public class ApplicationScopeBean implements Serializable {
             this.versionAndBuildTime = props.getProperty("pom.version.and.build.time");
 
             if (this.versionAndBuildTime.startsWith("datasystem")) {
+                
                 this.projectTitle = "Data System Project";
+                
             } else if (this.versionAndBuildTime.startsWith("oncologydrugs")) {
-                this.projectTitle = "Approved and Investigational Oncology Drugs Project";
+                
+                this.projectTitle = "Oncology Drugs Project";
+                                
             }
 
             String rawLandingCompareUrl = props.getProperty("compare.application.landing.url");
@@ -358,7 +364,6 @@ public class ApplicationScopeBean implements Serializable {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-    
     public String getProjectTitle() {
         return projectTitle;
     }

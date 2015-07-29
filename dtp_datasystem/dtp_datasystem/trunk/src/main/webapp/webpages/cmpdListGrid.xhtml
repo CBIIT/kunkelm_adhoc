@@ -41,11 +41,11 @@
 
                 <p:selectBooleanCheckbox value="#{cmpd.isSelected}" />
 
-                <h:graphicImage alt="Chemical Structure of Parent Fragment"
+                <p:graphicImage alt="Chemical Structure of Parent Fragment"
                                 width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
                                 styleClass="parentStructure"
                                 url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-                </h:graphicImage>
+                </p:graphicImage>
 
                 <f:facet name="footer">
                     <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  

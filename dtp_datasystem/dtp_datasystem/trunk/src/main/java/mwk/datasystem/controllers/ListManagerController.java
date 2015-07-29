@@ -62,16 +62,18 @@ public class ListManagerController implements Serializable {
     public ListManagerBean getListManagerBean() {
         return listManagerBean;
     }
-
+    
     @PostConstruct
     public void init() {
         this.listManagerBean = new ListManagerBean();
         performUpdateAvailableLists();
+        
+        // TESTING
+        loadToActiveList(619205300997564186l);
     }
 
     public ListManagerController() {
-        this.listManagerBean = new ListManagerBean();
-        performUpdateAvailableLists();
+        init();
     }
 
     public void handleExcelExport(ActionEvent event) {
@@ -245,6 +247,20 @@ public class ListManagerController implements Serializable {
 
     }
 
+    public void loadToActiveList(Long listId) {
+
+        System.out.println("Entering loadToActiveList(Long listId)");
+
+        for (CmpdListVO clVO : listManagerBean.availableLists) {
+            if (clVO.getCmpdListId().longValue() == listId.longValue()) {
+                listManagerBean.activeList = clVO;
+                performLoadSelectedList();
+                break;
+            }
+        }
+
+    }
+    
     public String performLoadSelectedList() {
 
         System.out.println("Entering performLoadSelectedList()");
@@ -264,7 +280,7 @@ public class ListManagerController implements Serializable {
      * @return This is used by the ListLogicController until I can figure out
      * coverters for selectItems
      */
-    public CmpdListVO performLoadList(Long listId) {
+    public CmpdListVO fetchList(Long listId) {
 
         System.out.println("Entering performLoadList(Long listId)");
 
