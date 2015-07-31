@@ -35,6 +35,7 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.component.export.DataExporter;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
@@ -62,12 +63,12 @@ public class ListManagerController implements Serializable {
     public ListManagerBean getListManagerBean() {
         return listManagerBean;
     }
-    
+
     @PostConstruct
     public void init() {
         this.listManagerBean = new ListManagerBean();
         performUpdateAvailableLists();
-        
+
         // TESTING
         loadToActiveList(619205300997564186l);
     }
@@ -260,13 +261,13 @@ public class ListManagerController implements Serializable {
         }
 
     }
-    
+
     public String performLoadSelectedList() {
 
         System.out.println("Entering performLoadSelectedList()");
 
         performLoadList(listManagerBean.activeList);
-        
+
         listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
 
         sessionController.configurationBean.performUpdateColumns();
@@ -274,6 +275,12 @@ public class ListManagerController implements Serializable {
         return "/webpages/activeListTable.xhtml?faces-redirect=true";
     }
 
+    // this is called everytime the activeListTable page is reloaded
+    
+    public void handleSynchronizeFilters(){
+        listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
+    }
+    
     /**
      *
      * @param listId
@@ -304,7 +311,7 @@ public class ListManagerController implements Serializable {
 
         CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
         clVO.setCmpdListMembers(voList.getCmpdListMembers());
-        
+
         sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";

@@ -110,7 +110,6 @@ from rdkit_mol
 where mol != mol_from_ctab
 ];
 
-
 foreach my $sql(@sqlList){
 	my $sth = $dbh->prepare($sql);
 	print "$sql\n\n";

@@ -9,6 +9,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
+
     <ui:define name="title">
         <h:outputText value="Active List Table View" />
     </ui:define>
@@ -16,13 +17,13 @@
     <ui:define name="instructions"/>
 
     <ui:define name="export"> 
-        <p:commandButton ajax="false" value="Export All to Excel">
+        <p:commandButton ajax="false" value="Export to Excel">
             <p:dataExporter type="xls"  
                             target="activeListTbl" 
                             fileName="activeListTable" />  
         </p:commandButton>
 
-        <p:commandButton ajax="false" value="Export All as CSV">  
+        <p:commandButton ajax="false" value="Export as CSV">  
             <p:dataExporter type="csv" 
                             target="activeListTbl" 
                             fileName="activeListTable" />  
@@ -42,6 +43,11 @@
     </ui:define>
 
     <ui:define name="content">
+
+        <!-- ensures that the filteredValues are reset whenever the page loads/reloads -->    
+        <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
+                         autoRun="true" 
+                         oncomplete="alert('Ran handleSynchronizeFilters');" />
 
         <p:menubar>
 
@@ -82,64 +88,6 @@
 
         </p:menubar>
 
-        <ui:remove>
-
-            <p:panel menuTitle="Active List Manipulations">
-
-                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
-
-                    <p:commandButton action="#{listContentController.performConnectToLandingSpotfire()}"
-                                     value="Landing Spotfire on Selected"
-                                     onstart="PF('resolvingBUI').show();"
-                                     oncomplete="PF('resolvingBUI').hide();"
-                                     style="width: 100%;">
-                    </p:commandButton>
-                    <p:column />
-                    <p:column />
-
-                    <p:commandButton action="#{listContentController.performDeleteFromActiveList()}"
-                                     value="Delete Selected from List"
-                                     onstart="PF('deletingBUI').show();"
-                                     oncomplete="PF('deletingBUI').hide();"
-                                     style="width: 100%;">
-                        <f:setPropertyActionListener value="#{listManagerController.listManagerBean.activeList}"   
-                                                     target="#{listContentController.targetList}" />  
-                    </p:commandButton>
-                    <p:column />
-                    <p:column />
-
-                    <p:commandButton action="#{listContentController.performCreateNewListFromSelectedListMembers()}"
-                                     value="Create New List from Selected"
-                                     onstart="PF('appendingBUI').show();"
-                                     oncomplete="PF('appendingBUI').hide();"
-                                     style="width: 100%;" />
-                    <p:outputLabel for="listNameText" value="List name:" />            
-                    <p:inputText id="listNameText" value="#{listContentController.listName}" />
-
-                    <p:commandButton action="#{listContentController.performAppendSelectedToExistingList()}"
-                                     value="Append Selected to Existing List"
-                                     onstart="PF('appendingBUI').show();"
-                                     oncomplete="PF('appendingBUI').hide();"
-                                     style="width: 100%;" />    
-
-                    <p:outputLabel for="listNameAutoComp" value="List name:"/>     
-                    <p:autoComplete id="listNameAutoComp"
-                                    converter="#{cmpdListConverter}"
-                                    dropdown="true"
-                                    emptyMessage="No matches"
-                                    placeholder="Start typing for possible matches"
-                                    scrollHeight="150"
-                                    minQueryLength="3"                                    
-                                    completeMethod="#{listManagerController.completeListName}"                        
-                                    value="#{listContentController.targetList}">
-                    </p:autoComplete>   
-
-                </p:panelGrid>
-
-            </p:panel>
-
-        </ui:remove>
-
         <p:panelGrid columns="1">
 
             <p:panel header="List Anchor Structure"
@@ -176,52 +124,64 @@
                           selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
                           filteredValue="#{listManagerController.listManagerBean.filteredActiveListMembers}"
                           rowKey="#{listMember.id}"                              
-                          sortMode="multiple">  
+                          sortMode="multiple"
+                          rowIndexVar="rowIdx">  
+
+                <c:set var="cmpd" value="#{listMember.cmpd}" />
+                <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
+                <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
+                <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
 
                 <f:facet name="header">                
                     <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>                    
                 </f:facet>
 
-                <p:column headerText="All"
-                          resizable="true" 
-                          selectionMode="multiple" 
+                <p:column selectionMode="multiple" 
                           style="width:4%" 
                           exportable="false"/>
 
-                <p:column headerText="Comment" resizable="true">                                
-                    <h:outputText value="#{listMember.listMemberComment}"/>
+                <p:column headerText="Discreet" 
+                          resizable="true">                                
+                    <h:outputText value="#{cmpd.discreet}"/>
                 </p:column>   
 
-                <p:column headerText="Aliases Concrete" 
-                          width="50"
+                <p:column headerText="NSC" 
+                          resizable="true">                                
+                    <h:outputText value="#{cmpd.nsc}"/>
+                </p:column>   
+
+                <p:column headerText="CONF" 
                           resizable="true"
-                          filterBy="#{listMember.cmpd.aliases}"
-                          filterFunction="#{customFilters.filterByAlias}">     
+                          sortBy="#{cmpd.conf}"
+                          filterBy="#{cmpd.conf}"
+                          filterMatchMode="contains">                                
+                    <h:outputText value="#{cmpd.conf}"/>
+                </p:column>   
 
-                    <p:dataList var="prop" 
-                        value="#{listMember.cmpd.aliases}"
-                        rows="5"
-                        paginator="true"
-                        paginatorPosition="top" 
-                        paginatorAlwaysVisible="false"
-                        currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords}"
-                        paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink}">
-                        
-                        <h:outputText value="#{prop.length() gt 50 ? prop.substring(0,49).concat('...') : prop}" />
-                        
-                    </p:dataList>
+                <p:column headerText="DIST" 
+                          resizable="true">                                
+                    <h:outputText value="#{cmpd.distribution}"/>
+                </p:column>   
 
-                </p:column>
+                <p:column headerText="NSCCmpdType"
+                          sortBy="#{cmpd.nscCmpdType}"
+                          filterBy="#{cmpd.nscCmpdType}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{cmpd.nscCmpdType}"/>
+                </p:column>   
 
-                <p:column headerText="Parent - Click for Details" resizable="true">
+                <p:column headerText="Parent - Click for Details" 
+                          resizable="true">
 
-                    <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" oncomplete="PF('listMemberDetailDlg').show();" title="View Detail">
+                    <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                   oncomplete="PF('listMemberDetailDlg').show();" 
+                                   title="View Detail">
                         <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                                        width="#{sessionController.configurationBean.strcDim}" 
+                                        height="#{sessionController.configurationBean.strcDim}"
                                         styleClass="parentStructure"
                                         url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                         </p:graphicImage>
-
                         <f:setPropertyActionListener value="#{listMember}"   
                                                      target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
                     </p:commandLink>
@@ -229,31 +189,31 @@
                 </p:column>
 
                 <p:column headerText="Fragments" rendered="#{sessionController.configurationBean.showFrags}">
-                    <p:dataGrid columns="1" value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" var="fragSmiles">
+
+                    <p:dataGrid columns="1" 
+                                value="#{cmpd.cmpdFragmentSmilesStrings}" 
+                                var="fragSmiles">
                         <p:graphicImage alt="Chemical Structure of Compound Fragment"
-                                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                                        width="#{sessionController.configurationBean.strcDim}" 
+                                        height="#{sessionController.configurationBean.strcDim}"
                                         styleClass="fragmentStructure"
                                         url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
                         </p:graphicImage>
                     </p:dataGrid>
                 </p:column>    
 
-                <p:column headerText="mtxt"  width="50" style="text-wrap: normal; white-space: normal;">
-                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.mtxt}"/>
+                <p:column headerText="mtxt"  
+                          sortBy="#{cmpd.cmpdAnnotation.mtxt}"
+                          filterBy="#{cmpd.cmpdAnnotation.mtxt}"
+                          filterMatchMode="contains"
+                          width="50" 
+                          style="text-wrap: normal; white-space: normal;">
+                    <h:outputText value="#{cmpd.cmpdAnnotation.mtxt}"/>
                 </p:column>
 
                 <p:column headerText="pseudo atoms">
-                    <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}"/>
+                    <h:outputText value="#{cmpd.cmpdAnnotation.pseudoAtoms}"/>
                 </p:column>
-
-                <p:column headerText="nsc cmpd type"
-                          sortBy="#{listMember.cmpd.nscCmpdType}"
-                          filterBy="#{listMember.cmpd.nscCmpdType}"
-                          filterMatchMode="contains">
-                    <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
-                </p:column>            
-
-                <c:set var="cmpd" value="#{listMember.cmpd}" />
 
                 <!-- webpage display, exportable="false" -->
 
@@ -264,7 +224,8 @@
                            var="column" 
                            columnIndexVar="colIndex" 
                            sortBy="#{cmpd[column.property]}" 
-                           filterBy="#{cmpd[column.property]}">
+                           filterBy="#{cmpd[column.property]}"
+                           filterFunction="#{customFilter.customFilter}">
 
                     <f:facet name="header">                        
                         <h:outputText value="#{column.header}" />
@@ -280,9 +241,10 @@
                                 paginator="true"
                                 paginatorPosition="top" 
                                 paginatorAlwaysVisible="false"
-                                currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
-                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page">
-                        <h:outputText value="#{prop}" style="word-wrap: break-word;" />
+                                currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords}"
+                                paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink}">
+
+                        <h:outputText value="#{prop.length() gt 50 ? prop.substring(0,49).concat('...') : prop}" />
                     </p:dataList>
 
                 </p:columns>
@@ -305,7 +267,6 @@
 
                 </p:columns>
 
-                <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
 
                 <p:columns resizable="true" 
                            value="#{sessionController.configurationBean.structureColumns}" 
@@ -319,7 +280,6 @@
                     <h:outputText value="#{strc[column.property]}" />
                 </p:columns>
 
-                <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
 
                 <p:columns resizable="true" 
                            value="#{sessionController.configurationBean.physChemColumns}" 
@@ -332,8 +292,6 @@
                     </f:facet>
                     <h:outputText value="#{physchem[column.property]}" />
                 </p:columns>
-
-                <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
 
                 <p:columns resizable="true" 
                            value="#{sessionController.configurationBean.biodataColumns}" 

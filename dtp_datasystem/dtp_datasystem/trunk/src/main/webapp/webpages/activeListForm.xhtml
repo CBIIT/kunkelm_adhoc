@@ -80,7 +80,8 @@
                     <p:graphicImage rendered="#{!empty listMember.cmpd}"
                                     alt="Chemical Structure of Parent Fragment"
                                     styleClass="unassignedClass"
-                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                                    width="#{sessionController.configurationBean.strcDim}" 
+                                    height="#{sessionController.configurationBean.strcDim}"                                
                                     url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
                     </p:graphicImage>
                 </p:panel>
@@ -120,7 +121,7 @@
 
                 <f:facet name="header">  
                     <p:row>  
-                        <p:column colspan="6">#{listMember.cmpd.name}</p:column>  
+                        <p:column colspan="6">#{listMember.cmpd.name} #{listMember.cmpd.nscCmpdType}</p:column>  
                     </p:row>  
                 </f:facet>  
 
