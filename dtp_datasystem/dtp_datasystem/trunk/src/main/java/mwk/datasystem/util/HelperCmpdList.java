@@ -37,7 +37,7 @@ import org.hibernate.Query;
  */
 public class HelperCmpdList {
 
-    public static final Boolean DEBUG = Boolean.TRUE;
+    public static final Boolean DEBUG = Boolean.FALSE;
 
     public static CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
 

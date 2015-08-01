@@ -66,6 +66,7 @@ public class MoleculeWrangling {
 //            throw new IllegalArgumentException("Invalid InChI:" + e.getMessage());
 //        }
 //    }
+    
     public static IAtomContainer fromName(String name) {
         return fromSmiles(opsin.parseToSmiles(name));
     }

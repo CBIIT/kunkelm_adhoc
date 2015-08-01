@@ -46,8 +46,7 @@
 
         <!-- ensures that the filteredValues are reset whenever the page loads/reloads -->    
         <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
-                         autoRun="true" 
-                         oncomplete="alert('Ran handleSynchronizeFilters');" />
+                         autoRun="true"/>
 
         <p:menubar>
 

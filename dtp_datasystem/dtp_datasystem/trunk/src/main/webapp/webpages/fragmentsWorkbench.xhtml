@@ -10,22 +10,41 @@
                 template="/webpages/templates/ui.xhtml">
 
     <ui:define name="content">
-        
+
         <p:panel>
-            
+
             <f:facet name="header">
                 <h:outputText value="Kekule Image of Legacy Compound" />
             </f:facet>
-            
+
             <p:graphicImage alt="Kekule Image of Legacy Compound"
                             width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
                             styleClass="unassignedClass"                                                                                        
                             url='/LegacyImageServlet?nsc=#{fragmentsWorkbenchController.cmpd.nsc}'>                                          
             </p:graphicImage>
-            
+
         </p:panel>
-        
-            
+
+        <p:panelGrid columns="2">
+            <h:outputText style="font-weight: bold;" value="id"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.id}"/>
+            <h:outputText style="font-weight: bold;" value="ctab"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.ctab}"/>
+            <h:outputText style="font-weight: bold;" value="molecular_weight"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecular_weight}"/>
+            <h:outputText style="font-weight: bold;" value="molecular_formula"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecular_formula}"/>
+            <h:outputText style="font-weight: bold;" value="jpg512"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.jpg512}"/>
+            <h:outputText style="font-weight: bold;" value="nsc"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.nsc}"/>
+            <h:outputText style="font-weight: bold;" value="inventory"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.inventory}"/>
+            <h:outputText style="font-weight: bold;" value="count_nci60"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.count_nci60}"/>
+            <h:outputText style="font-weight: bold;" value="mtxt"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.mtxt}"/>
+        </p:panelGrid>
 
         <p:dataTable id="fragments"
                      resizableColumns="true"
@@ -61,12 +80,12 @@
             <p:column headerText="molecularFormula" sortBy="#{frag.cmpdFragmentPChem.molecularFormula}">                      
                 <h:outputText value="#{frag.cmpdFragmentPChem.molecularFormula}" />
             </p:column>
-            
+
             <p:column headerText="molecularWeight" sortBy="#{frag.cmpdFragmentPChem.molecularWeight}">                      
                 <h:outputText value="#{frag.cmpdFragmentPChem.molecularWeight}" />
             </p:column>
-            
-            
+
+
             <p:column headerText="stoichiometry" sortBy="#{frag.stoichiometry}">              
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{frag.stoichiometry}" /></f:facet>

@@ -5,21 +5,17 @@
  */
 package mwk.datasystem.controllers;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.util.HelperCmpd;
-import mwk.datasystem.util.HelperCmpdKnownSalt;
+import mwk.datasystem.util.HelperCmpdLegacyCmpd;
 import mwk.datasystem.vo.CmpdFragmentVO;
-import mwk.datasystem.vo.CmpdKnownSaltVO;
-import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdLegacyCmpdVO;
 import mwk.datasystem.vo.CmpdVO;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
@@ -34,6 +30,7 @@ public class FragmentsWorkbenchController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
 
+    private CmpdLegacyCmpdVO legacyCmpd;
     private CmpdVO cmpd;
     private List<CmpdFragmentVO> fragments;
     private CmpdFragmentVO selectedFragment;
@@ -43,6 +40,8 @@ public class FragmentsWorkbenchController implements Serializable {
         this.fragments = new ArrayList<CmpdFragmentVO>();
 
         cmpd = HelperCmpd.fetchFullCmpd(nsc);
+        
+        legacyCmpd = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nsc, null);
 
         fragments = new ArrayList<CmpdFragmentVO>(cmpd.getCmpdFragments());
 
@@ -102,6 +101,12 @@ public class FragmentsWorkbenchController implements Serializable {
         this.selectedFragment = selectedFragment;
     }
 
-    
-    
+    public CmpdLegacyCmpdVO getLegacyCmpd() {
+        return legacyCmpd;
+    }
+
+    public void setLegacyCmpd(CmpdLegacyCmpdVO legacyCmpd) {
+        this.legacyCmpd = legacyCmpd;
+    }
+
 }

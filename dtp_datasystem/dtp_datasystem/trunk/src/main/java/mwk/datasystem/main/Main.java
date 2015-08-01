@@ -61,11 +61,20 @@ public class Main {
         // testCtabParseFromDb();
         // testSdfParser();
         // testFetchList();
-        testCreateCmpdListFromQueryObject("SL-102");
+        // testCreateCmpdListFromQueryObject("SL-102");
         // testSeqWrangling();
+        testCtabFromSmiles();
 
     }
 
+    public static void testCtabFromSmiles(){
+        
+        String smiles = "CCCCCC";
+        String ctab =  MoleculeWrangling.toCtabFromSmiles(smiles);
+        System.out.println(ctab);
+        
+    }
+    
     public static void testCreateCmpdListFromQueryObject(String projectCode) {
 
         SearchCriteriaBean scb = new SearchCriteriaBean();

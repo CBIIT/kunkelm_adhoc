@@ -44,6 +44,9 @@ public class StructureSearchController implements Serializable {
         this.listManagerController = listManagerController;
     }
 
+    private String message;
+    private String errorMessage;
+
     private String nscForLoad;
     private String ctabForLoad;
     private String smilesForLoad;
@@ -121,10 +124,10 @@ public class StructureSearchController implements Serializable {
 
         System.out.println("Now in performSubstructureSearch()");
 
-         // aromaticity set to true so that 
+        // aromaticity set to true so that 
         // SMARTSPattern.match() will work during structure display
         this.smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
-        
+
         List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromCtabFromEditor);
 
         System.out.println("Size of nscIntList: " + nscIntList.size());
@@ -201,6 +204,57 @@ public class StructureSearchController implements Serializable {
 
     }
 
+    public String performLandingLoadEditor() {
+
+        System.out.println("In performLandingLoadEditor in StructureSearchController.");
+
+        if (nscForLoad != null && nscForLoad.length() > 0) {
+
+            performLoadEditorByNsc();
+
+        } else if (smilesForLoad != null && smilesForLoad.length() > 0) {
+
+            performLoadEditorBySmiles();
+
+        } else {
+
+            message = "landingNscForLoad and landingSmilesForLoad are not specified.";
+            errorMessage = "landingNscForLoad and landingSmilesForLoad are not specified.";
+
+        }
+
+        return null;
+
+    }
+
+    public String performLoadEditorBySmiles() {
+
+        System.out.println("In performLoadEditorBySmiles in StructureSearchController");
+
+        ctabForLoad = "";
+
+        String ctab = null;
+
+        if (smilesForLoad != null) {
+            ctab = MoleculeWrangling.toCtabFromSmiles(smilesForLoad);
+        } else {
+            message = "smilesForLoad is null";
+            errorMessage = "smilesForLoad is null";
+        }
+
+        if (ctab != null) {
+            ctabForLoad = ctab;
+            message = "PerformLoadEditorBySmiles success.";
+                    errorMessage = "";
+        } else {
+            message = "Unable to create ctab from smilesForLoad: " + smilesForLoad;
+            errorMessage = "Unable to create ctab from smilesForLoad: " + smilesForLoad;
+        }
+
+        return null;
+
+    }
+
     public String performLoadEditorByNsc() {
 
         System.out.println("In performLoadEditorByNsc in StructureSearchController");
@@ -252,14 +306,14 @@ public class StructureSearchController implements Serializable {
 
             } else {
 
-                ctabForLoad = "No ctab or smiles for : " + nscForLoad;
-                smilesForLoad = "No ctab or smiles for : " + nscForLoad;
+                message = "No ctab or smiles for : " + nscForLoad;
+                errorMessage = "No ctab or smiles for : " + nscForLoad;
 
             }
         } else {
 
-            ctabForLoad = "Not a valid NSC: " + nscForLoad;
-            smilesForLoad = "NOo a valid NSC: " + nscForLoad;
+            message = "Not a valid NSC: " + nscForLoad;
+            errorMessage = "Not a valid NSC: " + nscForLoad;
 
         }
 
@@ -267,20 +321,28 @@ public class StructureSearchController implements Serializable {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
     public String getNscForLoad() {
         return nscForLoad;
     }
 
     public void setNscForLoad(String nscForLoad) {
         this.nscForLoad = nscForLoad;
-    }
-
-    public String getSmilesForLoad() {
-        return smilesForLoad;
-    }
-
-    public void setSmilesForLoad(String smilesForLoad) {
-        this.smilesForLoad = smilesForLoad;
     }
 
     public String getCtabForLoad() {
@@ -291,12 +353,12 @@ public class StructureSearchController implements Serializable {
         this.ctabForLoad = ctabForLoad;
     }
 
-    public String getSmilesFromCtabFromEditor() {
-        return smilesFromCtabFromEditor;
+    public String getSmilesForLoad() {
+        return smilesForLoad;
     }
 
-    public void setSmilesFromCtabFromEditor(String smilesFromCtabFromEditor) {
-        this.smilesFromCtabFromEditor = smilesFromCtabFromEditor;
+    public void setSmilesForLoad(String smilesForLoad) {
+        this.smilesForLoad = smilesForLoad;
     }
 
     public String getCtabFromEditor() {
@@ -305,6 +367,14 @@ public class StructureSearchController implements Serializable {
 
     public void setCtabFromEditor(String ctabFromEditor) {
         this.ctabFromEditor = ctabFromEditor;
+    }
+
+    public String getSmilesFromCtabFromEditor() {
+        return smilesFromCtabFromEditor;
+    }
+
+    public void setSmilesFromCtabFromEditor(String smilesFromCtabFromEditor) {
+        this.smilesFromCtabFromEditor = smilesFromCtabFromEditor;
     }
 
     public String getListName() {
@@ -323,5 +393,5 @@ public class StructureSearchController implements Serializable {
         this.listToSearch = listToSearch;
     }
 
-    // </editor-fold>  
+// </editor-fold>  
 }

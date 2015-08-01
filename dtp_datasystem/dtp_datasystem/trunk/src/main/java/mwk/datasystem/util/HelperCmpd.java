@@ -82,6 +82,7 @@ public class HelperCmpd {
     }
 
     public static CmpdVO fetchFullCmpd(Integer id) {
+        
         CmpdVO rtn = new CmpdVO();
 
         System.out.println("In fetchFullCmpd in HelperCmpd.");
