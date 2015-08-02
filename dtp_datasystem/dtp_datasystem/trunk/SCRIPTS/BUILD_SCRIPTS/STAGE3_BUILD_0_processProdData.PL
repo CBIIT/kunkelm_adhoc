@@ -251,7 +251,7 @@ push @sqlList, qq[
 create table temp
 as
 select ntl.nsc, 
-array_to_string(array_agg(labelarray), ',') as labels
+array_to_string(array_agg(labelarray), ', ') as labels
 from nsc_to_load ntl
 left outer join rs3_from_plp_frags frags
 on ntl.nsc = frags.nsc

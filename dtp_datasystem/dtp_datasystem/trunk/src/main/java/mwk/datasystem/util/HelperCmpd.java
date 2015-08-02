@@ -81,7 +81,7 @@ public class HelperCmpd {
 
     }
 
-    public static CmpdVO fetchFullCmpd(Integer id) {
+    public static CmpdVO fetchFullCmpd(Integer id, String currentUser) {
         
         CmpdVO rtn = new CmpdVO();
 
@@ -238,6 +238,8 @@ public class HelperCmpd {
                 randomId = -1 * randomId;
             }
             cmpdListId = new Long(randomId);
+            
+            // just fetch the projection of the cmpd.id that meets criteria
 
             Criteria c = session.createCriteria(Cmpd.class)
                     .setProjection(Projections.property("id"));
@@ -305,6 +307,7 @@ public class HelperCmpd {
             c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 
             // List<Cmpd> cmpdList = (List<Cmpd>) c.list();
+            
             List<Long> projList = c.list();
 
             System.out.println("Size of projList in createCmpdListFromQueryObjectin HelperCmpd is: " + projList.size());
@@ -326,7 +329,7 @@ public class HelperCmpd {
             tx = session.beginTransaction();
 
             for (Long l : projList) {
-                // System.out.println("Calling CmpdListMember.Factory.newInstatnce()");
+                // System.out.println("Calling CmpdListMember.Factory.newInstance()");
                 CmpdListMember clm = CmpdListMember.Factory.newInstance();
                 clm.setCmpd((Cmpd) session.load(CmpdImpl.class, l));
                 clm.setCmpdList(cl);

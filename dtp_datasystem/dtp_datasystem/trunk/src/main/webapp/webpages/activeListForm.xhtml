@@ -60,7 +60,8 @@
                 </p:row>                                              
             </f:facet>
 
-            <p:panelGrid columns="2" style="display: inline-block;">
+            <p:panelGrid columns="2"  
+                         layout="grid">
 
                 <p:panel>
                     <f:facet name="header">
@@ -86,6 +87,10 @@
                     </p:graphicImage>
                 </p:panel>
 
+            </p:panelGrid>
+
+            <p:panelGrid columns="2"
+                         style="display: inline-block;">
 
                 <h:outputText value="PSEUDO ATOMS" style="font-weight: bold;" />
                 <h:outputText value="#{listMember.cmpd.cmpdAnnotation.pseudoAtoms}"/>
@@ -96,16 +101,15 @@
                 <h:outputText value="NSC Cmpd Type" style="font-weight: bold;"/>
                 <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
 
+            </p:panelGrid>
 
-                <p:dataGrid columns="3" 
-                            rendered="#{sessionController.configurationBean.showFrags}" 
-                            value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" 
-                            var="fragSmiles">
+            <p:panel rendered="#{sessionController.configurationBean.showFrags}"
+                     style="display: inline-block">
 
-                    <p:panel>
-                        <f:facet name="header">
-                            <h:outputText value="Fragment Structure"/>
-                        </f:facet>
+                <ui:repeat value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" 
+                           var="fragSmiles">
+
+                    <p:panel style="display: inline-block">
                         <p:graphicImage alt="Chemical Structure of Compound Fragment"
                                         styleClass="fragmentStructure"
                                         width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
@@ -113,9 +117,9 @@
                         </p:graphicImage>
                     </p:panel>
 
-                </p:dataGrid>
+                </ui:repeat>
 
-            </p:panelGrid>
+            </p:panel>
 
             <p:panelGrid>
 
@@ -129,7 +133,7 @@
                     <p:column style="white-space: nowrap" 
                               colspan="6" 
                               styleClass="ui-widget-header">
-                        NSC Compound
+                        <h:outputText value="NSC Compound"/>
                     </p:column>                  
                 </p:row>
 
@@ -216,8 +220,8 @@
                     </p:column>
 
                     <p:column colspan="2">
-                        <p:dataList value="#{listMember.cmpd.aliases}" var="n" itemType="disc">  
-                            <h:outputText value="#{n}"/>                
+                        <p:dataList value="#{listMember.cmpd.aliases}" var="n" itemType="disc">                                
+                            <h:outputText value="#{n.length() gt 50 ? n.substring(0,49).concat('...') : n}" />
                         </p:dataList>
                     </p:column>
 

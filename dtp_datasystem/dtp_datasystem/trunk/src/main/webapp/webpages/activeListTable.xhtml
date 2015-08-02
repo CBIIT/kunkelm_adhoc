@@ -110,6 +110,7 @@
             <p:dataTable  id="activeListTbl"
                           resizableColumns="true" 
                           draggableColumns="true"
+                          draggableRows="true"
                           tableStyle="width: auto;"                 
                           widgetVar="activeListTblWidgetVar"
                           var="listMember"                       
@@ -187,9 +188,10 @@
 
                 </p:column>
 
-                <p:column headerText="Fragments" rendered="#{sessionController.configurationBean.showFrags}">
+                <p:column headerText="Fragments" 
+                          rendered="#{sessionController.configurationBean.showFrags}">
 
-                    <p:dataGrid columns="1" 
+                    <p:dataGrid columns="3" layout="grid"
                                 value="#{cmpd.cmpdFragmentSmilesStrings}" 
                                 var="fragSmiles">
                         <p:graphicImage alt="Chemical Structure of Compound Fragment"
@@ -200,20 +202,27 @@
                         </p:graphicImage>
                     </p:dataGrid>
                 </p:column>    
-
-                <p:column headerText="mtxt"  
-                          sortBy="#{cmpd.cmpdAnnotation.mtxt}"
+                
+                <p:column headerText="mtxt" 
+                          resizable="true"
+                          rendered="#{sessionController.configurationBean.showQc}"
+                          width="50"                          
                           filterBy="#{cmpd.cmpdAnnotation.mtxt}"
                           filterMatchMode="contains"
-                          width="50" 
                           style="text-wrap: normal; white-space: normal;">
                     <h:outputText value="#{cmpd.cmpdAnnotation.mtxt}"/>
                 </p:column>
 
-                <p:column headerText="pseudo atoms">
+                <p:column headerText="pseudo atoms"
+                          resizable="true"
+                          rendered="#{sessionController.configurationBean.showQc}"
+                          width="50"
+                          filterBy="#{cmpd.cmpdAnnotation.pseudoAtoms}"
+                          filterMatchMode="contains"
+                          style="text-wrap: normal; white-space: normal;">
                     <h:outputText value="#{cmpd.cmpdAnnotation.pseudoAtoms}"/>
                 </p:column>
-
+    
                 <!-- webpage display, exportable="false" -->
 
                 <p:columns resizable="true"  
@@ -266,7 +275,6 @@
 
                 </p:columns>
 
-
                 <p:columns resizable="true" 
                            value="#{sessionController.configurationBean.structureColumns}" 
                            var="column" 
@@ -278,7 +286,6 @@
                     </f:facet>
                     <h:outputText value="#{strc[column.property]}" />
                 </p:columns>
-
 
                 <p:columns resizable="true" 
                            value="#{sessionController.configurationBean.physChemColumns}" 

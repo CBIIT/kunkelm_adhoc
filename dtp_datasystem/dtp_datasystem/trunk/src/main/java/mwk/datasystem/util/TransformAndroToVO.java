@@ -359,6 +359,7 @@ public class TransformAndroToVO {
 //                rtn.setSaltMw(nscc.getSaltMw());
 //                rtn.setParentStoichiometry(nscc.getParentStoichiometry());
 //                rtn.setSaltStoichiometry(nscc.getSaltStoichiometry());
+                
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());

@@ -5,8 +5,18 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-                template="/webpages/templates/ui.xhtml">
+                template="/webpages/templates/ui_form.xhtml">
 
+    <ui:define name="title">
+        <h:outputText value="Confirm Delete List"/>
+    </ui:define>
+    
+    <ui:define name="instructions"/>
+    
+    <ui:define name="content title">
+        <h:outputText value="Confirm Delete List #{listManagerController.listManagerBean.listForDelete.listName}"/>
+    </ui:define>
+    
     <ui:define name="content">
 
         <p:panel style="display: inline-block;">

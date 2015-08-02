@@ -7,7 +7,17 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-                template="/webpages/templates/ui.xhtml">
+                template="/webpages/templates/ui_form.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="Fragments Workbench" />
+    </ui:define>
+
+    <ui:define name="instructions"/>
+
+    <ui:define name="content title">
+        <h:outputText value="Fragments Workbench NSC #{fragmentsWorkbenchController.cmpd.nsc}"/>
+    </ui:define>
 
     <ui:define name="content">
 
@@ -28,20 +38,20 @@
         <p:panelGrid columns="2">
             <h:outputText style="font-weight: bold;" value="id"/>
             <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.id}"/>
-            <h:outputText style="font-weight: bold;" value="ctab"/>
-            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.ctab}"/>
             <h:outputText style="font-weight: bold;" value="molecular_weight"/>
-            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecular_weight}"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecularWeight}">
+                <f:convertNumber pattern="#0.00"/>
+            </h:outputText>
             <h:outputText style="font-weight: bold;" value="molecular_formula"/>
-            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecular_formula}"/>
-            <h:outputText style="font-weight: bold;" value="jpg512"/>
-            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.jpg512}"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecularFormula}"/>
             <h:outputText style="font-weight: bold;" value="nsc"/>
             <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.nsc}"/>
-            <h:outputText style="font-weight: bold;" value="inventory"/>
-            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.inventory}"/>
+            <h:outputText style="font-weight: bold;" value="inventory"/>                
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.inventory}">
+                <f:convertNumber pattern="#0.00"/>
+            </h:outputText>
             <h:outputText style="font-weight: bold;" value="count_nci60"/>
-            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.count_nci60}"/>
+            <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.countNci60}"/>
             <h:outputText style="font-weight: bold;" value="mtxt"/>
             <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.mtxt}"/>
         </p:panelGrid>
@@ -55,7 +65,7 @@
                      paginator="false" >
 
             <f:facet name="header">  
-                NSC: #{fragmentsWorkbenchController.cmpd.nsc} #{fn:length(fragmentsWorkbenchController.fragments)} Fragments
+                <h:outputText value="NSC: #{fragmentsWorkbenchController.cmpd.nsc} #{fn:length(fragmentsWorkbenchController.fragments)} Fragments"/>
             </f:facet>
 
             <p:ajax event="rowEdit" listener="#{fragmentsWorkbenchController.onRowEdit}" update=":datasystemForm:msgs" />
@@ -82,9 +92,10 @@
             </p:column>
 
             <p:column headerText="molecularWeight" sortBy="#{frag.cmpdFragmentPChem.molecularWeight}">                      
-                <h:outputText value="#{frag.cmpdFragmentPChem.molecularWeight}" />
+                <h:outputText value="#{frag.cmpdFragmentPChem.molecularWeight}">
+                    <f:convertNumber pattern="#0.00"/>
+                </h:outputText>
             </p:column>
-
 
             <p:column headerText="stoichiometry" sortBy="#{frag.stoichiometry}">              
                 <p:cellEditor>
@@ -100,6 +111,31 @@
                         </h:selectOneMenu>
                     </f:facet>
                 </p:cellEditor>  
+            </p:column>
+
+            <p:column headerText="saltName"
+                      sortBy="#{frag.saltName}"
+                      filterBy="#{frag.saltName}">
+                <h:outputText value="#{frag.saltName}"/>
+            </p:column>
+            <p:column headerText="saltMf"
+                      sortBy="#{frag.saltMf}"
+                      filterBy="#{frag.saltMf}">
+                <h:outputText value="#{frag.saltMf}"/>
+            </p:column>
+            <p:column headerText="saltMw"
+                      sortBy="#{frag.saltMw}"
+                      filterBy="#{frag.saltMw}">
+                <h:outputText value="#{frag.saltMw}"/>
+            </p:column>
+            <p:column headerText="saltSmiles"
+                      sortBy="#{frag.saltSmiles}"
+                      filterBy="#{frag.saltSmiles}">
+                <h:outputText value="#{frag.saltSmiles}"/>
+            </p:column>
+
+            <p:column headerText="CanSmi" sortBy="#{frag.cmpdFragmentStructure.canSmi}">
+                <h:outputText value="#{frag.cmpdFragmentStructure.canSmi}"/>
             </p:column>
 
             <p:column headerText="CanSmi Structure">

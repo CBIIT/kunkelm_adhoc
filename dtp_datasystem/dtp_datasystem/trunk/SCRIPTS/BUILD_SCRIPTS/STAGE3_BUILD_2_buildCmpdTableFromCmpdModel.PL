@@ -40,25 +40,32 @@ print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
+
+## formatted_plates includes distinct because data are degenerate by set 
+## (not tracking plate row/column in dctddb)
+## In any case EVERYTHING has to be distinct to avoid Cartesian products on LOJ
+## on one-to-many alias, project, etc.
+## DISTINCT DISTINCT DISTINCT  
+
 my $tempSql = qq[
 create table temp_formatted_strings
 as
 select
 nsc.id, 
 nsc.nsc,
-string_agg(alia.alias,'xxx') as formatted_aliases_string,
---formatted_plates includes distinct because data are degenerate by set (not tracking plate row/column in dctddb)
+-- ALL MUST BE DISTINCT to avoid Cartesian products on multiple LOJ
+string_agg(distinct alia.alias,'xxx') as formatted_aliases_string,
 string_agg(distinct plat.plate_name,'xxx') as formatted_plates_string,
 string_agg(distinct proj.project_code,'xxx') as formatted_projects_string,
-string_agg(cset.set_name,'xxx') as formatted_sets_string,
-string_agg(targ.target,'xxx') as formatted_targets_string
+string_agg(distinct cset.set_name,'xxx') as formatted_sets_string,
+string_agg(distinct targ.target,'xxx') as formatted_targets_string
 from
 nsc_cmpd nsc
-left outer join cmpd_aliases2nsc_cmpds alia2c on (alia2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_alias alia on (alia2c.cmpd_aliases_fk = alia.id)
-left outer join cmpd_plates2nsc_cmpds plat2c on (plat2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_plate plat on (plat2c.cmpd_plates_fk = plat.id)
-left outer join cmpd_projects2nsc_cmpds proj2c on (proj2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_project proj on (proj2c.cmpd_projects_fk = proj.id)
+left outer join cmpd_aliases2nsc_cmpds alia2c    on (alia2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_alias alia     on (alia2c.cmpd_aliases_fk = alia.id)
+left outer join cmpd_plates2nsc_cmpds plat2c     on (plat2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_plate plat     on (plat2c.cmpd_plates_fk = plat.id)
+left outer join cmpd_projects2nsc_cmpds proj2c   on (proj2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_project proj   on (proj2c.cmpd_projects_fk = proj.id)
 left outer join cmpd_named_sets2nsc_cmpds sets2c on (sets2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_named_set cset on (sets2c.cmpd_named_sets_fk = cset.id)
-left outer join cmpd_targets2nsc_cmpds targ2c on (targ2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_target targ on (targ2c.cmpd_targets_fk = targ.id)
+left outer join cmpd_targets2nsc_cmpds targ2c    on (targ2c.nsc_cmpds_fk = nsc.id) left outer join cmpd_target targ    on (targ2c.cmpd_targets_fk = targ.id)
 group by 
 nsc.id, 
 nsc.nsc];

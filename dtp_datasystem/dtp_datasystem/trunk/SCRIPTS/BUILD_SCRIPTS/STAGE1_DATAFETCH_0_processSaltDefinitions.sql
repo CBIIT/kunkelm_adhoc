@@ -37,8 +37,8 @@ create table unique_salts
 as
 select can_smi, can_taut, can_taut_strip_stereo, Molecular_Formula, Molecular_Weight, 
 count(*), 
-array_to_string(array_agg(distinct name), ',') as names, 
-array_to_string(array_agg(distinct source), ',') as sources 
+array_to_string(array_agg(distinct name), ', ') as names, 
+array_to_string(array_agg(distinct source), ', ') as sources 
 from processed_salts
 
 group by 1, 2, 3, 4, 5 order by 2 desc;

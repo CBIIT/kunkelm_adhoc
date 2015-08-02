@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.util.HelperCmpd;
@@ -30,6 +31,14 @@ public class FragmentsWorkbenchController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
 
+    // reach-through to sessionController
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
+
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
+
     private CmpdLegacyCmpdVO legacyCmpd;
     private CmpdVO cmpd;
     private List<CmpdFragmentVO> fragments;
@@ -39,9 +48,9 @@ public class FragmentsWorkbenchController implements Serializable {
 
         this.fragments = new ArrayList<CmpdFragmentVO>();
 
-        cmpd = HelperCmpd.fetchFullCmpd(nsc);
-        
-        legacyCmpd = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nsc, null);
+        cmpd = HelperCmpd.fetchFullCmpd(nsc, sessionController.getLoggedUser());
+
+        legacyCmpd = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nsc, sessionController.getLoggedUser());
 
         fragments = new ArrayList<CmpdFragmentVO>(cmpd.getCmpdFragments());
 

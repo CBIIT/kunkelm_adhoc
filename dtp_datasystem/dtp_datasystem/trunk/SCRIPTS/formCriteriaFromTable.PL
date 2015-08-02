@@ -285,7 +285,7 @@ foreach my $line(@lines){
 	
 }
 
-print outputPartAddToColumnModelList join(',', @cumulativeFieldNames);
+print outputPartAddToColumnModelList join(', ', @cumulativeFieldNames);
 
 }
 
