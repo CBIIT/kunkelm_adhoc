@@ -140,14 +140,18 @@
                           style="width:4%" 
                           exportable="false"/>
 
-                <p:column headerText="Discreet" 
-                          resizable="true">                                
-                    <h:outputText value="#{cmpd.discreet}"/>
-                </p:column>   
-
                 <p:column headerText="NSC" 
-                          resizable="true">                                
+                          resizable="true"
+                          sortBy="#{cmpd.nsc}">                                
                     <h:outputText value="#{cmpd.nsc}"/>
+                </p:column>   
+                
+                <p:column headerText="Discreet" 
+                          resizable="true"
+                          sortBy="#{cmpd.discreet}"
+                          filterBy="#{cmpd.discreet}"
+                          filterMatchMode="contains">                                
+                    <h:outputText value="#{cmpd.discreet}"/>
                 </p:column>   
 
                 <p:column headerText="CONF" 
@@ -159,7 +163,10 @@
                 </p:column>   
 
                 <p:column headerText="DIST" 
-                          resizable="true">                                
+                          resizable="true"
+                          sortBy="#{cmpd.distribution}"
+                          filterBy="#{cmpd.distribution}"
+                          filterMatchMode="contains">                                
                     <h:outputText value="#{cmpd.distribution}"/>
                 </p:column>   
 
