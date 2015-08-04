@@ -344,11 +344,15 @@ public class ListContentController implements Serializable {
             }
         }
 
-//        System.out.println("Content of listContentBean:");
-//        this.listContentBean.printCriteriaLists();
-//        System.out.println("Content of QueryObject:");
-//        lCntntBean.printCriteriaLists();
-//
+        
+        System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
+        
+        System.out.println("Content of listContentBean:");
+        this.listContentBean.printCriteriaLists();
+        
+        System.out.println("Content of QueryObject:");
+        lCntntBean.printCriteriaLists();
+
 //        System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
         
         Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, lCntntBean, null, this.sessionController.getLoggedUser());

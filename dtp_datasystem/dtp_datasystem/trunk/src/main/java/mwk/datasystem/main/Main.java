@@ -7,6 +7,7 @@ package mwk.datasystem.main;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.sql.Connection;
@@ -55,7 +56,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        testCtabFromSmiles();
+        // testCtabFromSmiles();
+        testReflection();
 
     }
 
@@ -64,6 +66,98 @@ public class Main {
         String smiles = "CCCCCC";
         String ctab = MoleculeWrangling.toCtabFromSmiles(smiles);
         System.out.println(ctab);
+
+    }
+
+    public static void testReflection() {
+
+        String[] textAreaFieldNames = new String[]{
+            "drugNameTextArea",
+            "aliasTextArea",
+            "casTextArea",
+            "cmpdNamedSetTextArea",
+            "nscTextArea",
+            "projectCodeTextArea",
+            "plateTextArea",
+            "targetTextArea",
+            "mtxtTextArea",
+            "pseudoAtomsTextArea"
+        };
+
+        String[] listFieldNames = new String[]{
+            "drugNames",
+            "aliases",
+            "cases",
+            "cmpdNamedSets",
+            "nscs",
+            "projectCodes",
+            "plates",
+            "targets",
+            "mtxtPieces",
+            "pseudoAtomsPieces"
+        };
+
+        SearchCriteriaBean scb = new SearchCriteriaBean();
+        scb.setNscTextArea("740 123127 401005 705701 743380");
+
+        try {
+
+            Class scbClass = scb.getClass();
+
+            
+            for (String textAreaFieldName : Arrays.asList(textAreaFieldNames)) {
+
+                Field f = scbClass.getDeclaredField(textAreaFieldName);
+                f.setAccessible(true);
+
+                System.out.println();
+                System.out.println("fieldName: " + f.getName());
+                System.out.println("fieldType: " + f.getType().getName());
+
+                String str = (String) f.get(scb);
+
+                System.out.println(textAreaFieldName);
+                System.out.println(str);
+            }
+            
+            
+            for (String textAreaFieldName : Arrays.asList(textAreaFieldNames)) {
+
+                Field f = scbClass.getDeclaredField(textAreaFieldName);
+                f.setAccessible(true);
+
+                System.out.println();
+                System.out.println("fieldName: " + f.getName());
+                System.out.println("fieldType: " + f.getType().getName());
+
+                String str = (String) f.get(scb);
+
+                System.out.println(textAreaFieldName);
+                System.out.println(str);
+            }
+
+            for (String listFieldName : Arrays.asList(listFieldNames)) {
+
+                Field f = scbClass.getDeclaredField(listFieldName);
+                f.setAccessible(true);
+
+                System.out.println();
+                System.out.println("fieldName: " + f.getName());
+                System.out.println("fieldType: " + f.getType().getName());
+
+                ArrayList<String> al = (ArrayList< String>) f.get(scb);
+                System.out.println(listFieldName);
+                for (String s : al) {
+                    System.out.println(s);
+                }
+            }
+
+            // production code should handle these exceptions more gracefully
+        } catch (NoSuchFieldException x) {
+            x.printStackTrace();
+        } catch (IllegalAccessException x) {
+            x.printStackTrace();
+        }
 
     }
 
