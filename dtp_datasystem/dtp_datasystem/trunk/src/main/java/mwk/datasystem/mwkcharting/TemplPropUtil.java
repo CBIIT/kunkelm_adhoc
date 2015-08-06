@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mwk.datasystem.main;
+package mwk.datasystem.mwkcharting;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class TemplPropUtil<T> {
         knownLongProperties = new ArrayList<String>();
         knownBooleanProperties = new ArrayList<String>();
         unmanagedProperties = new ArrayList<String>();
-
+        
         props(t.getClass(), "");
 
         if (DEBUG) {

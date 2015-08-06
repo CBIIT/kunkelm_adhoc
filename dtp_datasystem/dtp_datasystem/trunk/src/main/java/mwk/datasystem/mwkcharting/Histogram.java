@@ -58,7 +58,7 @@ public class Histogram {
 
     // parse the ah and create a list of bins
     // for discrete distributions, minCut and maxCut are the same
-    if (this.propertyName.equals("hba") || this.propertyName.equals("hbd")) {
+    if (this.propertyName.equals("cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors") || this.propertyName.equals("cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors")) {
 
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
@@ -184,22 +184,24 @@ public class Histogram {
 
   private void putInAppropriateBin(CmpdListMemberVO clmVO) {
 
+    TemplPropUtil propUtils = new TemplPropUtil(clmVO);
+      
     NumberFormat nf2 = new DecimalFormat();
     nf2.setMaximumFractionDigits(2);
 
     Double val = null;
 
-    if (PropertyUtilities.knownIntegerProperty(this.propertyName)) {
-      if (PropertyUtilities.getIntegerProperty(clmVO, this.propertyName) != null) {
-        val = PropertyUtilities.getIntegerProperty(clmVO, this.propertyName).doubleValue();
+    if (propUtils.knownIntegerProperty(this.propertyName)) {
+      if (propUtils.getIntegerProperty(clmVO, this.propertyName) != null) {
+        val = propUtils.getIntegerProperty(clmVO, this.propertyName).doubleValue();
       } else {
         System.out.println(this.propertyName + " was null in getIntegerProperty for NSC: " + clmVO.getCmpd().getNsc());
       }
     }
 
-    if (PropertyUtilities.knownDoubleProperty(this.propertyName)) {
-      if (PropertyUtilities.getDoubleProperty(clmVO, this.propertyName) != null) {
-        val = PropertyUtilities.getDoubleProperty(clmVO, this.propertyName);
+    if (propUtils.knownDoubleProperty(this.propertyName)) {
+      if (propUtils.getDoubleProperty(clmVO, this.propertyName) != null) {
+        val = propUtils.getDoubleProperty(clmVO, this.propertyName);
       } else {
         System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + clmVO.getCmpd().getNsc());
       }

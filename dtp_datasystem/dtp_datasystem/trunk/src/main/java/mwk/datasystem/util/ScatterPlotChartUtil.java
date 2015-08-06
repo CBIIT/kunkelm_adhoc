@@ -9,9 +9,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import mwk.datasystem.mwkcharting.PropertyUtilities;
+import mwk.datasystem.mwkcharting.TemplPropUtil;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import org.primefaces.model.chart.Axis;
@@ -139,40 +138,21 @@ public class ScatterPlotChartUtil {
 
     public static Double getProperty(CmpdListMemberVO clmVO, String propertyName) {
 
+        TemplPropUtil<CmpdListMemberVO> propUtils = new TemplPropUtil<CmpdListMemberVO>(clmVO);
+
         // these are hard-coded since reflection is problematic...
         Double rtn = null;
 
         CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
-        // these are hard-coded since reflection is problematic...
-        if (propertyName.equals("alogp")) {
-            rtn = PropertyUtilities.getDoubleProperty(clmVO, "alogp");
-        }
-
-        if (propertyName.equals("logd")) {
-            rtn = PropertyUtilities.getDoubleProperty(clmVO, "logd");
-        }
-
-        if (propertyName.equals("hba")) {
-            Integer tempRtn = PropertyUtilities.getIntegerProperty(clmVO, "hba");
-            if (tempRtn != null) {
-                rtn = tempRtn.doubleValue();
+        if (propUtils.knownDoubleProperty(propertyName)) {
+            if (propUtils.getDoubleProperty(clmVO, propertyName) != null) {
+                rtn = propUtils.getDoubleProperty(clmVO, propertyName);
             }
-        }
-
-        if (propertyName.equals("hbd")) {
-            Integer tempRtn = PropertyUtilities.getIntegerProperty(clmVO, "hbd");
-            if (tempRtn != null) {
-                rtn = tempRtn.doubleValue();
+        } else if (propUtils.knownIntegerProperty(propertyName)) {
+            if (propUtils.getIntegerProperty(clmVO, propertyName) != null) {
+                rtn = propUtils.getIntegerProperty(clmVO, propertyName).doubleValue();
             }
-        }
-
-        if (propertyName.equals("sa")) {
-            rtn = PropertyUtilities.getDoubleProperty(clmVO, "sa");
-        }
-
-        if (propertyName.equals("mw")) {
-            rtn = PropertyUtilities.getDoubleProperty(clmVO, "mw");
         }
 
         return rtn;

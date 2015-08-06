@@ -59,7 +59,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
     // parse the ah and create a list of bins
     // for discrete distributions, minCut and maxCut are the same
-    if (this.propertyName.equals("hba") || this.propertyName.equals("hbd")) {
+    if (this.propertyName.equals("cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors") || this.propertyName.equals("cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors")) {
 
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
@@ -179,7 +179,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
     NumberFormat nf2 = new DecimalFormat();
     nf2.setMaximumFractionDigits(2);
 
-    TemplatedPropertyUtilities<T> propUtils = new TemplatedPropertyUtilities<T>();
+    TemplPropUtil<T> propUtils = new TemplPropUtil<T>(t);
 
     String nameString = "name not defined";
     

@@ -9554,16 +9554,13 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Str
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/WindowPopper.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/LoadKekuleRenderedImages.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/TemplPropUtil.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/Histogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/HistogramBin.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlot.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlotPoint.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/PropertyUtilities.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/PropertyUtilities_ORIGINAL.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplPropUtil.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogramBin.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedPropertyUtilities.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/AddDimensionedImage.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Comparators.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ExtendedCartesianChartModel.java -text

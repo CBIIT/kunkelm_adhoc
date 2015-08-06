@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import mwk.datasystem.mwkcharting.Histogram;
-import mwk.datasystem.mwkcharting.PropertyUtilities;
+import mwk.datasystem.mwkcharting.TemplPropUtil;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 
@@ -24,6 +24,8 @@ public class HistogramChartUtil {
     public static final Boolean DEBUG = Boolean.TRUE;
 
     public static List<Histogram> doHistograms(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
+
+        TemplPropUtil<CmpdListMemberVO> propUtils = new TemplPropUtil<CmpdListMemberVO>(new CmpdListMemberVO());
 
         if (DEBUG) {
             System.out.println("In HistogramChartUtil.doHistograms()");
@@ -41,47 +43,20 @@ public class HistogramChartUtil {
         }
 
         for (CmpdListMemberVO clmVO : incoming) {
-
-            // these are hard-coded since reflection is problematic...
-            if (propertyNameList.contains("alogp")) {
-                if (PropertyUtilities.getDoubleProperty(clmVO, "alogp") != null) {
-                    ahMap.get("alogp").addValue(PropertyUtilities.getDoubleProperty(clmVO, "alogp"));
+            for (String propertyName : propertyNameList) {
+                if (propUtils.knownDoubleProperty(propertyName)) {
+                    if (propUtils.get(clmVO, propertyName) != null) {
+                        ahMap.get(propertyName).addValue(propUtils.getDoubleProperty(clmVO, propertyName));
+                    }
+                } else if (propUtils.knownIntegerProperty(propertyName)) {
+                    if (propUtils.get(clmVO, propertyName) != null) {
+                        ahMap.get(propertyName).addValue(propUtils.getIntegerProperty(clmVO, propertyName));
+                    }
                 }
             }
-
-            if (propertyNameList.contains("logd")) {
-                if (PropertyUtilities.getDoubleProperty(clmVO, "logd") != null) {
-                    ahMap.get("logd").addValue(PropertyUtilities.getDoubleProperty(clmVO, "logd"));
-                }
-            }
-
-            if (propertyNameList.contains("hba")) {
-                if (PropertyUtilities.getIntegerProperty(clmVO, "hba")!=null) {
-                    ahMap.get("hba").addValue(PropertyUtilities.getIntegerProperty(clmVO, "hba"));
-                }
-            }
-
-            if (propertyNameList.contains("hbd")) {
-                if (PropertyUtilities.getIntegerProperty(clmVO, "hbd")!= null) {
-                    ahMap.get("hbd").addValue(PropertyUtilities.getIntegerProperty(clmVO, "hbd"));
-                }
-            }
-
-            if (propertyNameList.contains("sa")) {
-                if (PropertyUtilities.getDoubleProperty(clmVO, "sa") != null) {
-                    ahMap.get("sa").addValue(PropertyUtilities.getDoubleProperty(clmVO, "sa"));
-                }
-            }
-
-            if (propertyNameList.contains("mw")) {
-                if (PropertyUtilities.getDoubleProperty(clmVO, "mw")!= null) {
-                    ahMap.get("mw").addValue(PropertyUtilities.getDoubleProperty(clmVO, "mw"));
-                }
-            }
-
         }
 
-    // MWK 07Dec2014 adding sort step
+        // MWK 07Dec2014 adding sort step
         ArrayList<String> sortList = new ArrayList<String>(ahMap.keySet());
         Collections.sort(sortList);
 

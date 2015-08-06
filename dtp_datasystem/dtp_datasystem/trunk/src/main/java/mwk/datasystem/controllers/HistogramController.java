@@ -78,7 +78,7 @@ public class HistogramController implements Serializable {
     this.histogramList = new ArrayList<TemplatedHistogram<CmpdListMemberVO>>();
     this.scatterPlotList = new ArrayList<LineChartModel>();
 
-    this.parametersPchem = new ArrayList<String>(Arrays.asList(new String[]{"mw", "hba", "hbd", "sa"}));
+    this.parametersPchem = new ArrayList<String>(Arrays.asList(new String[]{"cmpd.parentFragment.cmpdFragmentPChem.molecularWeight", "cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors", "cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors", "cmpd.parentFragment.cmpdFragmentPChem.surfaceArea"}));
 
     this.histogramSizeString = "medium";
     this.scatterPlotSizeString = "medium";

@@ -69,13 +69,12 @@
                             <br/>
 
                             <p:selectManyButton value="#{histogramController.parametersPchem}" >  
-                                <f:selectItem itemLabel="mw" itemValue="mw" />  
-                                <f:selectItem itemLabel="hba" itemValue="hba" />  
-                                <f:selectItem itemLabel="hbd" itemValue="hbd" />  
-                                <f:selectItem itemLabel="alogp" itemValue="alogp" />  
-                                <f:selectItem itemLabel="logd" itemValue="logd" />  
-                                <f:selectItem itemLabel="sa" itemValue="sa" />  
-                                <f:selectItem itemLabel="psa" itemValue="psa" />  
+                                <f:selectItem itemLabel="molecularWeight" itemValue="cmpd.parentFragment.cmpdFragmentPChem.molecularWeight" />  
+                                <f:selectItem itemLabel="countHydBondAcceptors" itemValue="cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors" />  
+                                <f:selectItem itemLabel="countHydBondDonors" itemValue="cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors" />  
+                                <f:selectItem itemLabel="theALogP" itemValue="cmpd.parentFragment.cmpdFragmentPChem.theALogP" />  
+                                <f:selectItem itemLabel="logD" itemValue="cmpd.parentFragment.cmpdFragmentPChem.logD" />  
+                                <f:selectItem itemLabel="surfaceArea" itemValue="cmpd.parentFragment.cmpdFragmentPChem.surfaceArea" />  
                             </p:selectManyButton>
 
                             <p:commandButton ajax="true" 
