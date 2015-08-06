@@ -92,15 +92,11 @@ public class HistogramController implements Serializable {
 
   }
 
-  //
   public void handleLoadActiveList() {
 
     String rtn = performLoadActiveList();
-
     FacesContext ctx = FacesContext.getCurrentInstance();
-
     ExternalContext extCtx = ctx.getExternalContext();
-
     String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/activeListHistograms.xhtml"));
 
     try {

@@ -4,60 +4,104 @@
  */
 package mwk.datasystem.main;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.math.BigInteger;
-import java.net.URLEncoder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import javax.xml.datatype.XMLGregorianCalendar;
 import mwk.datasystem.controllers.SearchCriteriaBean;
-import mwk.datasystem.controllers.SessionController;
-import mwk.datasystem.controllers.StructureSearchController;
-import mwk.datasystem.domain.AdHocCmpd;
-import mwk.datasystem.domain.Cmpd;
-import mwk.datasystem.domain.CmpdImpl;
-import mwk.datasystem.domain.CmpdLegacyCmpd;
-import mwk.datasystem.domain.CmpdLegacyCmpdImpl;
-import mwk.datasystem.domain.CmpdList;
-import mwk.datasystem.domain.CmpdListMember;
-import mwk.datasystem.util.HelperCmpd;
-import mwk.datasystem.util.HelperCmpdList;
-import mwk.datasystem.util.HibernateUtil;
-import mwk.datasystem.util.MoleculeParser;
-import mwk.datasystem.util.TransformXMLGregorianCalendar;
-import mwk.datasystem.vo.CmpdLegacyCmpdVO;
-import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdFragmentPChemVO;
+import mwk.datasystem.vo.CmpdFragmentVO;
+import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdVO;
 import newstructureservlet.MoleculeWrangling;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Disjunction;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  *
  * @author mwkunkel
  */
 public class Main {
-
+    
+    public static final Boolean DEBUG = Boolean.TRUE;
+    
     public static void main(String[] args) {
 
         // testCtabFromSmiles();
-        testReflection();
+        // testReflection();
+        testTemplPropUtil();
+
+    }
+
+    public static void testTemplPropUtil() {
+
+        CmpdListMemberVO fake = new CmpdListMemberVO();
+
+        TemplPropUtil<CmpdListMemberVO> util = new TemplPropUtil<CmpdListMemberVO>(fake);
+
+        if (DEBUG) {
+
+            System.out.println("----------------knownStringProperties");
+
+            for (String propertyName : util.knownStringProperties) {
+                System.out.println(propertyName + ": " + util.getStringProperty(fake, propertyName));
+            }
+
+            System.out.println("----------------knownIntegerProperties");
+
+            for (String propertyName : util.knownIntegerProperties) {
+                System.out.println(propertyName + ": " + util.getIntegerProperty(fake, propertyName));
+            }
+
+            System.out.println("----------------knownDoubleProperties");
+
+            for (String propertyName : util.knownDoubleProperties) {
+                System.out.println(propertyName + ": " + util.getDoubleProperty(fake, propertyName));
+            }
+
+            System.out.println("----------------unmanagedProperties");
+
+            for (String propertyName : util.unmanagedProperties) {
+                System.out.println(propertyName);
+            }
+        }
+
+        CmpdListMemberVO clmVO = new CmpdListMemberVO();
+        CmpdVO cVO = new CmpdVO();
+        cVO.setName("fakeName");
+        clmVO.setCmpd(cVO);
+
+        CmpdFragmentPChemVO pChemVO = new CmpdFragmentPChemVO();
+        pChemVO.setSurfaceArea(-101.01);
+
+        CmpdFragmentVO fragVO = new CmpdFragmentVO();
+        fragVO.setCmpdFragmentPChem(pChemVO);
+
+        cVO.setParentFragment(fragVO);
+
+        // retrieve
+        String propertyString = "";
+
+        propertyString = "cmpd.name";
+        Object rtn = util.get(clmVO, propertyString);
+        if (rtn != null) {
+            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
+        } else {
+            System.out.println(propertyString + " rtn is null");
+        }
+
+        propertyString = "cmpd.parentFragment.cmpdFragmentPChem.surfaceArea";
+        rtn = util.get(clmVO, propertyString);
+        if (rtn != null) {
+            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
+        } else {
+            System.out.println(propertyString + " rtn is null");
+        }
+
+        propertyString = "cmpd.parentFragment.cmpdFragmentStructure.surfaceArea";
+        rtn = util.get(clmVO, propertyString);
+        if (rtn != null) {
+            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
+        } else {
+            System.out.println(propertyString + " rtn is null");
+        }
 
     }
 
@@ -104,7 +148,6 @@ public class Main {
 
             Class scbClass = scb.getClass();
 
-            
             for (String textAreaFieldName : Arrays.asList(textAreaFieldNames)) {
 
                 Field f = scbClass.getDeclaredField(textAreaFieldName);
@@ -119,8 +162,7 @@ public class Main {
                 System.out.println(textAreaFieldName);
                 System.out.println(str);
             }
-            
-            
+
             for (String textAreaFieldName : Arrays.asList(textAreaFieldNames)) {
 
                 Field f = scbClass.getDeclaredField(textAreaFieldName);

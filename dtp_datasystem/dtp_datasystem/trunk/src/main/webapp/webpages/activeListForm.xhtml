@@ -219,6 +219,20 @@
                         </p:dataList>
                     </p:column>
 
+                    
+                      <p:dataList rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates'}"
+                                var="prop" 
+                                value="#{cmpd[column.property]}"
+                                rows="5" 
+                                paginator="true"
+                                paginatorPosition="top" 
+                                paginatorAlwaysVisible="false"
+                                currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords}"
+                                paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink}">
+
+                        <h:outputText value="#{prop.length() gt 50 ? prop.substring(0,49).concat('...') : prop}" />
+                    </p:dataList>
+                    
                     <p:column colspan="2">
                         <p:dataList value="#{listMember.cmpd.aliases}" var="n" itemType="disc">                                
                             <h:outputText value="#{n.length() gt 50 ? n.substring(0,49).concat('...') : n}" />
