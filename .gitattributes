@@ -9672,7 +9672,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/menubar.x
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui_form.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/uploadList.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/test.txt -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/CHANGELOG -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/build.xml -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/firstReleaseFileManagement.sql -text
