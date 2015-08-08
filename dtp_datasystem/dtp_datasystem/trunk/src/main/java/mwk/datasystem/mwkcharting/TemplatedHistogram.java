@@ -183,23 +183,23 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
     String nameString = "name not defined";
     
-    if (propUtils.getStringProperty(t, "name") != null){
-      nameString = propUtils.getStringProperty(t, "name");
+    if (propUtils.getStr(t, "name") != null){
+      nameString = propUtils.getStr(t, "name");
     }
     
     Double val = null;
 
-    if (propUtils.knownIntegerProperty(this.propertyName)) {
-      if (propUtils.getIntegerProperty(t, propertyName) != null) {
-        val = propUtils.getIntegerProperty(t, this.propertyName).doubleValue();
+    if (propUtils.isIntProp(this.propertyName)) {
+      if (propUtils.getInt(t, propertyName) != null) {
+        val = propUtils.getInt(t, this.propertyName).doubleValue();
       } else {
         System.out.println(this.propertyName + " was null in getDoubleProperty for name: " + nameString);
       }
     }
 
-    if (propUtils.knownDoubleProperty(this.propertyName)) {
-      if (propUtils.getDoubleProperty(t, propertyName) != null) {
-        val = propUtils.getDoubleProperty(t, this.propertyName);
+    if (propUtils.isDblProp(this.propertyName)) {
+      if (propUtils.getDbl(t, propertyName) != null) {
+        val = propUtils.getDbl(t, this.propertyName);
       } else {
         System.out.println(this.propertyName + " was null in getDoubleProperty for name: " + nameString);
       }

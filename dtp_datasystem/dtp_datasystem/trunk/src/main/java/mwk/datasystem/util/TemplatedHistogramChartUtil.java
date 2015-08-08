@@ -43,13 +43,13 @@ public class TemplatedHistogramChartUtil {
 
         for (CmpdListMemberVO clmVO : incoming) {
             for (String propertyName : propertyNameList) {
-                if (propUtils.knownDoubleProperty(propertyName)) {
+                if (propUtils.isDblProp(propertyName)) {
                     if (propUtils.get(clmVO, propertyName) != null) {
-                        ahMap.get(propertyName).addValue(propUtils.getDoubleProperty(clmVO, propertyName));
+                        ahMap.get(propertyName).addValue(propUtils.getDbl(clmVO, propertyName));
                     }
-                } else if (propUtils.knownIntegerProperty(propertyName)) {
+                } else if (propUtils.isIntProp(propertyName)) {
                     if (propUtils.get(clmVO, propertyName) != null) {
-                        ahMap.get(propertyName).addValue(propUtils.getIntegerProperty(clmVO, propertyName));
+                        ahMap.get(propertyName).addValue(propUtils.getInt(clmVO, propertyName));
                     }
                 }
             }

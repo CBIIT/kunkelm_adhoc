@@ -9559,8 +9559,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/His
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlot.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlotPoint.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplPropUtil.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplPropUtil_BEFORE_UNIQUE_MODS.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogram.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedHistogramBin.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplatedPair.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/AddDimensionedImage.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Comparators.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ExtendedCartesianChartModel.java -text

@@ -8,6 +8,7 @@ import mwk.datasystem.mwkcharting.TemplPropUtil;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import mwk.datasystem.controllers.SearchCriteriaBean;
 import mwk.datasystem.vo.CmpdFragmentPChemVO;
 import mwk.datasystem.vo.CmpdFragmentVO;
@@ -20,14 +21,15 @@ import newstructureservlet.MoleculeWrangling;
  * @author mwkunkel
  */
 public class Main {
-    
-    public static final Boolean DEBUG = Boolean.TRUE;
-    
+
+    public static final Boolean DEBUG = Boolean.FALSE;
+
     public static void main(String[] args) {
 
         // testCtabFromSmiles();
         // testReflection();
         testTemplPropUtil();
+        // testSplitting();
 
     }
 
@@ -39,71 +41,84 @@ public class Main {
 
         if (DEBUG) {
 
-            System.out.println("----------------knownStringProperties");
+            System.out.println("----------------strProps");
 
-            for (String propertyName : util.knownStringProperties) {
-                System.out.println(propertyName + ": " + util.getStringProperty(fake, propertyName));
+            for (String propertyName : util.strProps) {
+                System.out.println(propertyName + ": " + util.getStr(fake, propertyName));
             }
 
-            System.out.println("----------------knownIntegerProperties");
+            System.out.println("----------------intProps");
 
-            for (String propertyName : util.knownIntegerProperties) {
-                System.out.println(propertyName + ": " + util.getIntegerProperty(fake, propertyName));
+            for (String propertyName : util.intProps) {
+                System.out.println(propertyName + ": " + util.getInt(fake, propertyName));
             }
 
-            System.out.println("----------------knownDoubleProperties");
+            System.out.println("----------------dblProps");
 
-            for (String propertyName : util.knownDoubleProperties) {
-                System.out.println(propertyName + ": " + util.getDoubleProperty(fake, propertyName));
+            for (String propertyName : util.dblProps) {
+                System.out.println(propertyName + ": " + util.getDbl(fake, propertyName));
             }
 
-            System.out.println("----------------unmanagedProperties");
+            System.out.println("----------------longProps");
 
-            for (String propertyName : util.unmanagedProperties) {
+            for (String propertyName : util.longProps) {
+                System.out.println(propertyName + ": " + util.getLong(fake, propertyName));
+            }
+
+            System.out.println("----------------boolProps");
+
+            for (String propertyName : util.boolProps) {
+                System.out.println(propertyName + ": " + util.getBool(fake, propertyName));
+            }
+
+            System.out.println("----------------othProps");
+
+            for (String propertyName : util.othProps) {
                 System.out.println(propertyName);
             }
+
         }
 
-        CmpdListMemberVO clmVO = new CmpdListMemberVO();
-        CmpdVO cVO = new CmpdVO();
-        cVO.setName("fakeName");
-        clmVO.setCmpd(cVO);
-
-        CmpdFragmentPChemVO pChemVO = new CmpdFragmentPChemVO();
-        pChemVO.setSurfaceArea(-101.01);
-
-        CmpdFragmentVO fragVO = new CmpdFragmentVO();
-        fragVO.setCmpdFragmentPChem(pChemVO);
-
-        cVO.setParentFragment(fragVO);
-
-        // retrieve
-        String propertyString = "";
-
-        propertyString = "cmpd.name";
-        Object rtn = util.get(clmVO, propertyString);
-        if (rtn != null) {
-            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
-        } else {
-            System.out.println(propertyString + " rtn is null");
-        }
-
-        propertyString = "cmpd.parentFragment.cmpdFragmentPChem.surfaceArea";
-        rtn = util.get(clmVO, propertyString);
-        if (rtn != null) {
-            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
-        } else {
-            System.out.println(propertyString + " rtn is null");
-        }
-
-        propertyString = "cmpd.parentFragment.cmpdFragmentStructure.surfaceArea";
-        rtn = util.get(clmVO, propertyString);
-        if (rtn != null) {
-            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
-        } else {
-            System.out.println(propertyString + " rtn is null");
-        }
-
+//        Create object to test        
+//        CmpdListMemberVO clmVO = new CmpdListMemberVO();
+//        CmpdVO cVO = new CmpdVO();
+//        cVO.setName("fakeName");
+//        clmVO.setCmpd(cVO);
+//
+//        CmpdFragmentPChemVO pChemVO = new CmpdFragmentPChemVO();
+//        pChemVO.setSurfaceArea(-101.01);
+//
+//        CmpdFragmentVO fragVO = new CmpdFragmentVO();
+//        fragVO.setCmpdFragmentPChem(pChemVO);
+//
+//        cVO.setParentFragment(fragVO);
+//
+//        // retrieve
+//        String propertyString = "";
+//
+//        propertyString = "cmpd.name";
+//        Object rtn = util.get(clmVO, propertyString);
+//        if (rtn != null) {
+//            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
+//        } else {
+//            System.out.println(propertyString + " rtn is null");
+//        }
+//
+//        propertyString = "cmpd.parentFragment.cmpdFragmentPChem.surfaceArea";
+//        rtn = util.get(clmVO, propertyString);
+//        if (rtn != null) {
+//            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
+//        } else {
+//            System.out.println(propertyString + " rtn is null");
+//        }
+//
+//        propertyString = "cmpd.parentFragment.cmpdFragmentStructure.surfaceArea";
+//        rtn = util.get(clmVO, propertyString);
+//        if (rtn != null) {
+//            System.out.println(propertyString + " rtn is: " + rtn.getClass().getName() + " toString:" + rtn.toString());
+//        } else {
+//            System.out.println(propertyString + " rtn is null");
+//        }
     }
 
     public static void testCtabFromSmiles() {
@@ -202,6 +217,52 @@ public class Main {
             x.printStackTrace();
         }
 
+    }
+
+    public static void testSplitting() {
+
+        //String testStr = "cmpdFragmentStructurecmpd.parentFragment.cmpdFragmentStructure.serialVersionUID";
+        String testStr = "cmpd.serialVersionUID";
+
+        System.out.println(testStr);
+
+        for (int tryCnt = 1; tryCnt < 10; tryCnt++) {
+
+            String tryStr = "";
+
+            String[] strArr = testStr.split("\\.");
+
+            System.out.println("strArr.length: " + strArr.length + " tryCnt: " + tryCnt);
+
+            int startIdx = strArr.length > tryCnt ? strArr.length - tryCnt : 0;
+
+            //int startIdx = strArr.length - tryCnt;
+            
+            String[] tryArr = Arrays.copyOfRange(strArr, startIdx, strArr.length);
+            tryStr = join(".", tryArr);
+
+            System.out.println(tryStr);
+
+        }
+
+    }
+
+    private static String join(String sep, String[] strArr) {
+
+        StringBuilder sb = new StringBuilder();
+        boolean isFirst = true;
+
+        for (String s : strArr) {
+            if (isFirst) {
+                sb.append(s);
+                isFirst = false;
+            } else {
+                sb.append(sep);
+                sb.append(s);
+            }
+        }
+
+        return sb.toString();
     }
 
 }

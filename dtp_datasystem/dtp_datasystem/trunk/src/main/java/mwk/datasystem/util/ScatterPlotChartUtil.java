@@ -145,13 +145,13 @@ public class ScatterPlotChartUtil {
 
         CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
 
-        if (propUtils.knownDoubleProperty(propertyName)) {
-            if (propUtils.getDoubleProperty(clmVO, propertyName) != null) {
-                rtn = propUtils.getDoubleProperty(clmVO, propertyName);
+        if (propUtils.isDblProp(propertyName)) {
+            if (propUtils.getDbl(clmVO, propertyName) != null) {
+                rtn = propUtils.getDbl(clmVO, propertyName);
             }
-        } else if (propUtils.knownIntegerProperty(propertyName)) {
-            if (propUtils.getIntegerProperty(clmVO, propertyName) != null) {
-                rtn = propUtils.getIntegerProperty(clmVO, propertyName).doubleValue();
+        } else if (propUtils.isIntProp(propertyName)) {
+            if (propUtils.getInt(clmVO, propertyName) != null) {
+                rtn = propUtils.getInt(clmVO, propertyName).doubleValue();
             }
         }
 

@@ -191,17 +191,17 @@ public class Histogram {
 
     Double val = null;
 
-    if (propUtils.knownIntegerProperty(this.propertyName)) {
-      if (propUtils.getIntegerProperty(clmVO, this.propertyName) != null) {
-        val = propUtils.getIntegerProperty(clmVO, this.propertyName).doubleValue();
+    if (propUtils.isIntProp(this.propertyName)) {
+      if (propUtils.getInt(clmVO, this.propertyName) != null) {
+        val = propUtils.getInt(clmVO, this.propertyName).doubleValue();
       } else {
         System.out.println(this.propertyName + " was null in getIntegerProperty for NSC: " + clmVO.getCmpd().getNsc());
       }
     }
 
-    if (propUtils.knownDoubleProperty(this.propertyName)) {
-      if (propUtils.getDoubleProperty(clmVO, this.propertyName) != null) {
-        val = propUtils.getDoubleProperty(clmVO, this.propertyName);
+    if (propUtils.isDblProp(this.propertyName)) {
+      if (propUtils.getDbl(clmVO, this.propertyName) != null) {
+        val = propUtils.getDbl(clmVO, this.propertyName);
       } else {
         System.out.println(this.propertyName + " was null in getDoubleProperty for NSC: " + clmVO.getCmpd().getNsc());
       }
