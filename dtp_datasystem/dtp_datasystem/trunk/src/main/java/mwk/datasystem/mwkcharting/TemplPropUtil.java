@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  *
@@ -24,19 +25,26 @@ public class TemplPropUtil<T> {
     public static final Boolean DEBUG = Boolean.FALSE;
     public static final Boolean SUMMARIZE = Boolean.TRUE;
 
+    // processing
     private ArrayList<StringTriplet> rawProps;
     private HashMap<String, ArrayList<StringPair>> collatedProps;
     private HashMap<String, ArrayList<StringPair>> dupProps;
     private HashMap<String, ArrayList<StringPair>> successDupProps;
+
+    // the final product(s)
     private HashMap<String, StringPair> uniqProps;
 
-    public ArrayList<String> strProps;
-    public ArrayList<String> intProps;
-    public ArrayList<String> dblProps;
-    public ArrayList<String> longProps;
-    public ArrayList<String> boolProps;
-    public ArrayList<String> othProps;
+    private ArrayList<String> strProps;
+    private ArrayList<String> intProps;
+    private ArrayList<String> dblProps;
+    private ArrayList<String> longProps;
+    private ArrayList<String> boolProps;
+    private ArrayList<String> othProps;
+
+    // incoming
     private T t;
+    ArrayList<String> ignList;
+    ArrayList<String> reqList;
 
     private String join(String sep, String[] strArr) {
 
@@ -56,6 +64,12 @@ public class TemplPropUtil<T> {
         return sb.toString();
     }
 
+    public void printUniqProps() {
+        for (String k : this.uniqProps.keySet()) {
+            System.out.printf("%30s%90s%30s%n", k, this.uniqProps.get(k).fullName, this.uniqProps.get(k).dataType);
+        }
+    }
+
     private void printProps(String when) {
         System.out.println();
         System.out.println(when + "----------");
@@ -67,11 +81,25 @@ public class TemplPropUtil<T> {
         System.out.println();
     }
 
-    public TemplPropUtil(T tIn) {
+    public TemplPropUtil(
+            T tIn,
+            ArrayList<String> ignListIn,
+            ArrayList<String> reqListIn) {
 
         System.out.println("In TemplPropUtil constructor");
 
         t = tIn;
+        if (ignListIn != null) {
+            this.ignList = ignListIn;
+        } else {
+            this.ignList = new ArrayList<String>();
+        }
+
+        if (reqListIn != null) {
+            this.reqList = reqListIn;
+        } else {
+            this.reqList = new ArrayList<String>();
+        }
 
         rawProps = new ArrayList<StringTriplet>();
         collatedProps = new HashMap<String, ArrayList<StringPair>>();
@@ -79,7 +107,7 @@ public class TemplPropUtil<T> {
         successDupProps = new HashMap<String, ArrayList<StringPair>>();
         uniqProps = new HashMap<String, StringPair>();
 
-        // these should be done later AFTER resolution of dups
+        // these should (could?) be done later AFTER resolution of dups
         strProps = new ArrayList<String>();
         intProps = new ArrayList<String>();
         dblProps = new ArrayList<String>();
@@ -88,17 +116,58 @@ public class TemplPropUtil<T> {
         othProps = new ArrayList<String>();
 
         // determine the fully-qualified props
-        props(t.getClass(), "");
+        // props will call against the ignList reqList
+        classWalker(t.getClass(), "");
 
-        // collate to collatedProps by short names
+        // collate to collatedProps by the last short name
+        // this is where filtering is applied
         for (StringTriplet trip : rawProps) {
-            // create ArrayList if needed
-            if (collatedProps.containsKey(trip.shortName)) {
-                //
+
+            String[] strArr = trip.fullName.split("\\.");
+            List<String> strList = Arrays.asList(strArr);
+
+            boolean ok = true;
+
+            if (this.ignList == null || this.ignList.size() == 0) {
+                // ok remains true;
             } else {
-                collatedProps.put(trip.shortName, new ArrayList<StringPair>());
+                if (CollectionUtils.containsAny(strList, this.ignList)) {
+
+                    Collection intersect = CollectionUtils.intersection(strList, this.ignList);
+                    System.out.printf("%15s%30s%30s%n", "IGNORE", intersect.toString(), trip.fullName);
+                    ok = false;
+                }
             }
-            collatedProps.get(trip.shortName).add(new StringPair(trip.fullName, trip.dataType));
+
+            if (ok) {
+
+                if (this.reqList == null || this.reqList.size() == 0) {
+
+                } else {
+                    if (CollectionUtils.containsAny(strList, this.reqList)) {
+                        Collection intersect = CollectionUtils.intersection(strList, this.reqList);
+                        System.out.printf("%15s%30s%30s%n", "MEETS REQ", intersect.toString(), trip.fullName);                        
+                    } else {
+                        System.out.printf("%15s%30s%30s%n", "FAILS REQ", reqList.toString(), trip.fullName);
+                        ok = false;
+                    }
+                }
+
+            }
+
+            if (ok) {
+
+                // create ArrayList if needed            
+                if (collatedProps.containsKey(trip.shortName)) {
+                    //
+                } else {
+                    collatedProps.put(trip.shortName, new ArrayList<StringPair>());
+                }
+
+                collatedProps.get(trip.shortName).add(new StringPair(trip.fullName, trip.dataType));
+
+            }
+
         }
 
         if (DEBUG) {
@@ -143,7 +212,9 @@ public class TemplPropUtil<T> {
 
                     String[] strArr = sp.fullName.split("\\.");
 
-                    System.out.println("strArr.length: " + strArr.length + " tryCnt: " + tryCnt);
+                    if (DEBUG) {
+                        System.out.println("strArr.length: " + strArr.length + " tryCnt: " + tryCnt);
+                    }
 
                     int startIdx = strArr.length > tryCnt ? strArr.length - tryCnt : 0;
                     String[] tryArr = Arrays.copyOfRange(strArr, startIdx, strArr.length);
@@ -153,15 +224,13 @@ public class TemplPropUtil<T> {
                 }
 
                 // success indicated when the size of the tryProps and pairs match
-                System.out.println();
-                System.out.println("theseProps.size: " + theseProps.size() + " tryProps.size: " + tryProps.size());
-
                 if (theseProps.size() == tryProps.size()) {
 
-                    System.out.println("dupProps: key: " + curDupKey + " resolved with tryCnt: " + tryCnt);
-
-                    for (String k : tryProps.keySet()) {
-                        System.out.printf("%30s%90s%30s%n", k, tryProps.get(k).fullName, tryProps.get(k).dataType);
+                    if (DEBUG) {
+                        System.out.println("dupProps: key: " + curDupKey + " resolved with tryCnt: " + tryCnt);
+                        for (String k : tryProps.keySet()) {
+                            System.out.printf("%30s%90s%30s%n", k, tryProps.get(k).fullName, tryProps.get(k).dataType);
+                        }
                     }
 
                     // copy the success to uniqProps
@@ -170,7 +239,7 @@ public class TemplPropUtil<T> {
                     }
 
                     // flag the successfully-resolved dupProp
-                    // can't remove because 
+                    // ConcurrentModificationException if try to remove now
                     successDupProps.put(curDupKey, theseProps);
 
                     break;
@@ -182,9 +251,33 @@ public class TemplPropUtil<T> {
             printProps("final sanity check");
         }
 
+        // populate the various prop categories
+        for (String s : uniqProps.keySet()) {
+            if (uniqProps.get(s).dataType.equals("String")) {
+                strProps.add(s);
+            } else if (uniqProps.get(s).dataType.equals("Integer")) {
+                intProps.add(s);
+            } else if (uniqProps.get(s).dataType.equals("Double")) {
+                dblProps.add(s);
+            } else if (uniqProps.get(s).dataType.equals("Long")) {
+                longProps.add(s);
+            } else if (uniqProps.get(s).dataType.equals("Boolean")) {
+                boolProps.add(s);
+            } else {
+                othProps.add(s);
+            }
+        }
+
+        Collections.sort(strProps);
+        Collections.sort(intProps);
+        Collections.sort(dblProps);
+        Collections.sort(longProps);
+        Collections.sort(boolProps);
+        Collections.sort(othProps);
+
     }
 
-    private void props(Class<?> c, String cumulative) {
+    private void classWalker(Class<?> c, String cumulative) {
 
         if (DEBUG) {
             System.out.println("c.class is: " + c.getName());
@@ -211,11 +304,7 @@ public class TemplPropUtil<T> {
             } else if (f.getType().equals(Double.class) || f.getType().equals(double.class)) {
                 rawProps.add(new StringTriplet(f.getName(), cumStr, "Double"));
             } else if (f.getType().equals(Long.class) || f.getType().equals(long.class)) {
-//                if (f.getName().equals("id") || f.getName().equals("serialVersionUID")) {
-//                    // IGNORE 
-//                } else {
                 rawProps.add(new StringTriplet(f.getName(), cumStr, "Long"));
-                //}
             } else if (f.getType().equals(Boolean.class) || f.getType().equals(boolean.class)) {
                 rawProps.add(new StringTriplet(f.getName(), cumStr, "Boolean"));
             } else if (Collection.class.isAssignableFrom(f.getType())) {
@@ -224,17 +313,21 @@ public class TemplPropUtil<T> {
                 if (DEBUG) {
                     System.out.println("Calling props with f.getType(): " + f.getType() + " and cumulative: " + cumStr);
                 }
-                props(f.getType(), cumStr);
+                classWalker(f.getType(), cumStr);
             }
+
         }
 
     }
 
-    public Object get(Object objIn, String propertyName) {
+    public Object get(Object objIn, String propNameIn) {
 
         Object rtn = null;
 
-        String[] strArr = propertyName.split("\\.");
+        // lookup the ACTUAL property name
+        String fullPropertyName = uniqProps.get(propNameIn).fullName;
+
+        String[] strArr = fullPropertyName.split("\\.");
         ArrayList<String> fieldNameList = new ArrayList<String>(Arrays.asList(strArr));
 
         if (DEBUG) {
@@ -299,23 +392,23 @@ public class TemplPropUtil<T> {
     }
 
     public Boolean isStrProp(String propertyName) {
-        return uniqProps.containsKey(propertyName) && uniqProps.get(propertyName).dataType.equals("String");
+        return strProps.contains(propertyName);
     }
 
     public Boolean isIntProp(String propertyName) {
-        return uniqProps.containsKey(propertyName) && uniqProps.get(propertyName).dataType.equals("Integer");
+        return intProps.contains(propertyName);
     }
 
     public Boolean isDblProp(String propertyName) {
-        return uniqProps.containsKey(propertyName) && uniqProps.get(propertyName).dataType.equals("Double");
+        return dblProps.contains(propertyName);
     }
 
     public Boolean isLongProp(String propertyName) {
-        return uniqProps.containsKey(propertyName) && uniqProps.get(propertyName).dataType.equals("Long");
+        return longProps.contains(propertyName);
     }
 
     public Boolean isBoolProp(String propertyName) {
-        return uniqProps.containsKey(propertyName) && uniqProps.get(propertyName).dataType.equals("Boolean");
+        return boolProps.contains(propertyName);
     }
 
     public String getStr(T tIn, String propertyName) {
@@ -323,6 +416,7 @@ public class TemplPropUtil<T> {
         if (isStrProp(propertyName)) {
             rtn = (String) get(tIn, propertyName);
         } else {
+            throw new IllegalArgumentException(propertyName + " is not a valid String field shortName");
         }
         return rtn;
     }
@@ -332,6 +426,7 @@ public class TemplPropUtil<T> {
         if (isIntProp(propertyName)) {
             rtn = (Integer) get(tIn, propertyName);
         } else {
+            throw new IllegalArgumentException(propertyName + " is not a valid Integer field shortName");
         }
         return rtn;
     }
@@ -341,6 +436,7 @@ public class TemplPropUtil<T> {
         if (isDblProp(propertyName)) {
             rtn = (Double) get(tIn, propertyName);
         } else {
+            throw new IllegalArgumentException(propertyName + " is not a valid Double field shortName");
         }
         return rtn;
     }
@@ -350,6 +446,7 @@ public class TemplPropUtil<T> {
         if (isLongProp(propertyName)) {
             rtn = (Long) get(tIn, propertyName);
         } else {
+            throw new IllegalArgumentException(propertyName + " is not a valid Long field shortName");
         }
         return rtn;
     }
@@ -359,8 +456,57 @@ public class TemplPropUtil<T> {
         if (isBoolProp(propertyName)) {
             rtn = (Boolean) get(tIn, propertyName);
         } else {
+            throw new IllegalArgumentException(propertyName + " is not a valid Boolean field shortName");
         }
         return rtn;
+    }
+
+    public ArrayList<String> getStrProps() {
+        return strProps;
+    }
+
+    public void setStrProps(ArrayList<String> strProps) {
+        this.strProps = strProps;
+    }
+
+    public ArrayList<String> getIntProps() {
+        return intProps;
+    }
+
+    public void setIntProps(ArrayList<String> intProps) {
+        this.intProps = intProps;
+    }
+
+    public ArrayList<String> getDblProps() {
+        return dblProps;
+    }
+
+    public void setDblProps(ArrayList<String> dblProps) {
+        this.dblProps = dblProps;
+    }
+
+    public ArrayList<String> getLongProps() {
+        return longProps;
+    }
+
+    public void setLongProps(ArrayList<String> longProps) {
+        this.longProps = longProps;
+    }
+
+    public ArrayList<String> getBoolProps() {
+        return boolProps;
+    }
+
+    public void setBoolProps(ArrayList<String> boolProps) {
+        this.boolProps = boolProps;
+    }
+
+    public ArrayList<String> getOthProps() {
+        return othProps;
+    }
+
+    public void setOthProps(ArrayList<String> othProps) {
+        this.othProps = othProps;
     }
 
     private class StringTriplet {

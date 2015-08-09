@@ -22,7 +22,7 @@ import newstructureservlet.MoleculeWrangling;
  */
 public class Main {
 
-    public static final Boolean DEBUG = Boolean.FALSE;
+    public static final Boolean DEBUG = Boolean.TRUE;
 
     public static void main(String[] args) {
 
@@ -37,47 +37,57 @@ public class Main {
 
         CmpdListMemberVO fake = new CmpdListMemberVO();
 
-        TemplPropUtil<CmpdListMemberVO> util = new TemplPropUtil<CmpdListMemberVO>(fake);
+        ArrayList<String> ignList = new ArrayList<String>();
+        ignList.add("id");
+        ignList.add("serialVersionUID");
+        
+        ArrayList<String> reqList = new ArrayList<String>();
+        reqList.add("name");
+        reqList.add("cmpdFragmentPChem");        
+        
+        TemplPropUtil<CmpdListMemberVO> util = new TemplPropUtil<CmpdListMemberVO>(fake, ignList, reqList);
 
         if (DEBUG) {
 
             System.out.println("----------------strProps");
 
-            for (String propertyName : util.strProps) {
+            for (String propertyName : util.getStrProps()) {
                 System.out.println(propertyName + ": " + util.getStr(fake, propertyName));
             }
 
             System.out.println("----------------intProps");
 
-            for (String propertyName : util.intProps) {
+            for (String propertyName : util.getIntProps()) {
                 System.out.println(propertyName + ": " + util.getInt(fake, propertyName));
             }
 
             System.out.println("----------------dblProps");
 
-            for (String propertyName : util.dblProps) {
+            for (String propertyName : util.getDblProps()) {
                 System.out.println(propertyName + ": " + util.getDbl(fake, propertyName));
             }
 
             System.out.println("----------------longProps");
 
-            for (String propertyName : util.longProps) {
+            for (String propertyName : util.getLongProps()) {
                 System.out.println(propertyName + ": " + util.getLong(fake, propertyName));
             }
 
             System.out.println("----------------boolProps");
 
-            for (String propertyName : util.boolProps) {
+            for (String propertyName : util.getBoolProps()) {
                 System.out.println(propertyName + ": " + util.getBool(fake, propertyName));
             }
 
             System.out.println("----------------othProps");
 
-            for (String propertyName : util.othProps) {
+            for (String propertyName : util.getOthProps()) {
                 System.out.println(propertyName);
             }
 
         }
+        
+        util.printUniqProps();
 
 //        Create object to test        
 //        CmpdListMemberVO clmVO = new CmpdListMemberVO();

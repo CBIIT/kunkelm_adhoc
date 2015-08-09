@@ -28,6 +28,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
   private Collection<T> objColl;
   private ArrayList<TemplatedHistogramBin<T>> binList;
   private BarChartModel chartModel;
+  private TemplPropUtil<T> propUtil;
 
   public void debugBins() {
 
@@ -42,7 +43,10 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
   public TemplatedHistogram(String titleIn,
           String propertyNameIn,
           Collection<T> objCollIn,
-          AdaptiveHistogram ahIn) {
+          AdaptiveHistogram ahIn,
+          TemplPropUtil propUtilIn) {
+      
+      this.propUtil = propUtilIn;
 
     NumberFormat intf = new DecimalFormat();
     intf.setParseIntegerOnly(true);
@@ -59,7 +63,8 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
     // parse the ah and create a list of bins
     // for discrete distributions, minCut and maxCut are the same
-    if (this.propertyName.equals("cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors") || this.propertyName.equals("cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors")) {
+    
+    if (propUtil.isIntProp(this.propertyName)){
 
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
@@ -72,7 +77,7 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
         this.binList.add(bin);
       }
 
-    } else {
+    } else if (propUtil.isDblProp(this.propertyName)){
 
       double min = ah.getValueForPercentile(0);
       double max = ah.getValueForPercentile(100);
@@ -123,11 +128,13 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
 
       }
 
+    } else {
+        System.out.println(this.propertyName + " is not an intProp or a dblProp in Constructor in TemplatedHistogram.");
     }
 
     // go through the list and add to the bins
-    for (T tVO : this.objColl) {
-      putInAppropriateBin(tVO);
+    for (T thisT : this.objColl) {
+      putInAppropriateBin(thisT);
     }
 
     // generate the chart
@@ -179,27 +186,25 @@ public class TemplatedHistogram<T extends HistogramDataInterface> {
     NumberFormat nf2 = new DecimalFormat();
     nf2.setMaximumFractionDigits(2);
 
-    TemplPropUtil<T> propUtils = new TemplPropUtil<T>(t);
-
     String nameString = "name not defined";
     
-    if (propUtils.getStr(t, "name") != null){
-      nameString = propUtils.getStr(t, "name");
+    if (this.propUtil.getStr(t, "name") != null){
+      nameString = this.propUtil.getStr(t, "name");
     }
     
     Double val = null;
 
-    if (propUtils.isIntProp(this.propertyName)) {
-      if (propUtils.getInt(t, propertyName) != null) {
-        val = propUtils.getInt(t, this.propertyName).doubleValue();
+    if (this.propUtil.isIntProp(this.propertyName)) {
+      if (this.propUtil.getInt(t, propertyName) != null) {
+        val = this.propUtil.getInt(t, this.propertyName).doubleValue();
       } else {
         System.out.println(this.propertyName + " was null in getDoubleProperty for name: " + nameString);
       }
     }
 
-    if (propUtils.isDblProp(this.propertyName)) {
-      if (propUtils.getDbl(t, propertyName) != null) {
-        val = propUtils.getDbl(t, this.propertyName);
+    if (this.propUtil.isDblProp(this.propertyName)) {
+      if (this.propUtil.getDbl(t, propertyName) != null) {
+        val = this.propUtil.getDbl(t, this.propertyName);
       } else {
         System.out.println(this.propertyName + " was null in getDoubleProperty for name: " + nameString);
       }

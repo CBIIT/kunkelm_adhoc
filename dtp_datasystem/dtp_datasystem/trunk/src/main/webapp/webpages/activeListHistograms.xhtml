@@ -68,15 +68,30 @@
 
                             <br/>
 
-                            <p:selectManyButton value="#{histogramController.parametersPchem}" >  
-                                <f:selectItem itemLabel="molecularWeight" itemValue="cmpd.parentFragment.cmpdFragmentPChem.molecularWeight" />  
-                                <f:selectItem itemLabel="countHydBondAcceptors" itemValue="cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors" />  
-                                <f:selectItem itemLabel="countHydBondDonors" itemValue="cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors" />  
-                                <f:selectItem itemLabel="theALogP" itemValue="cmpd.parentFragment.cmpdFragmentPChem.theALogP" />  
-                                <f:selectItem itemLabel="logD" itemValue="cmpd.parentFragment.cmpdFragmentPChem.logD" />  
-                                <f:selectItem itemLabel="surfaceArea" itemValue="cmpd.parentFragment.cmpdFragmentPChem.surfaceArea" />  
-                            </p:selectManyButton>
+                            <p:outputLabel for="intCbxGrd" value="Integer Properties"/>
+                            
+                            <p:selectManyCheckbox id="intCbxGrd"
+                                                  value="#{histogramController.intParams}"  
+                                                  layout="grid"
+                                                  columns="5">                                  
+                                <f:selectItems value="#{histogramController.intProps}"
+                                               var="itm"
+                                               itemLabel="#{itm}"
+                                               itemValue="#{itm}"/>
+                            </p:selectManyCheckbox>
 
+                            <p:outputLabel for="dblCbxGrd" value="Double Properties"/>
+                            
+                            <p:selectManyCheckbox id="dblCbxGrd"
+                                                  value="#{histogramController.dblParams}" 
+                                                  layout="grid"
+                                                  columns="5">                                  
+                                <f:selectItems value="#{histogramController.dblProps}"
+                                               var="itm"
+                                               itemLabel="#{itm}"
+                                               itemValue="#{itm}"/>
+                            </p:selectManyCheckbox>
+                            
                             <p:commandButton ajax="true" 
                                              disabled="#{empty histogramController.cmpdListMembers}"
                                              value="UPDATE"
@@ -165,7 +180,7 @@
                             <p:commandButton disabled="false"                                 
                                              type="button"
                                              value="All Scatter Plots as Image" 
-                                             onclick="addAllCharts('widgetScatterPlotChart', '#{fn:length(histogramController.parametersPchem)}')"/>                
+                                             onclick="addAllCharts('widgetScatterPlotChart', '#{fn:length(histogramController.combinedParams)}')"/>                
 
                             <p:selectOneRadio value="#{histogramController.scatterPlotSizeString}">
                                 <f:selectItem itemLabel="small" itemValue="small" />  
@@ -182,7 +197,7 @@
                                           value="NO SCATTERPLOTS"
                                           style="font-size: 200%;" />              
 
-                            <p:dataGrid columns="#{fn:length(histogramController.parametersPchem)}"
+                            <p:dataGrid columns="#{fn:length(histogramController.combinedParams)}"
                                         rendered="#{histogramController.scatterPlotList != null}" 
                                         value="#{histogramController.scatterPlotList}" 
                                         var="scat" 

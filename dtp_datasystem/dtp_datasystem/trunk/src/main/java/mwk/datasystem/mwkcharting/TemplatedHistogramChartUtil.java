@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mwk.datasystem.util;
+package mwk.datasystem.mwkcharting;
 
 import com.flaptor.hist4j.mwkdbl.AdaptiveHistogram;
 import java.util.ArrayList;
@@ -12,26 +12,27 @@ import java.util.HashMap;
 import java.util.List;
 import mwk.datasystem.mwkcharting.TemplPropUtil;
 import mwk.datasystem.mwkcharting.TemplatedHistogram;
-import mwk.datasystem.vo.CmpdListMemberVO;
+import mwk.datasystem.vo.HistogramDataInterface;
 
 /**
  *
  * @author mwkunkel
  */
-public class TemplatedHistogramChartUtil {
+public class TemplatedHistogramChartUtil<T extends HistogramDataInterface> {
 
     public static final Boolean DEBUG = Boolean.TRUE;
 
-    public static List<TemplatedHistogram<CmpdListMemberVO>> doHistograms(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
-
-        TemplPropUtil<CmpdListMemberVO> propUtils = new TemplPropUtil<CmpdListMemberVO>(new CmpdListMemberVO());
+    public List<TemplatedHistogram<T>> doHistograms(
+            Collection<T> incoming,
+            List<String> propertyNameList,
+            TemplPropUtil<T> propUtil) {
 
         if (DEBUG) {
             System.out.println("In HistogramChartUtil.doHistograms()");
             System.out.println("Size of incomding: " + incoming.size());
         }
 
-        ArrayList<TemplatedHistogram<CmpdListMemberVO>> rtn = new ArrayList<TemplatedHistogram<CmpdListMemberVO>>();
+        ArrayList<TemplatedHistogram<T>> rtn = new ArrayList<TemplatedHistogram<T>>();
 
         // Histograms looked up by property
         HashMap<String, AdaptiveHistogram> ahMap = new HashMap<String, AdaptiveHistogram>();
@@ -41,17 +42,27 @@ public class TemplatedHistogramChartUtil {
             ahMap.put(propertyName, new AdaptiveHistogram());
         }
 
-        for (CmpdListMemberVO clmVO : incoming) {
+        for (T t : incoming) {
             for (String propertyName : propertyNameList) {
-                if (propUtils.isDblProp(propertyName)) {
-                    if (propUtils.get(clmVO, propertyName) != null) {
-                        ahMap.get(propertyName).addValue(propUtils.getDbl(clmVO, propertyName));
+
+                Double thisDbl = null;
+
+                if (propUtil.isIntProp(propertyName)) {
+                    if (propUtil.getInt(t, propertyName) != null) {
+                        thisDbl = propUtil.getInt(t, propertyName).doubleValue();
                     }
-                } else if (propUtils.isIntProp(propertyName)) {
-                    if (propUtils.get(clmVO, propertyName) != null) {
-                        ahMap.get(propertyName).addValue(propUtils.getInt(clmVO, propertyName));
-                    }
+                } else if (propUtil.isDblProp(propertyName)) {
+                    thisDbl = propUtil.getDbl(t, propertyName);
+                } else {
+                    System.out.println(propertyName + " is not an intProp or a dblProp in doHistograms in TemplatedHistogramChartUtil.");
                 }
+
+                if (thisDbl != null) {
+                    ahMap.get(propertyName).addValue(thisDbl);
+                } else {
+                    System.out.println(propertyName + " is null in doHistograms in TemplatedHistogramChartUtil.");
+                }
+
             }
         }
 
@@ -61,7 +72,7 @@ public class TemplatedHistogramChartUtil {
 
         for (String key : sortList) {
             String title = key;
-            TemplatedHistogram<CmpdListMemberVO> h = new TemplatedHistogram<CmpdListMemberVO>(title, key, incoming, ahMap.get(key));
+            TemplatedHistogram<T> h = new TemplatedHistogram<T>(title, key, incoming, ahMap.get(key), propUtil);
             rtn.add(h);
         }
 

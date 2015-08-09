@@ -24,7 +24,12 @@ import org.primefaces.model.chart.LineChartSeries;
  */
 public class ScatterPlotChartUtil {
 
-    public static ArrayList<LineChartModel> generateScatter(Collection<CmpdListMemberVO> incoming, List<String> propertyNameList) {
+    public static final Boolean DEBUG = Boolean.TRUE;
+
+    public static ArrayList<LineChartModel> generateScatter(
+            Collection<CmpdListMemberVO> incoming,
+            List<String> propertyNameList,
+            TemplPropUtil<CmpdListMemberVO> propUtil) {
 
         // MWK 07Dec2014 added sort step to propertyNameList
         // MWK 30Jan2015 refactoring to LineChartModel
@@ -48,7 +53,7 @@ public class ScatterPlotChartUtil {
 
                     String innerParam = sortedPropertyNames.get(innterCnt);
 
-                    scatPlotMdl.setTitle(outerParam + " vs " + innerParam);
+                    scatPlotMdl.setTitle(outerParam + " vs " + innerParam);                    
                     scatPlotMdl.setExtender("scatterPlotExtender");
                     scatPlotMdl.setZoom(true);
                     Axis xAxis = scatPlotMdl.getAxis(AxisType.X);
@@ -77,24 +82,41 @@ public class ScatterPlotChartUtil {
 
                     for (CmpdListMemberVO clmVO : clmList) {
 
-                        if (clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem() != null) {
+                        Double xProp = null;
 
-                            CmpdFragmentPChemVO pChem = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
+                        if (propUtil.isIntProp(innerParam)) {
+                            if (propUtil.getInt(clmVO, innerParam) != null) {
+                                xProp = propUtil.getInt(clmVO, innerParam).doubleValue();
+                            }
+                        } else if (propUtil.isDblProp(innerParam)) {
+                            xProp = propUtil.getDbl(clmVO, innerParam);
+                        } else {
+                            System.out.println(innerParam + " is not an intProp or a dblProp in generateScatter in ScatterPlotChartUtil.");
+                        }
 
-                            Double xProp = getProperty(clmVO, innerParam);
-                            Double yProp = getProperty(clmVO, outerParam);
+                        Double yProp = null;
 
-                            // create lists of XYProp for sorting
-                            if (xProp != null && yProp != null) {
-                                if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
-                                    XYProp p = new XYProp(xProp, yProp, clmVO.getCmpd().getName());
-                                    selSerPropList.add(p);
-                                } else {
-                                    XYProp p = new XYProp(xProp, yProp, clmVO.getCmpd().getName());
-                                    serPropList.add(p);
-                                }
+                        if (propUtil.isIntProp(outerParam)) {
+                            if (propUtil.getInt(clmVO, outerParam) != null) {
+                                yProp = propUtil.getInt(clmVO, outerParam).doubleValue();
+                            }
+                        } else if (propUtil.isDblProp(outerParam)) {
+                            yProp = propUtil.getDbl(clmVO, outerParam);
+                        } else {
+                            System.out.println(outerParam + " is not an intProp or a dblProp in generateScatter in ScatterPlotChartUtil.");
+                        }
+
+                        // create lists of XYProp for sorting
+                        if (xProp != null && yProp != null) {
+                            if (clmVO.getIsSelected() != null && clmVO.getIsSelected()) {
+                                XYProp p = new XYProp(xProp, yProp, clmVO.getCmpd().getName());
+                                selSerPropList.add(p);
+                            } else {
+                                XYProp p = new XYProp(xProp, yProp, clmVO.getCmpd().getName());
+                                serPropList.add(p);
                             }
                         }
+
                     }
 
                     // sort the lists
@@ -133,29 +155,6 @@ public class ScatterPlotChartUtil {
         }
 
         return scatChartList;
-
-    }
-
-    public static Double getProperty(CmpdListMemberVO clmVO, String propertyName) {
-
-        TemplPropUtil<CmpdListMemberVO> propUtils = new TemplPropUtil<CmpdListMemberVO>(clmVO);
-
-        // these are hard-coded since reflection is problematic...
-        Double rtn = null;
-
-        CmpdFragmentPChemVO pchemVO = clmVO.getCmpd().getParentFragment().getCmpdFragmentPChem();
-
-        if (propUtils.isDblProp(propertyName)) {
-            if (propUtils.getDbl(clmVO, propertyName) != null) {
-                rtn = propUtils.getDbl(clmVO, propertyName);
-            }
-        } else if (propUtils.isIntProp(propertyName)) {
-            if (propUtils.getInt(clmVO, propertyName) != null) {
-                rtn = propUtils.getInt(clmVO, propertyName).doubleValue();
-            }
-        }
-
-        return rtn;
 
     }
 
