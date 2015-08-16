@@ -9484,10 +9484,15 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_recrea
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CANCEL_POSTGRES_PROCESS.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/app_and_inv.13Aug2015.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/app_and_inv.with_smiles.13Aug2015.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formatPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/importAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQClists.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscNeedLegacyImage.sql -text
