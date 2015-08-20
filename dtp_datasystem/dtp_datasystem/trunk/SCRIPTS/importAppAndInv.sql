@@ -18,14 +18,14 @@ create index aai_nsc_idx on app_and_inv(nsc);
 -- fetching SMILES from datasystem
 -- ONLY run in datasystemdb
 
-alter table app_and_inv add smiles varchar;
+-- alter table app_and_inv add smiles varchar;
 
-update app_and_inv 
-set smiles = cmpd_table.can_smi
-from cmpd_table
-where app_and_inv.nsc = cmpd_table.nsc;
+-- update app_and_inv 
+-- set smiles = cmpd_table.can_smi
+-- from cmpd_table
+-- where app_and_inv.nsc = cmpd_table.nsc;
 
-\copy app_and_inv to /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/app_and_inv.with_smiles.13Aug2015.csv csv header
+-- \copy app_and_inv to /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/app_and_inv.with_smiles.13Aug2015.csv csv header
 
 -- import to database that wants updating
 

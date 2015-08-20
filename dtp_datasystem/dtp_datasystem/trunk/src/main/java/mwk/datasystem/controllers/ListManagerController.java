@@ -69,8 +69,10 @@ public class ListManagerController implements Serializable {
         this.listManagerBean = new ListManagerBean();
         performUpdateAvailableLists();
 
-        // TESTING
-        loadToActiveList(619205300997564186l);
+        // APP&INV APP & INV APPROVED AND INVESTIGATIONAL
+        
+        // default activeList is set to APPROVED and INVESTIGATIONAL which is forced to be CmpdList.id = 1
+        loadToActiveList(1l);
     }
 
     public ListManagerController() {

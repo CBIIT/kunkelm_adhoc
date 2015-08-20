@@ -18,7 +18,7 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 
 my @fpList;
 push @fpList, "atompairbv_fp";                                                                           
-push @fpList, "avalon_fp";                              
+# push @fpList, "avalon_fp";                              
 push @fpList, "featmorganbv_fp";                                                      
 push @fpList, "layered_fp";                                                                              
 push @fpList, "maccs_fp";                                                                                
@@ -26,35 +26,76 @@ push @fpList, "morganbv_fp";
 push @fpList, "rdkit_fp";
 push @fpList, "torsionbv_fp";
 
+#drop table if exists all_pair_nsc;
+#create table all_pair_nsc as select u.nsc as uno, d.nsc as duo from app_and_inv u, app_and_inv d where u.nsc < d.nsc;
+
 # drop and create the fingerprints
 
 my @sqlList;
 
-foreach my $fp(@fpList){
-	push @sqlList, "drop table if exists temp_" . $fp;
-	push @sqlList, "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol where nsc in ( select nsc from app_and_inv )";
-}
+#foreach my $fp(@fpList){
+#	push @sqlList, "drop table if exists temp_" . $fp;
+#	push @sqlList, "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol where nsc in ( select nsc from app_and_inv )";
+#}
 
-foreach my $sql(@sqlList){
-  my $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
- $sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
-}
+#foreach my $sql(@sqlList){
+#  my $sth = $dbh->prepare($sql);
+#  print "$sql\n\n";
+#$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+#}
 
 # run the tanimoto
 
+#@sqlList = {};
+#foreach my $fp(@fpList){
+#	print "$fp";
+#	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
+#	push @sqlList, "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
+#}
+
+#foreach my $sql(@sqlList){
+#  my $sth = $dbh->prepare($sql);
+#  print "$sql\n\n";
+# #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+#}
+
+# quick check on counts
+
+#@sqlList = {};
+#foreach my $fp(@fpList){
+#	print "$fp";
+#	push @sqlList, "select count(*) from temp_tanimoto_" . $fp;		
+#}
+
+#foreach my $sql(@sqlList){
+#  my $sth = $dbh->prepare($sql);
+#  print "$sql\n\n";
+# $sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+#}
+
+# crosstab
+
 @sqlList = {};
-foreach my $fp(@fpList){
-	print "$fp";
-	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
-	push @sqlList, "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
+
+my $sql = "drop table if exists temp_tanimoto_collate";
+
+$sql = "create table temp_tanimoto_collate as select all_pair_nsc.uno, all_pair_nsc.duo ";
+
+foreach my $fp(@fpList){	
+	$sql = $sql . "\n, temp_tanimoto_" . $fp . ".tanimoto as " . $fp . "_tanimoto";
 }
 
-foreach my $sql(@sqlList){
-  my $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
- $sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+$sql = $sql . "\n from all_pair_nsc ";
+
+foreach my $fp(@fpList){	
+	$sql = $sql . "\n left outer join temp_tanimoto_" . $fp . " on all_pair_nsc.uno = temp_tanimoto_" . $fp . ".nsc1 and all_pair_nsc.duo = temp_tanimoto_" . $fp . ".nsc2";
 }
+
+#foreach my $fp(@fpList){	
+#	$sql = $sql . ", temp_tanimoto_" . $fp;
+#}
+
+print "$sql\n";
 
 # clean up
 $dbh->disconnect();

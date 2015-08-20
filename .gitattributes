@@ -9494,8 +9494,10 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/importAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/loadAndResolveAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQClists.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscNeedLegacyImage.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscWithMulti.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartAddToColumnModelList -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartColumnFormat -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartLabelValue -text
@@ -9518,7 +9520,6 @@ dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/5.2
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/maven-metadata-local.xml -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
-dtp_datasystem/dtp_datasystem/trunk/nscWithMulti.sql -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/dtp_datasystem/trunk/processedSalts.txt -text
 dtp_datasystem/dtp_datasystem/trunk/qc_ct.06March2015.csv -text
