@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ 
+ 
+ 
  */
 package mwk.datasystem.controllers;
 
@@ -109,6 +109,7 @@ public class ConfigurationBean implements Serializable {
         hm.put("Aliases", "aliases");
         hm.put("Projects", "projects");
         hm.put("Plates", "plates");
+        hm.put("Targets", "targets");
         hm.put("Count Fragments", "countCmpdFragments");
 
         this.valid_cmpd_keys = hm;

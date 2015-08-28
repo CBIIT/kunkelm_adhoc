@@ -9501,6 +9501,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscWithMulti.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartAddToColumnModelList -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartColumnFormat -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartLabelValue -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/possibleQuaternary.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.08March2015.xml -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.19Feb2015.xml -text
@@ -9540,6 +9541,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/Hist
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/mwkdbl/package-info.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/com/flaptor/hist4j/package-info.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImageServlet.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/ForceGraph.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/Info.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/Link.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/Node.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
@@ -9560,6 +9565,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Str
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/WindowPopper.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/LoadKekuleRenderedImages.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/TanimotoForceGraphs.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlot.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/LinePlotPoint.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/mwkcharting/TemplPropUtil.java -text
@@ -9663,6 +9669,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogHistograms.xh
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogSelectedListMembers.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/landingChemDoodle.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text

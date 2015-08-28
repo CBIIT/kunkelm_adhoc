@@ -1,20 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mwk.datasystem.mwkcharting;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  *
@@ -86,16 +83,27 @@ public class TemplPropUtil<T> {
             ArrayList<String> ignListIn,
             ArrayList<String> reqListIn) {
 
-        System.out.println("In TemplPropUtil constructor");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");;
+        System.out.println("In TemplPropUtil constructor. System.time: " + sdf.format(Calendar.getInstance().getTime()));
+
+        if (tIn == null) {
+            System.out.println("T tIn is null.");
+        } else {
+            System.out.println("T tIn.class is: " + tIn.getClass().getName());
+        }
+
+        System.out.println(ExceptionUtils.getFullStackTrace(new Throwable()));
 
         t = tIn;
-        if (ignListIn != null) {
+        if (ignListIn
+                != null) {
             this.ignList = ignListIn;
         } else {
             this.ignList = new ArrayList<String>();
         }
 
-        if (reqListIn != null) {
+        if (reqListIn
+                != null) {
             this.reqList = reqListIn;
         } else {
             this.reqList = new ArrayList<String>();
@@ -146,7 +154,7 @@ public class TemplPropUtil<T> {
                 } else {
                     if (CollectionUtils.containsAny(strList, this.reqList)) {
                         Collection intersect = CollectionUtils.intersection(strList, this.reqList);
-                        System.out.printf("%15s%30s%30s%n", "MEETS REQ", intersect.toString(), trip.fullName);                        
+                        System.out.printf("%15s%30s%30s%n", "MEETS REQ", intersect.toString(), trip.fullName);
                     } else {
                         System.out.printf("%15s%30s%30s%n", "FAILS REQ", reqList.toString(), trip.fullName);
                         ok = false;
@@ -175,14 +183,16 @@ public class TemplPropUtil<T> {
         }
 
         // determine dups by size of ArrayList and copy dups to dupProps
-        for (String s : collatedProps.keySet()) {
+        for (String s
+                : collatedProps.keySet()) {
             if (collatedProps.get(s).size() > 1) {
                 dupProps.put(s, collatedProps.get(s));
             }
         }
 
         // remove dups from collatedProps
-        for (String s : dupProps.keySet()) {
+        for (String s
+                : dupProps.keySet()) {
             collatedProps.remove(s);
         }
 
@@ -191,7 +201,8 @@ public class TemplPropUtil<T> {
         }
 
         // copy non-dup properties to uniqProps        
-        for (String s : collatedProps.keySet()) {
+        for (String s
+                : collatedProps.keySet()) {
             uniqProps.put(s, collatedProps.get(s).get(0));
         }
 
@@ -200,7 +211,8 @@ public class TemplPropUtil<T> {
         }
 
         // work through the sets of dups
-        for (String curDupKey : dupProps.keySet()) {
+        for (String curDupKey
+                : dupProps.keySet()) {
 
             ArrayList<StringPair> theseProps = dupProps.get(curDupKey);
 
@@ -252,7 +264,8 @@ public class TemplPropUtil<T> {
         }
 
         // populate the various prop categories
-        for (String s : uniqProps.keySet()) {
+        for (String s
+                : uniqProps.keySet()) {
             if (uniqProps.get(s).dataType.equals("String")) {
                 strProps.add(s);
             } else if (uniqProps.get(s).dataType.equals("Integer")) {
@@ -269,10 +282,15 @@ public class TemplPropUtil<T> {
         }
 
         Collections.sort(strProps);
+
         Collections.sort(intProps);
+
         Collections.sort(dblProps);
+
         Collections.sort(longProps);
+
         Collections.sort(boolProps);
+
         Collections.sort(othProps);
 
     }
@@ -297,17 +315,35 @@ public class TemplPropUtil<T> {
 
             String cumStr = cumulative.isEmpty() ? f.getName() : cumulative + "." + f.getName();
 
-            if (f.getType().equals(String.class)) {
-                rawProps.add(new StringTriplet(f.getName(), cumStr, "String"));
-            } else if (f.getType().equals(Integer.class) || f.getType().equals(int.class)) {
-                rawProps.add(new StringTriplet(f.getName(), cumStr, "Integer"));
-            } else if (f.getType().equals(Double.class) || f.getType().equals(double.class)) {
-                rawProps.add(new StringTriplet(f.getName(), cumStr, "Double"));
-            } else if (f.getType().equals(Long.class) || f.getType().equals(long.class)) {
-                rawProps.add(new StringTriplet(f.getName(), cumStr, "Long"));
-            } else if (f.getType().equals(Boolean.class) || f.getType().equals(boolean.class)) {
-                rawProps.add(new StringTriplet(f.getName(), cumStr, "Boolean"));
-            } else if (Collection.class.isAssignableFrom(f.getType())) {
+            if (f.getType().equals(String.class
+            )) {
+                rawProps.add(
+                        new StringTriplet(f.getName(), cumStr, "String"));
+            } else if (f.getType().equals(Integer.class
+            ) || f.getType().equals(int.class
+            )) {
+                rawProps.add(
+                        new StringTriplet(f.getName(), cumStr, "Integer"));
+            } else if (f.getType()
+                    .equals(Double.class
+                    ) || f.getType().equals(double.class
+                    )) {
+                rawProps.add(
+                        new StringTriplet(f.getName(), cumStr, "Double"));
+            } else if (f.getType()
+                    .equals(Long.class
+                    ) || f.getType().equals(long.class
+                    )) {
+                rawProps.add(
+                        new StringTriplet(f.getName(), cumStr, "Long"));
+            } else if (f.getType()
+                    .equals(Boolean.class
+                    ) || f.getType().equals(boolean.class
+                    )) {
+                rawProps.add(
+                        new StringTriplet(f.getName(), cumStr, "Boolean"));
+            } else if (Collection.class
+                    .isAssignableFrom(f.getType())) {
                 System.out.println(f.getName() + " is Collection: " + f.getType());
             } else {
                 if (DEBUG) {

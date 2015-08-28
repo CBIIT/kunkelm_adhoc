@@ -15,11 +15,30 @@
     <ui:define name="content">
 
         <h:head>
+
+            <f:metadata>
+                <f:viewParam maxlength="4096" 
+                             name="landingChemDoodleNsc" 
+                             value="#{structureSearchController.nscForLoad}"/>
+                <f:viewParam maxlength="4096" 
+                             name="landingChemDoodleSmiles" 
+                             value="#{structureSearchController.smilesForLoad}"/>
+            </f:metadata>
+
             <h:outputScript library="chemdoodle" name="ChemDoodleWeb.js"/>
             <h:outputStylesheet library="chemdoodle" name="ChemDoodleWeb.css"/>
+
             <h:outputScript library="chemdoodle" name="uis/ChemDoodleWeb-uis.js"/>
             <h:outputStylesheet library="chemdoodle" name="uis/jquery-ui-1.10.3.custom.css"/>
+
         </h:head>
+
+        <!-- try every time -->        
+        <p:remoteCommand name="landingHandler"
+                         autoRun="true"           
+                         action="#{structureSearchController.performLandingLoadEditor()}"  
+                         update=":datasystemForm:ctabforload,:datasystemForm:smilesforload,:datasystemForm:messagePanel"
+                         oncomplete="loadEditorFromMol()"/>
 
         <p:remoteCommand name="remCom_runLoadByNsc" 
                          action="#{structureSearchController.performLoadEditorByNsc()}" 

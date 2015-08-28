@@ -246,10 +246,10 @@
                         <h:outputText value="#{column.header}" />
                     </f:facet>
 
-                    <h:outputText rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates'}"
+                    <h:outputText rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
                                   value="#{cmpd[column.property]}"/>
 
-                    <p:dataList rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates'}"
+                    <p:dataList rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates' or column.property eq 'targets'}"
                                 var="prop" 
                                 value="#{cmpd[column.property]}"
                                 rows="5" 

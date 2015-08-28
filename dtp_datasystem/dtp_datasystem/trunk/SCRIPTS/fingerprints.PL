@@ -16,6 +16,13 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0});
 
+ ######  #####
+ #       #    #
+ #####   #    #
+ #       #####
+ #       #
+ #       #
+
 my @fpList;
 push @fpList, "atompairbv_fp";                                                                           
 # push @fpList, "avalon_fp";                              
@@ -26,10 +33,31 @@ push @fpList, "morganbv_fp";
 push @fpList, "rdkit_fp";
 push @fpList, "torsionbv_fp";
 
+ #####   ######  ######     #    #    #  ######
+ #    #  #       #          #    ##   #  #
+ #    #  #####   #####      #    # #  #  #####
+ #    #  #       #          #    #  # #  #
+ #    #  #       #          #    #   ##  #
+ #####   ######  #          #    #    #  ######
+
+
+   ##    #       #               #####     ##       #    #####
+  #  #   #       #               #    #   #  #      #    #    #
+ #    #  #       #               #    #  #    #     #    #    #
+ ######  #       #               #####   ######     #    #####
+ #    #  #       #               #       #    #     #    #   #
+ #    #  ######  ###### #######  #       #    #     #    #    #
+
+
 #drop table if exists all_pair_nsc;
 #create table all_pair_nsc as select u.nsc as uno, d.nsc as duo from app_and_inv u, app_and_inv d where u.nsc < d.nsc;
 
-# drop and create the fingerprints
+ #####    ####           ######  #####
+ #    #  #    #          #       #    #
+ #    #  #    #          #####   #    #
+ #    #  #    #          #       #####
+ #    #  #    #          #       #
+ #####    ####           #       #
 
 my @sqlList;
 
@@ -44,9 +72,14 @@ my @sqlList;
 #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 #}
 
-# run the tanimoto
+  #####    ##    #    #     #    #    #   ####    #####   ####
+    #     #  #   ##   #     #    ##  ##  #    #     #    #    #
+    #    #    #  # #  #     #    # ## #  #    #     #    #    #
+    #    ######  #  # #     #    #    #  #    #     #    #    #
+    #    #    #  #   ##     #    #    #  #    #     #    #    #
+    #    #    #  #    #     #    #    #   ####      #     ####
 
-#@sqlList = {};
+#@sqlList = ();
 #foreach my $fp(@fpList){
 #	print "$fp";
 #	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
@@ -61,7 +94,7 @@ my @sqlList;
 
 # quick check on counts
 
-#@sqlList = {};
+#@sqlList = ();
 #foreach my $fp(@fpList){
 #	print "$fp";
 #	push @sqlList, "select count(*) from temp_tanimoto_" . $fp;		
@@ -73,9 +106,14 @@ my @sqlList;
 # $sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 #}
 
-# crosstab
+  ####   #####    ####    ####    ####    #####    ##    #####
+ #    #  #    #  #    #  #       #          #     #  #   #    #
+ #       #    #  #    #   ####    ####      #    #    #  #####
+ #       #####   #    #       #       #     #    ######  #    #
+ #    #  #   #   #    #  #    #  #    #     #    #    #  #    #
+  ####   #    #   ####    ####    ####      #    #    #  #####
 
-@sqlList = {};
+@sqlList = ();
 
 my $sql = "drop table if exists temp_tanimoto_collate";
 
@@ -91,11 +129,28 @@ foreach my $fp(@fpList){
 	$sql = $sql . "\n left outer join temp_tanimoto_" . $fp . " on all_pair_nsc.uno = temp_tanimoto_" . $fp . ".nsc1 and all_pair_nsc.duo = temp_tanimoto_" . $fp . ".nsc2";
 }
 
-#foreach my $fp(@fpList){	
-#	$sql = $sql . ", temp_tanimoto_" . $fp;
-#}
-
 print "$sql\n";
+
+ ######  #    #  #####    ####   #####    #####
+ #        #  #   #    #  #    #  #    #     #
+ #####     ##    #    #  #    #  #    #     #
+ #         ##    #####   #    #  #####      #
+ #        #  #   #       #    #  #   #      #
+ ######  #    #  #        ####   #    #     #
+
+@sqlList = ();
+
+foreach my $fp(@fpList){	            
+        $sql = "\\copy temp_tanimoto_" . $fp . " to /tmp/temp_tanimoto_" . $fp . ".csv csv header";
+        push @sqlList, $sql;
+}
+
+foreach my $sql(@sqlList){
+  #my $sth = $dbh->prepare($sql);
+  print "$sql\n\n";
+ #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+}
+
 
 # clean up
 $dbh->disconnect();
