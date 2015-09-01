@@ -9647,6 +9647,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/images/excel.png -
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/images/pdf.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/images/xml.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvasWrangling.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.min.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionTimeOut.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
@@ -9662,6 +9664,11 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListTable.xhtml
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configuration.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/createList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/cmpdListMembers.json -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/histoScat.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/histoScat.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/histoScatCheckpointSun1130.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/scatterMatrix.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdFragment.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogExportImage.xhtml -text

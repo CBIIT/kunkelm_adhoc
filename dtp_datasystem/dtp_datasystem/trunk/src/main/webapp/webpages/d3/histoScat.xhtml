@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>D3 Histograms and ScatterPlots</title>
+            </f:facet>
+
+            <h:outputScript library="js" name="d3.js"/>
+            
+            <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
+            <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+            <script type="text/javascript" src="./histoScat.js"></script>
+
+            <style>
+                body {
+                    font: 10px sans-serif;
+                }
+
+                .bar rect {
+                    fill: steelblue;
+                    shape-rendering: crispEdges;
+                }
+
+                .bar text {
+                    fill: #fff;
+                }
+
+                .axis path, .axis line {
+                    fill: none;
+                    stroke: #000;
+                    shape-rendering: crispEdges;
+                }
+
+            </style>
+
+        </h:head>
+
+        <h:body onload="loadData();">
+        
+                <h:form id="configForm">
+                    
+                    <h:inputHidden id="jsonStr" 
+                                   value="#{histogramController.json}"/>
+                
+                <h:outputText style="font-size: 200%;" 
+                              value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+                              
+                <p:outputPanel id="configDiv">
+
+                    <h:outputText style="font-size: 200%;" value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(histogramController.cmpdListMembers)} Members"/>
+
+                    <br/>
+
+                    <p:outputLabel for="intCbxGrd" value="Integer Properties"/>
+
+                    <p:selectManyCheckbox id="intCbxGrd"
+                                          value="#{histogramController.intParams}"  
+                                          layout="grid"
+                                          columns="5">                                  
+                        <f:selectItems value="#{histogramController.intProps}"
+                                       var="itm"
+                                       itemLabel="#{itm}"
+                                       itemValue="#{itm}"/>
+                    </p:selectManyCheckbox>
+
+                    <p:outputLabel for="dblCbxGrd" value="Double Properties"/>
+
+                    <p:selectManyCheckbox id="dblCbxGrd"
+                                          value="#{histogramController.dblParams}" 
+                                          layout="grid"
+                                          columns="5">                                  
+                        <f:selectItems value="#{histogramController.dblProps}"
+                                       var="itm"
+                                       itemLabel="#{itm}"
+                                       itemValue="#{itm}"/>
+                    </p:selectManyCheckbox>
+
+
+                </p:outputPanel>
+
+               </h:form>
+               
+               <h:form id="histoForm">
+            
+                   
+               <h1>Histograms</h1>
+            
+               <p:outputPanel id="histoDiv">
+            </p:outputPanel>
+                        
+            </h:form>
+            
+               <h:form id="scatForm">
+               
+               <h1>Scatter Plots</h1>
+               
+            <p:outputPanel id="scatDiv">
+            </p:outputPanel>
+            
+            </h:form>
+
+            <ui:include src="/webpages/dialogExportImage.xhtml"/>
+
+        </h:body>
+
+    </f:view>
+
+</html>

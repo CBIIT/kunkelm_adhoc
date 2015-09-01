@@ -1,10 +1,9 @@
-/*
- 
- 
- 
- */
 package mwk.datasystem.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -42,6 +41,8 @@ import org.primefaces.model.chart.LineChartModel;
 public class HistogramController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
+    
+    private String json;
 
     // reach-through to sessionController
     @ManagedProperty(value = "#{sessionController}")
@@ -68,7 +69,6 @@ public class HistogramController implements Serializable {
     private List<String> dblParams;
 
     // private List<String> combinedParams; accessible ONLY via getMethod
-
     private String histogramSizeString;
     private String scatterPlotSizeString;
     private String structureSizeString;
@@ -86,28 +86,28 @@ public class HistogramController implements Serializable {
         init();
     }
 
-    @PostConstruct
+    // don't do this for now 'cuz calls it too often... @PostConstruct
     public void init() {
 
         this.histogramList = new ArrayList<TemplatedHistogram<CmpdListMemberVO>>();
         this.scatterPlotList = new ArrayList<LineChartModel>();
 
-         ArrayList<String> ignList = new ArrayList<String>();
+        ArrayList<String> ignList = new ArrayList<String>();
         ignList.add("id");
         ignList.add("serialVersionUID");
-        
+
         ArrayList<String> reqList = new ArrayList<String>();
         reqList.add("name");
-        reqList.add("cmpdFragmentPChem");    
+        reqList.add("cmpdFragmentPChem");
 
         this.propUtil = new TemplPropUtil<CmpdListMemberVO>(new CmpdListMemberVO(), ignList, reqList);
         this.intProps = this.propUtil.getIntProps();
         this.dblProps = this.propUtil.getDblProps();
-        
+
         this.intParams = new ArrayList<String>(Arrays.asList(new String[]{
             "countHydBondAcceptors",
             "countHydBondDonors"}));
-        
+
         this.dblParams = new ArrayList<String>(Arrays.asList(new String[]{
             "molecularWeight",
             "surfaceArea"}));
@@ -143,6 +143,19 @@ public class HistogramController implements Serializable {
 
         this.cmpdListMembers = new ArrayList<CmpdListMemberVO>(listManagerController.getListManagerBean().activeList.getCmpdListMembers());
         this.selectedCmpdListMembers = new ArrayList<CmpdListMemberVO>();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(this.cmpdListMembers);
+        try {
+            File f = new File("/tmp/cmpdListMembers.json");
+            FileWriter fw = new FileWriter(f);
+            fw.write(json);
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        this.json = json;
 
         renderHistoAndScatter();
 
@@ -266,7 +279,7 @@ public class HistogramController implements Serializable {
 
         // regenerate the histogramList
         TemplatedHistogramChartUtil histoUtil = new TemplatedHistogramChartUtil<CmpdListMemberVO>();
-                
+
         this.histogramList = histoUtil.doHistograms(this.cmpdListMembers, getCombinedParams(), this.propUtil);
 
         this.scatterPlotList = ScatterPlotChartUtil.generateScatter(this.cmpdListMembers, getCombinedParams(), this.propUtil);
@@ -359,6 +372,14 @@ public class HistogramController implements Serializable {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
+    
     public String getHistogramSizeString() {
         return histogramSizeString;
     }
@@ -488,10 +509,10 @@ public class HistogramController implements Serializable {
 
     public List<String> getCombinedParams() {
         ArrayList<String> rtn = new ArrayList<String>();
-        
+
         rtn.addAll(this.getIntParams());
         rtn.addAll(this.getDblParams());
-        
+
         return rtn;
     }
 
