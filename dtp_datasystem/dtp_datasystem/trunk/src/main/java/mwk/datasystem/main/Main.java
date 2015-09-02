@@ -4,7 +4,7 @@
  */
 package mwk.datasystem.main;
 
-import mwk.datasystem.mwkcharting.TemplPropUtil;
+import mwk.datasystem.util.TemplPropUtil;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;

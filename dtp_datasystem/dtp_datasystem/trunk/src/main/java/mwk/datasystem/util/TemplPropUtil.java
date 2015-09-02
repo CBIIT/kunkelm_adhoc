@@ -1,4 +1,4 @@
-package mwk.datasystem.mwkcharting;
+package mwk.datasystem.util;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
