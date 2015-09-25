@@ -8,6 +8,10 @@ dtp_microxeno/MicroXenoParser/MicroXenoParsers/build
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/private
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/.,
 dtp_microxeno/dtp_microxeno/dtp_microxeno/target
+dtp_microxeno/microxenouml/microxenouml/common/target
+dtp_microxeno/microxenouml/microxenouml/core/target
+dtp_microxeno/microxenouml/microxenouml/mda/.project
+dtp_microxeno/microxenouml/microxenouml/mda/target
 dtp_pptp/trunk/target
 dtp_structureservlet/trunk/target
 pf5.1.11-MWK/trunk/target
