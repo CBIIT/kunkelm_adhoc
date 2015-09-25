@@ -9677,6 +9677,7 @@ dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/build-impl.xml -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/genfiles.properties -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/project.properties -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/project.xml -text
+dtp_microxeno/MicroXenoParser/MicroXenoParsers/runAffyPowerTools.txt -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/src/microxenoparsers/Main.java -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/src/microxenoparsers/SecondRelease.java -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/uploadAndResolveAffyData.sql -text

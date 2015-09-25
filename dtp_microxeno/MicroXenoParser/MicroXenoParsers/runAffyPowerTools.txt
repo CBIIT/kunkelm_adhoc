@@ -1,0 +1,1 @@
+/home/mwkunkel/apt-1.17.0-x86_64-intel-linux/bin/apt-probeset-summarize -a rma -d /home/mwkunkel/DATA_DEPOT_IMPORTANT/MICROXENO_DATA/HG-U133_Plus_2.cdf -o /tmp/AFFY_OUTPUT --cel-files /home/mwkunkel/DATA_DEPOT_IMPORTANT/MICROXENO_DATA/celFileList.txt

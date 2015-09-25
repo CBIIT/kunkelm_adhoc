@@ -16,8 +16,8 @@ import java.util.Arrays;
  */
 public class SecondRelease {
 
-    public static final String INPUTFILE = "/home/mwkunkel/DATA_DEPOT_IMPORTANT/MICROXENO_DATA/rma-sketch.summary.txt";
-    public static final String OUTPUTFILE = "/home/mwkunkel/DATA_DEPOT_IMPORTANT/MICROXENO_DATA/rma-sketch.summary.txt.processed";
+    public static final String INPUTFILE = "/home/mwkunkel/DATA_DEPOT_IMPORTANT/MICROXENO_DATA/AFFY_OUTPUT/rma.summary.txt";
+    public static final String OUTPUTFILE = "/home/mwkunkel/DATA_DEPOT_IMPORTANT/MICROXENO_DATA/AFFY_OUTPUT/rma.summary.txt.processed";
 
     /**
      * @param args the command line arguments
@@ -67,6 +67,8 @@ public class SecondRelease {
 
             // parse the EA_ID line
             String[] eaLine = currentLine.split("\t");
+            
+            System.out.println("Count of fields in probeset_id line: " + eaLine.length);
 //            for (String s : eaLine) {
 //                System.out.println(s);
 //            }
