@@ -9680,6 +9680,11 @@ dtp_microxeno/MicroXenoParser/MicroXenoParsers/nbproject/project.xml -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/src/microxenoparsers/Main.java -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/src/microxenoparsers/SecondRelease.java -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/uploadAndResolveAffyData.sql -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/SCRIPTS/OLD/firstReleaseFileManagement.sql -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/SCRIPTS/OLD/uploadAndResolveAffyData.sql -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/SCRIPTS/buildFlatData.sql -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/SCRIPTS/importParsedRmaOutput.sql -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/SCRIPTS/loadAnnotations.sql -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/maven-jsf-plugin/1.3.2/_maven.repositories -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/maven-jsf-plugin/1.3.2/maven-jsf-plugin-1.3.2.jar -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/maven-jsf-plugin/1.3.2/maven-jsf-plugin-1.3.2.pom -text
