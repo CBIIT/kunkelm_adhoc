@@ -9541,6 +9541,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Fac
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FragmentsWorkbenchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/GenericConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/IdleController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerBean.java -text
@@ -9592,6 +9593,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/META-INF/context.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/faces-config.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/jax-ws-catalog.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/web.xml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/idleWarning.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/csv.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/excel.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/pdf.png -text
@@ -9630,6 +9632,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvasWrangling
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.min.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionEnded.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionTimeOut.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text

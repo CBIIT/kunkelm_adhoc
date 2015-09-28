@@ -24,13 +24,16 @@
             </p:idleMonitor>
         </h:form>
 
+        timeout="#{session.maxInactiveInterval * 1000 - 10000}"
+
     </ui:remove>
 
-
     <ui:composition>
+
         <h:form prependId="false">
+
             <p:idleMonitor
-                timeout="#{session.maxInactiveInterval * 1000 - 125000}"
+                timeout="#{session.maxInactiveInterval * 1000 - 10000}"
                 onidle="startIdleMonitor()"
                 onactive="PF('timeoutDialog').hide()" />
 
@@ -51,10 +54,13 @@
 
                 <p>
                     <span class="ui-icon ui-icon-alert" style="float: left; margin: 8px 8px 0;"/>
+
                     <p:panel>
-                        Logoff Soon Message 1
-                        <span id="dialog-countdown" style="font-weight: bold"></span>
-                        Logoff Soon Message 2
+                        <h:outputText value="COMPARE sessions time out after #{(session.maxInactiveInterval/60)}  minutes (#{session.maxInactiveInterval} seconds)" />
+                        <br/>
+                        <h:outputText value="Time remaining in this session is: " /> 
+                        <br/>
+                        <span id="dialog-countdown" style="font-weight: bold"></span> Seconds
                     </p:panel>
                 </p>
                 <br />
@@ -62,6 +68,7 @@
             </p:dialog>
             <p:remoteCommand name="keepAlive" actionListener="#{auth.keepSessionAlive}" />
         </h:form>
+        
         <script type="text/javascript">
 
             var TIME = 10; // in seconds
@@ -71,7 +78,7 @@
             var redirectPage = "#{request.contextPath}/viewExpired.xhtml";
             var countDownDiv = "dialog-countdown";
             var txtCountDown = null;
-
+            
             if (!txtCountDown)
                 txtCountDown = document.getElementById(countDownDiv);
 
@@ -80,7 +87,7 @@
                 txtCountDown.innerHTML = countTimer;
                 PF('timeoutDialog').show();
             }
-
+            
             function timedCount() {
                 txtCountDown.innerHTML = countTimer;
                 if (countTimer == 0) {
@@ -91,14 +98,14 @@
                 countTimer = countTimer - 1;
                 processTimer = setTimeout("timedCount()", 1000);
             }
-
+            
             function doTimer() {
                 if (!timer_is_on) {
                     timer_is_on = 1;
                     timedCount();
                 }
             }
-
+            
             function stopCount() {
                 clearTimeout(processTimer);
                 timer_is_on = 0;
