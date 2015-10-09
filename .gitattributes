@@ -9484,8 +9484,11 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_recrea
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CANCEL_POSTGRES_PROCESS.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/app_and_inv.13Aug2015.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/app_and_inv.with_smiles.13Aug2015.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/Cmax[!!-~]02.03.15.xls -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/Cmax02.03.15.biologicals.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/Cmax02.03.15.smallmol.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]10_09a_2015.xls -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/appAndInv.09OCT2015.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
@@ -9523,10 +9526,6 @@ dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/dtp_datasystem/trunk/processedSalts.txt -text
-dtp_datasystem/dtp_datasystem/trunk/qc_ct.06March2015.csv -text
-dtp_datasystem/dtp_datasystem/trunk/qc_ct.17May2015.beforeSolventRemoval.csv -text
-dtp_datasystem/dtp_datasystem/trunk/qc_ct.27Feb2015.csv -text
-dtp_datasystem/dtp_datasystem/trunk/qc_ct.afterRemoveSolvent.csv -text
 dtp_datasystem/dtp_datasystem/trunk/rawSaltDefinitions.txt -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImageServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/ForceGraph.java -text
@@ -9633,7 +9632,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.min.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionEnded.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionTimeOut.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
@@ -9672,6 +9670,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/menubar.x
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui_form.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/uploadList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/stats/qc_ct.06March2015.csv -text
+dtp_datasystem/dtp_datasystem/trunk/stats/qc_ct.17May2015.beforeSolventRemoval.csv -text
+dtp_datasystem/dtp_datasystem/trunk/stats/qc_ct.27Feb2015.csv -text
+dtp_datasystem/dtp_datasystem/trunk/stats/qc_ct.afterRemoveSolvent.csv -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/CHANGELOG -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/build.xml -text
 dtp_microxeno/MicroXenoParser/MicroXenoParsers/firstReleaseFileManagement.sql -text

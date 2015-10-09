@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mwk.datasystem.controller;
+package mwk.datasystem.controllers;
 
 import java.io.Serializable;
 import java.util.Timer;
