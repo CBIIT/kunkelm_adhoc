@@ -48,35 +48,29 @@ public class FetchFromProd {
             oraConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
-//      System.out.println("Starting: fetchBioDataCounts");
-//      fetchBioDataCounts(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchLegacyImage");
-//      fetchLegacyImage(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchMtxt");
-//      fetchMtxt(pgCo    System.out.println("Starting: fetchBioDataCounts");
-//      fetchBioDataCounts(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchLegacyImage");
-//      fetchLegacyImage(pgConn, oraConn);nn, oraConn);
-//
-//      System.out.println("Starting: fetchInventory");
-//      fetchInventory(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchChemNames");
-//      fetchChemNames(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchPubChemId");
-//      fetchPubChemId(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchCmpd");
-//      fetchCmpd(pgConn, oraConn);
-//
-//      System.out.println("Starting: fetchProjects");
-//      fetchProjects(pgConn, oraConn);
+            System.out.println("Starting: fetchBioDataCounts");
+            fetchBioDataCounts(pgConn, oraConn);
+
+            System.out.println("Starting: fetchChemNames");
+            fetchChemNames(pgConn, oraConn);
+           
+             System.out.println("Starting: fetchCmpd");
+            fetchCmpd(pgConn, oraConn);
+            
+            System.out.println("Starting: fetchInventory");
+            fetchInventory(pgConn, oraConn);
+
+            System.out.println("Starting: fetchMtxt");
+            fetchMtxt(pgConn, oraConn);
+
             System.out.println("Starting: fetchPlatedSets");
             fetchPlatedSets(pgConn, oraConn);
+            
+            System.out.println("Starting: fetchPubChemId");
+            fetchPubChemId(pgConn, oraConn);
+           
+            System.out.println("Starting: fetchProjects");
+            fetchProjects(pgConn, oraConn);
 
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
@@ -116,7 +110,7 @@ public class FetchFromProd {
 
         try {
 
-      // these all fetch nsc and "the_count"
+            // these all fetch nsc and "the_count"
             // pairs of parameters: name of table, query to populate
             String[] paramArray = new String[]{
                 "prod_count_hf",
