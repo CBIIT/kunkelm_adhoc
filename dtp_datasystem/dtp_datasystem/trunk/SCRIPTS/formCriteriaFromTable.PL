@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
+# for a list of field names and types
+# cranks out form input and output fields
 # java variable declarations, .xhtml input fields, .xhtml output fields
-
-# for 
 
 # min/max criteria for integer and double precision fields
 # string criteria for String fields
@@ -113,9 +113,6 @@ open ( hibernatePart, ">hibernatePart") or die "Can't open hibernatePart\n";
 #--------------------------------------------------------------------
 
 my @cumulativeFieldNames = ();
-
-
-
 
 foreach my $dataSet($pChemVars, $strcVars, $nscCmpdVars){
 

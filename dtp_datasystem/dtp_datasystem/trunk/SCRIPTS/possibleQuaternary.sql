@@ -1,4 +1,4 @@
- create table possible_quaternary
+create table possible_quaternary
 as
 select nsc 
 from rdkit_mol 

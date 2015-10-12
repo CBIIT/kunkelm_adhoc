@@ -9485,7 +9485,8 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax02.03.15.biologicals
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax02.03.15.smallmol.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]10_09a_2015.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/appAndInv.09OCT2015.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/loadAndResolveAppAndInv.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/cmax.mwk.10oct2015.xls -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/loadAppAndInvAndCmax.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/DATA_SYSTEM_BUILD_PARAMETERS.pm -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/FULL_BUILD_COMMANDS -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/MAKE_CATEGORIES.PL -text
@@ -9514,12 +9515,10 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGE
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CANCEL_POSTGRES_PROCESS.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formatPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/importAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQClists.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscNeedLegacyImage.sql -text
