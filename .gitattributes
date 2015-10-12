@@ -9402,10 +9402,11 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonres
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/AnotherExample.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ConstraintManagement.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/DatasystemReplicator.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ExampleFromNet.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/MicroXenoReplicator.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ParkingLot.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Replicator.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/build.xml -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/jaxb-api-2.2.12.jar -text

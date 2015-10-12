@@ -17,8 +17,26 @@ import java.util.ArrayList;
  */
 public class ConstraintManagement {
 
-    public static void saveConstraints(Connection destConn)
+    public static void saveConstraints(Connection destConn, String[] tableNamesAndWhereClauses)
             throws Exception {
+
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+
+        for (int tableCounter = 0; tableCounter < tableNamesAndWhereClauses.length; tableCounter += 2) {
+            String curTbl = tableNamesAndWhereClauses[tableCounter];
+            String curWhereClause = tableNamesAndWhereClauses[tableCounter + 1];
+
+            if (first) {
+                first = false;
+                sb.append("'" + curTbl + "'");
+            } else {
+                sb.append(",'" + curTbl + "'");
+            }
+
+        }
+
+        String tableNameList = sb.toString();
 
         Statement destStmt = null;
 
@@ -39,11 +57,12 @@ public class ConstraintManagement {
                     + "INNER JOIN pg_class ON conrelid = pg_class.oid\n"
                     + "INNER JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace\n"
                     + "WHERE conname not like '%pkey'\n"
-                    //                    + "AND relname in (\n"
-                    //                    + "' $commaJoinedTableList '\n"
-                    //                    + ")\n"
+                    + "AND relname in (\n"
+                    + tableNameList + "\n"
+                    + ")\n"
                     + "ORDER BY CASE WHEN contype = 'f' THEN 0 ELSE 1 END DESC, contype DESC, nspname DESC, relname DESC, conname DESC";
 
+            System.out.println(createConstraintsSql);
             result = destStmt.executeUpdate(createConstraintsSql);
 
             String dropConstraintsSql = "insert into drop_constraint_statements(stmt)\n"
@@ -52,11 +71,12 @@ public class ConstraintManagement {
                     + "INNER JOIN pg_class ON conrelid = pg_class.oid \n"
                     + "INNER JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace\n"
                     + "WHERE conname not like '%pkey'\n"
-                    //                    + "AND relname in (\n"
-                    //                    + "' $commaJoinedTableList '\n"
-                    //                    + ") \n"
+                    + "AND relname in (\n"
+                    + tableNameList + "\n"
+                    + ") \n"
                     + "ORDER BY CASE WHEN contype = 'f' THEN 0 ELSE 1 END, contype, nspname, relname, conname";
 
+            System.out.println(dropConstraintsSql);
             result = destStmt.executeUpdate(dropConstraintsSql);
 
             System.out.println("DONE!");
@@ -170,7 +190,7 @@ public class ConstraintManagement {
             for (String sql : sqlList) {
                 System.out.println("executeUpdate: " + sql);
                 int rtn = destStmt.executeUpdate(sql);
-                 System.out.println("int rtn is: " + rtn);                
+                System.out.println("int rtn is: " + rtn);
             }
 
             System.out.println("DONE!");
@@ -204,10 +224,4 @@ public class ConstraintManagement {
 
     }
 
-    /*
-    
-     \copy create_constraint_statements to /tmp/create
-     \copy drop_constraint_statements to /tmp/drop
-    
-     */
 }
