@@ -60,17 +60,22 @@ push @fpList, "torsionbv_fp";
  #####    ####           #       #
 
 my @sqlList;
+my $sth;
 
-#foreach my $fp(@fpList){
-#	push @sqlList, "drop table if exists temp_" . $fp;
-#	push @sqlList, "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol where nsc in ( select nsc from app_and_inv )";
-#}
 
-#foreach my $sql(@sqlList){
-#  my $sth = $dbh->prepare($sql);
-#  print "$sql\n\n";
+
+foreach my $fp(@fpList){
+	push @sqlList, "drop table if exists temp_" . $fp;
+	push @sqlList, "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol where nsc in ( select nsc from app_and_inv )";
+}
+
+foreach my $sql(@sqlList){
+  $sth = $dbh->prepare($sql);
+  print "$sql\n\n";
 #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
-#}
+}
+
+
 
   #####    ##    #    #     #    #    #   ####    #####   ####
     #     #  #   ##   #     #    ##  ##  #    #     #    #    #
@@ -79,32 +84,34 @@ my @sqlList;
     #    #    #  #   ##     #    #    #  #    #     #    #    #
     #    #    #  #    #     #    #    #   ####      #     ####
 
-#@sqlList = ();
-#foreach my $fp(@fpList){
-#	print "$fp";
-#	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
-#	push @sqlList, "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
-#}
+@sqlList = ();
 
-#foreach my $sql(@sqlList){
-#  my $sth = $dbh->prepare($sql);
-#  print "$sql\n\n";
-# #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
-#}
+foreach my $fp(@fpList){
+	print "$fp";
+	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
+	push @sqlList, "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
+}
 
-# quick check on counts
+foreach my $sql(@sqlList){
+  $sth = $dbh->prepare($sql);
+  print "$sql\n\n";
+ #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+}
 
-#@sqlList = ();
-#foreach my $fp(@fpList){
-#	print "$fp";
-#	push @sqlList, "select count(*) from temp_tanimoto_" . $fp;		
-#}
+# check on counts
 
-#foreach my $sql(@sqlList){
-#  my $sth = $dbh->prepare($sql);
-#  print "$sql\n\n";
-# $sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
-#}
+@sqlList = ();
+
+foreach my $fp(@fpList){
+	print "$fp";
+	push @sqlList, "select count(*) from temp_tanimoto_" . $fp;		
+}
+
+foreach my $sql(@sqlList){
+  my $sth = $dbh->prepare($sql);
+  print "$sql\n\n";
+ #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+}
 
   ####   #####    ####    ####    ####    #####    ##    #####
  #    #  #    #  #    #  #       #          #     #  #   #    #
@@ -131,6 +138,10 @@ foreach my $fp(@fpList){
 
 print "$sql\n";
 
+$sth = $dbh->prepare($sql);
+#$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+
+
  ######  #    #  #####    ####   #####    #####
  #        #  #   #    #  #    #  #    #     #
  #####     ##    #    #  #    #  #    #     #
@@ -146,9 +157,10 @@ foreach my $fp(@fpList){
 }
 
 foreach my $sql(@sqlList){
-  #my $sth = $dbh->prepare($sql);
+  $sth = $dbh->prepare($sql);
   print "$sql\n\n";
- #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+  # Can't execute \copy over DBI...   just print these out
+  #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
 
