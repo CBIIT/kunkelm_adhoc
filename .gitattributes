@@ -9515,6 +9515,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGE
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CANCEL_POSTGRES_PROCESS.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formatPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
