@@ -15,7 +15,8 @@ import java.sql.SQLException;
  */
 public class Main {
 
-    public static String[] ds2od = new String[]{
+    // datasystem to oncologydrugs
+    static final String[] ds2od = new String[]{
         "jdbc:postgresql://localhost:5432/datasystemdb",
         "mwkunkel",
         "donkie11",
@@ -24,7 +25,17 @@ public class Main {
         "donkie11"
     };
 
-    static final String[] tnwc = new String[]{
+    // compare to oncologydrugs
+    static final String[] compare2od = new String[]{
+        "jdbc:postgresql://localhost:5432/sarcomadb",
+        "mwkunkel",
+        "donkie11",
+        "jdbc:postgresql://localhost:5432/comparedb",
+        "mwkunkel",
+        "donkie11"
+    };
+
+    static final String[] ds2od_tnwc = new String[]{
         // ad_hoc_cmpd not exported
         //                "ad_hoc_cmpd", " where ",
         //                "ad_hoc_cmpd_fragment", " where ",
@@ -75,7 +86,40 @@ public class Main {
         "rdkit_mol", " where nsc in (select nsc from for_export)"
     };
 
+    static final String[] compare2od_tnwc = new String[]{
+        // "types"
+        "build_date", " ",
+        "compare_cell_line", "",
+        "named_target_set", "",
+        "test_result_type", "",
+        //
+        "cell_line_data_set", " where cell_line_data_set_ident_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from for_export)))",
+        "cell_line_data_set_ident", " where id in (select id from nsc_ident where nsc in (select nsc from for_export))",
+        "cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from for_export)))",
+        //        compare jobs, results not exported
+        //         "compare_result", " where",
+        //         "grid_compare_columns", " where",
+        //         "grid_compare_job", " where",
+        //         "grid_compare_rows", " where",
+        //         "job", " where",
+        //         "require_use_ignore", " where",
+        //         "standard_compare_job", " where",
+        //         "uploaded_ident", " where"
+        // skip this, for now...        
+        //        "mol_targ_ident", " where",
+
+        "nsc_ident", " where nsc in (select nsc from for_export)",
+        "test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set where cell_line_data_set_ident_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from for_export))))",
+        // conc-resp
+
+        "conc_resp_element", " where five_conc_assay_fk in (select id from five_conc_assay where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from for_export)))",
+        "five_conc_assay", " where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from for_export))",
+        "nsc_compound", " where nsc in (select nsc from for_export)",};
+
     public static void main(String[] args) {
+
+        String[] whichConnectionInfo = compare2od; //ds2od;
+        String[] whichTableNamesAndWhereClauses = compare2od_tnwc; //ds2od_tnwc;
 
         Connection destConn = null;
         Connection sourceConn = null;
@@ -84,32 +128,31 @@ public class Main {
 
             DriverManager.registerDriver(new org.postgresql.Driver());
 
-            sourceConn = DriverManager.getConnection(ds2od[0], ds2od[1], ds2od[2]);
-            destConn = DriverManager.getConnection(ds2od[3], ds2od[4], ds2od[5]);
+            sourceConn = DriverManager.getConnection(whichConnectionInfo[0], whichConnectionInfo[1], whichConnectionInfo[2]);
+            destConn = DriverManager.getConnection(whichConnectionInfo[3], whichConnectionInfo[4], whichConnectionInfo[5]);
 
             // archive constraint drop/create statements
-            // ConstraintManagement.saveConstraints(destConn, tnwc);
-
+            //ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
             // drop constraints before build
             ConstraintManagement.dropConstraints(destConn);
 
-            for (int i = 0; i < tnwc.length; i += 2) {
-                String curTbl = tnwc[i];
-                String whereClause = tnwc[i + 1];
+            for (int i = 0; i < whichTableNamesAndWhereClauses.length; i += 2) {
+                String curTbl = whichTableNamesAndWhereClauses[i];
+                String whereClause = whichTableNamesAndWhereClauses[i + 1];
                 // scrape out anything remaining
                 // Replicator.nuke(destConn, curTbl);
                 // replicate the tables
                 Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
             }
-            
+
             // recreate the constraints
             ConstraintManagement.createConstraints(destConn);
-            
+
             System.out.println("Done! in Main");
-            
+
             sourceConn.close();
             destConn.close();
-            
+
             sourceConn = null;
             destConn = null;
 

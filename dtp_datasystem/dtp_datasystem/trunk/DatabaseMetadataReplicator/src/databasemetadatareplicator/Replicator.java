@@ -12,58 +12,9 @@ import java.util.ArrayList;
  * @author mwkunkel
  */
 public class Replicator {
-
-//    static final String[] tableNamesAndWhereClauses = new String[]{
-//        // ad_hoc_cmpd not exported
-//        //                "ad_hoc_cmpd", " where ",
-//        //                "ad_hoc_cmpd_fragment", " where ",
-//        //                "ad_hoc_cmpd_fragment_p_chem", " where ",
-//        //                "ad_hoc_cmpd_fragment_structure", " where ",
-//
-//        "cmpd_known_salt", "",
-//        "nsc_cmpd_type", "",
-//        "cmpd_alias_type", "",
-//        "cmpd_relation_type", "",
-//        "cmpd_fragment_type", "",
-//        //
-//        "cmpd_inventory", " where id in (select nsc from for_export)",
-//        "cmpd_annotation", " where id in (select nsc from for_export)",
-//        "cmpd_bio_assay", " where id in (select nsc from for_export)",
-//        "cmpd_legacy_cmpd", " where nsc in (select nsc from for_export)",
-//        "cmpd_table", " where nsc in (select nsc from for_export)",
-//        // 
-//        "cmpd", " where id in (select nsc from for_export)",
-//        //
-//        "nsc_cmpd", " where nsc in (select nsc from for_export)",
-//        //
-//        "cmpd_fragment", " where nsc_cmpd_fk in (select nsc from for_export)",
-//        "cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-//        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-//        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-//        "cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-//        // 
-//        //  cmpd_list not exported
-//        //                "cmpd_list", " where ",
-//        //                "cmpd_list_member", " where ",
-//        //
-//        "cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-//        "cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-//        //
-//        "cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-//        "cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-//        //
-//        "cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-//        "cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-//        "cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-//        "cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-//        "cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-//        "cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-//        //
-//        "cmpd_related", " where nsc_cmpd_fk in (select nsc from for_export)",
-//        //
-//        "rdkit_mol", " where nsc in (select nsc from for_export)"
-//    };
     
+    public static final Integer BATCH_SIZE = 10000;
+
     public static void useMetadata(
             Connection sourceConn,
             Connection destConn,
@@ -81,7 +32,7 @@ public class Replicator {
         try {
 
             sourceStmt = sourceConn.createStatement();
-            sourceStmt.setFetchSize(1000);
+            sourceStmt.setFetchSize(BATCH_SIZE);
 
             destConn.setAutoCommit(true);
 
@@ -134,8 +85,8 @@ public class Replicator {
                     prepStmt.setObject(i, rs.getObject(i));
                 }
                 prepStmt.addBatch();
-                if (prepStmtCounter == 1000) {
-                    System.out.println("-----prepStmt.batch size is 1000.  Executing.");
+                if (prepStmtCounter == BATCH_SIZE) {
+                    System.out.println("-----prepStmt.batch size is " + BATCH_SIZE + ".  Executing.");
                     prepStmt.executeBatch();
                     prepStmtCounter = 0;
                 }
