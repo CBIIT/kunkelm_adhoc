@@ -108,7 +108,7 @@ public class HistogramController implements Serializable {
         this.cmpdListMembers = new ArrayList<CmpdListMemberVO>(listManagerController.getListManagerBean().activeList.getCmpdListMembers());
         this.selectedCmpdListMembers = new ArrayList<CmpdListMemberVO>();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new Gson();
         String json = gson.toJson(this.cmpdListMembers);
         try {
             File f = new File("/tmp/cmpdListMembers.json");

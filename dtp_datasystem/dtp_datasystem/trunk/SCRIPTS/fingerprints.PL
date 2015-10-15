@@ -151,6 +151,10 @@ $sth = $dbh->prepare($sql);
 
 @sqlList = ();
 
+# hard-code statement for temp_tanimoto_collate
+$sql = "\\copy temp_tanimoto_collate to /tmp/temp_tanimoto_collate.csv csv header";
+push @sqlList, $sql;
+
 foreach my $fp(@fpList){	            
         $sql = "\\copy temp_tanimoto_" . $fp . " to /tmp/temp_tanimoto_" . $fp . ".csv csv header";
         push @sqlList, $sql;

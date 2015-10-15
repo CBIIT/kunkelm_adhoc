@@ -146,6 +146,8 @@ left outer join temp_tanimoto_morganbv_fp on all_pair_nsc.uno = temp_tanimoto_mo
 left outer join temp_tanimoto_rdkit_fp on all_pair_nsc.uno = temp_tanimoto_rdkit_fp.nsc1 and all_pair_nsc.duo = temp_tanimoto_rdkit_fp.nsc2
 left outer join temp_tanimoto_torsionbv_fp on all_pair_nsc.uno = temp_tanimoto_torsionbv_fp.nsc1 and all_pair_nsc.duo = temp_tanimoto_torsionbv_fp.nsc2;
 
+\copy temp_tanimoto_collate to /tmp/temp_tanimoto_collate.csv csv header;
+
 \copy temp_tanimoto_atompairbv_fp to /tmp/temp_tanimoto_atompairbv_fp.csv csv header;
 
 \copy temp_tanimoto_featmorganbv_fp to /tmp/temp_tanimoto_featmorganbv_fp.csv csv header;
