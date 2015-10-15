@@ -9541,6 +9541,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/ForceGraph.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/Info.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/Link.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/Node.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/TanimotoForceGraph.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/TanimotoLink.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
