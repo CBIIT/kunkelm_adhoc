@@ -35,17 +35,17 @@
     alter table CMPD_FRAGMENT 
         drop constraint CMPD_FRAGMENT_CMPD_FRAGMENT_PC;
 
-    alter table CMPD_LISTS2SHARE_WITH_USERS 
-        drop constraint DATA_SYSTEM_USER_CMPD_LISTS_FC;
-
-    alter table CMPD_LISTS2SHARE_WITH_USERS 
-        drop constraint CMPD_LIST_SHARE_WITH_USERS_FKC;
-
     alter table CMPD_LIST_MEMBER 
         drop constraint CMPD_LIST_MEMBER_CMPD_LIST_FKC;
 
     alter table CMPD_LIST_MEMBER 
         drop constraint CMPD_LIST_MEMBER_CMPD_FKC;
+
+    alter table CMPD_NAMED_SETS2NSC_CMPDS 
+        drop constraint CMPD_NAMED_SET_NSC_CMPDS_FKC;
+
+    alter table CMPD_NAMED_SETS2NSC_CMPDS 
+        drop constraint NSC_CMPD_CMPD_NAMED_SETS_FKC;
 
     alter table CMPD_PLATES2NSC_CMPDS 
         drop constraint CMPD_PLATE_NSC_CMPDS_FKC;
@@ -71,29 +71,14 @@
     alter table CMPD_RELATED 
         drop constraint CMPD_RELATED_CMPD_RELATION_TYC;
 
-    alter table CMPD_SETS2NSC_CMPDS 
-        drop constraint CMPD_SET_NSC_CMPDS_FKC;
-
-    alter table CMPD_SETS2NSC_CMPDS 
-        drop constraint NSC_CMPD_CMPD_SETS_FKC;
-
     alter table CMPD_TARGETS2NSC_CMPDS 
         drop constraint CMPD_TARGET_NSC_CMPDS_FKC;
 
     alter table CMPD_TARGETS2NSC_CMPDS 
         drop constraint NSC_CMPD_CMPD_TARGETS_FKC;
 
-    alter table DATA_SYSTEM_ROLES2DATA_SYSTEM_ 
-        drop constraint DATA_SYSTEM_ROLE_DATA_SYSTEM_C;
-
-    alter table DATA_SYSTEM_ROLES2DATA_SYSTEM_ 
-        drop constraint DATA_SYSTEM_USER_DATA_SYSTEM_C;
-
     alter table NSC_CMPD 
         drop constraint NSC_CMPD_CMPD_LEGACY_CMPD_FKC;
-
-    alter table NSC_CMPD 
-        drop constraint NSC_CMPD_CMPD_ANNOTATIONS_FKC;
 
     alter table NSC_CMPD 
         drop constraint NSC_CMPD_CMPD_INVENTORY_FKC;
@@ -106,6 +91,9 @@
 
     alter table NSC_CMPD 
         drop constraint NSC_CMPD_CMPD_PARENT_FRAGMENTC;
+
+    alter table NSC_CMPD 
+        drop constraint NSC_CMPD_CMPD_ANNOTATION_FKC;
 
     alter table NSC_CMPD 
         drop constraint NSC_CMPD_CMPD_BIO_ASSAY_FKC;
@@ -126,7 +114,7 @@
 
     drop table CMPD_ALIAS_TYPE cascade;
 
-    drop table CMPD_ANNOTATIONS cascade;
+    drop table CMPD_ANNOTATION cascade;
 
     drop table CMPD_BIO_ASSAY cascade;
 
@@ -144,9 +132,11 @@
 
     drop table CMPD_LIST cascade;
 
-    drop table CMPD_LISTS2SHARE_WITH_USERS cascade;
-
     drop table CMPD_LIST_MEMBER cascade;
+
+    drop table CMPD_NAMED_SET cascade;
+
+    drop table CMPD_NAMED_SETS2NSC_CMPDS cascade;
 
     drop table CMPD_PLATE cascade;
 
@@ -164,21 +154,11 @@
 
     drop table CMPD_RELATION_TYPE cascade;
 
-    drop table CMPD_SET cascade;
-
-    drop table CMPD_SETS2NSC_CMPDS cascade;
-
     drop table CMPD_TABLE cascade;
 
     drop table CMPD_TARGET cascade;
 
     drop table CMPD_TARGETS2NSC_CMPDS cascade;
-
-    drop table DATA_SYSTEM_ROLE cascade;
-
-    drop table DATA_SYSTEM_ROLES2DATA_SYSTEM_ cascade;
-
-    drop table DATA_SYSTEM_USER cascade;
 
     drop table NSC_CMPD cascade;
 
@@ -212,6 +192,8 @@
 
     drop sequence CMPD_LIST_SEQ;
 
+    drop sequence CMPD_NAMED_SET_SEQ;
+
     drop sequence CMPD_PLATE_SEQ;
 
     drop sequence CMPD_PROJECT_SEQ;
@@ -223,8 +205,6 @@
     drop sequence CMPD_RELATION_TYPE_SEQ;
 
     drop sequence CMPD_SEQ;
-
-    drop sequence CMPD_SET_SEQ;
 
     drop sequence CMPD_TARGET_SEQ;
 

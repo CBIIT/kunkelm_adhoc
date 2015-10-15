@@ -62,6 +62,7 @@
 
     create table CMPD (
         ID BIGINT not null,
+        COMMENT CHARACTER VARYING(1024),
         primary key (ID)
     );
 
@@ -84,7 +85,7 @@
         primary key (ID)
     );
 
-    create table CMPD_ANNOTATIONS (
+    create table CMPD_ANNOTATION (
         ID BIGINT not null,
         GENERAL_COMMENT CHARACTER VARYING(1024),
         PURITY_COMMENT CHARACTER VARYING(1024),
@@ -99,16 +100,18 @@
         NCI60 INTEGER,
         HF INTEGER,
         XENO INTEGER,
-        SARCOMA INTEGER unique,
+        SARCOMA INTEGER,
         primary key (ID)
     );
 
     create table CMPD_FRAGMENT (
         ID BIGINT not null,
         STOICHIOMETRY DOUBLE PRECISION,
-        CMPD_FRAGMENT_STRUCTURE_FK BIGINT unique,
+        COMMENT CHARACTER VARYING(1024),
+        CMPD_FRAGMENT_TYPE_FK BIGINT not null,
         CMPD_KNOWN_SALT_FK BIGINT,
         CMPD_FRAGMENT_P_CHEM_FK BIGINT unique,
+        CMPD_FRAGMENT_STRUCTURE_FK BIGINT unique,
         NSC_CMPD_FK BIGINT,
         primary key (ID)
     );
@@ -156,6 +159,13 @@
         primary key (ID)
     );
 
+    create table CMPD_FRAGMENT_TYPE (
+        ID BIGINT not null,
+        FRAGMENT_TYPE CHARACTER VARYING(1024) not null unique,
+        FRAGMENT_TYPE_DESCRIPTION CHARACTER VARYING(1024) not null,
+        primary key (ID)
+    );
+
     create table CMPD_INVENTORY (
         ID BIGINT not null,
         INVENTORY DOUBLE PRECISION,
@@ -164,12 +174,14 @@
 
     create table CMPD_KNOWN_SALT (
         ID BIGINT not null,
-        CANONICAL_SMILES CHARACTER VARYING(1024),
-        CANONICAL_TAUTOMER_SMILES CHARACTER VARYING(1024),
-        CANONICAL_TAUTOMER_SMILES_STRI CHARACTER VARYING(1024),
         SALT_NAME CHARACTER VARYING(1024),
         SALT_MF CHARACTER VARYING(1024),
         SALT_MW DOUBLE PRECISION,
+        CAN_SMI TEXT,
+        CAN_TAUT TEXT,
+        CAN_TAUT_STRIP_STEREO TEXT,
+        COUNT_OCCURENCES INTEGER,
+        SALT_COMMENT CHARACTER VARYING(1024) not null,
         primary key (ID)
     );
 
@@ -179,6 +191,10 @@
         MOLECULAR_WEIGHT DOUBLE PRECISION,
         MOLECULAR_FORMULA CHARACTER VARYING(1024),
         JPG512 BYTEA,
+        NSC INTEGER unique,
+        INVENTORY DOUBLE PRECISION,
+        COUNT_NCI60 INTEGER,
+        MTXT CHARACTER VARYING(1024),
         primary key (ID)
     );
 
@@ -196,18 +212,25 @@
         primary key (ID)
     );
 
-    create table CMPD_LISTS2SHARE_WITH_USERS (
-        CMPD_LISTS_FK BIGINT not null,
-        SHARE_WITH_USERS_FK BIGINT not null,
-        primary key (CMPD_LISTS_FK, SHARE_WITH_USERS_FK)
-    );
-
     create table CMPD_LIST_MEMBER (
         ID BIGINT not null,
-        LIST_MEMBER_COMMENT CHARACTER VARYING(1024) unique,
-        CMPD_FK BIGINT not null,
+        LIST_MEMBER_COMMENT CHARACTER VARYING(1024),
         CMPD_LIST_FK BIGINT not null,
+        CMPD_FK BIGINT not null,
         primary key (ID)
+    );
+
+    create table CMPD_NAMED_SET (
+        ID BIGINT not null,
+        SET_NAME CHARACTER VARYING(1024) not null unique,
+        SET_DESCRIPTION CHARACTER VARYING(1024) not null unique,
+        primary key (ID)
+    );
+
+    create table CMPD_NAMED_SETS2NSC_CMPDS (
+        NSC_CMPDS_FK BIGINT not null,
+        CMPD_NAMED_SETS_FK BIGINT not null,
+        primary key (NSC_CMPDS_FK, CMPD_NAMED_SETS_FK)
     );
 
     create table CMPD_PLATE (
@@ -249,7 +272,7 @@
 
     create table CMPD_RELATED (
         ID BIGINT not null,
-        NSC_CMPD_FK BIGINT not null unique,
+        NSC_CMPD_FK BIGINT not null,
         CMPD_RELATION_TYPE_FK BIGINT not null unique,
         primary key (ID)
     );
@@ -258,18 +281,6 @@
         ID BIGINT not null,
         RELATION_TYPE CHARACTER VARYING(1024) not null unique,
         primary key (ID)
-    );
-
-    create table CMPD_SET (
-        ID BIGINT not null,
-        SET_NAME CHARACTER VARYING(1024) not null unique,
-        primary key (ID)
-    );
-
-    create table CMPD_SETS2NSC_CMPDS (
-        NSC_CMPDS_FK BIGINT not null,
-        CMPD_SETS_FK BIGINT not null,
-        primary key (NSC_CMPDS_FK, CMPD_SETS_FK)
     );
 
     create table CMPD_TABLE (
@@ -288,14 +299,14 @@
         NCI60 INTEGER,
         HF INTEGER,
         XENO INTEGER,
-        FORMATTED_TARGETS_STRING CHARACTER VARYING(1024),
-        FORMATTED_SETS_STRING CHARACTER VARYING(1024),
-        FORMATTED_PROJECTS_STRING CHARACTER VARYING(1024),
-        FORMATTED_PLATES_STRING CHARACTER VARYING(1024),
-        FORMATTED_ALIASES_STRING CHARACTER VARYING(1024),
-        FORMATTED_FRAGMENTS_STRING CHARACTER VARYING(1024),
-        PSEUDO_ATOMS CHARACTER VARYING(1024),
-        MTXT CHARACTER VARYING(1024),
+        FORMATTED_TARGETS_STRING TEXT,
+        FORMATTED_SETS_STRING TEXT,
+        FORMATTED_PROJECTS_STRING TEXT,
+        FORMATTED_PLATES_STRING TEXT,
+        FORMATTED_ALIASES_STRING TEXT,
+        FORMATTED_FRAGMENTS_STRING TEXT,
+        PSEUDO_ATOMS TEXT,
+        MTXT TEXT,
         SALT_SMILES CHARACTER VARYING(1024),
         SALT_NAME CHARACTER VARYING(1024),
         SALT_MF CHARACTER VARYING(1024),
@@ -308,7 +319,6 @@
         CAN_SMI TEXT,
         CAN_TAUT TEXT,
         CAN_TAUT_STRIP_STEREO TEXT,
-        MOLECULAR_WEIGHT DOUBLE PRECISION,
         MOLECULAR_FORMULA CHARACTER VARYING(1024),
         LOG_D DOUBLE PRECISION,
         COUNT_HYD_BOND_ACCEPTORS INTEGER,
@@ -340,8 +350,7 @@
         STEREOCHEMISTRY_COMMENT CHARACTER VARYING(1024),
         IDENTIFIER_STRING CHARACTER VARYING(1024),
         DESCRIPTOR_STRING CHARACTER VARYING(1024),
-        FORMULA_WEIGHT DOUBLE PRECISION,
-        FORMULA_MOLECULAR_FORMULA CHARACTER VARYING(1024),
+        MOLECULAR_WEIGHT DOUBLE PRECISION,
         NSC_CMPD_TYPE CHARACTER VARYING(1024),
         primary key (ID)
     );
@@ -358,26 +367,6 @@
         primary key (NSC_CMPDS_FK, CMPD_TARGETS_FK)
     );
 
-    create table DATA_SYSTEM_ROLE (
-        ID BIGINT not null,
-        ROLE_NAME CHARACTER VARYING(1024) not null unique,
-        ROLE_DESCRIPTION CHARACTER VARYING(1024) not null unique,
-        primary key (ID)
-    );
-
-    create table DATA_SYSTEM_ROLES2DATA_SYSTEM_ (
-        DATA_SYSTEM_USERS_FK BIGINT not null,
-        DATA_SYSTEM_ROLES_FK BIGINT not null,
-        primary key (DATA_SYSTEM_ROLES_FK, DATA_SYSTEM_USERS_FK)
-    );
-
-    create table DATA_SYSTEM_USER (
-        ID BIGINT not null,
-        USER_NAME CHARACTER VARYING(1024) not null unique,
-        REAL_NAME CHARACTER VARYING(1024) not null unique,
-        primary key (ID)
-    );
-
     create table NSC_CMPD (
         ID BIGINT not null,
         NAME CHARACTER VARYING(1024),
@@ -391,13 +380,13 @@
         DISCREET CHARACTER VARYING(1024) not null,
         IDENTIFIER_STRING CHARACTER VARYING(1024),
         DESCRIPTOR_STRING CHARACTER VARYING(1024),
-        FORMULA_WEIGHT DOUBLE PRECISION,
-        FORMULA_MOLECULAR_FORMULA CHARACTER VARYING(1024),
+        MOLECULAR_WEIGHT DOUBLE PRECISION,
+        MOLECULAR_FORMULA CHARACTER VARYING(1024),
         NSC_CMPD_TYPE_FK BIGINT not null,
         CMPD_PARENT_FRAGMENT_FK BIGINT unique,
-        CMPD_BIO_ASSAY_FK BIGINT unique,
-        CMPD_INVENTORY_FK BIGINT unique,
-        CMPD_ANNOTATIONS_FK BIGINT unique,
+        CMPD_BIO_ASSAY_FK BIGINT,
+        CMPD_INVENTORY_FK BIGINT,
+        CMPD_ANNOTATION_FK BIGINT,
         CMPD_LEGACY_CMPD_FK BIGINT unique,
         primary key (ID)
     );
@@ -413,6 +402,7 @@
         ID BIGINT not null,
         NSC INTEGER,
         MOL CHARACTER VARYING(1024) not null,
+        MOL_FROM_CTAB CHARACTER VARYING(1024) not null,
         primary key (ID)
     );
 
@@ -467,6 +457,11 @@
         references CMPD_KNOWN_SALT;
 
     alter table CMPD_FRAGMENT 
+        add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_TC 
+        foreign key (CMPD_FRAGMENT_TYPE_FK) 
+        references CMPD_FRAGMENT_TYPE;
+
+    alter table CMPD_FRAGMENT 
         add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_SC 
         foreign key (CMPD_FRAGMENT_STRUCTURE_FK) 
         references CMPD_FRAGMENT_STRUCTURE;
@@ -475,16 +470,6 @@
         add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_PC 
         foreign key (CMPD_FRAGMENT_P_CHEM_FK) 
         references CMPD_FRAGMENT_P_CHEM;
-
-    alter table CMPD_LISTS2SHARE_WITH_USERS 
-        add constraint DATA_SYSTEM_USER_CMPD_LISTS_FC 
-        foreign key (CMPD_LISTS_FK) 
-        references CMPD_LIST;
-
-    alter table CMPD_LISTS2SHARE_WITH_USERS 
-        add constraint CMPD_LIST_SHARE_WITH_USERS_FKC 
-        foreign key (SHARE_WITH_USERS_FK) 
-        references DATA_SYSTEM_USER;
 
     alter table CMPD_LIST_MEMBER 
         add constraint CMPD_LIST_MEMBER_CMPD_LIST_FKC 
@@ -495,6 +480,16 @@
         add constraint CMPD_LIST_MEMBER_CMPD_FKC 
         foreign key (CMPD_FK) 
         references CMPD;
+
+    alter table CMPD_NAMED_SETS2NSC_CMPDS 
+        add constraint CMPD_NAMED_SET_NSC_CMPDS_FKC 
+        foreign key (NSC_CMPDS_FK) 
+        references NSC_CMPD;
+
+    alter table CMPD_NAMED_SETS2NSC_CMPDS 
+        add constraint NSC_CMPD_CMPD_NAMED_SETS_FKC 
+        foreign key (CMPD_NAMED_SETS_FK) 
+        references CMPD_NAMED_SET;
 
     alter table CMPD_PLATES2NSC_CMPDS 
         add constraint CMPD_PLATE_NSC_CMPDS_FKC 
@@ -536,16 +531,6 @@
         foreign key (CMPD_RELATION_TYPE_FK) 
         references CMPD_RELATION_TYPE;
 
-    alter table CMPD_SETS2NSC_CMPDS 
-        add constraint CMPD_SET_NSC_CMPDS_FKC 
-        foreign key (NSC_CMPDS_FK) 
-        references NSC_CMPD;
-
-    alter table CMPD_SETS2NSC_CMPDS 
-        add constraint NSC_CMPD_CMPD_SETS_FKC 
-        foreign key (CMPD_SETS_FK) 
-        references CMPD_SET;
-
     create index cmpd_table_nsc on CMPD_TABLE (NSC);
 
     alter table CMPD_TARGETS2NSC_CMPDS 
@@ -558,25 +543,10 @@
         foreign key (CMPD_TARGETS_FK) 
         references CMPD_TARGET;
 
-    alter table DATA_SYSTEM_ROLES2DATA_SYSTEM_ 
-        add constraint DATA_SYSTEM_ROLE_DATA_SYSTEM_C 
-        foreign key (DATA_SYSTEM_USERS_FK) 
-        references DATA_SYSTEM_USER;
-
-    alter table DATA_SYSTEM_ROLES2DATA_SYSTEM_ 
-        add constraint DATA_SYSTEM_USER_DATA_SYSTEM_C 
-        foreign key (DATA_SYSTEM_ROLES_FK) 
-        references DATA_SYSTEM_ROLE;
-
     alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_LEGACY_CMPD_FKC 
         foreign key (CMPD_LEGACY_CMPD_FK) 
         references CMPD_LEGACY_CMPD;
-
-    alter table NSC_CMPD 
-        add constraint NSC_CMPD_CMPD_ANNOTATIONS_FKC 
-        foreign key (CMPD_ANNOTATIONS_FK) 
-        references CMPD_ANNOTATIONS;
 
     alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_INVENTORY_FKC 
@@ -597,6 +567,11 @@
         add constraint NSC_CMPD_CMPD_PARENT_FRAGMENTC 
         foreign key (CMPD_PARENT_FRAGMENT_FK) 
         references CMPD_FRAGMENT;
+
+    alter table NSC_CMPD 
+        add constraint NSC_CMPD_CMPD_ANNOTATION_FKC 
+        foreign key (CMPD_ANNOTATION_FK) 
+        references CMPD_ANNOTATION;
 
     alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_BIO_ASSAY_FKC 
@@ -625,9 +600,13 @@
 
     create sequence CMPD_KNOWN_SALT_SEQ;
 
+    create sequence CMPD_LEGACY_CMPD_SEQ;
+
     create sequence CMPD_LIST_MEMBER_SEQ;
 
     create sequence CMPD_LIST_SEQ;
+
+    create sequence CMPD_NAMED_SET_SEQ;
 
     create sequence CMPD_PLATE_SEQ;
 
@@ -640,8 +619,6 @@
     create sequence CMPD_RELATION_TYPE_SEQ;
 
     create sequence CMPD_SEQ;
-
-    create sequence CMPD_SET_SEQ;
 
     create sequence CMPD_TARGET_SEQ;
 

@@ -6,9 +6,9 @@
     <groupId>mwk.datasystem</groupId>
     <artifactId>datasystem</artifactId>
     <packaging>pom</packaging>
-    <version>0.1</version>
-    <name>DCTD Data</name>
-    <description>The DCTD Data Project.</description>
+    <version>20150309</version>
+    <name>Datasystem UML</name>
+    <description>Datasystem UML</description>
     <inceptionYear></inceptionYear>
     <url>http://www.andromda.org/</url>
     <issueManagement>

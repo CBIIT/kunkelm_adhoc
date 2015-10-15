@@ -5,11 +5,11 @@
     <parent>
         <groupId>mwk.datasystem</groupId>
         <artifactId>datasystem</artifactId>
-        <version>0.1</version>
+        <version>20150309</version>
     </parent>
     <artifactId>datasystem-common</artifactId>
     <packaging>jar</packaging>
-    <name>DCTD Data Common</name>
+    <name>Datasystem UML Common</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
