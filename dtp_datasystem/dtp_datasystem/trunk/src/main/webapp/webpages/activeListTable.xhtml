@@ -237,7 +237,8 @@
                            width="50"
                            value="#{sessionController.configurationBean.cmpdColumns}" 
                            var="column" 
-                           columnIndexVar="colIndex" 
+                           columnIndexVar="colIndex"
+                           sortable="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
                            sortBy="#{cmpd[column.property]}" 
                            filterBy="#{cmpd[column.property]}"
                            filterFunction="#{customFilter.customFilter}">

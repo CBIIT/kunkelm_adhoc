@@ -21,10 +21,6 @@
                 <!-- id-generator merge-point -->
             </generator>
         </id>
-        <property name="comment">
-            <column name="COMMENT" not-null="false" unique="false" sql-type="CHARACTER VARYING(1024)"/>
-            <type name="java.lang.String"/>
-        </property>
         <joined-subclass name="mwk.datasystem.domain.NscCmpdImpl" table="NSC_CMPD" lazy="true" dynamic-insert="false" dynamic-update="false" abstract="false">
             <key foreign-key="NSC_CMPDIFKC">
                 <column name="ID" sql-type="BIGINT"/>

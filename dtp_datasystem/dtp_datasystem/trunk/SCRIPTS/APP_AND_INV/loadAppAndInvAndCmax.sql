@@ -12,7 +12,7 @@ app_or_inv varchar,
 project_code varchar
 );
 
-\copy app_and_inv from ./appAndInv.09OCT2015.csv csv header
+\copy app_and_inv from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/appAndInv.09OCT2015.csv csv header
 
 -- stats
 
@@ -53,6 +53,9 @@ order by target;
 --
 --
 --
+
+drop table if exists cmax_small_mol;
+
 create table cmax_small_mol(
 sort_code varchar,
 nsc varchar,
@@ -91,6 +94,8 @@ filler8 varchar,
 filler9 varchar,
 unit_list varchar,
 route_list varchar);
+
+drop table if exists cmax_biologicals;
 
 create table cmax_biologicals(
 sort_code varchar,
@@ -131,8 +136,8 @@ filler10 varchar,
 unit_list varchar,
 route_list varchar);
 
-\copy cmax_small_mol from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/Cmax02.03.15.smallmol.csv csv header
-\copy cmax_biologicals from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/Cmax02.03.15.biologicals.csv csv header
+\copy cmax_small_mol from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/cmax.04july2015.smallmol.csv csv header
+\copy cmax_biologicals from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/cmax.04july2015.biologicals.csv csv header
 
 -- validate expected numeric-only columns
 
@@ -148,8 +153,17 @@ alter table cmax_biologicals alter column cmax_um type double precision using(cm
 alter table cmax_biologicals alter column cmax_mol_per_liter type double precision using(cmax_mol_per_liter::double precision);;
 alter table cmax_biologicals alter column cmax_g_per_liter type double precision using(cmax_g_per_liter::double precision);;
 
+drop table if exists app_and_inv_with_cmax;
 
+create table app_and_inv_with_cmax
+as
+select a.nsc, a.target, sm.target_moa as small_mol_target_moa, b.target_moa as biologicals_target_moa
+from app_and_inv a 
+    left join cmax_small_mol sm on a.nsc = sm.nsc
+    left join cmax_biologicals b on a.nsc = b.nsc
+order by a.nsc;
 
+\copy app_and_inv_with_cmax to /tmp/app_and_inv_with_cmax.csv csv header
 
 
 

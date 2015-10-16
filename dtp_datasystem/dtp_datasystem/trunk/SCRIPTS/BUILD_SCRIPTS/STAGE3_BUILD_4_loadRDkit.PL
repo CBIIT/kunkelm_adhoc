@@ -134,41 +134,41 @@ while ($sth->fetch()){
 }
 
 
-#drop table if exists rdkit_fps;
-#
-#create table rdkit_fps(
-#id bigint,
-#atompairfp bfp,
-#featmorganfp bfp,
-#morganfp bfp,
-#torsionfp bfp
-#);
+drop table if exists rdkit_fps;
 
-#insert into rdkit_fps
-#select 
-#id, 
-#atompairbv_fp(mol),
-#featmorganbv_fp(mol),
-#morganbv_fp(mol),
-#torsionbv_fp(mol)
-#from rdkit_mol;
+create table rdkit_fps(
+id bigint,
+atompairfp bfp,
+featmorganfp bfp,
+morganfp bfp,
+torsionfp bfp
+);
 
-#select nsc,
-#tanimoto_dist(atompairbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.atompairfp) as atompair,
-#tanimoto_dist(featmorganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.featmorganfp) as featmorgan,
-#tanimoto_dist(morganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.morganfp) as morgan,
-#tanimoto_dist(torsionbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.torsionfp) as torsion
-#from rdkit_fps, rdkit_mol 
-#where rdkit_fps.id = rdkit_mol.id
-#limit 10;
+insert into rdkit_fps
+select 
+id, 
+atompairbv_fp(mol),
+featmorganbv_fp(mol),
+morganbv_fp(mol),
+torsionbv_fp(mol)
+from rdkit_mol;
 
-#set rdkit.tanimoto_threshold = 0.8;
+select nsc,
+tanimoto_dist(atompairbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.atompairfp) as atompair,
+tanimoto_dist(featmorganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.featmorganfp) as featmorgan,
+tanimoto_dist(morganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.morganfp) as morgan,
+tanimoto_dist(torsionbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.torsionfp) as torsion
+from rdkit_fps, rdkit_mol 
+where rdkit_fps.id = rdkit_mol.id
+limit 10;
 
-#select rdkit_mol.nsc 
-#from rdkit_fps, rdkit_mol 
-#where morganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO',2) % rdkit_fps.morganfp 
-#and 
-#rdkit_fps.id = rdkit_mol.id;
+set rdkit.tanimoto_threshold = 0.8;
+
+select rdkit_mol.nsc 
+from rdkit_fps, rdkit_mol 
+where morganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO',2) % rdkit_fps.morganfp 
+and 
+rdkit_fps.id = rdkit_mol.id;
 
 # clean up
 $dbh->disconnect();
