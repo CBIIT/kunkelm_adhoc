@@ -14,6 +14,8 @@ import mwk.datasystem.vo.CmpdVO;
 public class Node {
 
     public Integer nsc;
+    public String drugName;
+    public String target;
 
     public String symbol;
     public String symbolColor;

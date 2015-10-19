@@ -29,6 +29,7 @@ import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
 import mwk.datasystem.domain.NscCmpdImpl;
+import mwk.datasystem.domain.TanimotoScores;
 import mwk.datasystem.vo.CmpdAliasVO;
 import mwk.datasystem.vo.CmpdAnnotationVO;
 import mwk.datasystem.vo.CmpdBioAssayVO;
@@ -44,6 +45,7 @@ import mwk.datasystem.vo.CmpdNamedSetVO;
 import mwk.datasystem.vo.CmpdPlateVO;
 import mwk.datasystem.vo.CmpdProjectVO;
 import mwk.datasystem.vo.CmpdTargetVO;
+import mwk.datasystem.vo.TanimotoScoresVO;
 
 /**
  *
@@ -52,6 +54,24 @@ import mwk.datasystem.vo.CmpdTargetVO;
 public class TransformAndroToVO {
 
     public static final Boolean DEBUG = Boolean.FALSE;
+
+    public static TanimotoScoresVO translateTanimotoScores(TanimotoScores entityIn) {
+
+        TanimotoScoresVO rtn = new TanimotoScoresVO();
+
+        rtn.setNsc1(entityIn.getNsc1());
+        rtn.setNsc2(entityIn.getNsc2());
+        rtn.setAtomPair(entityIn.getAtomPair());
+        rtn.setFeatMorgan(entityIn.getFeatMorgan());
+        rtn.setLayered(entityIn.getLayered());
+        rtn.setMacss(entityIn.getMacss());
+        rtn.setMorganBv(entityIn.getMorganBv());
+        rtn.setRdkit(entityIn.getRdkit());
+        rtn.setTorsionBv(entityIn.getTorsionBv());
+
+        return rtn;
+
+    }
 
     public static CmpdKnownSaltVO translateCmpdKnownSalt(CmpdKnownSalt entityIn) {
         CmpdKnownSaltVO rtn = new CmpdKnownSaltVO();
@@ -359,7 +379,6 @@ public class TransformAndroToVO {
 //                rtn.setSaltMw(nscc.getSaltMw());
 //                rtn.setParentStoichiometry(nscc.getParentStoichiometry());
 //                rtn.setSaltStoichiometry(nscc.getSaltStoichiometry());
-                
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());

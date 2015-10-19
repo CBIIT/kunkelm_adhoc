@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>Tanimoto Score Force Graph</title>
+            </f:facet>
+
+            <style type="text/css">
+
+                circle.norm {
+                    fill: green;
+                    stroke: black;
+                    stroke-width: 1.5px;           
+                }
+
+                circle.sel{
+                    fill: red;
+                    stroke: #black;
+                    stroke-width: 1.5px;           
+                }
+                .node {
+                    stroke: #fff;
+                    stroke-width: 1.5px;            
+                }
+
+                .link {
+                    stroke: #999;
+                    stroke-opacity: .6;
+                }
+
+            </style>
+
+            <h:outputScript library="js" name="d3.js"/>
+            <script type="text/javascript" src="./tanimotoForce.js"></script>
+
+            <h:outputScript library="js" name="rgbcolor.js"/> 
+            <h:outputScript library="js" name="canvg.js"/>
+
+
+        </h:head>
+
+        <h:body onload="setGlobals(); drawIt();">
+
+            <h:form id="theForm">
+                
+                <p:commandButton action="#{tanimotoForceGraphController.reload()}"
+                                 value="RELOAD DATA"/>
+
+                <h:inputHidden id="jsonStr" 
+                               value="#{tanimotoForceGraphController.json}"/>
+
+                <div>
+
+                    <p:panelGrid columns="7">
+
+                        <p:outputLabel for="fp" value="Which Fingerprint"/>
+                        <p:outputLabel for="mintan" value="Minimum Tanimoto Score"/>
+                        <p:outputLabel for="multinsc" value="Highlight NSC"/>
+                        <p:outputLabel for="multidrugname" value="Highlight Drug Names"/>
+                        <p:outputLabel for="multitarg" value="Highlight Targets"/>                        
+                        <p:outputLabel for="exportButton" value="Export as Image"/>
+                        <p:outputLabel for="structPanel" value="Current Structures"/>
+                        
+                         <h:selectOneListbox id="fp" size="1">
+                            <f:selectItem itemLabel="atompairbv_fp_tanimoto" itemValue="ap"/>
+                            <f:selectItem itemLabel="featmorganbv_fp_tanimoto" itemValue="fm"/>
+                            <f:selectItem itemLabel="layered_fp_tanimoto" itemValue="l"/>
+                            <f:selectItem itemLabel="maccs_fp_tanimoto" itemValue="mc"/>
+                            <f:selectItem itemLabel="morganbv_fp_tanimoto" itemValue="m"/>
+                            <f:selectItem itemLabel="rdkit_fp_tanimoto" itemValue="r"/>
+                            <f:selectItem itemLabel="torsionbv_fp_tanimoto" itemValue="to"/>
+                        </h:selectOneListbox>
+
+                        <h:selectOneListbox id="mintan"
+                                            size="1"
+                                            value="#{tanimotoForceGraphController.minTan}">
+                            <f:selectItem itemLabel="0" itemValue="0"/>
+                            <f:selectItem itemLabel="0.1" itemValue="0.1"/>
+                            <f:selectItem itemLabel="0.2" itemValue="0.2"/>
+                            <f:selectItem itemLabel="0.3" itemValue="0.3"/>
+                            <f:selectItem itemLabel="0.4" itemValue="0.4"/>
+                            <f:selectItem itemLabel="0.5" itemValue="0.5"/>
+                            <f:selectItem itemLabel="0.6" itemValue="0.6"/>
+                            <f:selectItem itemLabel="0.625" itemValue="0.625"/>
+                            <f:selectItem itemLabel="0.65" itemValue="0.65"/>
+                            <f:selectItem itemLabel="0.675" itemValue="0.675"/>
+                            <f:selectItem itemLabel="0.7" itemValue="0.7"/>
+                            <f:selectItem itemLabel="0.725" itemValue="0.725"/>
+                            <f:selectItem itemLabel="0.75" itemValue="0.75"/>
+                            <f:selectItem itemLabel="0.775" itemValue="0.775"/>
+                            <f:selectItem itemLabel="0.8" itemValue="0.8"/>
+                            <f:selectItem itemLabel="0.825" itemValue="0.825"/>
+                            <f:selectItem itemLabel="0.85" itemValue="0.85"/>
+                            <f:selectItem itemLabel="0.875" itemValue="0.875"/>
+                            <f:selectItem itemLabel="0.9" itemValue="0.9"/>
+                            <f:selectItem itemLabel="0.925" itemValue="0.925"/>
+                            <f:selectItem itemLabel="0.95" itemValue="0.95"/>
+                            <f:selectItem itemLabel="0.975" itemValue="0.975"/>
+                            <f:selectItem itemLabel="1" itemValue="1"/>                        
+                        </h:selectOneListbox>
+                       
+                        <h:selectManyListbox id="multinsc"
+                                             size="5">
+                            <f:selectItems value="#{tanimotoForceGraphController.nscList}"
+                                           var="nsc"
+                                           itemLabel="#{nsc}"
+                                           itemValue="#{nsc}"/>
+                        </h:selectManyListbox>
+
+                        <h:selectManyListbox id="multidrugname"
+                                             size="5">
+                            <f:selectItems value="#{tanimotoForceGraphController.drugNameList}"
+                                           var="nam"
+                                           itemLabel="#{nam}"
+                                           itemValue="#{nam}"/>
+                        </h:selectManyListbox>                        
+                        
+                        <h:selectManyListbox id="multitarg"
+                                             size="5">
+                            <f:selectItems value="#{tanimotoForceGraphController.targetList}"
+                                           var="targ"
+                                           itemLabel="#{targ}"
+                                           itemValue="#{targ}"/>
+                        </h:selectManyListbox>
+
+                        <h:commandButton id="exportButton" 
+                                         type="button" 
+                                         value="Export as Image"
+                                         onclick="toPng()"/>
+
+                        <p:panel id="structPanel">
+
+                        </p:panel>
+
+                    </p:panelGrid>
+
+                </div>
+
+                <div id="divForD3"> 
+                </div>
+
+            </h:form>
+
+            <ui:include src="/webpages/dialogExportImage.xhtml"/>
+
+        </h:body>
+
+    </f:view>
+
+</html>

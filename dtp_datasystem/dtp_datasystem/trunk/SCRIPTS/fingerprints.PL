@@ -62,8 +62,6 @@ push @fpList, "torsionbv_fp";
 my @sqlList;
 my $sth;
 
-
-
 foreach my $fp(@fpList){
 	push @sqlList, "drop table if exists temp_" . $fp;
 	push @sqlList, "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol where nsc in ( select nsc from app_and_inv )";
@@ -136,10 +134,39 @@ foreach my $fp(@fpList){
 	$sql = $sql . "\n left outer join temp_tanimoto_" . $fp . " on all_pair_nsc.uno = temp_tanimoto_" . $fp . ".nsc1 and all_pair_nsc.duo = temp_tanimoto_" . $fp . ".nsc2";
 }
 
-print "$sql\n";
+print "$sql\n\n";
 
 $sth = $dbh->prepare($sql);
 #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+
+  ####    #####    ##     ####   #    #  ######  #####
+ #          #     #  #   #    #  #   #   #       #    #
+  ####      #    #    #  #       ####    #####   #    #
+      #     #    ######  #       #  #    #       #    #
+ #    #     #    #    #  #    #  #   #   #       #    #
+  ####      #    #    #   ####   #    #  ######  #####
+
+@sqlList = ();
+
+$sql = "drop table if exists temp_tanimoto_stacked";
+
+push @sqlList, $sql;
+
+$sql = "create table temp_tanimoto_stacked( uno int, duo int, fp varchar, tanimoto double precision )";
+
+push @sqlList, $sql;
+
+foreach my $fp(@fpList){
+	print "$fp";
+	push @sqlList, "insert into temp_tanimoto_stacked select nsc1, nsc2, '$fp', tanimoto from temp_tanimoto_" . $fp . " where nsc1 < nsc2";
+}
+
+foreach my $sql(@sqlList){
+  $sth = $dbh->prepare($sql);
+  print "$sql\n\n";
+$sth = $dbh->prepare($sql);
+$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+}
 
 
  ######  #    #  #####    ####   #####    #####

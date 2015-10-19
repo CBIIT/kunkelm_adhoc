@@ -58,7 +58,17 @@
                         icon="fa fa-bar-chart"
                         ajax="false"
                         actionListener="#{histogramController.handleLoadActiveList}"/>
+            
+             <p:menuitem value="Tanimoto Histograms" 
+                        icon="fa fa-bar-chart"
+                        ajax="false"
+                        action="/webpages/d3/tanimotoHistoScat?faces-redirect=true"/>
 
+             <p:menuitem value="Tanimoto Force Graph" 
+                        icon="fa fa-bar-chart"
+                        ajax="false"
+                        action="/webpages/d3/tanimotoForce?faces-redirect=true"/>
+             
         </p:submenu>
 
         <p:menuitem value="Configure Display"

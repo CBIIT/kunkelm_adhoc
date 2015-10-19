@@ -48,6 +48,7 @@
         <mapping resource="mwk/datasystem/domain/CmpdProject.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/NscCmpdType.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/RdkitMol.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/TanimotoScores.hbm.xml"/>
     
                 
        
