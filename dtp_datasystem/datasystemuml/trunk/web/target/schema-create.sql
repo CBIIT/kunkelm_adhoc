@@ -406,6 +406,20 @@
         primary key (ID)
     );
 
+    create table TANIMOTO_SCORES (
+        ID BIGINT not null,
+        NSC1 INTEGER,
+        NSC2 INTEGER,
+        ATOM_PAIR DOUBLE PRECISION,
+        FEAT_MORGAN DOUBLE PRECISION,
+        LAYERED DOUBLE PRECISION,
+        MACSS DOUBLE PRECISION,
+        MORGAN_BV DOUBLE PRECISION,
+        RDKIT DOUBLE PRECISION,
+        TORSION_BV DOUBLE PRECISION,
+        primary key (ID)
+    );
+
     alter table AD_HOC_CMPD 
         add constraint AD_HOC_CMPDIFKC 
         foreign key (ID) 
