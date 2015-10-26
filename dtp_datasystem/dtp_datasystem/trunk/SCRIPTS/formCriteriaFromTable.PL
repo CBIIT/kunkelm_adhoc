@@ -181,12 +181,15 @@ foreach my $line(@lines){
 		push @cumulativeFieldNames, qq["$varName"];
 		
 		print hibernatePart qq[		
-		if (this.min_$varName != null && this.max_$varName != null){
+		if (scb.min_$varName != null && scb.max_$varName != null){
 		// between
-		} else if (this.min_$varName != null){
+                c.add(Restrictions.between("pchem.$varName", scb.min_$varName, scb.max_$varName));
+		} else if (scb.min_$varName != null){
 		// gt min
-		} else if (this.max_$varName != null){
+                c.add(Restrictions.gt("pchem.$varName", scb.min_$varName));
+		} else if (scb.max_$varName != null){
 		// lt max
+                c.add(Restrictions.lt("pchem.$varName", scb.max_$varName));
 		}		
 		];
 		
@@ -231,13 +234,16 @@ foreach my $line(@lines){
 		push @cumulativeFieldNames, qq["$varName"];
 		
 		print hibernatePart qq[		
-		if (this.min_$varName != null && this.max_$varName != null){
+		if (scb.min_$varName != null && scb.max_$varName != null){
 		// between
-		} else if (this.min_$varName != null){
+                c.add(Restrictions.between("pchem.$varName", scb.min_$varName, scb.max_$varName));
+		} else if (scb.min_$varName != null){
 		// gt min
-		} else if (this.max_$varName != null){
+                c.add(Restrictions.gt("pchem.$varName", scb.min_$varName));
+		} else if (scb.max_$varName != null){
 		// lt max
-		}
+                c.add(Restrictions.lt("pchem.$varName", scb.max_$varName));
+		}		
 		];
 		
 	} elsif ($varType eq "String"){
@@ -271,8 +277,8 @@ foreach my $line(@lines){
 		push @cumulativeFieldNames, qq["$varName"];
 		
 		print hibernatePart qq[		
-		if (this.$varName != null){
-		// eq
+		if (scb.$varName != null){
+		// eq TODO handle this
 		}
 		];
 		
