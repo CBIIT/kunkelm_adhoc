@@ -20,17 +20,34 @@ public class Main {
         "jdbc:postgresql://localhost:5432/datasystemdb",
         "mwkunkel",
         "donkie11",
-        "jdbc:postgresql://localhost:5432/oncologydrugsdb",
-        "mwkunkel",
-        "donkie11"
+        
+        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
+        "oncology",
+        "OnC0L029302802K1t"
     };
 
     // compare to oncologydrugs
     static final String[] compare2od = new String[]{
-        "jdbc:postgresql://localhost:5432/sarcomadb",
+        "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
-        "jdbc:postgresql://localhost:5432/comparedb",
+        
+        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
+        "oncology",
+        "OnC0L029302802K1t"
+    };
+    
+      // private compare to public compare
+    static final String[] priv2pub = new String[]{
+        "jdbc:postgresql://localhost:5432/privatecomparedb",
+        "mwkunkel",
+        "donkie11",
+        
+//        "jdbc:postgresql://ncidb-d115-d:5473/pubcompare",
+//        "publiccompare",
+//        "P3b092094wlC0m3"
+//        
+        "jdbc:postgresql://localhost:5432/publiccomparedb",
         "mwkunkel",
         "donkie11"
     };
@@ -51,7 +68,7 @@ public class Main {
         "cmpd_inventory", " where id in (select nsc from for_export)",
         "cmpd_annotation", " where id in (select nsc from for_export)",
         "cmpd_bio_assay", " where id in (select nsc from for_export)",
-        "cmpd_legacy_cmpd", " where nsc in (select nsc from for_export)",
+        "cmpd_legacy_cmpd", " where id in (select nsc from for_export)",
         "cmpd_table", " where nsc in (select nsc from for_export)",
         // 
         "cmpd", " where id in (select nsc from for_export)",
@@ -118,8 +135,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] whichConnectionInfo = compare2od; //ds2od;
-        String[] whichTableNamesAndWhereClauses = compare2od_tnwc; //ds2od_tnwc;
+        String[] whichConnectionInfo = compare2od;
+        String[] whichTableNamesAndWhereClauses = compare2od_tnwc;
 
         Connection destConn = null;
         Connection sourceConn = null;
@@ -132,9 +149,9 @@ public class Main {
             destConn = DriverManager.getConnection(whichConnectionInfo[3], whichConnectionInfo[4], whichConnectionInfo[5]);
 
             // archive constraint drop/create statements
-            //ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
+            // ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
             // drop constraints before build
-            ConstraintManagement.dropConstraints(destConn);
+            // ConstraintManagement.dropConstraints(destConn);
 
             for (int i = 0; i < whichTableNamesAndWhereClauses.length; i += 2) {
                 String curTbl = whichTableNamesAndWhereClauses[i];

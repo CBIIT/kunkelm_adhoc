@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * @author mwkunkel
  */
 public class Replicator {
-    
-    public static final Integer BATCH_SIZE = 10000;
+
+    public static final Integer BATCH_SIZE = 100000;
 
     public static void useMetadata(
             Connection sourceConn,
@@ -31,11 +31,15 @@ public class Replicator {
 
         try {
 
+            sourceConn.setAutoCommit(false);
+
+            // setting this on the statement
+            // ALSO set on ResultSet below
             sourceStmt = sourceConn.createStatement();
             sourceStmt.setFetchSize(BATCH_SIZE);
+            sourceStmt.setFetchDirection(ResultSet.FETCH_FORWARD);
 
             destConn.setAutoCommit(true);
-
             destStmt = destConn.createStatement();
 
             System.out.println();
@@ -47,9 +51,19 @@ public class Replicator {
             int result = destStmt.executeUpdate("delete from " + tblName);
 
             System.out.println("-----Selecting from source: " + tblName);
-            String selStr = "select * from " + tblName + whereClause;
+
+            String selStr = "";
+
+            // K L U D G E !
+            if (tblName.equals("publicrelease")) {
+                selStr = "select * from structure_edit.publicrelease";
+            } else {
+                selStr = "select * from " + tblName + whereClause;
+            }
+
             System.out.println("-----" + selStr);
             rs = sourceStmt.executeQuery(selStr);
+            rs.setFetchDirection(ResultSet.FETCH_FORWARD);
 
             ResultSetMetaData md = rs.getMetaData();
 
@@ -77,6 +91,8 @@ public class Replicator {
 
             prepStmt = destConn.prepareStatement(iB.toString());
 
+            int cumCnt = 0;
+
             //have to catch those few tables that have lots of rows.
             int prepStmtCounter = 0;
             while (rs.next()) {
@@ -86,7 +102,8 @@ public class Replicator {
                 }
                 prepStmt.addBatch();
                 if (prepStmtCounter == BATCH_SIZE) {
-                    System.out.println("-----prepStmt.batch size is " + BATCH_SIZE + ".  Executing.");
+                    cumCnt += prepStmtCounter;
+                    System.out.println("-----prepStmt.batch size is " + BATCH_SIZE + ".  Executing. cumCnt: " + cumCnt);
                     prepStmt.executeBatch();
                     prepStmtCounter = 0;
                 }

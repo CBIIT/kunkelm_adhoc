@@ -22,6 +22,8 @@
         <!-- MWK local copy modified to change cascade to none from clm to cmpd -->        
         <mapping resource="CmpdListMember.hbm.xml"/>
 
+        <!-- MWK local copy modified to manually set id (to NSC) -->        
+        <mapping resource="CmpdLegacyCmpd.hbm.xml"/>
        
         <!-- androMDA mappings -->   
     
@@ -41,7 +43,7 @@
         <mapping resource="mwk/datasystem/domain/CmpdFragmentStructure.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdInventory.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdKnownSalt.hbm.xml"/>
-        <mapping resource="mwk/datasystem/domain/CmpdLegacyCmpd.hbm.xml"/>        
+        <!--<mapping resource="mwk/datasystem/domain/CmpdLegacyCmpd.hbm.xml"/>-->
         <mapping resource="mwk/datasystem/domain/CmpdTarget.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdPlate.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/CmpdNamedSet.hbm.xml"/>

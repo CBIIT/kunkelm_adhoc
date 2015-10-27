@@ -9371,6 +9371,7 @@ dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main
 dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/tags/TagBeforeFullReplace[!!-~]28July2014/src/main/webapp/webpages/uploadList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/build.xml -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/manifest.mf -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/nbproject/build-impl.xml -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/nbproject/genfiles.properties -text
@@ -9386,13 +9387,14 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonres
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/DatabaseException.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.class -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/AnotherExample.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ConstraintManagement.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ExampleFromNet.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/GetPublicRelease.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/MicroXenoReplicator.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ParkingLot.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Replicator.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/AnotherExample.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/ExampleFromNet.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/ParkingLot.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/build.xml -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/jaxb-api-2.2.12.jar -text
@@ -9455,6 +9457,7 @@ dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clin
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clinicaltrials/TextblockStruct.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clinicaltrials/VocabTermStruct.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clinicaltrials/jaxb.index -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromchembl/FetchFromChembl.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromprod/FetchFromProd.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/log4j.properties -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/Main.java -text
@@ -9597,6 +9600,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MoleculeWr
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdLegacyCmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdListMember.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdTable.hbm.xml -text

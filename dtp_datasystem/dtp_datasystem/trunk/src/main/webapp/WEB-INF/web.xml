@@ -93,39 +93,22 @@
     <security-role>
         <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
     </security-role>
-    <Realm className="org.apache.catalina.realm.CombinedRealm">
-        
+    <Realm className="org.apache.catalina.realm.CombinedRealm">        
         <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>        
         <Realm className="org.apache.catalina.realm.JNDIRealm" 
-                       debug="10"				
-                       connectionTimeout="30000" 
-                       connectionName="ncimkldapconnect" 
-                       connectionPassword="Mk07242015**mesozoic" 
-                       connectionURL="ldap://nihdcadhub.nih.gov:389"
-                       userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"
-                       roleName="cn" 
-                       roleBase="ou=groups,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov"
-                       roleNested="true"
-                       roleSearch="(member={0})" 
-                       roleSubtree="true"
-                       sizeLimit="0"
-                       allRolesMode="authOnly" />
-        
-        <!--
-        
-        <Realm allRolesMode="authOnly" 
-               className="org.apache.catalina.realm.JNDIRealm" 
+               debug="10"				
+               connectionTimeout="30000" 
                connectionName="ncimkldapconnect" 
                connectionPassword="Mk07242015**mesozoic" 
-               connectionTimeout="30000" 
-               connectionURL="ldap://nihdcadhub.nih.gov:389" 
-               debug="10" roleBase="ou=groups,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov" 
-               roleName="cn" roleNested="true" 
+               connectionURL="ldap://nihdcadhub.nih.gov:389"
+               userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"
+               roleName="cn" 
+               roleBase="ou=groups,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov"
+               roleNested="true"
                roleSearch="(member={0})" 
-               roleSubtree="true" 
-               sizeLimit="0" 
-               userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"/>
-               
-               -->
+               roleSubtree="true"
+               sizeLimit="0"
+               allRolesMode="authOnly" />
+        
     </Realm>
 </web-app>

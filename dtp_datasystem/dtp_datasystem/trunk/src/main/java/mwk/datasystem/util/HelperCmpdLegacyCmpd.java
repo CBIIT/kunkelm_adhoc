@@ -92,9 +92,8 @@ public class HelperCmpdLegacyCmpd {
             tx = session.beginTransaction();
 
             CmpdLegacyCmpd clc = CmpdLegacyCmpd.Factory.newInstance();
-
-            // id is set by hibernate sequence generator clc.setId(nsc.longValue());
-            clc.setNsc(nsc);            
+                       
+            clc.setId(nsc.longValue());            
             clc.setJpg512(imageBytes);
 
             session.save(clc);

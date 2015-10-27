@@ -34,7 +34,7 @@ public class HelperTanimotoScores {
      select 
      nextval('tan_seq'), uno, duo, atompairbv_fp_tanimoto, featmorganbv_fp_tanimoto, layered_fp_tanimoto, maccs_fp_tanimoto, morganbv_fp_tanimoto, rdkit_fp_tanimoto, torsionbv_fp_tanimoto
      from temp_tanimoto_collate
-    where uno < 200000 and duo < 200000;
+    where uno < duo;
      */
     public static ArrayList<TanimotoScoresVO> fetch() {
 

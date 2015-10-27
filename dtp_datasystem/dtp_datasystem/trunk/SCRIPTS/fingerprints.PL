@@ -69,7 +69,7 @@ foreach my $fp(@fpList){
 
 foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
+  print "$sql;\n\n";
 #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
@@ -85,14 +85,14 @@ foreach my $sql(@sqlList){
 @sqlList = ();
 
 foreach my $fp(@fpList){
-	print "$fp";
+	# print "$fp";
 	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
 	push @sqlList, "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
 }
 
 foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
+  print "$sql;\n\n";
  #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
@@ -101,13 +101,13 @@ foreach my $sql(@sqlList){
 @sqlList = ();
 
 foreach my $fp(@fpList){
-	print "$fp";
+	# print "$fp";
 	push @sqlList, "select count(*) from temp_tanimoto_" . $fp;		
 }
 
 foreach my $sql(@sqlList){
   my $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
+  print "$sql;\n\n";
  #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
@@ -134,7 +134,7 @@ foreach my $fp(@fpList){
 	$sql = $sql . "\n left outer join temp_tanimoto_" . $fp . " on all_pair_nsc.uno = temp_tanimoto_" . $fp . ".nsc1 and all_pair_nsc.duo = temp_tanimoto_" . $fp . ".nsc2";
 }
 
-print "$sql\n\n";
+print "$sql;\n\n";
 
 $sth = $dbh->prepare($sql);
 #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
@@ -157,15 +157,15 @@ $sql = "create table temp_tanimoto_stacked( uno int, duo int, fp varchar, tanimo
 push @sqlList, $sql;
 
 foreach my $fp(@fpList){
-	print "$fp";
+	# print "$fp";
 	push @sqlList, "insert into temp_tanimoto_stacked select nsc1, nsc2, '$fp', tanimoto from temp_tanimoto_" . $fp . " where nsc1 < nsc2";
 }
 
 foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
+  print "$sql;\n\n";
 $sth = $dbh->prepare($sql);
-$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+#$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
 
@@ -189,7 +189,7 @@ foreach my $fp(@fpList){
 
 foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
-  print "$sql\n\n";
+  print "$sql;\n\n";
   # Can't execute \copy over DBI...   just print these out
   #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
 }

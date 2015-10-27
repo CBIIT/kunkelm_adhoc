@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ 
+ 
+ 
  */
 package fetchfromprod;
 
@@ -48,21 +48,27 @@ public class FetchFromProd {
             oraConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
-            System.out.println("Starting: fetchBioDataCounts");
-            fetchBioDataCounts(pgConn, oraConn);
+//            System.out.println("Starting: fetchBioDataCounts");
+//            fetchBioDataCounts(pgConn, oraConn);
+//
+//            System.out.println("Starting: fetchMtxt");
+//            fetchMtxt(pgConn, oraConn);
+//
+//            System.out.println("Starting: fetchInventory");
+//            fetchInventory(pgConn, oraConn);
+//
+//            System.out.println("Starting: fetchChemNames");
+//            fetchChemNames(pgConn, oraConn);
+//
+//            System.out.println("Starting: fetchPubChemId");
+//            fetchPubChemId(pgConn, oraConn);
+//
+//            System.out.println("Starting: fetchCmpd");
+//            fetchCmpd(pgConn, oraConn);
 
-            System.out.println("Starting: fetchChemNames");
-            fetchChemNames(pgConn, oraConn);
-           
-             System.out.println("Starting: fetchCmpd");
-            fetchCmpd(pgConn, oraConn);
+            System.out.println("Starting: fetchProjects");
+            fetchProjects(pgConn, oraConn);
             
-            System.out.println("Starting: fetchInventory");
-            fetchInventory(pgConn, oraConn);
-
-            System.out.println("Starting: fetchMtxt");
-            fetchMtxt(pgConn, oraConn);
-
             System.out.println("Starting: fetchPlatedSets");
             fetchPlatedSets(pgConn, oraConn);
             
@@ -74,6 +80,7 @@ public class FetchFromProd {
 
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
+            e.printStackTrace();
         } finally {
             if (oraConn != null) {
                 System.out.println("Closing oraConn.");
@@ -738,11 +745,11 @@ public class FetchFromProd {
             pgPrepStmt.executeBatch();
             pgConn.commit();
 
-            sqlString = "drop index if exists prod_cmpd_cmpd_id";
+            sqlString = "drop index if exists prod_cmpd_nsc";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create index prod_cmpd_cmpd_id on prod_cmpd(cmpd_id)";
+            sqlString = "create index prod_cmpd_nsc on prod_cmpd(nsc)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
@@ -855,6 +862,7 @@ public class FetchFromProd {
     public static void fetchPlatedSets(
             Connection pgConn,
             Connection oraConn) throws Exception {
+        
 // have to add distinct filter since DIS tracks different interations of same plate
 
         Statement oraStmt = null;
@@ -883,8 +891,7 @@ public class FetchFromProd {
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "select distinct nsc, plateset "
-                    + "from ops$oradis.oradis_dis_well";
+            sqlString = "select distinct nsc, plateset from ops$oradis.oradis_dis_well";
             System.out.println(sqlString);
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);

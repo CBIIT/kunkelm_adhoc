@@ -34,32 +34,7 @@ public class LoadKekuleRenderedImages {
 
     public static void insertLegacyCmpds() {
 
-//        File[] files = new File[]{
-//            new File("172122.GIF"),
-//            new File("232822.GIF"),
-//            new File("296108.GIF"),
-//            new File("369447.GIF"),
-//            new File("600300.GIF"),
-//            new File("663277.GIF"),
-//            new File("742310.GIF"),
-//            new File("904466.GIF"),
-//            new File("914041.GIF"),
-//            new File("923547.GIF"),
-//            new File("99959.GIF"),
-//            new File("172127.GIF"),
-//            new File("232874.GIF"),
-//            new File("296109.GIF"),
-//            new File("369449.GIF"),
-//            new File("600301.GIF"),
-//            new File("663279.GIF"),
-//            new File("742311.GIF"),
-//            new File("904467.GIF"),
-//            new File("914042.GIF"),
-//            new File("923548.GIF"),
-//            new File("9995.GIF")
-//        };
-
-        File path = new File("/home/mwkunkel/GIFFILES");
+        File path = new File("/home/mwkunkel/KEKULE_GIF_FILES");
 
         try {
 

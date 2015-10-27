@@ -128,14 +128,10 @@ public class TransformAndroToVO {
 
         if (entityIn != null) {
             rtn.setId(entityIn.getId());
-            rtn.setNsc(entityIn.getNsc());
             rtn.setCtab(entityIn.getCtab());
             rtn.setJpg512(entityIn.getJpg512());
             rtn.setMolecularFormula(entityIn.getMolecularFormula());
-            rtn.setMolecularWeight(entityIn.getMolecularWeight());
-            rtn.setInventory(entityIn.getInventory());
-            rtn.setCountNci60(entityIn.getCountNci60());
-            rtn.setMtxt(entityIn.getMtxt());
+            rtn.setMolecularWeight(entityIn.getMolecularWeight());            
         }
 
         return rtn;
