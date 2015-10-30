@@ -187,8 +187,8 @@
                     <jdbcUsername>${jdbc.username}</jdbcUsername>
                     <jdbcPassword>${jdbc.password}</jdbcPassword>
                     <!-- set this to false if you don't want to execute
-                         the generated SQL scripts (creates and saves DDL under app/target/schema*.sql -->
-                    <executeScripts>false</executeScripts>
+                    the generated SQL scripts (creates and saves DDL under app/target/schema*.sql -->
+                    <executeScripts>true</executeScripts>
                     <properties>
                         <property>
                             <name>mappingsLocation</name>
@@ -216,45 +216,45 @@
                     -->
                 </configuration>
                 <dependencies>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-core</artifactId>
-						<version>${hibernate.version}</version>
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-core</artifactId>
+                        <version>${hibernate.version}</version>
                         
                         <!--MWK exclusions to try to make schema create work-->
-						<exclusions>
-							<exclusion>
-								<groupId>org.slf4j</groupId>
-								<artifactId>slf4j-api</artifactId>
-							</exclusion>
-						</exclusions>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-api</artifactId>
+                            </exclusion>
+                        </exclusions>
 					
-					</dependency>
+                    </dependency>
                     
                     <!-- MWK dependencies needed for validator framework -->
 					
-					<dependency>
-						<artifactId>hibernate-validator</artifactId>
-						<groupId>org.hibernate</groupId>
-						<version>4.2.0.Final</version>
+                    <dependency>
+                        <artifactId>hibernate-validator</artifactId>
+                        <groupId>org.hibernate</groupId>
+                        <version>4.2.0.Final</version>
 						
-						<!--MWK exclusions to try to make schema create work-->
-						<exclusions>
-							<exclusion>
-								<groupId>org.slf4j</groupId>
-								<artifactId>slf4j-api</artifactId>
-							</exclusion>
-						</exclusions>
+                        <!--MWK exclusions to try to make schema create work-->
+                        <exclusions>
+                            <exclusion>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-api</artifactId>
+                            </exclusion>
+                        </exclusions>
 					
-					</dependency>
+                    </dependency>
 					
-					<dependency>
-						<groupId>commons-validator</groupId>
-						<artifactId>commons-validator</artifactId>
-						<version>1.3.1</version>
-					</dependency>
+                    <dependency>
+                        <groupId>commons-validator</groupId>
+                        <artifactId>commons-validator</artifactId>
+                        <version>1.3.1</version>
+                    </dependency>
 				
-				</dependencies>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>

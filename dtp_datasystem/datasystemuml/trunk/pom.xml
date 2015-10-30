@@ -99,8 +99,8 @@
                 </exclusions>
             </dependency>
             <!-- This dependency provides the ability to implement your
-                 business logic in an interpreted manner during development on
-                 your local machine -->
+            business logic in an interpreted manner during development on
+            your local machine -->
             <dependency>
                 <groupId>org.andromda</groupId>
                 <artifactId>andromda-script-wrappers</artifactId>
@@ -263,12 +263,16 @@
                 <version>1.2.17</version>
                 <!--scope>test</scope-->
             </dependency>
+            
             <dependency>
                 <groupId>postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>9.1-901.jdbc4</version>
                 <scope>test</scope>
             </dependency>
+            
+            
+            
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
@@ -372,14 +376,14 @@
                     <configuration>
                         <archive>
                             <manifest>
-                              <addClasspath>true</addClasspath>
-                              <useUniqueVersions>false</useUniqueVersions>
-                              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addClasspath>true</addClasspath>
+                                <useUniqueVersions>false</useUniqueVersions>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             </manifest>
                             <manifestEntries>
-                              <Implementation-Build>${maven.build.timestamp}</Implementation-Build>
-                              <url>${project.url}</url>
+                                <Implementation-Build>${maven.build.timestamp}</Implementation-Build>
+                                <url>${project.url}</url>
                             </manifestEntries>
                         </archive>
                         <excludes>
@@ -399,7 +403,7 @@
                 </plugin>
                 <plugin>
                     <!-- Automatically attach sources to build artifact as artifact-version-sources.jar and deploy to local repository.
-                         Causes generate-sources phase to execute twice if under plugins instead of pluginManagement - bug -->
+                    Causes generate-sources phase to execute twice if under plugins instead of pluginManagement - bug -->
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.2</version>
                     <executions>
@@ -422,8 +426,8 @@
                     <artifactId>tomcat-maven-plugin</artifactId>
                     <version>1.1</version>
                     <configuration>
-                      <contextFile>${project.basedir}/src/test/resources/context.xml</contextFile>
-                      <additionalConfigFilesDir>${project.basedir}/src/test/resources</additionalConfigFilesDir>
+                        <contextFile>${project.basedir}/src/test/resources/context.xml</contextFile>
+                        <additionalConfigFilesDir>${project.basedir}/src/test/resources</additionalConfigFilesDir>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -555,7 +559,8 @@
             For Derby use: Derby
         -->
         <sql.mappings>
-            PostgreSQL
+            <!-- MWK 27 Oct 2015 PostgreSQL -->
+            Oracle9i
         </sql.mappings>
         <!--
         Change this for the appropriate database
@@ -581,7 +586,8 @@
         For Sybase Anywhere use: org.hibernate.dialect.SybaseAnywhereDialect
         -->
         <hibernate.dialect>
-            org.hibernate.dialect.PostgreSQLDialect
+            <!-- MWK 27 Oct 2015 org.hibernate.dialect.PostgreSQLDialect -->
+            org.hibernate.dialect.Oracle10gDialect
         </hibernate.dialect>
         <tomcat.home>${env.CATALINA_HOME}</tomcat.home>
         <application.id>datasystem</application.id>
@@ -614,7 +620,8 @@
                 For Hypersonic use: hsqldb.jar
                 -->
                 <jdbc.driver.jar>
-                    /opt/postgresql-9.1-901.jdbc4.jar
+                    <!-- MWK 27 Oct 2015 /opt/postgresql-9.1-901.jdbc4.jar-->
+                    /opt/ojdbc6.jar
                 </jdbc.driver.jar>
                 <!--
                     Change driver for appropriate database
@@ -633,7 +640,8 @@
                     For Derby use: org.apache.derby.jdbc.EmbeddedDriver
                 -->
                 <jdbc.driver>
-                    org.postgresql.Driver
+                    <!-- MWK 27 Oct 2015 org.postgresql.Driver -->
+                    oracle.jdbc.driver.OracleDriver
                 </jdbc.driver>
                 <!--
                     Change connection url for appropriate database
@@ -650,14 +658,15 @@
                     For Progress use: jdbc:JdbcProgress:T:localhost:3305:datasystem
                 -->
                 <jdbc.url>
-                    jdbc:postgresql://localhost:5432/dctddb
+                    <!-- MWK 27 Oct 2015 jdbc:postgresql://localhost:5432/dctddb -->
+                    jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov
                 </jdbc.url>
-                <!-- Enter id/password for the database connection -->
+                <!-- Enter id/password for the database connection -->                
                 <jdbc.username>
-                    dctd_user
+                    DIS_CLEANED
                 </jdbc.username>
                 <jdbc.password>
-                        dctd_pass
+                    R6pq4$6V8d
                 </jdbc.password>
                 <!--
                     Change exception sorter class name for appropriate database
@@ -674,7 +683,8 @@
                     For Progress use: org.jboss.resource.adapter.jdbc.vendor.DummyExceptionSorter
                 -->
                 <jdbc.exception.sorter>
-                    org.jboss.resource.adapter.jdbc.NullExceptionSorter
+                    <!-- MWK 27 Oct 2015 org.jboss.resource.adapter.jdbc.NullExceptionSorter -->
+                    org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter
                 </jdbc.exception.sorter>
             </properties>
             <build>
@@ -746,7 +756,7 @@
             </distributionManagement-->
         </profile>
         <!-- Cloudbees WebDav: See https://github.com/CloudBees-community/maven-config-github-cloudbees/blob/master/pom.xml
-            Configure server id/password in settings.xml to deploy. -->
+        Configure server id/password in settings.xml to deploy. -->
         <profile>
             <id>cloudbees</id>
             <activation>
@@ -754,62 +764,62 @@
             </activation>
             <!-- Deploy releases and snapshots to the CloudBees maven repositories. Customize for your project if using Cloudbees, or remove. -->
             <distributionManagement>
-              <repository>
-                <id>andromdabuild-cloudbees-release</id>
-                <name>andromdabuild-cloudbees-release</name>
-                <!-- Webdav repository url are prefixed with dav: -->
-                <url>dav:https://repository-andromdabuild.forge.cloudbees.com/release/</url>
-                <uniqueVersion>true</uniqueVersion>
-              </repository>
-              <snapshotRepository>
-                <id>andromdabuild-cloudbees-snapshot</id>
-                <name>andromdabuild-cloudbees-snapshot</name>
-                <url>dav:https://andromdabuild-javaetmoi.forge.cloudbees.com/snapshot/</url>
-                <uniqueVersion>false</uniqueVersion>
-              </snapshotRepository>
-              <site>
-                  <id>website</id>
-                  <url>file:/scratch/hudson/workspace/Andromda/site/</url>
-              </site>
+                <repository>
+                    <id>andromdabuild-cloudbees-release</id>
+                    <name>andromdabuild-cloudbees-release</name>
+                    <!-- Webdav repository url are prefixed with dav: -->
+                    <url>dav:https://repository-andromdabuild.forge.cloudbees.com/release/</url>
+                    <uniqueVersion>true</uniqueVersion>
+                </repository>
+                <snapshotRepository>
+                    <id>andromdabuild-cloudbees-snapshot</id>
+                    <name>andromdabuild-cloudbees-snapshot</name>
+                    <url>dav:https://andromdabuild-javaetmoi.forge.cloudbees.com/snapshot/</url>
+                    <uniqueVersion>false</uniqueVersion>
+                </snapshotRepository>
+                <site>
+                    <id>website</id>
+                    <url>file:/scratch/hudson/workspace/Andromda/site/</url>
+                </site>
             </distributionManagement>
             <repositories>
-              <repository>
-                <id>andromdabuild-cloudbees-release</id>
-                <name>andromdabuild-cloudbees-release</name>
-                <url>https://andromdabuild-javaetmoi.forge.cloudbees.com/release/</url>
-                <releases>
-                  <enabled>true</enabled>
-                </releases>
-                <snapshots>
-                  <enabled>false</enabled>
-                </snapshots>
-              </repository>
-              <repository>
-                <id>andromdabuild-cloudbees-snapshot</id>
-                <name>andromdabuild-cloudbees-snapshot</name>
-                <url>https://repository-andromdabuild.forge.cloudbees.com/snapshot/</url>
-                <releases>
-                  <enabled>false</enabled>
-                </releases>
-                <snapshots>
-                  <enabled>true</enabled>
-                </snapshots>
-              </repository>
+                <repository>
+                    <id>andromdabuild-cloudbees-release</id>
+                    <name>andromdabuild-cloudbees-release</name>
+                    <url>https://andromdabuild-javaetmoi.forge.cloudbees.com/release/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>andromdabuild-cloudbees-snapshot</id>
+                    <name>andromdabuild-cloudbees-snapshot</name>
+                    <url>https://repository-andromdabuild.forge.cloudbees.com/snapshot/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
             </repositories>
         </profile>
         <!-- Sourceforge SCP site deployment: See http://maven.apache.org/plugins/maven-site-plugin/examples/site-deploy-to-sourceforge.net.html
-            Configure server id/password in settings.xml to deploy. Must create sourceforge shell before running, with 240 minute time limit:
-            ssh -t sfusername,andromda@shell.sf.net create -->
+        Configure server id/password in settings.xml to deploy. Must create sourceforge shell before running, with 240 minute time limit:
+        ssh -t sfusername,andromda@shell.sf.net create -->
         <profile>
             <id>sourceforge</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <distributionManagement>
-              <site>
-                  <id>andromda.sourceforge.net</id>
-                  <url>scp://shell.sourceforge.net/home/project-web/andromda/htdocs</url>
-              </site>
+                <site>
+                    <id>andromda.sourceforge.net</id>
+                    <url>scp://shell.sourceforge.net/home/project-web/andromda/htdocs</url>
+                </site>
             </distributionManagement>
         </profile>
         <!-- Sonatype builds and distribution, for synch to maven central. See
@@ -902,64 +912,64 @@
         <profile>
             <id>javadocs</id>
             <build>
-                    <plugins>
-                        <plugin>
-                            <artifactId>maven-javadoc-plugin</artifactId>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${maven-javadoc-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>javadoc-jar</id>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>jar</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>test-jar</id>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>test-jar</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <show>package</show>
-                                <version>true</version>
-                                <javadocVersion>${source.version}</javadocVersion>
-                                <failOnError>false</failOnError>
-                                <linksource>true</linksource>
-                                <detectLinks>true</detectLinks>
-                                <detectOfflineLinks>true</detectOfflineLinks>
-                                <links>
-                                    <link>http://download.oracle.com/javase/6/docs/api/</link>
-                                    <link>http://download.oracle.com/javaee/1.4/api/</link>
-                                    <link>http://download.eclipse.org/modeling/mdt/uml2/javadoc/3.1.0/</link>
-                                    <link>http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/</link>
-                                    <link>http://dom4j.sourceforge.net/dom4j-1.6.1/apidocs/</link>
-                                    <link>http://freemarker.org/docs/api/</link>
-                                    <link>http://groovy.codehaus.org/api/</link>
-                                    <link>http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/api/</link>
-                                    <link>http://jakarta.apache.org/commons/collections/apidocs/</link>
-                                    <link>http://jakarta.apache.org/commons/logging/apidocs/</link>
-                                    <link>http://jakarta.apache.org/regexp/apidocs/</link>
-                                    <link>http://jaxb.java.net/nonav/2.2.4/docs/api/</link>
-                                    <link>http://logging.apache.org/log4j/docs/api/</link>
-                                    <link>http://maven.apache.org/ref/2.2.1/maven-core/apidocs/</link>
-                                    <link>http://maven.apache.org/ref/2.2.1/maven-plugin-api/apidocs/</link>
-                                    <link>http://maven.apache.org/ref/2.2.1/maven-project/apidocs/</link>
-                                    <link>http://maven.apache.org/ref/2.2.1/maven-artifact/apidocs/</link>
-                                    <link>http://velocity.apache.org/engine/devel/apidocs/</link>
-                                    <link>http://www.andromda.org/docs/jmi-uml1.4/</link>
-                                    <link>http://www.csg.is.titech.ac.jp/~chiba/javassist/html/</link>
-                                    <link>http://www.junit.org/junit/javadoc/</link>
-                                </links>
-                            </configuration>
-                        </plugin>
-                    </plugins>
+                        <executions>
+                            <execution>
+                                <id>javadoc-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>test-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <show>package</show>
+                            <version>true</version>
+                            <javadocVersion>${source.version}</javadocVersion>
+                            <failOnError>false</failOnError>
+                            <linksource>true</linksource>
+                            <detectLinks>true</detectLinks>
+                            <detectOfflineLinks>true</detectOfflineLinks>
+                            <links>
+                                <link>http://download.oracle.com/javase/6/docs/api/</link>
+                                <link>http://download.oracle.com/javaee/1.4/api/</link>
+                                <link>http://download.eclipse.org/modeling/mdt/uml2/javadoc/3.1.0/</link>
+                                <link>http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/</link>
+                                <link>http://dom4j.sourceforge.net/dom4j-1.6.1/apidocs/</link>
+                                <link>http://freemarker.org/docs/api/</link>
+                                <link>http://groovy.codehaus.org/api/</link>
+                                <link>http://www.jajakarta.org/ant/ant-1.6.1/docs/ja/manual/api/</link>
+                                <link>http://jakarta.apache.org/commons/collections/apidocs/</link>
+                                <link>http://jakarta.apache.org/commons/logging/apidocs/</link>
+                                <link>http://jakarta.apache.org/regexp/apidocs/</link>
+                                <link>http://jaxb.java.net/nonav/2.2.4/docs/api/</link>
+                                <link>http://logging.apache.org/log4j/docs/api/</link>
+                                <link>http://maven.apache.org/ref/2.2.1/maven-core/apidocs/</link>
+                                <link>http://maven.apache.org/ref/2.2.1/maven-plugin-api/apidocs/</link>
+                                <link>http://maven.apache.org/ref/2.2.1/maven-project/apidocs/</link>
+                                <link>http://maven.apache.org/ref/2.2.1/maven-artifact/apidocs/</link>
+                                <link>http://velocity.apache.org/engine/devel/apidocs/</link>
+                                <link>http://www.andromda.org/docs/jmi-uml1.4/</link>
+                                <link>http://www.csg.is.titech.ac.jp/~chiba/javassist/html/</link>
+                                <link>http://www.junit.org/junit/javadoc/</link>
+                            </links>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
         <!-- Needed for releases only. settings.xml: Add same profile with gpg.keyname, gpg.passphrase, gpg.homedir properties.
-          Run mvn deploy -Pjavadocs,local,gpg-andromda > deploy.txt -->
+        Run mvn deploy -Pjavadocs,local,gpg-andromda > deploy.txt -->
         <profile>
             <id>gpg-andromda</id>
             <build>
@@ -1000,6 +1010,14 @@
         <maven>2.2.1</maven>
     </prerequisites>
     <!-- Comment to disable project reporting using default maven plugins -->
+    <dependencies>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.4.0</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
     <reporting>
         <plugins>
             <plugin>
@@ -1010,25 +1028,25 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>2.5.1</version>
                 <reportSets>
-                  <reportSet>
-                    <reports>
-                      <report>cim</report>
-                      <report>dependencies</report>
-                      <report>dependency-convergence</report>
-                      <report>dependency-management</report>
-                      <report>help</report>
-                      <report>index </report>
-                      <report>issue-tracking</report>
-                      <report>license</report>
-                      <report>mailing-list</report>
-                      <report>modules</report>
-                      <report>plugin-management</report>
-                      <report>plugins</report>
-                      <report>project-team</report>
-                      <report>scm</report>
-                      <report>summary</report>
-                    </reports>
-                  </reportSet>
+                    <reportSet>
+                        <reports>
+                            <report>cim</report>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
+                            <report>dependency-management</report>
+                            <report>help</report>
+                            <report>index </report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>mailing-list</report>
+                            <report>modules</report>
+                            <report>plugin-management</report>
+                            <report>plugins</report>
+                            <report>project-team</report>
+                            <report>scm</report>
+                            <report>summary</report>
+                        </reports>
+                    </reportSet>
                 </reportSets>
             </plugin>
             <plugin>
@@ -1232,11 +1250,11 @@
                 <version>1.3.1</version>
                 <reportSets>
                     <reportSet>
-                      <reports>
-                        <report>dependency-updates-report</report>
-                        <report>plugin-updates-report</report>
-                        <report>property-updates-report</report>
-                      </reports>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
                     </reportSet>
                 </reportSets>
             </plugin>
