@@ -224,4 +224,90 @@ public class ConstraintManagement {
 
     }
 
+    public static void oracleSaveConstraints(Connection destConn, String[] tableNamesAndWhereClauses)
+            throws Exception {
+
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+
+        for (int tableCounter = 0; tableCounter < tableNamesAndWhereClauses.length; tableCounter += 2) {
+            String curTbl = tableNamesAndWhereClauses[tableCounter];
+            String curWhereClause = tableNamesAndWhereClauses[tableCounter + 1];
+
+            if (first) {
+                first = false;
+                sb.append("'" + curTbl.toUpperCase() + "'");
+            } else {
+                sb.append(",'" + curTbl.toUpperCase() + "'");
+            }
+
+        }
+
+        String tableNameList = sb.toString();
+
+        Statement destStmt = null;
+
+        try {
+
+            destConn.setAutoCommit(true);
+            destStmt = destConn.createStatement();
+
+            int result = destStmt.executeUpdate("drop table create_constraint_statements");
+            result = destStmt.executeUpdate("drop table drop_constraint_statements");
+
+            result = destStmt.executeUpdate("create table create_constraint_statements(stmt clob)");
+            result = destStmt.executeUpdate("create table drop_constraint_statements(stmt clob)");
+
+            String createConstraintsSql = "insert into create_constraint_statements(stmt)\n"
+                    + "select 'alter table '||table_name||' enable constraint '||CONSTRAINT_NAME||'' from user_constraints where owner='DIS_CLEANED'"
+                    + "and CONSTRAINT_NAME not like '%pkey'\n"
+                    + "AND TABLE_NAME in (\n"
+                    + tableNameList + "\n"
+                    + ")";
+
+            System.out.println(createConstraintsSql);
+            result = destStmt.executeUpdate(createConstraintsSql);
+
+            String disableConstraintsSql = "insert into drop_constraint_statements(stmt)\n"
+                    + "select 'alter table '||table_name||' drop constraint '||CONSTRAINT_NAME||' cascade' from user_constraints where owner='DIS_CLEANED'"
+                    + "and CONSTRAINT_NAME not like '%pkey'\n"
+                    + "AND TABLE_NAME in (\n"
+                    + tableNameList + "\n"
+                    + ")";
+
+            System.out.println(disableConstraintsSql);
+            result = destStmt.executeUpdate(disableConstraintsSql);
+
+            System.out.println("DONE!");
+
+        } catch (SQLException se) {
+            System.out.println("SQL Exception in saveConstraints:");
+            // Loop through the SQL Exceptions
+            while (se != null) {
+                System.out.println("State  : " + se.getSQLState());
+                System.out.println("Message: " + se.getMessage());
+                System.out.println("Error  : " + se.getErrorCode());
+                se = se.getNextException();
+            }
+            throw new Exception(se);
+        } catch (Exception e) {
+            System.out.println("Exception in saveConstraints:");
+            e.printStackTrace();
+            System.out.println(e);
+            throw (e);
+        } finally {
+            try {
+                if (destStmt != null) {
+                    destStmt.close();
+                    destStmt = null;
+                }
+            } catch (Exception e) {
+                System.out.println("Exception in finally clause in saveConstraints: " + e);
+                e.printStackTrace();
+                throw (e);
+            }
+        }
+
+    }
+
 }

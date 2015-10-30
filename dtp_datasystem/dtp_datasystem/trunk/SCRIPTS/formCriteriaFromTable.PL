@@ -114,182 +114,212 @@ open ( hibernatePart, ">hibernatePart") or die "Can't open hibernatePart\n";
 
 my @cumulativeFieldNames = ();
 
-foreach my $dataSet($pChemVars, $strcVars, $nscCmpdVars){
+#MWK for now, only pChemVars foreach my $dataSet($pChemVars, $strcVars, $nscCmpdVars){
 
-#print "$dataSet\n";
-
-chomp($dataSet);
-
-my $fetchString = '';
-
-if ($dataSet eq $pChemVars){
+foreach my $dataSet($pChemVars){
+	
+	#print "$dataSet\n";
+	
+	chomp($dataSet);
+	
+	my $fetchString = '';
+	
+	if ($dataSet eq $pChemVars){
     print "\n\n-------------------------This is pChemVars\n";
     $fetchString = 'listMember.cmpd.parentFragment.cmpdFragmentPChem';
-} elsif ($dataSet eq $strcVars){
+  } elsif ($dataSet eq $strcVars){
     print "\n\n-------------------------This is strcVars\n";
     $fetchString = 'listMember.cmpd.parentFragment.cmpdFragmentStructure';
-} elsif ($dataSet eq $nscCmpdVars){
-   print "\n\n-------------------------This is nscCmpdVars\n"; 
+  } elsif ($dataSet eq $nscCmpdVars){
+  	print "\n\n-------------------------This is nscCmpdVars\n"; 
     $fetchString = 'listMember.cmpd';
-}
-
-my @lines = split(/;/, $dataSet);
-
-foreach my $line(@lines){
-	
-	chomp($line);
-	
-	my @splitLine = split(/\s/, $line);
-	my $varType = $splitLine[1];
-	my $varName = $splitLine[2];
-	#print "varType: $varType varName: $varName\n";
-	
-	if ( $varType eq "Integer"){
-		
-		print "---------min_$varName max_$varName\n";
-		
-		print javaPart "private $varType min_$varName;\n";
-		print javaPart "private $varType max_$varName;\n";
-		
-		print formatPart qq[
-		<p:panel header="$varName" style="display:inline-block;border: none;">
-		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
-		<br/>
-		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
-		<br/>
-		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
-		<br/>
-		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
-		</p:panel>
-		];	
-		
-		print outputPartColumnFormat qq[
-		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
-		<h:outputText value="#{$fetchString.$varName}" />
-		</p:column>
-		];
-		
-		print outputPartLabelValue qq[
-		<p:outputLabel value="$varName"/>                
-		<h:outputText value="#{$fetchString.$varName}" />
-		];
-		
-		print outputPartAddToColumnModelList qq[
-		hm.put("$varName", "$fetchString.$varName");
-		];
-		
-		push @cumulativeFieldNames, qq["$varName"];
-		
-		print hibernatePart qq[		
-		if (scb.min_$varName != null && scb.max_$varName != null){
-		// between
-                c.add(Restrictions.between("pchem.$varName", scb.min_$varName, scb.max_$varName));
-		} else if (scb.min_$varName != null){
-		// gt min
-                c.add(Restrictions.gt("pchem.$varName", scb.min_$varName));
-		} else if (scb.max_$varName != null){
-		// lt max
-                c.add(Restrictions.lt("pchem.$varName", scb.max_$varName));
-		}		
-		];
-		
-	} elsif ($varType eq "Double"){
-		
-		print "---------min_$varName max_$varName\n";
-		
-		print javaPart "private $varType min_$varName;\n";
-		print javaPart "private $varType max_$varName;\n";
-		
-		print formatPart qq[
-		<p:panel header="$varName" style="display:inline-block;border: none;">
-		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
-		<br/>
-		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
-		<br/>
-		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
-		<br/>
-		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
-		</p:panel>
-		];
-		
-		print outputPartColumnFormat qq[
-		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
-		<h:outputText value="#{$fetchString.$varName}">
-		<f:convertNumber pattern="#0.00" />
-		</h:outputText>
-		</p:column>
-		];
-		
-		print outputPartLabelValue qq[
-		<p:outputLabel value="$varName"/>
-		<h:outputText value="#{$fetchString.$varName}">
-		<f:convertNumber pattern="#0.00" />
-		</h:outputText>
-		];
-		
-		print outputPartAddToColumnModelList qq[
-		hm.put("$varName", "$fetchString.$varName");
-		];
-		
-		push @cumulativeFieldNames, qq["$varName"];
-		
-		print hibernatePart qq[		
-		if (scb.min_$varName != null && scb.max_$varName != null){
-		// between
-                c.add(Restrictions.between("pchem.$varName", scb.min_$varName, scb.max_$varName));
-		} else if (scb.min_$varName != null){
-		// gt min
-                c.add(Restrictions.gt("pchem.$varName", scb.min_$varName));
-		} else if (scb.max_$varName != null){
-		// lt max
-                c.add(Restrictions.lt("pchem.$varName", scb.max_$varName));
-		}		
-		];
-		
-	} elsif ($varType eq "String"){
-		
-		print "---------$varName\n";
-		print javaPart "private $varType $varName;\n";
-		
-		print formatPart qq[
-		<p:panel header="$varName" style="display:inline-block;border: none;">
-		<h:outputLabel for="$varName\_id" value="$varName"/>
-		<br/>
-		<h:inputText value="#{pChemBean.$varName}" id="$varName\_id" cols="15" rows="5"/>                
-		</p:panel>
-		];
-		
-		print outputPartColumnFormat qq[
-		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
-		<h:outputText value="#{$fetchString.$varName}" />
-		</p:column>
-		];
-		
-		print outputPartLabelValue qq[
-		<p:outputLabel value="$varName"/>
-		<h:outputText value="#{$fetchString.$varName}" />
-		];
-		
-		print outputPartAddToColumnModelList qq[
-		hm.put("$varName", "$fetchString.$varName");
-		];
-		
-		push @cumulativeFieldNames, qq["$varName"];
-		
-		print hibernatePart qq[		
-		if (scb.$varName != null){
-		// eq TODO handle this
-		}
-		];
-		
-		
-	}
-
-	
-}
-
-print outputPartAddToColumnModelList join(', ', @cumulativeFieldNames);
-
+  }
+  
+  my @lines = split(/;/, $dataSet);
+  
+  foreach my $line(@lines){
+  	
+  	chomp($line);
+  	
+  	my @splitLine = split(/\s/, $line);
+  	my $varType = $splitLine[1];
+  	my $varName = $splitLine[2];
+  	#print "varType: $varType varName: $varName\n";
+  	
+  	if ( $varType eq "Integer"){
+  		
+  		print "---------min_$varName max_$varName\n";
+  		
+  		print javaPart "private $varType min_$varName;\n";
+  		print javaPart "private $varType max_$varName;\n";
+  		
+  		print formatPart qq[
+  		<p:panel header="$varName" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
+  		<br/>
+  		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
+  		<br/>
+  		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
+  		<br/>
+  		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
+  		</p:panel>
+  		];	
+  		
+  		print outputPartColumnFormat qq[
+  		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
+  		<h:outputText value="#{$fetchString.$varName}" />
+  		</p:column>
+  		];
+  		
+  		print outputPartLabelValue qq[
+  		<p:outputLabel value="$varName"/>                
+  		<h:outputText value="#{$fetchString.$varName}" />
+  		];
+  		
+  		print outputPartAddToColumnModelList qq[
+  		hm.put("$varName", "$fetchString.$varName");
+  		];
+  		
+  		push @cumulativeFieldNames, qq["$varName"];
+  		
+  		print hibernatePart qq[  		
+  		f = scbClass.getDeclaredField("min_$varName");
+  		f.setAccessible(true);                        
+  		minInt = (Integer)f.get(qo);
+  		
+  		f = scbClass.getDeclaredField("max_$varName");
+  		f.setAccessible(true);
+  		maxInt = (Integer)f.get(qo);
+  		
+  		if (minInt != null && maxInt != null) {
+  		if (minInt.compareTo(maxInt) == 0) {
+  		if (minInt - 0 != 0) {
+  		c.add(Restrictions.eq("pchem.$varName", minInt));
+  		}
+  		} else {
+  		// between
+  		c.add(Restrictions.between("pchem.$varName", minInt, maxInt));
+  		}
+  		} else if (minInt != null) {
+  		// gt min
+  		c.add(Restrictions.gt("pchem.$varName", minInt));
+  		} else if (maxInt != null) {
+  		// lt max
+  		c.add(Restrictions.lt("pchem.$varName", maxInt));
+  		}  		
+  		];
+  		
+  	} elsif ($varType eq "Double"){
+  		
+  		print "---------min_$varName max_$varName\n";
+  		
+  		print javaPart "private $varType min_$varName;\n";
+  		print javaPart "private $varType max_$varName;\n";
+  		
+  		print formatPart qq[
+  		<p:panel header="$varName" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
+  		<br/>
+  		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
+  		<br/>
+  		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
+  		<br/>
+  		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
+  		</p:panel>
+  		];
+  		
+  		print outputPartColumnFormat qq[
+  		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
+  		<h:outputText value="#{$fetchString.$varName}">
+  		<f:convertNumber pattern="#0.00" />
+  		</h:outputText>
+  		</p:column>
+  		];
+  		
+  		print outputPartLabelValue qq[
+  		<p:outputLabel value="$varName"/>
+  		<h:outputText value="#{$fetchString.$varName}">
+  		<f:convertNumber pattern="#0.00" />
+  		</h:outputText>
+  		];
+  		
+  		print outputPartAddToColumnModelList qq[
+  		hm.put("$varName", "$fetchString.$varName");
+  		];
+  		
+  		push @cumulativeFieldNames, qq["$varName"];
+  		
+  		print hibernatePart qq[		  		
+  		f = scbClass.getDeclaredField("min_$varName");
+  		f.setAccessible(true);                        
+  		minDbl = (Double)f.get(qo);
+  		
+  		f = scbClass.getDeclaredField("max_$varName");
+  		f.setAccessible(true);
+  		maxDbl = (Double)f.get(qo);
+  		
+  		if (minDbl != null && maxDbl != null) {
+  		if (minDbl.compareTo(maxDbl) == 0) {
+  		if (minDbl - 0 != 0) {
+  		c.add(Restrictions.eq("pchem.$varName", minDbl));
+  		}
+  		} else {
+  		// between
+  		c.add(Restrictions.between("pchem.$varName", minDbl, maxDbl));
+  		}
+  		} else if (minDbl != null) {
+  		// gt min
+  		c.add(Restrictions.gt("pchem.$varName", minDbl));
+  		} else if (maxDbl != null) {
+  		// lt max
+  		c.add(Restrictions.lt("pchem.$varName", maxDbl));
+  		}
+  		];
+  		
+  	} elsif ($varType eq "String"){
+  		
+  		print "---------$varName\n";
+  		print javaPart "private $varType $varName;\n";
+  		
+  		print formatPart qq[
+  		<p:panel header="$varName" style="display:inline-block;border: none;">
+  		<h:outputLabel for="$varName\_id" value="$varName"/>
+  		<br/>
+  		<h:inputText value="#{pChemBean.$varName}" id="$varName\_id" cols="15" rows="5"/>                
+  		</p:panel>
+  		];
+  		
+  		print outputPartColumnFormat qq[
+  		<p:column headerText="$varName" resizeable="true" sortBy="#{$fetchString.$varName}">                
+  		<h:outputText value="#{$fetchString.$varName}" />
+  		</p:column>
+  		];
+  		
+  		print outputPartLabelValue qq[
+  		<p:outputLabel value="$varName"/>
+  		<h:outputText value="#{$fetchString.$varName}" />
+  		];
+  		
+  		print outputPartAddToColumnModelList qq[
+  		hm.put("$varName", "$fetchString.$varName");
+  		];
+  		
+  		push @cumulativeFieldNames, qq["$varName"];
+  		
+  		print hibernatePart qq[		
+  		if (scb.$varName != null){
+  		// eq TODO handle this
+  		}
+  		];
+  		
+  		
+  	}
+  	
+  	
+  }
+  
+  print outputPartAddToColumnModelList join(', ', @cumulativeFieldNames);
+  
 }
 
 close javaPart;

@@ -15,12 +15,21 @@ import java.sql.SQLException;
  */
 public class Main {
 
+    // datasystem postgres to oracle
+    static final String[] dspg2dsora = new String[]{
+        "jdbc:postgresql://localhost:5432/datasystemdb",
+        "mwkunkel",
+        "donkie11",
+        "jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov",
+        "DIS_CLEANED",
+        "R6pq4$6V8d"
+    };
+
     // datasystem to oncologydrugs
     static final String[] ds2od = new String[]{
         "jdbc:postgresql://localhost:5432/datasystemdb",
         "mwkunkel",
         "donkie11",
-        
         "jdbc:postgresql://ncidb-d115-d:5474/oncology",
         "oncology",
         "OnC0L029302802K1t"
@@ -31,76 +40,73 @@ public class Main {
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
-        
         "jdbc:postgresql://ncidb-d115-d:5474/oncology",
         "oncology",
         "OnC0L029302802K1t"
     };
-    
-      // private compare to public compare
+
+    // private compare to public compare
     static final String[] priv2pub = new String[]{
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
-        
-//        "jdbc:postgresql://ncidb-d115-d:5473/pubcompare",
-//        "publiccompare",
-//        "P3b092094wlC0m3"
-//        
+        //        "jdbc:postgresql://ncidb-d115-d:5473/pubcompare",
+        //        "publiccompare",
+        //        "P3b092094wlC0m3"
+        //        
         "jdbc:postgresql://localhost:5432/publiccomparedb",
         "mwkunkel",
         "donkie11"
     };
 
     static final String[] ds2od_tnwc = new String[]{
-        // ad_hoc_cmpd not exported
-        //                "ad_hoc_cmpd", " where ",
-        //                "ad_hoc_cmpd_fragment", " where ",
-        //                "ad_hoc_cmpd_fragment_p_chem", " where ",
-        //                "ad_hoc_cmpd_fragment_structure", " where ",
-
+        //        // ad_hoc_cmpd not exported
+        //        //                "ad_hoc_cmpd", " where ",
+        //        //                "ad_hoc_cmpd_fragment", " where ",
+        //        //                "ad_hoc_cmpd_fragment_p_chem", " where ",
+        //        //                "ad_hoc_cmpd_fragment_structure", " where ",
+        //
         "cmpd_known_salt", "",
         "nsc_cmpd_type", "",
-        "cmpd_alias_type", "",
-        "cmpd_relation_type", "",
+        //        "cmpd_alias_type", "",
+        //        "cmpd_relation_type", "",
         "cmpd_fragment_type", "",
-        //
-        "cmpd_inventory", " where id in (select nsc from for_export)",
-        "cmpd_annotation", " where id in (select nsc from for_export)",
-        "cmpd_bio_assay", " where id in (select nsc from for_export)",
-        "cmpd_legacy_cmpd", " where id in (select nsc from for_export)",
-        "cmpd_table", " where nsc in (select nsc from for_export)",
-        // 
-        "cmpd", " where id in (select nsc from for_export)",
-        //
+        //        //
+        //        "cmpd_inventory", " where id in (select nsc from for_export)",
+        //        "cmpd_annotation", " where id in (select nsc from for_export)",
+        //        "cmpd_bio_assay", " where id in (select nsc from for_export)",
+        //        "cmpd_legacy_cmpd", " where id in (select nsc from for_export)",
+        //        "cmpd_table", " where nsc in (select nsc from for_export)",
+        //        // 
+        //        "cmpd", " where id in (select nsc from for_export)",
+        //        //
         "nsc_cmpd", " where nsc in (select nsc from for_export)",
-        //
+        //        //
         "cmpd_fragment", " where nsc_cmpd_fk in (select nsc from for_export)",
         "cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        // 
-        //  cmpd_list not exported
-        //                "cmpd_list", " where ",
-        //                "cmpd_list_member", " where ",
-        //
-        "cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        //
-        "cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        //
-        "cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        //
-        "cmpd_related", " where nsc_cmpd_fk in (select nsc from for_export)",
-        //
-        "rdkit_mol", " where nsc in (select nsc from for_export)"
+        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))", //        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+    //        "cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+    //        // 
+    //        //  cmpd_list not exported
+    //        //                "cmpd_list", " where ",
+    //        //                "cmpd_list_member", " where ",
+    //        //
+    //        "cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+    //        "cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+    //        //
+    //        "cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+    //        "cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+    //        //
+    //        "cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+    //        "cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+    //        "cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+    //        "cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+    //        "cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+    //        "cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+    //        //
+    //        "cmpd_related", " where nsc_cmpd_fk in (select nsc from for_export)",
+    //        //
+    //        "rdkit_mol", " where nsc in (select nsc from for_export)"
     };
 
     static final String[] compare2od_tnwc = new String[]{
@@ -135,8 +141,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] whichConnectionInfo = compare2od;
-        String[] whichTableNamesAndWhereClauses = compare2od_tnwc;
+        String[] whichConnectionInfo = dspg2dsora;
+        String[] whichTableNamesAndWhereClauses = ds2od_tnwc;
 
         Connection destConn = null;
         Connection sourceConn = null;
@@ -149,22 +155,20 @@ public class Main {
             destConn = DriverManager.getConnection(whichConnectionInfo[3], whichConnectionInfo[4], whichConnectionInfo[5]);
 
             // archive constraint drop/create statements
-            // ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
+            ConstraintManagement.oracleSaveConstraints(destConn, whichTableNamesAndWhereClauses);
             // drop constraints before build
-            // ConstraintManagement.dropConstraints(destConn);
-
+            ConstraintManagement.dropConstraints(destConn);
             for (int i = 0; i < whichTableNamesAndWhereClauses.length; i += 2) {
                 String curTbl = whichTableNamesAndWhereClauses[i];
                 String whereClause = whichTableNamesAndWhereClauses[i + 1];
                 // scrape out anything remaining
                 // Replicator.nuke(destConn, curTbl);
                 // replicate the tables
-                Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
+                //Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
             }
 
             // recreate the constraints
-            ConstraintManagement.createConstraints(destConn);
-
+            // ConstraintManagement.createConstraints(destConn);
             System.out.println("Done! in Main");
 
             sourceConn.close();

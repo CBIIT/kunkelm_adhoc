@@ -84,15 +84,11 @@
 
     <p:fieldset legend="Interactive suggestions for search terms. Possible matches for 3 or more characters will be listed. Selections from the list will be added to free-form text areas above."> 
 
-      <ui:remove>
-          
-          These are excluded because of the SIZE of selectItem sets...
-
         <p:panel style="display: inline-block;border: none;">
           <p:outputLabel for="nscAutoComp" value="nsc"/>
           <br/>
           <p:autoComplete id="nscAutoComp" 
-                          dropdown="false"
+                          dropdown="true"
                           scrollHeight="150"
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completensc}">
@@ -106,7 +102,7 @@
           <p:outputLabel for="drugNameAutoComp" value="drugName"/>
           <br/>
           <p:autoComplete id="drugNameAutoComp" 
-                          dropdown="false"
+                          dropdown="true"
                           scrollHeight="150"
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completedrugName}">
@@ -120,7 +116,7 @@
           <p:outputLabel for="aliasAutoComp" value="alias"/>
           <br/>
           <p:autoComplete id="aliasAutoComp" 
-                          dropdown="false"
+                          dropdown="true"
                           scrollHeight="150"
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completealias}">
@@ -134,7 +130,7 @@
           <p:outputLabel for="casAutoComp" value="cas"/>
           <br/>
           <p:autoComplete id="casAutoComp" 
-                          dropdown="false"
+                          dropdown="true"
                           scrollHeight="150"
                           minQueryLength="3"                                    
                           completeMethod="#{applicationScopeBean.completecas}">
@@ -143,8 +139,6 @@
                     update=":datasystemForm:casTextArea_id"/>  
           </p:autoComplete>                
         </p:panel>
-
-      </ui:remove>
 
       <p:panel style="display: inline-block;border: none;">
         <p:outputLabel for="cmpdNamedSetAutoComp" value="cmpdNamedSet"/>

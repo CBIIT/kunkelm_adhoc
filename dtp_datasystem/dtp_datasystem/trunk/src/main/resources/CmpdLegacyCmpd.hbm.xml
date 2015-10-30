@@ -15,7 +15,6 @@
             <column name="ID" sql-type="BIGINT"/>
             <generator class="sequence">
                 <param name="sequence">CMPD_LEGACY_CMPD_SEQ</param>
-                <!-- id-generator merge-point -->
             </generator>
         </id>
         -->

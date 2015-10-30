@@ -285,77 +285,69 @@ public class ListContentController implements Serializable {
 
         String delimiters = "[\\n\\r\\t\\s,]+";
 
-        SearchCriteriaBean lCntntBean = new SearchCriteriaBean();
-
         splitStrings = this.listContentBean.getNscTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].replaceAll("[^0-9]", "");
             if (fixedString.length() > 0) {
-                lCntntBean.getNscs().add(fixedString);
+                this.listContentBean.getNscs().add(fixedString);
             }
         }
 
         splitStrings = this.listContentBean.getCasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getCases().add(splitStrings[i]);
+                this.listContentBean.getCases().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getProjectCodeTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getProjectCodes().add(splitStrings[i]);
+                this.listContentBean.getProjectCodes().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getDrugNameTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getDrugNames().add(splitStrings[i]);
+                this.listContentBean.getDrugNames().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getAliasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getAliases().add(splitStrings[i]);
+                this.listContentBean.getAliases().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getPlateTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getPlates().add(splitStrings[i]);
+                this.listContentBean.getPlates().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getTargetTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getTargets().add(splitStrings[i]);
+                this.listContentBean.getTargets().add(splitStrings[i]);
             }
         }
 
         splitStrings = this.listContentBean.getCmpdNamedSetTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             if (splitStrings[i].length() > 0) {
-                lCntntBean.getCmpdNamedSets().add(splitStrings[i]);
+                this.listContentBean.getCmpdNamedSets().add(splitStrings[i]);
             }
         }
 
-        
         System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
         
         System.out.println("Content of listContentBean:");
         this.listContentBean.printCriteriaLists();
         
-        System.out.println("Content of QueryObject:");
-        lCntntBean.printCriteriaLists();
-
-//        System.out.println("Calling createCmpdListFromQueryObject in HelperCmpd from performCreateListBySearch in ListContentController.");
-        
-        Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, lCntntBean, null, this.sessionController.getLoggedUser());
+        Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, this.listContentBean, null, this.sessionController.getLoggedUser());
 
         // now fetch the list            
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());

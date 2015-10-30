@@ -5,11 +5,11 @@
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
-import static java.lang.System.out;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -104,7 +104,7 @@ public class SearchCriteriaBean implements Serializable {
     public SearchCriteriaBean() {
         reset();
     }
-
+    
     public void reset() {
         this.drugNames = new ArrayList<String>();
         this.aliases = new ArrayList<String>();
@@ -118,248 +118,44 @@ public class SearchCriteriaBean implements Serializable {
         this.pseudoAtomsPieces = new ArrayList<String>();
     }
 
-    /*
-     import java.lang.reflect.Field;
-     import java.util.Arrays;
-     import static java.lang.System.out;
-
-     enum Tweedle { DEE, DUM }
-
-     public class Book {
-     public long chapters = 0;
-     public String[] characters = { "Alice", "White Rabbit" };
-     public Tweedle twin = Tweedle.DEE;
-
-     public static void main(String... args) {
-     Book book = new Book();
-     String fmt = "%6S:  %-12s = %s%n";
-
-     try {
-     Class<?> c = book.getClass();
-
-     Field chap = c.getDeclaredField("chapters");
-     out.format(fmt, "before", "chapters", book.chapters);
-     chap.setLong(book, 12);
-     out.format(fmt, "after", "chapters", chap.getLong(book));
-
-     Field chars = c.getDeclaredField("characters");
-     out.format(fmt, "before", "characters",
-     Arrays.asList(book.characters));
-     String[] newChars = { "Queen", "King" };
-     chars.set(book, newChars);
-     out.format(fmt, "after", "characters",
-     Arrays.asList(book.characters));
-
-     Field t = c.getDeclaredField("twin");
-     out.format(fmt, "before", "twin", book.twin);
-     t.set(book, Tweedle.DUM);
-     out.format(fmt, "after", "twin", t.get(book));
-
-     // production code should handle these exceptions more gracefully
-     } catch (NoSuchFieldException x) {
-     x.printStackTrace();
-     } catch (IllegalAccessException x) {
-     x.printStackTrace();
-     }
-     }
-     }
-     */
     public void printCriteriaLists() {
 
         System.out.println("------------------ BEGIN testing reflection:");
         System.out.println("------------------ BEGIN testing reflection:");
         System.out.println("------------------ BEGIN testing reflection:");
-        String[] textAreaFieldNames = new String[]{
-            "drugNameTextArea",
-            "aliasTextArea",
-            "casTextArea",
-            "cmpdNamedSetTextArea",
-            "nscTextArea",
-            "projectCodeTextArea",
-            "plateTextArea",
-            "targetTextArea",
-            "mtxtTextArea",
-            "pseudoAtomsTextArea"
-        };
-
-        String[] listFieldNames = new String[]{
-            "drugNames",
-            "aliases",
-            "cases",
-            "cmpdNamedSets",
-            "nscs",
-            "projectCodes",
-            "plates",
-            "targets",
-            "mtxtPieces",
-            "pseudoAtomsPieces"
-        };
 
         try {
 
             Class thisClass = this.getClass();
 
-            for (String textAreaFieldName : Arrays.asList(textAreaFieldNames)) {
+            Field[] fieldArr = thisClass.getDeclaredFields();
 
-                Field f = thisClass.getDeclaredField(textAreaFieldName);
+            for (Field f : fieldArr) {
                 f.setAccessible(true);
-
-                System.out.println();
-                System.out.println("fieldName: " + f.getName());
-                System.out.println("fieldType: " + f.getType().getName());
-
-                String str = (String) f.get(this);
-
-                System.out.println(textAreaFieldName);
-                System.out.println(str);
-            }
-
-            for (String listFieldName : Arrays.asList(listFieldNames)) {
-
-                Field f = thisClass.getDeclaredField(listFieldName);
-                f.setAccessible(true);
-
-                System.out.println();
-                System.out.println("fieldName: " + f.getName());
-                System.out.println("fieldType: " + f.getType().getName());
-
-                ArrayList<String> al = (ArrayList< String>) f.get(this);
-                System.out.println(listFieldName);
-                for (String s : al) {
-                    System.out.println(s);
+                System.out.println("fieldName: " + f.getName() + " fieldType: " + f.getType().getName());
+                if (Collection.class.isAssignableFrom(f.getType())) {
+                    for (Object o : (Collection) f.get(this)) {
+                        System.out.println("----" + o.toString());
+                    }
+                } else {
+                    Object o = f.get(this);
+                    if (o == null) {
+                        System.out.println("----null");
+                    } else {
+                        System.out.println("----" + o.toString());
+                    }
                 }
             }
 
-            // production code should handle these exceptions more gracefully
-        } catch (NoSuchFieldException x) {
-            x.printStackTrace();
-        } catch (IllegalAccessException x) {
-            x.printStackTrace();
+        } catch (IllegalArgumentException argx) {
+            argx.printStackTrace();
+        } catch (IllegalAccessException accx) {
+            accx.printStackTrace();
         }
 
         System.out.println("------------------ END testing reflection:");
         System.out.println("------------------ END testing reflection:");
         System.out.println("------------------ END testing reflection:");
-
-        System.out.println("aliasTextArea: " + this.aliasTextArea);
-        System.out.println("casTextArea: " + this.casTextArea);
-        System.out.println("cmpdNamedSetTextArea: " + this.cmpdNamedSetTextArea);
-        System.out.println("drugNameTextArea: " + this.drugNameTextArea);
-        System.out.println("nscTextArea: " + this.nscTextArea);
-        System.out.println("plateTextArea: " + this.plateTextArea);
-        System.out.println("targetTextArea: " + this.targetTextArea);
-        System.out.println("projectCodeTextArea: " + this.projectCodeTextArea);
-        System.out.println("mtxtTextArea: " + this.mtxtTextArea);
-        System.out.println("pseudoAtomsTextArea: " + this.pseudoAtomsTextArea);
-
-        System.out.println("aliases:");
-        for (String s : this.aliases) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("cases:");
-        for (String s : this.cases) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("cmpdNamedSets:");
-        for (String s : this.cmpdNamedSets) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("drugNames:");
-        for (String s : this.drugNames) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("nscs:");
-        for (String s : this.nscs) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("plates:");
-        for (String s : this.plates) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("projectCodes:");
-        for (String s : this.projectCodes) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("targets:");
-        for (String s : this.targets) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("mtxtPieces:");
-        for (String s : this.mtxtPieces) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-        System.out.println("pseudoAtomPieces:");
-        for (String s : this.pseudoAtomsPieces) {
-            System.out.println("-------->" + s + "<--------");
-        }
-
-    }
-
-    public void printPchemCriteria() {
-        // QC on pChemBean, etc.
-        System.out.println("QC on settings for molecularPropertiesCriteriaBean");
-        System.out.println("min_molecularWeight: " + this.getMin_molecularWeight());
-        System.out.println("max_molecularWeight: " + this.getMax_molecularWeight());
-        System.out.println("molecularFormula: " + this.getMolecularFormula());
-        System.out.println("min_logD: " + this.getMin_logD());
-        System.out.println("max_logD: " + this.getMax_logD());
-        System.out.println("min_countHydBondAcceptors: " + this.getMin_countHydBondAcceptors());
-        System.out.println("max_countHydBondAcceptors: " + this.getMax_countHydBondAcceptors());
-        System.out.println("min_countHydBondDonors: " + this.getMin_countHydBondDonors());
-        System.out.println("max_countHydBondDonors: " + this.getMax_countHydBondDonors());
-        System.out.println("min_surfaceArea: " + this.getMin_surfaceArea());
-        System.out.println("max_surfaceArea: " + this.getMax_surfaceArea());
-        System.out.println("min_solubility: " + this.getMin_solubility());
-        System.out.println("max_solubility: " + this.getMax_solubility());
-        System.out.println("min_countRings: " + this.getMin_countRings());
-        System.out.println("max_countRings: " + this.getMax_countRings());
-        System.out.println("min_countAtoms: " + this.getMin_countAtoms());
-        System.out.println("max_countAtoms: " + this.getMax_countAtoms());
-        System.out.println("min_countBonds: " + this.getMin_countBonds());
-        System.out.println("max_countBonds: " + this.getMax_countBonds());
-        System.out.println("min_countSingleBonds: " + this.getMin_countSingleBonds());
-        System.out.println("max_countSingleBonds: " + this.getMax_countSingleBonds());
-        System.out.println("min_countDoubleBonds: " + this.getMin_countDoubleBonds());
-        System.out.println("max_countDoubleBonds: " + this.getMax_countDoubleBonds());
-        System.out.println("min_countTripleBonds: " + this.getMin_countTripleBonds());
-        System.out.println("max_countTripleBonds: " + this.getMax_countTripleBonds());
-        System.out.println("min_countRotatableBonds: " + this.getMin_countRotatableBonds());
-        System.out.println("max_countRotatableBonds: " + this.getMax_countRotatableBonds());
-        System.out.println("min_countHydrogenAtoms: " + this.getMin_countHydrogenAtoms());
-        System.out.println("max_countHydrogenAtoms: " + this.getMax_countHydrogenAtoms());
-        System.out.println("min_countMetalAtoms: " + this.getMin_countMetalAtoms());
-        System.out.println("max_countMetalAtoms: " + this.getMax_countMetalAtoms());
-        System.out.println("min_countHeavyAtoms: " + this.getMin_countHeavyAtoms());
-        System.out.println("max_countHeavyAtoms: " + this.getMax_countHeavyAtoms());
-        System.out.println("min_countPositiveAtoms: " + this.getMin_countPositiveAtoms());
-        System.out.println("max_countPositiveAtoms: " + this.getMax_countPositiveAtoms());
-        System.out.println("min_countNegativeAtoms: " + this.getMin_countNegativeAtoms());
-        System.out.println("max_countNegativeAtoms: " + this.getMax_countNegativeAtoms());
-        System.out.println("min_countRingBonds: " + this.getMin_countRingBonds());
-        System.out.println("max_countRingBonds: " + this.getMax_countRingBonds());
-        System.out.println("min_countStereoAtoms: " + this.getMin_countStereoAtoms());
-        System.out.println("max_countStereoAtoms: " + this.getMax_countStereoAtoms());
-        System.out.println("min_countStereoBonds: " + this.getMin_countStereoBonds());
-        System.out.println("max_countStereoBonds: " + this.getMax_countStereoBonds());
-        System.out.println("min_countRingAssemblies: " + this.getMin_countRingAssemblies());
-        System.out.println("max_countRingAssemblies: " + this.getMax_countRingAssemblies());
-        System.out.println("min_countAromaticBonds: " + this.getMin_countAromaticBonds());
-        System.out.println("max_countAromaticBonds: " + this.getMax_countAromaticBonds());
-        System.out.println("min_countAromaticRings: " + this.getMin_countAromaticRings());
-        System.out.println("max_countAromaticRings: " + this.getMax_countAromaticRings());
-        System.out.println("min_formalCharge: " + this.getMin_formalCharge());
-        System.out.println("max_formalCharge: " + this.getMax_formalCharge());
-        System.out.println("min_theALogP: " + this.getMin_theALogP());
-        System.out.println("max_theALogP: " + this.getMax_theALogP());
 
     }
 
