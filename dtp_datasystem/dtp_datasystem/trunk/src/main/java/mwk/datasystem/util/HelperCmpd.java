@@ -57,10 +57,7 @@ public class HelperCmpd {
             CmpdFragment cfEntity = (CmpdFragment) c.uniqueResult();
 
             if (cfEntity != null) {
-
-                if (cfVO.getComment() != null) {
-                    cfEntity.setComment(cfVO.getComment());
-                }
+                
                 if (cfVO.getStoichiometry() != null) {
                     cfEntity.setStoichiometry(cfVO.getStoichiometry());
                 }

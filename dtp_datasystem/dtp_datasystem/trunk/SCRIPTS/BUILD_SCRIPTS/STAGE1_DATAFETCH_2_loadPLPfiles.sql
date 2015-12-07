@@ -49,8 +49,6 @@ vacuum analyze rs3_from_plp_frags;
 vacuum analyze rs3_from_plp_nsc;
 vacuum analyze rs3_from_plp_ctab;
 
-vacuum analyze rs3_from_plp_ctab;
-
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------

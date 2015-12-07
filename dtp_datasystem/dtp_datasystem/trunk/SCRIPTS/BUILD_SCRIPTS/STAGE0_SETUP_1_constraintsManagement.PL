@@ -49,7 +49,7 @@ INNER JOIN pg_class ON conrelid = pg_class.oid
 INNER JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace
 WHERE conname not like '%pkey'
 AND relname in (
-' $commaJoinedTableList '
+'$commaJoinedTableList'
 ) 
 ORDER BY CASE WHEN contype = 'f' THEN 0 ELSE 1 END, contype, nspname, relname, conname
 ];
@@ -84,7 +84,7 @@ INNER JOIN pg_class ON conrelid = pg_class.oid
 INNER JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace
 WHERE conname not like '%pkey'
 AND relname in (
-' $commaJoinedTableList '
+'$commaJoinedTableList'
 )
 ORDER BY CASE WHEN contype = 'f' THEN 0 ELSE 1 END DESC, contype DESC, nspname DESC, relname DESC, conname DESC
 ];

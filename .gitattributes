@@ -9470,6 +9470,7 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/combo.csv -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/APP_AND_INV.02DEC2015.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax[!!-~]02.03.15.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax[!!-~]07.24.15.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax02.03.15.biologicals.csv -text
@@ -9492,6 +9493,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_2_loa
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_3_postLoadCheckAndFixPLPdata.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_4_ALTERNATE_FetchFromProdFromFiles.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_4_FetchFromProd -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_AD_HOC_MANUAL.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_1_doLblStrcFrags.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_2_makeQCwithNSC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_3_makeQC.PL -text
@@ -9500,8 +9502,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_5_ns
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_0_processProdData.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_1_buildCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_2_buildCmpdTableFromCmpdModel.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_3_processProdData.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_3_processProdData.PL.ORIGINAL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_4_loadRDkit.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_recreateConstraints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
@@ -9513,6 +9513,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formatPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/grant.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/importAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQClists.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscNeedLegacyImage.sql -text
@@ -9543,6 +9544,7 @@ dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
 dtp_datasystem/dtp_datasystem/trunk/processedSalts.txt -text
+dtp_datasystem/dtp_datasystem/trunk/processedSaltsOut.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/rawSaltDefinitions.txt -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/legacyimageservlet/LegacyImageServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/ForceGraph.java -text

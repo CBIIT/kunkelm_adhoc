@@ -15,19 +15,21 @@ name varchar(1024)
 drop table if exists processed_salts;
 
 create table processed_salts(
-source varchar(1024),
-smiles varchar(1024),	
-name varchar(1024),	
-atomArray varchar(1024),	
-can_smi varchar(1024),	
-can_taut varchar(1024),
-can_taut_strip_stereo varchar(1024),	
-Molecular_Formula varchar(1024),	
-Molecular_Weight double precision,	
-CanonicalTautomer varchar(1024),	
-NumberOfTautomers int);
+source varchar,
+salt_name varchar,	
+smiles varchar,	
+can_smi varchar,	
+can_taut varchar,	
+can_taut_strip_stereo varchar,	
+inchi varchar,
+inchikey varchar,
+molecular_weight double precision,
+molecular_formula varchar,
+canonicaltautomer varchar,
+numberoftautomers varchar
+);
 
-\copy processed_salts from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/processedSalts.txt csv header delimiter as E'\t'
+\copy processed_salts from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/processedSaltsOut.tsv csv header delimiter as E'\t'
 
 -- same salts
 
@@ -35,9 +37,9 @@ drop table if exists unique_salts;
 
 create table unique_salts
 as
-select can_smi, can_taut, can_taut_strip_stereo, Molecular_Formula, Molecular_Weight, 
+select can_smi, can_taut, can_taut_strip_stereo, molecular_formula, molecular_weight, 
 count(*), 
-array_to_string(array_agg(distinct name), ', ') as names, 
+array_to_string(array_agg(distinct salt_name), ', ') as names, 
 array_to_string(array_agg(distinct source), ', ') as sources 
 from processed_salts
 

@@ -154,7 +154,6 @@ public class TransformAndroToVO {
         if (entityIn != null) {
 
             rtn.setId(entityIn.getId());
-            rtn.setComment(entityIn.getComment());
             rtn.setStoichiometry(entityIn.getStoichiometry());
 
             if (entityIn.getCmpdFragmentStructure() != null) {
@@ -332,8 +331,6 @@ public class TransformAndroToVO {
     public static CmpdVO translateCmpd(Cmpd entityIn) {
 
         CmpdVO rtn = new CmpdVO();
-
-        rtn.setComment(entityIn.getComment());
 
         if (entityIn instanceof NscCmpdImpl) {
 

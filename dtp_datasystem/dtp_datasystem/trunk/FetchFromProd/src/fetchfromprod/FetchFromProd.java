@@ -48,33 +48,43 @@ public class FetchFromProd {
             oraConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
-//            System.out.println("Starting: fetchBioDataCounts");
-//            fetchBioDataCounts(pgConn, oraConn);
-//
-//            System.out.println("Starting: fetchMtxt");
-//            fetchMtxt(pgConn, oraConn);
-//
-//            System.out.println("Starting: fetchInventory");
-//            fetchInventory(pgConn, oraConn);
-//
-//            System.out.println("Starting: fetchChemNames");
-//            fetchChemNames(pgConn, oraConn);
-//
-//            System.out.println("Starting: fetchPubChemId");
-//            fetchPubChemId(pgConn, oraConn);
-//
-//            System.out.println("Starting: fetchCmpd");
-//            fetchCmpd(pgConn, oraConn);
+            System.out.println();
+            System.out.println("Starting: fetchBioDataCounts");
+            fetchBioDataCounts(pgConn, oraConn);
 
+            System.out.println();
+            System.out.println("Starting: fetchMtxt");
+            fetchMtxt(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchInventory");
+            fetchInventory(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchChemNames");
+            fetchChemNames(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchPubChemId");
+            fetchPubChemId(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchCmpd");
+            fetchCmpd(pgConn, oraConn);
+
+            System.out.println();
             System.out.println("Starting: fetchProjects");
             fetchProjects(pgConn, oraConn);
             
+            System.out.println();
             System.out.println("Starting: fetchPlatedSets");
             fetchPlatedSets(pgConn, oraConn);
             
+            System.out.println();
             System.out.println("Starting: fetchPubChemId");
             fetchPubChemId(pgConn, oraConn);
            
+            System.out.println();
             System.out.println("Starting: fetchProjects");
             fetchProjects(pgConn, oraConn);
 

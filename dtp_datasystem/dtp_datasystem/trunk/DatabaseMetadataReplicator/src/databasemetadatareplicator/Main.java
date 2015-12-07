@@ -15,8 +15,41 @@ import java.sql.SQLException;
  */
 public class Main {
 
+    // microxeno from local to dev (TEMPORARILY using pptp dev schema)
+    static final String[] microXeno_localToDev = new String[]{
+        "jdbc:postgresql://localhost:5432/microxenodb",
+        "mwkunkel",
+        "donkie11",
+        "jdbc:postgresql://ncidb-d115-d.nci.nih.gov:5473/pptp",
+        "pptp",
+        "P2039p023t023pG0"           
+    };
+
+    // microXeno table names and where clauses
+    static final String[] microXeno_tableNamesAndWhereClauses = new String[]{
+        //"flat_data", ""
+        //"affymetrix_identifier", ""
+        "tumor","",
+        "tumor_type",""
+    };
+
+    // chembl postgres to oracle
+    static final String[] chembl_pgToOra = new String[]{
+        "jdbc:postgresql://localhost:5432/chembl_20",
+        "mwkunkel",
+        "donkie11",
+        "jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov",
+        "ops$kunkel",
+        "donkie"
+    };
+
+    static final String[] chemblTablesAndWhereClauses = new String[]{
+        "my_chembl", "",
+        "cmpd_table", ""
+    };
+
     // datasystem postgres to oracle
-    static final String[] dspg2dsora = new String[]{
+    static final String[] datasystem_pgToOra = new String[]{
         "jdbc:postgresql://localhost:5432/datasystemdb",
         "mwkunkel",
         "donkie11",
@@ -26,7 +59,7 @@ public class Main {
     };
 
     // datasystem to oncologydrugs
-    static final String[] ds2od = new String[]{
+    static final String[] datasystemToOncologyDrugs = new String[]{
         "jdbc:postgresql://localhost:5432/datasystemdb",
         "mwkunkel",
         "donkie11",
@@ -36,7 +69,7 @@ public class Main {
     };
 
     // compare to oncologydrugs
-    static final String[] compare2od = new String[]{
+    static final String[] compareToOncologyDrugs = new String[]{
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
@@ -46,7 +79,7 @@ public class Main {
     };
 
     // private compare to public compare
-    static final String[] priv2pub = new String[]{
+    static final String[] comparePrivateToPublic = new String[]{
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
@@ -59,32 +92,31 @@ public class Main {
         "donkie11"
     };
 
-    static final String[] ds2od_tnwc = new String[]{
+    static final String[] datasystemTableNamesAndWhereClauses = new String[]{
         //        // ad_hoc_cmpd not exported
         //        //                "ad_hoc_cmpd", " where ",
         //        //                "ad_hoc_cmpd_fragment", " where ",
         //        //                "ad_hoc_cmpd_fragment_p_chem", " where ",
         //        //                "ad_hoc_cmpd_fragment_structure", " where ",
         //
-        "cmpd_known_salt", "",
-        "nsc_cmpd_type", "",
+        //        "cmpd_known_salt", "",
+        //        "nsc_cmpd_type", "",
         //        "cmpd_alias_type", "",
         //        "cmpd_relation_type", "",
-        "cmpd_fragment_type", "",
+        //        "cmpd_fragment_type", "",
         //        //
         //        "cmpd_inventory", " where id in (select nsc from for_export)",
         //        "cmpd_annotation", " where id in (select nsc from for_export)",
         //        "cmpd_bio_assay", " where id in (select nsc from for_export)",
         //        "cmpd_legacy_cmpd", " where id in (select nsc from for_export)",
-        //        "cmpd_table", " where nsc in (select nsc from for_export)",
-        //        // 
-        //        "cmpd", " where id in (select nsc from for_export)",
-        //        //
-        "nsc_cmpd", " where nsc in (select nsc from for_export)",
-        //        //
-        "cmpd_fragment", " where nsc_cmpd_fk in (select nsc from for_export)",
-        "cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))", //        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
+        "cmpd_table", " where nsc in (select nsc from for_export)", //        // 
+    //        "cmpd", " where id in (select nsc from for_export)",
+    //        //
+    //        "nsc_cmpd", " where nsc in (select nsc from for_export)",
+    //        //
+    //        "cmpd_fragment", " where nsc_cmpd_fk in (select nsc from for_export)",
+    //        "cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
+    //        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))", //        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
     //        "cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
     //        // 
     //        //  cmpd_list not exported
@@ -109,7 +141,7 @@ public class Main {
     //        "rdkit_mol", " where nsc in (select nsc from for_export)"
     };
 
-    static final String[] compare2od_tnwc = new String[]{
+    static final String[] compareTableNamesAndWhereClauses = new String[]{
         // "types"
         "build_date", " ",
         "compare_cell_line", "",
@@ -141,8 +173,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] whichConnectionInfo = dspg2dsora;
-        String[] whichTableNamesAndWhereClauses = ds2od_tnwc;
+        String[] whichConnectionInfo = microXeno_localToDev;
+        String[] whichTableNamesAndWhereClauses = microXeno_tableNamesAndWhereClauses;
 
         Connection destConn = null;
         Connection sourceConn = null;
@@ -155,16 +187,17 @@ public class Main {
             destConn = DriverManager.getConnection(whichConnectionInfo[3], whichConnectionInfo[4], whichConnectionInfo[5]);
 
             // archive constraint drop/create statements
-            ConstraintManagement.oracleSaveConstraints(destConn, whichTableNamesAndWhereClauses);
+            // ConstraintManagement.oracleSaveConstraints(destConn, whichTableNamesAndWhereClauses);
             // drop constraints before build
-            ConstraintManagement.dropConstraints(destConn);
+            // ConstraintManagement.dropConstraints(destConn);
+            
             for (int i = 0; i < whichTableNamesAndWhereClauses.length; i += 2) {
                 String curTbl = whichTableNamesAndWhereClauses[i];
                 String whereClause = whichTableNamesAndWhereClauses[i + 1];
                 // scrape out anything remaining
                 // Replicator.nuke(destConn, curTbl);
                 // replicate the tables
-                //Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
+                Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
             }
 
             // recreate the constraints

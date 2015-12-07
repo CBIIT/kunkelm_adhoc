@@ -179,10 +179,10 @@ foreach my $fragFileBase(@fragFileList){
 	# print "firstLine: $firstLine\n";
 	my @fragFileHeaders = split(/,/, $firstLine);
 	
-	# print join(",", @fragColumnNames);
-	# print "\n";
-	# print join(",", @fragFileHeaders);
-	# print "\n";
+	print join(",", @fragColumnNames);
+	print "\n";
+	print join(",", @fragFileHeaders);
+	print "\n";
 	
 	my $equals = 0;
 	
