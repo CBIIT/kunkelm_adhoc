@@ -9562,6 +9562,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Fra
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/GenericConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/IdleController.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/LandingController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerBean.java -text
@@ -9620,6 +9621,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/csv.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/excel.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/pdf.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/xml.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/landing.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/login.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/loginFailed.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/popupTest.xhtml -text
@@ -9692,11 +9694,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -te
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_manip.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/menubar.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui_form.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/uploadList.xhtml -text

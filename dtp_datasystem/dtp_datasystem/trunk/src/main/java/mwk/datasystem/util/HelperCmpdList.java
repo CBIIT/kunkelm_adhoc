@@ -320,7 +320,7 @@ public class HelperCmpdList {
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
-        } finally {
+        } finally {        	
             session.close();
         }
 

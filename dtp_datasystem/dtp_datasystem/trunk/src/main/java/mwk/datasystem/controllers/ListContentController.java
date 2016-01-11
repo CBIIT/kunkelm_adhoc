@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
@@ -37,418 +36,420 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class ListContentController implements Serializable {
 
-    static final long serialVersionUID = -8653468638698142855l;
+  static final long serialVersionUID = -8653468638698142855l;
 
-    // reach-through to sessionController
-    @ManagedProperty(value = "#{sessionController}")
-    private SessionController sessionController;
+  // reach-through to sessionController
+  @ManagedProperty(value = "#{sessionController}")
+  private SessionController sessionController;
 
-    public void setSessionController(SessionController sessionController) {
-        this.sessionController = sessionController;
+  public void setSessionController(SessionController sessionController) {
+    this.sessionController = sessionController;
+  }
+
+  // reach-through to listManagerController
+  @ManagedProperty(value = "#{listManagerController}")
+  private ListManagerController listManagerController;
+
+  public void setListManagerController(ListManagerController listManagerController) {
+    this.listManagerController = listManagerController;
+  }
+
+  private SearchCriteriaBean scb;
+
+  public SearchCriteriaBean getSearchCriteriaBean() {
+    return scb;
+  }
+
+  public ListContentController() {
+    if (this.scb == null) {
+      this.scb = new SearchCriteriaBean();
     }
+  }
 
-    // reach-through to listManagerController
-    @ManagedProperty(value = "#{listManagerController}")
-    private ListManagerController listManagerController;
+  private String listName;
+  UploadedFile uploadedFile;
+  CmpdListVO targetList;
 
-    public void setListManagerController(ListManagerController listManagerController) {
-        this.listManagerController = listManagerController;
-    }
+  /**
+   *
+   * @return For checkboxes outside of dataTable
+   */
+  public String performDeleteFromActiveList() {
 
-    private SearchCriteriaBean listContentBean;
+    HelperCmpdListMember.deleteCmpdListMembers(targetList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
 
-    public SearchCriteriaBean getListContentBean() {
-        return listContentBean;
-    }
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
 
-    public ListContentController() {
-        this.listContentBean = new SearchCriteriaBean();
-    }
+    listManagerController.getListManagerBean().activeList = clVO;
 
-    private String listName;
-    UploadedFile uploadedFile;
-    CmpdListVO targetList;
+    sessionController.configurationBean.performUpdateColumns();
 
-    /**
-     *
-     * @return For checkboxes outside of dataTable
-     */
-    public String performDeleteFromActiveList() {
+    return "/webpages/activeListTable?faces-redirect=true";
+  }
 
-        HelperCmpdListMember.deleteCmpdListMembers(this.targetList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), this.sessionController.getLoggedUser());
+  public String performCreateNewListFromActiveList() {
+    return null;
+  }
 
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+  public String performCreateNewListFromSelectedListMembers() {
 
-        listManagerController.getListManagerBean().activeList = clVO;
+    // first, create an empty list
+    Long cmpdListId = HelperCmpdListMember.createEmptyList(listName, sessionController.getLoggedUser());
 
-        sessionController.configurationBean.performUpdateColumns();
+    System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
 
-        return "/webpages/activeListTable?faces-redirect=true";
-    }
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
-    public String performCreateNewListFromActiveList() {
-        return null;
-    }
+    // append the selected
+    HelperCmpdListMember.appendCmpdListMembers(clVO, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
 
-    public String performCreateNewListFromSelectedListMembers() {
-
-        // first, create an empty list
-        Long cmpdListId = HelperCmpdListMember.createEmptyList(this.listName, this.sessionController.getLoggedUser());
-
-        System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
-
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
-
-        // append the selected
-        HelperCmpdListMember.appendCmpdListMembers(clVO, listManagerController.getListManagerBean().getSelectedActiveListMembers(), this.sessionController.getLoggedUser());
-
-        // have to UPDATE the list   
-        CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
+    // have to UPDATE the list   
+    CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
         // have to add to the session
-        // and move to the new list        
-        listManagerController.getListManagerBean().availableLists.add(updatedClVO);
-        listManagerController.getListManagerBean().activeList = updatedClVO;
+    // and move to the new list        
+    listManagerController.getListManagerBean().availableLists.add(updatedClVO);
+    listManagerController.getListManagerBean().activeList = updatedClVO;
 
-        sessionController.configurationBean.performUpdateColumns();
+    sessionController.configurationBean.performUpdateColumns();
 
-        return "/webpages/activeListTable?faces-redirect=true";
+    return "/webpages/activeListTable?faces-redirect=true";
 
-    }
+  }
 
-    public String performAppendSelectedToExistingList() {
+  public String performAppendSelectedToExistingList() {
 
-        HelperCmpdListMember.appendCmpdListMembers(this.targetList, listManagerController.getListManagerBean().selectedActiveListMembers, this.sessionController.getLoggedUser());
+    HelperCmpdListMember.appendCmpdListMembers(targetList, listManagerController.getListManagerBean().selectedActiveListMembers, sessionController.getLoggedUser());
 
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(this.targetList.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(targetList.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
 
-        listManagerController.getListManagerBean().activeList = clVO;
+    listManagerController.getListManagerBean().activeList = clVO;
 
-        listManagerController.performUpdateAvailableLists();
+    listManagerController.performUpdateAvailableLists();
 
-        return "/webpages/activeListTable?faces-redirect=true";
+    return "/webpages/activeListTable?faces-redirect=true";
 
-    }
+  }
 
-    public String performConnectToLandingSpotfire() {
+  public String performConnectToLandingSpotfire() {
 
-        StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
 
-        boolean isFirst = true;
+    boolean isFirst = true;
 
-        for (CmpdListMemberVO clmVO : this.listManagerController.getListManagerBean().selectedActiveListMembers) {
-            if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
-                if (!isFirst) {
-                    sb.append("xxx");
-                }
-                sb.append(clmVO.getCmpd().getNsc());
-                isFirst = false;
-            }
+    for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().selectedActiveListMembers) {
+      if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
+        if (!isFirst) {
+          sb.append("xxx");
         }
+        sb.append(clmVO.getCmpd().getNsc());
+        isFirst = false;
+      }
+    }
 
-        String siteString = "http://localhost:8080/sarcomacompare/landingSpotfire.xhtml";
-        String paramString = "landingSpotfireNscSet=" + sb.toString();
-        String urlString = siteString + "?" + paramString;
+    String siteString = "http://localhost:8080/sarcomacompare/landingSpotfire.xhtml";
+    String paramString = "landingSpotfireNscSet=" + sb.toString();
+    String urlString = siteString + "?" + paramString;
 
 //        landingSpotfireNscSet
 //        landingSpotfireEndpointSet
 //        landingSpotfireIncludeExperiments
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        ExternalContext extCtx = ctx.getExternalContext();
+    FacesContext ctx = FacesContext.getCurrentInstance();
+    ExternalContext extCtx = ctx.getExternalContext();
 
-        System.out.println("Generated URL is: " + urlString);
+    System.out.println("Generated URL is: " + urlString);
 
-        try {
-            extCtx.redirect(urlString);
-        } catch (IOException ioe) {
-            throw new FacesException(ioe);
-        }
-
-        return null;
-
+    try {
+      extCtx.redirect(urlString);
+    } catch (IOException ioe) {
+      throw new FacesException(ioe);
     }
 
-    public String performSmilesFileUpload() {
+    return null;
 
-        try {
+  }
 
-            Random randomGenerator = new Random();
+  public String performSmilesFileUpload() {
 
-            String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.uploadedFile.getFileName());
+    try {
 
-            System.out.println(" fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize() + " realPath: " + realPath);
+      Random randomGenerator = new Random();
 
-            File systemFile = new File(realPath);
+      String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(uploadedFile.getFileName());
 
-            FileOutputStream fos = new FileOutputStream(systemFile, false);
+      System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
 
-            byte[] byteArray = IOUtils.toByteArray(this.uploadedFile.getInputstream());
+      File systemFile = new File(realPath);
 
-            fos.write(byteArray);
+      FileOutputStream fos = new FileOutputStream(systemFile, false);
 
-            fos.flush();
-            fos.close();
+      byte[] byteArray = IOUtils.toByteArray(uploadedFile.getInputstream());
 
-            FacesMessage msg = new FacesMessage(
-                    FacesMessage.SEVERITY_INFO,
-                    "Uploaded File",
-                    "fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize());
+      fos.write(byteArray);
 
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+      fos.flush();
+      fos.close();
 
-            MoleculeParser mp = new MoleculeParser();
+      FacesMessage msg = new FacesMessage(
+              FacesMessage.SEVERITY_INFO,
+              "Uploaded File",
+              "fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize());
 
-            File smilesFile = new File(realPath);
+      FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
+      MoleculeParser mp = new MoleculeParser();
 
-            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+      File smilesFile = new File(realPath);
 
-            // new fetch the list
-            CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+      ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
 
-            listManagerController.getListManagerBean().availableLists.add(clVO);
-            listManagerController.getListManagerBean().activeList = clVO;
+      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, listName, sessionController.getLoggedUser());
 
-            System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+      // new fetch the list
+      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+      listManagerController.getListManagerBean().availableLists.add(clVO);
+      listManagerController.getListManagerBean().activeList = clVO;
 
-        sessionController.configurationBean.performUpdateColumns();
+      System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
 
-        return "/webpages/activeListTable?faces-redirect=true";
-
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    public String performFileUpload() {
+    sessionController.configurationBean.performUpdateColumns();
 
-        try {
+    return "/webpages/activeListTable?faces-redirect=true";
 
-            Random randomGenerator = new Random();
+  }
 
-            String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(this.uploadedFile.getFileName());
+  public String performFileUpload() {
 
-            System.out.println(" fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize() + " realPath: " + realPath);
+    try {
 
-            File systemFile = new File(realPath);
+      Random randomGenerator = new Random();
 
-            FileOutputStream fos = new FileOutputStream(systemFile, false);
+      String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(uploadedFile.getFileName());
 
-            byte[] byteArray = IOUtils.toByteArray(this.uploadedFile.getInputstream());
+      System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
 
-            fos.write(byteArray);
+      File systemFile = new File(realPath);
 
-            fos.flush();
-            fos.close();
+      FileOutputStream fos = new FileOutputStream(systemFile, false);
 
-            FacesMessage msg = new FacesMessage(
-                    FacesMessage.SEVERITY_INFO,
-                    "Uploaded File",
-                    "fileName: " + this.uploadedFile.getFileName() + " fileSize: " + this.uploadedFile.getSize());
+      byte[] byteArray = IOUtils.toByteArray(uploadedFile.getInputstream());
 
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+      fos.write(byteArray);
 
-            MoleculeParser mp = new MoleculeParser();
+      fos.flush();
+      fos.close();
 
-            File sdFile = new File(realPath);
+      FacesMessage msg = new FacesMessage(
+              FacesMessage.SEVERITY_INFO,
+              "Uploaded File",
+              "fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize());
 
-            ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
+      FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+      MoleculeParser mp = new MoleculeParser();
 
-            // new fetch the list
-            CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
+      File sdFile = new File(realPath);
 
-            listManagerController.getListManagerBean().availableLists.add(clVO);
-            listManagerController.getListManagerBean().activeList = clVO;
+      ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
 
-            System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, listName, sessionController.getLoggedUser());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+      // new fetch the list
+      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
 
-        sessionController.configurationBean.performUpdateColumns();
+      listManagerController.getListManagerBean().availableLists.add(clVO);
+      listManagerController.getListManagerBean().activeList = clVO;
 
-        return "/webpages/activeListTable?faces-redirect=true";
+      System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
 
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    public String performCreateListBySearch() {
+    sessionController.configurationBean.performUpdateColumns();
 
-        // parse text areas
-        String[] splitStrings = null;
-        String fixedString = null;
-        int i;
+    return "/webpages/activeListTable?faces-redirect=true";
 
-        String delimiters = "[\\n\\r\\t\\s,]+";
+  }
 
-        splitStrings = this.listContentBean.getNscTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            fixedString = splitStrings[i].replaceAll("[^0-9]", "");
-            if (fixedString.length() > 0) {
-                this.listContentBean.getNscs().add(fixedString);
-            }
-        }
+  public String performCreateListBySearch() {
 
-        splitStrings = this.listContentBean.getCasTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getCases().add(splitStrings[i]);
-            }
-        }
+    // parse text areas
+    String[] splitStrings = null;
+    String fixedString = null;
+    int i;
 
-        splitStrings = this.listContentBean.getProjectCodeTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getProjectCodes().add(splitStrings[i]);
-            }
-        }
+    String delimiters = "[\\n\\r\\t\\s,]+";
 
-        splitStrings = this.listContentBean.getDrugNameTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getDrugNames().add(splitStrings[i]);
-            }
-        }
-
-        splitStrings = this.listContentBean.getAliasTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getAliases().add(splitStrings[i]);
-            }
-        }
-
-        splitStrings = this.listContentBean.getPlateTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getPlates().add(splitStrings[i]);
-            }
-        }
-
-        splitStrings = this.listContentBean.getTargetTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getTargets().add(splitStrings[i]);
-            }
-        }
-
-        splitStrings = this.listContentBean.getCmpdNamedSetTextArea().split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-            if (splitStrings[i].length() > 0) {
-                this.listContentBean.getCmpdNamedSets().add(splitStrings[i]);
-            }
-        }
-
-        System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
-        
-        System.out.println("Content of listContentBean:");
-        this.listContentBean.printCriteriaLists();
-        
-        Long cmpdListId = HelperCmpd.createCmpdListFromQueryObject(this.listName, this.listContentBean, null, this.sessionController.getLoggedUser());
-
-        // now fetch the list            
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, this.sessionController.getLoggedUser());
-
-        listManagerController.getListManagerBean().availableLists.add(clVO);
-        listManagerController.getListManagerBean().activeList = clVO;
-
-        sessionController.configurationBean.performUpdateColumns();
-
-        return "/webpages/activeListTable?faces-redirect=true";
-
+    splitStrings = scb.getNscTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].replaceAll("[^0-9]", "");
+      if (fixedString.length() > 0) {
+        scb.getNscs().add(fixedString);
+      }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-    public String getListName() {
-        return listName;
+    splitStrings = scb.getCasTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getCases().add(splitStrings[i]);
+      }
     }
 
-    public void setListName(String listName) {
-        this.listName = listName;
+    splitStrings = scb.getProjectCodeTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getProjectCodes().add(splitStrings[i]);
+      }
     }
 
-    public UploadedFile getUploadedFile() {
-        return uploadedFile;
+    splitStrings = scb.getDrugNameTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getDrugNames().add(splitStrings[i]);
+      }
     }
 
-    public void setUploadedFile(UploadedFile uploadedFile) {
-        this.uploadedFile = uploadedFile;
+    splitStrings = scb.getAliasTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getAliases().add(splitStrings[i]);
+      }
     }
 
-    public CmpdListVO getTargetList() {
-        return targetList;
+    splitStrings = scb.getPlateTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getPlates().add(splitStrings[i]);
+      }
     }
 
-    public void setTargetList(CmpdListVO targetList) {
-        this.targetList = targetList;
-    }
-    // </editor-fold>
-
-    public void appendToaliasTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getAliasTextArea() == null) {
-            listContentBean.setAliasTextArea("");
-        }
-        listContentBean.setAliasTextArea(item + " " + listContentBean.getAliasTextArea());
+    splitStrings = scb.getTargetTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getTargets().add(splitStrings[i]);
+      }
     }
 
-    public void appendTotargetTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getTargetTextArea() == null) {
-            listContentBean.setTargetTextArea("");
-        }
-        listContentBean.setTargetTextArea(item + " " + listContentBean.getTargetTextArea());
+    splitStrings = scb.getCmpdNamedSetTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      if (splitStrings[i].length() > 0) {
+        scb.getCmpdNamedSets().add(splitStrings[i]);
+      }
     }
 
-    public void appendToprojectCodeTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getProjectCodeTextArea() == null) {
-            listContentBean.setProjectCodeTextArea("");
-        }
-        listContentBean.setProjectCodeTextArea(item + " " + listContentBean.getProjectCodeTextArea());
-    }
+    System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
 
-    public void appendToplateTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getPlateTextArea() == null) {
-            listContentBean.setPlateTextArea("");
-        }
-        listContentBean.setPlateTextArea(item + " " + listContentBean.getPlateTextArea());
-    }
+    System.out.println("Content of searchCriteriaBean:");
+    scb.printCriteriaLists();
 
-    public void appendTocasTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getCasTextArea() == null) {
-            listContentBean.setCasTextArea("");
-        }
-        listContentBean.setCasTextArea(item + " " + listContentBean.getCasTextArea());
-    }
+    Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
 
-    public void appendTodrugNameTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getDrugNameTextArea() == null) {
-            listContentBean.setDrugNameTextArea("");
-        }
-        listContentBean.setDrugNameTextArea(item + " " + listContentBean.getDrugNameTextArea());
-    }
+    // now fetch the list            
+    CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
-    public void appendTonscTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getNscTextArea() == null) {
-            listContentBean.setNscTextArea("");
-        }
-        listContentBean.setNscTextArea(item + " " + listContentBean.getNscTextArea());
-    }
+    listManagerController.getListManagerBean().availableLists.add(clVO);
+    listManagerController.getListManagerBean().activeList = clVO;
 
-    public void appendTocmpdNamedSetTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (listContentBean.getCmpdNamedSetTextArea() == null) {
-            listContentBean.setCmpdNamedSetTextArea("");
-        }
-        listContentBean.setCmpdNamedSetTextArea(item + " " + listContentBean.getCmpdNamedSetTextArea());
+    sessionController.configurationBean.performUpdateColumns();
+
+    return "/webpages/activeListTable?faces-redirect=true";
+
+  }
+
+  // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
+  public String getListName() {
+    return listName;
+  }
+
+  public void setListName(String listName) {
+    this.listName = listName;
+  }
+
+  public UploadedFile getUploadedFile() {
+    return uploadedFile;
+  }
+
+  public void setUploadedFile(UploadedFile uploadedFile) {
+    this.uploadedFile = uploadedFile;
+  }
+
+  public CmpdListVO getTargetList() {
+    return targetList;
+  }
+
+  public void setTargetList(CmpdListVO targetList) {
+    this.targetList = targetList;
+  }
+  // </editor-fold>
+
+  public void appendToaliasTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getAliasTextArea() == null) {
+      scb.setAliasTextArea("");
     }
+    scb.setAliasTextArea(item + " " + scb.getAliasTextArea());
+  }
+
+  public void appendTotargetTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getTargetTextArea() == null) {
+      scb.setTargetTextArea("");
+    }
+    scb.setTargetTextArea(item + " " + scb.getTargetTextArea());
+  }
+
+  public void appendToprojectCodeTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getProjectCodeTextArea() == null) {
+      scb.setProjectCodeTextArea("");
+    }
+    scb.setProjectCodeTextArea(item + " " + scb.getProjectCodeTextArea());
+  }
+
+  public void appendToplateTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getPlateTextArea() == null) {
+      scb.setPlateTextArea("");
+    }
+    scb.setPlateTextArea(item + " " + scb.getPlateTextArea());
+  }
+
+  public void appendTocasTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getCasTextArea() == null) {
+      scb.setCasTextArea("");
+    }
+    scb.setCasTextArea(item + " " + scb.getCasTextArea());
+  }
+
+  public void appendTodrugNameTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getDrugNameTextArea() == null) {
+      scb.setDrugNameTextArea("");
+    }
+    scb.setDrugNameTextArea(item + " " + scb.getDrugNameTextArea());
+  }
+
+  public void appendTonscTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getNscTextArea() == null) {
+      scb.setNscTextArea("");
+    }
+    scb.setNscTextArea(item + " " + scb.getNscTextArea());
+  }
+
+  public void appendTocmpdNamedSetTextArea(SelectEvent event) {
+    Object item = event.getObject();
+    if (scb.getCmpdNamedSetTextArea() == null) {
+      scb.setCmpdNamedSetTextArea("");
+    }
+    scb.setCmpdNamedSetTextArea(item + " " + scb.getCmpdNamedSetTextArea());
+  }
 
 }
