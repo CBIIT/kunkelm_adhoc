@@ -6,129 +6,128 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui">
 
-    <f:view contentType="text/html">
+  <f:view contentType="text/html">
 
-        <h:head>
-            <f:facet name="first">
-                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-                <title>
-                    #{applicationScopeBean.projectTitle} <ui:insert name="title"/>
-                </title>
-            </f:facet>
+    <h:head>
+      <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+        <title>
+          #{applicationScopeBean.projectTitle} <ui:insert name="title"/>
+        </title>
+      </f:facet>
 
-            <noscript>
-                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
-            </noscript>
+      <noscript>
+        <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
+      </noscript>
 
-            <h:outputScript library="js" name="dctdDataSystem.js"/>                
-            <h:outputScript library="js" name="canvasWrangling.js"/>
-            <h:outputStylesheet library="css" name="my.css"/>
+      <h:outputScript library="js" name="dctdDataSystem.js"/>                
+      <h:outputScript library="js" name="canvasWrangling.js"/>
+      <h:outputStylesheet library="css" name="my.css"/>
 
-        </h:head>
-        
-         <ui:remove>
-            
-            <ui:define name="instructions"></ui:define>        
-            <ui:define name="export"></ui:define>        
-            <ui:define name="alternate"></ui:define>        
-            <ui:define name="content title"></ui:define>
+    </h:head>
 
-        </ui:remove>
+    <ui:remove>
 
-        <h:body>
+      <ui:define name="instructions"></ui:define>        
+      <ui:define name="export"></ui:define>        
+      <ui:define name="alternate"></ui:define>        
+      <ui:define name="content title"></ui:define>
 
-            <h:form id="datasystemForm" enctype="multipart/form-data">
+    </ui:remove>
 
-                <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+    <h:body>
 
-                <h:outputLink value="#centerContent">
-                    <h:outputText value="Skip to Content"/>
-                </h:outputLink>
+      <h:form id="datasystemForm" enctype="multipart/form-data">
 
-                <p:panel style="display: block;" id="wholePage">
+        <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
 
-                    <a name="centerContent"/>
+        <h:outputLink value="#centerContent">
+          <h:outputText value="Skip to Content"/>
+        </h:outputLink>
 
-                    <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
+        <p:panel style="display: block;" id="wholePage">
 
-                    <br/>
+          <a name="centerContent"/>
 
-                    <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
+          <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
 
-                    <h1>#{applicationScopeBean.projectTitle} <ui:insert name="content title"/></h1>
+          <br/>
 
-                    <ui:insert name="instructions"/>
+          <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
 
-                    <h:outputLink style="color: transparent; font-size: xx-small;" value="#afterExportData">
-                        <h:outputText value="Skip Export Data"/>
-                    </h:outputLink>
+          <h1>#{applicationScopeBean.projectTitle} <ui:insert name="content title"/></h1>
 
-                    <h2>Export Data or Images</h2>                    
-                    <ui:insert name="export"/>
-                    <a id="afterExportData" tabindex="-1" />
+          <ui:insert name="instructions"/>
 
-                    <h2>Screen Reader Alternate</h2> 
-                    <ui:insert name="alternate"/>
+          <h:outputLink style="color: transparent; font-size: xx-small;" value="#afterExportData">
+            <h:outputText value="Skip Export Data"/>
+          </h:outputLink>
 
-                    <h2><ui:insert name="content title"/></h2>
+          <h2>Export Data or Images</h2>                    
+          <ui:insert name="export"/>
+          <a id="afterExportData" tabindex="-1" />
 
-                    <ui:insert name="content"/>
+          <h2>Screen Reader Alternate</h2> 
+          <ui:insert name="alternate"/>
 
-                </p:panel>
+          <h2><ui:insert name="content title"/></h2>
 
-                <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
-                <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
-                <ui:include src="/webpages/dialogSelectedListMembers.xhtml"/>
+          <ui:insert name="content"/>
 
-            </h:form>
+        </p:panel>
 
-            <ui:include src="/webpages/dialogExportImage.xhtml"/>
+        <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
+        <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
 
-            <p:blockUI block=":datasystemForm"
-                       widgetVar="searchingBUI">
-                <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      </h:form>
 
-            <p:blockUI block=":datasystemForm" 
-                       widgetVar="loadingBUI">
-                <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
-            <p:blockUI block=":datasystemForm" 
-                       widgetVar="creatingBUI">
-                <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      <p:blockUI block=":datasystemForm"
+                 widgetVar="searchingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
 
-            <p:blockUI block=":datasystemForm"
-                       widgetVar="resolvingBUI">
-                <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      <p:blockUI block=":datasystemForm" 
+                 widgetVar="loadingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
 
-            <p:blockUI block=":datasystemForm" 
-                       widgetVar="uploadingBUI">
-                <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      <p:blockUI block=":datasystemForm" 
+                 widgetVar="creatingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
 
-            <p:blockUI block=":datasystemForm" 
-                       widgetVar="deletingBUI">
-                <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      <p:blockUI block=":datasystemForm"
+                 widgetVar="resolvingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
 
-            <p:blockUI block=":datasystemForm" 
-                       widgetVar="appendingBUI">
-                <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
-                <p:graphicImage name="images/ajax-loader.gif"/>  
-            </p:blockUI>
+      <p:blockUI block=":datasystemForm" 
+                 widgetVar="uploadingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
 
-        </h:body>
+      <p:blockUI block=":datasystemForm" 
+                 widgetVar="deletingBUI">
+        <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
 
-    </f:view>
+      <p:blockUI block=":datasystemForm" 
+                 widgetVar="appendingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
+
+    </h:body>
+
+  </f:view>
 
 </html>

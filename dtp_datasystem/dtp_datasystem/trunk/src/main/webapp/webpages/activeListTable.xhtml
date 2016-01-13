@@ -51,7 +51,7 @@
     <p:menubar>
 
       <p:menuitem action="#{listContentController.performConnectToLandingSpotfire()}"
-                  value="Landing Spotfire on Selected"
+                  value="NCI60 data for Selected"
                   onstart="PF('resolvingBUI').show();"
                   oncomplete="PF('resolvingBUI').hide();"
                   style="width: 100%;"/>
@@ -196,6 +196,52 @@
             <f:setPropertyActionListener value="#{listMember}"   
                                          target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
           </p:commandLink>
+
+        </p:column>
+
+        <p:column>
+
+          <h:outputText value="#{cmpd.name}"/>
+
+          <br/>
+
+          <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                          width="#{sessionController.configurationBean.strcDim}" 
+                          height="#{sessionController.configurationBean.strcDim}"
+                          styleClass="parentStructure"
+                          url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+
+          </p:graphicImage>
+
+          <br/>
+
+          <h:outputText value="#{cmpd.nscCmpdType}" style="font-weight: bold;"/>                    
+
+          <br/>
+
+          <h:outputText value="#{cmpd.countCmpdFragments} fragment(s)" 
+                        style="font-weight: bold;"/>
+
+          <br/>
+
+          <p:commandButton  value="DETAILS"
+                            update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                            oncomplete="PF('listMemberDetailDlg').show();" 
+                            title="List Member Details"
+                            style="display: inline-block;">  
+            <f:setPropertyActionListener value="#{listMember}"   
+                                         target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+          </p:commandButton>
+
+          <p:commandButton value="SSS"
+                           ajax="false" 
+                           title="Substructure Search"
+                           action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+
+            <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                         target="#{structureSearchController.nscForLoad}" />  
+
+          </p:commandButton>
 
         </p:column>
 

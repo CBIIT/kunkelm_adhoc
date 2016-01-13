@@ -8,21 +8,17 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <p:dialog  header="Compound Details" 
-               showEffect="fade" 
-               hideEffect="fade" 
-               widgetVar="cmpdDetailDlg"> 
+  <p:dialog  header="Compound Details" 
+             modal="true"
+             closeOnEscape="true"
+             widgetVar="cmpdDetailDlg"> 
 
-        <p:outputPanel id="CmpdDetailsDialogPanel">
- 
-            #{listLogicController.selectedCmpd.cmpdFragments}
-            
-            <ui:include src="/webpages/shared_cmpdDetails.xhtml">
-              <ui:param name="the_cmpd" value="#{listLogicController.selectedCmpd}" />
-            </ui:include>         
+    <p:outputPanel id="CmpdDetailsDialogPanel">            
+      <ui:include src="/webpages/shared_cmpdDetails.xhtml">
+        <ui:param name="the_cmpd" value="#{listLogicController.selectedCmpd}" />
+      </ui:include>         
+    </p:outputPanel>
 
-        </p:outputPanel>
-
-    </p:dialog>
+  </p:dialog>
 
 </ui:composition>

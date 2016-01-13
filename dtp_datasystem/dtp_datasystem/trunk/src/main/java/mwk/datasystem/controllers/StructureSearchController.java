@@ -258,6 +258,7 @@ public class StructureSearchController implements Serializable {
     public String performLoadEditorByNsc() {
 
         System.out.println("In performLoadEditorByNsc in StructureSearchController");
+        System.out.println("In performLoadEditorByNsc in nscForLoad is: " + nscForLoad);
 
         ctabForLoad = "";
         smilesForLoad = "";
@@ -320,6 +321,73 @@ public class StructureSearchController implements Serializable {
         return null;
     }
 
+      public String landingPerformLoadEditorByNsc() {
+
+        System.out.println("In landingPerformLoadEditorByNsc in StructureSearchController");
+        System.out.println("In landingPerformLoadEditorByNsc in nscForLoad is: " + nscForLoad);
+
+        ctabForLoad = "";
+        smilesForLoad = "";
+
+        // MWK 16Feb2015 calls to local methods which delegate to MolInput
+        Integer nscInt = null;
+
+        try {
+            nscInt = Integer.parseInt(nscForLoad);
+        } catch (NumberFormatException e) {
+        }
+
+        if (nscInt != null) {
+
+            CmpdVO cVO = HelperCmpd.getSingleCmpdByNsc(nscInt, sessionController.getLoggedUser());
+
+            String ctab = null;
+            String smiles = null;
+
+            try {
+                ctab = cVO.getParentFragment().getCmpdFragmentStructure().getCtab();
+            } catch (Exception e) {
+
+            }
+
+            try {
+                smiles = cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi();
+            } catch (Exception e) {
+
+            }
+
+            if (ctab != null) {
+
+                ctabForLoad = ctab;
+
+                if (smiles != null) {
+                    smilesForLoad = smiles;
+                } else {
+                    smilesForLoad = MoleculeWrangling.toSmilesFromCtab(ctabForLoad, true);
+                }
+
+            } else if (smiles != null) {
+
+                smilesForLoad = smiles;
+                ctabForLoad = MoleculeWrangling.toCtabFromSmiles(smiles);
+
+            } else {
+
+                message = "No ctab or smiles for : " + nscForLoad;
+                errorMessage = "No ctab or smiles for : " + nscForLoad;
+
+            }
+        } else {
+
+            message = "Not a valid NSC: " + nscForLoad;
+            errorMessage = "Not a valid NSC: " + nscForLoad;
+
+        }
+
+        return "/webpages/chemDoodle.xhtml?faces-redirect=true";
+    }
+
+    
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
     public String getMessage() {
         return message;

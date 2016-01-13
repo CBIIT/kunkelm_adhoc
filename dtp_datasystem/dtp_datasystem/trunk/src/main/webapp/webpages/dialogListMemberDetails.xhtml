@@ -9,19 +9,17 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
   <p:dialog  header="List Member Details" 
-             showEffect="fade" 
-             hideEffect="fade" 
+             modal="true"
+             closeOnEscape="true"
              widgetVar="listMemberDetailDlg" 
              appendTo="@(body)"> 
 
-    <p:scrollPanel style="width:800px;height:600px">
+    <p:scrollPanel mode="native" style="width:800px;height:600px">
 
-      <p:outputPanel id="ListMemberDetailsDialogPanel">
-
-        <ui:include src="/webpages/listMemberDetails.xhtml">            
-          <ui:param name="listMember" value="#{listManagerController.listManagerBean.selectedActiveListMember}"/>
+      <p:outputPanel id="ListMemberDetailsDialogPanel">      
+        <ui:include src="/webpages/shared_cmpdDetails.xhtml">            
+          <ui:param name="the_cmpd" value="#{listManagerController.listManagerBean.selectedActiveListMember.cmpd}"/>
         </ui:include>
-
       </p:outputPanel>
 
     </p:scrollPanel>

@@ -9684,14 +9684,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoForce.xh
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoHistoScat.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdDetails.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdFragment.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogExportImage.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDetails.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogSelectedListMembers.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/landingChemDoodle.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listMemberDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
