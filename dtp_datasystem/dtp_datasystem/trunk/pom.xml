@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>2015.09.29</version>
+    <version>20160113</version>
     <packaging>war</packaging>
     <name>datasystem</name>
     <properties>
@@ -182,12 +182,12 @@
         <dependency>
             <groupId>mwk.datasystem</groupId>
             <artifactId>datasystem-common</artifactId>
-            <version>20150309</version>      
+            <version>20160113</version>      
         </dependency>
         <dependency>
             <groupId>mwk.datasystem</groupId>
             <artifactId>datasystem-core</artifactId>
-            <version>20150309</version>
+            <version>20160113</version>
             <exclusions>
                 <exclusion>
                     <artifactId>hibernate-validator-legacy</artifactId>
