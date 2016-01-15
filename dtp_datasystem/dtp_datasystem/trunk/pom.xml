@@ -194,13 +194,7 @@
                     <groupId>org.hibernate</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>  
-        
-        <dependency>
-            <groupId>hist4j</groupId>
-            <artifactId>hist4j</artifactId>
-            <version>0.1</version>      
-        </dependency>
+        </dependency>          
     </dependencies>
     <build>
         <plugins>
