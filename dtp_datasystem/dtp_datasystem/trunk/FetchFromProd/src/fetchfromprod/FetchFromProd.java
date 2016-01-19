@@ -390,6 +390,7 @@ public class FetchFromProd {
 //    }
 //
 //  }
+    
     public static void fetchMtxt(
             Connection pgConn,
             Connection oraConn) throws Exception {
@@ -673,7 +674,7 @@ public class FetchFromProd {
             Connection oraConn) throws Exception {
     }
 
-    public static void fetchCmpd(
+    public static void fetchLegacyCmpd(
             Connection pgConn,
             Connection oraConn) throws Exception {
 
@@ -696,11 +697,11 @@ public class FetchFromProd {
             pgStmt = pgConn.createStatement();
             oraStmt = oraConn.createStatement();
 
-            sqlString = "drop table if exists prod_cmpd";
+            sqlString = "drop table if exists prod_legacy_cmpd";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create table prod_cmpd ("
+            sqlString = "create table prod_legacy_cmpd ("
                     + "nsc integer, "
                     + "cas integer, "
                     + "conf varchar(32), "
