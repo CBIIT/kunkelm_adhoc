@@ -658,17 +658,17 @@
             For Progress use: jdbc:JdbcProgress:T:localhost:3305:datasystem
         -->
         <jdbc.url>
-          jdbc:postgresql://localhost:5432/dctddb
+          jdbc:postgresql://localhost:5432/datasystemdb
           <!--jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov-->
         </jdbc.url>
         <!-- Enter id/password for the database connection -->                
         <jdbc.username>
           <!--DIS_CLEANED-->
-          datasystem_user
+          mwkunkel
         </jdbc.username>
         <jdbc.password>
           <!--R6pq4$6V8d-->
-          datasystem_pass
+          donkie11
         </jdbc.password>
         <!--
             Change exception sorter class name for appropriate database

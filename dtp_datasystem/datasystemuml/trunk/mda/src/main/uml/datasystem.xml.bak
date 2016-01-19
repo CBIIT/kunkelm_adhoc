@@ -4233,32 +4233,6 @@
 							</xmi:Extension>
 							<lowerValue xmi:type='uml:LiteralInteger' xmi:id='_17_0_6_fab036f_1452866192966_490138_3237' visibility='public'/>
 						</ownedAttribute>
-						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1453089805592_621124_3414' name='prodFormulaWeight' visibility='public' isUnique='false'>
-							<type xmi:type='uml:DataType' href='andromda-profile-datatype-3.4.xml.zip#_9_0_1fe00f9_1119336925531_221770_56'>
-								<xmi:Extension extender='MagicDraw UML 17.0'>
-									<referenceExtension referentPath='datatype::Double' referentType='DataType'/>
-								</xmi:Extension>
-							</type>
-							<xmi:Extension extender='MagicDraw UML 17.0'>
-								<modelExtension>
-									<upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:id='_17_0_6_fab036f_1453089805594_440089_3416' visibility='public' value='1'/>
-								</modelExtension>
-							</xmi:Extension>
-							<lowerValue xmi:type='uml:LiteralInteger' xmi:id='_17_0_6_fab036f_1453089805594_119401_3417' visibility='public'/>
-						</ownedAttribute>
-						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1453089805593_559326_3415' name='prodMolecularFormula' visibility='public' isUnique='false'>
-							<type xmi:type='uml:DataType' href='andromda-profile-datatype-3.4.xml.zip#_9_0_1fe00f9_1119336925531_364079_66'>
-								<xmi:Extension extender='MagicDraw UML 17.0'>
-									<referenceExtension referentPath='datatype::String' referentType='DataType'/>
-								</xmi:Extension>
-							</type>
-							<xmi:Extension extender='MagicDraw UML 17.0'>
-								<modelExtension>
-									<upperValue xmi:type='uml:LiteralUnlimitedNatural' xmi:id='_17_0_6_fab036f_1453089805594_33456_3418' visibility='public' value='1'/>
-								</modelExtension>
-							</xmi:Extension>
-							<lowerValue xmi:type='uml:LiteralInteger' xmi:id='_17_0_6_fab036f_1453089805594_72915_3419' visibility='public'/>
-						</ownedAttribute>
 					</packagedElement>
 					<packagedElement xmi:type='uml:Association' xmi:id='_17_0_6_fab036f_1396138222187_735692_2439' visibility='public'>
 						<memberEnd xmi:idref='_17_0_6_fab036f_1396138222244_356936_2714'/>
@@ -7364,7 +7338,7 @@ AdHocCmpd.originalAdHocCmpdId links ALL copies of the same AdHocCmpd.  EACH copy
 						<mdElement elementClass='StringProperty'>
 							<propertyID>INFO_PROPERTY</propertyID>
 							<propertyDescriptionID>INFO_PROPERTY_DESCRIPTION</propertyDescriptionID>
-							<value>41 63 48 3a 5c 1d 4b 35 32 27 9a f5 85 d1 7e e 76 dd 1 19 24 88 56 9b d5 a7 35 96 ae 7f f7 1b 2b f1 b7 33 98 26 7e 59 4c b3 7b 5f d4 b2 b 4d ee 5a e1 4f 9f 54 3e e 95 e6 1d f 92 ce 8e 2a d6 21 64 49 58 </value>
+							<value>41 63 48 3a 5c 1d 4b 35 32 27 9a f5 85 d1 7e e 76 dd 1 19 24 88 56 9b d5 a7 34 96 af 7b f7 1b 2b f1 b7 33 98 26 7e 59 4c b3 7b 5f d4 b2 b 4d ee 5a e1 4f 9f 54 3e e 95 e6 1d f 92 ce 8e 2a d6 21 64 49 58 </value>
 						</mdElement>
 						<mdElement elementClass='LIST_PROPERTY'>
 							<propertyID>ADDITIONAL_CONTAINMENT_TREES</propertyID>
