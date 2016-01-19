@@ -150,13 +150,15 @@
           <h:outputText value="#{cmpd.nsc}"/>
         </p:column>   
 
-        <p:column headerText="Discreet" 
+        <p:column headerText="DISCREET" 
                   resizable="true"
                   sortBy="#{cmpd.discreet}"
                   filterBy="#{cmpd.discreet}"
                   filterMatchMode="contains">                                
           <h:outputText value="#{cmpd.discreet}"/>
         </p:column>   
+        
+        <!--
 
         <p:column headerText="CONF" 
                   resizable="true"
@@ -172,7 +174,9 @@
                   filterBy="#{cmpd.distribution}"
                   filterMatchMode="contains">                                
           <h:outputText value="#{cmpd.distribution}"/>
-        </p:column>   
+        </p:column> 
+        
+        -->
 
         <p:column headerText="NSCCmpdType"
                   sortBy="#{cmpd.nscCmpdType}"
@@ -181,25 +185,8 @@
           <h:outputText value="#{cmpd.nscCmpdType}"/>
         </p:column>   
 
-        <p:column headerText="Parent - Click for Details" 
+        <p:column headerText="Parent Structure" 
                   resizable="true">
-
-          <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
-                         oncomplete="PF('listMemberDetailDlg').show();" 
-                         title="View Detail">
-            <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                            width="#{sessionController.configurationBean.strcDim}" 
-                            height="#{sessionController.configurationBean.strcDim}"
-                            styleClass="parentStructure"
-                            url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-            </p:graphicImage>
-            <f:setPropertyActionListener value="#{listMember}"   
-                                         target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-          </p:commandLink>
-
-        </p:column>
-
-        <p:column>
 
           <h:outputText value="#{cmpd.name}"/>
 
@@ -244,6 +231,73 @@
           </p:commandButton>
 
         </p:column>
+        
+        <p:column resizable="true"
+                  sortBy="#{cmpd.parentMolecularWeight}">  
+          
+          <f:facet name="header">                
+            <h:outputText escape="false" value="Compound and Parent&lt;br/&gt;Sort by Parent MW"/>                    
+        </f:facet>          
+          
+          <p:panelGrid columns="2" style="width: auto;">
+            <h:outputText value="MF"/>
+            <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
+            <h:outputText value="FW"/>
+            <h:outputText value="#{cmpd.formulaWeight}"/>
+            <h:outputText value="Parent MF"/>
+            <h:outputText value="#{cmpd.parentMolecularFormula}"/>
+            <h:outputText value="Parent MW"/>
+            <h:outputText value="#{cmpd.parentMolecularWeight}"/>
+          </p:panelGrid>
+        </p:column> 
+        
+        <!--
+
+        <p:column headerText="Molecular Formula" 
+                  resizable="true"
+                  sortBy="#{cmpd.formulaMolecularFormula}"
+                  filterBy="#{cmpd.formulaMolecularFormula}"
+                  filterMatchMode="contains">                                
+          <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
+        </p:column> 
+
+        <p:column headerText="Formula Weight" 
+                  resizable="true"
+                  sortBy="#{cmpd.formulaWeight}">                                
+          <h:outputText value="#{cmpd.formulaWeight}"/>
+        </p:column> 
+
+        <p:column headerText="Parent Molecular Formula" 
+                  resizable="true"
+                  sortBy="#{cmpd.parentMolecularFormula}"
+                  filterBy="#{cmpd.parentMolecularFormula}"
+                  filterMatchMode="contains">                                
+          <h:outputText value="#{cmpd.parentMolecularFormula}"/>
+        </p:column> 
+
+        <p:column headerText="Parent Molecular Weight" 
+                  resizable="true"
+                  sortBy="#{cmpd.parentMolecularWeight}">                                
+          <h:outputText value="#{cmpd.parentMolecularWeight}"/>
+        </p:column> 
+        
+        -->
+
+        <p:column resizable="true"
+                  sortBy="#{cmpd.saltFragment.saltName}">  
+          
+          <f:facet name="header">                
+            <h:outputText escape="false" value="Salt&lt;br/&gt;Sort by Salt Name"/>                    
+        </f:facet>          
+          <p:panelGrid columns="2" style="width: auto;">
+            <h:outputText value="Name"/>
+            <h:outputText value="#{cmpd.saltFragment.saltName}"/>
+            <h:outputText value="MF"/>
+            <h:outputText value="#{cmpd.saltFragment.saltMf}"/>
+            <h:outputText value="MW"/>
+            <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
+          </p:panelGrid>
+        </p:column> 
 
         <p:column headerText="Fragments" 
                   rendered="#{sessionController.configurationBean.showFrags}">

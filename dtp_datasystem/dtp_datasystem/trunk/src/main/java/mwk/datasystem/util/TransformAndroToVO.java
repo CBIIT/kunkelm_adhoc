@@ -128,10 +128,11 @@ public class TransformAndroToVO {
 
         if (entityIn != null) {
             rtn.setId(entityIn.getId());
-            rtn.setCtab(entityIn.getCtab());
+            rtn.setNsc(entityIn.getNsc());
+            rtn.setProdCtab(entityIn.getProdCtab());
             rtn.setJpg512(entityIn.getJpg512());
-            rtn.setMolecularFormula(entityIn.getMolecularFormula());
-            rtn.setMolecularWeight(entityIn.getMolecularWeight());            
+            rtn.setProdMolecularFormula(entityIn.getProdMolecularFormula());
+            rtn.setProdFormulaWeight(entityIn.getProdFormulaWeight());            
         }
 
         return rtn;
@@ -372,6 +373,7 @@ public class TransformAndroToVO {
 //                rtn.setSaltMw(nscc.getSaltMw());
 //                rtn.setParentStoichiometry(nscc.getParentStoichiometry());
 //                rtn.setSaltStoichiometry(nscc.getSaltStoichiometry());
+                                
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());
@@ -380,9 +382,10 @@ public class TransformAndroToVO {
 
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());
-                rtn.setMolecularWeight(nscc.getMolecularWeight());
-                rtn.setMolecularFormula(nscc.getMolecularFormula());
-
+                                
+                rtn.setFormulaWeight(nscc.getFormulaWeight());
+                rtn.setFormulaMolecularFormula(nscc.getFormulaMolecularFormula());
+                
                 Collection<CmpdTarget> entityColl = nscc.getCmpdTargets();
                 ArrayList<String> strColl = new ArrayList<String>();
                 for (CmpdTarget ct : entityColl) {
@@ -437,15 +440,28 @@ public class TransformAndroToVO {
 
             }
 
-            // is there a parent fragment
+            // parent fragment
             if (nscc.getCmpdParentFragment() != null) {
 
                 rtn.setParentFragment(translateCmpdFragment(nscc.getCmpdParentFragment()));
+                                
+                rtn.setParentMolecularWeight(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getMolecularWeight());
+                rtn.setParentMolecularFormula(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getMolecularFormula());
+                
+                // check for salt fragment
+                
+                if (nscc.getCmpdSaltFragment() != null){
+                  
+                  rtn.setSaltFragment(translateCmpdFragment(nscc.getCmpdSaltFragment()));                  
+                  
+                }
+                
 
             } else {
 
                 // nsc_cmpd should already have a parent fragment
                 // if not, calculation on-the-fly by size
+              
                 ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(rtn.getCmpdFragments());
 
                 // some cmpds will have no fragments

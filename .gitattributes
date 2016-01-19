@@ -9516,6 +9516,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/importAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/makeQClists.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/newParentAndSaltModel.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscNeedLegacyImage.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/nscWithMulti.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartAddToColumnModelList -text
@@ -9598,7 +9599,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/DepictionG
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/MoleculeWrangling.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/newstructureservlet/StructureServlet.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/Cmpd.hbm.xml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdFragment.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdLegacyCmpd.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdListMember.hbm.xml -text

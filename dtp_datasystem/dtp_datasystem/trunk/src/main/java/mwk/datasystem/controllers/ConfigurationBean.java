@@ -8,9 +8,8 @@ package mwk.datasystem.controllers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import mwk.datasystem.vo.CmpdVO;
 
@@ -20,7 +19,7 @@ import mwk.datasystem.vo.CmpdVO;
  */
 public class ConfigurationBean implements Serializable {
 
-    static final long serialVersionUID = -8653468634048142855l;
+  static final long serialVersionUID = -8653468634048142855l;
 
 //       _       _           _               _   _                 
 //  __ _| | ___ | |__   __ _| |   ___  _ __ | |_(_) ___  _ __  ___ 
@@ -28,9 +27,9 @@ public class ConfigurationBean implements Serializable {
 //| (_| | | (_) | |_) | (_| | | | (_) | |_) | |_| | (_) | | | \__ \
 // \__, |_|\___/|_.__/ \__,_|_|  \___/| .__/ \__|_|\___/|_| |_|___/
 // |___/                              |_|                          
-    protected Boolean showFrags;
-    protected Boolean showAnchor;
-    protected Boolean showQc;
+  protected Boolean showFrags;
+  protected Boolean showAnchor;
+  protected Boolean showQc;
 
 //     _                   _                  
 // ___| |_ _ __ _   _  ___| |_ _   _ _ __ ___ 
@@ -44,9 +43,9 @@ public class ConfigurationBean implements Serializable {
 //| | |  __/ | | | (_| |  __/ |  | | | | | (_| |
 //|_|  \___|_| |_|\__,_|\___|_|  |_|_| |_|\__, |
 //                                        |___/ 
-    protected List<String> selectedStrcOptions;
-    protected String selectedStrcSize;
-    protected Integer strcDim;
+  protected List<String> selectedStrcOptions;
+  protected String selectedStrcSize;
+  protected Integer strcDim;
 
 //     _                             _      
 //  __| |_   _ _ __   __ _ _ __ ___ (_) ___ 
@@ -59,535 +58,527 @@ public class ConfigurationBean implements Serializable {
 // / __/ _ \| | | | | '_ ` _ \| '_ \/ __|
 //| (_| (_) | | |_| | | | | | | | | \__ \
 // \___\___/|_|\__,_|_| |_| |_|_| |_|___/
-    protected List<String> availablePChemParameters;
-    protected List<String> selectedPChemParameters;
-    protected static HashMap<String, String> valid_physchem_keys;
-    protected List<ColumnModel> physChemColumns;
+  protected List<String> availablePChemParameters;
+  protected List<String> selectedPChemParameters;
+  protected static HashMap<String, String> valid_physchem_keys;
+  protected List<ColumnModel> physChemColumns;
 
-    protected List<String> availableStructureParameters;
-    protected List<String> selectedStructureParameters;
-    protected static HashMap<String, String> valid_strc_keys;
-    protected List<ColumnModel> structureColumns;
+  protected List<String> availableStructureParameters;
+  protected List<String> selectedStructureParameters;
+  protected static HashMap<String, String> valid_strc_keys;
+  protected List<ColumnModel> structureColumns;
 
-    protected List<String> availableCmpdParameters;
-    protected List<String> selectedCmpdParameters;
-    protected static HashMap<String, String> valid_cmpd_keys;
-    protected List<ColumnModel> cmpdColumns;
+  protected List<String> availableCmpdParameters;
+  protected List<String> selectedCmpdParameters;
+  protected static HashMap<String, String> valid_cmpd_keys;
+  protected List<ColumnModel> cmpdColumns;
 
-    protected List<String> availableBioDataParameters;
-    protected List<String> selectedBioDataParameters;
-    protected static HashMap<String, String> valid_bio_keys;
-    protected List<ColumnModel> biodataColumns;
+  protected List<String> availableBioDataParameters;
+  protected List<String> selectedBioDataParameters;
+  protected static HashMap<String, String> valid_bio_keys;
+  protected List<ColumnModel> biodataColumns;
 
-    public ConfigurationBean() {
+  public ConfigurationBean() {
 
-        reset();
+    reset();
 
-        showFrags = Boolean.FALSE;
-        showAnchor = Boolean.FALSE;
-        showQc = Boolean.FALSE;
+    showFrags = Boolean.FALSE;
+    showAnchor = Boolean.FALSE;
+    showQc = Boolean.FALSE;
 
-        selectedStrcOptions = new ArrayList<String>();
-        selectedStrcOptions.add("TTL");
-        selectedStrcOptions.add("CLR");
-        selectedStrcOptions.add("HLT");
-        selectedStrcSize = "MED";
-        strcDim = Integer.valueOf(200);
+    selectedStrcOptions = new ArrayList<String>();
+    selectedStrcOptions.add("TTL");
+    selectedStrcOptions.add("CLR");
+    selectedStrcOptions.add("HLT");
+    selectedStrcSize = "MED";
+    strcDim = Integer.valueOf(200);
 
-        // cmpd
-        HashMap<String, String> hm = new HashMap<String, String>();
-        hm.put("Prefix", "prefix");
-        hm.put("NSC", "nsc");
-        hm.put("Conf", "conf");
-        hm.put("Distribution", "distribution");
-        hm.put("CAS", "cas");
-        hm.put("Name", "name");
-        hm.put("adHocCmpdId", "adHocCmpdId");
-        hm.put("originalAdHocCmpdId", "originalAdHocCmpdId");
-        hm.put("nscCmpdId", "nscCmpdId");
-        hm.put("Inventory", "inventory");
-        hm.put("Aliases", "aliases");
-        hm.put("Projects", "projects");
-        hm.put("Plates", "plates");
-        hm.put("Targets", "targets");
-        hm.put("Count Fragments", "countCmpdFragments");
+    // cmpd
+    HashMap<String, String> hm = new HashMap<String, String>();
+    hm.put("Prefix", "prefix");
+    // NSC and DISCREET are ALWAYS shown
+    hm.put("CONF", "conf");
+    hm.put("DIST", "distribution");
+    hm.put("CAS", "cas");
+    hm.put("Name", "name");
+    hm.put("adHocCmpdId", "adHocCmpdId");
+    hm.put("originalAdHocCmpdId", "originalAdHocCmpdId");
+    hm.put("nscCmpdId", "nscCmpdId");
+    hm.put("Inventory", "inventory");
+    hm.put("Aliases", "aliases");
+    hm.put("Projects", "projects");
+    hm.put("Plates", "plates");
+    hm.put("Targets", "targets");
+    hm.put("Count Fragments", "countCmpdFragments");
 
-        this.valid_cmpd_keys = hm;
+    hm.put("Molecular Formula", "formulaMolecularFormula");
+    hm.put("Formula Weight", "formulaWeight");
+    hm.put("Parent Molecular Formula", "parentMolecularFormula");
+    hm.put("Parent Formula Weight", "parentMolecularWeight");
 
-        this.availableCmpdParameters = new ArrayList<String>(hm.keySet());
-        // Collections.sort(this.availableCmpdParameters, null);
+    this.valid_cmpd_keys = hm;
 
-        // pChem
-        hm = new HashMap<String, String>();
-        hm.put("Molecular Weight", "molecularWeight");
-        hm.put("Molecular Formula", "molecularFormula");
-        hm.put("Formal Charge", "formalCharge");
-        hm.put("aLogP", "theALogP");
-        hm.put("logD", "logD");
-        hm.put("Count H Bond Acceptors", "countHydBondAcceptors");
-        hm.put("Count H Bond Donors", "countHydBondDonors");
-        hm.put("SurfaceArea", "surfaceArea");
-        hm.put("Solubility", "solubility");
-        hm.put("Count Rings", "countRings");
-        hm.put("Count Atoms", "countAtoms");
-        hm.put("Count Bonds", "countBonds");
-        hm.put("Count Single Bonds", "countSingleBonds");
-        hm.put("Count Double Bonds", "countDoubleBonds");
-        hm.put("Count Triple Bonds", "countTripleBonds");
-        hm.put("Count Rotatable Bonds", "countRotatableBonds");
-        hm.put("Count Hydrogen Atoms", "countHydrogenAtoms");
-        hm.put("Count Metal Atoms", "countMetalAtoms");
-        hm.put("Count Heavy Atoms", "countHeavyAtoms");
-        hm.put("Count Positive Atoms", "countPositiveAtoms");
-        hm.put("Count Negative Atoms", "countNegativeAtoms");
-        hm.put("Count Ring Bonds", "countRingBonds");
-        hm.put("Count Stereo Atoms", "countStereoAtoms");
-        hm.put("Count Stereo Bonds", "countStereoBonds");
-        hm.put("Count Ring Assemblies", "countRingAssemblies");
-        hm.put("Count Aromatic Bonds", "countAromaticBonds");
-        hm.put("Count Aromatic Rings", "countAromaticRings");
+    this.availableCmpdParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availableCmpdParameters);
 
-        this.valid_physchem_keys = hm;
+    // pChem
+    hm = new HashMap<String, String>();
+    hm.put("Formal Charge", "formalCharge");
+    hm.put("aLogP", "theALogP");
+    hm.put("logD", "logD");
+    hm.put("H Bond Acceptors", "countHydBondAcceptors");
+    hm.put("H Bond Donors", "countHydBondDonors");
+    hm.put("Surface Area", "surfaceArea");
+    hm.put("Solubility", "solubility");
+    hm.put("Rings", "countRings");
+    hm.put("Atoms Count", "countAtoms");
+    hm.put("Bonds Count", "countBonds");
+    hm.put("Bonds Single Count", "countSingleBonds");
+    hm.put("Bonds Double", "countDoubleBonds");
+    hm.put("Bonds Triple", "countTripleBonds");
+    hm.put("Bonds Rotatable", "countRotatableBonds");
+    hm.put("Atoms Hydrogen", "countHydrogenAtoms");
+    hm.put("Atoms Metal", "countMetalAtoms");
+    hm.put("Atoms Heavy", "countHeavyAtoms");
+    hm.put("Atoms Positive", "countPositiveAtoms");
+    hm.put("Atoms Negative", "countNegativeAtoms");
+    hm.put("Bonds Ring", "countRingBonds");
+    hm.put("Atoms Stereo", "countStereoAtoms");
+    hm.put("Bonds Stereo", "countStereoBonds");
+    hm.put("Assemblies Ring", "countRingAssemblies");
+    hm.put("Bonds Aromatic", "countAromaticBonds");
+    hm.put("Rings Aromatic", "countAromaticRings");
 
-        this.availablePChemParameters = new ArrayList<String>(hm.keySet());
-        // Collections.sort(this.availablePChemParameters, null);
+    this.valid_physchem_keys = hm;
 
-        // Structure
-        hm = new HashMap<String, String>();
-        hm.put("Canonical Smiles", "canSmi");
-        hm.put("Canonical Tautomer", "canTaut");
-        hm.put("Canonical Tautomer, Strip Stereo", "canTautStripStero");
-        hm.put("InChI", "inchi");
-        hm.put("InChI Auxilliary", "inchiAux");
+    this.availablePChemParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availablePChemParameters);
 
-        this.valid_strc_keys = hm;
+    // Structure
+    hm = new HashMap<String, String>();
+    hm.put("Canonical Smiles", "canSmi");
+    hm.put("Canonical Tautomer", "canTaut");
+    hm.put("Canonical Tautomer, Strip Stereo", "canTautStripStero");
+    hm.put("InChI", "inchi");
+    hm.put("InChI Auxilliary", "inchiAux");
 
-        this.availableStructureParameters = new ArrayList<String>(hm.keySet());
-        // Collections.sort(this.availableStructureParameters, null);
+    this.valid_strc_keys = hm;
 
-        // biodata
-        hm = new HashMap<String, String>();
-        hm.put("NCI60", "nci60");
-        hm.put("HF", "hf");
-        hm.put("XENO", "xeno");
+    this.availableStructureParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availableStructureParameters);
 
-        this.valid_bio_keys = hm;
+    // biodata
+    hm = new HashMap<String, String>();
+    hm.put("NCI60", "nci60");
+    hm.put("HF", "hf");
+    hm.put("XENO", "xeno");
 
-        this.availableBioDataParameters = new ArrayList<String>(hm.keySet());
-        // Collections.sort(this.availableBioDataParameters, null);
+    this.valid_bio_keys = hm;
 
-        // defaults
-        selectedCmpdParameters = new ArrayList<String>();
-        String[] initArr = new String[]{"NSC", "Inventory"};
-        selectedCmpdParameters.addAll(Arrays.asList(initArr));
+    this.availableBioDataParameters = new ArrayList<String>(hm.keySet());
+    Collections.sort(this.availableBioDataParameters);
 
-        selectedPChemParameters = new ArrayList<String>();
-        initArr = new String[]{"Molecular Weight", "Molecular Formula"};
-        selectedPChemParameters.addAll(Arrays.asList(initArr));
+    // defaults
+    selectedCmpdParameters = new ArrayList<String>();
+    // NSC and DISCREET shown by default
+    
+    selectedPChemParameters = new ArrayList<String>();
+    String[] initArr = new String[]{"Parent Molecular Formula", "Parent Molecular Weight"};
+    selectedPChemParameters.addAll(Arrays.asList(initArr));
 
-        // default is no structures 
-        selectedBioDataParameters = new ArrayList<String>();
-        initArr = new String[]{"NCI60"};
-        selectedBioDataParameters.addAll(Arrays.asList(initArr));
+    selectedBioDataParameters = new ArrayList<String>();
+    initArr = new String[]{"NCI60"};
+    selectedBioDataParameters.addAll(Arrays.asList(initArr));
 
+  }
+
+  public void reset() {
+    this.showFrags = Boolean.FALSE;
+    this.showAnchor = Boolean.FALSE;
+    this.showQc = Boolean.FALSE;
+    this.selectedStrcOptions = new ArrayList<String>();
+    this.selectedStrcSize = selectedStrcSize;
+    this.strcDim = Integer.valueOf(200);
+    this.availablePChemParameters = new ArrayList<String>();
+    this.selectedPChemParameters = new ArrayList<String>();
+    this.physChemColumns = new ArrayList<ColumnModel>();
+    this.availableStructureParameters = new ArrayList<String>();
+    this.selectedStructureParameters = new ArrayList<String>();
+    this.structureColumns = new ArrayList<ColumnModel>();
+    this.availableCmpdParameters = new ArrayList<String>();
+    this.selectedCmpdParameters = new ArrayList<String>();
+    this.cmpdColumns = new ArrayList<ColumnModel>();
+    this.availableBioDataParameters = new ArrayList<String>();
+    this.selectedBioDataParameters = new ArrayList<String>();
+    this.biodataColumns = new ArrayList<ColumnModel>();
+  }
+
+  private void createDynamicColumns() {
+
+    this.physChemColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedPChemParameters) {
+      String key = columnKey.trim();
+      if (valid_physchem_keys.containsKey(key)) {
+        this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
+      }
     }
 
-    public void reset() {
-        this.showFrags = Boolean.FALSE;
-        this.showAnchor = Boolean.FALSE;
-        this.showQc = Boolean.FALSE;
-        this.selectedStrcOptions = new ArrayList<String>();
-        this.selectedStrcSize = selectedStrcSize;
-        this.strcDim = Integer.valueOf(200);
-        this.availablePChemParameters = new ArrayList<String>();
-        this.selectedPChemParameters = new ArrayList<String>();
-        this.physChemColumns = new ArrayList<ColumnModel>();
-        this.availableStructureParameters = new ArrayList<String>();
-        this.selectedStructureParameters = new ArrayList<String>();
-        this.structureColumns = new ArrayList<ColumnModel>();
-        this.availableCmpdParameters = new ArrayList<String>();
-        this.selectedCmpdParameters = new ArrayList<String>();
-        this.cmpdColumns = new ArrayList<ColumnModel>();
-        this.availableBioDataParameters = new ArrayList<String>();
-        this.selectedBioDataParameters = new ArrayList<String>();
-        this.biodataColumns = new ArrayList<ColumnModel>();
+    this.structureColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedStructureParameters) {
+      String key = columnKey.trim();
+      if (valid_strc_keys.containsKey(key)) {
+        this.structureColumns.add(new ColumnModel(key, valid_strc_keys.get(key)));
+      }
     }
 
-    private void createDynamicColumns() {
-
-        this.physChemColumns = new ArrayList<ColumnModel>();
-        for (String columnKey : this.selectedPChemParameters) {
-            String key = columnKey.trim();
-            if (valid_physchem_keys.containsKey(key)) {
-                this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
-            }
-        }
-
-        this.structureColumns = new ArrayList<ColumnModel>();
-        for (String columnKey : this.selectedStructureParameters) {
-            String key = columnKey.trim();
-            if (valid_strc_keys.containsKey(key)) {
-                this.structureColumns.add(new ColumnModel(key, valid_strc_keys.get(key)));
-            }
-        }
-
-        this.cmpdColumns = new ArrayList<ColumnModel>();
-        for (String columnKey : this.selectedCmpdParameters) {
-            String key = columnKey.trim();
-            if (valid_cmpd_keys.containsKey(key)) {
-                this.cmpdColumns.add(new ColumnModel(key, valid_cmpd_keys.get(key)));
-            }
-        }
-
-        this.biodataColumns = new ArrayList<ColumnModel>();
-        for (String columnKey : this.selectedBioDataParameters) {
-            String key = columnKey.trim();
-            if (valid_bio_keys.containsKey(key)) {
-                this.biodataColumns.add(new ColumnModel(key, valid_bio_keys.get(key)));
-            }
-        }
-
+    this.cmpdColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedCmpdParameters) {
+      String key = columnKey.trim();
+      if (valid_cmpd_keys.containsKey(key)) {
+        this.cmpdColumns.add(new ColumnModel(key, valid_cmpd_keys.get(key)));
+      }
     }
 
-    public String performUpdateColumns() {
-
-        try {
-            createDynamicColumns();
-        } catch (Exception e) {
-            System.out.println("Exception in performUpdateColumns");
-            e.printStackTrace();
-        }
-
-        return "/webpages/activeListTable.xhtml?faces-redirect=true";
-
+    this.biodataColumns = new ArrayList<ColumnModel>();
+    for (String columnKey : this.selectedBioDataParameters) {
+      String key = columnKey.trim();
+      if (valid_bio_keys.containsKey(key)) {
+        this.biodataColumns.add(new ColumnModel(key, valid_bio_keys.get(key)));
+      }
     }
 
-    static public class ColumnModel implements Serializable {
+  }
 
-        private String header;
-        private String property;
+  public String performUpdateColumns() {
 
-        public ColumnModel(String header, String property) {
-            this.header = header;
-            this.property = property;
-        }
-
-        public String getHeader() {
-            return header;
-        }
-
-        public String getProperty() {
-            return property;
-        }
-
+    try {
+      createDynamicColumns();
+    } catch (Exception e) {
+      System.out.println("Exception in performUpdateColumns");
+      e.printStackTrace();
     }
 
-    public void handleStrcOptions() {
+    return "/webpages/activeListTable.xhtml?faces-redirect=true";
+
+  }
+
+  static public class ColumnModel implements Serializable {
+
+    private String header;
+    private String property;
+
+    public ColumnModel(String header, String property) {
+      this.header = header;
+      this.property = property;
+    }
+
+    public String getHeader() {
+      return header;
+    }
+
+    public String getProperty() {
+      return property;
+    }
+
+  }
+
+  public void handleStrcOptions() {
 //        for (String s : selectedStrcOptions) {
 //            System.out.println("selectedStrcOptions includes: " + s);
 //        }
 //        System.out.println("selectedStrcSize is: " + selectedStrcSize);
 //        System.out.println("showFrags is: " + showFrags);
 //        System.out.println("showAnchor is: " + showAnchor);
-    }
+  }
 
-    public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
+  public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
         // System.out.println("In getSmilesStrcUrl(smiles, querySmiles, title)");
-        // System.out.println("smiles is: " + smiles);
-        String rtn = "";
-        StringBuilder sb = new StringBuilder();
-        strcDim = Integer.valueOf(200);
-        if (selectedStrcSize.equals("SM")) {
-            strcDim = Integer.valueOf(100);
-        } else if (selectedStrcSize.equals("MED")) {
-            strcDim = Integer.valueOf(200);
-        } else if (selectedStrcSize.equals("LG")) {
-            strcDim = Integer.valueOf(400);
-        } else if (selectedStrcSize.equals("JUMBO")) {
-            strcDim = Integer.valueOf(800);
-        }
-        sb.append("/StructureServlet?structureDim=");
-        sb.append(strcDim);
-        if (smiles != null && smiles.length() > 0) {
-            sb.append("&smiles=");
-            sb.append(SessionController.urlEncode(smiles));
-        }
-        if (selectedStrcOptions.contains("HLT")) {
-            if (querySmiles != null && querySmiles.length() > 0) {
-                sb.append("&querySmiles=");
-                sb.append(SessionController.urlEncode(querySmiles));
-            }
-        }
-        if (selectedStrcOptions.contains("TTL")) {
-            sb.append("&title=");
-            sb.append(SessionController.urlEncode(title));
-        }
-        if (selectedStrcOptions.contains("CLR")) {
-            sb.append("&color-atoms=true");
-        }
-        if (selectedStrcOptions.contains("NUM")) {
-            sb.append("&atom-numbers=true");
-        }
-        if (selectedStrcOptions.contains("KEK")) {
-            sb.append("&kekule=true");
-        }
-        rtn = sb.toString();
+    // System.out.println("smiles is: " + smiles);
+    String rtn = "";
+    StringBuilder sb = new StringBuilder();
+    strcDim = Integer.valueOf(200);
+    if (selectedStrcSize.equals("SM")) {
+      strcDim = Integer.valueOf(100);
+    } else if (selectedStrcSize.equals("MED")) {
+      strcDim = Integer.valueOf(200);
+    } else if (selectedStrcSize.equals("LG")) {
+      strcDim = Integer.valueOf(400);
+    } else if (selectedStrcSize.equals("JUMBO")) {
+      strcDim = Integer.valueOf(800);
+    }
+    sb.append("/StructureServlet?structureDim=");
+    sb.append(strcDim);
+    if (smiles != null && smiles.length() > 0) {
+      sb.append("&smiles=");
+      sb.append(SessionController.urlEncode(smiles));
+    }
+    if (selectedStrcOptions.contains("HLT")) {
+      if (querySmiles != null && querySmiles.length() > 0) {
+        sb.append("&querySmiles=");
+        sb.append(SessionController.urlEncode(querySmiles));
+      }
+    }
+    if (selectedStrcOptions.contains("TTL")) {
+      sb.append("&title=");
+      sb.append(SessionController.urlEncode(title));
+    }
+    if (selectedStrcOptions.contains("CLR")) {
+      sb.append("&color-atoms=true");
+    }
+    if (selectedStrcOptions.contains("NUM")) {
+      sb.append("&atom-numbers=true");
+    }
+    if (selectedStrcOptions.contains("KEK")) {
+      sb.append("&kekule=true");
+    }
+    rtn = sb.toString();
         // System.out.println("getSmilesStrcUrl() in SessionController: ");
-        // System.out.println("rtn from getSmilesStrcUrl is: " + rtn);
-        return rtn;
-    }
+    // System.out.println("rtn from getSmilesStrcUrl is: " + rtn);
+    return rtn;
+  }
 
-    public String getSmilesStrcUrl(String smiles) {
+  public String getSmilesStrcUrl(String smiles) {
         // System.out.println("In getSmilesStrcUrl(smiles)");
-        // System.out.println("smiles is: " + smiles);
-        return getSmilesStrcUrl(smiles, null, null);
-    }
+    // System.out.println("smiles is: " + smiles);
+    return getSmilesStrcUrl(smiles, null, null);
+  }
 
-    public String getCmpdStrcUrl(CmpdVO cVO, String querySmiles) {
-        String rtn = "";
-        if (cVO != null) {
-            StringBuilder sb = new StringBuilder();
-            strcDim = Integer.valueOf(200);
-            if (selectedStrcSize.equals("SM")) {
-                strcDim = Integer.valueOf(100);
-            } else if (selectedStrcSize.equals("MED")) {
-                strcDim = Integer.valueOf(200);
-            } else if (selectedStrcSize.equals("LG")) {
-                strcDim = Integer.valueOf(400);
-            } else if (selectedStrcSize.equals("JUMBO")) {
-                strcDim = Integer.valueOf(800);
-            }
-            sb.append("/StructureServlet?structureDim=");
-            sb.append(strcDim);
-            if (cVO.getParentFragment() != null && cVO.getParentFragment().getCmpdFragmentStructure() != null && cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi() != null) {
-                sb.append("&smiles=");
-                sb.append(SessionController.urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
-            } else if (cVO.getNsc() != null) {
-                sb.append("&nsc=");
-                sb.append(cVO.getNsc());
-            }
-            if (selectedStrcOptions.contains("TTL")) {
-                sb.append("&title=");
-                if (cVO.getPrefix() != null && cVO.getNsc() != null) {
-                    sb.append(SessionController.urlEncode(cVO.getPrefix() + cVO.getNsc()));
-                } else if (cVO.getName() != null) {
-                    sb.append(SessionController.urlEncode(cVO.getName()));
-                } else {
-                    sb.append("Can't determine title from cmpdVO.");
-                }
-            }
-            if (selectedStrcOptions.contains("CLR")) {
-                sb.append("&color-atoms=true");
-            }
-            if (selectedStrcOptions.contains("NUM")) {
-                sb.append("&atom-numbers=true");
-            }
-            if (selectedStrcOptions.contains("KEK")) {
-                sb.append("&kekule=true");
-            }
-            if (selectedStrcOptions.contains("HLT")) {
-                if (querySmiles != null && querySmiles.length() > 0) {
-                    sb.append("&querySmiles=");
-                    sb.append(SessionController.urlEncode(querySmiles));
-                }
-            }
-            rtn = sb.toString();
+  public String getCmpdStrcUrl(CmpdVO cVO, String querySmiles) {
+    String rtn = "";
+    if (cVO != null) {
+      StringBuilder sb = new StringBuilder();
+      strcDim = Integer.valueOf(200);
+      if (selectedStrcSize.equals("SM")) {
+        strcDim = Integer.valueOf(100);
+      } else if (selectedStrcSize.equals("MED")) {
+        strcDim = Integer.valueOf(200);
+      } else if (selectedStrcSize.equals("LG")) {
+        strcDim = Integer.valueOf(400);
+      } else if (selectedStrcSize.equals("JUMBO")) {
+        strcDim = Integer.valueOf(800);
+      }
+      sb.append("/StructureServlet?structureDim=");
+      sb.append(strcDim);
+      if (cVO.getParentFragment() != null && cVO.getParentFragment().getCmpdFragmentStructure() != null && cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi() != null) {
+        sb.append("&smiles=");
+        sb.append(SessionController.urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
+      } else if (cVO.getNsc() != null) {
+        sb.append("&nsc=");
+        sb.append(cVO.getNsc());
+      }
+      if (selectedStrcOptions.contains("TTL")) {
+        sb.append("&title=");
+        if (cVO.getPrefix() != null && cVO.getNsc() != null) {
+          sb.append(SessionController.urlEncode(cVO.getPrefix() + cVO.getNsc()));
+        } else if (cVO.getName() != null) {
+          sb.append(SessionController.urlEncode(cVO.getName()));
         } else {
-
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("CmpdVO is null in getCmpdStrcUrl in SessionController");
-            System.out.println("querySmiles is: " + querySmiles);
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("--------------------------------------------------------------------");
-
+          sb.append("Can't determine title from cmpdVO.");
         }
-        return rtn;
-    }
+      }
+      if (selectedStrcOptions.contains("CLR")) {
+        sb.append("&color-atoms=true");
+      }
+      if (selectedStrcOptions.contains("NUM")) {
+        sb.append("&atom-numbers=true");
+      }
+      if (selectedStrcOptions.contains("KEK")) {
+        sb.append("&kekule=true");
+      }
+      if (selectedStrcOptions.contains("HLT")) {
+        if (querySmiles != null && querySmiles.length() > 0) {
+          sb.append("&querySmiles=");
+          sb.append(SessionController.urlEncode(querySmiles));
+        }
+      }
+      rtn = sb.toString();
+    } else {
 
-    public String getCmpdStrcUrl(CmpdVO cVO) {
-        return getCmpdStrcUrl(cVO, null);
-    }
+      System.out.println("CmpdVO is null in getCmpdStrcUrl in SessionController");
+      System.out.println("querySmiles is: " + querySmiles);
 
-    public Boolean getShowFrags() {
-        return showFrags;
     }
+    return rtn;
+  }
 
-    public void setShowFrags(Boolean showFrags) {
-        this.showFrags = showFrags;
-    }
+  public String getCmpdStrcUrl(CmpdVO cVO) {
+    return getCmpdStrcUrl(cVO, null);
+  }
 
-    public Boolean getShowAnchor() {
-        return showAnchor;
-    }
+  public Boolean getShowFrags() {
+    return showFrags;
+  }
 
-    public void setShowAnchor(Boolean showAnchor) {
-        this.showAnchor = showAnchor;
-    }
+  public void setShowFrags(Boolean showFrags) {
+    this.showFrags = showFrags;
+  }
 
-    public Boolean getShowQc() {
-        return showQc;
-    }
+  public Boolean getShowAnchor() {
+    return showAnchor;
+  }
 
-    public void setShowQc(Boolean showQc) {
-        this.showQc = showQc;
-    }
+  public void setShowAnchor(Boolean showAnchor) {
+    this.showAnchor = showAnchor;
+  }
 
-    public List<String> getSelectedStrcOptions() {
-        return selectedStrcOptions;
-    }
+  public Boolean getShowQc() {
+    return showQc;
+  }
 
-    public void setSelectedStrcOptions(List<String> selectedStrcOptions) {
-        this.selectedStrcOptions = selectedStrcOptions;
-    }
+  public void setShowQc(Boolean showQc) {
+    this.showQc = showQc;
+  }
 
-    public String getSelectedStrcSize() {
-        return selectedStrcSize;
-    }
+  public List<String> getSelectedStrcOptions() {
+    return selectedStrcOptions;
+  }
 
-    public void setSelectedStrcSize(String selectedStrcSize) {
-        this.selectedStrcSize = selectedStrcSize;
-    }
+  public void setSelectedStrcOptions(List<String> selectedStrcOptions) {
+    this.selectedStrcOptions = selectedStrcOptions;
+  }
 
-    public Integer getStrcDim() {
-        return strcDim;
-    }
+  public String getSelectedStrcSize() {
+    return selectedStrcSize;
+  }
 
-    public void setStrcDim(Integer strcDim) {
-        this.strcDim = strcDim;
-    }
+  public void setSelectedStrcSize(String selectedStrcSize) {
+    this.selectedStrcSize = selectedStrcSize;
+  }
 
-    public List<String> getAvailablePChemParameters() {
-        return availablePChemParameters;
-    }
+  public Integer getStrcDim() {
+    return strcDim;
+  }
 
-    public void setAvailablePChemParameters(List<String> availablePChemParameters) {
-        this.availablePChemParameters = availablePChemParameters;
-    }
+  public void setStrcDim(Integer strcDim) {
+    this.strcDim = strcDim;
+  }
 
-    public List<String> getSelectedPChemParameters() {
-        return selectedPChemParameters;
-    }
+  public List<String> getAvailablePChemParameters() {
+    return availablePChemParameters;
+  }
 
-    public void setSelectedPChemParameters(List<String> selectedPChemParameters) {
-        this.selectedPChemParameters = selectedPChemParameters;
-    }
+  public void setAvailablePChemParameters(List<String> availablePChemParameters) {
+    this.availablePChemParameters = availablePChemParameters;
+  }
 
-    public static HashMap<String, String> getValid_physchem_keys() {
-        return valid_physchem_keys;
-    }
+  public List<String> getSelectedPChemParameters() {
+    return selectedPChemParameters;
+  }
 
-    public static void setValid_physchem_keys(HashMap<String, String> valid_physchem_keys) {
-        ConfigurationBean.valid_physchem_keys = valid_physchem_keys;
-    }
+  public void setSelectedPChemParameters(List<String> selectedPChemParameters) {
+    this.selectedPChemParameters = selectedPChemParameters;
+  }
 
-    public List<ColumnModel> getPhysChemColumns() {
-        return physChemColumns;
-    }
+  public static HashMap<String, String> getValid_physchem_keys() {
+    return valid_physchem_keys;
+  }
 
-    public void setPhysChemColumns(List<ColumnModel> physChemColumns) {
-        this.physChemColumns = physChemColumns;
-    }
+  public static void setValid_physchem_keys(HashMap<String, String> valid_physchem_keys) {
+    ConfigurationBean.valid_physchem_keys = valid_physchem_keys;
+  }
 
-    public List<String> getAvailableStructureParameters() {
-        return availableStructureParameters;
-    }
+  public List<ColumnModel> getPhysChemColumns() {
+    return physChemColumns;
+  }
 
-    public void setAvailableStructureParameters(List<String> availableStructureParameters) {
-        this.availableStructureParameters = availableStructureParameters;
-    }
+  public void setPhysChemColumns(List<ColumnModel> physChemColumns) {
+    this.physChemColumns = physChemColumns;
+  }
 
-    public List<String> getSelectedStructureParameters() {
-        return selectedStructureParameters;
-    }
+  public List<String> getAvailableStructureParameters() {
+    return availableStructureParameters;
+  }
 
-    public void setSelectedStructureParameters(List<String> selectedStructureParameters) {
-        this.selectedStructureParameters = selectedStructureParameters;
-    }
+  public void setAvailableStructureParameters(List<String> availableStructureParameters) {
+    this.availableStructureParameters = availableStructureParameters;
+  }
 
-    public static HashMap<String, String> getValid_strc_keys() {
-        return valid_strc_keys;
-    }
+  public List<String> getSelectedStructureParameters() {
+    return selectedStructureParameters;
+  }
 
-    public static void setValid_strc_keys(HashMap<String, String> valid_strc_keys) {
-        ConfigurationBean.valid_strc_keys = valid_strc_keys;
-    }
+  public void setSelectedStructureParameters(List<String> selectedStructureParameters) {
+    this.selectedStructureParameters = selectedStructureParameters;
+  }
 
-    public List<ColumnModel> getStructureColumns() {
-        return structureColumns;
-    }
+  public static HashMap<String, String> getValid_strc_keys() {
+    return valid_strc_keys;
+  }
 
-    public void setStructureColumns(List<ColumnModel> structureColumns) {
-        this.structureColumns = structureColumns;
-    }
+  public static void setValid_strc_keys(HashMap<String, String> valid_strc_keys) {
+    ConfigurationBean.valid_strc_keys = valid_strc_keys;
+  }
 
-    public List<String> getAvailableCmpdParameters() {
-        return availableCmpdParameters;
-    }
+  public List<ColumnModel> getStructureColumns() {
+    return structureColumns;
+  }
 
-    public void setAvailableCmpdParameters(List<String> availableCmpdParameters) {
-        this.availableCmpdParameters = availableCmpdParameters;
-    }
+  public void setStructureColumns(List<ColumnModel> structureColumns) {
+    this.structureColumns = structureColumns;
+  }
 
-    public List<String> getSelectedCmpdParameters() {
-        return selectedCmpdParameters;
-    }
+  public List<String> getAvailableCmpdParameters() {
+    return availableCmpdParameters;
+  }
 
-    public void setSelectedCmpdParameters(List<String> selectedCmpdParameters) {
-        this.selectedCmpdParameters = selectedCmpdParameters;
-    }
+  public void setAvailableCmpdParameters(List<String> availableCmpdParameters) {
+    this.availableCmpdParameters = availableCmpdParameters;
+  }
 
-    public static HashMap<String, String> getValid_cmpd_keys() {
-        return valid_cmpd_keys;
-    }
+  public List<String> getSelectedCmpdParameters() {
+    return selectedCmpdParameters;
+  }
 
-    public static void setValid_cmpd_keys(HashMap<String, String> valid_cmpd_keys) {
-        ConfigurationBean.valid_cmpd_keys = valid_cmpd_keys;
-    }
+  public void setSelectedCmpdParameters(List<String> selectedCmpdParameters) {
+    this.selectedCmpdParameters = selectedCmpdParameters;
+  }
 
-    public List<ColumnModel> getCmpdColumns() {
-        return cmpdColumns;
-    }
+  public static HashMap<String, String> getValid_cmpd_keys() {
+    return valid_cmpd_keys;
+  }
 
-    public void setCmpdColumns(List<ColumnModel> cmpdColumns) {
-        this.cmpdColumns = cmpdColumns;
-    }
+  public static void setValid_cmpd_keys(HashMap<String, String> valid_cmpd_keys) {
+    ConfigurationBean.valid_cmpd_keys = valid_cmpd_keys;
+  }
 
-    public List<String> getAvailableBioDataParameters() {
-        return availableBioDataParameters;
-    }
+  public List<ColumnModel> getCmpdColumns() {
+    return cmpdColumns;
+  }
 
-    public void setAvailableBioDataParameters(List<String> availableBioDataParameters) {
-        this.availableBioDataParameters = availableBioDataParameters;
-    }
+  public void setCmpdColumns(List<ColumnModel> cmpdColumns) {
+    this.cmpdColumns = cmpdColumns;
+  }
 
-    public List<String> getSelectedBioDataParameters() {
-        return selectedBioDataParameters;
-    }
+  public List<String> getAvailableBioDataParameters() {
+    return availableBioDataParameters;
+  }
 
-    public void setSelectedBioDataParameters(List<String> selectedBioDataParameters) {
-        this.selectedBioDataParameters = selectedBioDataParameters;
-    }
+  public void setAvailableBioDataParameters(List<String> availableBioDataParameters) {
+    this.availableBioDataParameters = availableBioDataParameters;
+  }
 
-    public static HashMap<String, String> getValid_bio_keys() {
-        return valid_bio_keys;
-    }
+  public List<String> getSelectedBioDataParameters() {
+    return selectedBioDataParameters;
+  }
 
-    public static void setValid_bio_keys(HashMap<String, String> valid_bio_keys) {
-        ConfigurationBean.valid_bio_keys = valid_bio_keys;
-    }
+  public void setSelectedBioDataParameters(List<String> selectedBioDataParameters) {
+    this.selectedBioDataParameters = selectedBioDataParameters;
+  }
 
-    public List<ColumnModel> getBiodataColumns() {
-        return biodataColumns;
-    }
+  public static HashMap<String, String> getValid_bio_keys() {
+    return valid_bio_keys;
+  }
 
-    public void setBiodataColumns(List<ColumnModel> biodataColumns) {
-        this.biodataColumns = biodataColumns;
-    }
+  public static void setValid_bio_keys(HashMap<String, String> valid_bio_keys) {
+    ConfigurationBean.valid_bio_keys = valid_bio_keys;
+  }
+
+  public List<ColumnModel> getBiodataColumns() {
+    return biodataColumns;
+  }
+
+  public void setBiodataColumns(List<ColumnModel> biodataColumns) {
+    this.biodataColumns = biodataColumns;
+  }
 
 }

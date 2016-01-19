@@ -115,59 +115,64 @@ my @sqlList = ();
 
 # INDEXES to speed up the joins below...
 push @sqlList, qq[
-drop index if exists cf_cfsf
+drop index if exists cFrag_cFragStrcFk
 ];
 push @sqlList, qq[
-drop index if exists cf_cfpcf
+drop index if exists cFrag_cFragPchemFk
 ];
 push @sqlList, qq[
-drop index if exists cf_ncfk
+drop index if exists cFrag_nCmpdFk
 ];
 push @sqlList, qq[
-drop index if exists nc_nctf
+drop index if exists nCmpd_nCmpdTypeFk
 ];
 push @sqlList, qq[
-drop index if exists nc_cpff
+drop index if exists nCmpd_cParFragFk
 ];
 push @sqlList, qq[
-drop index if exists nc_cbaf
+drop index if exists nCmpd_cSaltFragFk
 ];
 push @sqlList, qq[
-drop index if exists nc_cif
+drop index if exists nCmpd_cBioAssFk
 ];
 push @sqlList, qq[
-drop index if exists nc_caf
+drop index if exists nCmpd_cInvFk
 ];
 push @sqlList, qq[
-drop index if exists nc_clcf
+drop index if exists nCmpd_cAnnotFk
 ];
-
 push @sqlList, qq[
-create index cf_cfsf on cmpd_fragment(cmpd_fragment_structure_fk)
+drop index if exists nCmpd_cLegCFk
+];
+push @sqlList, qq[
+create index cFrag_cFragStrcFk on cmpd_fragment(cmpd_fragment_structure_fk)
 ]; 
 push @sqlList, qq[
-create index cf_cfpcf on cmpd_fragment(cmpd_fragment_p_chem_fk)
+create index cFrag_cFragPchemFk on cmpd_fragment(cmpd_fragment_p_chem_fk)
 ]; 
 push @sqlList, qq[
-create index cf_ncfk on cmpd_fragment(nsc_cmpd_fk)
+create index cFrag_nCmpdFk on cmpd_fragment(nsc_cmpd_fk)
 ];
 push @sqlList, qq[
-create index nc_nctf on nsc_cmpd(nsc_cmpd_type_fk)
-];        
+create index nCmpd_nCmpdTypeFk on nsc_cmpd(nsc_cmpd_type_fk)
+];   
 push @sqlList, qq[
-create index nc_cpff on nsc_cmpd(cmpd_parent_fragment_fk)
+create index nCmpd_cSaltFragFk on nsc_cmpd(cmpd_salt_fragment_fk)
+]; 
+push @sqlList, qq[
+create index nCmpd_cParFragFk on nsc_cmpd(cmpd_parent_fragment_fk)
 ];  
 push @sqlList, qq[
-create index nc_cbaf on nsc_cmpd(cmpd_bio_assay_fk)
+create index nCmpd_cBioAssFk on nsc_cmpd(cmpd_bio_assay_fk)
 ];        
 push @sqlList, qq[
-create index nc_cif on nsc_cmpd(cmpd_inventory_fk)
+create index nCmpd_cInvFk on nsc_cmpd(cmpd_inventory_fk)
 ];        
 push @sqlList, qq[
-create index nc_caf on nsc_cmpd(cmpd_annotation_fk)
+create index nCmpd_cAnnotFk on nsc_cmpd(cmpd_annotation_fk)
 ];       
 push @sqlList, qq[
-create index nc_clcf on nsc_cmpd(cmpd_legacy_cmpd_fk)
+create index nCmpd_cLegCFk on nsc_cmpd(cmpd_legacy_cmpd_fk)
 ];  
 
 foreach my $sql(@sqlList){
@@ -286,10 +291,13 @@ tff.formatted_fragments_string,
 
 pseudo_atoms,
 
-null, --salt_smiles,
-null, --salt_name,
-null, --salt_mf,
-null, --salt_mw,
+-- salts
+
+salt.salt_smiles, --null, --salt_smiles,
+salt.salt_name, --null, --salt_name,
+salt.salt_mf, --null, --salt_mf,
+salt.salt_mw, --null, --salt_mw,
+
 1, --parent_stoichiometry,
 1, --salt_stoichiometry,
 
@@ -358,6 +366,9 @@ left outer join cmpd_fragment_structure strc on frag.cmpd_fragment_structure_fk 
 left outer join cmpd_annotation annot on nsc.cmpd_annotation_fk = annot.id
 left outer join cmpd_inventory invent on nsc.cmpd_inventory_fk = invent.id
 left outer join cmpd_bio_assay bioass on nsc.cmpd_bio_assay_fk = bioass.id
+
+left outer join cmpd_fragment salt_frag on nsc.cmpd_salt_fragment_fk = salt_frag.id
+left outer join cmpd_known_salt salt on salt_frag.cmpd_known_salt_fk = salt_frag.cmpd_known_salt_fk
 
 -- temp tables
 
