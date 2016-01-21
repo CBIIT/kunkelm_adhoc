@@ -37,10 +37,19 @@ import org.primefaces.model.UploadedFile;
 public class ListContentController implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
+    
+    // reach-through to applicationScopeBean
+    @ManagedProperty(value = "#{applicationScopeBean}")
+    private ApplicationScopeBean applicationScopeBean;
 
-  // reach-through to sessionController
-  @ManagedProperty(value = "#{sessionController}")
-  private SessionController sessionController;
+    public void setApplicationScopeBean(ApplicationScopeBean applicationScopeBean) {
+        this.applicationScopeBean = applicationScopeBean;
+    }
+
+
+    // reach-through to sessionController
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
 
   public void setSessionController(SessionController sessionController) {
     this.sessionController = sessionController;
@@ -147,9 +156,10 @@ public class ListContentController implements Serializable {
       }
     }
 
-    String siteString = "http://localhost:8080/sarcomacompare/landingSpotfire.xhtml";
-    String paramString = "landingSpotfireNscSet=" + sb.toString();
-    String urlString = siteString + "?" + paramString;
+        String siteString = applicationScopeBean.getLandingSpotfireUrl();        
+        
+        String paramString = "landingSpotfireNscSet=" + sb.toString();
+        String urlString = siteString + "?" + paramString;
 
 //        landingSpotfireNscSet
 //        landingSpotfireEndpointSet

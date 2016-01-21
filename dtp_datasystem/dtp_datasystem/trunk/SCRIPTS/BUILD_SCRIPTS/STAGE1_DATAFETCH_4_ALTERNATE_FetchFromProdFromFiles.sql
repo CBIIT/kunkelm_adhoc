@@ -1,3 +1,5 @@
+\set ON_ERROR_FAIL true
+
 \c datasystemdb
 
 create table prod_chem_name(

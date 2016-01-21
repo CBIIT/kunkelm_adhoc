@@ -307,6 +307,19 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
+
+need to do salt
+need to do salt
+need to do salt
+need to do salt
+need to do salt
+need to do salt
+need to do salt
+
+
+
+
+
 ## #####     ##    #####   ######  #    #   #####
 ## #    #   #  #   #    #  #       ##   #     #
 ## #    #  #    #  #    #  #####   # #  #     #

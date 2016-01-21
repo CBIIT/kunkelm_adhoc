@@ -29,47 +29,35 @@ from app_and_inv ai
 left outer join cmpd_table ct
 on ai.nsc = ct.nsc;
 
+\copy app_and_inv_with_smiles to /tmp/app_and_inv_with_smiles.csv csv header
+
+
+
+
+--_                       _         _       _        _                    
+--|_ __ _ _ __ __ _  ___| |_    __| | __ _| |_ __ _| |__   __ _ ___  ___ 
+--| __/ _` | '__/ _` |/ _ \ __|  / _` |/ _` | __/ _` | '_ \ / _` / __|/ _ \
+--| || (_| | | | (_| |  __/ |_  | (_| | (_| | || (_| | |_) | (_| \__ \  __/
+-- \__\__,_|_|  \__, |\___|\__|  \__,_|\__,_|\__\__,_|_.__/ \__,_|___/\___|
 --
---
--- examine nsc without can_smi
---
---
 
-drop table if exists temp;
+drop table if exists app_and_inv_with_smiles;
 
-create table temp
-as
-select nsc from app_and_inv_with_smiles
-where can_smi is null;
+create table app_and_inv_with_smiles(
+generic_name varchar,
+preferred_name varchar,
+alias_names varchar,
+originator varchar,
+nsc int,
+cas varchar,
+primary_target varchar,
+other_targets varchar,
+type varchar,
+project_code varchar,
+can_smi varchar
+);
 
-select nsc from temp
-intersect
-select nsc from missing_nsc;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\copy app_and_inv_with_smiles from /tmp/app_and_inv_with_smiles.csv csv header
 
 alter table nsc_ident alter column drug_name drop not null;
 alter table nsc_ident alter column target drop not null;
@@ -81,11 +69,6 @@ alter table nsc_ident alter column smiles drop not null;
 --| | | \__ \ (__    | | (_| |  __/ | | | |_ 
 --|_| |_|___/\___|___|_|\__,_|\___|_| |_|\__|
 --              |_____|                      
-
--- Scrub ONLY where matches by nsc in app_and_inv.
--- Scrubs ALL three fields.
--- This will force ANY fields that may have been changed ad hoc for specific nscs
--- IF that nsc is in app_and_inv!
 
 update nsc_ident
 set target = null, drug_name = null, smiles = null
@@ -100,9 +83,9 @@ select count(*) from nsc_ident where smiles is null;
 -- trying generic_name
 
 update nsc_ident 
-set target = aaiws.target,
+set target = aaiws.primary_target,
 drug_name = aaiws.generic_name,
-smiles = aaiws.smiles
+smiles = aaiws.can_smi
 from app_and_inv_with_smiles aaiws
 where nsc_ident.nsc = aaiws.nsc;
 
@@ -127,7 +110,6 @@ select count(*) from nsc_ident where drug_name is null;
 -- \___\___/|_| |_| |_| .__/ \___/ \__,_|_| |_|\__,_|
 --                    |_|                            
 
-
 update compound
 set target = null, drug_name = null, smiles = null
 where nsc in (
@@ -141,9 +123,9 @@ select count(*) from compound where smiles is null;
 -- trying generic_name
 
 update compound 
-set target = aaiws.target,
+set target = aaiws.primary_target,
 drug_name = aaiws.generic_name,
-smiles = aaiws.smiles
+smiles = aaiws.can_smi
 from app_and_inv_with_smiles aaiws
 where compound.nsc = aaiws.nsc;
 

@@ -108,7 +108,9 @@ Num_H_Acceptors int,
 Num_H_Donors int,
 CanonicalTautomer varchar,
 NumberOfTautomers int,
-InChI_Message varchar
+InChI_Message varchar,
+ErrorText varchar,
+TooManyTautomers varchar
 )
 ];
 
@@ -159,7 +161,9 @@ my @fragColumnNames = (
 	"Num_H_Donors",
 	"CanonicalTautomer",
 	"NumberOfTautomers",
-	"InChI_Message"
+	"InChI_Message",
+        "ErrorText",
+        "TooManyTautomers"
 	);
 
 my $overallFragOK = 0;
@@ -179,10 +183,11 @@ foreach my $fragFileBase(@fragFileList){
 	# print "firstLine: $firstLine\n";
 	my @fragFileHeaders = split(/,/, $firstLine);
 	
-	print join(",", @fragColumnNames);
-	print "\n";
-	print join(",", @fragFileHeaders);
-	print "\n";
+        # debug - all column names
+	# print join(",", @fragColumnNames);
+	# print "\n";
+	# print join(",", @fragFileHeaders);
+	# print "\n";
 	
 	my $equals = 0;
 	

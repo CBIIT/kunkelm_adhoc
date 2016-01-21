@@ -332,12 +332,17 @@ public class TransformAndroToVO {
     public static CmpdVO translateCmpd(Cmpd entityIn) {
 
         CmpdVO rtn = new CmpdVO();
+        
+        
 
         if (entityIn instanceof NscCmpdImpl) {
 
             NscCmpd nscc = (NscCmpd) entityIn;
 
             if (null != nscc) {
+                
+                rtn.setProdFormulaWeight(nscc.getFormulaWeight());
+                rtn.setProdMolecularFormula(nscc.getProdMolecularFormula());
 
                 // identifier
                 rtn.setId(nscc.getId());
@@ -366,14 +371,7 @@ public class TransformAndroToVO {
                 }
 
                 rtn.setCountCmpdFragments(nscc.getCountFragments());
-
-//                rtn.setSaltSmiles(nscc.getSaltSmiles()); 
-//                rtn.setSaltName(nscc.getSaltName());
-//                rtn.setSaltMf(nscc.getSaltMf());
-//                rtn.setSaltMw(nscc.getSaltMw());
-//                rtn.setParentStoichiometry(nscc.getParentStoichiometry());
-//                rtn.setSaltStoichiometry(nscc.getSaltStoichiometry());
-                                
+                  
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());

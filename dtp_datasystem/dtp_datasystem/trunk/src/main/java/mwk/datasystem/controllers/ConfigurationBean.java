@@ -115,6 +115,8 @@ public class ConfigurationBean implements Serializable {
     hm.put("Formula Weight", "formulaWeight");
     hm.put("Parent Molecular Formula", "parentMolecularFormula");
     hm.put("Parent Formula Weight", "parentMolecularWeight");
+    hm.put("Prod Molecular Formula", "prodMolecularFormula");
+    hm.put("Prod Formula Weight", "prodFormulaWeight");
 
     this.valid_cmpd_keys = hm;
 

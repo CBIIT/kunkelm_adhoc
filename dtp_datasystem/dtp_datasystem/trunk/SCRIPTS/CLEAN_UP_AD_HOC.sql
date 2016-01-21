@@ -1,3 +1,7 @@
+\set ON_ERROR_FAIL true
+
+\c datasystemdb
+
 update ad_hoc_cmpd set ad_hoc_cmpd_parent_fragment_fk = null;
 update ad_hoc_cmpd_fragment set ad_hoc_cmpd_fragment_p_chem_fk = null;
 update ad_hoc_cmpd_fragment set ad_hoc_cmpd_fragment_struct_fk = null;

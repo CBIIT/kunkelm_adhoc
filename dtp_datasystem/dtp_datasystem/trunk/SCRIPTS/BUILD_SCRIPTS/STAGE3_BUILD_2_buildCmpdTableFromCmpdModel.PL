@@ -31,14 +31,14 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 my $tempSql = qq[truncate table cmpd_table];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # temp_formatted_strings - aliases, plates, projects, sets, targets
 
 my $tempSql = qq[drop table if exists temp_formatted_strings];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 
 ## formatted_plates includes distinct because data are degenerate by set 
@@ -71,19 +71,19 @@ nsc.id,
 nsc.nsc];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tfs_nsc on temp_formatted_strings(nsc)];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## temp_formatted_fragments
 
 my $tempSql = qq[drop table if exists temp_formatted_fragments];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_formatted_fragments
@@ -104,12 +104,12 @@ nsc.id,
 nsc.nsc];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tff_nsc on temp_formatted_fragments(nsc)];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my @sqlList = ();
 
@@ -178,7 +178,7 @@ create index nCmpd_cLegCFk on nsc_cmpd(cmpd_legacy_cmpd_fk)
 foreach my $sql(@sqlList){
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
-	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 }
 
 my $tempSql = qq[
@@ -248,9 +248,13 @@ purity_comment,
 stereochemistry_comment,
 identifier_string,
 descriptor_string,
-molecular_weight,
-molecular_formula,
-nsc_cmpd_type
+nsc_cmpd_type,
+formula_molecular_formula,
+formula_weight,
+parent_molecular_formula,
+parent_molecular_weight,
+prod_formula_weight,
+prod_molecular_formula
 )
 
 select
@@ -293,7 +297,7 @@ pseudo_atoms,
 
 -- salts
 
-salt.salt_smiles, --null, --salt_smiles,
+salt.can_smi, --null, --salt_smiles,
 salt.salt_name, --null, --salt_name,
 salt.salt_mf, --null, --salt_mf,
 salt.salt_mw, --null, --salt_mw,
@@ -348,10 +352,14 @@ annot.stereochemistry_comment,
 nsc.identifier_string,
 nsc.descriptor_string,
 
-pchem.molecular_weight,
-pchem.molecular_formula,
+typ.nsc_cmpd_type,
 
-typ.nsc_cmpd_type
+nsc.formula_molecular_formula,
+nsc.formula_weight,
+nsc.parent_molecular_formula,
+nsc.parent_molecular_weight,
+nsc.prod_formula_weight,
+nsc.prod_molecular_formula
 
 from 
 
@@ -368,7 +376,7 @@ left outer join cmpd_inventory invent on nsc.cmpd_inventory_fk = invent.id
 left outer join cmpd_bio_assay bioass on nsc.cmpd_bio_assay_fk = bioass.id
 
 left outer join cmpd_fragment salt_frag on nsc.cmpd_salt_fragment_fk = salt_frag.id
-left outer join cmpd_known_salt salt on salt_frag.cmpd_known_salt_fk = salt_frag.cmpd_known_salt_fk
+left outer join cmpd_known_salt salt on salt_frag.cmpd_known_salt_fk = salt.id
 
 -- temp tables
 

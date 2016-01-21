@@ -9492,7 +9492,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_2_loa
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_3_postLoadCheckAndFixPLPdata.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_4_ALTERNATE_FetchFromProdFromFiles.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_4_FetchFromProd -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_AD_HOC_MANUAL.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_1_doLblStrcFrags.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_2_makeQCwithNSC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_3_makeQC.PL -text
@@ -9608,7 +9607,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/resources/hibernate.properties -tex
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/log4j.properties -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/META-INF/context.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/faces-config.xml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/jax-ws-catalog.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/web.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/idleWarning.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/csv.png -text

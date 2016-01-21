@@ -40,6 +40,8 @@ public class ApplicationScopeBean implements Serializable {
     //
     private String projectTitle;
     private String versionAndBuildTime;
+    
+    private String compareUrl;
     private String landingCompareUrl;
     private String landingSpotfireUrl;
     //
@@ -74,25 +76,18 @@ public class ApplicationScopeBean implements Serializable {
                 this.projectTitle = "Oncology Drugs Project";
             }
 
-            String rawLandingCompareUrl = props.getProperty("compare.application.landing.url");
+            String rawCompareUrl = props.getProperty("compare.application.url");
 
             // make sure there aren't any concatenated //
             // protect the http: header
-            String str1 = rawLandingCompareUrl.replaceAll("http:\\/\\/", "httpLeader");
+            String str1 = rawCompareUrl.replaceAll("http:\\/\\/", "httpLeader");
             String str2 = str1.replaceAll("\\/\\/", "\\/");
             String str3 = str2.replaceAll("httpLeader", "http:\\/\\/");
 
-            this.landingCompareUrl = str3;
+            this.compareUrl = str3;
 
-            String rawLandingSpotfireUrl = props.getProperty("compare.application.landing.spotfire.url");
-
-            // make sure there aren't any concatenated //
-            // protect the http: header
-            str1 = rawLandingSpotfireUrl.replaceAll("http:\\/\\/", "httpLeader");
-            str2 = str1.replaceAll("\\/\\/", "\\/");
-            str3 = str2.replaceAll("httpLeader", "http:\\/\\/");
-
-            this.landingSpotfireUrl = str3;
+            this.landingSpotfireUrl = this.compareUrl + "/landingSpotfire.xhtml";
+            this.landingCompareUrl = this.compareUrl + "/landingRunCompare.xhtml";
 
         } catch (Exception e) {
             e.printStackTrace();

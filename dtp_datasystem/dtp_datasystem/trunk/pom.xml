@@ -273,7 +273,8 @@
                 <deploy.db.url>jdbc:postgresql://ncidb-d115-d:5474/oncology</deploy.db.url>
                 <deploy.db.user>oncology_user</deploy.db.user>
                 <deploy.db.pass>Us0923rC0gy0293dtP</deploy.db.pass>                
-                <deploy.compare.url>http://oncologydrugs-dev.cancer.gov/oncologydrugscompare</deploy.compare.url>
+                <!--<deploy.compare.url>http://oncologydrugs-dev.cancer.gov/oncologydrugscompare</deploy.compare.url>-->
+                <deploy.compare.url>http://sarcoma-dev.cancer.gov/sarcomacompare</deploy.compare.url>
             </properties>
         </profile>        
     </profiles>    

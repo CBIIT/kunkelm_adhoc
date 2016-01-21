@@ -7,8 +7,11 @@ psql -a -d datasystemdb < STAGE1_DATAFETCH_0_processSaltDefinitions.sql
 perl STAGE1_DATAFETCH_1_checkPLPfiles.PL
 psql -a -d datasystemdb < STAGE1_DATAFETCH_2_loadPLPfiles.sql
 perl STAGE1_DATAFETCH_3_postLoadCheckAndFixPLPdata.PL
-psql -a -d datasystemdb < STAGE1_DATAFETCH_4_ALTERNATE_FetchFromProdFromFiles.sql
-# STAGE1_DATAFETCH_4_FetchFromProd
+
+FetchFromProd - can either parse exisiting files, or fetch de novo
+
+-- -- -- psql -a -d datasystemdb < STAGE1_DATAFETCH_4_ALTERNATE_FetchFromProdFromFiles.sql
+-- -- -- STAGE1_DATAFETCH_4_FetchFromProd
 
 perl STAGE2_CATEGORIZE_1_doLblStrcFrags.PL
 perl STAGE2_CATEGORIZE_2_makeQCwithNSC.PL
@@ -17,7 +20,7 @@ perl STAGE2_CATEGORIZE_4_crosstabQC.PL
 perl STAGE2_CATEGORIZE_5_nscToLoad.PL
 
 # processProdData moved up so that it will be available when inserts are first made to nsc_cmpd
-# updates on nsc_cmpd were going DOG SLOW
+# doing it the other way around meant that updates on nsc_cmpd were going DOG SLOW...
 
 perl STAGE3_BUILD_0_processProdData.PL
 perl STAGE3_BUILD_1_buildCmpdModel.PL
