@@ -20,17 +20,17 @@ public class Main {
         "jdbc:postgresql://localhost:5432/microxenodb",
         "mwkunkel",
         "donkie11",
-        "jdbc:postgresql://ncidb-d115-d.nci.nih.gov:5473/pptp",
-        "pptp",
-        "P2039p023t023pG0"           
+        "jdbc:postgresql://ncidb-d115-d.nci.nih.gov:5473/microxeno",
+        "microxeno",
+        "M1cr0x0293025en0"
     };
 
     // microXeno table names and where clauses
     static final String[] microXeno_tableNamesAndWhereClauses = new String[]{
-        //"flat_data", ""
-        //"affymetrix_identifier", ""
-        "tumor","",
-        "tumor_type",""
+        "affymetrix_identifier", "",
+        "tumor", "",
+        "tumor_type", "",
+        "flat_data", ""
     };
 
     // chembl postgres to oracle
@@ -186,8 +186,9 @@ public class Main {
             sourceConn = DriverManager.getConnection(whichConnectionInfo[0], whichConnectionInfo[1], whichConnectionInfo[2]);
             destConn = DriverManager.getConnection(whichConnectionInfo[3], whichConnectionInfo[4], whichConnectionInfo[5]);
 
-            // archive constraint drop/create statements
-            // ConstraintManagement.oracleSaveConstraints(destConn, whichTableNamesAndWhereClauses);
+            // archive constraint drop/create statements            
+            // ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
+            
             // drop constraints before build
             // ConstraintManagement.dropConstraints(destConn);
             
@@ -197,11 +198,12 @@ public class Main {
                 // scrape out anything remaining
                 // Replicator.nuke(destConn, curTbl);
                 // replicate the tables
-                Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
+                // Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
             }
 
             // recreate the constraints
-            // ConstraintManagement.createConstraints(destConn);
+            ConstraintManagement.createConstraints(destConn);
+            
             System.out.println("Done! in Main");
 
             sourceConn.close();

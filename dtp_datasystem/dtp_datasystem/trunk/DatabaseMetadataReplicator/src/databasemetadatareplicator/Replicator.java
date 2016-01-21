@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Replicator {
 
-    public static final Integer BATCH_SIZE = 10000;
+    public static final Integer BATCH_SIZE = 50000;
 
     public static void useMetadata(
             Connection sourceConn,
@@ -22,12 +22,17 @@ public class Replicator {
             String whereClause)
             throws Exception {
 
+        long startTime = 0;
+        long elapsedTime = 0;
+
         ResultSet rs = null;
 
         Statement sourceStmt = null;
         Statement destStmt = null;
 
         PreparedStatement prepStmt = null;
+
+        startTime = System.currentTimeMillis();
 
         try {
 
@@ -102,8 +107,12 @@ public class Replicator {
                 }
                 prepStmt.addBatch();
                 if (prepStmtCounter == BATCH_SIZE) {
+
+                    elapsedTime = System.currentTimeMillis() - startTime;
+                    startTime = System.currentTimeMillis();
+
                     cumCnt += prepStmtCounter;
-                    System.out.println("-----prepStmt.batch size is " + BATCH_SIZE + ".  Executing. cumCnt: " + cumCnt);
+                    System.out.println("-----prepStmt.batch size is " + BATCH_SIZE + ".  Executing. cumCnt: " + cumCnt + " elapsedTime: " + elapsedTime);
                     prepStmt.executeBatch();
                     prepStmtCounter = 0;
                 }
