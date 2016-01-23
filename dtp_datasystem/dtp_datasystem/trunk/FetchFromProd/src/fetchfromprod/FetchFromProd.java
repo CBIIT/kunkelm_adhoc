@@ -64,10 +64,6 @@ public class FetchFromProd {
             fetchPubChemId(pgConn, oraConn);
 
             System.out.println();
-            System.out.println("Starting: fetchCmpd");
-            fetchCmpd(pgConn, oraConn);
-
-            System.out.println();
             System.out.println("Starting: fetchProjects");
             fetchProjects(pgConn, oraConn);
             
@@ -75,10 +71,6 @@ public class FetchFromProd {
             System.out.println("Starting: fetchPlatedSets");
             fetchPlatedSets(pgConn, oraConn);
             
-            System.out.println();
-            System.out.println("Starting: fetchPubChemId");
-            fetchPubChemId(pgConn, oraConn);
-           
             System.out.println();
             System.out.println("Starting: fetchProjects");
             fetchProjects(pgConn, oraConn);

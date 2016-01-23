@@ -101,9 +101,9 @@ public class LegacyImageServlet extends HttpServlet {
            
             CmpdLegacyCmpdVO rtn = HelperCmpdLegacyCmpd.getLegacyCmpdByNsc(nscInt, "PUBLIC");
            
-            if (rtn != null && rtn.getJpg512() != null && rtn.getJpg512().length > 0) {
+            if (rtn != null && rtn.getGif512() != null && rtn.getGif512().length > 0) {
                
-                byte[] byteArray = rtn.getJpg512();
+                byte[] byteArray = rtn.getGif512();
 
                 ByteArrayInputStream is = new ByteArrayInputStream(byteArray);
                 BufferedImage imgFromDb = ImageIO.read(is);

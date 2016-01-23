@@ -94,7 +94,7 @@ public class HelperCmpdLegacyCmpd {
             CmpdLegacyCmpd clc = CmpdLegacyCmpd.Factory.newInstance();
                        
             clc.setId(nsc.longValue());            
-            clc.setJpg512(imageBytes);
+            clc.setGif512(imageBytes);
 
             session.save(clc);
 

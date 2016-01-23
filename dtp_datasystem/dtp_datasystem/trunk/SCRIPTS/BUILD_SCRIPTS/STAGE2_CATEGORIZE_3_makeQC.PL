@@ -71,9 +71,10 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my $sql = qq[
 insert into qc (source, comparator, target, the_count)
-select source, comparator, target||' '||invTest, count(*) 
+select source, comparator, target||' '||invtest, count(*) 
 from qc_with_nsc
-group by source, comparator, target, invTest
+where invtest = 'any nsc'
+group by source, comparator, target, invtest
 ];
 
 print "$sql\n";
@@ -98,7 +99,9 @@ my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my $sql = qq[
-create table temp as select nsc from qc_with_nsc group by nsc having count(distinct source) > 1
+create table temp as select nsc from qc_with_nsc 
+where invtest = 'any nsc' 
+group by nsc having count(distinct source) > 1
 ];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);
@@ -116,7 +119,8 @@ create table qc_overlap
 as 
 select t.nsc, qc.source
 from temp t, qc_with_nsc qc
-where t.nsc = qc.nsc
+where qc.invtest = 'any nsc'
+and t.nsc = qc.nsc
 ];
 print "$sql\n";
 my $sth = $dbh->prepare($sql);

@@ -21,6 +21,8 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 
 my @sqlList = ();
 
+goto skipToHere;
+
 push @sqlList, qq[
 drop table if exists rdkit_validity
 ];
@@ -35,7 +37,6 @@ is_valid_smiles(can_taut_strip_stereo::cstring) as valid_can_taut_strip_stereo,
 is_valid_ctab(ctab::cstring) as valid_ctab
 from cmpd_table
 where can_smi is not null 
-and can_smi != '[RH]'
 ];
 
 push @sqlList, qq[
@@ -45,6 +46,8 @@ create index rdkv_nsc on rdkit_validity(nsc)
 push @sqlList, qq[
 vacuum analyze rdkit_validity
 ];
+
+skipToHere:
 
 # drop and recreate the table
 # the datasystem uml model doesn't know about rdkit mol data type
@@ -90,7 +93,7 @@ drop table if exists rdkit_fail
 push @sqlList, qq[
 create table rdkit_fail 
 as 
-select ct.nsc, ct.can_smi, molecular_formula
+select ct.nsc, ct.can_smi, parent_molecular_formula
 from cmpd_table ct, rdkit_validity v 
 where ct.nsc = v.nsc
 and v.valid_can_smi = 'f'

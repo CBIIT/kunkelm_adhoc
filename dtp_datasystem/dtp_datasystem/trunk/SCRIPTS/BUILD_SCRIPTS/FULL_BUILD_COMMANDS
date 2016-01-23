@@ -8,7 +8,7 @@ perl STAGE1_DATAFETCH_1_checkPLPfiles.PL
 psql -a -d datasystemdb < STAGE1_DATAFETCH_2_loadPLPfiles.sql
 perl STAGE1_DATAFETCH_3_postLoadCheckAndFixPLPdata.PL
 
-FetchFromProd - can either parse exisiting files, or fetch de novo
+FetchFromProd - can either parse existing dump files, or fetch de novo
 
 -- -- -- psql -a -d datasystemdb < STAGE1_DATAFETCH_4_ALTERNATE_FetchFromProdFromFiles.sql
 -- -- -- STAGE1_DATAFETCH_4_FetchFromProd
@@ -23,10 +23,35 @@ perl STAGE2_CATEGORIZE_5_nscToLoad.PL
 # doing it the other way around meant that updates on nsc_cmpd were going DOG SLOW...
 
 perl STAGE3_BUILD_0_processProdData.PL
+
+################
+################ DROP INDEXES BEFORE INSERT!
+################
+drop index nsc_cmpd_cas_idx;
+drop index nsc_cmpd_form_mol_form_idx;
+drop index nsc_cmpd_nsc_idx;
+drop index nsc_cmpd_par_mol_form_idx;
+
+
 perl STAGE3_BUILD_1_buildCmpdModel.PL
+
+################
+################ DROP INDEXES BEFORE INSERT!
+################
+drop index cmpd_table_cas_idx;
+drop index cmpd_table_nsc_idx;
+drop index cmpd_table_par_form_mol_form_idx;
+drop index cmpd_table_par_mol_form_idx;
+
 perl STAGE3_BUILD_2_buildCmpdTableFromCmpdModel.PL
+
+// what was BUILD_3?
 
 perl STAGE3_BUILD_4_loadRDkit.PL
 
-perl STAGE4_FOLLOWUP_recreateConstraints.PL
+perl STAGE4_FOLLOWUP_1_recreateConstraints.PL  
+psql -a -d datasystemdb < STAGE4_FOLLOWUP_2_grants.sql
+
+
+
 # STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL

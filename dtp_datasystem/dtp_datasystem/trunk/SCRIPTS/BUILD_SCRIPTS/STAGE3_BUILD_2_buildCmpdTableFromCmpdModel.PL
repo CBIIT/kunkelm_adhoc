@@ -28,17 +28,26 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## #    #  #    #  #       #    #             #    #    #  #    #  #       #
 ##  ####   #    #  #       #####  #######     #    #    #  #####   ######  ######
 
+################
+################ DROP INDEXES!
+################
+
+## drop index cmpd_table_cas_idx;
+## drop index cmpd_table_nsc_idx;
+## drop index cmpd_table_par_form_mol_form_idx;
+## drop index cmpd_table_par_mol_form_idx;
+
 my $tempSql = qq[truncate table cmpd_table];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # temp_formatted_strings - aliases, plates, projects, sets, targets
 
 my $tempSql = qq[drop table if exists temp_formatted_strings];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 
 ## formatted_plates includes distinct because data are degenerate by set 
@@ -71,19 +80,19 @@ nsc.id,
 nsc.nsc];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tfs_nsc on temp_formatted_strings(nsc)];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## temp_formatted_fragments
 
 my $tempSql = qq[drop table if exists temp_formatted_fragments];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create table temp_formatted_fragments
@@ -104,12 +113,12 @@ nsc.id,
 nsc.nsc];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tff_nsc on temp_formatted_fragments(nsc)];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my @sqlList = ();
 
@@ -178,7 +187,7 @@ create index nCmpd_cLegCFk on nsc_cmpd(cmpd_legacy_cmpd_fk)
 foreach my $sql(@sqlList){
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
-	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 }
 
 my $tempSql = qq[

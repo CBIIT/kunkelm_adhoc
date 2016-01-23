@@ -130,7 +130,7 @@ public class TransformAndroToVO {
             rtn.setId(entityIn.getId());
             rtn.setNsc(entityIn.getNsc());
             rtn.setProdCtab(entityIn.getProdCtab());
-            rtn.setJpg512(entityIn.getJpg512());
+            rtn.setGif512(entityIn.getGif512());
             rtn.setProdMolecularFormula(entityIn.getProdMolecularFormula());
             rtn.setProdFormulaWeight(entityIn.getProdFormulaWeight());            
         }

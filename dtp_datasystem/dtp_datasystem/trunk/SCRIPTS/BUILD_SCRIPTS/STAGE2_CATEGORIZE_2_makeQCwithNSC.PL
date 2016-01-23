@@ -71,8 +71,27 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 ##                       |___/               |___/ 
 
 foreach my $thisCategory (@allCategories){
+
+# MWK 22Jan2015
+# first, aggregate plp fragments for mf, fw and then 
+# join to mw, mf, formalcharge from rs3_from_plp_nsc
 	
-	#------------ for each category, use temp to calculate the fw
+	my $sql = qq[	
+	drop table if exists temp_agg
+	];
+	print "$sql\n";
+	my $sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	
+  my $sql = qq[
+	create table temp_agg 
+	as
+	select nsc, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
+	from $thisCategory
+	group by 1
+	];
+  my $sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
 	my $sql = qq[	
 	drop table if exists temp
@@ -80,13 +99,14 @@ foreach my $thisCategory (@allCategories){
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-	
+
 	my $sql = qq[
 	create table temp 
 	as
-	select nsc, mf, molecular_formula, mw, sum(molecular_weight) as fw
-	from $thisCategory
-	group by 1, 2, 3, 4
+	select ta.nsc, ta.mf, ta.fw, rs3.mf as prod_mf, rs3.mw as prod_mw, rs3.formalcharge as formal_charge
+	from temp_agg ta 
+  left outer join rs3_from_plp_nsc rs3
+  on ta.nsc = rs3.nsc;
 	];
 	print "$sql\n";
 	my $sth = $dbh->prepare($sql);
