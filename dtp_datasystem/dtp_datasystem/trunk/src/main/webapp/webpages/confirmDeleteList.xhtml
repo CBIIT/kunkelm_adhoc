@@ -7,15 +7,11 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui_form.xhtml">
 
-    <ui:define name="title">
-        <h:outputText value="Confirm Delete List"/>
+     <ui:define name="content title">
+        <h:outputText value="Confirm Delete List #{listManagerController.listManagerBean.listForDelete.listName}"/>
     </ui:define>
     
     <ui:define name="instructions"/>
-    
-    <ui:define name="content title">
-        <h:outputText value="Confirm Delete List #{listManagerController.listManagerBean.listForDelete.listName}"/>
-    </ui:define>
     
     <ui:define name="content">
 

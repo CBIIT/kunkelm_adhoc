@@ -332,8 +332,6 @@ public class TransformAndroToVO {
     public static CmpdVO translateCmpd(Cmpd entityIn) {
 
         CmpdVO rtn = new CmpdVO();
-        
-        
 
         if (entityIn instanceof NscCmpdImpl) {
 
@@ -343,6 +341,7 @@ public class TransformAndroToVO {
                 
                 rtn.setProdFormulaWeight(nscc.getFormulaWeight());
                 rtn.setProdMolecularFormula(nscc.getProdMolecularFormula());
+                rtn.setFormalCharge(nscc.getFormalCharge());
 
                 // identifier
                 rtn.setId(nscc.getId());

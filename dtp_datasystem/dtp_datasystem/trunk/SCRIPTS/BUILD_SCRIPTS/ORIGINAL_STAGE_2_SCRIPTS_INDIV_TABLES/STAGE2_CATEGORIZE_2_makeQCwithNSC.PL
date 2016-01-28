@@ -70,15 +70,6 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 ## \___|\__,_| \__|\___| \__, | \___/ |_|    \__, |
 ##                       |___/               |___/ 
 
-# MWK 25Jan2016, ALL category data (frags) now in a single table
-
-# inv, nci60, etc. 
-
-my @critList;
-#push @critList,"inv"; 
-#push @critList,"nci60";
-#push @critList,"inv&nci60";
-
 foreach my $thisCategory (@allCategories){
 
 # MWK 22Jan2015
@@ -96,7 +87,7 @@ foreach my $thisCategory (@allCategories){
 	create table temp_agg 
 	as
 	select nsc, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
-	from comb_cat where category = '$thisCategory'
+	from $thisCategory
 	group by 1
 	];
   my $sth = $dbh->prepare($sql);
@@ -201,31 +192,33 @@ foreach my $thisCategory (@allCategories){
 
 # indexes
 
-my @sqlList;
-
-push @sqlList, qq[
+my $sql = qq[
 create index qc_with_nsc_source on qc_with_nsc(source)
 ];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-push @sqlList, qq[
+my $sql = qq[
 create index qc_with_nsc_comparator on qc_with_nsc(comparator)
 ];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-push @sqlList, qq[
+my $sql = qq[
 create index qc_with_nsc_target on qc_with_nsc(target)
 ];
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
-push @sqlList, qq[
+my $sql = qq[
 vacuum analyze qc_with_nsc
 ];
-
-# execute
-
-foreach my $sqlStmt (@sqlList){
-	my $sth = $dbh->prepare($sqlStmt);
-	print "$sqlStmt\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
-}
+print "$sql\n";
+my $sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 # clean up
 $dbh->disconnect();

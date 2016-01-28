@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import mwk.datasystem.vo.CmpdVO;
 
 /**
@@ -20,6 +21,11 @@ import mwk.datasystem.vo.CmpdVO;
 public class ConfigurationBean implements Serializable {
 
   static final long serialVersionUID = -8653468634048142855l;
+
+  @PostConstruct
+  public void init() {
+    reset();
+  }
 
 //       _       _           _               _   _                 
 //  __ _| | ___ | |__   __ _| |   ___  _ __ | |_(_) ___  _ __  ___ 
@@ -183,7 +189,7 @@ public class ConfigurationBean implements Serializable {
     // defaults
     selectedCmpdParameters = new ArrayList<String>();
     // NSC and DISCREET shown by default
-    
+
     selectedPChemParameters = new ArrayList<String>();
     String[] initArr = new String[]{"Parent Molecular Formula", "Parent Molecular Weight"};
     selectedPChemParameters.addAll(Arrays.asList(initArr));
@@ -215,38 +221,49 @@ public class ConfigurationBean implements Serializable {
     this.biodataColumns = new ArrayList<ColumnModel>();
   }
 
-  private void createDynamicColumns() {
+  private void createDynamicColumns() throws Exception {
 
-    this.physChemColumns = new ArrayList<ColumnModel>();
-    for (String columnKey : this.selectedPChemParameters) {
-      String key = columnKey.trim();
-      if (valid_physchem_keys.containsKey(key)) {
-        this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
-      }
-    }
+    try {
 
-    this.structureColumns = new ArrayList<ColumnModel>();
-    for (String columnKey : this.selectedStructureParameters) {
-      String key = columnKey.trim();
-      if (valid_strc_keys.containsKey(key)) {
-        this.structureColumns.add(new ColumnModel(key, valid_strc_keys.get(key)));
+      this.physChemColumns = new ArrayList<ColumnModel>();
+      for (String columnKey : this.selectedPChemParameters) {
+        String key = columnKey.trim();
+        if (valid_physchem_keys.containsKey(key)) {
+          this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
+        }
       }
-    }
 
-    this.cmpdColumns = new ArrayList<ColumnModel>();
-    for (String columnKey : this.selectedCmpdParameters) {
-      String key = columnKey.trim();
-      if (valid_cmpd_keys.containsKey(key)) {
-        this.cmpdColumns.add(new ColumnModel(key, valid_cmpd_keys.get(key)));
+      this.structureColumns = new ArrayList<ColumnModel>();
+      for (String columnKey : this.selectedStructureParameters) {
+        String key = columnKey.trim();
+        if (valid_strc_keys.containsKey(key)) {
+          this.structureColumns.add(new ColumnModel(key, valid_strc_keys.get(key)));
+        }
       }
-    }
 
-    this.biodataColumns = new ArrayList<ColumnModel>();
-    for (String columnKey : this.selectedBioDataParameters) {
-      String key = columnKey.trim();
-      if (valid_bio_keys.containsKey(key)) {
-        this.biodataColumns.add(new ColumnModel(key, valid_bio_keys.get(key)));
+      this.cmpdColumns = new ArrayList<ColumnModel>();
+      for (String columnKey : this.selectedCmpdParameters) {
+        String key = columnKey.trim();
+        if (valid_cmpd_keys.containsKey(key)) {
+          this.cmpdColumns.add(new ColumnModel(key, valid_cmpd_keys.get(key)));
+        }
       }
+
+      this.biodataColumns = new ArrayList<ColumnModel>();
+      for (String columnKey : this.selectedBioDataParameters) {
+        String key = columnKey.trim();
+        if (valid_bio_keys.containsKey(key)) {
+          this.biodataColumns.add(new ColumnModel(key, valid_bio_keys.get(key)));
+        }
+      }
+
+    } catch (NullPointerException npe) {
+      npe.printStackTrace();
+      throw npe;
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw e;
     }
 
   }
@@ -294,7 +311,7 @@ public class ConfigurationBean implements Serializable {
   }
 
   public String getSmilesStrcUrl(String smiles, String querySmiles, String title) {
-        // System.out.println("In getSmilesStrcUrl(smiles, querySmiles, title)");
+    // System.out.println("In getSmilesStrcUrl(smiles, querySmiles, title)");
     // System.out.println("smiles is: " + smiles);
     String rtn = "";
     StringBuilder sb = new StringBuilder();
@@ -334,13 +351,13 @@ public class ConfigurationBean implements Serializable {
       sb.append("&kekule=true");
     }
     rtn = sb.toString();
-        // System.out.println("getSmilesStrcUrl() in SessionController: ");
+    // System.out.println("getSmilesStrcUrl() in SessionController: ");
     // System.out.println("rtn from getSmilesStrcUrl is: " + rtn);
     return rtn;
   }
 
   public String getSmilesStrcUrl(String smiles) {
-        // System.out.println("In getSmilesStrcUrl(smiles)");
+    // System.out.println("In getSmilesStrcUrl(smiles)");
     // System.out.println("smiles is: " + smiles);
     return getSmilesStrcUrl(smiles, null, null);
   }

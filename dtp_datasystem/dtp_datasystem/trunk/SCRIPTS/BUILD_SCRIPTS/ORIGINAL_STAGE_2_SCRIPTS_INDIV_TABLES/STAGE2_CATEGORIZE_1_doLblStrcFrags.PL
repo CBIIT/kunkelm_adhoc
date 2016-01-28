@@ -19,21 +19,17 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
-goto skipToHere;
-
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
-## #####   #####   ######            ##     ####    ####
-## #    #  #    #  #                #  #   #    #  #    #
-## #    #  #    #  #####   #####   #    #  #       #
-## #####   #####   #               ######  #  ###  #  ###
-## #       #   #   #               #    #  #    #  #    #
-## #       #    #  ######          #    #   ####    ####
-
-# statements in sqlList
+##   ####   ######   #####  #    #  #####
+##  #       #          #    #    #  #    #
+##   ####   #####      #    #    #  #    #
+##       #  #          #    #    #  #####
+##  #    #  #          #    #    #  #
+##   ####   ######     #     ####   #
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -162,8 +158,6 @@ push @sqlList,qq[
 create index csaltf_nsc on count_salt_frags(nsc)
 ];
 
-# run the sql statements
-
 foreach my $sqlStmt(@sqlList){
 	my $sth = $dbh->prepare($sqlStmt);
 	print "$sqlStmt\n\n";
@@ -269,8 +263,6 @@ foreach my $sqlStmt (@sqlList){
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
 
-skipToHere:
-
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -291,27 +283,11 @@ skipToHere:
 ##  #    #  #    #     #    #       #    #  #    #  #   #      #    #       #    #
 ##   ####   #    #     #    ######   ####    ####   #    #     #    ######   ####
 
-# MWK 25Jan2016, ALL categories into a single table
-
-@sqlList = ();
-
-# drop/create table
-
-push @sqlList,qq[
-drop table if exists comb_cat
-];
-
-push @sqlList,qq[
-create table comb_cat
-as
-select 'category'::varchar as category, rs3.*
-from rs3_from_plp_frags rs3
-limit 0
-];
+# category	count_frags	count_lbl	count_strc	salt
 
 my @infoList = getCategoryCriteriaList();
 
-# insert for each category
+my @unionStmtList;
 
 foreach my $thisInfo (@infoList){
 	
@@ -319,9 +295,25 @@ foreach my $thisInfo (@infoList){
   
   my ($category, $count_frags, $count_lbl, $count_strc,	$count_salt) = split(/ /, $thisInfo);
   
-  push @sqlList,qq[
-  insert into comb_cat
-  select '$category', rs3.*
+  # set up here for UNION join to find missing NSC
+  push (@unionStmtList, "select nsc from " . $category);
+  
+  ## ---------------------------------------------------------
+  ## ---------------------------------------------------------
+  ## ---------------------------------------------------------
+  ## ---------------------------------------------------------
+  
+  my $tempSql = qq[
+  drop table if exists $category
+  ];
+  my $sth = $dbh->prepare($tempSql);
+  print "$tempSql\n\n";
+  $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+  
+  my $tempSql = qq[
+  create table $category
+  as
+  select rs3.*
   from rs3_from_plp_frags rs3, frag_stats_with_totals fs
   where fs.count_frags = fs.total_type_frags
   and rs3.nsc = fs.nsc  
@@ -329,23 +321,18 @@ foreach my $thisInfo (@infoList){
   and fs.count_lbl $count_lbl
   and fs.count_strc $count_strc
   and fs.salt $count_salt
-  ];  
-}
-
-push @sqlList,qq[
-create index comb_cat_category on comb_cat(category)
-];
-
-push @sqlList,qq[
-create index comb_cat_nsc on comb_cat(nsc)
-];
-
-# execute
-
-foreach my $sqlStmt (@sqlList){
-	my $sth = $dbh->prepare($sqlStmt);
-	print "$sqlStmt\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
+  ];
+  my $sth = $dbh->prepare($tempSql);
+  print "$tempSql\n\n";
+  $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+  
+  my $tempSql = qq[
+  create index $category\_nsc on $category(nsc)
+  ];
+  my $sth = $dbh->prepare($tempSql);
+  print "$tempSql\n\n";
+  $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
+  
 }
 
 ## ---------------------------------------------------------
@@ -365,27 +352,43 @@ foreach my $sqlStmt (@sqlList){
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
-@sqlList = ();
-
-push @sqlList,qq[
+my $tempSql = qq[
 drop table if exists missing_nsc
 ];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
-push @sqlList,qq[
+my $unionStmt = join(" \n UNION \n ", @unionStmtList);
+
+#print $unionStmt . "\n";
+
+my $tempSql = qq[
 create table missing_nsc
 as
 select frag.*
 from frag_stats_with_totals frag
 where nsc not in (
-select distinct nsc from comb_cat
+select distinct x.nsc
+from
+(
+$unionStmt
+)
+as x
 )
 ];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
-push @sqlList,qq[
+my $tempSql = qq[
 drop table if exists missing_nsc_frags
 ];
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
-push @sqlList,qq[
+my $tempSql = qq[
 create table missing_nsc_frags
 as
 select *
@@ -394,14 +397,9 @@ where nsc in (
 select nsc from missing_nsc
 )
 ];
-
-# execute
-
-foreach my $sqlStmt (@sqlList){
-	my $sth = $dbh->prepare($sqlStmt);
-	print "$sqlStmt\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
-}
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

@@ -9482,6 +9482,11 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/loadAppAndInvAndCmax.sql
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/DATA_SYSTEM_BUILD_PARAMETERS.pm -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/FULL_BUILD_COMMANDS -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/MAKE_CATEGORIES.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/ORIGINAL_STAGE_2_SCRIPTS_INDIV_TABLES/STAGE2_CATEGORIZE_1_doLblStrcFrags.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/ORIGINAL_STAGE_2_SCRIPTS_INDIV_TABLES/STAGE2_CATEGORIZE_2_makeQCwithNSC.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/ORIGINAL_STAGE_2_SCRIPTS_INDIV_TABLES/STAGE2_CATEGORIZE_3_makeQC.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/ORIGINAL_STAGE_2_SCRIPTS_INDIV_TABLES/STAGE2_CATEGORIZE_4_crosstabQC.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/ORIGINAL_STAGE_2_SCRIPTS_INDIV_TABLES/STAGE2_CATEGORIZE_5_nscToLoad.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/SCRIPT9_exportToAccord.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE0_SETUP_1_constraintsManagement.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE0_SETUP_2_dropConstraints.PL -text
@@ -9499,12 +9504,15 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_5_ns
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_0_processProdData.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_1_buildCmpdModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_2_buildCmpdTableFromCmpdModel.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_3_buildCmpdLegacyCmpds.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE3_BUILD_4_loadRDkit.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_1_recreateConstraints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_2_grants.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CANCEL_POSTGRES_PROCESS.txt -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/cancelPostgresProcess -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
@@ -9660,6 +9668,9 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListForm.xhtml 
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configuration.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureAppendToExistingList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureCreateNewList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureDeleteFromList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/createList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/activeListHistoScat.xhtml -text
@@ -9681,6 +9692,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_menu_bar.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text

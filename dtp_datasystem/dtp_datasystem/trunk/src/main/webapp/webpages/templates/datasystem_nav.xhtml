@@ -62,28 +62,6 @@
                     ajax="false"
                     action="/webpages/configuration?faces-redirect=true"/>
 
-        <ui:remove>
-
-            MOVED TO ui:insert/ui:define
-
-            <p:submenu label="Export">
-
-                <p:menuitem value="Export Active List to Excel"
-                            ajax="false"
-                            actionListener="#{listManagerController.handleExcelExport}"/>
-
-                <p:menuitem value="Export Active List as CSV"
-                            ajax="false"
-                            actionListener="#{listManagerController.handleCsvExport}" />
-
-                <p:menuitem value="Export Structures as Image"
-                            ajax="false"
-                            onclick="structuresAsGridImage()"/>
-
-            </p:submenu>
-
-        </ui:remove>
-
         <p:menuitem value="List Logic"
                     ajax="false"
                     action="/webpages/listLogic?faces-redirect=true"/>

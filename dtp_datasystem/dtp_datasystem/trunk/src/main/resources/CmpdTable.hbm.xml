@@ -300,5 +300,9 @@
             <column name="PROD_MOLECULAR_FORMULA" not-null="false" unique="false" sql-type="CHARACTER VARYING(1024)"/>
             <type name="java.lang.String"/>
         </property>
+        <property name="cmpdFormalCharge">
+            <column name="CMPD_FORMAL_CHARGE" not-null="false" unique="false" sql-type="INTEGER"/>
+            <type name="java.lang.Integer"/>
+        </property>
     </class>
 </hibernate-mapping>

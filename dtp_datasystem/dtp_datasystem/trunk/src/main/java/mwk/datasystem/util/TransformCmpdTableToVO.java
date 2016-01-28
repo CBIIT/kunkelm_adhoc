@@ -224,9 +224,10 @@ public class TransformCmpdTableToVO {
 
         CmpdVO cmpdVO = new CmpdVO();
 
-        cmpdVO.setProdFormulaWeight(entityIn.getFormulaWeight());
+        cmpdVO.setProdFormulaWeight(entityIn.getProdFormulaWeight());
         cmpdVO.setProdMolecularFormula(entityIn.getProdMolecularFormula());
-
+        cmpdVO.setFormalCharge(entityIn.getCmpdFormalCharge());
+        
         try {
 
             cmpdVO.setConf(entityIn.getConf());

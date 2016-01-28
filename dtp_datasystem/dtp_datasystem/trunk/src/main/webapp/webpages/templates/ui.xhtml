@@ -13,7 +13,7 @@
         <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
         <title>
-          #{applicationScopeBean.projectTitle} <ui:insert name="title"/>
+          #{applicationScopeBean.projectTitle} <ui:insert name="content title"/>
         </title>
       </f:facet>
 
@@ -26,15 +26,6 @@
       <h:outputStylesheet library="css" name="my.css"/>
 
     </h:head>
-
-    <ui:remove>
-
-      <ui:define name="instructions"></ui:define>        
-      <ui:define name="export"></ui:define>        
-      <ui:define name="alternate"></ui:define>        
-      <ui:define name="content title"></ui:define>
-
-    </ui:remove>
 
     <h:body>
 
@@ -56,23 +47,14 @@
 
           <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
 
-          <h1>#{applicationScopeBean.projectTitle} <ui:insert name="content title"/></h1>
+          <h1>
+            <ui:insert name="content title"/>
+          </h1>
 
-          <ui:insert name="instructions"/>
-
-          <h:outputLink style="color: transparent; font-size: xx-small;" value="#afterExportData">
-            <h:outputText value="Skip Export Data"/>
-          </h:outputLink>
-
-          <h2>Export Data or Images</h2>                    
-          <ui:insert name="export"/>
-          <a id="afterExportData" tabindex="-1" />
-
-          <h2>Screen Reader Alternate</h2> 
           <ui:insert name="alternate"/>
-
-          <h2><ui:insert name="content title"/></h2>
-
+          <ui:insert name="instructions"/>
+          <ui:insert name="export"/> 
+          <p:spacer height="20" width="100%"/>
           <ui:insert name="content"/>
 
         </p:panel>

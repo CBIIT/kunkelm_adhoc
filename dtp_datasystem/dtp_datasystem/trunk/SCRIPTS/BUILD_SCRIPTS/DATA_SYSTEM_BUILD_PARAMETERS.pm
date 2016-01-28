@@ -9,6 +9,8 @@ $VERSION     = 1.00;
 @EXPORT      = ();
 @EXPORT_OK   = qw(getDatasystemTableList getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
 
+# datasystem domain tables
+
 my @datasystemTableList;
 
 push @datasystemTableList, "ad_hoc_cmpd";
@@ -46,7 +48,9 @@ push @datasystemTableList, "cmpd_targets2nsc_cmpds";
 push @datasystemTableList, "nsc_cmpd";
 push @datasystemTableList, "nsc_cmpd_type";
 push @datasystemTableList, "rdkit_mol";
-# ancillary tables that need to be kept around
+
+# ancillary tables that ought to be kept around
+
 push @datasystemTableList, "create_constraint_statements";
 push @datasystemTableList, "drop_constraint_statements";
 push @datasystemTableList, "frag_stats";
@@ -138,24 +142,46 @@ foreach my $thisCatCrit (@categoryCriteriaList){
   push(@categoryList, $category);  
 }
 
-my @qualityControlCriteriaList;
-push(@qualityControlCriteriaList,"count nsc,1=1");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) = 0,round(prod_mw) = round(fw)");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) < 1,abs( prod_mw - fw ) <1");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) < 2,abs( prod_mw - fw ) <2");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) < 3,abs( prod_mw - fw ) <3");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) < 4,abs( prod_mw - fw ) <4");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) < 5,abs( prod_mw - fw ) <5");
-push(@qualityControlCriteriaList,"abs(prod_mw - fw) > 5,abs( prod_mw - fw ) >5");
-push(@qualityControlCriteriaList,"prod_mf with .,prod_mf like '%.%'");
-push(@qualityControlCriteriaList,"prod_mf W99,prod_mf = 'W99'");
-push(@qualityControlCriteriaList,"prod_mf ~ .*\(.*\)[xn0-9],mf ~ '.*\\(.*\\)[xn0-9]'");
-push(@qualityControlCriteriaList,"r groups in output, mf like '%R#%'");
-push(@qualityControlCriteriaList,"formal_charge != 0,formal_charge != 0");
+my @qcCritList;
+
+# all nsc, no filter
+push(@qcCritList,"count nsc,1=1");
+
+# filter by diff_mw prod vs. build
+push(@qcCritList,"diff_mw 0.0-0.2,abs(prod_mw-fw ) <= 0.2");
+push(@qcCritList,"diff_mw 0.0-0.2 Hx hal,abs(prod_mw-fw ) <= 0.2 and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"diff_mw 0.2-1.0,abs(prod_mw-fw) > 0.2 and abs(prod_mw-fw) <= 1.0");
+push(@qcCritList,"diff_mw 0.2-1.0 Hx hal,abs(prod_mw-fw) > 0.2 and abs(prod_mw-fw) <= 1.0 and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"diff_mw 1.0-2.0,abs(prod_mw-fw) > 1.0 and abs(prod_mw-fw) <= 2.0");
+push(@qcCritList,"diff_mw 1.0-2.0 Hx hal,abs(prod_mw-fw) > 1.0 and abs(prod_mw-fw) <= 2.0 and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"diff_mw 2.0-3.0,abs(prod_mw-fw) > 2.0 and abs(prod_mw-fw) <= 3.0");
+push(@qcCritList,"diff_mw 2.0-3.0 Hx hal,abs(prod_mw-fw) > 2.0 and abs(prod_mw-fw) <= 3.0 and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"diff_mw 3.0-4.0,abs(prod_mw-fw) > 3.0 and abs(prod_mw-fw) <= 4.0");
+push(@qcCritList,"diff_mw 3.0-4.0 Hx hal,abs(prod_mw-fw) > 3.0 and abs(prod_mw-fw) <= 4. and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"diff_mw 4.0-5.0,abs(prod_mw-fw) > 4.0 and abs(prod_mw-fw) <= 5.0");
+push(@qcCritList,"diff_mw 4.0-5.0 Hx hal,abs(prod_mw-fw) > 4.0 and abs(prod_mw-fw) <= 5.0 and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"diff_mw 5.0-inf,abs(prod_mw-fw) > 5.0");
+push(@qcCritList,"diff_mw 5.0-inf Hx hal,abs(prod_mw-fw) > 5.0 and prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+# categories of prod_md
+push(@qcCritList,"prod_mf with .,prod_mf like '%.%'");
+push(@qcCritList,"prod_mf W99,prod_mf = 'W99'");
+push(@qcCritList,"prod_mf ~ .*\(.*\)[xn0-9],prod_mf ~ '.*\\(.*\\)[xn0-9]'");
+push(@qcCritList,"prod_mf halogen Hx or xH,prod_mf ~ '(\.HCl|\.ClH|\.HBr|\.BrH|\.HI|\.IH)'");
+
+push(@qcCritList,"r groups in output, mf like '%R#%'");
+
+push(@qcCritList,"formal_charge != 0,formal_charge != 0");
 
 sub getDatasystemTableList { return @datasystemTableList; }
 sub getCategoryCriteriaList { return @categoryCriteriaList; }
 sub getCategoryList  { return @categoryList; }
-sub getQualityControlCriteriaList  { return @qualityControlCriteriaList; }
+sub getQualityControlCriteriaList  { return @qcCritList; }
 
 1;

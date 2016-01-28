@@ -16,6 +16,8 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
 
+goto skipToHere;
+
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -48,7 +50,6 @@ my $tempSql = qq[drop table if exists temp_formatted_strings];
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
 
 ## formatted_plates includes distinct because data are degenerate by set 
 ## (not tracking plate row/column in dctddb)
@@ -190,6 +191,24 @@ foreach my $sql(@sqlList){
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 }
 
+
+
+
+#
+#
+#
+skipToHere:
+#
+#
+#
+
+  #####  #    #  ######             #    #    #   ####   ######  #####    #####
+    #    #    #  #                  #    ##   #  #       #       #    #     #
+    #    ######  #####              #    # #  #   ####   #####   #    #     #
+    #    #    #  #                  #    #  # #       #  #       #####      #
+    #    #    #  #                  #    #   ##  #    #  #       #   #      #
+    #    #    #  ######             #    #    #   ####   ######  #    #     #
+
 my $tempSql = qq[
 insert into cmpd_table(
 id,
@@ -263,7 +282,8 @@ formula_weight,
 parent_molecular_formula,
 parent_molecular_weight,
 prod_formula_weight,
-prod_molecular_formula
+prod_molecular_formula,
+cmpd_formal_charge
 )
 
 select
@@ -368,7 +388,8 @@ nsc.formula_weight,
 nsc.parent_molecular_formula,
 nsc.parent_molecular_weight,
 nsc.prod_formula_weight,
-nsc.prod_molecular_formula
+nsc.prod_molecular_formula,
+nsc.formal_charge
 
 from 
 
@@ -402,11 +423,6 @@ where nsc.nsc = load.nsc
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-#start : 20150306 07:47:26.141
-#finish: 20150306 08:46:53.539
-
-
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

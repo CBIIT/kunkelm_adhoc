@@ -110,6 +110,25 @@ public class SearchCriteriaBean implements Serializable {
     reset();
   }
 
+  /**
+   * 
+   */
+  public void newSearch() {
+   
+    this.drugNames = new ArrayList<String>();
+    this.aliases = new ArrayList<String>();
+    this.cases = new ArrayList<String>();
+    this.cmpdNamedSets = new ArrayList<String>();
+    this.nscs = new ArrayList<String>();
+    this.projectCodes = new ArrayList<String>();
+    this.plates = new ArrayList<String>();
+    this.targets = new ArrayList<String>();
+    this.mtxtPieces = new ArrayList<String>();
+    this.pseudoAtomsPieces = new ArrayList<String>();
+    
+  }
+
+  
   public void reset() {
     
     this.aliasTextArea = "";

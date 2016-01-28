@@ -19,20 +19,7 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
 
-
-
-
 goto skipToHere;
-
-
-
-
-
-
-
-
-
-
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -66,8 +53,7 @@ my @tablesToNuke = (
 
 foreach my $tableToNuke(@tablesToNuke){
 	
-	my $tempSql = qq[truncate table $tableToNuke cascade];
-	
+	my $tempSql = qq[truncate table $tableToNuke cascade];	
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
 	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
@@ -364,13 +350,13 @@ select nsc, fragmentindex from multi_lbl_one_strc_no_salt  where labelarray is n
 
 union
 
-select nsc, fragmentindex from no_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null is null     
+select nsc, fragmentindex from no_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null     
 union
-select nsc, fragmentindex from one_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null is null    
+select nsc, fragmentindex from one_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null    
 union
-select nsc, fragmentindex from two_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null is null    
+select nsc, fragmentindex from two_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null    
 union
-select nsc, fragmentindex from multi_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null is null 
+select nsc, fragmentindex from multi_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null 
 
 )
 ];
@@ -379,7 +365,7 @@ my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-my $tempSql = qq[create index tpf_nsc on temp_parent_fragment(nsc)];
+my $tempSql = qq[create index temp_par_frag_nsc on temp_parent_fragment(nsc)];
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
@@ -401,8 +387,7 @@ my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-# only UNAMBIGUOUS salts
-# any combo of labels, but only a single strc with a single salt
+# any combo of labels, but only two strc with a single salt
 
 my $tempSql = qq[
 create table temp_salt_fragment
@@ -429,11 +414,13 @@ my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-my $tempSql = qq[create index tsf_nsc on temp_salt_fragment(nsc)];
+my $tempSql = qq[create index temp_salt_frag_nsc on temp_salt_fragment(nsc)];
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+skipToHere:
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -453,8 +440,6 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ##  #    #  #            #  #       #####                #     #    #####
 ##  #    #  #       #    #  #    #  #   #           #    #     #    #   #
 ##  #####   ######   ####    ####   #    #           ####      #    #    #
-
-
 
 my $tempSql = qq[drop table if exists temp_ident_descr];
 
@@ -543,9 +528,6 @@ my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-skipToHere:
-
-print "Now at skipToHere\n";
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -595,7 +577,8 @@ cmpd_salt_fragment_fk,
 cmpd_bio_assay_fk,
 cmpd_inventory_fk,
 cmpd_annotation_fk,
-cmpd_legacy_cmpd_fk
+cmpd_legacy_cmpd_fk,
+formal_charge
 )
 select
 ntl.nsc,
@@ -614,25 +597,26 @@ tid.descriptor_string,
 tna.formula_molecular_formula,
 tna.formula_weight,
 
-tpf.molecular_formula,
-tpf.molecular_weight,
+temp_par_frag.molecular_formula,
+temp_par_frag.molecular_weight,
 
 rs3.mf,
 rs3.mw,
 
 nct.id, 		-- nsc_cmpd_type_fk
-tpf.fragmentindex, 	-- cmpd_parent_fragment_fk
-tsf.fragmentindex, -- cmpd_salt_fragment_fk
+temp_par_frag.fragmentindex, 	-- cmpd_parent_fragment_fk
+temp_salt_frag.fragmentindex, -- cmpd_salt_fragment_fk
 cba.id, 		-- cmpd_bio_assay_fk,
 ci.id, 			-- cmpd_inventory_fk,
-annot.id, 		-- cmpd_annotation_fk,
-null 			-- cmpd_legacy_cmpd_fk
+annot.id, 	-- cmpd_annotation_fk,
+null 			  -- cmpd_legacy_cmpd_fk,
+tna.formal_charge
 
 from nsc_to_load ntl
 left outer join temp_ident_descr tid on ntl.nsc = tid.nsc
 left outer join temp_nsc_agg tna on ntl.nsc = tna.nsc
-left outer join temp_parent_fragment tpf on ntl.nsc = tpf.nsc
-left outer join temp_salt_fragment tsf on ntl.nsc = tsf.nsc
+left outer join temp_parent_fragment temp_par_frag on ntl.nsc = temp_par_frag.nsc
+left outer join temp_salt_fragment temp_salt_frag on ntl.nsc = temp_salt_frag.nsc
 left outer join prod_cmpd pc on ntl.nsc = pc.nsc
 left outer join rs3_from_plp_nsc rs3 on ntl.nsc = rs3.nsc
 left outer join cmpd_bio_assay cba on ntl.nsc = cba.id

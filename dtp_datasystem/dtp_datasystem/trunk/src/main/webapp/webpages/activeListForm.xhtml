@@ -9,9 +9,9 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-  <ui:define name="title">
-    <h:outputText value="Active List Form View"/>
-  </ui:define>     
+  <ui:define name="content title">
+    <h:outputText value="Active List Form View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+  </ui:define>
 
   <ui:define name="instructions">
     <h:outputText value="Soring and filtering of the list can be
@@ -19,14 +19,11 @@
                   be reflected in this view."/>
   </ui:define>        
 
-  <ui:define name="export">
+  <ui:define name="export">    
   </ui:define>        
 
-  <ui:define name="alternate"></ui:define>        
-
-  <ui:define name="content title">
-    <h:outputText value="Form View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
-  </ui:define>
+  <ui:define name="alternate">    
+  </ui:define>        
 
   <ui:define name="content">
 
@@ -100,6 +97,24 @@
 
         <h:outputText value="NSC Cmpd Type" style="font-weight: bold;"/>
         <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
+
+        <h:outputText value="PROD MF"/>
+        <h:outputText value="#{listMember.cmpd.prodMolecularFormula}"/>
+
+        <h:outputText value="PROD FW"/>
+        <h:outputText value="#{listMember.cmpd.prodFormulaWeight}"/>            
+
+        <h:outputText value="MF"/>
+        <h:outputText value="#{listMember.cmpd.formulaMolecularFormula}"/>
+
+        <h:outputText value="FW"/>
+        <h:outputText value="#{listMember.cmpd.formulaWeight}"/>
+
+        <h:outputText value="Parent MF"/>
+        <h:outputText value="#{listMember.cmpd.parentMolecularFormula}"/>
+
+        <h:outputText value="Parent MW"/>
+        <h:outputText value="#{listMember.cmpd.parentMolecularWeight}"/>
 
       </p:panelGrid>
 

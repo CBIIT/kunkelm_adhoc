@@ -30,8 +30,8 @@
             <column name="PROD_MOLECULAR_FORMULA" not-null="false" unique="false" sql-type="CHARACTER VARYING(1024)"/>
             <type name="java.lang.String"/>
         </property>
-        <property name="jpg512">
-            <column name="JPG512" not-null="false" unique="false" sql-type="BYTEA"/>
+        <property name="gif512">
+            <column name="GIF512" not-null="false" unique="false" sql-type="BYTEA"/>
             <type name="org.andromda.persistence.hibernate.usertypes.HibernateByteBlobType"/>
         </property>
         <property name="nsc">

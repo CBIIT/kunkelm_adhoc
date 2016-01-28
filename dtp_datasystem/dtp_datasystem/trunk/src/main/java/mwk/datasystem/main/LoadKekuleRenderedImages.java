@@ -26,53 +26,56 @@ import org.hibernate.Transaction;
  */
 public class LoadKekuleRenderedImages {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        insertLegacyCmpds();
+    insertLegacyCmpds();
 
-    }
+  }
 
-    public static void insertLegacyCmpds() {
+  public static void insertLegacyCmpds() {
 
-        File path = new File("/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_GIF_FILES");
+    // File path = new File("/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_GIF_FILES");
+    File path = new File("/home/mwkunkel/GIFFILES");
 
-        try {
+    try {
 
-            File[] files = path.listFiles();
-            
-            for (int i = 0; i < files.length; i++) {
-            
-                String nscString = null;
-                byte[] imageBytes = null;
+      File[] files = path.listFiles();
 
-                File thisFile = files[i];
+      for (int i = 0; i < files.length; i++) {
 
-                if (thisFile.isFile() && thisFile.getName().endsWith("GIF")) {
+        String nscString = null;
+        byte[] imageBytes = null;
 
-                    nscString = thisFile.getName().replace(".GIF", "");
+        File thisFile = files[i];
 
-                    System.out.println("processing: " + thisFile.getName() + " for NSC: " + nscString);
+        if (thisFile.isFile() && thisFile.getName().endsWith("GIF")) {
 
-                    BufferedImage originalImage = ImageIO.read(thisFile);
+          nscString = thisFile.getName().replace(".GIF", "");
 
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(originalImage, "gif", baos);
-                    baos.flush();
-                    imageBytes = baos.toByteArray();
+          System.out.println("processing: " + thisFile.getName() + " for NSC: " + nscString);
 
-                }
+          BufferedImage originalImage = ImageIO.read(thisFile);
 
-                if (nscString != null && imageBytes != null) {                                        
-                    Integer nscInt = Integer.valueOf(nscString);                    
-                    HelperCmpdLegacyCmpd.insertLegacyCmpds(nscInt, imageBytes);
-                }
-            }
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          ImageIO.write(originalImage, "gif", baos);
+          baos.flush();
+          imageBytes = baos.toByteArray();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
         }
 
+        if (nscString != null && imageBytes != null) {
+          Integer nscInt = Integer.valueOf(nscString);
+          HelperCmpdLegacyCmpd.insertLegacyCmpds(nscInt, imageBytes);
+        }
+      }
+
+    } catch (NullPointerException npe) {
+      npe.printStackTrace();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
     }
+
+  }
 
 }

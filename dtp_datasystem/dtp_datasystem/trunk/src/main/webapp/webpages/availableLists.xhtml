@@ -9,159 +9,155 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-     <ui:define name="title">
-        <h:outputText value="Available Lists" />
-    </ui:define>
+  <ui:define name="content title">
+    <h:outputText value="Available Lists" />
+  </ui:define>
 
-    <ui:define name="instructions"/>
+  <ui:define name="instructions"/>
 
-    <ui:define name="export"> 
-         <p:commandButton ajax="false" value="Export to Excel">
-            <p:dataExporter type="xls"  
-                            target="availableListsTbl" 
-                            fileName="availableListsTable" />  
-        </p:commandButton>
+  <ui:define name="export"> 
+    <h2>Export Data or Images</h2>
+    <p:commandButton ajax="false" value="Export to Excel">
+      <p:dataExporter type="xls"  
+                      target="availableListsTbl" 
+                      fileName="availableListsTable" />  
+    </p:commandButton>
 
-        <p:commandButton ajax="false" value="Export as CSV">  
-            <p:dataExporter type="csv" 
-                            target="availableListsTbl" 
-                            fileName="availableListsTable" />  
-        </p:commandButton> 
-    </ui:define>
-    
-    <ui:define name="alternate">
-        
-    </ui:define>
-    
-    <ui:define name="content title">
-        <h:outputText value="Available Lists" />
-    </ui:define>
-    
-    <ui:define name="content">
+    <p:commandButton ajax="false" value="Export as CSV">  
+      <p:dataExporter type="csv" 
+                      target="availableListsTbl" 
+                      fileName="availableListsTable" />  
+    </p:commandButton> 
+  </ui:define>
 
-        <p:commandButton value="Update Lists"
-                         action="#{listManagerController.performUpdateAvailableLists()}"/>
+  <ui:define name="alternate">
+  </ui:define>
 
-        <p:spacer height="20" width="100%"/>
-        
-        <p:dataTable id="availableListsTbl"
-                     resizableColumns="true"
-                     tableStyle="width: auto;"
-                     editable="true"                      
-                     var="list"
-                     value="#{listManagerController.listManagerBean.availableLists}"
-                     paginator="true" 
-                     rows="10"  
-                     filteredValue="#{listManagerController.listManagerBean.filteredAvailableLists}"
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                     rowsPerPageTemplate="10,25,50">
+  <ui:define name="content">
 
-            <f:facet name="header">  
-                #{fn:length(listManagerController.listManagerBean.availableLists)} Available Lists
-            </f:facet>
+    <p:commandButton value="Update Lists"
+                     action="#{listManagerController.performUpdateAvailableLists()}"/>
 
-            <p:ajax event="rowEdit" listener="#{listManagerController.onRowEdit}" update=":datasystemForm:msgs" />
-            <p:ajax event="rowEditCancel" listener="#{listManagerController.onRowCancel}" update=":datasystemForm:msgs" />
-            <p:ajax event="cellEdit" listener="#{listManagerController.onCellEdit}" update=":datasystemForm:msgs" />
+    <p:spacer height="20" width="100%"/>
 
-            <p:column style="width:32px"
-                      exportable="false">
-                <p:rowEditor rendered="#{list.listOwner == sessionController.loggedUser &amp;&amp; list.shareWith != 'PUBLIC'}"/>
-            </p:column>
+    <p:dataTable id="availableListsTbl"
+                 resizableColumns="true"
+                 tableStyle="width: auto;"
+                 editable="true"                      
+                 var="list"
+                 value="#{listManagerController.listManagerBean.availableLists}"
+                 paginator="true" 
+                 rows="10"  
+                 filteredValue="#{listManagerController.listManagerBean.filteredAvailableLists}"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="10,25,50">
 
-            <p:column exportable="false">
+      <f:facet name="header">  
+        #{fn:length(listManagerController.listManagerBean.availableLists)} Available Lists
+      </f:facet>
 
-                <p:commandLink value="VIEW"                                             
-                               action="#{listManagerController.performLoadSelectedList()}"
-                               onstart="PF('loadingBUI').show();"
-                               oncomplete="PF('loadingBUI').hide();">      
-                    <f:setPropertyActionListener value="#{list}"   
-                                                 target="#{listManagerController.listManagerBean.activeList}"/>  
-                </p:commandLink>
+      <p:ajax event="rowEdit" listener="#{listManagerController.onRowEdit}" update=":datasystemForm:msgs" />
+      <p:ajax event="rowEditCancel" listener="#{listManagerController.onRowCancel}" update=":datasystemForm:msgs" />
+      <p:ajax event="cellEdit" listener="#{listManagerController.onCellEdit}" update=":datasystemForm:msgs" />
 
-                <h:outputText escape="false" value="&lt;br/&gt;"/>
+      <p:column style="width:32px"
+                exportable="false">
+        <p:rowEditor rendered="#{list.listOwner == sessionController.loggedUser &amp;&amp; list.shareWith != 'PUBLIC'}"/>
+      </p:column>
 
-                <p:commandLink disabled="#{list.listOwner != sessionController.loggedUser || list.shareWith == 'PUBLIC'}"
-                               value="SHARE" style="color: green;"
-                               action="#{listManagerController.performMakeListPublic()}">      
-                    <f:setPropertyActionListener value="#{list}"   
-                                                 target="#{listManagerController.listManagerBean.activeList}"/>
-                </p:commandLink>
+      <p:column exportable="false">
 
-                <h:outputText escape="false" value="&lt;br/&gt;"/>
+        <p:commandLink value="VIEW"                                             
+                       action="#{listManagerController.performLoadSelectedList()}"
+                       onstart="PF('loadingBUI').show();"
+                       oncomplete="PF('loadingBUI').hide();">      
+          <f:setPropertyActionListener value="#{list}"   
+                                       target="#{listManagerController.listManagerBean.activeList}"/>  
+        </p:commandLink>
 
-                <p:commandLink disabled="#{list.listOwner != sessionController.loggedUser || list.shareWith == 'PUBLIC'}"                
-                               value="DELETE" style="color: red;"
-                               action="#{listManagerController.performInitiateDeleteList}">
+        <h:outputText escape="false" value="&lt;br/&gt;"/>
 
-                    <f:param name="cmpdListIdForDelete" value="#{list.cmpdListId}"/>
+        <p:commandLink disabled="#{list.listOwner != sessionController.loggedUser || list.shareWith == 'PUBLIC'}"
+                       value="SHARE" style="color: green;"
+                       action="#{listManagerController.performMakeListPublic()}">      
+          <f:setPropertyActionListener value="#{list}"   
+                                       target="#{listManagerController.listManagerBean.activeList}"/>
+        </p:commandLink>
 
-                </p:commandLink>
+        <h:outputText escape="false" value="&lt;br/&gt;"/>
 
-            </p:column>
+        <p:commandLink disabled="#{list.listOwner != sessionController.loggedUser || list.shareWith == 'PUBLIC'}"                
+                       value="DELETE" style="color: red;"
+                       action="#{listManagerController.performInitiateDeleteList}">
 
-            <p:column resizable="true" sortBy="#{list.dateCreated}">
-                <f:facet name="header">
-                    Date Created <br/> CmpdListId
-                </f:facet>
-                <h:outputText value="#{list.dateCreated}" /> 
-                <br/>
-                <h:outputText value="#{list.cmpdListId}" />  
-            </p:column> 
+          <f:param name="cmpdListIdForDelete" value="#{list.cmpdListId}"/>
 
-            <p:column headerText="ListName"  
-                      width="40%"
-                      resizable="true" 
-                      sortBy="#{list.listName}"
-                      filterBy="#{list.listName}"
-                      filterMatchMode="contains">       
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{list.listName}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="listNameInput" value="#{list.listName}" style="width:100%"/></f:facet>
-                </p:cellEditor>
-            </p:column> 
+        </p:commandLink>
 
-            <p:column  headerText="List Size" resizable="true" sortBy="#{list.countListMembers}">              
-                <h:outputText value="#{list.countListMembers}" />  
-            </p:column> 
+      </p:column>
 
-            <p:column headerText="Owner" resizable="true" sortBy="#{list.listOwner}"
-                      filterBy="#{list.listOwner}"
-                      filterMatchMode="contains">
-                <h:outputText value="#{list.listOwner}" />  
-            </p:column> 
+      <p:column resizable="true" sortBy="#{list.dateCreated}">
+        <f:facet name="header">
+          Date Created <br/> CmpdListId
+        </f:facet>
+        <h:outputText value="#{list.dateCreated}" /> 
+        <br/>
+        <h:outputText value="#{list.cmpdListId}" />  
+      </p:column> 
 
-            <p:column headerText="Share With" resizable="true" sortBy="#{list.shareWith}">              
-                <h:outputText value="#{list.shareWith}" />  
-            </p:column> 
+      <p:column headerText="ListName"  
+                width="40%"
+                resizable="true" 
+                sortBy="#{list.listName}"
+                filterBy="#{list.listName}"
+                filterMatchMode="contains">       
+        <p:cellEditor>
+          <f:facet name="output"><h:outputText value="#{list.listName}" /></f:facet>
+          <f:facet name="input"><p:inputText id="listNameInput" value="#{list.listName}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+      </p:column> 
 
-            <p:column headerText="List Comment" resizable="true"
-                      filterBy="#{list.listComment}"
-                      filterMatchMode="contains">
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{list.listComment}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="listCommentInput" value="#{list.listComment}" style="width:100%"/></f:facet>
-                </p:cellEditor>
-            </p:column> 
+      <p:column  headerText="List Size" resizable="true" sortBy="#{list.countListMembers}">              
+        <h:outputText value="#{list.countListMembers}" />  
+      </p:column> 
 
-            <p:column headerText="Anchor Comment" resizable="true"
-                      filterBy="#{list.anchorComment}"
-                      filterMatchMode="contains">             
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{list.anchorComment}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="anchorCommentInput" value="#{list.anchorComment}" style="width:100%"/></f:facet>
-                </p:cellEditor>
-            </p:column> 
+      <p:column headerText="Owner" resizable="true" sortBy="#{list.listOwner}"
+                filterBy="#{list.listOwner}"
+                filterMatchMode="contains">
+        <h:outputText value="#{list.listOwner}" />  
+      </p:column> 
 
-            <p:column headerText="Anchor SMILES" resizable="true">   
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{list.anchorSmiles}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="anchorSmilesInput" value="#{list.anchorSmiles}" style="width:100%"/></f:facet>
-                </p:cellEditor>
-            </p:column> 
+      <p:column headerText="Share With" resizable="true" sortBy="#{list.shareWith}">              
+        <h:outputText value="#{list.shareWith}" />  
+      </p:column> 
 
-        </p:dataTable>
+      <p:column headerText="List Comment" resizable="true"
+                filterBy="#{list.listComment}"
+                filterMatchMode="contains">
+        <p:cellEditor>
+          <f:facet name="output"><h:outputText value="#{list.listComment}" /></f:facet>
+          <f:facet name="input"><p:inputText id="listCommentInput" value="#{list.listComment}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+      </p:column> 
 
-    </ui:define>
+      <p:column headerText="Anchor Comment" resizable="true"
+                filterBy="#{list.anchorComment}"
+                filterMatchMode="contains">             
+        <p:cellEditor>
+          <f:facet name="output"><h:outputText value="#{list.anchorComment}" /></f:facet>
+          <f:facet name="input"><p:inputText id="anchorCommentInput" value="#{list.anchorComment}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+      </p:column> 
+
+      <p:column headerText="Anchor SMILES" resizable="true">   
+        <p:cellEditor>
+          <f:facet name="output"><h:outputText value="#{list.anchorSmiles}" /></f:facet>
+          <f:facet name="input"><p:inputText id="anchorSmilesInput" value="#{list.anchorSmiles}" style="width:100%"/></f:facet>
+        </p:cellEditor>
+      </p:column> 
+
+    </p:dataTable>
+
+  </ui:define>
 
 </ui:composition>

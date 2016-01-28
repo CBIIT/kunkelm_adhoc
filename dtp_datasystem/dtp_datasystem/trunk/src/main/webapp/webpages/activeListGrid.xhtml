@@ -9,9 +9,9 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-  <ui:define name="title">
-    <h:outputText value="Active List Grid View"/>
-  </ui:define>     
+  <ui:define name="content title">
+    <h:outputText value="Active List Grid View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+  </ui:define>
 
   <ui:define name="instructions">
     <h:outputText value="Soring and filtering of the list can be
@@ -20,17 +20,16 @@
   </ui:define>        
 
   <ui:define name="export">
+    <h2>Export Data or Images</h2>    
     <p:commandButton value="Export Structures as Image"
                      type="button"
                      ajax="false"
                      onclick="structuresAsGridImage()"/>
   </ui:define>        
 
-  <ui:define name="alternate"></ui:define>        
+  <ui:define name="alternate">    
+  </ui:define>        
 
-  <ui:define name="content title">
-    <h:outputText value="Grid View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
-  </ui:define>
 
   <ui:define name="content">
 
@@ -98,15 +97,15 @@
               <f:setPropertyActionListener value="#{listMember}"   
                                            target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
             </p:commandButton>
-            
+
             <p:commandButton value="SSS"
                              ajax="false" 
                              title="Substructure Search"
                              action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
-              
+
               <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
                                            target="#{structureSearchController.nscForLoad}" />  
-              
+
             </p:commandButton>
 
           </f:facet> 

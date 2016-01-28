@@ -9,15 +9,11 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui_form.xhtml">
 
-    <ui:define name="title">
-        <h:outputText value="Fragments Workbench" />
+     <ui:define name="content title">
+        <h:outputText value="Fragments Workbench NSC #{fragmentsWorkbenchController.cmpd.nsc}"/>
     </ui:define>
 
     <ui:define name="instructions"/>
-
-    <ui:define name="content title">
-        <h:outputText value="Fragments Workbench NSC #{fragmentsWorkbenchController.cmpd.nsc}"/>
-    </ui:define>
 
     <ui:define name="content">
 

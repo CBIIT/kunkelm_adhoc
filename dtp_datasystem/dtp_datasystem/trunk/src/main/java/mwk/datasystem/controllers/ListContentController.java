@@ -79,13 +79,18 @@ public class ListContentController implements Serializable {
   UploadedFile uploadedFile;
   CmpdListVO targetList;
 
+  public String performConfigureDelete(){
+    // placeholder action to populate selectedListMembers
+    return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
+  }
+  
   /**
    *
    * @return For checkboxes outside of dataTable
    */
   public String performDeleteFromActiveList() {
 
-    HelperCmpdListMember.deleteCmpdListMembers(targetList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
+    HelperCmpdListMember.deleteCmpdListMembers(listManagerController.getListManagerBean().activeList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
 
     CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
 
@@ -100,6 +105,11 @@ public class ListContentController implements Serializable {
     return null;
   }
 
+  public String performConfigureCreate(){
+    // placeholder action to populate selectedListMembers
+    return "/webpages/configureCreateNewList.xhtml?faces-redirect=true";
+  }
+  
   public String performCreateNewListFromSelectedListMembers() {
 
     // first, create an empty list
@@ -126,6 +136,11 @@ public class ListContentController implements Serializable {
 
   }
 
+  public String performConfigureAppend(){
+    // placeholder action to populate selectedListMembers
+    return "/webpages/configureAppendToExistingList.xhtml?faces-redirect=true";
+  }
+    
   public String performAppendSelectedToExistingList() {
 
     HelperCmpdListMember.appendCmpdListMembers(targetList, listManagerController.getListManagerBean().selectedActiveListMembers, sessionController.getLoggedUser());
@@ -288,6 +303,8 @@ public class ListContentController implements Serializable {
   }
 
   public String performCreateListBySearch() {
+    
+    scb.newSearch();
 
     // parse text areas
     String[] splitStrings = null;

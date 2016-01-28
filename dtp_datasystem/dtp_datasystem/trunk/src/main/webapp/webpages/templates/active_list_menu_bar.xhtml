@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+  <h2 style="margin: 0;">
+    <h:outputText value="Act on Selected Rows"/>
+  </h2>
+
+  <!--
+  
+<p:menubar>
+
+<p:menuitem action="#{listContentController.performConnectToLandingSpotfire()}"
+  value="NCI60 data for Selected"
+  onstart="PF('resolvingBUI').show();"
+  oncomplete="PF('resolvingBUI').hide();"
+  style="width: 100%;"/>
+
+<p:menuitem action="#{listContentController.performConfigureDelete()}"
+  value="Delete Selected from List"
+  style="width: 100%;"/>
+
+<p:menuitem action="#{listContentController.performConfigureCreate()}"
+  value="Create New List from Selected"
+  style="width: 100%;" />
+
+<p:menuitem action="#{listContentController.performConfigureAppend()}"
+  value="Append Selected to Existing List"
+  style="width: 100%;" />
+
+<p:menuitem actionListener="#{listContentController.performConfigureDelete()}"
+  value="Delete Selected from List"
+  onclick="PF('del_dlg').show();"
+  style="width: 100%;"/>
+
+<p:menuitem actionListener="#{listContentController.performConfigureCreate()}"
+  value="Create New List from Selected"
+  onclick="PF('crt_dlg').show();"
+  style="width: 100%;" />
+
+<p:menuitem actionListener="#{listContentController.performConfigureAppend()}"
+  value="Append Selected to Existing List"
+  onclick="PF('app_dlg').show();"
+  style="width: 100%;" />
+
+</p:menubar>
+
+  -->
+
+  <p:commandButton action="#{listContentController.performConnectToLandingSpotfire()}"
+                   value="NCI60 DATA"
+                   onstart="PF('resolvingBUI').show();"
+                   oncomplete="PF('resolvingBUI').hide();"/>
+
+  <p:spacer width="20"/>
+
+  <p:commandButton actionListener="#{listContentController.performConfigureCreate()}"
+                   value="CREATE New List"
+                   onclick="PF('crt_dlg').show();"/>
+
+  <p:spacer width="20"/>
+
+  <p:commandButton actionListener="#{listContentController.performConfigureAppend()}"
+                   value="Append to List"
+                   onclick="PF('app_dlg').show();"/>
+
+  <p:spacer width="20"/>
+
+  <p:commandButton actionListener="#{listContentController.performConfigureDelete()}"
+                   value="DELETE from List"
+                   onclick="PF('del_dlg').show();"/>
+
+  <p:dialog header="Delete Selected From List" 
+            widgetVar="del_dlg" 
+            modal="true"
+            width="400" height="300">
+    <p:outputPanel autoUpdate="true">
+      <p:panelGrid columns="1">
+        <h:outputText value="Delete From #{listManagerController.listManagerBean.activeList.listName}." />
+        <h:outputText value="Delete #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} List Members." />
+        <p:outputLabel value="Delete cannot be undone." style="font-size: 200%; color: red;"/>
+        <p:commandButton action="#{listContentController.performDeleteFromActiveList()}"
+                         value="Delete Selected From List"
+                         onstart="PF('appendingBUI').show();"
+                         oncomplete="PF('appendingBUI').hide();"
+                         style="width: 100%;" />
+      </p:panelGrid>
+    </p:outputPanel>
+  </p:dialog>
+
+  <p:dialog header="Create New List From Selected" 
+            widgetVar="crt_dlg" 
+            modal="true"
+            width="400" height="300">
+    <p:outputPanel autoUpdate="true">
+      <p:panelGrid columns="1">
+        <h:outputText value="Create New List from #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} List Members." />
+        <p:outputLabel for="listNameText" value="New List name:" />            
+        <p:inputText id="listNameText" value="#{listContentController.listName}" />
+        <p:commandButton action="#{listContentController.performCreateNewListFromSelectedListMembers()}"
+                         value="Create New List from Selected"
+                         onstart="PF('appendingBUI').show();"
+                         oncomplete="PF('appendingBUI').hide();"
+                         style="width: 100%;" />
+      </p:panelGrid>
+    </p:outputPanel>
+  </p:dialog>
+
+  <p:dialog header="Append Selected to Existing List" 
+            widgetVar="app_dlg" 
+            modal="true"
+            width="400" height="300">
+    <p:outputPanel autoUpdate="true">
+      <p:panelGrid columns="1">
+        <h:outputText value="Append #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} List Members to Existing List." />
+        <p:outputLabel for="listSelect" value="Select an Existing List:"/>
+        <p:selectOneRadio id="listSelect" 
+                          value="#{listContentController.targetList}" 
+                          converter="#{cmpdListConverter}"
+                          layout="pageDirection">
+          <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
+                         var="list" 
+                         itemLabel="#{list.listName}" 
+                         itemValue="#{list}" /> 
+        </p:selectOneRadio>                    
+        <p:commandButton action="#{listContentController.performAppendSelectedToExistingList()}"
+                         value="Append Selected to Existing List"
+                         onstart="PF('appendingBUI').show();"
+                         oncomplete="PF('appendingBUI').hide();"
+                         style="width: 100%;" />
+      </p:panelGrid>
+    </p:outputPanel>    
+  </p:dialog>
+
+</ui:composition>
