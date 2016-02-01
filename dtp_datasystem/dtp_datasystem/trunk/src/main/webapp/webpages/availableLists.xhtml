@@ -16,18 +16,21 @@
   <ui:define name="instructions"/>
 
   <ui:define name="export"> 
-    <h2>Export Data or Images</h2>
-    <p:commandButton ajax="false" value="Export to Excel">
-      <p:dataExporter type="xls"  
-                      target="availableListsTbl" 
-                      fileName="availableListsTable" />  
-    </p:commandButton>
-
-    <p:commandButton ajax="false" value="Export as CSV">  
-      <p:dataExporter type="csv" 
-                      target="availableListsTbl" 
-                      fileName="availableListsTable" />  
-    </p:commandButton> 
+    <h2 style="margin: 0;">
+      <h:outputText value="Export Data or Images"/>
+    </h2>
+    <p:menubar>
+      <p:menuitem ajax="false" value="Export to Excel">
+        <p:dataExporter type="xls"  
+                        target="availableListsTbl" 
+                        fileName="availableListsTable" />  
+      </p:menuitem>
+      <p:menuitem ajax="false" value="Export as CSV">  
+        <p:dataExporter type="csv" 
+                        target="availableListsTbl" 
+                        fileName="availableListsTable" />  
+      </p:menuitem> 
+    </p:menubar>
   </ui:define>
 
   <ui:define name="alternate">

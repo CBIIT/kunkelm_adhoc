@@ -37,19 +37,20 @@ import org.primefaces.model.UploadedFile;
 public class ListContentController implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
-    
-    // reach-through to applicationScopeBean
-    @ManagedProperty(value = "#{applicationScopeBean}")
-    private ApplicationScopeBean applicationScopeBean;
 
-    public void setApplicationScopeBean(ApplicationScopeBean applicationScopeBean) {
-        this.applicationScopeBean = applicationScopeBean;
-    }
+  static final Boolean DEBUG = Boolean.FALSE;
 
+  // reach-through to applicationScopeBean
+  @ManagedProperty(value = "#{applicationScopeBean}")
+  private ApplicationScopeBean applicationScopeBean;
 
-    // reach-through to sessionController
-    @ManagedProperty(value = "#{sessionController}")
-    private SessionController sessionController;
+  public void setApplicationScopeBean(ApplicationScopeBean applicationScopeBean) {
+    this.applicationScopeBean = applicationScopeBean;
+  }
+
+  // reach-through to sessionController
+  @ManagedProperty(value = "#{sessionController}")
+  private SessionController sessionController;
 
   public void setSessionController(SessionController sessionController) {
     this.sessionController = sessionController;
@@ -79,11 +80,11 @@ public class ListContentController implements Serializable {
   UploadedFile uploadedFile;
   CmpdListVO targetList;
 
-  public String performConfigureDelete(){
+  public String performConfigureDelete() {
     // placeholder action to populate selectedListMembers
     return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
   }
-  
+
   /**
    *
    * @return For checkboxes outside of dataTable
@@ -105,17 +106,19 @@ public class ListContentController implements Serializable {
     return null;
   }
 
-  public String performConfigureCreate(){
+  public String performConfigureCreate() {
     // placeholder action to populate selectedListMembers
     return "/webpages/configureCreateNewList.xhtml?faces-redirect=true";
   }
-  
+
   public String performCreateNewListFromSelectedListMembers() {
 
     // first, create an empty list
     Long cmpdListId = HelperCmpdListMember.createEmptyList(listName, sessionController.getLoggedUser());
 
-    System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
+    if (DEBUG) {
+      System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
+    }
 
     CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
@@ -125,7 +128,7 @@ public class ListContentController implements Serializable {
     // have to UPDATE the list   
     CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
-        // have to add to the session
+    // have to add to the session
     // and move to the new list        
     listManagerController.getListManagerBean().availableLists.add(updatedClVO);
     listManagerController.getListManagerBean().activeList = updatedClVO;
@@ -136,11 +139,11 @@ public class ListContentController implements Serializable {
 
   }
 
-  public String performConfigureAppend(){
+  public String performConfigureAppend() {
     // placeholder action to populate selectedListMembers
     return "/webpages/configureAppendToExistingList.xhtml?faces-redirect=true";
   }
-    
+
   public String performAppendSelectedToExistingList() {
 
     HelperCmpdListMember.appendCmpdListMembers(targetList, listManagerController.getListManagerBean().selectedActiveListMembers, sessionController.getLoggedUser());
@@ -171,18 +174,21 @@ public class ListContentController implements Serializable {
       }
     }
 
-        String siteString = applicationScopeBean.getLandingSpotfireUrl();        
-        
-        String paramString = "landingSpotfireNscSet=" + sb.toString();
-        String urlString = siteString + "?" + paramString;
+    String siteString = applicationScopeBean.getLandingSpotfireUrl();
+
+    String paramString = "landingSpotfireNscSet=" + sb.toString();
+    String urlString = siteString + "?" + paramString;
 
 //        landingSpotfireNscSet
 //        landingSpotfireEndpointSet
 //        landingSpotfireIncludeExperiments
+    
     FacesContext ctx = FacesContext.getCurrentInstance();
     ExternalContext extCtx = ctx.getExternalContext();
 
-    System.out.println("Generated URL is: " + urlString);
+    if (DEBUG) {
+      System.out.println("Generated URL is: " + urlString);
+    }
 
     try {
       extCtx.redirect(urlString);
@@ -202,7 +208,9 @@ public class ListContentController implements Serializable {
 
       String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(uploadedFile.getFileName());
 
-      System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
+      if (DEBUG) {
+        System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
+      }
 
       File systemFile = new File(realPath);
 
@@ -236,7 +244,9 @@ public class ListContentController implements Serializable {
       listManagerController.getListManagerBean().availableLists.add(clVO);
       listManagerController.getListManagerBean().activeList = clVO;
 
-      System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+      if (DEBUG) {
+        System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+      }
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -256,7 +266,9 @@ public class ListContentController implements Serializable {
 
       String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(uploadedFile.getFileName());
 
-      System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
+      if (DEBUG) {
+        System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
+      }
 
       File systemFile = new File(realPath);
 
@@ -290,7 +302,9 @@ public class ListContentController implements Serializable {
       listManagerController.getListManagerBean().availableLists.add(clVO);
       listManagerController.getListManagerBean().activeList = clVO;
 
-      System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+      if (DEBUG) {
+        System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
+      }
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -302,8 +316,13 @@ public class ListContentController implements Serializable {
 
   }
 
+  public String performStartOver() {
+    scb.reset();
+    return "/webpages/createList?faces-redirect=true";
+  }
+
   public String performCreateListBySearch() {
-    
+
     scb.newSearch();
 
     // parse text areas
@@ -370,10 +389,11 @@ public class ListContentController implements Serializable {
       }
     }
 
-    System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
-
-    System.out.println("Content of searchCriteriaBean:");
-    scb.printCriteriaLists();
+    if (DEBUG) {
+      System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
+      System.out.println("Content of searchCriteriaBean:");
+      scb.printCriteriaLists();
+    }
 
     Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
 

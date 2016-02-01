@@ -51,6 +51,12 @@
 
   -->
 
+  <p:commandButton action="#{launchingController.performConnectToLandingJson()}"
+                   value="NCI60 DATA TEST JSON"
+                   onstart="PF('resolvingBUI').show();"
+                   oncomplete="PF('resolvingBUI').hide();"/>
+
+  
   <p:commandButton action="#{listContentController.performConnectToLandingSpotfire()}"
                    value="NCI60 DATA"
                    onstart="PF('resolvingBUI').show();"

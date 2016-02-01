@@ -20,11 +20,14 @@
   </ui:define>        
 
   <ui:define name="export">
-    <h2>Export Data or Images</h2>    
-    <p:commandButton value="Export Structures as Image"
-                     type="button"
-                     ajax="false"
-                     onclick="structuresAsGridImage()"/>
+    <h2 style="margin: 0;">
+      <h:outputText value="Export Data or Images"/>
+    </h2>    
+    <p:menubar>
+      <p:menuitem value="Export Structures as Image"
+                  ajax="false"
+                  onclick="structuresAsGridImage()"/>
+    </p:menubar>
   </ui:define>        
 
   <ui:define name="alternate">    

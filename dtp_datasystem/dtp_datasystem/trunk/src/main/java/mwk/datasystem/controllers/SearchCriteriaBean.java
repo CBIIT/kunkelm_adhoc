@@ -111,10 +111,10 @@ public class SearchCriteriaBean implements Serializable {
   }
 
   /**
-   * 
+   *
    */
   public void newSearch() {
-   
+
     this.drugNames = new ArrayList<String>();
     this.aliases = new ArrayList<String>();
     this.cases = new ArrayList<String>();
@@ -125,12 +125,11 @@ public class SearchCriteriaBean implements Serializable {
     this.targets = new ArrayList<String>();
     this.mtxtPieces = new ArrayList<String>();
     this.pseudoAtomsPieces = new ArrayList<String>();
-    
+
   }
 
-  
   public void reset() {
-    
+
     this.aliasTextArea = "";
     this.casTextArea = "";
     this.cmpdNamedSetTextArea = "";
@@ -151,7 +150,7 @@ public class SearchCriteriaBean implements Serializable {
     this.targets = new ArrayList<String>();
     this.mtxtPieces = new ArrayList<String>();
     this.pseudoAtomsPieces = new ArrayList<String>();
-    
+
   }
 
   public void printCriteriaLists() {
@@ -159,7 +158,7 @@ public class SearchCriteriaBean implements Serializable {
     System.out.println("------------------ BEGIN testing reflection:");
     System.out.println("------------------ BEGIN testing reflection:");
     System.out.println("------------------ BEGIN testing reflection:");
-
+    
     try {
 
       Class thisClass = this.getClass();

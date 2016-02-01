@@ -19,27 +19,21 @@
     <h2 style="margin: 0;">
       <h:outputText value="Export Data or Images"/>
     </h2>
-    <p:commandButton ajax="false" value="Export to Excel">
-      <p:dataExporter type="xls"  
-                      target="activeListTbl" 
-                      fileName="activeListTable" />  
-    </p:commandButton>
-
-    <p:spacer width="20"/>
-
-    <p:commandButton ajax="false" value="Export as CSV">  
-      <p:dataExporter type="csv" 
-                      target="activeListTbl" 
-                      fileName="activeListTable" />  
-    </p:commandButton> 
-
-    <p:spacer width="20"/>
-
-    <p:commandButton value="Export Structures as Image"
-                     type="button"
-                     ajax="false"
-                     onclick="structuresAsGridImage()"/>
-
+    <p:menubar>
+      <p:menuitem ajax="false" value="Export to Excel">
+        <p:dataExporter type="xls"  
+                        target="activeListTbl" 
+                        fileName="activeListTable" />  
+      </p:menuitem>
+      <p:menuitem ajax="false" value="Export as CSV">  
+        <p:dataExporter type="csv" 
+                        target="activeListTbl" 
+                        fileName="activeListTable" />  
+      </p:menuitem> 
+      <p:menuitem value="Export Structures as Image"
+                  ajax="false"
+                  onclick="structuresAsGridImage()"/>
+    </p:menubar>
   </ui:define>
 
   <ui:define name="alternate">

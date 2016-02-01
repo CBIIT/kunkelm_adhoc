@@ -29,33 +29,34 @@ my $fragTableName = "$fragString";
 # array of expected column names for sanity check with header row in PLP files
 
 my $pChemVars = "
-Double|molecularWeight|Molecular Weight
-String|molecularFormula|Molecular Formula
-Integer|countHydBondAcceptors|HBond Acceptors count
-Integer|countHydBondDonors|HBond Donors count
-Integer|formalCharge|Formal Charge
-Double|theALogP|aLogP
-Double|logD|logD
-Double|surfaceArea|Surface Area
-Double|solubility|Solubility
-Integer|countAtoms|Atoms count
-Integer|countHydrogenAtoms|Atoms Hydrogen count
-Integer|countMetalAtoms|Atoms Metal count
-Integer|countHeavyAtoms|Atoms Heavy count
-Integer|countPositiveAtoms|Atoms Positive count
-Integer|countNegativeAtoms|Atoms Negative count
-Integer|countStereoAtoms|Atoms Stereo count
-Integer|countBonds|Bonds count
-Integer|countAromaticBonds|Bonds Aromatic count
-Integer|countSingleBonds|Bonds Single count
-Integer|countDoubleBonds|Bonds Double count
-Integer|countTripleBonds|Bonds Triple count
-Integer|countRotatableBonds|Bonds Rotatable count
-Integer|countRingBonds|Bonds Ring count
-Integer|countStereoBonds|Bonds Stereo count
-Integer|countAromaticRings|Rings Aromatic count
-Integer|countRingAssemblies|Ring Assemblies count
-Integer|countRings|Rings count
+Double molecularWeight;
+String molecularFormula;
+Double logD;
+Integer countHydBondAcceptors;
+Integer countHydBondDonors;
+Double surfaceArea;
+Double solubility;
+Integer countRings;
+Integer countAtoms;
+Integer countBonds;
+Integer countSingleBonds;
+Integer countDoubleBonds;
+Integer countTripleBonds;
+Integer countRotatableBonds;
+Integer countHydrogenAtoms;
+Integer countMetalAtoms;
+Integer countHeavyAtoms;
+Integer countPositiveAtoms;
+Integer countNegativeAtoms;
+Integer countRingBonds;
+Integer countStereoAtoms;
+Integer countStereoBonds;
+Integer countRingAssemblies;
+Integer countAromaticBonds;
+Integer countAromaticRings;
+Integer formalCharge;
+Double theALogP;
+Long id;
 ";
 
 my $strcVars = "	
@@ -101,7 +102,7 @@ CmpdLegacyCmpd cmpdLegacyCmpd;
 
 
 open ( javaPart, ">javaPart") or die "Can't open javaPart\n";
-open ( FORM_PART, ">FORM_PART") or die "Can't open FORM_PART\n";
+open ( formPart, ">formPart") or die "Can't open formPart\n";
 open ( outputPartColumnFormat, ">outputPartColumnFormat") or die "Can't open outputPartColumnFormat\n";
 open ( outputPartLabelValue, ">outputPartLabelValue") or die "Can't open outputPartLabelValue\n";
 open ( outputPartAddToColumnModelList, ">outputPartAddToColumnModelList") or die "Can't open outputPartAddToColumnModelList\n";
@@ -134,20 +135,16 @@ foreach my $dataSet($pChemVars){
     $fetchString = 'listMember.cmpd';
   }
   
-  my @lines = split(/\n/, $dataSet);
+  my @lines = split(/;/, $dataSet);
   
   foreach my $line(@lines){
   	
   	chomp($line);
   	
-  	my @splitLine = split(/\|/, $line);
-  	my $varType = $splitLine[0];
-  	chomp($varType);
-  	my $varName = $splitLine[1];
-  	chomp($varName);
-    my $displayName = $splitLine[2];
-    chomp($displayName);
-  	print "$varType --- $varName --- $displayName\n";
+  	my @splitLine = split(/\s/, $line);
+  	my $varType = $splitLine[1];
+  	my $varName = $splitLine[2];
+  	#print "varType: $varType varName: $varName\n";
   	
   	if ( $varType eq "Integer"){
   		
@@ -156,15 +153,15 @@ foreach my $dataSet($pChemVars){
   		print javaPart "private $varType min_$varName;\n";
   		print javaPart "private $varType max_$varName;\n";
   		
-  		print FORM_PART qq[
-  		<p:panel header="$displayName" style="display:inline-block;border: none;">
-  		<h:outputLabel for="min_$varName\_id" value="$displayName MIN"/>
+  		print formPart qq[
+  		<p:panel header="$varName" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
   		<br/>
-  		<h:inputText value="#{listContentController.searchCriteriaBean.min_$varName}" id="min_$varName\_id"/>
+  		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
   		<br/>
-  		<h:outputLabel for="max_$varName\_id" value="$displayName MAX"/>
+  		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
   		<br/>
-  		<h:inputText value="#{listContentController.searchCriteriaBean.max_$varName}" id="max_$varName\_id"/>
+  		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
   		</p:panel>
   		];	
   		
@@ -219,15 +216,15 @@ foreach my $dataSet($pChemVars){
   		print javaPart "private $varType min_$varName;\n";
   		print javaPart "private $varType max_$varName;\n";
   		
-  		print FORM_PART qq[
-  		<p:panel header="$displayName" style="display:inline-block;border: none;">
-  		<h:outputLabel for="min_$varName\_id" value="$displayName MIN"/>
+  		print formPart qq[
+  		<p:panel header="$varName" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_$varName\_id" value="$varName Minimum"/>
   		<br/>
-  		<h:inputText value="#{listContentController.searchCriteriaBean.min_$varName}" id="min_$varName\_id"/>
+  		<h:inputText value="#{pChemBean.min_$varName}" id="min_$varName\_id" cols="15" rows="5"/>
   		<br/>
-  		<h:outputLabel for="max_$varName\_id" value="$displayName MAX"/>
+  		<h:outputLabel for="max_$varName\_id" value="$varName Maximum"/>
   		<br/>
-  		<h:inputText value="#{listContentController.searchCriteriaBean.max_$varName}" id="max_$varName\_id"/>
+  		<h:inputText value="#{pChemBean.max_$varName}" id="max_$varName\_id" cols="15" rows="5"/>
   		</p:panel>
   		];
   		
@@ -284,11 +281,11 @@ foreach my $dataSet($pChemVars){
   		print "---------$varName\n";
   		print javaPart "private $varType $varName;\n";
   		
-  		print FORM_PART qq[
-  		<p:panel header="$displayName" style="display:inline-block;border: none;">
+  		print formPart qq[
+  		<p:panel header="$varName" style="display:inline-block;border: none;">
   		<h:outputLabel for="$varName\_id" value="$varName"/>
   		<br/>
-  		<h:inputText value="#{listContentController.searchCriteriaBean.$varName}" id="$varName\_id"/>                
+  		<h:inputText value="#{pChemBean.$varName}" id="$varName\_id" cols="15" rows="5"/>                
   		</p:panel>
   		];
   		
@@ -315,8 +312,7 @@ foreach my $dataSet($pChemVars){
   		}
   		];
   		
-  	} else {
-  		print "---------------------UNKNOWN varType---------->$varType<-----------\n";
+  		
   	}
   	
   	
@@ -327,7 +323,7 @@ foreach my $dataSet($pChemVars){
 }
 
 close javaPart;
-close FORM_PART;
+close formPart;
 close outputPartColumnFormat;
 close outputPartLabelValue;
 close outputPartAddToColumnModelList;

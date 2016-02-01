@@ -9512,11 +9512,13 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGE
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/FORM_PART -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/cancelPostgresProcess -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formatPart -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable_BEFORE_DISPLAY_NAME.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formPart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/hibernatePart -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/importAppAndInv.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/javaPart -text
@@ -9564,6 +9566,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Gen
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/IdleController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/LandingController.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/LaunchingController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerBean.java -text

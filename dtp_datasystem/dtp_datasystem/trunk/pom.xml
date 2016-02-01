@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mwk</groupId>
     <artifactId>datasystem</artifactId>
-    <version>20160113</version>
+    <version>20160128</version>
     <packaging>war</packaging>
     <name>datasystem</name>
     <properties>
@@ -178,6 +178,12 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.9</version>
             <type>jar</type>
+        </dependency>
+        <!-- compare common lib to handle connectivity between apps -->
+        <dependency>
+          <groupId>mwk.compare</groupId>
+          <artifactId>compare-common</artifactId>
+          <version>20151204</version>
         </dependency>
         <dependency>
             <groupId>mwk.datasystem</groupId>

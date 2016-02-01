@@ -8,105 +8,105 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('datasystem')}">
+  <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('datasystem')}">
 
-        <p:menuitem value="Show Available Lists"
-                    ajax="false"                         
-                    action="/webpages/availableLists?faces-redirect=true"/>
+    <p:menuitem value="Show Available Lists"
+                ajax="false"                         
+                action="/webpages/availableLists?faces-redirect=true"/>
 
-        <p:submenu label="Create List">
+    <p:submenu label="Create List">
 
-          <p:menuitem value="Search By Parameters"
-                        ajax="false"
-                        action="/webpages/createList?faces-redirect=true"/>
+      <p:menuitem value="Search By Parameters"
+                  ajax="false"
+                  action="/webpages/createList?faces-redirect=true"/>
 
-            <p:menuitem value="Search By Structure"
-                        ajax="false"
-                        action="/webpages/chemDoodle?faces-redirect=true"/>
+      <p:menuitem value="Search By Structure"
+                  ajax="false"
+                  action="/webpages/chemDoodle?faces-redirect=true"/>
 
-            <p:menuitem value="Upload Structures"
-                        ajax="false"
-                        action="/webpages/uploadList?faces-redirect=true"/>
+      <p:menuitem value="Upload Structures"
+                  ajax="false"
+                  action="/webpages/uploadList?faces-redirect=true"/>
 
-        </p:submenu>
+    </p:submenu>
 
-        <p:submenu label="View Active List">
+    <p:submenu label="View Active List">
 
-            <p:menuitem value="View As Table"
-                        ajax="false"
-                        action="/webpages/activeListTable?faces-redirect=true"/>
+      <p:menuitem value="View As Table"
+                  ajax="false"
+                  action="/webpages/activeListTable?faces-redirect=true"/>
 
-            <p:menuitem value="View As Grid"
-                        ajax="false"
-                        action="/webpages/activeListGrid?faces-redirect=true"/>
+      <p:menuitem value="View As Grid"
+                  ajax="false"
+                  action="/webpages/activeListGrid?faces-redirect=true"/>
 
-            <p:menuitem value="View As Form"
-                        ajax="false"
-                        action="/webpages/activeListForm?faces-redirect=true"/>
+      <p:menuitem value="View As Form"
+                  ajax="false"
+                  action="/webpages/activeListForm?faces-redirect=true"/>
 
-            <p:menuitem value="Property Explorer" 
-                        ajax="false"
-                        actionListener="#{histogramController.handleLoadActiveList}"/>
-            
-             <p:menuitem value="Tanimoto Histograms" 
-                        ajax="false"
-                        action="/webpages/d3/tanimotoHistoScat?faces-redirect=true"/>
+      <p:menuitem value="Property Explorer" 
+                  ajax="false"
+                  actionListener="#{histogramController.handleLoadActiveList}"/>
 
-             <p:menuitem value="Tanimoto Force Graph" 
-                        ajax="false"
-                        action="/webpages/d3/tanimotoForce?faces-redirect=true"/>
-             
-        </p:submenu>
+      <p:menuitem value="Tanimoto Histograms" 
+                  ajax="false"
+                  action="/webpages/d3/tanimotoHistoScat?faces-redirect=true"/>
 
-        <p:menuitem value="Configure Display"
-                    ajax="false"
-                    action="/webpages/configuration?faces-redirect=true"/>
+      <p:menuitem value="Tanimoto Force Graph" 
+                  ajax="false"
+                  action="/webpages/d3/tanimotoForce?faces-redirect=true"/>
 
-        <p:menuitem value="List Logic"
-                    ajax="false"
-                    action="/webpages/listLogic?faces-redirect=true"/>
+    </p:submenu>
 
-        <f:facet name="options">
+    <p:menuitem value="Configure Display"
+                ajax="false"
+                action="/webpages/configuration?faces-redirect=true"/>
 
-            <p:commandButton ajax="false"
-                             style="color: blue;"
-                             action="#{sessionController.logout()}"
-                             value="Logout #{sessionController.loggedUser}"/>
+    <p:menuitem value="List Logic"
+                ajax="false"
+                action="/webpages/listLogic?faces-redirect=true"/>
 
-        </f:facet>
+    <f:facet name="options">
 
-    </p:menubar>
+      <p:commandButton ajax="false"
+                       style="color: blue;"
+                       action="#{sessionController.logout()}"
+                       value="Logout #{sessionController.loggedUser}"/>
 
-    <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('oncologydrugs')}">
+    </f:facet>
 
-        <p:menuitem value="Search By Parameters"
-                    ajax="false"
-                    action="/webpages/createList?faces-redirect=true"/>
+  </p:menubar>
 
-        <p:menuitem value="Search By Structure"
-                    ajax="false"
-                    action="/webpages/chemDoodle?faces-redirect=true"/>
+  <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('oncologydrugs')}">
 
-        <p:menuitem value="View As Table"
-                    ajax="false"
-                    action="/webpages/activeListTable?faces-redirect=true"/>
+    <p:menuitem value="Search By Parameters"
+                ajax="false"
+                action="/webpages/createList?faces-redirect=true"/>
 
-        <p:menuitem value="View As Grid"
-                    ajax="false"
-                    action="/webpages/activeListGrid?faces-redirect=true"/>
+    <p:menuitem value="Search By Structure"
+                ajax="false"
+                action="/webpages/chemDoodle?faces-redirect=true"/>
 
-        <p:menuitem value="View As Form"
-                    ajax="false"
-                    action="/webpages/activeListForm?faces-redirect=true"/>
+    <p:menuitem value="View As Table"
+                ajax="false"
+                action="/webpages/activeListTable?faces-redirect=true"/>
 
-        <p:menuitem value="Property Explorer" 
-                    ajax="false"
-                    actionListener="#{histogramController.handleLoadActiveList}"/>
+    <p:menuitem value="View As Grid"
+                ajax="false"
+                action="/webpages/activeListGrid?faces-redirect=true"/>
 
-        <p:menuitem value="Configure Display"
-                    ajax="false"
-                    action="/webpages/configuration?faces-redirect=true"/>
+    <p:menuitem value="View As Form"
+                ajax="false"
+                action="/webpages/activeListForm?faces-redirect=true"/>
 
-    </p:menubar>
+    <p:menuitem value="Property Explorer" 
+                ajax="false"
+                actionListener="#{histogramController.handleLoadActiveList}"/>
+
+    <p:menuitem value="Configure Display"
+                ajax="false"
+                action="/webpages/configuration?faces-redirect=true"/>
+
+  </p:menubar>
 
 </ui:composition>
