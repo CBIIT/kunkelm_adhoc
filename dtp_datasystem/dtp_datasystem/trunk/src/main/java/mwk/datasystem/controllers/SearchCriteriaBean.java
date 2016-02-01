@@ -23,28 +23,27 @@ public class SearchCriteriaBean implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
 
-  private List<String> drugNames;
   private List<String> aliases;
   private List<String> cases;
   private List<String> cmpdNamedSets;
-  private List<String> nscs;
-  private List<String> projectCodes;
-  private List<String> plates;
-  private List<String> targets;
+  private List<String> drugNames;
   private List<String> mtxtPieces;
+  private List<String> nscs;
+  private List<String> plates;
+  private List<String> projectCodes;
+  private List<String> targets;
   private List<String> pseudoAtomsPieces;
 
-  private String drugNameTextArea;
   private String aliasTextArea;
   private String casTextArea;
   private String cmpdNamedSetTextArea;
-  private String nscTextArea;
-  private String projectCodeTextArea;
-  private String plateTextArea;
-  private String targetTextArea;
-  // MWK added 03Aug2015
+  private String drugNameTextArea;
   private String mtxtTextArea;
+  private String nscTextArea;
+  private String plateTextArea;
+  private String projectCodeTextArea;
   private String pseudoAtomsTextArea;
+  private String targetTextArea;
 
   // molecular properties
   public Double min_molecularWeight;
@@ -115,15 +114,15 @@ public class SearchCriteriaBean implements Serializable {
    */
   public void newSearch() {
 
-    this.drugNames = new ArrayList<String>();
     this.aliases = new ArrayList<String>();
     this.cases = new ArrayList<String>();
     this.cmpdNamedSets = new ArrayList<String>();
-    this.nscs = new ArrayList<String>();
-    this.projectCodes = new ArrayList<String>();
-    this.plates = new ArrayList<String>();
-    this.targets = new ArrayList<String>();
+    this.drugNames = new ArrayList<String>();
     this.mtxtPieces = new ArrayList<String>();
+    this.nscs = new ArrayList<String>();
+    this.plates = new ArrayList<String>();
+    this.projectCodes = new ArrayList<String>();
+    this.targets = new ArrayList<String>();
     this.pseudoAtomsPieces = new ArrayList<String>();
 
   }
@@ -133,22 +132,23 @@ public class SearchCriteriaBean implements Serializable {
     this.aliasTextArea = "";
     this.casTextArea = "";
     this.cmpdNamedSetTextArea = "";
-    this.nscTextArea = "";
-    this.projectCodeTextArea = "";
-    this.plateTextArea = "";
-    this.targetTextArea = "";
+    this.drugNameTextArea = "";
     this.mtxtTextArea = "";
+    this.nscTextArea = "";
+    this.plateTextArea = "";
+    this.projectCodeTextArea = "";
     this.pseudoAtomsTextArea = "";
+    this.targetTextArea = "";
 
-    this.drugNames = new ArrayList<String>();
     this.aliases = new ArrayList<String>();
     this.cases = new ArrayList<String>();
     this.cmpdNamedSets = new ArrayList<String>();
-    this.nscs = new ArrayList<String>();
-    this.projectCodes = new ArrayList<String>();
-    this.plates = new ArrayList<String>();
-    this.targets = new ArrayList<String>();
+    this.drugNames = new ArrayList<String>();
     this.mtxtPieces = new ArrayList<String>();
+    this.nscs = new ArrayList<String>();
+    this.plates = new ArrayList<String>();
+    this.projectCodes = new ArrayList<String>();
+    this.targets = new ArrayList<String>();
     this.pseudoAtomsPieces = new ArrayList<String>();
 
   }
@@ -158,7 +158,7 @@ public class SearchCriteriaBean implements Serializable {
     System.out.println("------------------ BEGIN testing reflection:");
     System.out.println("------------------ BEGIN testing reflection:");
     System.out.println("------------------ BEGIN testing reflection:");
-    
+
     try {
 
       Class thisClass = this.getClass();
