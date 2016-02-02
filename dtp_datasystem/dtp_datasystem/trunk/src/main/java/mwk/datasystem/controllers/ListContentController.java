@@ -182,7 +182,6 @@ public class ListContentController implements Serializable {
 //        landingSpotfireNscSet
 //        landingSpotfireEndpointSet
 //        landingSpotfireIncludeExperiments
-    
     FacesContext ctx = FacesContext.getCurrentInstance();
     ExternalContext extCtx = ctx.getExternalContext();
 
@@ -330,8 +329,43 @@ public class ListContentController implements Serializable {
     String fixedString = null;
     int i;
 
-    String delimiters = "[\\n\\r\\t\\s,]+";
+    String delimiters = "[\\n\\r\\t,]+";
 
+    splitStrings = scb.getAliasTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getAliases().add(fixedString);
+      }
+    }
+    splitStrings = scb.getCasTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getCases().add(fixedString);
+      }
+    }
+    splitStrings = scb.getCmpdNamedSetTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getCmpdNamedSets().add(fixedString);
+      }
+    }
+    splitStrings = scb.getDrugNameTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getDrugNames().add(fixedString);
+      }
+    }
+    splitStrings = scb.getMtxtTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getMtxtPieces().add(fixedString);
+      }
+    }
     splitStrings = scb.getNscTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
       fixedString = splitStrings[i].replaceAll("[^0-9]", "");
@@ -339,53 +373,32 @@ public class ListContentController implements Serializable {
         scb.getNscs().add(fixedString);
       }
     }
-
-    splitStrings = scb.getCasTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getCases().add(splitStrings[i]);
-      }
-    }
-
-    splitStrings = scb.getProjectCodeTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getProjectCodes().add(splitStrings[i]);
-      }
-    }
-
-    splitStrings = scb.getDrugNameTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getDrugNames().add(splitStrings[i]);
-      }
-    }
-
-    splitStrings = scb.getAliasTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getAliases().add(splitStrings[i]);
-      }
-    }
-
     splitStrings = scb.getPlateTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getPlates().add(splitStrings[i]);
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getPlates().add(fixedString);
       }
     }
-
+    splitStrings = scb.getProjectCodeTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getProjectCodes().add(fixedString);
+      }
+    }
+    splitStrings = scb.getPseudoAtomsTextArea().split(delimiters);
+    for (i = 0; i < splitStrings.length; i++) {
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getPseudoAtomsPieces().add(fixedString);
+      }
+    }
     splitStrings = scb.getTargetTextArea().split(delimiters);
     for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getTargets().add(splitStrings[i]);
-      }
-    }
-
-    splitStrings = scb.getCmpdNamedSetTextArea().split(delimiters);
-    for (i = 0; i < splitStrings.length; i++) {
-      if (splitStrings[i].length() > 0) {
-        scb.getCmpdNamedSets().add(splitStrings[i]);
+      fixedString = splitStrings[i].trim();
+      if (fixedString.length() > 0) {
+        scb.getTargets().add(fixedString);
       }
     }
 
