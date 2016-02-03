@@ -32,7 +32,6 @@ drop index nsc_cmpd_form_mol_form_idx;
 drop index nsc_cmpd_nsc_idx;
 drop index nsc_cmpd_par_mol_form_idx;
 
-
 perl STAGE3_BUILD_1_buildCmpdModel.PL
 
 ################
@@ -52,6 +51,6 @@ perl STAGE3_BUILD_4_loadRDkit.PL
 perl STAGE4_FOLLOWUP_1_recreateConstraints.PL  
 psql -a -d datasystemdb < STAGE4_FOLLOWUP_2_grants.sql
 
-
-
 # STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL
+
+MANUALLY RUN Main.

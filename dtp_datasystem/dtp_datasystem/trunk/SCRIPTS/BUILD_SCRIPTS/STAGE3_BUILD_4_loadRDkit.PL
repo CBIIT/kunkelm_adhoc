@@ -21,8 +21,6 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 
 my @sqlList = ();
 
-goto skipToHere;
-
 push @sqlList, qq[
 drop table if exists rdkit_validity
 ];
@@ -46,8 +44,6 @@ create index rdkv_nsc on rdkit_validity(nsc)
 push @sqlList, qq[
 vacuum analyze rdkit_validity
 ];
-
-skipToHere:
 
 # drop and recreate the table
 # the datasystem uml model doesn't know about rdkit mol data type
@@ -137,7 +133,6 @@ print "valCanSmi validCanTaut validCanTautStripStereo\n";
 while ($sth->fetch()){
 	print "$valCanSmi $validCanTaut $validCanTautStripStereo\n";	
 }
-
 
 #drop table if exists rdkit_fps;
 

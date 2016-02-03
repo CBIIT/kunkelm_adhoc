@@ -336,27 +336,15 @@ select nsc from nsc_to_load
 and (nsc, fragmentindex) in  
 (
 
--- if there is only one strc, fetch fragment without labelarray (labels)
+-- if there is only one strc, fetch the fragment without labelarray (labels)
 
-select nsc, fragmentindex from no_lbl_one_strc_no_salt where labelarray is null    
-union
-select nsc, fragmentindex from one_lbl_one_strc_no_salt where labelarray is null   
-union
-select nsc, fragmentindex from two_lbl_one_strc_no_salt where labelarray is null 
-union
-select nsc, fragmentindex from multi_lbl_one_strc_no_salt  where labelarray is null
+select nsc, fragmentindex from comb_cat where category like '%one_strc_no_salt' and labelarray is null    
 
--- if there is one strc, and one salt, fetch parent as fragment without labelarray that is NOT the smiles
+-- if there are two strc and one salt, fetch parent as fragment without labelarray that is NOT the smiles
 
 union
 
-select nsc, fragmentindex from no_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null     
-union
-select nsc, fragmentindex from one_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null    
-union
-select nsc, fragmentindex from two_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null    
-union
-select nsc, fragmentindex from multi_lbl_two_strc_one_salt where labelarray is null and salt_smiles is null 
+select nsc, fragmentindex from comb_cat where category like '%two_strc_one_salt' and labelarray is null and salt_smiles is null     
 
 )
 ];
@@ -398,15 +386,7 @@ select nsc from nsc_to_load
 )
 and (nsc, fragmentindex) in  
 (
-
-select nsc, fragmentindex from no_lbl_two_strc_one_salt where salt_smiles is NOT null     
-union
-select nsc, fragmentindex from one_lbl_two_strc_one_salt where salt_smiles is NOT null    
-union
-select nsc, fragmentindex from two_lbl_two_strc_one_salt where salt_smiles is NOT null    
-union
-select nsc, fragmentindex from multi_lbl_two_strc_one_salt where salt_smiles is NOT null 
-
+select nsc, fragmentindex from comb_cat where category like '%two_strc_one_salt' and labelarray is null and salt_smiles is NOT null
 )
 ];
 
@@ -419,8 +399,6 @@ my $tempSql = qq[create index temp_salt_frag_nsc on temp_salt_fragment(nsc)];
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-skipToHere:
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -456,26 +434,17 @@ descriptor_string varchar(1024)
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
+
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-## cycle through the categories
-
-my @categories = getCategoryList();
-
-foreach my $categ (@categories){
-	
-	my $tempSql = qq[
-	insert into temp_ident_descr
-	select uni.nsc, 'S'||uni.nsc||' $categ' , 'S'||uni.nsc||' $categ'
-	from(
-	select distinct nsc from $categ where nsc in (select nsc from nsc_to_load)
-	) as uni];
-	
-	my $sth = $dbh->prepare($tempSql);
-	print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-	
-}
+my $tempSql = qq[
+insert into temp_ident_descr
+select nsc, 'S'||nsc||' '||cmpd_type , 'S'||nsc||' '||cmpd_type
+from nsc_to_load
+];	
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[create index tid_nsc on temp_ident_descr(nsc)];
 
@@ -528,6 +497,7 @@ my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
+skipToHere:
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -600,8 +570,8 @@ tna.formula_weight,
 temp_par_frag.molecular_formula,
 temp_par_frag.molecular_weight,
 
-rs3.mf,
-rs3.mw,
+pc.mf, --prod_molecular_formula
+pc.mw, --prod_formula_weight
 
 nct.id, 		-- nsc_cmpd_type_fk
 temp_par_frag.fragmentindex, 	-- cmpd_parent_fragment_fk
@@ -609,7 +579,7 @@ temp_salt_frag.fragmentindex, -- cmpd_salt_fragment_fk
 cba.id, 		-- cmpd_bio_assay_fk,
 ci.id, 			-- cmpd_inventory_fk,
 annot.id, 	-- cmpd_annotation_fk,
-null 			  -- cmpd_legacy_cmpd_fk,
+null, 			  -- cmpd_legacy_cmpd_fk,
 tna.formal_charge
 
 from nsc_to_load ntl
@@ -617,15 +587,15 @@ left outer join temp_ident_descr tid on ntl.nsc = tid.nsc
 left outer join temp_nsc_agg tna on ntl.nsc = tna.nsc
 left outer join temp_parent_fragment temp_par_frag on ntl.nsc = temp_par_frag.nsc
 left outer join temp_salt_fragment temp_salt_frag on ntl.nsc = temp_salt_frag.nsc
-left outer join prod_cmpd pc on ntl.nsc = pc.nsc
-left outer join rs3_from_plp_nsc rs3 on ntl.nsc = rs3.nsc
+left outer join prod_legacy_cmpd pc on ntl.nsc = pc.nsc
 left outer join cmpd_bio_assay cba on ntl.nsc = cba.id
 left outer join cmpd_inventory ci on ntl.nsc = ci.id
 left outer join cmpd_annotation annot on ntl.nsc = annot.id,
 
 nsc_cmpd_type nct
 
-where ntl.cmpd_type = nct.nsc_cmpd_type];
+where ntl.cmpd_type = nct.nsc_cmpd_type
+];
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";

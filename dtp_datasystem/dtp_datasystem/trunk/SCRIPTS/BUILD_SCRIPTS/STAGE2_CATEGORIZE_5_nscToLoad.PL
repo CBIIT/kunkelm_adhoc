@@ -26,30 +26,14 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 
 my @sqlList = ();
 
-my @setsToLoad = getCategoryList();
-
-push @sqlList, qq[
-drop table if exists temp
-];
-
-push @sqlList, qq[
-create table temp(nsc int, cmpd_type varchar(1024))
-];
-
-foreach my $setToLoad(@setsToLoad){	
-	push @sqlList, qq[
-	insert into temp select distinct nsc, '$setToLoad' from $setToLoad
-	];
-}
-
 push @sqlList, qq[
 drop table if exists nsc_to_load
 ];
 
 push @sqlList, qq[
 create table nsc_to_load as
-select distinct nsc, cmpd_type 
-from temp
+select distinct nsc, category as cmpd_type
+from comb_cat
 ];
 
 push @sqlList, qq[

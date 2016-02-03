@@ -19,8 +19,6 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
-goto skipToHere;
-
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -268,8 +266,6 @@ foreach my $sqlStmt (@sqlList){
 	print "$sqlStmt\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
-
-skipToHere:
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
