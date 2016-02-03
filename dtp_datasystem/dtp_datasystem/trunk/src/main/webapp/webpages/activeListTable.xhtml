@@ -144,11 +144,12 @@
       </p:column>   
 
       <p:column headerText="Parent Structure" 
-                resizable="true">
+                resizable="true"
+                exportable="false">
 
         <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                        width="#{sessionController.configurationBean.strcDim * 0.5}" 
-                        height="#{sessionController.configurationBean.strcDim * 0.5}"
+                        width="#{sessionController.configurationBean.strcDim}" 
+                        height="#{sessionController.configurationBean.strcDim}"
                         styleClass="parentStructure"
                         url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
 
@@ -177,9 +178,14 @@
 
       </p:column>
 
-      <p:column resizable="true"
-                sortBy="#{cmpd.parentMolecularWeight}">  
 
+      <!-- exportable alternate -->
+      <p:column headerText="Parent SMILES"
+                style="display: none;">
+        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
+      </p:column>
+
+      <p:column exportable="false">
         <f:facet name="header">                
           <h:outputText escape="false" value="Compound and Parent&lt;br/&gt;Sort by Parent MW"/>                    
         </f:facet>          
@@ -203,41 +209,43 @@
             <f:convertNumber pattern="#0.00" />
           </h:outputText>
         </p:panelGrid>
+        
       </p:column> 
 
-      <!--
+      <!-- exportable alternates -->
 
-      <p:column headerText="Molecular Formula" 
-                resizable="true"
-                sortBy="#{cmpd.formulaMolecularFormula}"
-                filterBy="#{cmpd.formulaMolecularFormula}"
-                filterMatchMode="contains">                                
+      <p:column headerText="Prod Molecular Formula" 
+                style="display: none;">
+        <h:outputText value="#{cmpd.prodMolecularFormula}"/>
+      </p:column> 
+
+      <p:column headerText="Prod Formula Weight" 
+                style="display: none;">
+        <h:outputText value="#{cmpd.prodFormulaWeight}"/>
+      </p:column> 
+
+      <p:column headerText="Cmpd Molecular Formula" 
+                style="display: none;">
         <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
       </p:column> 
 
-      <p:column headerText="Formula Weight" 
-                resizable="true"
-                sortBy="#{cmpd.formulaWeight}">                                
+      <p:column headerText="Cmpd Formula Weight" 
+                style="display: none;">
         <h:outputText value="#{cmpd.formulaWeight}"/>
       </p:column> 
 
       <p:column headerText="Parent Molecular Formula" 
-                resizable="true"
-                sortBy="#{cmpd.parentMolecularFormula}"
-                filterBy="#{cmpd.parentMolecularFormula}"
-                filterMatchMode="contains">                                
+                style="display: none;">
         <h:outputText value="#{cmpd.parentMolecularFormula}"/>
       </p:column> 
 
       <p:column headerText="Parent Molecular Weight" 
-                resizable="true"
-                sortBy="#{cmpd.parentMolecularWeight}">                                
+                style="display: none;">
         <h:outputText value="#{cmpd.parentMolecularWeight}"/>
       </p:column> 
-      
-      -->
 
       <p:column resizable="true"
+                exportable="false"
                 sortBy="#{cmpd.saltFragment.saltName}">  
 
         <f:facet name="header">                
@@ -251,6 +259,23 @@
           <h:outputText value="MW"/>
           <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
         </p:panelGrid>
+      </p:column> 
+
+      <!-- exportable alternates -->
+
+      <p:column headerText="Salt Name" 
+                style="display: none;">
+        <h:outputText value="#{cmpd.saltFragment.saltName}"/>
+      </p:column> 
+
+      <p:column headerText="Salt MF" 
+                style="display: none;">
+        <h:outputText value="#{cmpd.saltFragment.saltMf}"/>
+      </p:column> 
+
+      <p:column headerText="Salt MW" 
+                style="display: none;">
+        <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
       </p:column> 
 
       <p:column headerText="Fragments" 
