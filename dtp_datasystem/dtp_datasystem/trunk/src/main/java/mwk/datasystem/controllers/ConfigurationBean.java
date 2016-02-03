@@ -6,6 +6,7 @@
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,11 +22,6 @@ import mwk.datasystem.vo.CmpdVO;
 public class ConfigurationBean implements Serializable {
 
   static final long serialVersionUID = -8653468634048142855l;
-
-  @PostConstruct
-  public void init() {
-    reset();
-  }
 
 //       _       _           _               _   _                 
 //  __ _| | ___ | |__   __ _| |   ___  _ __ | |_(_) ___  _ __  ___ 
@@ -84,7 +80,22 @@ public class ConfigurationBean implements Serializable {
   protected static HashMap<String, String> valid_bio_keys;
   protected List<ColumnModel> biodataColumns;
 
+  // TODO Need to handle Exceptions!  
+  public static String urlEncode(String in) {
+    String rtn = "";
+    try {
+      rtn = URLEncoder.encode(in, "UTF-8");
+    } catch (Exception e) {
+    }
+    return rtn;
+  }
+
   public ConfigurationBean() {
+    init();
+  }
+
+  @PostConstruct
+  public void init() {
 
     reset();
 
@@ -329,17 +340,17 @@ public class ConfigurationBean implements Serializable {
     sb.append(strcDim);
     if (smiles != null && smiles.length() > 0) {
       sb.append("&smiles=");
-      sb.append(SessionController.urlEncode(smiles));
+      sb.append(urlEncode(smiles));
     }
     if (selectedStrcOptions.contains("HLT")) {
       if (querySmiles != null && querySmiles.length() > 0) {
         sb.append("&querySmiles=");
-        sb.append(SessionController.urlEncode(querySmiles));
+        sb.append(urlEncode(querySmiles));
       }
     }
     if (selectedStrcOptions.contains("TTL")) {
       sb.append("&title=");
-      sb.append(SessionController.urlEncode(title));
+      sb.append(urlEncode(title));
     }
     if (selectedStrcOptions.contains("CLR")) {
       sb.append("&color-atoms=true");
@@ -380,7 +391,7 @@ public class ConfigurationBean implements Serializable {
       sb.append(strcDim);
       if (cVO.getParentFragment() != null && cVO.getParentFragment().getCmpdFragmentStructure() != null && cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi() != null) {
         sb.append("&smiles=");
-        sb.append(SessionController.urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
+        sb.append(urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
       } else if (cVO.getNsc() != null) {
         sb.append("&nsc=");
         sb.append(cVO.getNsc());
@@ -388,9 +399,9 @@ public class ConfigurationBean implements Serializable {
       if (selectedStrcOptions.contains("TTL")) {
         sb.append("&title=");
         if (cVO.getPrefix() != null && cVO.getNsc() != null) {
-          sb.append(SessionController.urlEncode(cVO.getPrefix() + cVO.getNsc()));
+          sb.append(urlEncode(cVO.getPrefix() + cVO.getNsc()));
         } else if (cVO.getName() != null) {
-          sb.append(SessionController.urlEncode(cVO.getName()));
+          sb.append(urlEncode(cVO.getName()));
         } else {
           sb.append("Can't determine title from cmpdVO.");
         }
@@ -407,7 +418,7 @@ public class ConfigurationBean implements Serializable {
       if (selectedStrcOptions.contains("HLT")) {
         if (querySmiles != null && querySmiles.length() > 0) {
           sb.append("&querySmiles=");
-          sb.append(SessionController.urlEncode(querySmiles));
+          sb.append(urlEncode(querySmiles));
         }
       }
       rtn = sb.toString();
@@ -420,6 +431,7 @@ public class ConfigurationBean implements Serializable {
     return rtn;
   }
 
+  //<editor-fold defaultstate="collapsed" desc="GETTERS/SETTERS">
   public String getCmpdStrcUrl(CmpdVO cVO) {
     return getCmpdStrcUrl(cVO, null);
   }
@@ -600,4 +612,5 @@ public class ConfigurationBean implements Serializable {
     this.biodataColumns = biodataColumns;
   }
 
+//</editor-fold>
 }
