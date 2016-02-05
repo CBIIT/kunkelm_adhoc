@@ -34,7 +34,7 @@ public class LoadKekuleRenderedImages {
 
   public static void insertLegacyCmpds() {
 
-    File path = new File("/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_GIF_FILES");
+    File path = new File("/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_SECOND_ROUND");
     File[] files = new File[]{};
     
     try {

@@ -185,7 +185,9 @@
         <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
       </p:column>
 
-      <p:column exportable="false">
+      <p:column resizable="true"
+                exportable="false"
+                sortBy="#{cmpd.parentMolecularWeight}">
         <f:facet name="header">                
           <h:outputText escape="false" value="Compound and Parent&lt;br/&gt;Sort by Parent MW"/>                    
         </f:facet>          

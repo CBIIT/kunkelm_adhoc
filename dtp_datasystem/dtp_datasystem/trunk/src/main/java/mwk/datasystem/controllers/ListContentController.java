@@ -453,7 +453,7 @@ public class ListContentController implements Serializable {
     if (scb.getAliasTextArea() == null) {
       scb.setAliasTextArea("");
     }
-    scb.setAliasTextArea(item + " " + scb.getAliasTextArea());
+    scb.setAliasTextArea(item + "\n" + scb.getAliasTextArea());
   }
 
   public void appendTotargetTextArea(SelectEvent event) {
@@ -461,7 +461,7 @@ public class ListContentController implements Serializable {
     if (scb.getTargetTextArea() == null) {
       scb.setTargetTextArea("");
     }
-    scb.setTargetTextArea(item + " " + scb.getTargetTextArea());
+    scb.setTargetTextArea(item + "\n" + scb.getTargetTextArea());
   }
 
   public void appendToprojectCodeTextArea(SelectEvent event) {
@@ -469,7 +469,7 @@ public class ListContentController implements Serializable {
     if (scb.getProjectCodeTextArea() == null) {
       scb.setProjectCodeTextArea("");
     }
-    scb.setProjectCodeTextArea(item + " " + scb.getProjectCodeTextArea());
+    scb.setProjectCodeTextArea(item + "\n" + scb.getProjectCodeTextArea());
   }
 
   public void appendToplateTextArea(SelectEvent event) {
@@ -477,7 +477,7 @@ public class ListContentController implements Serializable {
     if (scb.getPlateTextArea() == null) {
       scb.setPlateTextArea("");
     }
-    scb.setPlateTextArea(item + " " + scb.getPlateTextArea());
+    scb.setPlateTextArea(item + "\n" + scb.getPlateTextArea());
   }
 
   public void appendTocasTextArea(SelectEvent event) {
@@ -485,7 +485,7 @@ public class ListContentController implements Serializable {
     if (scb.getCasTextArea() == null) {
       scb.setCasTextArea("");
     }
-    scb.setCasTextArea(item + " " + scb.getCasTextArea());
+    scb.setCasTextArea(item + "\n" + scb.getCasTextArea());
   }
 
   public void appendTodrugNameTextArea(SelectEvent event) {
@@ -493,7 +493,7 @@ public class ListContentController implements Serializable {
     if (scb.getDrugNameTextArea() == null) {
       scb.setDrugNameTextArea("");
     }
-    scb.setDrugNameTextArea(item + " " + scb.getDrugNameTextArea());
+    scb.setDrugNameTextArea(item + "\n" + scb.getDrugNameTextArea());
   }
 
   public void appendTonscTextArea(SelectEvent event) {
@@ -501,7 +501,7 @@ public class ListContentController implements Serializable {
     if (scb.getNscTextArea() == null) {
       scb.setNscTextArea("");
     }
-    scb.setNscTextArea(item + " " + scb.getNscTextArea());
+    scb.setNscTextArea(item + "\n" + scb.getNscTextArea());
   }
 
   public void appendTocmpdNamedSetTextArea(SelectEvent event) {
@@ -509,7 +509,7 @@ public class ListContentController implements Serializable {
     if (scb.getCmpdNamedSetTextArea() == null) {
       scb.setCmpdNamedSetTextArea("");
     }
-    scb.setCmpdNamedSetTextArea(item + " " + scb.getCmpdNamedSetTextArea());
+    scb.setCmpdNamedSetTextArea(item + "\n" + scb.getCmpdNamedSetTextArea());
   }
 
 }

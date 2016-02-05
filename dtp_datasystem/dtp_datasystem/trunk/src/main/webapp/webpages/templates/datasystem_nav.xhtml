@@ -8,105 +8,198 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-  <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('datasystem')}">
+    <p:menubar>
 
-    <p:menuitem value="Show Available Lists"
-                ajax="false"                         
-                action="/webpages/availableLists?faces-redirect=true"/>
+        <p:menuitem value="Show Available Lists"
+                    ajax="false"                         
+                    action="/webpages/availableLists?faces-redirect=true"/>
 
-    <p:submenu label="Create List">
+        <p:submenu label="Create List">
 
-      <p:menuitem value="Search By Parameters"
-                  ajax="false"
-                  action="/webpages/createList?faces-redirect=true"/>
+            <p:menuitem value="Search By Parameters"
+                        ajax="false"
+                        action="/webpages/createList?faces-redirect=true"/>
 
-      <p:menuitem value="Search By Structure"
-                  ajax="false"
-                  action="/webpages/chemDoodle?faces-redirect=true"/>
+            <p:menuitem value="Search By Structure"
+                        ajax="false"
+                        action="/webpages/chemDoodle?faces-redirect=true"/>
 
-      <p:menuitem value="Upload Structures"
-                  ajax="false"
-                  action="/webpages/uploadList?faces-redirect=true"/>
+            <p:menuitem value="Upload Structures"
+                        ajax="false"
+                        action="/webpages/uploadList?faces-redirect=true"/>
 
-    </p:submenu>
+        </p:submenu>
 
-    <p:submenu label="View Active List">
+        <p:submenu label="View Active List">
 
-      <p:menuitem value="View As Table"
-                  ajax="false"
-                  action="/webpages/activeListTable?faces-redirect=true"/>
+            <p:menuitem value="View As Table"
+                        ajax="false"
+                        action="/webpages/activeListTable?faces-redirect=true"/>
 
-      <p:menuitem value="View As Grid"
-                  ajax="false"
-                  action="/webpages/activeListGrid?faces-redirect=true"/>
+            <p:menuitem value="View As Grid"
+                        ajax="false"
+                        action="/webpages/activeListGrid?faces-redirect=true"/>
 
-      <p:menuitem value="View As Form"
-                  ajax="false"
-                  action="/webpages/activeListForm?faces-redirect=true"/>
+            <p:menuitem value="View As Form"
+                        ajax="false"
+                        action="/webpages/activeListForm?faces-redirect=true"/>
 
-      <p:menuitem value="Property Explorer" 
-                  ajax="false"
-                  actionListener="#{histogramController.handleLoadActiveList}"/>
+            <p:menuitem value="Property Explorer" 
+                        ajax="false"
+                        actionListener="#{histogramController.handleLoadActiveList}"/>
 
-      <p:menuitem value="Tanimoto Histograms" 
-                  ajax="false"
-                  action="/webpages/d3/tanimotoHistoScat?faces-redirect=true"/>
+            <p:menuitem value="Tanimoto Histograms" 
+                        ajax="false"
+                        action="/webpages/d3/tanimotoHistoScat?faces-redirect=true"/>
 
-      <p:menuitem value="Tanimoto Force Graph" 
-                  ajax="false"
-                  action="/webpages/d3/tanimotoForce?faces-redirect=true"/>
+            <p:menuitem value="Tanimoto Force Graph" 
+                        ajax="false"
+                        action="/webpages/d3/tanimotoForce?faces-redirect=true"/>
 
-    </p:submenu>
+        </p:submenu>
 
-    <p:menuitem value="Configure Display"
-                ajax="false"
-                action="/webpages/configuration?faces-redirect=true"/>
+        <p:menuitem value="TEST Configure Display"
+                    onclick="PF('act_list_cfg_dlg').show();"/>
 
-    <p:menuitem value="List Logic"
-                ajax="false"
-                action="/webpages/listLogic?faces-redirect=true"/>
+        <p:menuitem value="Configure Display"
+                    ajax="false"
+                    action="/webpages/configuration?faces-redirect=true"/>
 
-    <f:facet name="options">
+        <p:menuitem value="List Logic"
+                    ajax="false"
+                    action="/webpages/listLogic?faces-redirect=true"/>
 
-      <p:commandButton ajax="false"
-                       style="color: blue;"
-                       action="#{sessionController.logout()}"
-                       value="Logout #{sessionController.loggedUser}"/>
+        <f:facet name="options">
 
-    </f:facet>
+            <p:commandButton ajax="false"
+                             style="color: blue;"
+                             action="#{sessionController.logout()}"
+                             value="Logout #{sessionController.loggedUser}"/>
 
-  </p:menubar>
+        </f:facet>
 
-  <p:menubar rendered="#{applicationScopeBean.versionAndBuildTime.startsWith('oncologydrugs')}">
+    </p:menubar>  
 
-    <p:menuitem value="Search By Parameters"
-                ajax="false"
-                action="/webpages/createList?faces-redirect=true"/>
+    <p:dialog header="Configure Active List Data Table" 
+              widgetVar="act_list_cfg_dlg" 
+              modal="true"
+              width="600" height="400">
+        <p:outputPanel autoUpdate="true">            
 
-    <p:menuitem value="Search By Structure"
-                ajax="false"
-                action="/webpages/chemDoodle?faces-redirect=true"/>
+            <h2 style="margin: 0;">
+                <h:outputText value="General Display Options"/>
+            </h2>
 
-    <p:menuitem value="View As Table"
-                ajax="false"
-                action="/webpages/activeListTable?faces-redirect=true"/>
+            <p:selectBooleanCheckbox id="boolAnchor"
+                                     value="#{sessionController.configurationBean.showAnchor}" 
+                                     style="display: inline-block;"/>                
+            <p:outputLabel for="boolAnchor" value="Show Anchor Structure" />
 
-    <p:menuitem value="View As Grid"
-                ajax="false"
-                action="/webpages/activeListGrid?faces-redirect=true"/>
+            <p:spacer height="20" width="20"/>
 
-    <p:menuitem value="View As Form"
-                ajax="false"
-                action="/webpages/activeListForm?faces-redirect=true"/>
+            <p:selectBooleanCheckbox id="boolFrags"
+                                     value="#{sessionController.configurationBean.showFrags}" 
+                                     style="display: inline-block;"/>                
 
-    <p:menuitem value="Property Explorer" 
-                ajax="false"
-                actionListener="#{histogramController.handleLoadActiveList}"/>
+            <p:outputLabel for="boolFrags" value="Show Fragments" />
 
-    <p:menuitem value="Configure Display"
-                ajax="false"
-                action="/webpages/configuration?faces-redirect=true"/>
+            <p:spacer height="20" width="20"/>
 
-  </p:menubar>
+            <p:selectBooleanCheckbox id="boolQc"
+                                     value="#{sessionController.configurationBean.showQc}" 
+                                     style="display: inline-block;"/>                
+
+            <p:outputLabel for="boolQc" value="Show MTXT and LABELS" />
+
+            <p:spacer height="20" width="100%" />
+
+            <h2 style="margin: 0;"><h:outputText value="Chemical Structure Rendering Options"/></h2>
+
+            <p:selectManyCheckbox value="#{sessionController.configurationBean.selectedStrcOptions}">                                                
+                <f:selectItem itemLabel="Show Title" itemValue="TTL" />
+                <f:selectItem itemLabel="Color Atoms" itemValue="CLR" />
+                <f:selectItem itemLabel="Number Atoms" itemValue="NUM" />
+                <f:selectItem itemLabel="Kekulize" itemValue="KEK" />
+                <f:selectItem itemLabel="Highlight Substructure" itemValue="HLT" />
+            </p:selectManyCheckbox>
+
+            <p:spacer height="20" width="100%" />
+
+            <h2 style="margin: 0;"><h:outputText value="Chemical Structure Size"/></h2>
+
+            <p:selectOneRadio value="#{sessionController.configurationBean.selectedStrcSize}">
+                <f:selectItem itemLabel="Small" itemValue="SM" />
+                <f:selectItem itemLabel="Medium" itemValue="MED" />
+                <f:selectItem itemLabel="Large" itemValue="LG" />
+                <f:selectItem itemLabel="Jumbo" itemValue="JUMBO" />
+            </p:selectOneRadio>
+
+            <p:spacer height="20" width="100%" />
+
+            <h2 style="margin: 0;"><h:outputText value="Cmpd Parameters"/></h2>
+
+            <p:selectManyCheckbox id="cmpdGrid"
+                                  value="#{sessionController.configurationBean.selectedCmpdParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{sessionController.configurationBean.availableCmpdParameters}" 
+                               var="cmpdParam" 
+                               itemLabel="#{cmpdParam}" 
+                               itemValue="#{cmpdParam}" />
+            </p:selectManyCheckbox>
+
+            <p:spacer height="20" width="100%" />
+
+            <h2 style="margin: 0;"><h:outputText value="PChem Parameters"/></h2>
+
+            <p:selectManyCheckbox id="physChemGrid"
+                                  value="#{sessionController.configurationBean.selectedPChemParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{sessionController.configurationBean.availablePChemParameters}" 
+                               var="pChemParam" 
+                               itemLabel="#{pChemParam}" 
+                               itemValue="#{pChemParam}" />
+            </p:selectManyCheckbox>
+
+            <p:spacer height="20" width="100%" />
+
+            <h2 style="margin: 0;"><h:outputText value="Structure Parameters"/></h2>
+
+            <p:selectManyCheckbox id="structureGrid"
+                                  value="#{sessionController.configurationBean.selectedStructureParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{sessionController.configurationBean.availableStructureParameters}" 
+                               var="strucParam" 
+                               itemLabel="#{strucParam}" 
+                               itemValue="#{strucParam}" />
+            </p:selectManyCheckbox>
+
+            <p:spacer height="20" width="100%" />
+
+            <h2 style="margin: 0;"><h:outputText value="BioData Parameters"/></h2>
+
+            <p:selectManyCheckbox id="bioDataGrid"
+                                  value="#{sessionController.configurationBean.selectedBioDataParameters}" 
+                                  layout="grid" 
+                                  columns="5">
+                <f:selectItems value="#{sessionController.configurationBean.availableBioDataParameters}" 
+                               var="bioDatParam" 
+                               itemLabel="#{bioDatParam}" 
+                               itemValue="#{bioDatParam}" />
+            </p:selectManyCheckbox>
+
+
+            <p:spacer height="20" width="100%" />
+
+            <p:commandButton action="#{sessionController.configurationBean.performUpdateColumns()}" 
+                             value="Update" 
+                             icon="ui-icon-refresh" 
+                             oncomplete="PF('activeListTblWidgetVar').clearFilters()"/>
+
+
+        </p:outputPanel>
+    </p:dialog>
 
 </ui:composition>

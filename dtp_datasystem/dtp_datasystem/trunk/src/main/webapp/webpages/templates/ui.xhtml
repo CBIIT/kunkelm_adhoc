@@ -66,6 +66,12 @@
 
       <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
+      <p:blockUI block=":datasystemForm:theConcRespDialog" 
+                 widgetVar="concRespCreatingBUI">
+        <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
+      
       <p:blockUI block=":datasystemForm"
                  widgetVar="searchingBUI">
         <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
