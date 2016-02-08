@@ -113,6 +113,17 @@
 
           </f:facet> 
 
+           <p:panel>
+          <f:facet name="header">
+            <h:outputText value="Kekule Image of Legacy Compound" />
+          </f:facet>
+          <p:graphicImage alt="Kekule Image of Legacy Compound"
+                          width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                
+                          styleClass="unassignedClass"                                                                                        
+                          url='/LegacyImageServlet?nsc=#{listMember.cmpd.nsc}'>                                          
+          </p:graphicImage>
+        </p:panel>
+          
         </p:panelGrid>
 
       </p:panel>

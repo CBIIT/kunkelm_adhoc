@@ -6,7 +6,6 @@ package mwk.datasystem.controllers;
 
 import java.io.InputStream;
 import java.io.Serializable;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -45,13 +44,13 @@ public class ApplicationScopeBean implements Serializable {
   private String landingCompareUrl;
   private String landingSpotfireUrl;
   //
-  private List<SelectItem> drugNameItems;
   private List<SelectItem> aliasItems;
   private List<SelectItem> casItems;
   private List<SelectItem> cmpdNamedSetItems;
+  private List<SelectItem> drugNameItems;
   private List<SelectItem> nscItems;
-  private List<SelectItem> projectCodeItems;
   private List<SelectItem> plateItems;
+  private List<SelectItem> projectCodeItems;
   private List<SelectItem> targetItems;
 
   public ApplicationScopeBean() {
@@ -65,15 +64,15 @@ public class ApplicationScopeBean implements Serializable {
 
     try {
 
-      InputStream is = this.getClass().getResourceAsStream("/deployment.properties");
+      InputStream is = getClass().getResourceAsStream("/deployment.properties");
       props.load(is);
 
-      this.versionAndBuildTime = props.getProperty("pom.version.and.build.time");
+      versionAndBuildTime = props.getProperty("pom.version.and.build.time");
 
-      if (this.versionAndBuildTime.startsWith("datasystem")) {
-        this.projectTitle = "Data System Project";
-      } else if (this.versionAndBuildTime.startsWith("oncologydrugs")) {
-        this.projectTitle = "Oncology Drugs Project";
+      if (versionAndBuildTime.startsWith("datasystem")) {
+        projectTitle = "Data System Project";
+      } else if (versionAndBuildTime.startsWith("oncologydrugs")) {
+        projectTitle = "Oncology Drugs Project";
       }
 
       String rawCompareUrl = props.getProperty("compare.application.url");
@@ -84,35 +83,38 @@ public class ApplicationScopeBean implements Serializable {
       String str2 = str1.replaceAll("\\/\\/", "\\/");
       String str3 = str2.replaceAll("httpLeader", "http:\\/\\/");
 
-      this.compareUrl = str3;
+      compareUrl = str3;
 
-      this.landingSpotfireUrl = this.compareUrl + "/landingSpotfire.xhtml";
-      this.landingCompareUrl = this.compareUrl + "/landingRunCompare.xhtml";
+      landingSpotfireUrl = compareUrl + "/landingSpotfire.xhtml";
+      landingCompareUrl = compareUrl + "/landingRunCompare.xhtml";
 
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    this.drugNameItems = new ArrayList<SelectItem>();
-    this.aliasItems = new ArrayList<SelectItem>();
-    this.casItems = new ArrayList<SelectItem>();
-    this.cmpdNamedSetItems = new ArrayList<SelectItem>();
-    this.nscItems = new ArrayList<SelectItem>();
-    this.projectCodeItems = new ArrayList<SelectItem>();
-    this.plateItems = new ArrayList<SelectItem>();
-    this.targetItems = new ArrayList<SelectItem>();
+    aliasItems = new ArrayList<SelectItem>();
 
-    if (!this.versionAndBuildTime.startsWith("oncologydrugs")) {
-      this.nscItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
-      this.drugNameItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
-      this.aliasItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
-      this.casItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
+    casItems = new ArrayList<SelectItem>();
+    cmpdNamedSetItems = new ArrayList<SelectItem>();
+    drugNameItems = new ArrayList<SelectItem>();
+    nscItems = new ArrayList<SelectItem>();
+    plateItems = new ArrayList<SelectItem>();
+    projectCodeItems = new ArrayList<SelectItem>();
+    targetItems = new ArrayList<SelectItem>();
+
+    // for large datasets, don't populate drop-down
+    if (!versionAndBuildTime.startsWith("oncologydrugs")) {
+      nscItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
+      drugNameItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
+      aliasItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
+      casItems.add(new SelectItem("not avaliable by lookup", "not avaliable by lookup"));
     }
 
-//        this.cmpdNamedSetItems.add(new SelectItem("cmpdNamedSetItemsTest", "cmpdNamedSetItemsTest"));
-//        this.projectCodeItems.add(new SelectItem("projectCodeItemsTest", "projectCodeItemsTest"));
-//        this.plateItems.add(new SelectItem("plateItemsTest", "plateItemsTest"));
-//        this.targetItems.add(new SelectItem("targetItemsTest", "targetItemsTest"));
+//        cmpdNamedSetItems.add(new SelectItem("cmpdNamedSetItemsTest", "cmpdNamedSetItemsTest"));
+//        projectCodeItems.add(new SelectItem("projectCodeItemsTest", "projectCodeItemsTest"));
+//        plateItems.add(new SelectItem("plateItemsTest", "plateItemsTest"));
+//        targetItems.add(new SelectItem("targetItemsTest", "targetItemsTest"));
+    
     createItemSelects();
 
     System.out.println("Size of drugNameItems:" + drugNameItems.size());
@@ -128,14 +130,15 @@ public class ApplicationScopeBean implements Serializable {
 
   private void createItemSelects() {
 
-    HashSet<Integer> nscSet = new HashSet<Integer>();
-    HashSet<String> drugNameSet = new HashSet<String>();
-    HashSet<String> casSet = new HashSet<String>();
+    
+    
     HashSet<String> aliasSet = new HashSet<String>();
-
+    HashSet<String> casSet = new HashSet<String>();
     HashSet<String> cmpdNamedSetSet = new HashSet<String>();
-    HashSet<String> projectCodeSet = new HashSet<String>();
+    HashSet<String> drugNameSet = new HashSet<String>();
+    HashSet<Integer> nscSet = new HashSet<Integer>();
     HashSet<String> plateSetSet = new HashSet<String>();
+    HashSet<String> projectCodeSet = new HashSet<String>();    
     HashSet<String> targetSet = new HashSet<String>();
 
     Session session = HibernateUtil.getSessionFactory().openSession();
@@ -143,7 +146,7 @@ public class ApplicationScopeBean implements Serializable {
 
     try {
 
-      if (this.versionAndBuildTime.startsWith("oncologydrugs")) {
+      if (versionAndBuildTime.startsWith("oncologydrugs")) {
 
         Criteria cmpdCrit = session.createCriteria(NscCmpd.class);
         List<NscCmpd> cmpdResultList = (List<NscCmpd>) cmpdCrit.list();
@@ -209,56 +212,56 @@ public class ApplicationScopeBean implements Serializable {
       ArrayList<String> drugNameList = new ArrayList<String>(drugNameSet);
       Collections.sort(drugNameList);
       for (String s : drugNameList) {
-        this.drugNameItems.add(new SelectItem(s, s));
+        drugNameItems.add(new SelectItem(s, s));
       }
 
 //alias
       ArrayList<String> aliasList = new ArrayList<String>(aliasSet);
       Collections.sort(aliasList);
       for (String s : aliasList) {
-        this.aliasItems.add(new SelectItem(s, s));
+        aliasItems.add(new SelectItem(s, s));
       }
 
 //cas
       ArrayList<String> casList = new ArrayList<String>(casSet);
       Collections.sort(casList);
       for (String s : casList) {
-        this.casItems.add(new SelectItem(s, s));
+        casItems.add(new SelectItem(s, s));
       }
 
 //cmpdNamedSet
       ArrayList<String> cmpdNamedSetList = new ArrayList<String>(cmpdNamedSetSet);
       Collections.sort(cmpdNamedSetList);
       for (String s : cmpdNamedSetList) {
-        this.cmpdNamedSetItems.add(new SelectItem(s, s));
+        cmpdNamedSetItems.add(new SelectItem(s, s));
       }
 
 //nsc
       ArrayList<Integer> nscList = new ArrayList<Integer>(nscSet);
       Collections.sort(nscList);
       for (Integer i : nscList) {
-        this.nscItems.add(new SelectItem(i.toString(), i.toString()));
+        nscItems.add(new SelectItem(i.toString(), i.toString()));
       }
 
 //projectCode
       ArrayList<String> projectCodeList = new ArrayList<String>(projectCodeSet);
       Collections.sort(projectCodeList);
       for (String s : projectCodeList) {
-        this.projectCodeItems.add(new SelectItem(s, s));
+        projectCodeItems.add(new SelectItem(s, s));
       }
 
 //plate
       ArrayList<String> plateList = new ArrayList<String>(plateSetSet);
       Collections.sort(plateList);
       for (String s : plateList) {
-        this.plateItems.add(new SelectItem(s, s));
+        plateItems.add(new SelectItem(s, s));
       }
 
 //target
       ArrayList<String> targetList = new ArrayList<String>(targetSet);
       Collections.sort(targetList);
       for (String s : targetList) {
-        this.targetItems.add(new SelectItem(s, s));
+        targetItems.add(new SelectItem(s, s));
       }
 
       tx.commit();
@@ -274,7 +277,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completedrugName(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.drugNameItems) {
+    for (SelectItem si : drugNameItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -284,7 +287,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completealias(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.aliasItems) {
+    for (SelectItem si : aliasItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -294,7 +297,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completecas(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.casItems) {
+    for (SelectItem si : casItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -304,7 +307,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completecmpdNamedSet(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.cmpdNamedSetItems) {
+    for (SelectItem si : cmpdNamedSetItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -314,7 +317,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completensc(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.nscItems) {
+    for (SelectItem si : nscItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -324,7 +327,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completeprojectCode(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.projectCodeItems) {
+    for (SelectItem si : projectCodeItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -334,7 +337,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completeplate(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.plateItems) {
+    for (SelectItem si : plateItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
@@ -344,7 +347,7 @@ public class ApplicationScopeBean implements Serializable {
 
   public List<String> completetarget(String query) {
     List<String> suggestions = new ArrayList<String>();
-    for (SelectItem si : this.targetItems) {
+    for (SelectItem si : targetItems) {
       if (StringUtils.containsIgnoreCase(si.getLabel(), query)) {
         suggestions.add(si.getLabel());
       }
