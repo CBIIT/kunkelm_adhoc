@@ -110,7 +110,7 @@ public class ConstraintManagement {
 
     }
 
-    public static void dropConstraints(Connection destConn)
+    public static void dropConstraints(Connection destConn) 
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
