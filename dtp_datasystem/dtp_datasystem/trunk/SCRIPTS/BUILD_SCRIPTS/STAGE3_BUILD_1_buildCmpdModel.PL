@@ -191,7 +191,9 @@ num_triplebonds,
 num_rotatablebonds,     
 num_hydrogens,      
 num_metalatoms,         
-(num_atoms - num_hydrogens),         
+# this is wrong!  this is wrong!  this is wrong!
+# (num_atoms - num_hydrogens),         
+num_atoms, #as num_heavyatoms
 num_positiveatoms,      
 num_negativeatoms,      
 num_ringbonds,          
