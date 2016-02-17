@@ -137,7 +137,7 @@ public class LaunchingController implements Serializable {
     long randomId = randGen.nextLong();
 
     String paramString = "landingRandomId=" + randomId
-            + "&landingAction=fetchData"
+            + "&landingAction=FETCH_DATA"
             + "&landingJson=" + encJson;
 
     urlString = siteString + "?" + paramString;
@@ -165,7 +165,7 @@ public class LaunchingController implements Serializable {
 
     CompareConfig compConf = new CompareConfig();
 
-    String action = "fetchData";
+    String action = "FETCH_DATA";
 
     compConf.setCompareAction(action);
 
