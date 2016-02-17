@@ -41,8 +41,6 @@ public class ApplicationScopeBean implements Serializable {
   private String versionAndBuildTime;
 
   private String compareUrl;
-  private String landingCompareUrl;
-  private String landingSpotfireUrl;
   //
   private List<SelectItem> aliasItems;
   private List<SelectItem> casItems;
@@ -85,15 +83,11 @@ public class ApplicationScopeBean implements Serializable {
 
       compareUrl = str3;
 
-      landingSpotfireUrl = compareUrl + "/landingSpotfire.xhtml";
-      landingCompareUrl = compareUrl + "/landingRunCompare.xhtml";
-
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     aliasItems = new ArrayList<SelectItem>();
-
     casItems = new ArrayList<SelectItem>();
     cmpdNamedSetItems = new ArrayList<SelectItem>();
     drugNameItems = new ArrayList<SelectItem>();
@@ -378,22 +372,6 @@ public class ApplicationScopeBean implements Serializable {
 
   public void setCompareUrl(String compareUrl) {
     this.compareUrl = compareUrl;
-  }
-
-  public String getLandingCompareUrl() {
-    return landingCompareUrl;
-  }
-
-  public void setLandingCompareUrl(String landingCompareUrl) {
-    this.landingCompareUrl = landingCompareUrl;
-  }
-
-  public String getLandingSpotfireUrl() {
-    return landingSpotfireUrl;
-  }
-
-  public void setLandingSpotfireUrl(String landingSpotfireUrl) {
-    this.landingSpotfireUrl = landingSpotfireUrl;
   }
 
   public List<SelectItem> getDrugNameItems() {

@@ -158,47 +158,6 @@ public class ListContentController implements Serializable {
 
   }
 
-  public String performConnectToLandingSpotfire() {
-
-    StringBuilder sb = new StringBuilder();
-
-    boolean isFirst = true;
-
-    for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().selectedActiveListMembers) {
-      if (clmVO.getCmpd() != null && clmVO.getCmpd().getNsc() != null) {
-        if (!isFirst) {
-          sb.append("xxx");
-        }
-        sb.append(clmVO.getCmpd().getNsc());
-        isFirst = false;
-      }
-    }
-
-    String siteString = applicationScopeBean.getLandingSpotfireUrl();
-
-    String paramString = "landingSpotfireNscSet=" + sb.toString();
-    String urlString = siteString + "?" + paramString;
-
-//        landingSpotfireNscSet
-//        landingSpotfireEndpointSet
-//        landingSpotfireIncludeExperiments
-    FacesContext ctx = FacesContext.getCurrentInstance();
-    ExternalContext extCtx = ctx.getExternalContext();
-
-    if (DEBUG) {
-      System.out.println("Generated URL is: " + urlString);
-    }
-
-    try {
-      extCtx.redirect(urlString);
-    } catch (IOException ioe) {
-      throw new FacesException(ioe);
-    }
-
-    return null;
-
-  }
-
   public String performSmilesFileUpload() {
 
     try {

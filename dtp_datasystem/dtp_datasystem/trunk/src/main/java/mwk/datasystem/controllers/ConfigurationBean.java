@@ -169,6 +169,12 @@ public class ConfigurationBean implements Serializable {
     hm.put("Rings Aromatic", "countAromaticRings");
 
     this.valid_physchem_keys = hm;
+    
+    System.out.println("In ConfigurationBean.init()");
+    System.out.println("valid_physchem_keys.size(): " + valid_physchem_keys.size());
+    for (String ky : valid_physchem_keys.keySet()){
+      System.out.println(ky + ": " + valid_physchem_keys.get(ky));
+    }
 
     this.availablePChemParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availablePChemParameters);
@@ -237,9 +243,18 @@ public class ConfigurationBean implements Serializable {
     try {
 
       this.physChemColumns = new ArrayList<ColumnModel>();
+      
       for (String columnKey : this.selectedPChemParameters) {
+        
         String key = columnKey.trim();
-        if (valid_physchem_keys.containsKey(key)) {
+        
+        System.out.println("In ConfigurationBean, searching for key: " + key);
+        
+        if (this.valid_physchem_keys == null){
+          System.out.println("valid_physchem_keys is null");
+        }
+        
+        if (this.valid_physchem_keys.containsKey(key)) {
           this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
         }
       }
