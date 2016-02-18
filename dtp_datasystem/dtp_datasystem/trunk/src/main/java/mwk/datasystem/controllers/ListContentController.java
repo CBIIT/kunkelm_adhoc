@@ -38,7 +38,7 @@ public class ListContentController implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
 
-  static final Boolean DEBUG = Boolean.FALSE;
+  static final Boolean DEBUG = Boolean.TRUE;
 
   // reach-through to applicationScopeBean
   @ManagedProperty(value = "#{applicationScopeBean}")
@@ -123,10 +123,16 @@ public class ListContentController implements Serializable {
     CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
     // append the selected
-    HelperCmpdListMember.appendCmpdListMembers(clVO, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
+    HelperCmpdListMember.appendCmpdListMembers(
+            clVO, 
+            listManagerController.getListManagerBean().getSelectedActiveListMembers(), 
+            sessionController.getLoggedUser());
 
     // have to UPDATE the list   
-    CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
+    CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(
+            cmpdListId, 
+            Boolean.TRUE, 
+            sessionController.getLoggedUser());
 
     // have to add to the session
     // and move to the new list        

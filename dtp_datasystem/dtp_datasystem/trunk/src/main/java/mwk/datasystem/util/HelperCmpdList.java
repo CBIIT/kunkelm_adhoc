@@ -37,7 +37,7 @@ import org.hibernate.Query;
  */
 public class HelperCmpdList {
 
-    public static final Boolean DEBUG = Boolean.FALSE;
+    public static final Boolean DEBUG = Boolean.TRUE;
 
     public static CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
 
@@ -375,7 +375,8 @@ public class HelperCmpdList {
 
             // ONLY listOwner can update, but only if not PUBLIC
             c.add(Restrictions.eq("listOwner", currentUser));
-            c.add(Restrictions.ne("shareWith", "PUBLIC"));
+            // 18Feb2016 MWK trying
+            //c.add(Restrictions.ne("shareWith", "PUBLIC"));
 
             CmpdList cl = (CmpdList) c.uniqueResult();
 
@@ -451,7 +452,7 @@ public class HelperCmpdList {
             clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
             clCrit.add(Restrictions.eq("listOwner", currentUser));
             // can NOT delete a PUBLIC list
-            clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
+            // clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
             CmpdList target = (CmpdList) clCrit.uniqueResult();
 

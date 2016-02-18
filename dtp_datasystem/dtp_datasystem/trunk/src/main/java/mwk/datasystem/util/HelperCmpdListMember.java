@@ -60,7 +60,7 @@ public class HelperCmpdListMember {
       clCrit.add(Restrictions.eq("cmpdListId", targetList.getCmpdListId()));
       clCrit.add(Restrictions.eq("listOwner", currentUser));
       // can NOT delete PUBLIC 
-      clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
+      // clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
       CmpdList target = (CmpdList) clCrit.uniqueResult();
 
@@ -156,7 +156,8 @@ public class HelperCmpdListMember {
       Criteria clCrit = session.createCriteria(CmpdList.class);
       clCrit.add(Restrictions.eq("cmpdListId", targetList.getCmpdListId()));
       clCrit.add(Restrictions.eq("listOwner", currentUser));
-      clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
+      // 18Feb2016 MWK removed to try to get createNewList to go
+      // clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
       CmpdList target = (CmpdList) clCrit.uniqueResult();
 
