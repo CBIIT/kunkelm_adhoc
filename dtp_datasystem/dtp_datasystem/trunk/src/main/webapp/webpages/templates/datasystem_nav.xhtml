@@ -87,7 +87,9 @@
   <p:dialog header="Configure Active List Data Table" 
             widgetVar="act_list_cfg_dlg" 
             modal="true"
-            width="600" height="400">
+            closeOnEscape="true"
+            width="80%" height="80%">
+
     <p:outputPanel autoUpdate="true">            
 
       <h2 style="margin: 0;">
@@ -156,6 +158,10 @@
 
       <h2 style="margin: 0;"><h:outputText value="PChem Parameters"/></h2>
 
+      <p:commandButton value="ALL" actionListener="#{sessionController.configurationBean.handleSelectAllPChem()}"/>
+
+      <p:commandButton value="NONE" actionListener="#{sessionController.configurationBean.handleUnselectAllPChem()}"/>
+
       <p:selectManyCheckbox id="dlg_physChemGrid"
                             value="#{sessionController.configurationBean.selectedPChemParameters}" 
                             layout="grid" 
@@ -193,7 +199,6 @@
                        itemLabel="#{bioDatParam}" 
                        itemValue="#{bioDatParam}" />
       </p:selectManyCheckbox>
-
 
       <p:spacer height="20" width="100%" />
 

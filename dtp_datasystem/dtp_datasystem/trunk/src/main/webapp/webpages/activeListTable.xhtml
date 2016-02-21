@@ -41,6 +41,15 @@
 
   <ui:define name="content">
 
+    <script>
+      jQuery(document).ready(function() {
+        $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
+      });
+      function doRotate() {
+        $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
+      }
+    </script>
+
     <!-- ensures that the filteredValues are reset whenever the page loads/reloads -->    
 
     <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
@@ -70,10 +79,10 @@
     <p:spacer height="20" width="100%"/>
 
     <p:dataTable  id="activeListTbl"
+                  tableStyle="width: auto;"
                   resizableColumns="true" 
                   draggableColumns="true"
                   draggableRows="true"
-                  tableStyle="width: auto;"                 
                   widgetVar="activeListTblWidgetVar"
                   var="listMember"                       
                   value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
@@ -108,40 +117,40 @@
         <h:outputText value="#{cmpd.nsc}"/>
       </p:column>   
 
-      <p:column headerText="DISCREET" 
-                resizable="true"
-                sortBy="#{cmpd.discreet}"
-                filterBy="#{cmpd.discreet}"
-                filterMatchMode="contains">                                
-        <h:outputText value="#{cmpd.discreet}"/>
-      </p:column>   
+      <ui:fragment rendered="#{sessionController.loggedUser != 'PUBLIC'}">
 
-      <!--
+        <p:column headerText="DISCREET" 
+                  resizable="true"
+                  sortBy="#{cmpd.discreet}"
+                  filterBy="#{cmpd.discreet}"
+                  filterMatchMode="contains">                                
+          <h:outputText value="#{cmpd.discreet}"/>
+        </p:column>   
 
-      <p:column headerText="CONF" 
-                resizable="true"
-                sortBy="#{cmpd.conf}"
-                filterBy="#{cmpd.conf}"
-                filterMatchMode="contains">                                
-        <h:outputText value="#{cmpd.conf}"/>
-      </p:column>   
+        <p:column headerText="CONF" 
+                  resizable="true"
+                  sortBy="#{cmpd.conf}"
+                  filterBy="#{cmpd.conf}"
+                  filterMatchMode="contains">                                
+          <h:outputText value="#{cmpd.conf}"/>
+        </p:column>   
 
-      <p:column headerText="DIST" 
-                resizable="true"
-                sortBy="#{cmpd.distribution}"
-                filterBy="#{cmpd.distribution}"
-                filterMatchMode="contains">                                
-        <h:outputText value="#{cmpd.distribution}"/>
-      </p:column> 
-      
-      -->
+        <p:column headerText="DIST" 
+                  resizable="true"
+                  sortBy="#{cmpd.distribution}"
+                  filterBy="#{cmpd.distribution}"
+                  filterMatchMode="contains">                                
+          <h:outputText value="#{cmpd.distribution}"/>
+        </p:column> 
 
-      <p:column headerText="NSCCmpdType"
-                sortBy="#{cmpd.nscCmpdType}"
-                filterBy="#{cmpd.nscCmpdType}"
-                filterMatchMode="contains">
-        <h:outputText value="#{cmpd.nscCmpdType}"/>
-      </p:column>   
+        <p:column headerText="NSCCmpdType"
+                  sortBy="#{cmpd.nscCmpdType}"
+                  filterBy="#{cmpd.nscCmpdType}"
+                  filterMatchMode="contains">
+          <h:outputText value="#{cmpd.nscCmpdType}"/>
+        </p:column>   
+
+      </ui:fragment>
 
       <p:column headerText="Parent Structure" 
                 resizable="true"
@@ -211,7 +220,7 @@
             <f:convertNumber pattern="#0.00" />
           </h:outputText>
         </p:panelGrid>
-        
+
       </p:column> 
 
       <!-- exportable alternates -->
@@ -324,12 +333,16 @@
                  var="column" 
                  columnIndexVar="colIndex"
                  sortable="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
-                 sortBy="#{cmpd[column.property]}" 
-                 filterBy="#{cmpd[column.property]}"
-                 filterFunction="#{customFilter.customFilter}">
+                 sortBy="#{cmpd[column.property]}"
+                 >
+        <!--
+        filterBy="#{cmpd[column.property]}"
+        filterFunction="#{customFilter.customFilter}">
+        -->
 
         <f:facet name="header">                        
-          <h:outputText value="#{column.header}" />
+          <h:outputText value="#{column.header}"
+                        class="vertical" />
         </f:facet>
 
         <h:outputText rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
@@ -358,10 +371,14 @@
                  var="column" 
                  columnIndexVar="colIndex" 
                  sortBy="#{cmpd[column.property]}" 
-                 filterBy="#{cmpd[column.property]}">
+                 >
+        <!--
+        filterBy="#{cmpd[column.property]}">
+        -->
 
         <f:facet name="header">                        
-          <h:outputText value="#{column.header}" />
+          <h:outputText value="#{column.header}" 
+                        class="vertical"/>
         </f:facet>                      
 
         <h:outputText value="#{cmpd[column.property]}"/>
@@ -373,7 +390,10 @@
                  var="column" 
                  columnIndexVar="colIndex" 
                  sortBy="#{strc[column.property]}" 
-                 filterBy="#{strc[column.property]}">
+                 >
+        <!--
+        filterBy="#{strc[column.property]}">
+        -->
         <f:facet name="header">
           <h:outputText value="#{column.header}" />
         </f:facet>
@@ -385,9 +405,13 @@
                  var="column" 
                  columnIndexVar="colIndex" 
                  sortBy="#{physchem[column.property]}" 
-                 filterBy="#{physchem[column.property]}">
+                 >
+        <!--
+        filterBy="#{physchem[column.property]}">
+        -->
         <f:facet name="header">
-          <h:outputText value="#{column.header}" />
+          <h:outputText value="#{column.header}"
+                        class="vertical"/>
         </f:facet>
         <h:outputText value="#{physchem[column.property]}" />
       </p:columns>
@@ -397,9 +421,13 @@
                  var="column" 
                  columnIndexVar="colIndex" 
                  sortBy="#{biodat[column.property]}" 
-                 filterBy="#{biodat[column.property]}">
+                 >
+        <!--
+        filterBy="#{biodat[column.property]}">
+        -->
         <f:facet name="header">
-          <h:outputText value="#{column.header}" />
+          <h:outputText value="#{column.header}"
+                        class="vertical"/>
         </f:facet>
         <h:outputText value="#{biodat[column.property]}" />
       </p:columns>

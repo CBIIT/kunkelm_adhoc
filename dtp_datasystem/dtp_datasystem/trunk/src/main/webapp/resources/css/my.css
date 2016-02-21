@@ -46,3 +46,22 @@ ul.ui-menu-child {
 .ui-menuitem-text {
     padding-left: 10px;
 }
+
+/* Styles for rotateTableCellContent plugin*/
+table div.rotated {
+
+    -ms-transform:rotate(270deg); /* IE 9 */
+    -moz-transform:rotate(270deg); /* Firefox */
+    -webkit-transform:rotate(270deg); /* Safari and Chrome */
+    -o-transform:rotate(270deg); /* Opera */
+    
+}
+
+thead th {
+    vertical-align:top;
+}
+
+table .vertical {
+    white-space:nowrap;
+    background-color:white;
+}

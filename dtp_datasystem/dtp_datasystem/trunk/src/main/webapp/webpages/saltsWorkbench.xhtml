@@ -9,84 +9,83 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <p:dataTable id="knownSalts"
-                     resizableColumns="true"
-                     tableStyle="width: auto;"
-                     editable="true"                      
-                     var="salt"
-                     value="#{saltsWorkbenchController.salts}"
-                     filteredValue="#{saltsWorkbenchController.filteredSalts}"
-                     paginator="true" 
-                     rows="10" 
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                     rowsPerPageTemplate="10,25,50">
+    <p:dataTable id="knownSalts"
+                 resizableColumns="true"
+                 editable="true"                      
+                 var="salt"
+                 value="#{saltsWorkbenchController.salts}"
+                 filteredValue="#{saltsWorkbenchController.filteredSalts}"
+                 paginator="true" 
+                 rows="10" 
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="10,25,50">
 
-            <f:facet name="header">  
-                #{fn:length(saltsWorkbenchController.salts)} Known Salts
-            </f:facet>
+      <f:facet name="header">  
+        #{fn:length(saltsWorkbenchController.salts)} Known Salts
+      </f:facet>
 
-            <p:ajax event="rowEdit" listener="#{saltsWorkbenchController.onRowEdit}" update=":datasystemForm:msgs" />
-            <p:ajax event="rowEditCancel" listener="#{saltsWorkbenchController.onRowCancel}" update=":datasystemForm:msgs" />
-            <p:ajax event="cellEdit" listener="#{saltsWorkbenchController.onCellEdit}" update=":datasystemForm:msgs" />
+      <p:ajax event="rowEdit" listener="#{saltsWorkbenchController.onRowEdit}" update=":datasystemForm:msgs" />
+      <p:ajax event="rowEditCancel" listener="#{saltsWorkbenchController.onRowCancel}" update=":datasystemForm:msgs" />
+      <p:ajax event="cellEdit" listener="#{saltsWorkbenchController.onCellEdit}" update=":datasystemForm:msgs" />
 
-            <p:column style="width:32px">
-                <p:rowEditor />
-            </p:column>
+      <p:column style="width:32px">
+        <p:rowEditor />
+      </p:column>
 
-            <p:column headerText="id" sortBy="#{salt.id}">              
-                <h:outputText value="#{salt.id}" />
-            </p:column>
+      <p:column headerText="id" sortBy="#{salt.id}">              
+        <h:outputText value="#{salt.id}" />
+      </p:column>
 
-            <p:column headerText="CanSmi Structure">
-                <p:graphicImage alt="Chemical Structure of List Anchor"
-                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                                styleClass="anchorStructure"
-                                url='#{sessionController.configurationBean.getSmilesStrcUrl(salt.canSmi, null, null)}'>              
-                </p:graphicImage>
-            </p:column>
+      <p:column headerText="CanSmi Structure">
+        <p:graphicImage alt="Chemical Structure of List Anchor"
+                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                        styleClass="anchorStructure"
+                        url='#{sessionController.configurationBean.getSmilesStrcUrl(salt.canSmi, null, null)}'>              
+        </p:graphicImage>
+      </p:column>
 
-            <p:column headerText="saltName">              
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{salt.saltName}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="saltNameInput" value="#{salt.saltName}" style="width:100%"/></f:facet>
-                </p:cellEditor>              
-            </p:column>
+      <p:column headerText="saltName">              
+        <p:cellEditor>
+          <f:facet name="output"><h:outputText value="#{salt.saltName}" /></f:facet>
+          <f:facet name="input"><p:inputText id="saltNameInput" value="#{salt.saltName}" style="width:100%"/></f:facet>
+        </p:cellEditor>              
+      </p:column>
 
-            <p:column headerText="saltComment" sortBy="#{salt.saltComment}" filterBy="#{salt.saltComment}" filterMatchMode="contains">              
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{salt.saltComment}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="saltCommentInput" value="#{salt.saltComment}" style="width:100%"/></f:facet>
-                </p:cellEditor>              
-            </p:column>
+      <p:column headerText="saltComment" sortBy="#{salt.saltComment}" filterBy="#{salt.saltComment}" filterMatchMode="contains">              
+        <p:cellEditor>
+          <f:facet name="output"><h:outputText value="#{salt.saltComment}" /></f:facet>
+          <f:facet name="input"><p:inputText id="saltCommentInput" value="#{salt.saltComment}" style="width:100%"/></f:facet>
+        </p:cellEditor>              
+      </p:column>
 
-            <p:column headerText="countOccurences" sortBy="#{salt.countOccurences}">
-                <h:outputText value="#{salt.countOccurences}" />
-            </p:column>
+      <p:column headerText="countOccurences" sortBy="#{salt.countOccurences}">
+        <h:outputText value="#{salt.countOccurences}" />
+      </p:column>
 
-            <p:column headerText="saltMf" sortBy="#{salt.saltMf}">
-                <h:outputText value="#{salt.saltMf}" />
-            </p:column>
+      <p:column headerText="saltMf" sortBy="#{salt.saltMf}">
+        <h:outputText value="#{salt.saltMf}" />
+      </p:column>
 
-            <p:column headerText="saltMw" sortBy="#{salt.saltMw}">              
-                <h:outputText value="#{salt.saltMw}" />        
-            </p:column>
+      <p:column headerText="saltMw" sortBy="#{salt.saltMw}">              
+        <h:outputText value="#{salt.saltMw}" />        
+      </p:column>
 
-            <p:column headerText="canSmi">                      
-                <h:outputText value="#{salt.canSmi}" />        
-            </p:column>
+      <p:column headerText="canSmi">                      
+        <h:outputText value="#{salt.canSmi}" />        
+      </p:column>
 
-            <p:column headerText="canTaut">              
-                <h:outputText value="#{salt.canTaut}" />        
-            </p:column>
+      <p:column headerText="canTaut">              
+        <h:outputText value="#{salt.canTaut}" />        
+      </p:column>
 
-            <p:column headerText="canTautStripStereo">              
-                <h:outputText value="#{salt.canTautStripStereo}" />        
-            </p:column>
+      <p:column headerText="canTautStripStereo">              
+        <h:outputText value="#{salt.canTautStripStereo}" />        
+      </p:column>
 
-        </p:dataTable>
+    </p:dataTable>
 
-    </ui:define>
+  </ui:define>
 
 </ui:composition>

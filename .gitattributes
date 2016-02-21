@@ -9528,6 +9528,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/possibleQuaternary.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.08March2015.xml -text
 dtp_datasystem/dtp_datasystem/trunk/datasystem.19Feb2015.xml -text
+dtp_datasystem/dtp_datasystem/trunk/faces-config.NavData -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-common/0.1/datasystem-common-0.1-sources.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-common/0.1/datasystem-common-0.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem-common/20150309/datasystem-common-20150309-sources.jar -text
@@ -9655,8 +9656,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.min.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/dctdDataSystem.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/rgbcolor.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/verticalHeader.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionEnded.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/viewExpired.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text

@@ -26,7 +26,16 @@
   </ui:define>        
 
   <ui:define name="content">
-      
+
+    <script>
+      jQuery(document).ready(function() {
+        $("[id='datasystemForm:theDataGrid:0:pChemTbl']").rotateTableCellContent();
+      });
+      function doRotate() {
+        $("[id='datasystemForm:theDataGrid:0:pChemTbl']").rotateTableCellContent();
+      }
+    </script>
+
     <p:panel header="List Anchor Structure"
              rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
@@ -43,7 +52,8 @@
 
     </p:panel>
 
-    <p:dataGrid var="listMember" 
+    <p:dataGrid id="theDataGrid"
+                var="listMember" 
                 value="#{listManagerController.listManagerBean.filteredActiveListMembers}"                                     
                 columns="1"  
                 rows="1" 
@@ -57,17 +67,16 @@
         </p:row>                                              
       </f:facet>
 
-        <h1 style="margin: 0;">
-            <h:outputText value="#{listMember.cmpd.nsc}"/>
-            <br/>
-            <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
-        </h1>
-        
-        
+      <h1 style="margin: 0;">
+        <h:outputText value="#{listMember.cmpd.nsc}"/>
+        <br/>
+        <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
+      </h1>
+
       <p:panelGrid columns="2"  
                    layout="grid">
 
-        <p:panel>
+        <p:panel style="display: inline-block;">
           <f:facet name="header">
             <h:outputText value="Kekule Image of Legacy Compound" />
           </f:facet>
@@ -127,10 +136,8 @@
 
       <p:panel rendered="#{sessionController.configurationBean.showFrags}"
                style="display: inline-block">
-
         <ui:repeat value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" 
                    var="fragSmiles">
-
           <p:panel style="display: inline-block">
             <p:graphicImage alt="Chemical Structure of Compound Fragment"
                             styleClass="fragmentStructure"
@@ -138,9 +145,7 @@
                             url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
             </p:graphicImage>
           </p:panel>
-
         </ui:repeat>
-
       </p:panel>
 
       <p:panelGrid>
@@ -257,9 +262,8 @@
 
         </p:row>
 
-
         <p:row>
-          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">PChem</p:column>  
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">pChem hard-coded</p:column>  
         </p:row>
 
         <p:row>
@@ -462,12 +466,32 @@
         </p:row>
 
         <p:row>
-          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Parent SMILES</p:column>  
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Canonical SMILES</p:column>  
         </p:row>
 
         <p:row>
           <p:column colspan="6">                
             <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
+          </p:column>
+        </p:row>
+
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Canonical Tautomer SMILES</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">                
+            <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTaut}"/>
+          </p:column>
+        </p:row>
+
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Canonical Tautomer Strip Stereo SMILES</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">                
+            <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canTautStripStereo}"/>
           </p:column>
         </p:row>
 
@@ -480,6 +504,98 @@
             <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi}"/>
           </p:column>
         </p:row>
+
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">pChem dataTable</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">
+            <p:dataTable id="pChemTbl" value="#{listMember.cmpd}" var="c" tableStyle="width: auto;">
+              <p:columns value="#{sessionController.configurationBean.valid_physchem_keys.keySet()}" 
+                         var="k"
+                         resizable="true">
+                <f:facet name="header">
+                  <h:outputText value="#{k}" class="vertical" />
+                </f:facet>
+                <h:outputText value="#{c.parentFragment.cmpdFragmentPChem[sessionController.configurationBean.valid_physchem_keys.get(k)]}"
+                              style="font: bold;"/>
+              </p:columns>
+            </p:dataTable>
+          </p:column>
+        </p:row>
+
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">pChem dataGrid</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">
+            <p:dataGrid columns="6" 
+                        value="#{sessionController.configurationBean.valid_physchem_keys.keySet()}" 
+                        var="k">
+              <p:panel header="#{k}">
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem[sessionController.configurationBean.valid_physchem_keys.get(k)]}"
+                              style="font: bold;"/>
+              </p:panel>        
+            </p:dataGrid>
+          </p:column>
+        </p:row>
+
+        <!--
+        
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">bioData</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">
+            <p:dataGrid columns="6" 
+                        value="#{sessionController.configurationBean.valid_bio_keys.keySet()}" 
+                        var="k">
+              <p:panel header="#{k}">
+                <h:outputText value="#{listMember.cmpd.cmpdBioAssay[sessionController.configurationBean.valid_bio_keys.get(k)]}"
+                              style="font: bold;"/>
+              </p:panel>        
+            </p:dataGrid>
+          </p:column>
+        </p:row>
+
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">cmpd</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">
+            <p:dataGrid columns="6" 
+                        value="#{sessionController.configurationBean.valid_cmpd_keys.keySet()}" 
+                        var="k">
+              <p:panel header="#{k}">
+                <h:outputText value="#{listMember.cmpd[sessionController.configurationBean.valid_cmpd_keys.get(k)]}"
+                              style="font: bold;"/>
+              </p:panel>        
+            </p:dataGrid>
+          </p:column>
+        </p:row>
+
+        <p:row>
+          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">strc</p:column>  
+        </p:row>
+
+        <p:row>
+          <p:column colspan="6">
+            <p:dataGrid columns="1" 
+                        value="#{sessionController.configurationBean.valid_strc_keys.keySet()}" 
+                        var="k">
+              <p:panel header="#{k}">
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure[sessionController.configurationBean.valid_strc_keys.get(k)]}"
+                              style="font: bold;"/>
+              </p:panel>        
+            </p:dataGrid>
+          </p:column>
+        </p:row>
+        
+        -->
 
       </p:panelGrid>
 

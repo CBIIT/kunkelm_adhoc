@@ -9,188 +9,187 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <ui:include src="/webpages/templates/cmpd_list_nav.xhtml"/>
+    <ui:include src="/webpages/templates/cmpd_list_nav.xhtml"/>
 
-        <p:fieldset legend="Export All Data">  
+    <p:fieldset legend="Export All Data">  
 
-            <p:commandButton ajax="false" value="Export to Excel">
-                <p:dataExporter type="xls" 
-                                target="cmpdListTbl" 
-                                fileName="listOfCompounds" />        
-            </p:commandButton>
+      <p:commandButton ajax="false" value="Export to Excel">
+        <p:dataExporter type="xls" 
+                        target="cmpdListTbl" 
+                        fileName="listOfCompounds" />        
+      </p:commandButton>
 
-            <p:spacer width="20"/>
+      <p:spacer width="20"/>
 
-            <p:commandButton ajax="false" value="Export as CSV">  
-                <p:dataExporter type="csv" 
-                                target="cmpdListTbl" 
-                                fileName="listOfCompounds" />
-            </p:commandButton> 
+      <p:commandButton ajax="false" value="Export as CSV">  
+        <p:dataExporter type="csv" 
+                        target="cmpdListTbl" 
+                        fileName="listOfCompounds" />
+      </p:commandButton> 
 
-            <p:spacer width="20"/>
+      <p:spacer width="20"/>
 
-            <p:commandButton ajax="false" value="Export to Excel with Structure Images">
-                <p:dataExporter type="xls" 
-                                target="cmpdListTbl" 
-                                postProcessor="#{listManagerController.postProcessXLS}"
-                                fileName="listOfCompounds" />        
-            </p:commandButton>
+      <p:commandButton ajax="false" value="Export to Excel with Structure Images">
+        <p:dataExporter type="xls" 
+                        target="cmpdListTbl" 
+                        postProcessor="#{listManagerController.postProcessXLS}"
+                        fileName="listOfCompounds" />        
+      </p:commandButton>
 
-            <p:spacer width="20"/>
+      <p:spacer width="20"/>
 
-            <p:commandButton onclick="structuresAsGridImage();" 
-                             ajax="true"
-                             value="Image of bare structures as grid" /> 
+      <p:commandButton onclick="structuresAsGridImage();" 
+                       ajax="true"
+                       value="Image of bare structures as grid" /> 
 
-        </p:fieldset>
+    </p:fieldset>
 
-        <p:spacer height="20" width="100%"/>
+    <p:spacer height="20" width="100%"/>
 
-        <p:dataTable  id="cmpdListTbl"
-                      resizableColumns="true"
-                     tableStyle="width: auto;"                 
-                      var="cmpd" 
-                      value="#{listLogicController.currentListOfCompounds}" 
-                      rows="50"                        
-                      paginator="true"
-                      paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
-                      rowsPerPageTemplate="50,100,250,500"
-                      selection="#{listLogicController.selectedCmpds}"
-                      rowKey="#{cmpd.id}"                              
-                      sortMode="multiple">  
+    <p:dataTable  id="cmpdListTbl"
+                  resizableColumns="true"
+                  var="cmpd" 
+                  value="#{listLogicController.currentListOfCompounds}" 
+                  rows="50"                        
+                  paginator="true"
+                  paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
+                  rowsPerPageTemplate="50,100,250,500"
+                  selection="#{listLogicController.selectedCmpds}"
+                  rowKey="#{cmpd.id}"                              
+                  sortMode="multiple">  
 
-            <f:facet name="header">                
-                <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Members"/>                  
-            </f:facet>
+      <f:facet name="header">                
+        <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Members"/>                  
+      </f:facet>
 
-            <p:column headerText="All"
-                      resizable="true" 
-                      selectionMode="multiple" 
-                      style="width:4%" 
-                      exportable="false"/>
+      <p:column headerText="All"
+                resizable="true" 
+                selectionMode="multiple" 
+                style="width:4%" 
+                exportable="false"/>
 
-            <p:column headerText="Click for details" resizable="true">
+      <p:column headerText="Click for details" resizable="true">
 
-                <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
-                    <p:graphicImage alt="Chemical Structure of List Anchor"
-                                    width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                                    styleClass="anchorStructure"
-                                    url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd)}'>              
-                    </p:graphicImage>
-
-
-                    <f:setPropertyActionListener value="#{cmpd}"   
-                                                 target="#{listLogicController.selectedCmpd}" />  
-                </p:commandLink>
-
-                <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                                styleClass="parentStructure"
-                                url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-                </p:graphicImage>
-
-            </p:column>
-
-            <p:column headerText="originalAdHocCmpdId" resizable="true" sortBy="#{cmpd.originalAdHocCmpdId}">                                
-                <h:outputText value="#{cmpd.originalAdHocCmpdId}"/>
-            </p:column>             
-
-            <p:column headerText="adHocCmpdId" resizable="true" sortBy="#{cmpd.adHocCmpdId}">                                
-                <h:outputText value="#{cmpd.adHocCmpdId}"/>
-            </p:column>             
+        <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
+          <p:graphicImage alt="Chemical Structure of List Anchor"
+                          width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                          styleClass="anchorStructure"
+                          url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd)}'>              
+          </p:graphicImage>
 
 
+          <f:setPropertyActionListener value="#{cmpd}"   
+                                       target="#{listLogicController.selectedCmpd}" />  
+        </p:commandLink>
 
-            <p:column headerText="NSC" resizable="true" sortBy="#{cmpd.nsc}">                                
-                <h:outputText value="#{cmpd.nsc}"/>
-            </p:column>             
+        <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                        styleClass="parentStructure"
+                        url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+        </p:graphicImage>
 
-            <p:column headerText="Name" resizable="true" sortBy="#{cmpd.name}">                
-                <h:outputText value="#{cmpd.name}"/>                
-            </p:column>        
+      </p:column>
 
-            <p:column headerText="Aliases" resizable="true">                
-                <p:scrollPanel style="width:250px;height:100px"> 
-                    <p:dataList value="#{cmpd.aliases}" var="n" itemType="disc" type="ordered">  
-                        <h:outputText value="#{n}"/>                
-                    </p:dataList>
-                </p:scrollPanel>
-            </p:column>   
+      <p:column headerText="originalAdHocCmpdId" resizable="true" sortBy="#{cmpd.originalAdHocCmpdId}">                                
+        <h:outputText value="#{cmpd.originalAdHocCmpdId}"/>
+      </p:column>             
 
-            <p:column headerText="Projects" resizable="true">                
-                <p:scrollPanel style="width:250px;height:100px"> 
-                    <p:dataList value="#{cmpd.projects}" var="n" itemType="disc" type="ordered">  
-                        <h:outputText value="#{n}"/>                
-                    </p:dataList>
-                </p:scrollPanel>
-            </p:column>   
+      <p:column headerText="adHocCmpdId" resizable="true" sortBy="#{cmpd.adHocCmpdId}">                                
+        <h:outputText value="#{cmpd.adHocCmpdId}"/>
+      </p:column>             
 
-            <p:column headerText="Plates" resizable="true">                
-                <p:scrollPanel style="width:250px;height:100px"> 
-                    <p:dataList value="#{cmpd.plates}" var="n" itemType="disc" type="ordered">  
-                        <h:outputText value="#{n}"/>                
-                    </p:dataList>
-                </p:scrollPanel>
-            </p:column>   
 
-            <p:column headerText="Inventory" resizable="true" sortBy="#{cmpd.inventory}">                                
-                <h:outputText value="#{cmpd.inventory}"/>
-            </p:column>
 
-            <p:column headerText="NCI60" resizable="true" sortBy="#{cmpd.cmpdBioAssay.nci60}">                
-                <f:facet name="header">                
-                    <h:outputText value="NCI60"/>                
-                </f:facet>              
-                <h:outputText value="#{cmpd.cmpdBioAssay.nci60}"/>
-            </p:column>
+      <p:column headerText="NSC" resizable="true" sortBy="#{cmpd.nsc}">                                
+        <h:outputText value="#{cmpd.nsc}"/>
+      </p:column>             
 
-            <p:column headerText="HF" resizable="true" sortBy="#{cmpd.cmpdBioAssay.hf}">                
-                <h:outputText value="#{cmpd.cmpdBioAssay.hf}"/>
-            </p:column>
+      <p:column headerText="Name" resizable="true" sortBy="#{cmpd.name}">                
+        <h:outputText value="#{cmpd.name}"/>                
+      </p:column>        
 
-            <p:column headerText="XENO" resizable="true" sortBy="#{cmpd.cmpdBioAssay.xeno}">                
-                <h:outputText value="#{cmpd.cmpdBioAssay.xeno}"/>
-            </p:column>
+      <p:column headerText="Aliases" resizable="true">                
+        <p:scrollPanel style="width:250px;height:100px"> 
+          <p:dataList value="#{cmpd.aliases}" var="n" itemType="disc" type="ordered">  
+            <h:outputText value="#{n}"/>                
+          </p:dataList>
+        </p:scrollPanel>
+      </p:column>   
 
-            <p:column headerText="MF" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}"/>
-            </p:column>
+      <p:column headerText="Projects" resizable="true">                
+        <p:scrollPanel style="width:250px;height:100px"> 
+          <p:dataList value="#{cmpd.projects}" var="n" itemType="disc" type="ordered">  
+            <h:outputText value="#{n}"/>                
+          </p:dataList>
+        </p:scrollPanel>
+      </p:column>   
 
-            <p:column headerText="MW" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
-                    <f:convertNumber pattern="#0.00" />
-                </h:outputText>
-            </p:column>
+      <p:column headerText="Plates" resizable="true">                
+        <p:scrollPanel style="width:250px;height:100px"> 
+          <p:dataList value="#{cmpd.plates}" var="n" itemType="disc" type="ordered">  
+            <h:outputText value="#{n}"/>                
+          </p:dataList>
+        </p:scrollPanel>
+      </p:column>   
 
-            <p:column headerText="aLogP" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
-                    <f:convertNumber pattern="#0.00" />
-                </h:outputText>
-            </p:column>
+      <p:column headerText="Inventory" resizable="true" sortBy="#{cmpd.inventory}">                                
+        <h:outputText value="#{cmpd.inventory}"/>
+      </p:column>
 
-            <p:column headerText="HBA" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}"/>
-            </p:column>
+      <p:column headerText="NCI60" resizable="true" sortBy="#{cmpd.cmpdBioAssay.nci60}">                
+        <f:facet name="header">                
+          <h:outputText value="NCI60"/>                
+        </f:facet>              
+        <h:outputText value="#{cmpd.cmpdBioAssay.nci60}"/>
+      </p:column>
 
-            <p:column headerText="HBD" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}"/>
-            </p:column>
+      <p:column headerText="HF" resizable="true" sortBy="#{cmpd.cmpdBioAssay.hf}">                
+        <h:outputText value="#{cmpd.cmpdBioAssay.hf}"/>
+      </p:column>
 
-            <p:column headerText="SA" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
-                    <f:convertNumber pattern="#0.00" />
-                </h:outputText>
-            </p:column>
+      <p:column headerText="XENO" resizable="true" sortBy="#{cmpd.cmpdBioAssay.xeno}">                
+        <h:outputText value="#{cmpd.cmpdBioAssay.xeno}"/>
+      </p:column>
 
-            <p:column headerText="SMILES" resizable="true">                
-                <h:outputText value="#{cmpd.parentFragment.cmpdFragmentStructure.canSmi}">
-                </h:outputText>
-            </p:column>
+      <p:column headerText="MF" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.molecularFormula}"/>
+      </p:column>
 
-        </p:dataTable>
+      <p:column headerText="MW" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.molecularWeight}">
+          <f:convertNumber pattern="#0.00" />
+        </h:outputText>
+      </p:column>
 
-    </ui:define>
+      <p:column headerText="aLogP" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.theALogP}">
+          <f:convertNumber pattern="#0.00" />
+        </h:outputText>
+      </p:column>
+
+      <p:column headerText="HBA" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondAcceptors}"/>
+      </p:column>
+
+      <p:column headerText="HBD" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.countHydBondDonors}"/>
+      </p:column>
+
+      <p:column headerText="SA" resizable="true" sortBy="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentPChem.surfaceArea}">
+          <f:convertNumber pattern="#0.00" />
+        </h:outputText>
+      </p:column>
+
+      <p:column headerText="SMILES" resizable="true">                
+        <h:outputText value="#{cmpd.parentFragment.cmpdFragmentStructure.canSmi}">
+        </h:outputText>
+      </p:column>
+
+    </p:dataTable>
+
+  </ui:define>
 
 </ui:composition>

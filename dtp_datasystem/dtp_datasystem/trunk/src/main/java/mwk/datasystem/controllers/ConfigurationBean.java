@@ -1,8 +1,3 @@
-/*
- 
- 
- 
- */
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
@@ -10,7 +5,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import mwk.datasystem.vo.CmpdVO;
@@ -62,22 +57,22 @@ public class ConfigurationBean implements Serializable {
 // \___\___/|_|\__,_|_| |_| |_|_| |_|___/
   protected List<String> availablePChemParameters;
   protected List<String> selectedPChemParameters;
-  protected static HashMap<String, String> valid_physchem_keys;
+  protected TreeMap<String, String> valid_physchem_keys;
   protected List<ColumnModel> physChemColumns;
 
   protected List<String> availableStructureParameters;
   protected List<String> selectedStructureParameters;
-  protected static HashMap<String, String> valid_strc_keys;
+  protected TreeMap<String, String> valid_strc_keys;
   protected List<ColumnModel> structureColumns;
 
   protected List<String> availableCmpdParameters;
   protected List<String> selectedCmpdParameters;
-  protected static HashMap<String, String> valid_cmpd_keys;
+  protected TreeMap<String, String> valid_cmpd_keys;
   protected List<ColumnModel> cmpdColumns;
 
   protected List<String> availableBioDataParameters;
   protected List<String> selectedBioDataParameters;
-  protected static HashMap<String, String> valid_bio_keys;
+  protected TreeMap<String, String> valid_bio_keys;
   protected List<ColumnModel> biodataColumns;
 
   // TODO Need to handle Exceptions!  
@@ -111,7 +106,7 @@ public class ConfigurationBean implements Serializable {
     strcDim = Integer.valueOf(200);
 
     // cmpd
-    HashMap<String, String> hm = new HashMap<String, String>();
+    TreeMap<String, String> hm = new TreeMap<String, String>();
     hm.put("Prefix", "prefix");
     // NSC and DISCREET are ALWAYS shown
     hm.put("CONF", "conf");
@@ -141,7 +136,7 @@ public class ConfigurationBean implements Serializable {
     Collections.sort(this.availableCmpdParameters);
 
     // pChem
-    hm = new HashMap<String, String>();
+    hm = new TreeMap<String, String>();
     hm.put("Formal Charge", "formalCharge");
     hm.put("aLogP", "theALogP");
     hm.put("logD", "logD");
@@ -164,23 +159,17 @@ public class ConfigurationBean implements Serializable {
     hm.put("Bonds Ring", "countRingBonds");
     hm.put("Atoms Stereo", "countStereoAtoms");
     hm.put("Bonds Stereo", "countStereoBonds");
-    hm.put("Assemblies Ring", "countRingAssemblies");
+    hm.put("Ring Assemblies", "countRingAssemblies");
     hm.put("Bonds Aromatic", "countAromaticBonds");
     hm.put("Rings Aromatic", "countAromaticRings");
 
     this.valid_physchem_keys = hm;
-    
-    System.out.println("In ConfigurationBean.init()");
-    System.out.println("valid_physchem_keys.size(): " + valid_physchem_keys.size());
-    for (String ky : valid_physchem_keys.keySet()){
-      System.out.println(ky + ": " + valid_physchem_keys.get(ky));
-    }
 
     this.availablePChemParameters = new ArrayList<String>(hm.keySet());
     Collections.sort(this.availablePChemParameters);
 
     // Structure
-    hm = new HashMap<String, String>();
+    hm = new TreeMap<String, String>();
     hm.put("Canonical Smiles", "canSmi");
     hm.put("Canonical Tautomer", "canTaut");
     hm.put("Canonical Tautomer, Strip Stereo", "canTautStripStero");
@@ -193,7 +182,7 @@ public class ConfigurationBean implements Serializable {
     Collections.sort(this.availableStructureParameters);
 
     // biodata
-    hm = new HashMap<String, String>();
+    hm = new TreeMap<String, String>();
     hm.put("NCI60", "nci60");
     hm.put("HF", "hf");
     hm.put("XENO", "xeno");
@@ -238,22 +227,21 @@ public class ConfigurationBean implements Serializable {
     this.biodataColumns = new ArrayList<ColumnModel>();
   }
 
+  public void handleSelectAllPChem(){
+    this.selectedPChemParameters = this.availablePChemParameters;
+  }
+  
+  public void handleUnselectAllPChem(){
+    this.selectedPChemParameters = new ArrayList<String>();    
+  }
+  
   private void createDynamicColumns() throws Exception {
 
     try {
 
       this.physChemColumns = new ArrayList<ColumnModel>();
-      
       for (String columnKey : this.selectedPChemParameters) {
-        
         String key = columnKey.trim();
-        
-        System.out.println("In ConfigurationBean, searching for key: " + key);
-        
-        if (this.valid_physchem_keys == null){
-          System.out.println("valid_physchem_keys is null");
-        }
-        
         if (this.valid_physchem_keys.containsKey(key)) {
           this.physChemColumns.add(new ColumnModel(key, valid_physchem_keys.get(key)));
         }
@@ -515,12 +503,12 @@ public class ConfigurationBean implements Serializable {
     this.selectedPChemParameters = selectedPChemParameters;
   }
 
-  public static HashMap<String, String> getValid_physchem_keys() {
+  public TreeMap<String, String> getValid_physchem_keys() {
     return valid_physchem_keys;
   }
 
-  public static void setValid_physchem_keys(HashMap<String, String> valid_physchem_keys) {
-    ConfigurationBean.valid_physchem_keys = valid_physchem_keys;
+  public void setValid_physchem_keys(TreeMap<String, String> valid_physchem_keys) {
+    this.valid_physchem_keys = valid_physchem_keys;
   }
 
   public List<ColumnModel> getPhysChemColumns() {
@@ -547,12 +535,12 @@ public class ConfigurationBean implements Serializable {
     this.selectedStructureParameters = selectedStructureParameters;
   }
 
-  public static HashMap<String, String> getValid_strc_keys() {
+  public TreeMap<String, String> getValid_strc_keys() {
     return valid_strc_keys;
   }
 
-  public static void setValid_strc_keys(HashMap<String, String> valid_strc_keys) {
-    ConfigurationBean.valid_strc_keys = valid_strc_keys;
+  public void setValid_strc_keys(TreeMap<String, String> valid_strc_keys) {
+    this.valid_strc_keys = valid_strc_keys;
   }
 
   public List<ColumnModel> getStructureColumns() {
@@ -579,12 +567,12 @@ public class ConfigurationBean implements Serializable {
     this.selectedCmpdParameters = selectedCmpdParameters;
   }
 
-  public static HashMap<String, String> getValid_cmpd_keys() {
+  public TreeMap<String, String> getValid_cmpd_keys() {
     return valid_cmpd_keys;
   }
 
-  public static void setValid_cmpd_keys(HashMap<String, String> valid_cmpd_keys) {
-    ConfigurationBean.valid_cmpd_keys = valid_cmpd_keys;
+  public void setValid_cmpd_keys(TreeMap<String, String> valid_cmpd_keys) {
+    this.valid_cmpd_keys = valid_cmpd_keys;
   }
 
   public List<ColumnModel> getCmpdColumns() {
@@ -611,12 +599,12 @@ public class ConfigurationBean implements Serializable {
     this.selectedBioDataParameters = selectedBioDataParameters;
   }
 
-  public static HashMap<String, String> getValid_bio_keys() {
+  public TreeMap<String, String> getValid_bio_keys() {
     return valid_bio_keys;
   }
 
-  public static void setValid_bio_keys(HashMap<String, String> valid_bio_keys) {
-    ConfigurationBean.valid_bio_keys = valid_bio_keys;
+  public void setValid_bio_keys(TreeMap<String, String> valid_bio_keys) {
+    this.valid_bio_keys = valid_bio_keys;
   }
 
   public List<ColumnModel> getBiodataColumns() {
