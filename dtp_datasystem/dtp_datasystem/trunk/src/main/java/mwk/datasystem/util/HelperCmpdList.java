@@ -169,7 +169,7 @@ public class HelperCmpdList {
                     ahc.setAdHocCmpdParentFragment(fragList.get(0));
                 }
 
-        // track the cmpds for addition to CmpdList
+                // track the cmpds for addition to CmpdList
                 // each ahc has been persisted as Cmpd
                 entityCmpdList.add(ahc);
 
@@ -270,7 +270,7 @@ public class HelperCmpdList {
                 System.out.println("checkpoint: 5");
             }
 
-      // HashMap for holding cmpdId numbers and their respective CmpdListMemberVO
+            // HashMap for holding cmpdId numbers and their respective CmpdListMemberVO
             // for resolution AFTER fetching CmpdTable by cmpdIdList
             HashMap<Long, CmpdListMemberVO> map = new HashMap<Long, CmpdListMemberVO>();
 
@@ -320,7 +320,7 @@ public class HelperCmpdList {
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
-        } finally {        	
+        } finally {
             session.close();
         }
 
@@ -374,6 +374,9 @@ public class HelperCmpdList {
             c.add(Restrictions.eq("cmpdListId", cL.getCmpdListId()));
 
             // ONLY listOwner can update, but only if not PUBLIC
+            // MWK 19FEB2016 removed restriction on shareWith 
+            // since this was causing problems with createNewListFromSelected
+            // when loggedUser is PUBLIC
             c.add(Restrictions.eq("listOwner", currentUser));
             // 18Feb2016 MWK trying
             //c.add(Restrictions.ne("shareWith", "PUBLIC"));
@@ -452,6 +455,9 @@ public class HelperCmpdList {
             clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
             clCrit.add(Restrictions.eq("listOwner", currentUser));
             // can NOT delete a PUBLIC list
+            // MWK 19FEB2016 removed restriction on shareWith 
+            // since this was causing problems with createNewListFromSelected
+            // when loggedUser is PUBLIC
             // clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
 
             CmpdList target = (CmpdList) clCrit.uniqueResult();
