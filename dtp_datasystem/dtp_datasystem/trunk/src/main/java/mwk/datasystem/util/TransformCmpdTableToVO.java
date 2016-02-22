@@ -358,6 +358,7 @@ public class TransformCmpdTableToVO {
     public static CmpdListMemberVO translateCmpdListMember(CmpdListMember entityIn) {
 
         CmpdListMemberVO rtn = new CmpdListMemberVO();
+        rtn.setListMemberComment(entityIn.getListMemberComment());
 
         try {
             rtn.setId(entityIn.getId());

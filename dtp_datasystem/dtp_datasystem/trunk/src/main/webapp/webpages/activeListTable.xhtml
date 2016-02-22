@@ -116,6 +116,14 @@
                 sortBy="#{cmpd.nsc}">                                
         <h:outputText value="#{cmpd.nsc}"/>
       </p:column>   
+      
+      <p:column headerText="List Member Comment"
+                resizable="true"
+                sortBy="#{listMember.listMemberComment}"
+                filterBy="#{listMember.listMemberComment}"
+                filterMatchMode="contains">        
+        <h:outputText value="#{listMember.listMemberComment}"/>        
+      </p:column> 
 
       <ui:fragment rendered="#{sessionController.loggedUser != 'PUBLIC'}">
 

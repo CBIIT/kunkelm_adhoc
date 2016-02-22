@@ -213,16 +213,12 @@ public class ConfigurationBean implements Serializable {
     this.selectedStrcOptions = new ArrayList<String>();
     this.selectedStrcSize = selectedStrcSize;
     this.strcDim = Integer.valueOf(200);
-    this.availablePChemParameters = new ArrayList<String>();
     this.selectedPChemParameters = new ArrayList<String>();
     this.physChemColumns = new ArrayList<ColumnModel>();
-    this.availableStructureParameters = new ArrayList<String>();
     this.selectedStructureParameters = new ArrayList<String>();
     this.structureColumns = new ArrayList<ColumnModel>();
-    this.availableCmpdParameters = new ArrayList<String>();
     this.selectedCmpdParameters = new ArrayList<String>();
     this.cmpdColumns = new ArrayList<ColumnModel>();
-    this.availableBioDataParameters = new ArrayList<String>();
     this.selectedBioDataParameters = new ArrayList<String>();
     this.biodataColumns = new ArrayList<ColumnModel>();
   }

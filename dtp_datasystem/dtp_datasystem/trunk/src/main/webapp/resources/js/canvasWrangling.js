@@ -24,6 +24,10 @@ function structuresAsGridImage() {
   console.log('maxWidth: ' + maxWidth);
   console.log('maxHeight: ' + maxHeight);
 
+  // MWK 20Feb2016, adding 10% padding 
+  // This SEEMS to have fixed the issue 
+  // with truncation at the edges of some structures.  
+
   var tileWidth = maxWidth + 0.1 * maxWidth;
   var tileHeight = maxHeight + 0.1 * maxHeight;
 
@@ -40,16 +44,12 @@ function structuresAsGridImage() {
   var yCnt = -1;
 
   for (var i = 0; i < images.length; i++) {
-
     if (i % xDim == 0) {
       xCnt = -1;
       yCnt++;
     }
-
     xCnt++;
-
     ctx.drawImage(images[i], xCnt * tileWidth, yCnt * tileHeight);
-
   }
 
   //      console.log('Writing text to canvas');
