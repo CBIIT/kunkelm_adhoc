@@ -9577,6 +9577,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Win
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/LoadKekuleRenderedImages.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/MessingAroundWithTanimotoScores.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/SDFWrangling.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/AddDimensionedImage.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/Comparators.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/ExtendedCartesianChartModel.java -text

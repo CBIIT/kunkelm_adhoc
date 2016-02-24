@@ -50,10 +50,8 @@ public class Main {
     public static final Boolean DEBUG = Boolean.TRUE;
 
     public static void main(String[] args) {
-
         //testTanimotoScores();
-        testSearchCriteriaBean();
-        
+        testSearchCriteriaBean();        
     }
 
     public static void testTanimotoScores(){        
