@@ -116,7 +116,7 @@
                 sortBy="#{cmpd.nsc}">                                
         <h:outputText value="#{cmpd.nsc}"/>
       </p:column>   
-      
+
       <p:column headerText="List Member Comment"
                 resizable="true"
                 sortBy="#{listMember.listMemberComment}"
@@ -192,6 +192,19 @@
                                        target="#{structureSearchController.nscForLoad}" />  
 
         </p:commandButton>
+
+      </p:column>
+
+
+      <p:column headerText="Parent Structure Ctab Test" 
+                resizable="true"
+                exportable="false">
+        <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                        width="#{sessionController.configurationBean.strcDim}" 
+                        height="#{sessionController.configurationBean.strcDim}"
+                        styleClass="parentStructure"
+                        url='#{sessionController.configurationBean.getCmpdStrcNscUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+        </p:graphicImage>
 
       </p:column>
 

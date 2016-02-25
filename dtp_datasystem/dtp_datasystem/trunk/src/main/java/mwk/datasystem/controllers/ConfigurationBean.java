@@ -122,7 +122,7 @@ public class ConfigurationBean implements Serializable {
     hm.put("Plates", "plates");
     hm.put("Targets", "targets");
     hm.put("Count Fragments", "countCmpdFragments");
-
+    hm.put("Formal Charge", "formalCharge");
     hm.put("Molecular Formula", "formulaMolecularFormula");
     hm.put("Formula Weight", "formulaWeight");
     hm.put("Parent Molecular Formula", "parentMolecularFormula");
@@ -392,6 +392,61 @@ public class ConfigurationBean implements Serializable {
         sb.append("&smiles=");
         sb.append(urlEncode(cVO.getParentFragment().getCmpdFragmentStructure().getCanSmi()));
       } else if (cVO.getNsc() != null) {
+        sb.append("&nsc=");
+        sb.append(cVO.getNsc());
+      }
+      if (selectedStrcOptions.contains("TTL")) {
+        sb.append("&title=");
+        if (cVO.getPrefix() != null && cVO.getNsc() != null) {
+          sb.append(urlEncode(cVO.getPrefix() + cVO.getNsc()));
+        } else if (cVO.getName() != null) {
+          sb.append(urlEncode(cVO.getName()));
+        } else {
+          sb.append("Can't determine title from cmpdVO.");
+        }
+      }
+      if (selectedStrcOptions.contains("CLR")) {
+        sb.append("&color-atoms=true");
+      }
+      if (selectedStrcOptions.contains("NUM")) {
+        sb.append("&atom-numbers=true");
+      }
+      if (selectedStrcOptions.contains("KEK")) {
+        sb.append("&kekule=true");
+      }
+      if (selectedStrcOptions.contains("HLT")) {
+        if (querySmiles != null && querySmiles.length() > 0) {
+          sb.append("&querySmiles=");
+          sb.append(urlEncode(querySmiles));
+        }
+      }
+      rtn = sb.toString();
+    } else {
+
+      System.out.println("CmpdVO is null in getCmpdStrcUrl in SessionController");
+      System.out.println("querySmiles is: " + querySmiles);
+
+    }
+    return rtn;
+  }
+  
+  public String getCmpdStrcNscUrl(CmpdVO cVO, String querySmiles) {
+    String rtn = "";
+    if (cVO != null) {
+      StringBuilder sb = new StringBuilder();
+      strcDim = Integer.valueOf(200);
+      if (selectedStrcSize.equals("SM")) {
+        strcDim = Integer.valueOf(100);
+      } else if (selectedStrcSize.equals("MED")) {
+        strcDim = Integer.valueOf(200);
+      } else if (selectedStrcSize.equals("LG")) {
+        strcDim = Integer.valueOf(400);
+      } else if (selectedStrcSize.equals("JUMBO")) {
+        strcDim = Integer.valueOf(800);
+      }
+      sb.append("/StructureServlet?structureDim=");
+      sb.append(strcDim);
+      if (cVO.getNsc() != null) {
         sb.append("&nsc=");
         sb.append(cVO.getNsc());
       }

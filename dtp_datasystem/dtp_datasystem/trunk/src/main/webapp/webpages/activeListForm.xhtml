@@ -73,8 +73,7 @@
         <h:outputText value="#{listMember.cmpd.nscCmpdType}"/>
       </h1>
 
-      <p:panelGrid columns="2"  
-                   layout="grid">
+      <p:panelGrid>
 
         <p:panel style="display: inline-block;">
           <f:facet name="header">
@@ -98,6 +97,20 @@
                           height="#{sessionController.configurationBean.strcDim}"                                
                           url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
           </p:graphicImage>
+        </p:panel>
+
+        <p:panel rendered="#{sessionController.configurationBean.showFrags}"
+                 style="display: inline-block">
+          <ui:repeat value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" 
+                     var="fragSmiles">
+            <p:panel style="display: inline-block">
+              <p:graphicImage alt="Chemical Structure of Compound Fragment"
+                              styleClass="fragmentStructure"
+                              width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
+                              url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
+              </p:graphicImage>
+            </p:panel>
+          </ui:repeat>
         </p:panel>
 
       </p:panelGrid>
@@ -132,21 +145,7 @@
         <h:outputText value="Parent MW"/>
         <h:outputText value="#{listMember.cmpd.parentMolecularWeight}"/>
 
-      </p:panelGrid>
-
-      <p:panel rendered="#{sessionController.configurationBean.showFrags}"
-               style="display: inline-block">
-        <ui:repeat value="#{listMember.cmpd.cmpdFragmentSmilesStrings}" 
-                   var="fragSmiles">
-          <p:panel style="display: inline-block">
-            <p:graphicImage alt="Chemical Structure of Compound Fragment"
-                            styleClass="fragmentStructure"
-                            width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
-                            url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
-            </p:graphicImage>
-          </p:panel>
-        </ui:repeat>
-      </p:panel>
+      </p:panelGrid>     
 
       <p:panelGrid>
 
@@ -262,6 +261,8 @@
 
         </p:row>
 
+        <!--
+        
         <p:row>
           <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">pChem hard-coded</p:column>  
         </p:row>
@@ -465,6 +466,8 @@
           </p:column>
         </p:row>
 
+        -->
+        
         <p:row>
           <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">Canonical SMILES</p:column>  
         </p:row>
@@ -504,27 +507,7 @@
             <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.inchi}"/>
           </p:column>
         </p:row>
-
-        <p:row>
-          <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">pChem dataTable</p:column>  
-        </p:row>
-
-        <p:row>
-          <p:column colspan="6">
-            <p:dataTable id="pChemTbl" value="#{listMember.cmpd}" var="c" tableStyle="width: auto;">
-              <p:columns value="#{sessionController.configurationBean.valid_physchem_keys.keySet()}" 
-                         var="k"
-                         resizable="true">
-                <f:facet name="header">
-                  <h:outputText value="#{k}" class="vertical" />
-                </f:facet>
-                <h:outputText value="#{c.parentFragment.cmpdFragmentPChem[sessionController.configurationBean.valid_physchem_keys.get(k)]}"
-                              style="font: bold;"/>
-              </p:columns>
-            </p:dataTable>
-          </p:column>
-        </p:row>
-
+        
         <p:row>
           <p:column style="white-space: nowrap" colspan="6" styleClass="ui-widget-header">pChem dataGrid</p:column>  
         </p:row>

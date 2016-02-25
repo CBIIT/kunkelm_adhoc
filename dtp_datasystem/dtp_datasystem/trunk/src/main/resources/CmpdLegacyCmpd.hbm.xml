@@ -35,11 +35,7 @@
             <column name="GIF512" not-null="false" unique="false" sql-type="BYTEA"/>
             <type name="org.andromda.persistence.hibernate.usertypes.HibernateByteBlobType"/>
         </property>
-        <property name="gif340">
-            <column name="GIF340" not-null="false" unique="false" sql-type="BYTEA"/>
-            <type name="org.andromda.persistence.hibernate.usertypes.HibernateByteBlobType"/>
-        </property>
-        <property name="nsc">
+         <property name="nsc">
             <column name="NSC" not-null="false" unique="false" sql-type="INTEGER"/>
             <type name="java.lang.Integer"/>
         </property>

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import mwk.datasystem.domain.AdHocCmpd;
 import mwk.datasystem.domain.AdHocCmpdFragment;
@@ -22,9 +23,13 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
@@ -34,6 +39,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
+import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.SaturationChecker;
@@ -271,6 +277,49 @@ public class MoleculeParser {
     paramName = "MW";
     parsedResult = parseDescriptorValue(result, paramName);
     pchemRtn.setMolecularWeight(Double.valueOf(parsedResult));
+    
+    pchemRtn.setCountAtoms(im.getAtomCount());
+    
+    int cntHydrogen = 0;
+    int cntHeavy = 0;
+    
+    
+    for (IAtom a : im.atoms()){
+      if (a.getAtomicNumber() > 1){
+        cntHeavy++;
+      }
+    }
+    
+    pchemRtn.setCountBonds(im.getBondCount());
+    
+    int cntSingle = 0;
+    int cntDouble = 0;
+    int cntTriple = 0;
+    int cntStereo = 0;
+    
+    for (IBond b : im.bonds()){
+      if (b.getOrder() == Order.SINGLE){
+        cntSingle++;
+      } else if (b.getOrder() == Order.DOUBLE){
+        cntDouble++;
+      } else if (b.getOrder() == Order.TRIPLE){
+        cntTriple++;
+      } else {
+        // TODO handle this
+      }
+        
+    }
+    
+    SSSRFinder f = new SSSRFinder(im);
+    IRingSet irs = f.findSSSR();
+    
+    pchemRtn.setCountRings(irs.getAtomContainerCount());
+    
+    irs.getAtomContainerCount();
+    
+    Iterator itr = irs.atomContainers().iterator();
+    
+    
 
 //System.out.println("Value of alogp is:" + rtn.alogp);
 //System.out.println("Value of hba is:" + rtn.hba);

@@ -11,41 +11,41 @@
 
   <ui:define name="content">
 
-    <p:fieldset legend="Create a list with structures from SDF or MOL files (.sdf or .mol extension, or SMILES strings from a text file (.smi extension)">
+    <h2 style="margin: 0;">
+      <h:outputText value="Create a list with structures from SDF or MOL files (.sdf or .mol extension, or SMILES strings from a text file (.smi extension)"/>
+    </h2>
 
-      <p:outputLabel for="listName" value="Save results to list named: " />
-      <p:inputText id="listName" value="#{listContentController.listName}"/>
+    <p:outputLabel for="listName" value="Save results to list named: " />
+    <p:inputText id="listName" value="#{listContentController.listName}"/>
 
-      <p:spacer height="20" width="100%"/>
+    <p:spacer height="20" width="100%"/>
 
-      <p:outputLabel for="filUpl" value="Source file: " />
-      <p:fileUpload 
-        id="filUpl"
-        style="width: 700px;"
-        value="#{listContentController.uploadedFile}"
-        mode="simple"
-        dragDropSupport="false"
-        fileLimit="1"
-        sizeLimit="2000000"
-        allowTypes="/(\.|\/)(sdf|mol|smi)$/"/>
+    <p:outputLabel for="filUpl" value="Source file: " />
+    <p:fileUpload 
+      id="filUpl"
+      style="width: 700px;"
+      value="#{listContentController.uploadedFile}"
+      mode="simple"
+      dragDropSupport="false"
+      fileLimit="1"
+      sizeLimit="2000000"
+      allowTypes="/(\.|\/)(sdf|mol|smi)$/"/>
 
-      <p:spacer height="20" width="100%"/>
+    <p:spacer height="20" width="100%"/>
 
-      <p:commandButton value="Source is SDF or MOL"
-                       ajax="false"
-                       action="#{listContentController.performFileUpload}"
-                       onstart="PF('uploadingBUI').show();"
-                       oncomplete="PF('uploadingBUI').hide();"/>
+    <p:commandButton value="Source is SDF or MOL"
+                     ajax="false"
+                     action="#{listContentController.performFileUpload}"
+                     onstart="PF('uploadingBUI').show();"
+                     oncomplete="PF('uploadingBUI').hide();"/>
 
-      <p:spacer height="20" width="20"/>
+    <p:spacer height="20" width="20"/>
 
-      <p:commandButton value="Source is SMILES strings"
-                       ajax="false"
-                       action="#{listContentController.performSmilesFileUpload()}"
-                       onstart="PF('uploadingBUI').show();"
-                       oncomplete="PF('uploadingBUI').hide();"/>
-
-    </p:fieldset>
+    <p:commandButton value="Source is SMILES strings"
+                     ajax="false"
+                     action="#{listContentController.performSmilesFileUpload()}"
+                     onstart="PF('uploadingBUI').show();"
+                     oncomplete="PF('uploadingBUI').hide();"/>
 
   </ui:define>
 

@@ -110,40 +110,5 @@ public class HelperCmpdLegacyCmpd {
         return rtn;
 
     }
-    
-    public static CmpdLegacyCmpdVO insertLegacyCmpds(Integer nsc, byte[] img512bytes, byte[] img340bytes) {
-
-        CmpdLegacyCmpdVO rtn = new CmpdLegacyCmpdVO();
-
-        Session session = null;
-        Transaction tx = null;
-
-        try {
-
-            session = HibernateUtil.getSessionFactory().openSession();
-
-            tx = session.beginTransaction();
-
-            CmpdLegacyCmpd clc = CmpdLegacyCmpd.Factory.newInstance();
-                       
-            clc.setId(nsc.longValue());  
-            clc.setNsc(nsc);
-            clc.setGif512(img512bytes);
-            clc.setGif340(img340bytes);
-
-            session.save(clc);
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-        return rtn;
-
-    }
 
 }

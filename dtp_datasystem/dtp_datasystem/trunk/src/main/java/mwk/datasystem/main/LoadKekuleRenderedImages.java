@@ -90,7 +90,7 @@ public class LoadKekuleRenderedImages {
 
                 if (nscString != null && image512bytes != null && image340bytes != null) {
                     Integer nscInt = Integer.valueOf(nscString);
-                    HelperCmpdLegacyCmpd.insertLegacyCmpds(nscInt, image512bytes, image340bytes);
+                    HelperCmpdLegacyCmpd.insertLegacyCmpds(nscInt, image512bytes);
                 }
 
             }
