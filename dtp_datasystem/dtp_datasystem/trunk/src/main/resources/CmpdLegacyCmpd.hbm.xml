@@ -8,7 +8,7 @@
 
 <hibernate-mapping default-cascade="none">
     <class name="mwk.datasystem.domain.CmpdLegacyCmpdImpl"
-           table="KEK_TBL" dynamic-insert="false" dynamic-update="false">
+           table="CMPD_LEGACY_CMPD" dynamic-insert="false" dynamic-update="false">
         
         <id name="id" type="java.lang.Long" unsaved-value="null">
             <column name="ID" sql-type="BIGINT"/>

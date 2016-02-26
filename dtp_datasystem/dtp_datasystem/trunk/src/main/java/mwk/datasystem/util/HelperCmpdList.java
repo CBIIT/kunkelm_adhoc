@@ -396,7 +396,7 @@ public class HelperCmpdList {
 
         crit.add(accessDisj);
 
-        if (!listNames.isEmpty() && cmpdListIds.isEmpty()) {
+        if (!listNames.isEmpty() && !cmpdListIds.isEmpty()) {
 
           Disjunction descrDisj = Restrictions.disjunction();
           descrDisj.add(Restrictions.in("listName", listNames));

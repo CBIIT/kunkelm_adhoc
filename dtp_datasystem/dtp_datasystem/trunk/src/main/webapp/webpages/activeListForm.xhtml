@@ -27,16 +27,7 @@
 
   <ui:define name="content">
 
-    <script>
-      jQuery(document).ready(function() {
-        $("[id='datasystemForm:theDataGrid:0:pChemTbl']").rotateTableCellContent();
-      });
-      function doRotate() {
-        $("[id='datasystemForm:theDataGrid:0:pChemTbl']").rotateTableCellContent();
-      }
-    </script>
-
-    <p:panel header="List Anchor Structure"
+  <p:panel header="List Anchor Structure"
              rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
       <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>

@@ -24,95 +24,95 @@ import org.openscience.cdk.layout.StructureDiagramGenerator;
  */
 public class SDFWrangling {
 
-  public static final Boolean DEBUG = Boolean.TRUE;
+    public static final Boolean DEBUG = Boolean.TRUE;
 
-  public static void main(String[] args) {
-    //viaSmilesStrings();
-    viaCtabs();
-  }
-
-  public static void viaSmilesStrings() {
-
-    try {
-
-      File sdFile = new File("/tmp/sdFile.sdf");
-      FileOutputStream fos = new FileOutputStream(sdFile);
-      SDFWriter sdWriter = new SDFWriter(fos);
-
-      File smilesFile = new File("/tmp/smilesFile.smi");
-      FileInputStream fis = new FileInputStream(smilesFile);
-
-      IteratingSMILESReader smiReader = new IteratingSMILESReader(fis, DefaultChemObjectBuilder.getInstance());
-
-      smiReader.setReaderMode(IChemObjectReader.Mode.RELAXED);
-
-      int countMol = 0;
-
-      while (smiReader.hasNext()) {
-
-        IAtomContainer mol = smiReader.next();
-        countMol++;
-        System.out.println("Processing countMol: " + countMol);
-
-        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        sdg.setMolecule(mol);
-        sdg.generateCoordinates();
-        IAtomContainer molCoord = sdg.getMolecule();
-        sdWriter.write(molCoord);
-
-      }
-
-      System.out.println("Processed: " + countMol + " molecules");
-
-      smiReader.close();
-      sdWriter.close();
-
-    } catch (Exception e) {
-      e.printStackTrace();
+    public static void main(String[] args) {
+        //viaSmilesStrings();
+        viaCtabs();
     }
 
-  }
+    public static void viaSmilesStrings() {
 
-  public static void viaCtabs() {
+        try {
 
-    Integer[] nscArr = new Integer[]{
-      140456,
-      206337,
-      368384,
-      615626,
-      735159
-    };
+            File sdFile = new File("/tmp/sdFile.sdf");
+            FileOutputStream fos = new FileOutputStream(sdFile);
+            SDFWriter sdWriter = new SDFWriter(fos);
 
-    try {
+            File smilesFile = new File("/tmp/smilesFile.smi");
+            FileInputStream fis = new FileInputStream(smilesFile);
 
-      File sdFile = new File("/tmp/sdFile.sdf");
-      FileOutputStream fos = new FileOutputStream(sdFile);
-      SDFWriter sdWriter = new SDFWriter(fos);
+            IteratingSMILESReader smiReader = new IteratingSMILESReader(fis, DefaultChemObjectBuilder.getInstance());
 
-      int countMol = 0;
+            smiReader.setReaderMode(IChemObjectReader.Mode.RELAXED);
 
-      for (Integer i : nscArr) {
+            int countMol = 0;
 
-        CmpdVO theCmpd = HelperCmpd.getSingleCmpdByNsc(i, "PUBLIC");
-        IAtomContainer mol = MoleculeWrangling.fromCtabString(theCmpd.getParentFragment().getCmpdFragmentStructure().getCtab());
+            while (smiReader.hasNext()) {
 
-        mol.setProperty(CDKConstants.TITLE, i.toString());
-        
-        countMol++;
-        System.out.println("Processing countMol: " + countMol);
+                IAtomContainer mol = smiReader.next();
+                countMol++;
+                System.out.println("Processing countMol: " + countMol);
 
-        sdWriter.write(mol);
-        
-      }
+                StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                sdg.setMolecule(mol);
+                sdg.generateCoordinates();
+                IAtomContainer molCoord = sdg.getMolecule();
+                sdWriter.write(molCoord);
 
-      System.out.println("Processed: " + countMol + " molecules");
+            }
 
-      sdWriter.close();
+            System.out.println("Processed: " + countMol + " molecules");
 
-    } catch (Exception e) {
-      e.printStackTrace();
+            smiReader.close();
+            sdWriter.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-  }
+    public static void viaCtabs() {
+
+        Integer[] nscArr = new Integer[]{
+            140456,
+            206337,
+            368384,
+            615626,
+            735159
+        };
+
+        try {
+
+            File sdFile = new File("/tmp/sdFile.sdf");
+            FileOutputStream fos = new FileOutputStream(sdFile);
+            SDFWriter sdWriter = new SDFWriter(fos);
+
+            int countMol = 0;
+
+            for (Integer i : nscArr) {
+
+                CmpdVO theCmpd = HelperCmpd.getSingleCmpdByNsc(i, "PUBLIC");
+                IAtomContainer mol = MoleculeWrangling.fromCtabString(theCmpd.getParentFragment().getCmpdFragmentStructure().getCtab());
+
+                mol.setProperty(CDKConstants.TITLE, i.toString());
+
+                countMol++;
+                System.out.println("Processing countMol: " + countMol);
+
+                sdWriter.write(mol);
+
+            }
+
+            System.out.println("Processed: " + countMol + " molecules");
+
+            sdWriter.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
