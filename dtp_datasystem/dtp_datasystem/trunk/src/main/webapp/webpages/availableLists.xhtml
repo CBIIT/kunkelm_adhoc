@@ -36,7 +36,27 @@
   <ui:define name="alternate">
   </ui:define>
 
+
+
   <ui:define name="content">
+
+    <p:panel style="display:inline-block;border: none;"> 
+      <h:outputLabel for="listNamesTextArea" value="List Names"/>
+      <br/>
+      <h:inputTextarea value="#{listManagerController.listNamesTextArea}" 
+                       id="listNamesTextArea" 
+                       cols="15" 
+                       rows="5"/>
+    </p:panel>
+
+    <p:panel style="display:inline-block;border: none;"> 
+      <h:outputLabel for="cmpdListIdsTextArea" value="CmpdListIds"/>
+      <br/>
+      <h:inputTextarea value="#{listManagerController.cmpdListIdsTextArea}" 
+                       id="cmpdListIdsTextArea" 
+                       cols="15" 
+                       rows="5"/>
+    </p:panel>
 
     <p:commandButton value="Update Lists"
                      action="#{listManagerController.performUpdateAvailableLists()}"/>
