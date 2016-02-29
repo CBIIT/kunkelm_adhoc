@@ -112,6 +112,7 @@ public class ConfigurationBean implements Serializable {
     hm.put("CONF", "conf");
     hm.put("DIST", "distribution");
     hm.put("CAS", "cas");
+    hm.put("Nsc Cmpd Type", "nscCmpdType");
     hm.put("Name", "name");
     hm.put("adHocCmpdId", "adHocCmpdId");
     hm.put("originalAdHocCmpdId", "originalAdHocCmpdId");

@@ -29,6 +29,7 @@ import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
 import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Disjunction;
 
 // MWK TODO do these need setMaxResults or will that percolate from fetchers elsewhere?
@@ -236,40 +237,20 @@ public class HelperCmpdList {
 
       tx = session.beginTransaction();
 
-      if (DEBUG) {
-        System.out.println("checkpoint: 1");
-      }
-
       Criteria clCrit = session.createCriteria(CmpdList.class);
       clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
       clCrit.add(Restrictions.disjunction()
               .add(Restrictions.eq("listOwner", currentUser))
-              .add(Restrictions.eq("shareWith", "PUBLIC")));
-
-      if (DEBUG) {
-        System.out.println("checkpoint: 2");
-      }
+              .add(Restrictions.eq("shareWith", "EVERYONE")));
 
       if (includeListMembers) {
         clCrit.setFetchMode("listMembers", FetchMode.JOIN);
       }
 
-      if (DEBUG) {
-        System.out.println("checkpoint: 3");
-      }
-
       entityCL = (CmpdList) clCrit.uniqueResult();
-
-      if (DEBUG) {
-        System.out.println("checkpoint: 4");
-      }
 
       // just populate the top-level stuff
       rtnVO = TransformCmpdTableToVO.translateCmpdList(entityCL, includeListMembers);
-
-      if (DEBUG) {
-        System.out.println("checkpoint: 5");
-      }
 
       // HashMap for holding cmpdId numbers and their respective CmpdListMemberVO
       // for resolution AFTER fetching CmpdTable by cmpdIdList
@@ -278,18 +259,10 @@ public class HelperCmpdList {
       List<Long> cmpdIdList = new ArrayList<Long>();
       Long cmpdId = null;
 
-      if (DEBUG) {
-        System.out.println("checkpoint: 6");
-      }
-
       for (CmpdListMember clm : entityCL.getCmpdListMembers()) {
         cmpdId = (Long) session.getIdentifier(clm.getCmpd());
         cmpdIdList.add(cmpdId);
         map.put(cmpdId, TransformCmpdTableToVO.translateCmpdListMember(clm));
-      }
-
-      if (DEBUG) {
-        System.out.println("checkpoint: 7");
       }
 
       // fetch a list of cmpdTable
@@ -297,7 +270,7 @@ public class HelperCmpdList {
       cvCrit.add(Restrictions.in("id", cmpdIdList));
       List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
-      if (entityCVlist.size() > 0) {
+      if (!entityCVlist.isEmpty()) {
 
         for (CmpdTable cv : entityCVlist) {
           // translate to VO
@@ -312,10 +285,6 @@ public class HelperCmpdList {
 
       }
 
-      if (DEBUG) {
-        System.out.println("checkpoint: 8");
-      }
-
       tx.commit();
 
     } catch (Exception e) {
@@ -326,43 +295,6 @@ public class HelperCmpdList {
     }
 
     return rtnVO;
-
-  }
-
-  public static List<CmpdListVO> showAvailableCmpdLists(String currentUser) {
-
-    List<CmpdListVO> voList = new ArrayList<CmpdListVO>();
-    List<CmpdList> entityList = null;
-
-    // this isn't available to a PUBLIC user
-    if (!currentUser.equals("PUBLIC")) {
-
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      Transaction tx = session.beginTransaction();
-
-      try {
-
-        Criteria c = session.createCriteria(CmpdList.class);
-        c.add(Restrictions.disjunction()
-                .add(Restrictions.eq("listOwner", currentUser))
-                .add(Restrictions.eq("shareWith", "PUBLIC")));
-
-        entityList = (List<CmpdList>) c.list();
-
-        voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
-
-        tx.commit();
-
-      } catch (Exception e) {
-        tx.rollback();
-        e.printStackTrace();
-      } finally {
-        session.close();
-      }
-
-    }
-
-    return voList;
 
   }
 
@@ -380,61 +312,183 @@ public class HelperCmpdList {
     if (cmpdListIds == null) {
       cmpdListIds = new ArrayList<Long>();
     }
+    if (currentUser == null) {
+      System.out.println("currentUser is null. setting to \"PUBLIC\"");              
+      currentUser = "PUBLIC";
+    }
 
-    if (!listNames.isEmpty() || !cmpdListIds.isEmpty()) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction tx = session.beginTransaction();
 
-      Session session = HibernateUtil.getSessionFactory().openSession();
-      Transaction tx = session.beginTransaction();
+    try {
 
-      try {
+      Criteria crit = session.createCriteria(CmpdList.class);
 
-        Criteria crit = session.createCriteria(CmpdList.class);
+      // restrict searches to owned and shared
+      Disjunction accessDisj = Restrictions.disjunction();
+      accessDisj.add(Restrictions.eq("listOwner", currentUser));
+      accessDisj.add(Restrictions.eq("shareWith", "EVERYONE"));
 
-        Disjunction accessDisj = Restrictions.disjunction();
-        accessDisj.add(Restrictions.eq("listOwner", currentUser));
-        accessDisj.add(Restrictions.eq("shareWith", "PUBLIC"));
+      Conjunction nameConj = null;
+      Conjunction idConj = null;
 
-        crit.add(accessDisj);
-
-        if (!listNames.isEmpty() && !cmpdListIds.isEmpty()) {
-
-          Disjunction descrDisj = Restrictions.disjunction();
-          descrDisj.add(Restrictions.in("listName", listNames));
-          descrDisj.add(Restrictions.in("cmpdListId", cmpdListIds));
-
-          crit.add(descrDisj);
-
-        } else if (!listNames.isEmpty()) {
-
-          crit.add(Restrictions.in("listName", listNames));
-
-        } else if (!cmpdListIds.isEmpty()) {
-
-          crit.add(Restrictions.in("cmpdListId", cmpdListIds));
-
-        } else {
-          // shouldn't ever get here
-        }
-
-        entityList = (List<CmpdList>) crit.list();
-
-        voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
-
-        tx.commit();
-
-      } catch (Exception e) {
-        tx.rollback();
-        e.printStackTrace();
-      } finally {
-        session.close();
+      if (!listNames.isEmpty()) {
+        nameConj = Restrictions.conjunction();
+        nameConj.add(accessDisj);
+        nameConj.add(Restrictions.in("listName", listNames));
       }
 
+      if (!cmpdListIds.isEmpty()) {
+        idConj = Restrictions.conjunction();
+        idConj.add(accessDisj);
+        idConj.add(Restrictions.in("cmpdListId", cmpdListIds));
+      }
+
+      if (nameConj != null && idConj != null) {
+        
+        Disjunction disj = Restrictions.disjunction();
+        disj.add(nameConj).add(idConj);
+        if (currentUser.equals("PUBLIC")) {
+          disj.add(Restrictions.eq("shareWith", "EVERYONE"));
+        } else {
+          disj.add(accessDisj);
+        }
+        crit.add(disj);
+        
+      } else if (nameConj != null) {
+        
+        Disjunction disj = Restrictions.disjunction();
+        disj.add(nameConj);
+        if (currentUser.equals("PUBLIC")) {
+          disj.add(Restrictions.eq("shareWith", "EVERYONE"));
+        } else {
+          disj.add(accessDisj);
+        }
+        crit.add(disj);
+        
+      } else if (idConj != null) {
+        
+        Disjunction disj = Restrictions.disjunction();
+        disj.add(idConj);
+        if (currentUser.equals("PUBLIC")) {
+          disj.add(Restrictions.eq("shareWith", "EVERYONE"));
+        } else {
+          disj.add(accessDisj);
+        }
+        crit.add(disj);
+        
+      } else {
+        // if no seach criteria were specified, run default
+        // seach for shared lists (if PUBLIC user) 
+        // or shared AND owned lists if anyone else
+        if (currentUser.equals("PUBLIC")) {
+          crit.add(Restrictions.eq("shareWith", "EVERYONE"));
+        } else {
+          crit.add(accessDisj);
+        }
+      }
+
+      entityList = (List<CmpdList>) crit.list();
+
+      if (!entityList.isEmpty()) {
+        voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
+      }
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
 
     return voList;
 
   }
 
+//  public static List<CmpdListVO> searchCmpdLists_ORIGINAL(
+//          List<String> listNames,
+//          List<Long> cmpdListIds,
+//          String currentUser) {
+//
+//    List<CmpdListVO> voList = new ArrayList<CmpdListVO>();
+//    List<CmpdList> entityList = null;
+//
+//    if (listNames == null) {
+//      listNames = new ArrayList<String>();
+//    }
+//    if (cmpdListIds == null) {
+//      cmpdListIds = new ArrayList<Long>();
+//    }
+//
+//    
+//    Session session = HibernateUtil.getSessionFactory().openSession();
+//    Transaction tx = session.beginTransaction();
+//
+//    try {
+//    
+//      Conjunction outerConj = Restrictions.conjunction();
+//      Disjunction outerDisj = Restrictions.disjunction();
+//
+//      Criteria crit = session.createCriteria(CmpdList.class);
+//
+//      if (currentUser.equals("PUBLIC")) {
+//
+//        crit.add(Restrictions.eq("shareWith", "EVERYONE"));
+//
+//      } else {
+//
+//        Disjunction accessDisj = Restrictions.disjunction();
+//        accessDisj.add(Restrictions.eq("listOwner", currentUser));
+//        accessDisj.add(Restrictions.eq("shareWith", "EVERYONE"));
+//
+//        crit.add(accessDisj);
+//
+//      }
+//
+//      if (!listNames.isEmpty() || !cmpdListIds.isEmpty()) {
+//
+//        if (!listNames.isEmpty() && !cmpdListIds.isEmpty()) {
+//
+//          Disjunction descrDisj = Restrictions.disjunction();
+//          descrDisj.add(Restrictions.in("listName", listNames));
+//          descrDisj.add(Restrictions.in("cmpdListId", cmpdListIds));
+//
+//          crit.add(descrDisj);
+//
+//        } else if (!listNames.isEmpty()) {
+//
+//          crit.add(Restrictions.in("listName", listNames));
+//
+//        } else if (!cmpdListIds.isEmpty()) {
+//
+//          crit.add(Restrictions.in("cmpdListId", cmpdListIds));
+//
+//        } else {
+//          // shouldn't ever get here
+//        }
+//
+//      }
+//
+//      entityList = (List<CmpdList>) crit.list();
+//
+//      if (!entityList.isEmpty()) {
+//        voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
+//      }
+//
+//      tx.commit();
+//
+//    } catch (Exception e) {
+//      tx.rollback();
+//      e.printStackTrace();
+//    } finally {
+//      session.close();
+//    }
+//
+//    return voList;
+//
+//  }
   public static void updateCmpdList(CmpdListVO cL, String currentUser) {
 
     Session session = null;
@@ -445,18 +499,14 @@ public class HelperCmpdList {
       session = HibernateUtil.getSessionFactory().openSession();
 
       tx = session.beginTransaction();
-      Criteria c = session.createCriteria(CmpdList.class);
-      c.add(Restrictions.eq("cmpdListId", cL.getCmpdListId()));
+      Criteria crit = session.createCriteria(CmpdList.class);
+      crit.add(Restrictions.eq("cmpdListId", cL.getCmpdListId()));
 
-      // ONLY listOwner can update, but only if not PUBLIC
-      // MWK 19FEB2016 removed restriction on shareWith 
-      // since this was causing problems with createNewListFromSelected
-      // when loggedUser is PUBLIC
-      c.add(Restrictions.eq("listOwner", currentUser));
-      // 18Feb2016 MWK trying
-      //c.add(Restrictions.ne("shareWith", "PUBLIC"));
+      // ONLY listOwner can update, but only if not shareWith EVERYONE      
+      crit.add(Restrictions.eq("listOwner", currentUser));
+      crit.add(Restrictions.ne("shareWith", "EVERYONE"));
 
-      CmpdList cl = (CmpdList) c.uniqueResult();
+      CmpdList cl = (CmpdList) crit.uniqueResult();
 
       if (cL.getListName() != null) {
         cl.setListName(cL.getListName());
@@ -484,7 +534,7 @@ public class HelperCmpdList {
 
   }
 
-  public static void makeCmpdListPublic(Long cmpdListId, String currentUser) {
+  public static void shareCmpdList(Long cmpdListId, String currentUser) {
 
     Session session = null;
     Transaction tx = null;
@@ -494,13 +544,13 @@ public class HelperCmpdList {
       session = HibernateUtil.getSessionFactory().openSession();
 
       tx = session.beginTransaction();
-      Criteria c = session.createCriteria(CmpdList.class);
-      c.add(Restrictions.eq("cmpdListId", cmpdListId));
-      c.add(Restrictions.eq("listOwner", currentUser));
+      Criteria crit = session.createCriteria(CmpdList.class);
+      crit.add(Restrictions.eq("cmpdListId", cmpdListId));
+      crit.add(Restrictions.eq("listOwner", currentUser));
 
-      CmpdList cl = (CmpdList) c.uniqueResult();
+      CmpdList cl = (CmpdList) crit.uniqueResult();
 
-      cl.setShareWith("PUBLIC");
+      cl.setShareWith("EVERYONE");
 
       session.update(cl);
 
@@ -529,11 +579,8 @@ public class HelperCmpdList {
       Criteria clCrit = session.createCriteria(CmpdList.class);
       clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
       clCrit.add(Restrictions.eq("listOwner", currentUser));
-      // can NOT delete a PUBLIC list
-      // MWK 19FEB2016 removed restriction on shareWith 
-      // since this was causing problems with createNewListFromSelected
-      // when loggedUser is PUBLIC
-      // clCrit.add(Restrictions.ne("shareWith", "PUBLIC"));
+      // can NOT delete a shared list
+      clCrit.add(Restrictions.ne("shareWith", "EVERYONE"));
 
       CmpdList target = (CmpdList) clCrit.uniqueResult();
 

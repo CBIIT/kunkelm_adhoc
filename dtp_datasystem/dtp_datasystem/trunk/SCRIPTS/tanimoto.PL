@@ -48,9 +48,17 @@ push @fpList, "torsionbv_fp";
  #    #  #       #               #       #    #     #    #   #
  #    #  ######  ###### #######  #       #    #     #    #    #
 
+my @sqlList;
+my $sth;
 
-#drop table if exists all_pair_nsc;
-#create table all_pair_nsc as select u.nsc as uno, d.nsc as duo from app_and_inv u, app_and_inv d where u.nsc < d.nsc;
+push @sqlList, "drop table if exists all_pair_nsc";
+push @sqlList, "create table all_pair_nsc as select u.nsc as uno, d.nsc as duo from app_and_inv u, app_and_inv d where u.nsc < d.nsc";
+
+foreach my $sql(@sqlList){
+  $sth = $dbh->prepare($sql);
+  print "$sql;\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+}
 
  #####    ####           ######  #####
  #    #  #    #          #       #    #
@@ -59,8 +67,7 @@ push @fpList, "torsionbv_fp";
  #    #  #    #          #       #
  #####    ####           #       #
 
-my @sqlList;
-my $sth;
+@sqlList = ();
 
 foreach my $fp(@fpList){
 	push @sqlList, "drop table if exists temp_" . $fp;
@@ -70,7 +77,7 @@ foreach my $fp(@fpList){
 foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
   print "$sql;\n\n";
-#$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
 
@@ -93,7 +100,7 @@ foreach my $fp(@fpList){
 foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
   print "$sql;\n\n";
- #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+ $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
 # check on counts
@@ -108,7 +115,7 @@ foreach my $fp(@fpList){
 foreach my $sql(@sqlList){
   my $sth = $dbh->prepare($sql);
   print "$sql;\n\n";
- #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+ $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
   ####   #####    ####    ####    ####    #####    ##    #####
@@ -137,7 +144,7 @@ foreach my $fp(@fpList){
 print "$sql;\n\n";
 
 $sth = $dbh->prepare($sql);
-#$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 
   ####    #####    ##     ####   #    #  ######  #####
  #          #     #  #   #    #  #   #   #       #    #
@@ -165,8 +172,52 @@ foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
   print "$sql;\n\n";
 $sth = $dbh->prepare($sql);
-#$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 }
+
+ #    #    ##    #    #  #    #    ##    #
+ ##  ##   #  #   ##   #  #    #   #  #   #
+ # ## #  #    #  # #  #  #    #  #    #  #
+ #    #  ######  #  # #  #    #  ######  #
+ #    #  #    #  #   ##  #    #  #    #  #
+ #    #  #    #  #    #   ####   #    #  ######
+
+ #    #    ##    #    #  #    #    ##    #
+ ##  ##   #  #   ##   #  #    #   #  #   #
+ # ## #  #    #  # #  #  #    #  #    #  #
+ #    #  ######  #  # #  #    #  ######  #
+ #    #  #    #  #   ##  #    #  #    #  #
+ #    #  #    #  #    #   ####   #    #  ######
+
+drop table if exists temp;
+create table temp as select * from tanimoto_scores limit 0;
+alter table temp drop id;
+\copy temp from /tmp/temp_tanimoto_collate.csv csv header
+drop sequence if exists temp_seq;
+create sequence temp_seq;
+insert into tanimoto_scores
+select nextval('temp_seq'), * from temp;
+
+ #    #    ##    #    #  #    #    ##    #
+ ##  ##   #  #   ##   #  #    #   #  #   #
+ # ## #  #    #  # #  #  #    #  #    #  #
+ #    #  ######  #  # #  #    #  ######  #
+ #    #  #    #  #   ##  #    #  #    #  #
+ #    #  #    #  #    #   ####   #    #  ######
+
+ #    #    ##    #    #  #    #    ##    #
+ ##  ##   #  #   ##   #  #    #   #  #   #
+ # ## #  #    #  # #  #  #    #  #    #  #
+ #    #  ######  #  # #  #    #  ######  #
+ #    #  #    #  #   ##  #    #  #    #  #
+ #    #  #    #  #    #   ####   #    #  ######
+
+
+
+
+
+
+
 
 
  ######  #    #  #####    ####   #####    #####
@@ -191,7 +242,7 @@ foreach my $sql(@sqlList){
   $sth = $dbh->prepare($sql);
   print "$sql;\n\n";
   # Can't execute \copy over DBI...   just print these out
-  #$sth->execute() or warn "Couldn't execute statement: $sql" . $sth->errstr;	
+  # $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
 

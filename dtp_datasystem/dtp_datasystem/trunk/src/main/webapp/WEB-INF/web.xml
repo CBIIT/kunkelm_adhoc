@@ -58,7 +58,7 @@
   </welcome-file-list>    
   <error-page>
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-    <location>/webpages/availableLists.xhtml?faces-redirect=true</location>
+    <location>/webpages/availableLists.xhtml</location>
   </error-page>
   <!--
   <security-constraint>

@@ -13,38 +13,38 @@
 
     <ui:include src="/webpages/templates/cmpd_list_nav.xhtml"/>
 
-    <p:fieldset legend="Export All Data">  
+    <h2 style="margin: 0;">
+      <h:outputText value="Export Data"/>
+    </h2>
 
-      <p:commandButton ajax="false" value="Export to Excel">
-        <p:dataExporter type="xls" 
-                        target="cmpdListTbl" 
-                        fileName="listOfCompounds" />        
-      </p:commandButton>
+    <p:commandButton ajax="false" value="Export to Excel">
+      <p:dataExporter type="xls" 
+                      target="cmpdListTbl" 
+                      fileName="listOfCompounds" />        
+    </p:commandButton>
 
-      <p:spacer width="20"/>
+    <p:spacer width="20"/>
 
-      <p:commandButton ajax="false" value="Export as CSV">  
-        <p:dataExporter type="csv" 
-                        target="cmpdListTbl" 
-                        fileName="listOfCompounds" />
-      </p:commandButton> 
+    <p:commandButton ajax="false" value="Export as CSV">  
+      <p:dataExporter type="csv" 
+                      target="cmpdListTbl" 
+                      fileName="listOfCompounds" />
+    </p:commandButton> 
 
-      <p:spacer width="20"/>
+    <p:spacer width="20"/>
 
-      <p:commandButton ajax="false" value="Export to Excel with Structure Images">
-        <p:dataExporter type="xls" 
-                        target="cmpdListTbl" 
-                        postProcessor="#{listManagerController.postProcessXLS}"
-                        fileName="listOfCompounds" />        
-      </p:commandButton>
+    <p:commandButton ajax="false" value="Export to Excel with Structure Images">
+      <p:dataExporter type="xls" 
+                      target="cmpdListTbl" 
+                      postProcessor="#{listManagerController.postProcessXLS}"
+                      fileName="listOfCompounds" />        
+    </p:commandButton>
 
-      <p:spacer width="20"/>
+    <p:spacer width="20"/>
 
-      <p:commandButton onclick="structuresAsGridImage();" 
-                       ajax="true"
-                       value="Image of bare structures as grid" /> 
-
-    </p:fieldset>
+    <p:commandButton onclick="structuresAsGridImage();" 
+                     ajax="true"
+                     value="Image of bare structures as grid" /> 
 
     <p:spacer height="20" width="100%"/>
 

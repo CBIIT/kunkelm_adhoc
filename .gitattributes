@@ -9509,8 +9509,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.sql -te
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CLEAN_UP_AD_HOC.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/FORM_PART -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/cancelPostgresProcess -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/fingerprints.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formCriteriaFromTable_BEFORE_DISPLAY_NAME.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/formPart -text
@@ -9525,6 +9523,8 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartAddToColumnModelList -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartColumnFormat -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/outputPartLabelValue -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/possibleQuaternary.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/tanimoto.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/tanimoto.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/template.PL -text
 dtp_datasystem/dtp_datasystem/trunk/faces-config.NavData -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/compare/compare-common/20160213/compare-common-20160213-sources.jar -text

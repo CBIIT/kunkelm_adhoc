@@ -20,90 +20,94 @@ import org.hibernate.criterion.Restrictions;
  */
 public class HelperCmpdKnownSalt {
 
-    public static List<CmpdKnownSaltVO> loadAllSalts() {
+  public static List<CmpdKnownSaltVO> loadAllSalts() {
 
-        ArrayList<CmpdKnownSaltVO> rtnList = new ArrayList<CmpdKnownSaltVO>();
+    ArrayList<CmpdKnownSaltVO> rtnList = new ArrayList<CmpdKnownSaltVO>();
 
-        Session session = null;
-        Transaction tx = null;
+    Session session = null;
+    Transaction tx = null;
 
-        try {
+    try {
 
-            session = HibernateUtil.getSessionFactory().openSession();
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            tx = session.beginTransaction();
+      tx = session.beginTransaction();
 
-            Criteria c = session.createCriteria(CmpdKnownSalt.class);
-            List<CmpdKnownSalt> saltList = (List<CmpdKnownSalt>) c.list();
+      Criteria crit = session.createCriteria(CmpdKnownSalt.class);
+      List<CmpdKnownSalt> saltList = (List<CmpdKnownSalt>) crit.list();
 
-            for (CmpdKnownSalt cks : saltList) {
-                rtnList.add(TransformAndroToVO.translateCmpdKnownSalt(cks));
-            }
+      if (!saltList.isEmpty()) {
 
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+        for (CmpdKnownSalt cks : saltList) {
+          rtnList.add(TransformAndroToVO.translateCmpdKnownSalt(cks));
         }
 
-        return rtnList;
+      }
 
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
 
-    public static void updateSalt(CmpdKnownSaltVO cksVO) {
+    return rtnList;
 
-        Session session = null;
-        Transaction tx = null;
+  }
 
-        try {
+  public static void updateSalt(CmpdKnownSaltVO cksVO) {
 
-            session = HibernateUtil.getSessionFactory().openSession();
+    Session session = null;
+    Transaction tx = null;
 
-            tx = session.beginTransaction();
-            Criteria c = session.createCriteria(CmpdKnownSalt.class);
-            c.add(Restrictions.eq("id", cksVO.getId()));
+    try {
 
-            CmpdKnownSalt cksEntity = (CmpdKnownSalt) c.uniqueResult();
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            if (cksEntity != null) {
+      tx = session.beginTransaction();
+      Criteria crit = session.createCriteria(CmpdKnownSalt.class);
+      crit.add(Restrictions.eq("id", cksVO.getId()));
 
-                if (cksVO.getSaltName() != null) {
-                    cksEntity.setSaltName(cksVO.getSaltName());
-                }
-                if (cksVO.getSaltMf() != null) {
-                    cksEntity.setSaltMf(cksVO.getSaltMf());
-                }
-                if (cksVO.getSaltMw() != null) {
-                    cksEntity.setSaltMw(cksVO.getSaltMw());
-                }
-                if (cksVO.getCanSmi() != null) {
-                    cksEntity.setCanSmi(cksVO.getCanSmi());
-                }
-                if (cksVO.getCanTaut() != null) {
-                    cksEntity.setCanTaut(cksVO.getCanTaut());
-                }
-                if (cksVO.getCanTautStripStereo() != null) {
-                    cksEntity.setCanTautStripStereo(cksVO.getCanTautStripStereo());
-                }
+      CmpdKnownSalt cksEntity = (CmpdKnownSalt) crit.uniqueResult();
 
-                session.update(cksEntity);
+      if (cksEntity != null) {
 
-            } else {
-                System.out.println("cksEntity is null in updateCmpdKnownSalt in HelperCmpdKnownSalt.");
-            }
-
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+        if (cksVO.getSaltName() != null) {
+          cksEntity.setSaltName(cksVO.getSaltName());
+        }
+        if (cksVO.getSaltMf() != null) {
+          cksEntity.setSaltMf(cksVO.getSaltMf());
+        }
+        if (cksVO.getSaltMw() != null) {
+          cksEntity.setSaltMw(cksVO.getSaltMw());
+        }
+        if (cksVO.getCanSmi() != null) {
+          cksEntity.setCanSmi(cksVO.getCanSmi());
+        }
+        if (cksVO.getCanTaut() != null) {
+          cksEntity.setCanTaut(cksVO.getCanTaut());
+        }
+        if (cksVO.getCanTautStripStereo() != null) {
+          cksEntity.setCanTautStripStereo(cksVO.getCanTautStripStereo());
         }
 
+        session.update(cksEntity);
+
+      } else {
+        System.out.println("cksEntity is null in updateCmpdKnownSalt in HelperCmpdKnownSalt.");
+      }
+
+      tx.commit();
+
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
+
+  }
 
 }

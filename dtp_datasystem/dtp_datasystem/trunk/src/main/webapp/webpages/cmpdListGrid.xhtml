@@ -9,57 +9,59 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="content">
+  <ui:define name="content">
 
-        <ui:include src="/webpages/templates/cmpd_list_nav.xhtml"/>
+    <ui:include src="/webpages/templates/cmpd_list_nav.xhtml"/>
 
-        <p:fieldset legend="Export Structure Images">  
-            <p:commandButton onclick="structuresAsGridImage();" 
-                             ajax="true"
-                             value="Image of bare structures as grid" /> 
-        </p:fieldset>
+    <h2 style="margin: 0;">
+      <h:outputText value="Export Structure Images"/>
+    </h2>
 
-        <p:spacer height="20" width="100%"/>
+    <p:commandButton onclick="structuresAsGridImage();" 
+                     ajax="true"
+                     value="Image of bare structures as grid" /> 
 
-        <p:dataGrid  var="cmpd" 
-                     value="#{listLogicController.currentListOfCompounds}" 
-                     id="compactGridViewDataGrid"
-                     columns="8"
-                     rows="80"
-                     paginator="true"  
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                     rowsPerPageTemplate="80,160,240,320">  
+    <p:spacer height="20" width="100%"/>
 
-            <f:facet name="header">  
-                <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Compounds"/>
-            </f:facet>
+    <p:dataGrid  var="cmpd" 
+                 value="#{listLogicController.currentListOfCompounds}" 
+                 id="compactGridViewDataGrid"
+                 columns="8"
+                 rows="80"
+                 paginator="true"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="80,160,240,320">  
 
-            <p:panelGrid columns="1">
+      <f:facet name="header">  
+        <h:outputText value="List with #{fn:length(listLogicController.currentListOfCompounds)} Compounds"/>
+      </f:facet>
 
-                <f:facet name="header"> 
-                    <h:outputText value="#{cmpd.name}"/>
-                </f:facet> 
+      <p:panelGrid columns="1">
 
-                <p:selectBooleanCheckbox value="#{cmpd.isSelected}" />
+        <f:facet name="header"> 
+          <h:outputText value="#{cmpd.name}"/>
+        </f:facet> 
 
-                <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                                width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
-                                styleClass="parentStructure"
-                                url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-                </p:graphicImage>
+        <p:selectBooleanCheckbox value="#{cmpd.isSelected}" />
 
-                <f:facet name="footer">
-                    <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
-                        <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
-                        <f:setPropertyActionListener value="#{cmpd}"   
-                                                     target="#{listLogicController.selectedCmpd}" />  
-                    </p:commandLink>
-                </f:facet> 
+        <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                        width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"
+                        styleClass="parentStructure"
+                        url='#{sessionController.configurationBean.getCmpdStrcUrl(cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+        </p:graphicImage>
 
-            </p:panelGrid>
+        <f:facet name="footer">
+          <p:commandLink update=":datasystemForm:CmpdDetailsDialogPanel" oncomplete="PF('cmpdDetailDlg').show();" title="View Detail">  
+            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />   
+            <f:setPropertyActionListener value="#{cmpd}"   
+                                         target="#{listLogicController.selectedCmpd}" />  
+          </p:commandLink>
+        </f:facet> 
 
-        </p:dataGrid>
+      </p:panelGrid>
 
-    </ui:define>
+    </p:dataGrid>
+
+  </ui:define>
 
 </ui:composition>

@@ -1,4 +1,4 @@
-start: 20151019 08:09:01.444
+start: 20160226 18:49:15.316
 drop table if exists temp_atompairbv_fp;
 
 create table temp_atompairbv_fp as select nsc, atompairbv_fp(mol) as fp from rdkit_mol where nsc in ( select nsc from app_and_inv );
@@ -120,5 +120,5 @@ insert into temp_tanimoto_stacked select nsc1, nsc2, 'torsionbv_fp', tanimoto fr
 
 \copy temp_tanimoto_torsionbv_fp to /tmp/temp_tanimoto_torsionbv_fp.csv csv header;
 
-start: 20151019 08:09:01.444
-finish: 20151019 08:09:01.469
+start: 20160226 18:49:15.316
+finish: 20160226 18:49:15.334

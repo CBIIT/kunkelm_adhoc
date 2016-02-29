@@ -29,45 +29,49 @@ import mwk.datasystem.vo.TanimotoScoresVO;
  */
 public class HelperTanimotoScores {
 
-    /*
-     insert into tanimoto_scores 
-     select 
-     nextval('tan_seq'), uno, duo, atompairbv_fp_tanimoto, featmorganbv_fp_tanimoto, layered_fp_tanimoto, maccs_fp_tanimoto, morganbv_fp_tanimoto, rdkit_fp_tanimoto, torsionbv_fp_tanimoto
-     from temp_tanimoto_collate
-    where uno < duo;
-     */
-    public static ArrayList<TanimotoScoresVO> fetch() {
+  /*
+   insert into tanimoto_scores 
+   select 
+   nextval('tan_seq'), uno, duo, atompairbv_fp_tanimoto, featmorganbv_fp_tanimoto, layered_fp_tanimoto, maccs_fp_tanimoto, morganbv_fp_tanimoto, rdkit_fp_tanimoto, torsionbv_fp_tanimoto
+   from temp_tanimoto_collate
+   where uno < duo;
+   */
+  public static ArrayList<TanimotoScoresVO> fetch() {
 
-        System.out.println("In fetch in HelperTanimotoScores.");
+    System.out.println("In fetch in HelperTanimotoScores.");
 
-        ArrayList<TanimotoScoresVO> rtnList = new ArrayList<TanimotoScoresVO>();
+    ArrayList<TanimotoScoresVO> rtnList = new ArrayList<TanimotoScoresVO>();
 
-        Session session = null;
-        Transaction tx = null;
+    Session session = null;
+    Transaction tx = null;
 
-        try {
+    try {
 
-            session = HibernateUtil.getSessionFactory().openSession();
+      session = HibernateUtil.getSessionFactory().openSession();
 
-            tx = session.beginTransaction();
+      tx = session.beginTransaction();
 
-            Criteria c = session.createCriteria(TanimotoScores.class);
+      Criteria crit = session.createCriteria(TanimotoScores.class);
 
-            List<TanimotoScores> entityList = (List<TanimotoScores>) c.list();
+      List<TanimotoScores> entityList = (List<TanimotoScores>) crit.list();
 
-            for (TanimotoScores t : entityList) {
-                rtnList.add(TransformAndroToVO.translateTanimotoScores(t));
-            }
+      if (!entityList.isEmpty()) {
 
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+        for (TanimotoScores t : entityList) {
+          rtnList.add(TransformAndroToVO.translateTanimotoScores(t));
         }
 
-        return rtnList;
+      }
 
+    } catch (Exception e) {
+      tx.rollback();
+      e.printStackTrace();
+    } finally {
+      session.close();
     }
+
+    return rtnList;
+
+  }
 
 }

@@ -76,7 +76,7 @@ public class ListManagerController implements Serializable {
     listNames = new ArrayList<String>();
     cmpdListIds = new ArrayList<Long>();
     performUpdateAvailableLists();
-    
+
     // APP&INV APP & INV APPROVED AND INVESTIGATIONAL
     // default activeList is set to APPROVED and INVESTIGATIONAL which is forced to be CmpdList.id = 1
     loadToActiveList(1l);
@@ -185,6 +185,13 @@ public class ListManagerController implements Serializable {
 
   }
 
+  public String performNewSearchForAvailableLists() {
+    listNames.clear();
+    cmpdListIds.clear();
+
+    return performUpdateAvailableLists();
+  }
+
   public String performUpdateAvailableLists() {
 
     // MWK 26FEB2016 Why is this here?  A fix for ancient problems, long forgotten?
@@ -198,52 +205,34 @@ public class ListManagerController implements Serializable {
 
       List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
 
-      if (sessionController != null && sessionController.getLoggedUser() != null) {
+      // parse text areas
+      String[] splitStrings = null;
+      String fixedString = null;
+      int i;
 
-        // parse text areas
-        String[] splitStrings = null;
-        String fixedString = null;
-        int i;
+      String delimiters = "[\\n\\r\\t,]+";
 
-        String delimiters = "[\\n\\r\\t,]+";
-
-        if (listNamesTextArea != null && !listNamesTextArea.isEmpty()) {
-          splitStrings = listNamesTextArea.split(delimiters);
-          for (i = 0; i < splitStrings.length; i++) {
-            fixedString = splitStrings[i].trim();
-            if (fixedString.length() > 0) {
-              listNames.add(fixedString);
-            }
+      if (listNamesTextArea != null && !listNamesTextArea.isEmpty()) {
+        splitStrings = listNamesTextArea.split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+          fixedString = splitStrings[i].trim();
+          if (fixedString.length() > 0) {
+            listNames.add(fixedString);
           }
         }
-
-        if (cmpdListIdsTextArea != null && !cmpdListIdsTextArea.isEmpty()) {
-          splitStrings = cmpdListIdsTextArea.split(delimiters);
-          for (i = 0; i < splitStrings.length; i++) {
-            fixedString = splitStrings[i].replaceAll("[^0-9]", "");
-            if (fixedString.length() > 0) {
-              cmpdListIds.add(Long.valueOf(fixedString));
-            }
-          }
-        }
-
-        // if PUBLIC can ONLY run a search
-        if (sessionController.getLoggedUser().equals("PUBLIC")) {
-          if (!listNames.isEmpty() || !cmpdListIds.isEmpty()) {
-            justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
-          }
-          // if other user then run a search if criteria have been specified
-          // otherwise show all available lists
-        } else {
-          if (!listNames.isEmpty() || !cmpdListIds.isEmpty()) {
-            justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
-          } else {
-            justFetchedLists = HelperCmpdList.showAvailableCmpdLists(sessionController.getLoggedUser());
-          }
-        }
-      } else {
-        System.out.println("sessionController.getLoggedUser is null in peformUpdateAvailableLists in ListManagerController");
       }
+
+      if (cmpdListIdsTextArea != null && !cmpdListIdsTextArea.isEmpty()) {
+        splitStrings = cmpdListIdsTextArea.split(delimiters);
+        for (i = 0; i < splitStrings.length; i++) {
+          fixedString = splitStrings[i].replaceAll("[^0-9]", "");
+          if (fixedString.length() > 0) {
+            cmpdListIds.add(Long.valueOf(fixedString));
+          }
+        }
+      }
+
+      justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
 
       // check for change in size of lists
       // null out the listMembers if there has been a change to force
@@ -267,7 +256,7 @@ public class ListManagerController implements Serializable {
           Integer curCountMembers = curList.getCountListMembers();
 
           // if the number of members has changed
-          // then null it out listMembers force re-fetch the next time it is called
+          // then null out listMembers to force re-fetch the next time it is called
           if (fetchedList.getCountListMembers().intValue() != curList.getCountListMembers().intValue()) {
 
             curList.setCmpdListMembers(null);
@@ -369,12 +358,12 @@ public class ListManagerController implements Serializable {
 
   }
 
-  public String performMakeListPublic() {
+  public String performShareList() {
 
     // only if owner
     if (listManagerBean.activeList.getListOwner().equals(sessionController.getLoggedUser())) {
-      HelperCmpdList.makeCmpdListPublic(listManagerBean.activeList.getCmpdListId(), sessionController.getLoggedUser());
-      listManagerBean.activeList.setShareWith("PUBLIC");
+      HelperCmpdList.shareCmpdList(listManagerBean.activeList.getCmpdListId(), sessionController.getLoggedUser());
+      listManagerBean.activeList.setShareWith("EVERYONE");
     }
 
     return "/webpages/availableLists.xhtml?faces-redirect=true";

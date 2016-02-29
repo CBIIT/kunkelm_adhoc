@@ -1,66 +1,177 @@
+.ui-widget-content{
+  color: black;
+}
+
+h1, h2, h3 {
+    margin-bottom: 0; 
+    padding-bottom: 0;
+}
+
 .ui-commandlink:focus{
-    color: red !important; 
-    font-size: large !important; 
-    text-decoration: underline !important;
-    border: dotted !important;
+  color: red !important; 
+  font-size: large !important; 
+  text-decoration: underline !important;
+  border: dotted !important;
 }
 
 .ui-button:focus{
+  color: red !important; 
+  font-size: large !important; 
+  text-decoration: underline !important;
+  border: dotted !important;
+}
+
+.ui-autocomplete-input:focus{
     color: red !important; 
     font-size: large !important; 
     text-decoration: underline !important;
     border: dotted !important;
 }
 
-.ui-widget-content{
-    color: black;
+a:focus { 
+    color: red !important; 
+    font-size: large !important; 
+    text-decoration: underline !important; 
+    border: dotted !important;
 }
 
-.ui-fieldset .ui-fieldset-legend{
-    background: transparent !important;
+a:active {
+    font-weight: bold; 
+    /* text-decoration: underline; */
+}
+
+textarea:focus { 
+    border-width: thick; 
+    border-color: red;}
+
+.ui-widget-content{
+  color: black;
 }
 
 .borderlessPanelGrid tr, .borderlessPanelGrid td {
-    border: none !important;
+  border: none !important;
 }
 
-.grayPanelGrid, .grayPanelGrid td {
-    font-weight: bold !important;
-    color: white !important;
-    background-color: lightgray !important;
-}
-
-.whitePanelGrid, .whitePanelGrid td {
-    font-weight: normal !important;
-    color: black !important;
-    background-color: white !important;
-}
-
-/* menus size by content */
+/*
+ #    #  ######  #    #  #    #  #####     ##    #####    ####
+ ##  ##  #       ##   #  #    #  #    #   #  #   #    #  #
+ # ## #  #####   # #  #  #    #  #####   #    #  #    #   ####
+ #    #  #       #  # #  #    #  #    #  ######  #####        #
+ #    #  #       #   ##  #    #  #    #  #    #  #   #   #    #
+ #    #  ######  #    #   ####   #####   #    #  #    #   ####
+*/
 
 ul.ui-menu-child {
-    white-space: nowrap;
-    width: auto !important;
+  white-space: nowrap;
+  width: auto !important;
 }
 
 .ui-menuitem-text {
-    font-size: large;
-    padding-left: 10px;
+	padding: 1em;
+	background-color: white;
+	color: blue;
+  font-size: 1em;
+  font-weight: bold;  
 }
+
+
+/*
+ #####    ####    #####    ##     #####  ######
+ #    #  #    #     #     #  #      #    #
+ #    #  #    #     #    #    #     #    #####
+ #####   #    #     #    ######     #    #
+ #   #   #    #     #    #    #     #    #
+ #    #   ####      #    #    #     #    ######
+*/
 
 /* Styles for rotateTableCellContent plugin*/
 table div.rotated {
-    -ms-transform:rotate(270deg); /* IE 9 */
-    -moz-transform:rotate(270deg); /* Firefox */
-    -webkit-transform:rotate(270deg); /* Safari and Chrome */
-    -o-transform:rotate(270deg); /* Opera */    
+  -ms-transform:rotate(270deg); /* IE 9 */
+  -moz-transform:rotate(270deg); /* Firefox */
+  -webkit-transform:rotate(270deg); /* Safari and Chrome */
+  -o-transform:rotate(270deg); /* Opera */    
 }
 
 thead th {
-    vertical-align:top;
+  vertical-align:bottom;
 }
 
 table .vertical {
-    white-space:nowrap;
-    background-color:white;
+  white-space:nowrap;
+  background-color:white;
+}
+
+
+/*
+                                                 #####
+ #    #   ####   ######  ######  #    #  #      #     #
+ #    #  #       #       #       #    #  #            #
+ #    #   ####   #####   #####   #    #  #          ##
+ #    #       #  #       #       #    #  #         #
+ #    #  #    #  #       #       #    #  #
+  ####    ####   ######  #        ####   ######    #
+
+*/
+
+/*
+http://jimmybonney.com/articles/column_header_rotation_css/
+*/
+
+.table-header-rotated th.row-header{
+  width: auto;
+}
+
+.table-header-rotated td{
+  width: 40px;
+  border-top: 1px solid #dddddd;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table-header-rotated th.rotate-45{
+  height: 80px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  position: relative;
+  vertical-align: bottom;
+  padding: 0;
+  font-size: 12px;
+  line-height: 0.8;
+}
+
+.table-header-rotated th.rotate-45 > div{
+  position: relative;
+  top: 0px;
+  left: 40px; /* 80 * tan(45) / 2 = 40 where 80 is the height on the cell and 45 is the transform angle*/
+  height: 100%;
+  -ms-transform:skew(-45deg,0deg);
+  -moz-transform:skew(-45deg,0deg);
+  -webkit-transform:skew(-45deg,0deg);
+  -o-transform:skew(-45deg,0deg);
+  transform:skew(-45deg,0deg);
+  overflow: hidden;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-top: 1px solid #dddddd;
+}
+
+
+
+.table-header-rotated th.rotate-45 span {
+  -ms-transform:skew(45deg,0deg) rotate(315deg);
+  -moz-transform:skew(45deg,0deg) rotate(315deg);
+  -webkit-transform:skew(45deg,0deg) rotate(315deg);
+  -o-transform:skew(45deg,0deg) rotate(315deg);
+  transform:skew(45deg,0deg) rotate(315deg);
+  position: absolute;
+  bottom: 30px; /* 40 cos(45) = 28 with an additional 2px margin*/
+  left: -25px; /*Because it looked good, but there is probably a mathematical link here as well*/
+  display: inline-block;
+  // width: 100%;
+  width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
+  text-align: left;
+  // white-space: nowrap; /*whether to display in one line or not*/
 }
