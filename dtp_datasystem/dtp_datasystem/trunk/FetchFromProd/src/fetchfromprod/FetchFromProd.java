@@ -40,40 +40,45 @@ public class FetchFromProd {
 
 //    MUST DISABLE AUTOCOMMIT for fetchForward cursor (batch fetches) to work
 //    EACH ResultSet MUST also have fetchDirection set FETCH_FORWARD
+            
             oraConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
             System.out.println();
-            System.out.println("Starting: fetchBioDataCounts");
-            fetchBioDataCounts(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchMtxt");
-            fetchMtxt(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchInventory");
-            fetchInventory(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchChemNames");
-            fetchChemNames(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchPubChemId");
-            fetchPubChemId(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchProjects");
-            fetchProjects(pgConn, oraConn);
+            System.out.println("Starting: fetchLegacyCmpd");
+            fetchLegacyCmpd(pgConn, oraConn);
             
-            System.out.println();
-            System.out.println("Starting: fetchPlatedSets");
-            fetchPlatedSets(pgConn, oraConn);
-            
-            System.out.println();
-            System.out.println("Starting: fetchProjects");
-            fetchProjects(pgConn, oraConn);
+//            System.out.println();
+//            System.out.println("Starting: fetchBioDataCounts");
+//            fetchBioDataCounts(pgConn, oraConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchMtxt");
+//            fetchMtxt(pgConn, oraConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchInventory");
+//            fetchInventory(pgConn, oraConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchChemNames");
+//            fetchChemNames(pgConn, oraConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchPubChemId");
+//            fetchPubChemId(pgConn, oraConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchProjects");
+//            fetchProjects(pgConn, oraConn);
+//            
+//            System.out.println();
+//            System.out.println("Starting: fetchPlatedSets");
+//            fetchPlatedSets(pgConn, oraConn);
+//            
+//            System.out.println();
+//            System.out.println("Starting: fetchProjects");
+//            fetchProjects(pgConn, oraConn);
 
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
@@ -289,94 +294,6 @@ public class FetchFromProd {
         pgStmt.execute(sqlString);
 
     }
-
-//  public static void fetchLegacyImage(
-//          Connection pgConn,
-//          Connection oraConn) throws Exception {
-//
-//    Statement oraStmt = null;
-//    Statement pgStmt = null;
-//    PreparedStatement pgPrepStmt = null;
-//    ResultSet resSet = null;
-//    String sqlString;
-//    String prepStmtString;
-//
-//    long startTime = 0;
-//    long elapsedTime = 0;
-//    int batCnt = 0;
-//    int totBatCnt = 0;
-//    int cumCnt = 0;
-//
-//    try {
-//
-//      pgStmt = pgConn.createStatement();
-//      oraStmt = oraConn.createStatement();
-//
-//      sqlString = "drop table if exists prod_legacy_image";
-//      System.out.println(sqlString);
-//      pgStmt.execute(sqlString);
-//
-//      sqlString = "create table prod_legacy_image (nsc int, image bytea)";
-//      System.out.println(sqlString);
-//      pgStmt.execute(sqlString);
-//
-//      sqlString = "select nsc, image "
-//              + "from ops$kunkel.strc_image";
-//      System.out.println(sqlString);
-//      resSet = oraStmt.executeQuery(sqlString);
-//      resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
-//
-//      prepStmtString = "insert into prod_legacy_image(nsc, image) values(?,?)";
-//      pgPrepStmt = pgConn.prepareStatement(prepStmtString);
-//
-//      startTime = System.currentTimeMillis();
-//
-//      while (resSet.next()) {
-//
-//        batCnt++;
-//
-//        int nsc = resSet.getInt("nsc");
-//        byte[] imageBytes = resSet.getBytes("image");
-//
-//        pgPrepStmt.setInt(1, nsc);
-//        pgPrepStmt.setBytes(2, imageBytes);
-//
-//        pgPrepStmt.addBatch();
-//
-//        if (batCnt > BATCH_FETCH_SIZE) {
-//          totBatCnt += batCnt;
-//          cumCnt += batCnt;
-//          if (totBatCnt > BATCH_INSERT_SIZE) {
-//            totBatCnt = 0;
-//            elapsedTime = System.currentTimeMillis() - startTime;
-//
-//            startTime = System.currentTimeMillis();
-//            lgr.info("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + BATCH_INSERT_SIZE + " in " + elapsedTime + " msec");
-//          }
-//          pgPrepStmt.executeBatch();
-//          pgConn.commit();
-//          batCnt = 0;
-//        }
-//      }
-//      pgPrepStmt.executeBatch();
-//      pgConn.commit();
-//
-//      sqlString = "drop index if exists pli_nsc";
-//      System.out.println(sqlString);
-//      pgStmt.execute(sqlString);
-//
-//      sqlString = "create index pli_nsc on prod_legacy_image(nsc)";
-//      System.out.println(sqlString);
-//      pgStmt.execute(sqlString);
-//
-//    } catch (Exception e) {
-//      handleCatch(e, oraStmt, pgStmt, pgPrepStmt, resSet);
-//      throw new Exception("Caught and handled Exception.");
-//    } finally {
-//      handleFinally(oraStmt, pgStmt, pgPrepStmt, resSet);
-//    }
-//
-//  }
     
     public static void fetchMtxt(
             Connection pgConn,
@@ -707,7 +624,7 @@ public class FetchFromProd {
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
 
-            prepStmtString = "insert into prod_cmpd(nsc, cas, conf, distribution_code, mf, mw) values(?,?,?,?,?,?)";
+            prepStmtString = "insert into prod_legacy_cmpd(nsc, cas, conf, distribution_code, mf, mw) values(?,?,?,?,?,?)";
             pgPrepStmt = pgConn.prepareStatement(prepStmtString);
 
             startTime = System.currentTimeMillis();
@@ -743,11 +660,11 @@ public class FetchFromProd {
             pgPrepStmt.executeBatch();
             pgConn.commit();
 
-            sqlString = "drop index if exists prod_cmpd_nsc";
+            sqlString = "drop index if exists prod_legacy_cmpd_nsc";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create index prod_cmpd_nsc on prod_cmpd(nsc)";
+            sqlString = "create index prod_legacy_cmpd_nsc on prod_legacy_cmpd(nsc)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 

@@ -13,9 +13,78 @@ type varchar,
 project_code varchar
 );
 
-\copy app_and_inv from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/APP_AND_INV.02DEC2015.csv csv header
---\copy app_and_inv from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/appAndInv.09OCT2015.csv csv header
+\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/Combined IOA and AOD List 02_12_2016.csv' csv header
+
 create index aai_nsc_idx on app_and_inv(nsc);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- stats
+
+drop table if exists temp;
+
+create table temp
+as
+select primary_target, regexp_replace(lower(primary_target), '[ -]','') as fixed, count(*) 
+from app_and_inv
+group by primary_target
+order by primary_target;
+
+drop table if exists temp2;
+
+create table temp2
+as 
+select fixed, array_to_string(array_agg(distinct primary_target), ','), count(distinct primary_target) 
+from temp
+group by fixed
+order by count(distinct primary_target) desc, fixed asc;
+
+drop table if exists temp3;
+
+create table temp3
+as
+select '--->'||primary_target||'<---'
+from app_and_inv
+where regexp_replace(lower(primary_target), '[ -]','') in (
+	select fixed from temp2
+	where "count" > 1
+)
+order by primary_target;
+
+\copy temp3 to /tmp/app_and_inv_primary_target_formatting.csv csv header
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- fetching SMILES from datasystem
 -- ONLY run in datasystemdb
@@ -30,9 +99,6 @@ left outer join cmpd_table ct
 on ai.nsc = ct.nsc;
 
 \copy app_and_inv_with_smiles to /tmp/app_and_inv_with_smiles.csv csv header
-
-
-
 
 --_                       _         _       _        _                    
 --|_ __ _ _ __ __ _  ___| |_    __| | __ _| |_ __ _| |__   __ _ ___  ___ 

@@ -54,8 +54,14 @@ public class Main {
         "mwkunkel",
         "donkie11",
         "jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov",
-        "DIS_CLEANED",
-        "R6pq4$6V8d"
+        //"DIS_CLEANED",
+        //"R6pq4$6V8d"
+        "ops$kunkel",
+        "donkie"
+    };
+
+    static final String[] pgToOraWhereClauses = new String[]{
+        "kek_tbl", ""
     };
 
     // datasystem to oncologydrugs
@@ -162,8 +168,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] whichConnectionInfo = datasystemToOncologyDrugs;
-        String[] whichTableNamesAndWhereClauses = datasystemTableNamesAndWhereClauses;
+        String[] whichConnectionInfo = datasystem_pgToOra; //datasystemToOncologyDrugs;
+        String[] whichTableNamesAndWhereClauses = pgToOraWhereClauses; //datasystemTableNamesAndWhereClauses;
 
         Connection destConn = null;
         Connection sourceConn = null;
@@ -185,12 +191,12 @@ public class Main {
                 // scrape out anything remaining
                 // Replicator.nuke(destConn, curTbl);
                 // replicate the tables
-                // Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
+                Replicator.useMetadata(sourceConn, destConn, curTbl, whereClause);
             }
 
             // recreate the constraints
-            ConstraintManagement.createConstraints(destConn);
-            System.out.println("Done! in Main");
+//            ConstraintManagement.createConstraints(destConn);
+//            System.out.println("Done! in Main");
 
             sourceConn.close();
             destConn.close();
