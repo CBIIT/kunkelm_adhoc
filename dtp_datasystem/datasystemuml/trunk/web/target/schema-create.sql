@@ -60,6 +60,12 @@
         primary key (ID)
     );
 
+    create table ALIASES2CURATED_NSC_TO_ALIASES (
+        ALIASES_FK BIGINT not null,
+        CURATED_NSC_TO_ALIASES_FK BIGINT not null,
+        primary key (ALIASES_FK, CURATED_NSC_TO_ALIASES_FK)
+    );
+
     create table CMPD (
         ID BIGINT not null,
         CMPD_COMMENT CHARACTER VARYING(1024),
@@ -353,6 +359,7 @@
         PARENT_MOLECULAR_WEIGHT DOUBLE PRECISION,
         PROD_FORMULA_WEIGHT DOUBLE PRECISION,
         PROD_MOLECULAR_FORMULA CHARACTER VARYING(1024),
+        CMPD_FORMAL_CHARGE INTEGER,
         primary key (ID)
     );
 
@@ -366,6 +373,61 @@
         NSC_CMPDS_FK BIGINT not null,
         CMPD_TARGETS_FK BIGINT not null,
         primary key (NSC_CMPDS_FK, CMPD_TARGETS_FK)
+    );
+
+    create table CURATED_NAME (
+        ID BIGINT not null,
+        VALUE CHARACTER VARYING(1024) not null unique,
+        DESCRIPTION CHARACTER VARYING(1024),
+        REFERENCE CHARACTER VARYING(1024),
+        primary key (ID)
+    );
+
+    create table CURATED_NSC (
+        ID BIGINT not null,
+        CAS CHARACTER VARYING(1024),
+        NSC INTEGER unique,
+        PREFERRED_NAME_FK BIGINT,
+        GENERIC_NAME_FK BIGINT,
+        PRIMARY_TARGET_FK BIGINT,
+        ORIGINATOR_FK BIGINT,
+        primary key (ID)
+    );
+
+    create table CURATED_NSCS2PROJECTS (
+        PROJECTS_FK BIGINT not null,
+        CURATED_NSCS_FK BIGINT not null,
+        primary key (PROJECTS_FK, CURATED_NSCS_FK)
+    );
+
+    create table CURATED_NSC_TO_SECONDARY_TARGE (
+        CURATED_NSC_TO_SECONDARY_TA_FK BIGINT not null,
+        SECONDARY_TARGETS_FK BIGINT not null,
+        primary key (SECONDARY_TARGETS_FK, CURATED_NSC_TO_SECONDARY_TA_FK)
+    );
+
+    create table CURATED_ORIGINATOR (
+        ID BIGINT not null,
+        VALUE CHARACTER VARYING(1024) not null unique,
+        DESCRIPTION CHARACTER VARYING(1024),
+        REFERENCE CHARACTER VARYING(1024),
+        primary key (ID)
+    );
+
+    create table CURATED_PROJECT (
+        ID BIGINT not null,
+        VALUE CHARACTER VARYING(1024) not null unique,
+        DESCRIPTION CHARACTER VARYING(1024) not null,
+        REFERENCE CHARACTER VARYING(1024) not null,
+        primary key (ID)
+    );
+
+    create table CURATED_TARGET (
+        ID BIGINT not null,
+        VALUE CHARACTER VARYING(1024) not null unique,
+        DESCRIPTION CHARACTER VARYING(1024),
+        REFERENCE CHARACTER VARYING(1024),
+        primary key (ID)
     );
 
     create table NSC_CMPD (
@@ -387,6 +449,7 @@
         PARENT_MOLECULAR_FORMULA CHARACTER VARYING(1024),
         PROD_FORMULA_WEIGHT DOUBLE PRECISION,
         PROD_MOLECULAR_FORMULA CHARACTER VARYING(1024),
+        FORMAL_CHARGE INTEGER,
         NSC_CMPD_TYPE_FK BIGINT not null,
         CMPD_PARENT_FRAGMENT_FK BIGINT unique,
         CMPD_SALT_FRAGMENT_FK BIGINT unique,
@@ -450,6 +513,16 @@
         add constraint AD_HOC_CMPD_FRAGMENT_AD_HOC_CD 
         foreign key (AD_HOC_CMPD_FK) 
         references AD_HOC_CMPD;
+
+    alter table ALIASES2CURATED_NSC_TO_ALIASES 
+        add constraint CURATED_NAME_CURATED_NSC_TO_AC 
+        foreign key (CURATED_NSC_TO_ALIASES_FK) 
+        references CURATED_NSC;
+
+    alter table ALIASES2CURATED_NSC_TO_ALIASES 
+        add constraint CURATED_NSC_ALIASES_FKC 
+        foreign key (ALIASES_FK) 
+        references CURATED_NAME;
 
     alter table CMPD_ALIAS 
         add constraint CMPD_ALIAS_CMPD_ALIAS_TYPE_FKC 
@@ -571,6 +644,46 @@
         foreign key (CMPD_TARGETS_FK) 
         references CMPD_TARGET;
 
+    alter table CURATED_NSC 
+        add constraint CURATED_NSC_ORIGINATOR_FKC 
+        foreign key (ORIGINATOR_FK) 
+        references CURATED_ORIGINATOR;
+
+    alter table CURATED_NSC 
+        add constraint CURATED_NSC_GENERIC_NAME_FKC 
+        foreign key (GENERIC_NAME_FK) 
+        references CURATED_NAME;
+
+    alter table CURATED_NSC 
+        add constraint CURATED_NSC_PREFERRED_NAME_FKC 
+        foreign key (PREFERRED_NAME_FK) 
+        references CURATED_NAME;
+
+    alter table CURATED_NSC 
+        add constraint CURATED_NSC_PRIMARY_TARGET_FKC 
+        foreign key (PRIMARY_TARGET_FK) 
+        references CURATED_TARGET;
+
+    alter table CURATED_NSCS2PROJECTS 
+        add constraint CURATED_PROJECT_CURATED_NSCS_C 
+        foreign key (CURATED_NSCS_FK) 
+        references CURATED_NSC;
+
+    alter table CURATED_NSCS2PROJECTS 
+        add constraint CURATED_NSC_PROJECTS_FKC 
+        foreign key (PROJECTS_FK) 
+        references CURATED_PROJECT;
+
+    alter table CURATED_NSC_TO_SECONDARY_TARGE 
+        add constraint CURATED_TARGET_CURATED_NSC_TOC 
+        foreign key (CURATED_NSC_TO_SECONDARY_TA_FK) 
+        references CURATED_NSC;
+
+    alter table CURATED_NSC_TO_SECONDARY_TARGE 
+        add constraint CURATED_NSC_SECONDARY_TARGETSC 
+        foreign key (SECONDARY_TARGETS_FK) 
+        references CURATED_TARGET;
+
     create index nsc_cmpd_form_mol_form_idx on NSC_CMPD (FORMULA_MOLECULAR_FORMULA);
 
     create index nsc_cmpd_par_mol_form_idx on NSC_CMPD (PARENT_MOLECULAR_FORMULA);
@@ -662,5 +775,7 @@
     create sequence CMPD_SEQ;
 
     create sequence CMPD_TARGET_SEQ;
+
+    create sequence CURATED_ORIGINATOR_SEQ;
 
     create sequence hibernate_sequence;
