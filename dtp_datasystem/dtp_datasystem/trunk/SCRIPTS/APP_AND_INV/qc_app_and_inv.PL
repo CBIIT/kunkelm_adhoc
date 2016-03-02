@@ -25,9 +25,11 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 my @sqlList = ();
 my $sql;
 
-my @multiEntryFields = ("generic_name", "preferred_name", "alias_names", "other_targets");
+my @multiEntryFields = ("generic_name", "preferred_name", "alias_names", "other_targets", "project_code");
 my @singleEntryFields = ("originator", "primary_target");
 my $whichField;
+
+goto skipToHere;
 
 #  ####   ######   #####  #    #  #####
 # #       #          #    #    #  #    #
@@ -36,8 +38,16 @@ my $whichField;
 # #    #  #          #    #    #  #
 #  ####   ######     #     ####   #
 
-# drop table if exists fields_and_entries;
-# create table fields_and_entries( field_name varchar, entry varchar );
+push @sqlList, qq[drop table if exists fields_and_entries];
+
+push @sqlList, qq[create table fields_and_entries( nsc int, cas varchar, field_name varchar, entry varchar )];
+
+foreach $sql(@sqlList){
+	my $sth = $dbh->prepare($sql);
+        print "$sql\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;		
+}
+
 
 # #    #  #    #  #        #####     #    ######  #    #   #####  #####    #   #
 # ##  ##  #    #  #          #       #    #       ##   #     #    #    #    # #
@@ -46,72 +56,57 @@ my $whichField;
 # #    #  #    #  #          #       #    #       #   ##     #    #   #      #
 # #    #   ####   ######     #       #    ######  #    #     #    #    #     #
 
-goto skipToHere;
-
 foreach $whichField(@multiEntryFields){
 	
-	$sql = qq[select $whichField from app_and_inv where $whichField is not null];
+	$sql = qq[select nsc, cas, $whichField from app_and_inv where $whichField is not null];
 	my $sth = $dbh->prepare($sql);
-	# print "$sql\n\n";
+	print "$sql\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
+	my $nsc;
+        my $cas;
 	my $val;
 	my @splitVal;
 	my $indivVal;
 	my $trimmedVal;
-	my @vals = ();
 	
-	$sth->bind_columns(\($val));
+	$sth->bind_columns(\($nsc, $cas, $val));
 	while ($sth->fetch){    
-            @splitVal = split(';', $val);
-            foreach $indivVal(@splitVal){
-            $trimmedVal = trim($indivVal);    	
-            push @vals, $trimmedVal;
+		@splitVal = split(';', $val);
+		foreach $indivVal(@splitVal){
+			$trimmedVal = trim($indivVal);    	
+			$dbh->do('insert into fields_and_entries (nsc, cas, field_name, entry) values (?,?,?,?)',
+				undef,
+				$nsc, $cas, $whichField, $trimmedVal);  
     }    
   }
-  
-  print "\n";
-  print "\n";
-  foreach $val(@vals){
-  	print "$whichField: $val\n";
-  	$dbh->do('insert into fields_and_entries (field_name, entry) values (?,?)',
-  		undef,
-  		$whichField, $val);  
-  }
-  
 }
 
-
-
 foreach $whichField(@singleEntryFields){
-
-$sql = qq[select $whichField from app_and_inv where $whichField is not null];
+	
+	$sql = qq[select nsc, cas, $whichField from app_and_inv where $whichField is not null];
 	my $sth = $dbh->prepare($sql);
-	# print "$sql\n\n";
+	print "$sql\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
+	my $nsc;
+        my $cas;
 	my $val;
 	my $trimmedVal;
 	my @vals = ();
 	
-	$sth->bind_columns(\($val));
-
-	while ($sth->fetch){    
-            $trimmedVal = trim($val);    	
-            push @vals, $trimmedVal;
-        }  
-
- print "\n";
-  print "\n";
-  foreach $val(@vals){
-  	print "$whichField: $val\n";
-  	$dbh->do('insert into fields_and_entries (field_name, entry) values (?,?)',
-  		undef,
-  		$whichField, $val);  
-  }
-  
-  }
+	$sth->bind_columns(\($nsc, $cas, $val));
 	
+	while ($sth->fetch){    
+		$trimmedVal = trim($val);    	
+		$dbh->do('insert into fields_and_entries (nsc, cas, field_name, entry) values (?,?,?,?)',
+  		undef,
+  		$nsc, $cas, $whichField, $trimmedVal);  
+  }  
+  
+}
+
+skipToHere:
 
 #  ####    ####
 # #    #  #    #
@@ -120,21 +115,19 @@ $sql = qq[select $whichField from app_and_inv where $whichField is not null];
 # #   #   #    #
 #  ### #   ####
 
-skipToHere:
-
 # NOW, cycle back through all fields
 
-my @allFields = ("generic_name", "preferred_name", "alias_names", "other_targets", "originator", "primary_target");
+my @allFields = ("generic_name", "preferred_name", "alias_names", "other_targets", "originator", "primary_target", "project_code");
 
 foreach $whichField(@allFields){
-
-push @sqlList, qq[drop table if exists temp;];
+	
+	push @sqlList, qq[drop table if exists temp;];
 	
 	push @sqlList, qq[create table temp
 	as
 	select entry, regexp_replace(lower(entry), '[ -]','') as fixed, count(*) 
 	from fields_and_entries
-        where field_name = '$whichField'
+	where field_name = '$whichField'
 	group by entry
 	order by entry;];
 	
@@ -154,9 +147,9 @@ push @sqlList, qq[drop table if exists temp;];
 	select '--->'||entry||'<---'
 	from fields_and_entries
 	where field_name = '$whichField'
-        and regexp_replace(lower(entry), '[ -]','') in (
-            select fixed from temp2
-            where "count" > 1
+	and regexp_replace(lower(entry), '[ -]','') in (
+	select fixed from temp2
+	where "count" > 1
 	)
 	order by entry;];
 	

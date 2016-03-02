@@ -1,3 +1,14 @@
+grant all on aliases2curated_nsc_to_aliases to datasystem_user; 
+grant all on curated_name to datasystem_user;                   
+grant all on curated_nsc to datasystem_user;                    
+grant all on curated_nsc_to_secondary_targe to datasystem_user; 
+grant all on curated_nscs2projects to datasystem_user;          
+grant all on curated_originator to datasystem_user;             
+grant all on curated_project to datasystem_user;                
+grant all on curated_target to datasystem_user;  
+
+
+
 -- APP can create ad hoc cmpds
 
 grant select, insert, update, delete on ad_hoc_cmpd to datasystem_user;                    

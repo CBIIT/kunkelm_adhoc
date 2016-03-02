@@ -25,7 +25,19 @@
         <!-- MWK local copy modified to manually set id (to NSC) -->        
         <mapping resource="CmpdLegacyCmpd.hbm.xml"/>
        
+        
+        
+        <!-- lazy="true" select="fetch" -> lazy="false" fetch="subselect" -->
+        <mapping resource="CuratedNsc.hbm.xml"/>
+        
+        
+        
         <!-- androMDA mappings -->   
+        
+        <mapping resource="mwk/datasystem/domain/CuratedName.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CuratedOriginator.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CuratedProject.hbm.xml"/>
+        <mapping resource="mwk/datasystem/domain/CuratedTarget.hbm.xml"/>
     
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragment.hbm.xml"/>
         <mapping resource="mwk/datasystem/domain/AdHocCmpdFragmentPChem.hbm.xml"/>

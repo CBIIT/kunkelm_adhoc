@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:dataTable id="curatedNscs"
+                     tableStyle="width: auto;"
+                     resizableColumns="true"
+                     var="nsc"
+                     value="#{curatedNscController.curatedNscs}"
+                     paginator="true" 
+                     rows="10" 
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="10,25,50">
+
+            <f:facet name="header">  
+                <h:outputText value="#{fn:length(curatedNscController.curatedNscs)} Curated NSC"/>
+            </f:facet>
+
+            <p:column resizable="true" headerText="id" sortBy="#{nsc.id}" filterBy="#{nsc.id}">              
+                <h:outputText value="#{nsc.id}" />
+            </p:column>
+
+            <!-- free-form -->
+
+            <p:column resizable="true" headerText="nsc" sortBy="#{nsc.nsc}" filterBy="#{nsc.nsc}">                                            
+                <h:outputText value="#{nsc.nsc}" />                              
+            </p:column>
+
+            <p:column resizable="true" headerText="cas" sortBy="#{nsc.cas}" filterBy="#{nsc.cas}">              
+                <h:outputText value="#{nsc.cas}" />                              
+            </p:column>
+
+            <!-- singletons -->
+
+            <p:column resizable="true" headerText="genericName"  sortBy="#{nsc.genericName.value}" filterBy="#{nsc.genericName.value}">              
+                <h:outputText value="#{nsc.genericName.value}" />                              
+            </p:column>
+
+            <p:column resizable="true" headerText="originator" sortBy="#{nsc.originator.value}" filterBy="#{nsc.originator.value}">              
+                <h:outputText value="#{nsc.originator.value}" />                
+            </p:column>
+
+            <p:column resizable="true" headerText="preferredName" sortBy="#{nsc.preferredName.value}" filterBy="#{nsc.preferredName.value}">                            
+                <h:outputText value="#{nsc.preferredName.value}" />
+            </p:column>
+
+            <p:column resizable="true" headerText="primaryTarget"  sortBy="#{nsc.primaryTarget.value}" filterBy="#{nsc.primaryTarget.value}">                            
+                <h:outputText value="#{nsc.primaryTarget.value}" />
+            </p:column>
+
+            <!-- multiples -->
+
+            <p:column resizable="true" headerText="aliases">      
+                <p:dataList var="prop" 
+                            value="#{nsc.aliases}">                                
+                    <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>                
+            </p:column>
+
+            <p:column resizable="true" headerText="projects">      
+                <p:dataList var="prop" 
+                            value="#{nsc.projects}">                                
+                    <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>                
+            </p:column>
+
+            <p:column resizable="true" headerText="secondaryTargets">                              
+                <p:dataList var="prop" 
+                            value="#{nsc.secondaryTargets}">                                
+                    <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>
+            </p:column>
+        </p:dataTable>
+
+        <!--
+
+        <p:dataTable id="curatedNscs"
+                                                        tableStyle="width: auto;"
+                     resizableColumns="true"
+                     editable="true"                      
+                     var="nsc"
+                     value="#{curatedNscController.curatedNscs}"
+                     paginator="true" 
+                     rows="10" 
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="10,25,50">
+
+            <f:facet name="header">  
+        #{fn:length(curatedNscController.curatedNscs)} Known Salts
+    </f:facet>
+
+    <p:ajax event="rowEdit" listener="#{curatedNscController.onRowEdit}" update=":datasystemForm:msgs" />
+    <p:ajax event="rowEditCancel" listener="#{curatedNscController.onRowCancel}" update=":datasystemForm:msgs" />
+    <p:ajax event="cellEdit" listener="#{curatedNscController.onCellEdit}" update=":datasystemForm:msgs" />
+
+    <p:column style="width:32px">
+        <p:rowEditor />
+    </p:column>
+
+    <p:column headerText="id" sortBy="#{nsc.id}">              
+        <h:outputText value="#{nsc.id}" />
+    </p:column>
+
+    <p:column headerText="nsc">              
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{nsc.nsc}" />
+            </f:facet>
+            <f:facet name="input">
+                <p:inputText id="nscInput" 
+                             value="#{nsc.nsc}" 
+                             style="width:100%"/>
+            </f:facet>
+        </p:cellEditor>              
+    </p:column>
+
+    <p:column headerText="cas">              
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{nsc.cas}" />
+            </f:facet>
+            <f:facet name="input">
+                <p:inputText id="casInput" 
+                             value="#{nsc.cas}" 
+                             style="width:100%"/>
+            </f:facet>
+        </p:cellEditor>              
+    </p:column>
+
+    <p:column headerText="genericName">              
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{nsc.genericName.value}" />
+            </f:facet>
+            <f:facet name="input">
+                <h:selectOneMenu value="#{nsc.genericName}" style="width:100%">
+                    <f:selectItems value="#{curatedNscController.names}" 
+                                   var="name" 
+                                   itemLabel="#{name.value}" 
+                                   itemValue="#{name.value}" />
+                </h:selectOneMenu>
+            </f:facet>
+        </p:cellEditor>              
+    </p:column>
+
+    <p:column headerText="originator">              
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{nsc.originator.value}" />
+            </f:facet>
+            <f:facet name="input">
+                <h:selectOneMenu value="#{nsc.originator}" style="width:100%">
+                    <f:selectItems value="#{curatedNscController.originators}" 
+                                   var="orig" 
+                                   itemLabel="#{orig.value}" 
+                                   itemValue="#{orig.value}" />
+                </h:selectOneMenu>
+            </f:facet>
+        </p:cellEditor>              
+    </p:column>
+
+    <p:column headerText="preferredName">              
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{nsc.preferredName.value}" />
+            </f:facet>
+            <f:facet name="input">
+                <h:selectOneMenu value="#{nsc.preferredName}" style="width:100%">
+                    <f:selectItems value="#{curatedNscController.names}" 
+                                   var="name" 
+                                   itemLabel="#{name.value}" 
+                                   itemValue="#{name.value}" />
+                </h:selectOneMenu>
+            </f:facet>
+        </p:cellEditor>              
+    </p:column>
+
+    <p:column headerText="primaryTarget">              
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{nsc.primaryTarget.value}" />
+            </f:facet>
+            <f:facet name="input">
+                <h:selectOneMenu value="#{nsc.primaryTarget}" style="width:100%">
+                    <f:selectItems value="#{curatedNscController.targets}" 
+                                   var="targ" 
+                                   itemLabel="#{targ.value}" 
+                                   itemValue="#{targ.value}" />
+                </h:selectOneMenu>
+            </f:facet>
+        </p:cellEditor>              
+    </p:column>
+
+    <p:column headerText="aliases"> 
+        <p:cellEditor>                    
+            <f:facet name="output">
+                <p:dataList var="prop" 
+                            value="#{nsc.aliases}">                                
+                            <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>
+            </f:facet>
+            <f:facet name="input">
+                <h:selectManyListbox value="#{nsc.aliases}">
+                    <f:selectItems value="#{curatedNscController.names}"
+                                   var="alia"
+                                   itemLabel="#{alia.value}"
+                                   itemValue="#{alia.value}"/>
+                </h:selectManyListbox>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+
+    <p:column headerText="projects">      
+        <p:cellEditor>                    
+            <f:facet name="output">
+                <p:dataList var="prop" 
+                            value="#{nsc.projects}">                                
+                            <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>
+            </f:facet>
+            <f:facet name="input">
+                <h:selectManyListbox value="#{nsc.projects}">
+                    <f:selectItems value="#{curatedNscController.projects}"
+                                   var="proj"
+                                   itemLabel="#{proj.value}"
+                                   itemValue="#{proj.value}"/>
+                </h:selectManyListbox>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+
+    <p:column headerText="secondaryTargets">                              
+        <p:cellEditor>
+            <f:facet name="output">
+                <p:dataList var="prop" 
+                            value="#{nsc.secondaryTargets}">                                
+                            <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>
+            </f:facet>
+            <f:facet name="input">
+                <h:selectManyListbox value="#{nsc.secondaryTargets}">
+                    <f:selectItems value="#{curatedNscController.targets}"
+                                   var="targ"
+                                   itemLabel="#{targ.value}"
+                                   itemValue="#{targ.value}"/>
+                </h:selectManyListbox>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+
+</p:dataTable>
+
+        -->
+
+    </ui:define>
+
+</ui:composition>

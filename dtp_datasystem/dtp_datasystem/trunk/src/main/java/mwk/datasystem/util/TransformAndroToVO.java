@@ -28,6 +28,11 @@ import mwk.datasystem.domain.CmpdLegacyCmpd;
 import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
+import mwk.datasystem.domain.CuratedName;
+import mwk.datasystem.domain.CuratedNsc;
+import mwk.datasystem.domain.CuratedOriginator;
+import mwk.datasystem.domain.CuratedProject;
+import mwk.datasystem.domain.CuratedTarget;
 import mwk.datasystem.domain.NscCmpdImpl;
 import mwk.datasystem.domain.TanimotoScores;
 import mwk.datasystem.vo.CmpdAliasVO;
@@ -45,6 +50,12 @@ import mwk.datasystem.vo.CmpdNamedSetVO;
 import mwk.datasystem.vo.CmpdPlateVO;
 import mwk.datasystem.vo.CmpdProjectVO;
 import mwk.datasystem.vo.CmpdTargetVO;
+import mwk.datasystem.vo.CuratedNscVO;
+import mwk.datasystem.vo.CuratedNameVO;
+import mwk.datasystem.vo.CuratedOriginatorVO;
+import mwk.datasystem.vo.CuratedProjectVO;
+import mwk.datasystem.vo.CuratedTargetVO;
+
 import mwk.datasystem.vo.TanimotoScoresVO;
 
 /**
@@ -54,6 +65,109 @@ import mwk.datasystem.vo.TanimotoScoresVO;
 public class TransformAndroToVO {
 
     public static final Boolean DEBUG = Boolean.FALSE;
+
+    public static List<CuratedNscVO> translateCuratedNscs(Collection<CuratedNsc> listIn) {
+        ArrayList<CuratedNscVO> rtnList = new ArrayList<CuratedNscVO>();
+        for (CuratedNsc cn : listIn) {
+            rtnList.add(translateCuratedNsc(cn));
+        }
+        return rtnList;
+    }
+
+    public static CuratedNscVO translateCuratedNsc(CuratedNsc ent) {
+
+        CuratedNscVO rtn = new CuratedNscVO();
+
+        rtn.setId(ent.getId());
+        rtn.setAliases(translateCuratedNames(ent.getAliases()));
+        rtn.setCas(ent.getCas());
+        rtn.setGenericName(translateCuratedName(ent.getGenericName()));
+        rtn.setNsc(ent.getNsc());
+        rtn.setOriginator(translateCuratedOriginator(ent.getOriginator()));
+        rtn.setPreferredName(translateCuratedName(ent.getPreferredName()));
+        rtn.setPrimaryTarget(translateCuratedTarget(ent.getPrimaryTarget()));
+        rtn.setProjects(translateCuratedProjects(ent.getProjects()));
+        rtn.setSecondaryTargets(translateCuratedTargets(ent.getSecondaryTargets()));
+
+        return rtn;
+
+    }
+
+    public static List<CuratedNameVO> translateCuratedNames(Collection<CuratedName> listIn) {
+        ArrayList<CuratedNameVO> rtnList = new ArrayList<CuratedNameVO>();
+        for (CuratedName cn : listIn) {
+            rtnList.add(translateCuratedName(cn));
+        }
+        return rtnList;
+    }
+
+    public static CuratedNameVO translateCuratedName(CuratedName ent) {
+        CuratedNameVO rtn = new CuratedNameVO();
+        if (ent != null) {
+            rtn.setId(ent.getId());
+            rtn.setValue(ent.getValue());
+            rtn.setDescription(ent.getDescription());
+            rtn.setReference(ent.getReference());
+        }
+        return rtn;
+    }
+
+    public static List<CuratedProjectVO> translateCuratedProjects(Collection<CuratedProject> listIn) {
+        ArrayList<CuratedProjectVO> rtnList = new ArrayList<CuratedProjectVO>();
+        for (CuratedProject cn : listIn) {
+            rtnList.add(translateCuratedProject(cn));
+        }
+        return rtnList;
+    }
+
+    public static CuratedProjectVO translateCuratedProject(CuratedProject ent) {
+        CuratedProjectVO rtn = new CuratedProjectVO();
+        if (ent != null) {
+            rtn.setId(ent.getId());
+            rtn.setValue(ent.getValue());
+            rtn.setDescription(ent.getDescription());
+            rtn.setReference(ent.getReference());
+        }
+        return rtn;
+    }
+
+    public static List<CuratedTargetVO> translateCuratedTargets(Collection<CuratedTarget> listIn) {
+        ArrayList<CuratedTargetVO> rtnList = new ArrayList<CuratedTargetVO>();
+        for (CuratedTarget cn : listIn) {
+            rtnList.add(translateCuratedTarget(cn));
+        }
+        return rtnList;
+    }
+
+    public static CuratedTargetVO translateCuratedTarget(CuratedTarget ent) {
+        CuratedTargetVO rtn = new CuratedTargetVO();
+        if (ent != null) {
+            rtn.setId(ent.getId());
+            rtn.setValue(ent.getValue());
+            rtn.setDescription(ent.getDescription());
+            rtn.setReference(ent.getReference());
+        }
+        return rtn;
+    }
+
+    public static List<CuratedOriginatorVO> translateCuratedOriginators(List<CuratedOriginator> listIn) {
+        ArrayList<CuratedOriginatorVO> rtnList = new ArrayList<CuratedOriginatorVO>();
+        for (CuratedOriginator cn : listIn) {
+            rtnList.add(translateCuratedOriginator(cn));
+        }
+        return rtnList;
+    }
+
+    public static CuratedOriginatorVO translateCuratedOriginator(CuratedOriginator ent) {
+        CuratedOriginatorVO rtn = new CuratedOriginatorVO();
+        if (ent != null) {
+            rtn.setId(ent.getId());
+            rtn.setValue(ent.getValue());
+            rtn.setDescription(ent.getDescription());
+            rtn.setReference(ent.getReference());
+        }
+        return rtn;
+    }
 
     public static TanimotoScoresVO translateTanimotoScores(TanimotoScores entityIn) {
 
@@ -132,7 +246,7 @@ public class TransformAndroToVO {
             rtn.setProdCtab(entityIn.getProdCtab());
             rtn.setGif512(entityIn.getGif512());
             rtn.setProdMolecularFormula(entityIn.getProdMolecularFormula());
-            rtn.setProdFormulaWeight(entityIn.getProdFormulaWeight());            
+            rtn.setProdFormulaWeight(entityIn.getProdFormulaWeight());
         }
 
         return rtn;
@@ -338,7 +452,7 @@ public class TransformAndroToVO {
             NscCmpd nscc = (NscCmpd) entityIn;
 
             if (null != nscc) {
-                
+
                 rtn.setProdFormulaWeight(nscc.getFormulaWeight());
                 rtn.setProdMolecularFormula(nscc.getProdMolecularFormula());
                 rtn.setFormalCharge(nscc.getFormalCharge());
@@ -370,7 +484,7 @@ public class TransformAndroToVO {
                 }
 
                 rtn.setCountCmpdFragments(nscc.getCountFragments());
-                  
+
                 rtn.setNscCmpdType(nscc.getNscCmpdType().getNscCmpdType());
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());
@@ -379,10 +493,10 @@ public class TransformAndroToVO {
 
                 rtn.setIdentifierString(nscc.getIdentifierString());
                 rtn.setDescriptorString(nscc.getDescriptorString());
-                                
+
                 rtn.setFormulaWeight(nscc.getFormulaWeight());
                 rtn.setFormulaMolecularFormula(nscc.getFormulaMolecularFormula());
-                
+
                 Collection<CmpdTarget> entityColl = nscc.getCmpdTargets();
                 ArrayList<String> strColl = new ArrayList<String>();
                 for (CmpdTarget ct : entityColl) {
@@ -441,24 +555,21 @@ public class TransformAndroToVO {
             if (nscc.getCmpdParentFragment() != null) {
 
                 rtn.setParentFragment(translateCmpdFragment(nscc.getCmpdParentFragment()));
-                                
+
                 rtn.setParentMolecularWeight(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getMolecularWeight());
                 rtn.setParentMolecularFormula(nscc.getCmpdParentFragment().getCmpdFragmentPChem().getMolecularFormula());
-                
+
                 // check for salt fragment
-                
-                if (nscc.getCmpdSaltFragment() != null){
-                  
-                  rtn.setSaltFragment(translateCmpdFragment(nscc.getCmpdSaltFragment()));                  
-                  
+                if (nscc.getCmpdSaltFragment() != null) {
+
+                    rtn.setSaltFragment(translateCmpdFragment(nscc.getCmpdSaltFragment()));
+
                 }
-                
 
             } else {
 
                 // nsc_cmpd should already have a parent fragment
                 // if not, calculation on-the-fly by size
-              
                 ArrayList<CmpdFragmentVO> fragList = new ArrayList<CmpdFragmentVO>(rtn.getCmpdFragments());
 
                 // some cmpds will have no fragments

@@ -9476,16 +9476,12 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.04july2015.bio
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.04july2015.smallmol.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.mwk.10oct2015.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/loadCmax.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax[!!-~]02.03.15.xls -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax[!!-~]07.24.15.xls -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax02.03.15.biologicals.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Cmax02.03.15.smallmol.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016.xlsx -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/cmax.04july2015.biologicals.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/cmax.04july2015.smallmol.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/cmax.mwk.10oct2015.xls -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/load_and_resolve_app_and_inv.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016_MWK_FIXED.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016_MWK_FIXED.ods -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/app_and_inv_to_curated_nsc.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/load_app_and_inv_file.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qc.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qc_app_and_inv.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/DATA_SYSTEM_BUILD_PARAMETERS.pm -text
@@ -9547,6 +9543,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/TanimotoLink.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CuratedNscController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CustomFilter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FacesAccessor.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FragmentsWorkbenchController.java -text
@@ -9580,6 +9577,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperCmpd
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperCmpdList.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperCmpdListMember.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperCmpdTable.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperCuratedNsc.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperStructure.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HelperTanimotoScores.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/util/HibernateUtil.java -text
@@ -9600,6 +9598,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdLegacyCmpd.hbm.xml -t
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdList.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdListMember.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CmpdTable.hbm.xml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/resources/CuratedNsc.hbm.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/deployment.properties -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/hibernate.cfg.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/resources/hibernate.properties -text
@@ -9665,6 +9664,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureCreateNewL
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureDeleteFromList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/createList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/activeListHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/cmpdListMembers.json -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/collatedFingerprints.json -text
