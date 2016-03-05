@@ -9542,10 +9542,10 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/App
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CuratedNscController.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CuratedNscWorkbenchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CustomFilter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FacesAccessor.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/FragmentsWorkbenchController.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/GenericConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/HistogramController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/IdleController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/LandingController.java -text
@@ -9561,6 +9561,11 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Ses
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/StructureSearchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/TanimotoForceGraphController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/WindowPopper.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedNameConverter.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedOriginatorConverter.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedProjectConverter.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedTargetConverter.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/GenericConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/LoadKekuleRenderedImages.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/main/MessingAroundWithTanimotoScores.java -text
@@ -9662,6 +9667,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureCreateNewL
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureDeleteFromList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/createList.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/activeListHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/cmpdListMembers.json -text

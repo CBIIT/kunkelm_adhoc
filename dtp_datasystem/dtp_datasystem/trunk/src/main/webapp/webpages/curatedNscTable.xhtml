@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:dataTable id="curatedNscs"
+                     tableStyle="width: auto;"
+                     resizableColumns="true"
+                     var="nsc"
+                     value="#{curatedNscController.curatedNscs}"
+                     paginator="true" 
+                     rows="10" 
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="10,25,50">
+
+            <f:facet name="header">  
+                <h:outputText value="#{fn:length(curatedNscController.curatedNscs)} Curated NSC"/>
+            </f:facet>
+
+            <p:column resizable="true" headerText="id" sortBy="#{nsc.id}" filterBy="#{nsc.id}">              
+                <h:outputText value="#{nsc.id}" />
+            </p:column>
+
+            <!-- free-form -->
+
+            <p:column resizable="true" headerText="nsc" sortBy="#{nsc.nsc}" filterBy="#{nsc.nsc}">                                            
+                <h:outputText value="#{nsc.nsc}" />                              
+            </p:column>
+
+            <p:column resizable="true" headerText="cas" sortBy="#{nsc.cas}" filterBy="#{nsc.cas}">              
+                <h:outputText value="#{nsc.cas}" />                              
+            </p:column>
+
+            <!-- singletons -->
+
+            <p:column resizable="true" headerText="genericName"  sortBy="#{nsc.genericName.value}" filterBy="#{nsc.genericName.value}">              
+                <h:outputText value="#{nsc.genericName.value}" />                              
+            </p:column>
+
+            <p:column resizable="true" headerText="originator" sortBy="#{nsc.originator.value}" filterBy="#{nsc.originator.value}">              
+                <h:outputText value="#{nsc.originator.value}" />                
+            </p:column>
+
+            <p:column resizable="true" headerText="preferredName" sortBy="#{nsc.preferredName.value}" filterBy="#{nsc.preferredName.value}">                            
+                <h:outputText value="#{nsc.preferredName.value}" />
+            </p:column>
+
+            <p:column resizable="true" headerText="primaryTarget"  sortBy="#{nsc.primaryTarget.value}" filterBy="#{nsc.primaryTarget.value}">                            
+                <h:outputText value="#{nsc.primaryTarget.value}" />
+            </p:column>
+
+            <!-- multiples -->
+
+            <p:column resizable="true" headerText="aliases">      
+                <p:dataList var="prop" 
+                            value="#{nsc.aliases}">                                
+                    <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>                
+            </p:column>
+
+            <p:column resizable="true" headerText="projects">      
+                <p:dataList var="prop" 
+                            value="#{nsc.projects}">                                
+                    <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>                
+            </p:column>
+
+            <p:column resizable="true" headerText="secondaryTargets">                              
+                <p:dataList var="prop" 
+                            value="#{nsc.secondaryTargets}">                                
+                    <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+                </p:dataList>
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

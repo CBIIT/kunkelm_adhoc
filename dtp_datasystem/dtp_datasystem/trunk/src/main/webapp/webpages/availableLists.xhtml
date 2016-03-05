@@ -19,7 +19,7 @@
     <h2 style="margin: 0;">
       <h:outputText value="Export Data or Images"/>
     </h2>
-    <p:menubar>
+      <p:menubar autoDisplay="false">
       <p:menuitem ajax="false" value="Export to Excel">
         <p:dataExporter type="xls"  
                         target="availableListsTbl" 
@@ -114,6 +114,14 @@
 
         <h:outputText escape="false" value="&lt;br/&gt;"/>
 
+        <p:commandLink disabled="#{true or list.listOwner ne sessionController.loggedUser or  list.shareWith eq 'EVERYONE'}"                
+                       value="COPY"
+                       action="#{listManagerController.performInitiateDeleteList}">
+          <f:param name="cmpdListIdForDelete" value="#{list.cmpdListId}"/>
+        </p:commandLink>
+        
+        <h:outputText escape="false" value="&lt;br/&gt;"/>
+
         <p:commandLink disabled="#{list.listOwner ne sessionController.loggedUser or  list.shareWith eq 'EVERYONE'}"                
                        value="DELETE" style="color: red;"
                        action="#{listManagerController.performInitiateDeleteList}">
@@ -184,6 +192,24 @@
       </p:column> 
 
     </p:dataTable>
+    
+     <p:dialog header="COPY to New List" 
+            widgetVar="copy_dlg" 
+            modal="true"
+            width="600" height="400">
+    <p:outputPanel autoUpdate="true">            
+      <h:outputText value="Create New List from #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} List Members." />
+      <p:spacer height="20" width="100%"/>
+      <p:outputLabel for="listNameText" value="New List name:" />            
+      <p:inputText id="listNameText" value="#{listContentController.listName}" />
+      <p:spacer height="20" width="100%"/>
+      <p:commandButton action="#{listManagerController.performCopyList()}"
+                       value="Create New List from Selected"
+                       onstart="PF('appendingBUI').show();"
+                       oncomplete="PF('appendingBUI').hide();"
+                       style="width: 100%;" />            
+    </p:outputPanel>
+  </p:dialog>
 
   </ui:define>
 

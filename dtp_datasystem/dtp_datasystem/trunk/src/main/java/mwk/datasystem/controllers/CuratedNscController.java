@@ -6,22 +6,18 @@
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import mwk.datasystem.util.HelperCmpdKnownSalt;
 import mwk.datasystem.util.HelperCuratedNsc;
-import mwk.datasystem.vo.CmpdKnownSaltVO;
 import mwk.datasystem.vo.CuratedNameVO;
 import mwk.datasystem.vo.CuratedNscVO;
 import mwk.datasystem.vo.CuratedOriginatorVO;
 import mwk.datasystem.vo.CuratedProjectVO;
 import mwk.datasystem.vo.CuratedTargetVO;
-import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -34,50 +30,68 @@ public class CuratedNscController implements Serializable {
     static final long serialVersionUID = -8653468638698142855l;
 
     private List<CuratedNscVO> curatedNscs;
-    private List<CuratedNameVO> names;
-    private List<CuratedOriginatorVO> originators;
-    private List<CuratedProjectVO> projects;
-    private List<CuratedTargetVO> targets;
+    private CuratedNscVO selectedCuratedNsc;
+
+    private List<CuratedNameVO> _knownNames;
+    private List<CuratedOriginatorVO> _knownOriginators;
+    private List<CuratedProjectVO> _knownProjects;
+    private List<CuratedTargetVO> _knownTargets;
+
+    private HashMap<String, CuratedNameVO> knownNamesMap;
+    private HashMap<String, CuratedOriginatorVO> knownOriginatorsMap;
+    private HashMap<String, CuratedProjectVO> knownProjectsMap;
+    private HashMap<String, CuratedTargetVO> knownTargetsMap;
 
     @PostConstruct
     public void init() {
-        curatedNscs = HelperCuratedNsc.loadAllCuratedNsc();
-        names = HelperCuratedNsc.loadAllNames();
-        originators = HelperCuratedNsc.loadAllOriginators();
-        projects = HelperCuratedNsc.loadAllProjects();
-        targets = HelperCuratedNsc.loadAllTargets();
+
+        loadCuratedNscs();
+
+        loadCuratedNames();
+        loadCuratedOriginators();
+        loadCuratedProjects();
+        loadCuratedTargets();
+
     }
 
     public CuratedNscController() {
-        init();
+        //init();
     }
 
-    public void onRowEdit(RowEditEvent event) {
-
-        FacesMessage msg = new FacesMessage("Salt Edited", ((CmpdKnownSaltVO) event.getObject()).getId().toString());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        HelperCmpdKnownSalt.updateSalt((CmpdKnownSaltVO) event.getObject());
-
+    public void loadCuratedNscs() {
+        curatedNscs = HelperCuratedNsc.loadAllCuratedNsc();
     }
 
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", ((CmpdKnownSaltVO) event.getObject()).getId().toString());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    public void onCellEdit(CellEditEvent event) {
-
-        String colHeader = event.getColumn().getFacet("header").toString();
-
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-
-        if (newValue != null && !newValue.equals(oldValue)) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, colHeader + "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void loadCuratedNames() {
+        _knownNames = HelperCuratedNsc.loadAllNames();
+        knownNamesMap = new HashMap<String, CuratedNameVO>();
+        for (CuratedNameVO cnVO : _knownNames) {
+            knownNamesMap.put(cnVO.getValue(), cnVO);
         }
+    }
 
+    public void loadCuratedOriginators() {
+        _knownOriginators = HelperCuratedNsc.loadAllOriginators();
+        knownOriginatorsMap = new HashMap<String, CuratedOriginatorVO>();
+        for (CuratedOriginatorVO cnVO : _knownOriginators) {
+            knownOriginatorsMap.put(cnVO.getValue(), cnVO);
+        }
+    }
+
+    public void loadCuratedProjects() {
+        _knownProjects = HelperCuratedNsc.loadAllProjects();
+        knownProjectsMap = new HashMap<String, CuratedProjectVO>();
+        for (CuratedProjectVO cnVO : _knownProjects) {
+            knownProjectsMap.put(cnVO.getValue(), cnVO);
+        }
+    }
+
+    public void loadCuratedTargets() {
+        _knownTargets = HelperCuratedNsc.loadAllTargets();
+        knownTargetsMap = new HashMap<String, CuratedTargetVO>();
+        for (CuratedTargetVO cnVO : _knownTargets) {
+            knownTargetsMap.put(cnVO.getValue(), cnVO);
+        }
     }
 
     public List<CuratedNscVO> getCuratedNscs() {
@@ -88,36 +102,44 @@ public class CuratedNscController implements Serializable {
         this.curatedNscs = curatedNscs;
     }
 
-    public List<CuratedNameVO> getNames() {
-        return names;
+    public CuratedNscVO getSelectedCuratedNsc() {
+        return selectedCuratedNsc;
     }
 
-    public void setNames(List<CuratedNameVO> names) {
-        this.names = names;
+    public void setSelectedCuratedNsc(CuratedNscVO selectedCuratedNsc) {
+        this.selectedCuratedNsc = selectedCuratedNsc;
     }
 
-    public List<CuratedOriginatorVO> getOriginators() {
-        return originators;
+    public HashMap<String, CuratedNameVO> getKnownNamesMap() {
+        return knownNamesMap;
     }
 
-    public void setOriginators(List<CuratedOriginatorVO> originators) {
-        this.originators = originators;
+    public void setKnownNamesMap(HashMap<String, CuratedNameVO> knownNamesMap) {
+        this.knownNamesMap = knownNamesMap;
     }
 
-    public List<CuratedProjectVO> getProjects() {
-        return projects;
+    public HashMap<String, CuratedOriginatorVO> getKnownOriginatorsMap() {
+        return knownOriginatorsMap;
     }
 
-    public void setProjects(List<CuratedProjectVO> projects) {
-        this.projects = projects;
+    public void setKnownOriginatorsMap(HashMap<String, CuratedOriginatorVO> knownOriginatorsMap) {
+        this.knownOriginatorsMap = knownOriginatorsMap;
     }
 
-    public List<CuratedTargetVO> getTargets() {
-        return targets;
+    public HashMap<String, CuratedProjectVO> getKnownProjectsMap() {
+        return knownProjectsMap;
     }
 
-    public void setTargets(List<CuratedTargetVO> targets) {
-        this.targets = targets;
+    public void setKnownProjectsMap(HashMap<String, CuratedProjectVO> knownProjectsMap) {
+        this.knownProjectsMap = knownProjectsMap;
+    }
+
+    public HashMap<String, CuratedTargetVO> getKnownTargetsMap() {
+        return knownTargetsMap;
+    }
+
+    public void setKnownTargetsMap(HashMap<String, CuratedTargetVO> knownTargetsMap) {
+        this.knownTargetsMap = knownTargetsMap;
     }
 
 }

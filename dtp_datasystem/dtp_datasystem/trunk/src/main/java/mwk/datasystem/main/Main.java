@@ -28,9 +28,26 @@ public class Main {
     public static void main(String[] args) {
         //testTanimotoScores();
         // testSearchCriteriaBean();
-        testCuratedStuff();
+        // testCuratedStuff();
+        
+        testCreateNewName();
+        
     }
 
+    public static void testCreateNewName(){
+        
+        CuratedNameVO newName = new CuratedNameVO();
+        
+        newName.setValue("MWK");
+        newName.setDescription("MWK desc");
+        newName.setReference("MWK ref");
+        
+        CuratedNameVO rtn = HelperCuratedNsc.createNewCuratedName(newName);
+        
+        System.out.println(rtn.toString());
+        
+    }
+    
     public static void testCuratedStuff() {
         
         List<CuratedNscVO> NscList = HelperCuratedNsc.loadAllCuratedNsc();

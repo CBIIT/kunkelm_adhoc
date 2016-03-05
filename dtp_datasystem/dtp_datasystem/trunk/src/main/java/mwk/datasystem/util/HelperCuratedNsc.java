@@ -5,6 +5,7 @@ package mwk.datasystem.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import mwk.datasystem.domain.AdHocCmpd;
 import mwk.datasystem.domain.CuratedName;
 import mwk.datasystem.domain.CuratedNsc;
 import mwk.datasystem.domain.CuratedOriginator;
@@ -105,8 +106,8 @@ public class HelperCuratedNsc {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
             Criteria crit = session.createCriteria(CuratedProject.class);
-            List<CuratedProject> entList = (List<CuratedProject>) crit.list();            
-                rtnList.addAll(TransformAndroToVO.translateCuratedProjects(entList));            
+            List<CuratedProject> entList = (List<CuratedProject>) crit.list();
+            rtnList.addAll(TransformAndroToVO.translateCuratedProjects(entList));
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -128,8 +129,8 @@ public class HelperCuratedNsc {
             session = HibernateUtil.getSessionFactory().openSession();
             tx = session.beginTransaction();
             Criteria crit = session.createCriteria(CuratedTarget.class);
-            List<CuratedTarget> entList = (List<CuratedTarget>) crit.list();            
-                rtnList.addAll(TransformAndroToVO.translateCuratedTargets(entList));            
+            List<CuratedTarget> entList = (List<CuratedTarget>) crit.list();
+            rtnList.addAll(TransformAndroToVO.translateCuratedTargets(entList));
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -139,4 +140,181 @@ public class HelperCuratedNsc {
         }
         return rtnList;
     }
+
+    public static CuratedNameVO createNewCuratedName(CuratedNameVO voIn) {
+
+        System.out.println("In createNewCuratedName in HelperCuratedNsc");
+        System.out.println("voIn: " + voIn.toString());
+        
+        CuratedNameVO rtn = null;
+
+        Session session = null;
+        Transaction tx = null;
+        
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            CuratedName newName = CuratedName.Factory.newInstance();
+
+            newName.setValue(voIn.getValue());
+            newName.setDescription(voIn.getDescription());
+            newName.setReference(voIn.getReference());
+
+            session.save(newName);
+            Long theId = (Long) session.getIdentifier(newName);
+
+            System.out.println("In HelperCuratedNsc theId: " + theId);
+            
+            session.flush();
+            session.evict(newName);
+            session.load(newName, theId);
+
+            rtn = TransformAndroToVO.translateCuratedName(newName);
+                        
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            session.close();
+        }
+
+        return rtn;
+    }
+    
+    public static CuratedOriginatorVO createNewCuratedOriginator(CuratedOriginatorVO voIn) {
+
+        System.out.println("In createNewCuratedOriginator in HelperCuratedNsc");
+        System.out.println("voIn: " + voIn.toString());
+        
+        CuratedOriginatorVO rtn = null;
+
+        Session session = null;
+        Transaction tx = null;
+        
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            CuratedOriginator newOriginator = CuratedOriginator.Factory.newInstance();
+
+            newOriginator.setValue(voIn.getValue());
+            newOriginator.setDescription(voIn.getDescription());
+            newOriginator.setReference(voIn.getReference());
+
+            session.save(newOriginator);
+            Long theId = (Long) session.getIdentifier(newOriginator);
+
+            System.out.println("In HelperCuratedNsc theId: " + theId);
+            
+            session.flush();
+            session.evict(newOriginator);
+            session.load(newOriginator, theId);
+
+            rtn = TransformAndroToVO.translateCuratedOriginator(newOriginator);
+                        
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            session.close();
+        }
+
+        return rtn;
+    }
+    
+    public static CuratedProjectVO createNewCuratedProject(CuratedProjectVO voIn) {
+
+        System.out.println("In createNewCuratedProject in HelperCuratedNsc");
+        System.out.println("voIn: " + voIn.toString());
+        
+        CuratedProjectVO rtn = null;
+
+        Session session = null;
+        Transaction tx = null;
+        
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            CuratedProject newProject = CuratedProject.Factory.newInstance();
+
+            newProject.setValue(voIn.getValue());
+            newProject.setDescription(voIn.getDescription());
+            newProject.setReference(voIn.getReference());
+
+            session.save(newProject);
+            Long theId = (Long) session.getIdentifier(newProject);
+
+            System.out.println("In HelperCuratedNsc theId: " + theId);
+            
+            session.flush();
+            session.evict(newProject);
+            session.load(newProject, theId);
+
+            rtn = TransformAndroToVO.translateCuratedProject(newProject);
+                        
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            session.close();
+        }
+
+        return rtn;
+    }
+
+    public static CuratedTargetVO createNewCuratedTarget(CuratedTargetVO voIn) {
+
+        System.out.println("In createNewCuratedTarget in HelperCuratedNsc");
+        System.out.println("voIn: " + voIn.toString());
+        
+        CuratedTargetVO rtn = null;
+
+        Session session = null;
+        Transaction tx = null;
+        
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            CuratedTarget newTarget = CuratedTarget.Factory.newInstance();
+
+            newTarget.setValue(voIn.getValue());
+            newTarget.setDescription(voIn.getDescription());
+            newTarget.setReference(voIn.getReference());
+
+            session.save(newTarget);
+            Long theId = (Long) session.getIdentifier(newTarget);
+
+            System.out.println("In HelperCuratedNsc theId: " + theId);
+            
+            session.flush();
+            session.evict(newTarget);
+            session.load(newTarget, theId);
+
+            rtn = TransformAndroToVO.translateCuratedTarget(newTarget);
+                        
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            session.close();
+        }
+
+        return rtn;
+    }
+    
 }
