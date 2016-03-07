@@ -619,7 +619,7 @@
         For MySQL use: mysql-connector-java-X-bin.jar
         For Hypersonic use: hsqldb.jar
         -->
-        <jdbc.driver.jar>
+        <jdbc.driver.jar>               
           /opt/postgresql-9.1-901.jdbc4.jar
           <!--/opt/ojdbc6.jar-->
         </jdbc.driver.jar>
