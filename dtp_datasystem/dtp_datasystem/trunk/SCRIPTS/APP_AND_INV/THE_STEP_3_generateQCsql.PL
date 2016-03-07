@@ -36,6 +36,8 @@ my $whichField;
 # #   #   #    #
 #  ### #   ####
 
+open ( OUTFILE, ">qc.sql") or die "Can't open qc.sql\n";
+
 # cycle through all the fields
 
 my @allFields = ("generic_name", "preferred_name", "alias_names", "other_targets", "originator", "primary_target", "project_code");
@@ -79,8 +81,38 @@ foreach $whichField(@allFields){
 }
 
 foreach $sql(@sqlList){
-	print "$sql\n\n";
+	print OUTFILE "$sql\n\n";
 }
+
+close OUTFILE;
+
+print " #    #  #    #   ####    #####\n"; 
+print " ##  ##  #    #  #          #\n"; 
+print " # ## #  #    #   ####      #\n"; 
+print " #    #  #    #       #     #\n"; 
+print " #    #  #    #  #    #     #\n"; 
+print " #    #   ####    ####      #\n"; 
+print "\n"; 
+print " #    #   ####   #    #\n"; 
+print " ##   #  #    #  #    #\n"; 
+print " # #  #  #    #  #    #\n"; 
+print " #  # #  #    #  # ## #\n"; 
+print " #   ##  #    #  ##  ##\n"; 
+print " #    #   ####   #    #\n"; 
+print "\n"; 
+print " #####   #    #  #    #\n"; 
+print " #    #  #    #  ##   #\n"; 
+print " #    #  #    #  # #  #\n"; 
+print " #####   #    #  #  # #\n"; 
+print " #   #   #    #  #   ##\n"; 
+print " #    #   ####   #    #\n"; 
+print "\n"; 
+print "  ####    ####            ####    ####   #\n"; 
+print " #    #  #    #          #       #    #  #\n"; 
+print " #    #  #                ####   #    #  #\n"; 
+print " #  # #  #        ###         #  #  # #  #\n"; 
+print " #   #   #    #   ###    #    #  #   #   #\n"; 
+print "  ### #   ####    ###     ####    ### #  ######\n"; 
 
 # clean up
 $dbh->disconnect();
