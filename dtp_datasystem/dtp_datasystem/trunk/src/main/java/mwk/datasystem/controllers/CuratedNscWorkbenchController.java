@@ -108,6 +108,8 @@ public class CuratedNscWorkbenchController implements Serializable {
         if (changesMade) {
             HelperCuratedNsc.updateCuratedNsc(work);
         }
+        
+        curatedNscController.loadCuratedNscs();
 
         return "/webpages/curatedNscTable?faces-redirect=true";
 

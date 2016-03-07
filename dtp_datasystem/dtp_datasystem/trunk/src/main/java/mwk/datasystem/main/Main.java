@@ -39,18 +39,18 @@ public class Main {
 
         CuratedNscVO valObj = new CuratedNscVO();
         
-        valObj.setId(789227l);
+        valObj.setId(671l);
         valObj.setNsc(10000000);
         valObj.setCas("MWK");
         
         CuratedNameVO cnamVO = new CuratedNameVO();
-        cnamVO.setId(15l);                
+        cnamVO.setId(75l);                
         valObj.setPreferredName(cnamVO);
         
         valObj.setGenericName(cnamVO);
         
         ArrayList<CuratedNameVO> aliases = new ArrayList<CuratedNameVO>();
-        for (long i = 10; i < 15; i++){
+        for (long i = 50; i < 80; i++){
             cnamVO = new CuratedNameVO();
             cnamVO.setId(i);
             aliases.add(cnamVO);
@@ -58,7 +58,7 @@ public class Main {
         valObj.setAliases(aliases);
         
         CuratedOriginatorVO coVO = new CuratedOriginatorVO();
-        coVO.setId(15l);
+        coVO.setId(45l);
         valObj.setOriginator(coVO);
         
         List<CuratedProjectVO> projects = new ArrayList<CuratedProjectVO>();
@@ -66,20 +66,19 @@ public class Main {
         cpVO.setId(2l);
         projects.add(cpVO);
         valObj.setProjects(projects);
-        valObj.setProjects(null);
-        
+                
         CuratedTargetVO prim=new CuratedTargetVO();
         prim.setId(35l);
         valObj.setPrimaryTarget(prim);
         
         List<CuratedTargetVO> targets = new ArrayList<CuratedTargetVO>();
-        for (long i = 10; i < 25; i++){
+        for (long i = 35; i < 75; i++){
             CuratedTargetVO ctVO = new CuratedTargetVO();
             ctVO.setId(i);
             targets.add(ctVO);
         }
         valObj.setSecondaryTargets(targets);
-        valObj.setSecondaryTargets(null);
+        
         
         HelperCuratedNsc.updateCuratedNsc(valObj);
 
