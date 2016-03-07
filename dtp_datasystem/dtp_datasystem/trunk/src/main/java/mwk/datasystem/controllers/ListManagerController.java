@@ -48,528 +48,464 @@ import org.primefaces.event.RowEditEvent;
 @SessionScoped
 public class ListManagerController implements Serializable {
 
-  static final long serialVersionUID = -8653468638698142855l;
+    static final long serialVersionUID = -8653468638698142855l;
 
-  // reach-through to sessionController
-  @ManagedProperty(value = "#{sessionController}")
-  private SessionController sessionController;
+    // reach-through to sessionController
+    @ManagedProperty(value = "#{sessionController}")
+    private SessionController sessionController;
 
-  public void setSessionController(SessionController sessionController) {
-    this.sessionController = sessionController;
-  }
+    public void setSessionController(SessionController sessionController) {
+        this.sessionController = sessionController;
+    }
 
-  private ListManagerBean listManagerBean;
+    private ListManagerBean listManagerBean;
 
-  public ListManagerBean getListManagerBean() {
-    return listManagerBean;
-  }
+    public ListManagerBean getListManagerBean() {
+        return listManagerBean;
+    }
 
-  private String listNamesTextArea;
-  private String cmpdListIdsTextArea;
+    private String listNamesTextArea;
+    private String cmpdListIdsTextArea;
 
-  private ArrayList<String> listNames;
-  private ArrayList<Long> cmpdListIds;
+    private ArrayList<String> listNames;
+    private ArrayList<Long> cmpdListIds;
 
-  @PostConstruct
-  public void init() {
-    listManagerBean = new ListManagerBean();
-    listNames = new ArrayList<String>();
-    cmpdListIds = new ArrayList<Long>();
-    performUpdateAvailableLists();
+    @PostConstruct
+    public void init() {
+        listManagerBean = new ListManagerBean();
+        listNames = new ArrayList<String>();
+        cmpdListIds = new ArrayList<Long>();
+        performUpdateAvailableLists();
 
     // APP&INV APP & INV APPROVED AND INVESTIGATIONAL
-    // default activeList is set to APPROVED and INVESTIGATIONAL which is forced to be CmpdList.id = 1
-    loadToActiveList(1l);
-  }
-
-  public ListManagerController() {
-    init();
-  }
-
-  public void handleExcelExport(ActionEvent event) {
-    handleAnyExport(event, "xls");
-  }
-
-  public void handlePdfExport(ActionEvent event) {
-    handleAnyExport(event, "pdf");
-  }
-
-  public void handleCsvExport(ActionEvent event) {
-    handleAnyExport(event, "csv");
-  }
-
-  public void handleXmlExport(ActionEvent event) {
-    handleAnyExport(event, "xml");
-  }
-
-  // called from menuBar commands
-  private void handleAnyExport(ActionEvent event, String exportType) {
-
-    try {
-
-      FacesContext fc = FacesContext.getCurrentInstance();
-      Application application = fc.getApplication();
-      ExpressionFactory ef = application.getExpressionFactory();
-      ELContext elc = fc.getELContext();
-
-      ValueExpression target = ef.createValueExpression(elc, ":datasystemForm:activeListTbl", String.class);
-      ValueExpression type = ef.createValueExpression(elc, exportType, String.class);
-      ValueExpression fileName = ef.createValueExpression(elc, "datasystemDataExport", String.class);
-      ValueExpression pageOnly = ef.createValueExpression(elc, "true", String.class);
-      ValueExpression selectionOnly = ef.createValueExpression(elc, "false", String.class);
-      ValueExpression encoding = ef.createValueExpression(elc, "UTF-8", String.class);
-      MethodExpression preProcessor = FacesAccessor.createMethodExpression("#{eventManager.preProcessor}", Void.class, new Class[2]);
-      MethodExpression postProcessor = FacesAccessor.createMethodExpression("#{eventManager.postProcessor}", Void.class, new Class[2]);
-
-//    DataExporter de = new DataExporter(target,
-//            type,
-//            fileName,
-//            pageOnly,
-//            selectionOnly,
-//            encoding,
-//            preProcessor,
-//            postProcessor);
-      DataExporter exporter = new DataExporter(target,
-              type,
-              fileName,
-              pageOnly,
-              selectionOnly,
-              encoding,
-              null,
-              null);
-
-      exporter.processAction(event);
-
-    } catch (Exception e) {
-      e.printStackTrace();
+        // default activeList is set to APPROVED and INVESTIGATIONAL which is forced to be CmpdList.id = 1
+        loadToActiveList(1l);
     }
 
-  }
-
-//  // previous version before refactor
-  public List<String> completeListName(String query) {
-    List<String> suggestions = new ArrayList<String>();
-    for (CmpdListVO clVO : listManagerBean.availableLists) {
-      if (StringUtils.containsIgnoreCase(clVO.getListName(), query)) {
-        suggestions.add(clVO.getListName());
-      }
-    }
-    return suggestions;
-  }
-
-  public void onRowEdit(RowEditEvent event) {
-
-    FacesMessage msg = new FacesMessage("List Edited", ((CmpdListVO) event.getObject()).getId().toString());
-    FacesContext.getCurrentInstance().addMessage(null, msg);
-
-    HelperCmpdList.updateCmpdList((CmpdListVO) event.getObject(), sessionController.getLoggedUser());
-
-  }
-
-  public void onRowCancel(RowEditEvent event) {
-    FacesMessage msg = new FacesMessage("Edit Cancelled", ((CmpdListVO) event.getObject()).getId().toString());
-    FacesContext.getCurrentInstance().addMessage(null, msg);
-  }
-
-  public void onCellEdit(CellEditEvent event) {
-
-    String colHeader = event.getColumn().getFacet("header").toString();
-
-    Object oldValue = event.getOldValue();
-    Object newValue = event.getNewValue();
-
-    if (newValue != null && !newValue.equals(oldValue)) {
-      FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, colHeader + "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-      FacesContext.getCurrentInstance().addMessage(null, msg);
+    public ListManagerController() {
+        init();
     }
 
-  }
-
-  public String performNewSearchForAvailableLists() {
-    listNames.clear();
-    cmpdListIds.clear();
-
-    return performUpdateAvailableLists();
-  }
-
-  public String performUpdateAvailableLists() {
-
-    // MWK 26FEB2016 Why is this here?  A fix for ancient problems, long forgotten?
-    if (listManagerBean == null) {
-      System.out.println("listManagerBean is null");
-    } else {
-      listManagerBean.availableLists = new ArrayList<CmpdListVO>();
-    }
-
-    try {
-
-      List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
-
-      // parse text areas
-      String[] splitStrings = null;
-      String fixedString = null;
-      int i;
-
-      String delimiters = "[\\n\\r\\t,]+";
-
-      if (listNamesTextArea != null && !listNamesTextArea.isEmpty()) {
-        splitStrings = listNamesTextArea.split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-          fixedString = splitStrings[i].trim();
-          if (fixedString.length() > 0) {
-            listNames.add(fixedString);
-          }
+    public List<String> completeListName(String query) {
+        List<String> suggestions = new ArrayList<String>();
+        for (CmpdListVO clVO : listManagerBean.availableLists) {
+            if (StringUtils.containsIgnoreCase(clVO.getListName(), query)) {
+                suggestions.add(clVO.getListName());
+            }
         }
-      }
+        return suggestions;
+    }
 
-      if (cmpdListIdsTextArea != null && !cmpdListIdsTextArea.isEmpty()) {
-        splitStrings = cmpdListIdsTextArea.split(delimiters);
-        for (i = 0; i < splitStrings.length; i++) {
-          fixedString = splitStrings[i].replaceAll("[^0-9]", "");
-          if (fixedString.length() > 0) {
-            cmpdListIds.add(Long.valueOf(fixedString));
-          }
+    public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("List Edited", ((CmpdListVO) event.getObject()).getId().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        HelperCmpdList.updateCmpdList((CmpdListVO) event.getObject(), sessionController.getLoggedUser());
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((CmpdListVO) event.getObject()).getId().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+
+        String colHeader = event.getColumn().getFacet("header").toString();
+
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, colHeader + "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
-      }
 
-      justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
+    }
+
+    public String performNewSearchForAvailableLists() {
+        listNames.clear();
+        cmpdListIds.clear();
+
+        return performUpdateAvailableLists();
+    }
+
+    public String performUpdateAvailableLists() {
+
+        // MWK 26FEB2016 Why is this here?  A fix for ancient problems, long forgotten?
+        if (listManagerBean == null) {
+            System.out.println("listManagerBean is null");
+        } else {
+            listManagerBean.availableLists = new ArrayList<CmpdListVO>();
+        }
+
+        try {
+
+            List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
+
+            // parse text areas
+            String[] splitStrings = null;
+            String fixedString = null;
+            int i;
+
+            String delimiters = "[\\n\\r\\t,]+";
+
+            if (listNamesTextArea != null && !listNamesTextArea.isEmpty()) {
+                splitStrings = listNamesTextArea.split(delimiters);
+                for (i = 0; i < splitStrings.length; i++) {
+                    fixedString = splitStrings[i].trim();
+                    if (fixedString.length() > 0) {
+                        listNames.add(fixedString);
+                    }
+                }
+            }
+
+            if (cmpdListIdsTextArea != null && !cmpdListIdsTextArea.isEmpty()) {
+                splitStrings = cmpdListIdsTextArea.split(delimiters);
+                for (i = 0; i < splitStrings.length; i++) {
+                    fixedString = splitStrings[i].replaceAll("[^0-9]", "");
+                    if (fixedString.length() > 0) {
+                        cmpdListIds.add(Long.valueOf(fixedString));
+                    }
+                }
+            }
+
+            justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
 
       // check for change in size of lists
-      // null out the listMembers if there has been a change to force
-      // re-load next time it is called
-      // OTHERWISE just update list-level info
-      // this hoop-protects any list-level data that may have already been
-      // fetched 
-      HashMap<Long, CmpdListVO> listMap = new HashMap<Long, CmpdListVO>();
-      for (CmpdListVO clVO : listManagerBean.availableLists) {
-        listMap.put(clVO.getId(), clVO);
-      }
+            // null out the listMembers if there has been a change to force
+            // re-load next time it is called
+            // OTHERWISE just update list-level info
+            // this hoop-protects any list-level data that may have already been
+            // fetched 
+            HashMap<Long, CmpdListVO> listMap = new HashMap<Long, CmpdListVO>();
+            for (CmpdListVO clVO : listManagerBean.availableLists) {
+                listMap.put(clVO.getId(), clVO);
+            }
 
-      for (CmpdListVO fetchedList : justFetchedLists) {
+            for (CmpdListVO fetchedList : justFetchedLists) {
 
-        if (listMap.containsKey(fetchedList.getId())) {
+                if (listMap.containsKey(fetchedList.getId())) {
 
           // existing list
-          // update list-level info and fetch data if count has changed
-          CmpdListVO curList = listMap.get(fetchedList.getId());
-          // how many current members
-          Integer curCountMembers = curList.getCountListMembers();
+                    // update list-level info and fetch data if count has changed
+                    CmpdListVO curList = listMap.get(fetchedList.getId());
+                    // how many current members
+                    Integer curCountMembers = curList.getCountListMembers();
 
           // if the number of members has changed
-          // then null out listMembers to force re-fetch the next time it is called
-          if (fetchedList.getCountListMembers().intValue() != curList.getCountListMembers().intValue()) {
+                    // then null out listMembers to force re-fetch the next time it is called
+                    if (fetchedList.getCountListMembers().intValue() != curList.getCountListMembers().intValue()) {
 
-            curList.setCmpdListMembers(null);
+                        curList.setCmpdListMembers(null);
 
-          } else {
+                    } else {
 
-            curList.setId(fetchedList.getId());
-            curList.setCmpdListId(fetchedList.getCmpdListId());
-            curList.setListName(fetchedList.getListName());
-            curList.setDateCreated(fetchedList.getDateCreated());
-            curList.setListOwner(fetchedList.getListOwner());
-            curList.setShareWith(fetchedList.getShareWith());
+                        curList.setId(fetchedList.getId());
+                        curList.setCmpdListId(fetchedList.getCmpdListId());
+                        curList.setListName(fetchedList.getListName());
+                        curList.setDateCreated(fetchedList.getDateCreated());
+                        curList.setListOwner(fetchedList.getListOwner());
+                        curList.setShareWith(fetchedList.getShareWith());
 
-            curList.setCountListMembers(fetchedList.getCountListMembers());
+                        curList.setCountListMembers(fetchedList.getCountListMembers());
 
-          }
+                    }
 
-        } else {
-          // a brand new list
-          listManagerBean.availableLists.add(fetchedList);
+                } else {
+                    // a brand new list
+                    listManagerBean.availableLists.add(fetchedList);
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-      }
+        return "/webpages/availableLists?faces-redirect=true";
 
-    } catch (Exception e) {
-      e.printStackTrace();
     }
 
-    return "/webpages/availableLists?faces-redirect=true";
+    public void loadToActiveList(Long listId) {
 
-  }
+        System.out.println("Entering loadToActiveList(Long listId)");
 
-  public void loadToActiveList(Long listId) {
-
-    System.out.println("Entering loadToActiveList(Long listId)");
-
-    for (CmpdListVO clVO : listManagerBean.availableLists) {
-      if (clVO.getCmpdListId().longValue() == listId.longValue()) {
-        listManagerBean.activeList = clVO;
-        performLoadSelectedList();
-        break;
-      }
-    }
-
-  }
-
-  public String performLoadSelectedList() {
-
-    System.out.println("Entering performLoadSelectedList()");
-
-    performLoadList(listManagerBean.activeList);
-
-    listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
-
-    sessionController.configurationBean.performUpdateColumns();
-
-    return "/webpages/activeListTable.xhtml?faces-redirect=true";
-  }
-
-  // this is called everytime the activeListTable page is reloaded
-  public void handleSynchronizeFilters() {
-    listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
-  }
-
-  /**
-   *
-   * @param listId
-   * @return This is used by the ListLogicController until I can figure out
-   * coverters for selectItems
-   */
-  public CmpdListVO fetchList(Long listId) {
-
-    System.out.println("Entering performLoadList(Long listId)");
-
-    CmpdListVO rtn = null;
-
-    for (CmpdListVO clVO : listManagerBean.availableLists) {
-      if (clVO.getCmpdListId().longValue() == listId.longValue()) {
-        performLoadList(clVO);
-        rtn = clVO;
-        break;
-      }
-    }
-
-    return rtn;
-
-  }
-
-  public String performLoadList(CmpdListVO clVO) {
-
-    System.out.println("Entering performLoadList(CmpdListVO clVO)");
-
-    CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
-    clVO.setCmpdListMembers(voList.getCmpdListMembers());
-
-    sessionController.configurationBean.performUpdateColumns();
-
-    return "/webpages/activeListTable?faces-redirect=true";
-
-  }
-
-  public String performShareList() {
-
-    // only if owner
-    if (listManagerBean.activeList.getListOwner().equals(sessionController.getLoggedUser())) {
-      HelperCmpdList.shareCmpdList(listManagerBean.activeList.getCmpdListId(), sessionController.getLoggedUser());
-      listManagerBean.activeList.setShareWith("EVERYONE");
-    }
-
-    return "/webpages/availableLists.xhtml?faces-redirect=true";
-
-  }
-
-  public String performInitiateDeleteList() {
-
-    listManagerBean.listForDelete = new CmpdListVO();
-
-    FacesContext context = FacesContext.getCurrentInstance();
-    String cmpdListIdForDelete = context.getExternalContext().getRequestParameterMap().get("cmpdListIdForDelete");
-
-    System.out.println("cmpdListIdForDelete is: " + cmpdListIdForDelete);
-
-    Long testLong = null;
-
-    try {
-      testLong = Long.parseLong(cmpdListIdForDelete);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    if (testLong != null) {
-      for (CmpdListVO clVO : listManagerBean.availableLists) {
-        if (clVO.getCmpdListId().longValue() == testLong.longValue()) {
-          // only if owner
-          if (clVO.getListOwner().equals(sessionController.getLoggedUser())) {
-            listManagerBean.listForDelete = clVO;
-          }
+        for (CmpdListVO clVO : listManagerBean.availableLists) {
+            if (clVO.getCmpdListId().longValue() == listId.longValue()) {
+                listManagerBean.activeList = clVO;
+                performLoadSelectedList();
+                break;
+            }
         }
-      }
+
     }
 
-    return "/webpages/confirmDeleteList.xhtml";
+    public String performLoadSelectedList() {
 
-  }
+        System.out.println("Entering performLoadSelectedList()");
 
-  public String performDeleteList() {
+        performLoadList(listManagerBean.activeList);
 
-    System.out.println("Now in performDeleteList in listManagerController.");
-    // only if owner
-    if (listManagerBean.listForDelete.getListOwner().equals(sessionController.getLoggedUser())) {
-      HelperCmpdList.deleteCmpdListByCmpdListId(listManagerBean.listForDelete.getCmpdListId(), sessionController.getLoggedUser());
-      listManagerBean.availableLists.remove(listManagerBean.listForDelete);
+        listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
+
+        sessionController.configurationBean.performUpdateColumns();
+
+        return "/webpages/activeListTable.xhtml?faces-redirect=true";
     }
 
-    return "/webpages/availableLists.xhtml?faces-redirect=true";
+    // this is called everytime the activeListTable page is reloaded
+    public void handleSynchronizeFilters() {
+        listManagerBean.setFilteredActiveListMembers(new ArrayList<CmpdListMemberVO>(listManagerBean.activeList.getCmpdListMembers()));
+    }
 
-  }
+    /**
+     *
+     * @param listId
+     * @return This is used by the ListLogicController until I can figure out
+     * coverters for selectItems
+     */
+    public CmpdListVO fetchList(Long listId) {
 
-  /**
-   *
-   * @param smiles
-   * @param title
-   * @return
-   * @throws Exception used to render structure images for postProcessXLS
-   */
-  public byte[] getStructureImage(String smiles, String title) throws Exception {
+        System.out.println("Entering performLoadList(Long listId)");
 
-    java.net.URL servletURL = null;
+        CmpdListVO rtn = null;
 
-    java.net.HttpURLConnection servletConn = null;
+        for (CmpdListVO clVO : listManagerBean.availableLists) {
+            if (clVO.getCmpdListId().longValue() == listId.longValue()) {
+                performLoadList(clVO);
+                rtn = clVO;
+                break;
+            }
+        }
 
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        return rtn;
 
-    try {
+    }
 
-      servletURL = new java.net.URL("http://localhost:8080/datasystem/StructureServlet");
+    public String performLoadList(CmpdListVO clVO) {
 
-      servletConn = (java.net.HttpURLConnection) servletURL.openConnection();
-      servletConn.setDoInput(true);
-      servletConn.setDoOutput(true);
-      servletConn.setUseCaches(false);
-      servletConn.setRequestMethod("POST");
-      servletConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        System.out.println("Entering performLoadList(CmpdListVO clVO)");
 
-      java.io.DataOutputStream outStream = new java.io.DataOutputStream(servletConn.getOutputStream());
+        CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
+        clVO.setCmpdListMembers(voList.getCmpdListMembers());
 
-      outStream.writeBytes("smiles=" + URLEncoder.encode(smiles, "UTF-8"));
+        sessionController.configurationBean.performUpdateColumns();
 
-      if (title != null) {
-        outStream.writeBytes("&title=" + URLEncoder.encode(title, "UTF-8"));
-      }
+        return "/webpages/activeListTable?faces-redirect=true";
 
-      outStream.flush();
-      outStream.close();
+    }
 
-      if (servletConn.getResponseCode() != servletConn.HTTP_OK) {
-        throw new Exception("Exception from StructureServlet in getStructureImage in ListManagerController: " + servletConn.getResponseMessage());
-      }
+    public String performShareList() {
+
+        // only if owner
+        if (listManagerBean.activeList.getListOwner().equals(sessionController.getLoggedUser())) {
+            HelperCmpdList.shareCmpdList(listManagerBean.activeList.getCmpdListId(), sessionController.getLoggedUser());
+            listManagerBean.activeList.setShareWith("EVERYONE");
+        }
+
+        return "/webpages/availableLists.xhtml?faces-redirect=true";
+
+    }
+
+    public String performInitiateDeleteList() {
+
+        listManagerBean.listForDelete = new CmpdListVO();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        String cmpdListIdForDelete = context.getExternalContext().getRequestParameterMap().get("cmpdListIdForDelete");
+
+        System.out.println("cmpdListIdForDelete is: " + cmpdListIdForDelete);
+
+        Long testLong = null;
+
+        try {
+            testLong = Long.parseLong(cmpdListIdForDelete);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (testLong != null) {
+            for (CmpdListVO clVO : listManagerBean.availableLists) {
+                if (clVO.getCmpdListId().longValue() == testLong.longValue()) {
+                    // only if owner
+                    if (clVO.getListOwner().equals(sessionController.getLoggedUser())) {
+                        listManagerBean.listForDelete = clVO;
+                    }
+                }
+            }
+        }
+
+        return "/webpages/confirmDeleteList.xhtml";
+
+    }
+
+    public String performDeleteList() {
+
+        System.out.println("Now in performDeleteList in listManagerController.");
+        // only if owner
+        if (listManagerBean.listForDelete.getListOwner().equals(sessionController.getLoggedUser())) {
+            HelperCmpdList.deleteCmpdListByCmpdListId(listManagerBean.listForDelete.getCmpdListId(), sessionController.getLoggedUser());
+            listManagerBean.availableLists.remove(listManagerBean.listForDelete);
+        }
+
+        return "/webpages/availableLists.xhtml?faces-redirect=true";
+
+    }
+
+    /**
+     *
+     * @param smiles
+     * @param title
+     * @return
+     * @throws Exception used to render structure images for postProcessXLS
+     */
+    public byte[] getStructureImage(String smiles, String title) throws Exception {
+
+        java.net.URL servletURL = null;
+
+        java.net.HttpURLConnection servletConn = null;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try {
+
+            servletURL = new java.net.URL("http://localhost:8080/datasystem/StructureServlet");
+
+            servletConn = (java.net.HttpURLConnection) servletURL.openConnection();
+            servletConn.setDoInput(true);
+            servletConn.setDoOutput(true);
+            servletConn.setUseCaches(false);
+            servletConn.setRequestMethod("POST");
+            servletConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            java.io.DataOutputStream outStream = new java.io.DataOutputStream(servletConn.getOutputStream());
+
+            outStream.writeBytes("smiles=" + URLEncoder.encode(smiles, "UTF-8"));
+
+            if (title != null) {
+                outStream.writeBytes("&title=" + URLEncoder.encode(title, "UTF-8"));
+            }
+
+            outStream.flush();
+            outStream.close();
+
+            if (servletConn.getResponseCode() != servletConn.HTTP_OK) {
+                throw new Exception("Exception from StructureServlet in getStructureImage in ListManagerController: " + servletConn.getResponseMessage());
+            }
 
 //      String tempString = new String();
 //      java.io.BufferedReader theReader = new java.io.BufferedReader(new InputStreamReader(servletConn.getInputStream()));
 //      while ((tempString = theReader.readLine()) != null) {
 //        returnString += tempString;
 //      }
-      InputStream is = servletConn.getInputStream();
+            InputStream is = servletConn.getInputStream();
 
-      byte[] buf = new byte[1000];
-      for (int nChunk = is.read(buf); nChunk != -1; nChunk = is.read(buf)) {
-        baos.write(buf, 0, nChunk);
-      }
+            byte[] buf = new byte[1000];
+            for (int nChunk = is.read(buf); nChunk != -1; nChunk = is.read(buf)) {
+                baos.write(buf, 0, nChunk);
+            }
 
-    } catch (Exception e) {
-      System.out.println("Exception in getStructureImage in ListManagerController " + e);
-      e.printStackTrace();
-      throw new Exception(e);
-    } finally {
-      servletConn.disconnect();
-      servletConn = null;
+        } catch (Exception e) {
+            System.out.println("Exception in getStructureImage in ListManagerController " + e);
+            e.printStackTrace();
+            throw new Exception(e);
+        } finally {
+            servletConn.disconnect();
+            servletConn = null;
+        }
+
+        baos.flush();
+        return baos.toByteArray();
+
     }
 
-    baos.flush();
-    return baos.toByteArray();
+    public void postProcessXLS(Object document) {
 
-  }
+        try {
 
-  public void postProcessXLS(Object document) {
+            System.out.println("In postProcessXLS in listManagerController.");
 
-    try {
+            HSSFWorkbook wb = (HSSFWorkbook) document;
+            HSSFSheet sheet = wb.getSheetAt(0);
 
-      System.out.println("In postProcessXLS in listManagerController.");
+            CreationHelper helper = wb.getCreationHelper();
 
-      HSSFWorkbook wb = (HSSFWorkbook) document;
-      HSSFSheet sheet = wb.getSheetAt(0);
+            // Create the drawing patriarch.  This is the top level container for all shapes. 
+            Drawing drawing = sheet.createDrawingPatriarch();
 
-      CreationHelper helper = wb.getCreationHelper();
+            for (Row row : sheet) {
 
-      // Create the drawing patriarch.  This is the top level container for all shapes. 
-      Drawing drawing = sheet.createDrawingPatriarch();
+                String title = null;
 
-      for (Row row : sheet) {
+                System.out.println("In row: " + row.getRowNum());
 
-        String title = null;
+                // get the SMILES column
+                if (row.getCell(17).getStringCellValue() != null) {
 
-        System.out.println("In row: " + row.getRowNum());
+                    row.setHeightInPoints(200);
 
-        // get the SMILES column
-        if (row.getCell(17).getStringCellValue() != null) {
+                    String smiles = row.getCell(17).getStringCellValue();
+                    System.out.println("SMILES is: " + smiles);
 
-          row.setHeightInPoints(200);
+                    if (row.getCell(3).getStringCellValue() != null) {
+                        title = row.getCell(3).getStringCellValue();
+                        System.out.println("title is: " + title);
+                    }
 
-          String smiles = row.getCell(17).getStringCellValue();
-          System.out.println("SMILES is: " + smiles);
+                    if (title == null) {
+                        title = "";
+                    }
 
-          if (row.getCell(3).getStringCellValue() != null) {
-            title = row.getCell(3).getStringCellValue();
-            System.out.println("title is: " + title);
-          }
+                    byte[] bytes = getStructureImage(smiles, title);
+                    int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
 
-          if (title == null) {
-            title = "";
-          }
-
-          byte[] bytes = getStructureImage(smiles, title);
-          int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
-
-          //add a picture shape
-          ClientAnchor anchor = helper.createClientAnchor();
+                    //add a picture shape
+                    ClientAnchor anchor = helper.createClientAnchor();
 
           //set top-left corner of the picture,
-          //subsequent call of Picture#resize() will operate relative to it
-          anchor.setCol1(18);
-          anchor.setRow1(row.getRowNum());
+                    //subsequent call of Picture#resize() will operate relative to it
+                    anchor.setCol1(18);
+                    anchor.setRow1(row.getRowNum());
 
-          anchor.setDx1(10);
-          anchor.setDx2(10);
-          anchor.setDy1(10);
-          anchor.setDy2(10);
+                    anchor.setDx1(10);
+                    anchor.setDx2(10);
+                    anchor.setDy1(10);
+                    anchor.setDy2(10);
 
-          anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
+                    anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
 
-          Picture pict = drawing.createPicture(anchor, pictureIdx);
+                    Picture pict = drawing.createPicture(anchor, pictureIdx);
 
-          //auto-size picture relative to its top-left corner
-          pict.resize();
+                    //auto-size picture relative to its top-left corner
+                    pict.resize();
 
-        }
+                }
 
 //        for (Cell cell : row) {
 //          //cell.setCellValue(cell.getStringCellValue().toUpperCase());        
 //          cell.setCellStyle(style);
 //        }
-      }
+            }
 
-    } catch (Exception e) {
-      e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-  }
+    public String getListNamesTextArea() {
+        return listNamesTextArea;
+    }
 
-  public String getListNamesTextArea() {
-    return listNamesTextArea;
-  }
+    public void setListNamesTextArea(String listNamesTextArea) {
+        this.listNamesTextArea = listNamesTextArea;
+    }
 
-  public void setListNamesTextArea(String listNamesTextArea) {
-    this.listNamesTextArea = listNamesTextArea;
-  }
+    public String getCmpdListIdsTextArea() {
+        return cmpdListIdsTextArea;
+    }
 
-  public String getCmpdListIdsTextArea() {
-    return cmpdListIdsTextArea;
-  }
-
-  public void setCmpdListIdsTextArea(String cmpdListIdsTextArea) {
-    this.cmpdListIdsTextArea = cmpdListIdsTextArea;
-  }
+    public void setCmpdListIdsTextArea(String cmpdListIdsTextArea) {
+        this.cmpdListIdsTextArea = cmpdListIdsTextArea;
+    }
 
 }

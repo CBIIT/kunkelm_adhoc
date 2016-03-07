@@ -266,7 +266,8 @@ public class HelperCmpdList {
       }
 
       // fetch a list of cmpdTable
-      Criteria cvCrit = session.createCriteria(CmpdTable.class);
+      Criteria cvCrit = session.createCriteria(CmpdTable.class)
+              .setMaxResults(2000);
       cvCrit.add(Restrictions.in("id", cmpdIdList));
       List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
@@ -407,88 +408,6 @@ public class HelperCmpdList {
 
   }
 
-//  public static List<CmpdListVO> searchCmpdLists_ORIGINAL(
-//          List<String> listNames,
-//          List<Long> cmpdListIds,
-//          String currentUser) {
-//
-//    List<CmpdListVO> voList = new ArrayList<CmpdListVO>();
-//    List<CmpdList> entityList = null;
-//
-//    if (listNames == null) {
-//      listNames = new ArrayList<String>();
-//    }
-//    if (cmpdListIds == null) {
-//      cmpdListIds = new ArrayList<Long>();
-//    }
-//
-//    
-//    Session session = HibernateUtil.getSessionFactory().openSession();
-//    Transaction tx = session.beginTransaction();
-//
-//    try {
-//    
-//      Conjunction outerConj = Restrictions.conjunction();
-//      Disjunction outerDisj = Restrictions.disjunction();
-//
-//      Criteria crit = session.createCriteria(CmpdList.class);
-//
-//      if (currentUser.equals("PUBLIC")) {
-//
-//        crit.add(Restrictions.eq("shareWith", "EVERYONE"));
-//
-//      } else {
-//
-//        Disjunction accessDisj = Restrictions.disjunction();
-//        accessDisj.add(Restrictions.eq("listOwner", currentUser));
-//        accessDisj.add(Restrictions.eq("shareWith", "EVERYONE"));
-//
-//        crit.add(accessDisj);
-//
-//      }
-//
-//      if (!listNames.isEmpty() || !cmpdListIds.isEmpty()) {
-//
-//        if (!listNames.isEmpty() && !cmpdListIds.isEmpty()) {
-//
-//          Disjunction descrDisj = Restrictions.disjunction();
-//          descrDisj.add(Restrictions.in("listName", listNames));
-//          descrDisj.add(Restrictions.in("cmpdListId", cmpdListIds));
-//
-//          crit.add(descrDisj);
-//
-//        } else if (!listNames.isEmpty()) {
-//
-//          crit.add(Restrictions.in("listName", listNames));
-//
-//        } else if (!cmpdListIds.isEmpty()) {
-//
-//          crit.add(Restrictions.in("cmpdListId", cmpdListIds));
-//
-//        } else {
-//          // shouldn't ever get here
-//        }
-//
-//      }
-//
-//      entityList = (List<CmpdList>) crit.list();
-//
-//      if (!entityList.isEmpty()) {
-//        voList = TransformAndroToVO.translateCmpdLists(entityList, Boolean.FALSE);
-//      }
-//
-//      tx.commit();
-//
-//    } catch (Exception e) {
-//      tx.rollback();
-//      e.printStackTrace();
-//    } finally {
-//      session.close();
-//    }
-//
-//    return voList;
-//
-//  }
   public static void updateCmpdList(CmpdListVO cL, String currentUser) {
 
     Session session = null;

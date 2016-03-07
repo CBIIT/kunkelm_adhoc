@@ -19,6 +19,14 @@
         </p:menubar>
 
         <h2>
+            <h:outputText value="NSC: #{curatedNscWorkbenchController.work.nsc}"/>
+        </h2>
+        
+        <h2>
+            <h:outputText value="CAS: #{curatedNscWorkbenchController.work.cas}"/>
+        </h2>
+                
+        <h2>
             <h:outputText value="Preferred Name"/>
         </h2>
 
@@ -58,7 +66,7 @@
             </p:panel>
 
             <p:dataTable id="preferredNameDataTable"
-                         value="#{curatedNscWorkbenchController.preferredName}"
+                         value="#{curatedNscWorkbenchController.work.preferredName}"
                          var="preferredNameDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -122,7 +130,7 @@
             </p:panel>
 
             <p:dataTable id="genericNameDataTable"
-                         value="#{curatedNscWorkbenchController.genericName}"
+                         value="#{curatedNscWorkbenchController.work.genericName}"
                          var="genericNameDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -186,7 +194,7 @@
             </p:panel>
 
             <p:dataTable id="aliasesDataTable"
-                         value="#{curatedNscWorkbenchController.aliases}"
+                         value="#{curatedNscWorkbenchController.work.aliases}"
                          var="aliasesDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -250,7 +258,7 @@
             </p:panel>
 
             <p:dataTable id="originatorDataTable"
-                         value="#{curatedNscWorkbenchController.originator}"
+                         value="#{curatedNscWorkbenchController.work.originator}"
                          var="originatorDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -314,7 +322,7 @@
             </p:panel>
 
             <p:dataTable id="projectsDataTable"
-                         value="#{curatedNscWorkbenchController.projects}"
+                         value="#{curatedNscWorkbenchController.work.projects}"
                          var="projectsDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -378,7 +386,7 @@
             </p:panel>
 
             <p:dataTable id="primaryTargetDataTable"
-                         value="#{curatedNscWorkbenchController.primaryTarget}"
+                         value="#{curatedNscWorkbenchController.work.primaryTarget}"
                          var="primaryTargetDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -442,7 +450,7 @@
             </p:panel>
 
             <p:dataTable id="secondaryTargetsDataTable"
-                         value="#{curatedNscWorkbenchController.secondaryTargets}"
+                         value="#{curatedNscWorkbenchController.work.secondaryTargets}"
                          var="secondaryTargetsDataTableVar">
 
                 <p:column headerText="REMOVE">
@@ -558,6 +566,7 @@
 
         </p:dialog>
 
+
         <p:dialog header="Create New CuratedTarget" 
                   widgetVar="create_new_curated_target_dlg" 
                   modal="true"
@@ -587,6 +596,11 @@
             </p:outputPanel>
 
         </p:dialog>
+        
+        <p:commandButton value="UPDATE"
+                         action="#{curatedNscWorkbenchController.performUpdate}"
+                         onstart="PF('updatingBUI').show();"
+                         oncomplete="PF('updatingBUI').hide();"/>
 
     </ui:define>
 

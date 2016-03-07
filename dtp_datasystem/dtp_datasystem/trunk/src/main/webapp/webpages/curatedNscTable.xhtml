@@ -9,7 +9,29 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
+    <ui:define name="export"> 
+        <h2 style="margin: 0;">
+            <h:outputText value="Export Data"/>
+        </h2>
+        <p:menubar autoDisplay="false">
+            <p:menuitem ajax="false" value="Export to Excel">
+                <p:dataExporter type="xls"  
+                                target="curatedNscs" 
+                                fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
+            </p:menuitem>
+            <p:menuitem ajax="false" value="Export as CSV">  
+                <p:dataExporter type="csv" 
+                                target="curatedNscs" 
+                                fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
+            </p:menuitem>       
+        </p:menubar>
+    </ui:define>    
+
     <ui:define name="content">
+
+        <p:menubar autoDisplay="false">
+            <p:menuitem value="Create New CuratedNsc" onclick="PF('create_new_curated_nsc_dlg').show();"/>
+        </p:menubar>
 
         <p:dataTable id="curatedNscs"
                      tableStyle="width: auto;"
@@ -19,14 +41,23 @@
                      paginator="true" 
                      rows="10" 
                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                     rowsPerPageTemplate="10,25,50">
+                     rowsPerPageTemplate="10,25,50,100,250,500,1000,2000">
 
             <f:facet name="header">  
                 <h:outputText value="#{fn:length(curatedNscController.curatedNscs)} Curated NSC"/>
             </f:facet>
 
-            <p:column resizable="true" headerText="id" sortBy="#{nsc.id}" filterBy="#{nsc.id}">              
-                <h:outputText value="#{nsc.id}" />
+            <p:column exportable="false">
+
+                <p:commandLink value="EDIT" 
+                               action="#{curatedNscWorkbenchController.performConfigureEdit(nsc)}"/>
+
+                <h:outputText escape="false" value="&lt;br/&gt;"/>
+
+                <p:commandLink value="DELETE" style="color: red;" 
+                               action="#{curatedNscController.configureDelete(nsc)}"
+                               oncomplete="PF('delete_curated_nsc_dlg').show();"/>
+
             </p:column>
 
             <!-- free-form -->
@@ -39,47 +70,103 @@
                 <h:outputText value="#{nsc.cas}" />                              
             </p:column>
 
-            <!-- singletons -->
-
             <p:column resizable="true" headerText="genericName"  sortBy="#{nsc.genericName.value}" filterBy="#{nsc.genericName.value}">              
                 <h:outputText value="#{nsc.genericName.value}" />                              
-            </p:column>
-
-            <p:column resizable="true" headerText="originator" sortBy="#{nsc.originator.value}" filterBy="#{nsc.originator.value}">              
-                <h:outputText value="#{nsc.originator.value}" />                
             </p:column>
 
             <p:column resizable="true" headerText="preferredName" sortBy="#{nsc.preferredName.value}" filterBy="#{nsc.preferredName.value}">                            
                 <h:outputText value="#{nsc.preferredName.value}" />
             </p:column>
 
-            <p:column resizable="true" headerText="primaryTarget"  sortBy="#{nsc.primaryTarget.value}" filterBy="#{nsc.primaryTarget.value}">                            
-                <h:outputText value="#{nsc.primaryTarget.value}" />
-            </p:column>
-
-            <!-- multiples -->
-
-            <p:column resizable="true" headerText="aliases">      
+            <p:column  exportable="false" resizable="true" headerText="aliases">      
                 <p:dataList var="prop" 
                             value="#{nsc.aliases}">                                
                     <h:outputText style="white-space: pre-line" value="#{prop.value}" />
                 </p:dataList>                
             </p:column>
 
-            <p:column resizable="true" headerText="projects">      
+            <p:column style="display: none;" resizable="true" headerText="aliases">      
+                <h:outputText value="#{curatedNscController.getDelimitedNames(nsc.aliases)}"/>
+            </p:column>
+
+            <p:column resizable="true" headerText="originator" sortBy="#{nsc.originator.value}" filterBy="#{nsc.originator.value}">              
+                <h:outputText value="#{nsc.originator.value}" />                
+            </p:column>
+
+            <p:column exportable="false" resizable="true" headerText="projects">      
                 <p:dataList var="prop" 
                             value="#{nsc.projects}">                                
                     <h:outputText style="white-space: pre-line" value="#{prop.value}" />
                 </p:dataList>                
             </p:column>
 
-            <p:column resizable="true" headerText="secondaryTargets">                              
+            <p:column style="display: none;" resizable="true" headerText="projects">      
+                <h:outputText value="#{curatedNscController.getDelimitedProjects(nsc.projects)}"/>
+            </p:column>
+
+            <p:column resizable="true" headerText="primaryTarget"  sortBy="#{nsc.primaryTarget.value}" filterBy="#{nsc.primaryTarget.value}">                            
+                <h:outputText value="#{nsc.primaryTarget.value}" />
+            </p:column>
+
+            <p:column exportable="false" resizable="true" headerText="secondaryTargets">                              
                 <p:dataList var="prop" 
                             value="#{nsc.secondaryTargets}">                                
                     <h:outputText style="white-space: pre-line" value="#{prop.value}" />
                 </p:dataList>
             </p:column>
+
+            <p:column style="display: none;" resizable="true" headerText="secondaryTargets">      
+                <h:outputText value="#{curatedNscController.getDelimitedTargets(nsc.secondaryTargets)}"/>
+            </p:column>
+
         </p:dataTable>
+
+        <p:dialog header="Create New CuratedNsc" 
+                  widgetVar="create_new_curated_nsc_dlg" 
+                  modal="true"
+                  width="600" height="400">
+
+            <p:outputPanel autoUpdate="true">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="curated_nsc_nsc" value="NSC"/>
+                    <h:inputText id="curated_nsc_nsc" value="#{curatedNscController.newCuratedNsc.nsc}"/>
+
+                    <h:outputLabel for="curated_nsc_cas" value="CAS"/>
+                    <h:inputText id="curated_nsc_cas" value="#{curatedNscController.newCuratedNsc.cas}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton action="#{curatedNscController.createNewCuratedNsc}"
+                                 value="Create New CuratedNsc"
+                                 onstart="PF('creatingBUI').show();"
+                                 oncomplete="PF('creatingBUI').hide();"
+                                 style="width: 100%;" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog header="Delete CuratedNsc" 
+                  widgetVar="delete_curated_nsc_dlg" 
+                  modal="true"
+                  width="600" height="400">
+
+            <p:outputPanel autoUpdate="true">
+
+                <p:outputLabel value="This will remove NSC #{curatedNscController.curatedNscForDelete.nsc} from curation!" 
+                               style="font-size: 200%; color: red;"/>
+
+                <p:commandButton action="#{curatedNscController.deleteCuratedNsc}"
+                                 value="Delete CuratedNsc"
+                                 onstart="PF('deletingBUI').show();"
+                                 oncomplete="PF('deletingBUI').hide();"
+                                 style="width: 100%;" />
+
+            </p:outputPanel>
+
+        </p:dialog>
 
     </ui:define>
 

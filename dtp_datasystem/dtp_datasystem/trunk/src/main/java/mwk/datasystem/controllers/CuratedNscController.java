@@ -6,12 +6,13 @@
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import mwk.datasystem.util.Comparators;
 import mwk.datasystem.util.HelperCuratedNsc;
 import mwk.datasystem.vo.CuratedNameVO;
 import mwk.datasystem.vo.CuratedNscVO;
@@ -31,6 +32,8 @@ public class CuratedNscController implements Serializable {
 
     private List<CuratedNscVO> curatedNscs;
     private CuratedNscVO selectedCuratedNsc;
+    private CuratedNscVO newCuratedNsc;
+    private CuratedNscVO curatedNscForDelete;
 
     private List<CuratedNameVO> _knownNames;
     private List<CuratedOriginatorVO> _knownOriginators;
@@ -45,6 +48,8 @@ public class CuratedNscController implements Serializable {
     @PostConstruct
     public void init() {
 
+        newCuratedNsc = new CuratedNscVO();
+
         loadCuratedNscs();
 
         loadCuratedNames();
@@ -58,12 +63,40 @@ public class CuratedNscController implements Serializable {
         //init();
     }
 
+    public String createNewCuratedNsc() {
+
+        CuratedNscVO cnVO = HelperCuratedNsc.createNewCuratedNsc(newCuratedNsc);
+
+        if (cnVO != null) {
+            System.out.println(cnVO);
+            // reload         
+            loadCuratedNscs();
+        } else {
+            System.out.println("null return from createNewCuratedOriginator");
+        }
+
+        return "/webpages/curatedNscTable?faces-redirect=true";
+
+    }
+
+    public void configureDelete(CuratedNscVO cnVO) {
+        curatedNscForDelete = cnVO;
+    }
+
+    public String deleteCuratedNsc() {
+        HelperCuratedNsc.deleteCuratedNsc(curatedNscForDelete);
+        loadCuratedNscs();
+        return "/webpages/curatedNscTable?faces-redirect=true";
+    }
+
     public void loadCuratedNscs() {
         curatedNscs = HelperCuratedNsc.loadAllCuratedNsc();
+        Collections.sort(curatedNscs, new Comparators.CuratedNscComparator());
     }
 
     public void loadCuratedNames() {
         _knownNames = HelperCuratedNsc.loadAllNames();
+        Collections.sort(_knownNames, new Comparators.CuratedNameComparator());
         knownNamesMap = new HashMap<String, CuratedNameVO>();
         for (CuratedNameVO cnVO : _knownNames) {
             knownNamesMap.put(cnVO.getValue(), cnVO);
@@ -72,6 +105,7 @@ public class CuratedNscController implements Serializable {
 
     public void loadCuratedOriginators() {
         _knownOriginators = HelperCuratedNsc.loadAllOriginators();
+        Collections.sort(_knownOriginators, new Comparators.CuratedOriginatorComparator());
         knownOriginatorsMap = new HashMap<String, CuratedOriginatorVO>();
         for (CuratedOriginatorVO cnVO : _knownOriginators) {
             knownOriginatorsMap.put(cnVO.getValue(), cnVO);
@@ -80,6 +114,7 @@ public class CuratedNscController implements Serializable {
 
     public void loadCuratedProjects() {
         _knownProjects = HelperCuratedNsc.loadAllProjects();
+        Collections.sort(_knownProjects, new Comparators.CuratedProjectComparator());
         knownProjectsMap = new HashMap<String, CuratedProjectVO>();
         for (CuratedProjectVO cnVO : _knownProjects) {
             knownProjectsMap.put(cnVO.getValue(), cnVO);
@@ -88,10 +123,45 @@ public class CuratedNscController implements Serializable {
 
     public void loadCuratedTargets() {
         _knownTargets = HelperCuratedNsc.loadAllTargets();
+        Collections.sort(_knownTargets, new Comparators.CuratedTargetComparator());
         knownTargetsMap = new HashMap<String, CuratedTargetVO>();
         for (CuratedTargetVO cnVO : _knownTargets) {
             knownTargetsMap.put(cnVO.getValue(), cnVO);
         }
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="GETTERS/SETTERS">
+    public String getDelimitedNames(List<CuratedNameVO> listIn) {
+        StringBuilder sb = new StringBuilder();
+        if (listIn != null) {
+            for (CuratedNameVO cnVO : listIn) {
+                sb.append(cnVO.getValue());
+                sb.append("; ");
+            }
+        }
+        return sb.toString();
+    }
+
+    public String getDelimitedProjects(List<CuratedProjectVO> listIn) {
+        StringBuilder sb = new StringBuilder();
+        if (listIn != null) {
+            for (CuratedProjectVO cpVO : listIn) {
+                sb.append(cpVO.getValue());
+                sb.append("; ");
+            }
+        }
+        return sb.toString();
+    }
+
+    public String getDelimitedTargets(List<CuratedTargetVO> listIn) {
+        StringBuilder sb = new StringBuilder();
+        if (listIn != null) {
+            for (CuratedTargetVO ctVO : listIn) {
+                sb.append(ctVO.getValue());
+                sb.append("; ");
+            }
+        }
+        return sb.toString();
     }
 
     public List<CuratedNscVO> getCuratedNscs() {
@@ -108,6 +178,22 @@ public class CuratedNscController implements Serializable {
 
     public void setSelectedCuratedNsc(CuratedNscVO selectedCuratedNsc) {
         this.selectedCuratedNsc = selectedCuratedNsc;
+    }
+
+    public CuratedNscVO getNewCuratedNsc() {
+        return newCuratedNsc;
+    }
+
+    public void setNewCuratedNsc(CuratedNscVO newCuratedNsc) {
+        this.newCuratedNsc = newCuratedNsc;
+    }
+
+    public CuratedNscVO getCuratedNscForDelete() {
+        return curatedNscForDelete;
+    }
+
+    public void setCuratedNscForDelete(CuratedNscVO curatedNscForDelete) {
+        this.curatedNscForDelete = curatedNscForDelete;
     }
 
     public HashMap<String, CuratedNameVO> getKnownNamesMap() {
@@ -142,4 +228,5 @@ public class CuratedNscController implements Serializable {
         this.knownTargetsMap = knownTargetsMap;
     }
 
+//</editor-fold>
 }

@@ -20,7 +20,7 @@
     <p:commandButton ajax="false" value="Export to Excel">
       <p:dataExporter type="xls" 
                       target="cmpdListTbl" 
-                      fileName="listOfCompounds" />        
+                      fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
     </p:commandButton>
 
     <p:spacer width="20"/>
@@ -28,7 +28,7 @@
     <p:commandButton ajax="false" value="Export as CSV">  
       <p:dataExporter type="csv" 
                       target="cmpdListTbl" 
-                      fileName="listOfCompounds" />
+                      fileName="listOfCompounds #{applicationScopeBean.dateTime}" />
     </p:commandButton> 
 
     <p:spacer width="20"/>
@@ -37,7 +37,7 @@
       <p:dataExporter type="xls" 
                       target="cmpdListTbl" 
                       postProcessor="#{listManagerController.postProcessXLS}"
-                      fileName="listOfCompounds" />        
+                      fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
     </p:commandButton>
 
     <p:spacer width="20"/>
@@ -55,7 +55,7 @@
                   rows="50"                        
                   paginator="true"
                   paginatorTemplate="On Page {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} Rows Per Page"  
-                  rowsPerPageTemplate="50,100,250,500"
+                  rowsPerPageTemplate="10,25,50,100,250,500,1000,2000"
                   selection="#{listLogicController.selectedCmpds}"
                   rowKey="#{cmpd.id}"                              
                   sortMode="multiple">  

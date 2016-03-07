@@ -102,8 +102,9 @@ public class TransformAndroToVO {
     }
 
     public static CuratedNameVO translateCuratedName(CuratedName ent) {
-        CuratedNameVO rtn = new CuratedNameVO();
+        CuratedNameVO rtn = null; //new CuratedNameVO();
         if (ent != null) {
+            rtn = new CuratedNameVO();
             rtn.setId(ent.getId());
             rtn.setValue(ent.getValue());
             rtn.setDescription(ent.getDescription());
@@ -121,8 +122,9 @@ public class TransformAndroToVO {
     }
 
     public static CuratedProjectVO translateCuratedProject(CuratedProject ent) {
-        CuratedProjectVO rtn = new CuratedProjectVO();
+        CuratedProjectVO rtn = null; //new CuratedProjectVO();
         if (ent != null) {
+            rtn = new CuratedProjectVO();
             rtn.setId(ent.getId());
             rtn.setValue(ent.getValue());
             rtn.setDescription(ent.getDescription());
@@ -140,8 +142,9 @@ public class TransformAndroToVO {
     }
 
     public static CuratedTargetVO translateCuratedTarget(CuratedTarget ent) {
-        CuratedTargetVO rtn = new CuratedTargetVO();
+        CuratedTargetVO rtn = null; //new CuratedTargetVO();
         if (ent != null) {
+            rtn = new CuratedTargetVO();
             rtn.setId(ent.getId());
             rtn.setValue(ent.getValue());
             rtn.setDescription(ent.getDescription());
@@ -159,8 +162,9 @@ public class TransformAndroToVO {
     }
 
     public static CuratedOriginatorVO translateCuratedOriginator(CuratedOriginator ent) {
-        CuratedOriginatorVO rtn = new CuratedOriginatorVO();
+        CuratedOriginatorVO rtn = null; //new CuratedOriginatorVO();
         if (ent != null) {
+            rtn = new CuratedOriginatorVO();
             rtn.setId(ent.getId());
             rtn.setValue(ent.getValue());
             rtn.setDescription(ent.getDescription());

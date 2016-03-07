@@ -6,6 +6,7 @@
 package mwk.datasystem.converters;
 
 import static com.sun.faces.util.MessageUtils.CONVERSION_ERROR_MESSAGE_ID;
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -25,7 +26,9 @@ import mwk.datasystem.vo.CuratedProjectVO;
 @SessionScoped
 @ManagedBean(name = "curatedProjectConverter")
 @FacesConverter("curatedProjectConverter")
-public class CuratedProjectConverter implements Converter {
+public class CuratedProjectConverter implements Converter, Serializable {
+
+    static final long serialVersionUID = -8653468638698142855l;
 // reach-through to curatedNscController
 
     @ManagedProperty(value = "#{curatedNscController}")

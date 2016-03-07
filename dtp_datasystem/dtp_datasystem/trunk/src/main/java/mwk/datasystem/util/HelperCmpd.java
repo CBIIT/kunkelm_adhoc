@@ -39,2051 +39,2052 @@ import org.hibernate.jdbc.Work;
  */
 public class HelperCmpd {
 
-  public static void updateCmpdFragment(CmpdFragmentVO cfVO) {
+    public static void updateCmpdFragment(CmpdFragmentVO cfVO) {
 
-    System.out.println("In updateCmpdFragment in HelperCmpd");
+        System.out.println("In updateCmpdFragment in HelperCmpd");
 
-    Session session = null;
-    Transaction tx = null;
+        Session session = null;
+        Transaction tx = null;
 
-    try {
+        try {
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
 
-      tx = session.beginTransaction();
-      Criteria crit = session.createCriteria(CmpdFragment.class);
-      crit.setMaxResults(2000);
-      crit.add(Restrictions.eq("id", cfVO.getId()));
+            tx = session.beginTransaction();
+            Criteria crit = session.createCriteria(CmpdFragment.class);
+            crit.setMaxResults(2000);
+            crit.add(Restrictions.eq("id", cfVO.getId()));
 
-      CmpdFragment cfEntity = (CmpdFragment) crit.uniqueResult();
+            CmpdFragment cfEntity = (CmpdFragment) crit.uniqueResult();
 
-      if (cfEntity != null) {
+            if (cfEntity != null) {
 
-        if (cfVO.getStoichiometry() != null) {
-          cfEntity.setStoichiometry(cfVO.getStoichiometry());
+                if (cfVO.getStoichiometry() != null) {
+                    cfEntity.setStoichiometry(cfVO.getStoichiometry());
+                }
+
+                session.update(cfEntity);
+
+            } else {
+                System.out.println("cfEntity is null in updateCmpdFragment in HelperCmpd.");
+            }
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        session.update(cfEntity);
-
-      } else {
-        System.out.println("cfEntity is null in updateCmpdFragment in HelperCmpd.");
-      }
-
-      tx.commit();
-
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
 
-  }
+    public static CmpdVO fetchFullCmpd(Integer id, String currentUser) {
 
-  public static CmpdVO fetchFullCmpd(Integer id, String currentUser) {
+        CmpdVO rtn = new CmpdVO();
 
-    CmpdVO rtn = new CmpdVO();
+        System.out.println("In fetchFullCmpd in HelperCmpd.");
 
-    System.out.println("In fetchFullCmpd in HelperCmpd.");
+        Session session = null;
+        Transaction tx = null;
 
-    Session session = null;
-    Transaction tx = null;
+        try {
 
-    try {
+            session = HibernateUtil.getSessionFactory().openSession();
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 
-      tx = session.beginTransaction();
+            Criteria crit = session.createCriteria(Cmpd.class);
+            crit.setMaxResults(2000);
 
-      Criteria crit = session.createCriteria(Cmpd.class);
-      crit.setMaxResults(2000);
+            crit.add(Restrictions.eq("nsc", id));
 
-      crit.add(Restrictions.eq("nsc", id));
+            Cmpd cmpd = (Cmpd) crit.uniqueResult();
 
-      Cmpd cmpd = (Cmpd) crit.uniqueResult();
+            rtn = TransformAndroToVO.translateCmpd(cmpd);
 
-      rtn = TransformAndroToVO.translateCmpd(cmpd);
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
 
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
+        return rtn;
+
     }
 
-    return rtn;
+    /**
+     *
+     * @param listName
+     * @param nscIntList
+     * @param smilesString
+     * @param currentUser
+     * @return Called by structure and similarity search
+     */
+    public static Long createCmpdListByNscs(
+            String listName,
+            List<Integer> nscIntList,
+            String smilesString,
+            String currentUser) {
 
-  }
+        Long rtn = Long.valueOf(-1);
 
-  /**
-   *
-   * @param listName
-   * @param nscIntList
-   * @param smilesString
-   * @param currentUser
-   * @return Called by structure and similarity search
-   */
-  public static Long createCmpdListByNscs(
-          String listName,
-          List<Integer> nscIntList,
-          String smilesString,
-          String currentUser) {
+        Session session = null;
+        Transaction tx = null;
 
-    Long rtn = Long.valueOf(-1);
+        try {
 
-    Session session = null;
-    Transaction tx = null;
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    try {
+            Date now = new Date();
+            XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            Long cmpdListId = null;
 
-      Date now = new Date();
-      XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
+            java.util.Random generator = new Random();
+            long randomId = generator.nextLong();
+            if (randomId < 0) {
+                randomId = -1 * randomId;
+            }
+            cmpdListId = new Long(randomId);
 
-      Long cmpdListId = null;
+            tx = session.beginTransaction();
 
-      java.util.Random generator = new Random();
-      long randomId = generator.nextLong();
-      if (randomId < 0) {
-        randomId = -1 * randomId;
-      }
-      cmpdListId = new Long(randomId);
+            Criteria crit = session.createCriteria(Cmpd.class);
+            crit.setMaxResults(2000);
+            crit.add(Restrictions.in("nsc", nscIntList));
+            List<Cmpd> cmpdList = (List<Cmpd>) crit.list();
 
-      tx = session.beginTransaction();
+            System.out.println("Size of cmpdList in createCmpdListByNscs in HelperCmpd is: " + cmpdList.size());
 
-      Criteria crit = session.createCriteria(Cmpd.class);
-      crit.setMaxResults(2000);
-      crit.add(Restrictions.in("nsc", nscIntList));
-      List<Cmpd> cmpdList = (List<Cmpd>) crit.list();
+            if (!cmpdList.isEmpty()) {
 
-      
+                // create a new cmpdlist
+                CmpdList cl = CmpdList.Factory.newInstance();
 
-        System.out.println("Size of cmpdList in createCmpdListByNscs in HelperCmpd is: " + cmpdList.size());
+                cl.setCmpdListId(cmpdListId);
+                cl.setListName(listName);
+                cl.setDateCreated(now);
+                cl.setListOwner(currentUser);
+                cl.setShareWith(currentUser);
+                cl.setAnchorSmiles(smilesString);
 
-        if (!cmpdList.isEmpty()){
-        
-        // create a new cmpdlist
-        CmpdList cl = CmpdList.Factory.newInstance();
+                session.persist(cl);
 
-        cl.setCmpdListId(cmpdListId);
-        cl.setListName(listName);
-        cl.setDateCreated(now);
-        cl.setListOwner(currentUser);
-        cl.setShareWith(currentUser);
-        cl.setAnchorSmiles(smilesString);
+                for (Cmpd cmpd : cmpdList) {
+                    CmpdListMember clm = CmpdListMember.Factory.newInstance();
+                    clm.setCmpd(cmpd);
+                    clm.setCmpdList(cl);
+                    session.persist(clm);
+                    // not needed for persistence, added for quick(er) conversion to VO
+                    cl.getCmpdListMembers().add(clm);
+                }
 
-        session.persist(cl);
+                cl.setCountListMembers(cl.getCmpdListMembers().size());
 
-        for (Cmpd cmpd : cmpdList) {
-          CmpdListMember clm = CmpdListMember.Factory.newInstance();
-          clm.setCmpd(cmpd);
-          clm.setCmpdList(cl);
-          session.persist(clm);
-          // not needed for persistence, added for quick(er) conversion to VO
-          cl.getCmpdListMembers().add(clm);
+                rtn = cl.getCmpdListId();
+
+                tx.commit();
+
+            }
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        cl.setCountListMembers(cl.getCmpdListMembers().size());
+        return rtn;
 
-        rtn = cl.getCmpdListId();
-
-        tx.commit();
-
-      }
-
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
 
-    return rtn;
+    private static Boolean listIsUsable(List theList) {
 
-  }
+        Boolean rtn = Boolean.FALSE;
 
-  private static Boolean listIsUsable(List theList) {
+        if ((theList != null) && (!theList.isEmpty())) {
+            rtn = Boolean.TRUE;
+        }
 
-    Boolean rtn = Boolean.FALSE;
+        return rtn;
 
-    if ((theList != null) && (!theList.isEmpty())) {
-      rtn = Boolean.TRUE;
     }
 
-    return rtn;
+    public static List<Long> searchCmpdsBySearchCriteriaBean(
+            SearchCriteriaBean scb,
+            String currentUser) {
 
-  }
+        System.out.println("In searchCmpdsBySearchCriteriaBean in HelperCmpd.");
 
-  public static List<Long> searchCmpdsBySearchCriteriaBean(
-          SearchCriteriaBean scb,
-          String currentUser) {
+        List<Long> rtn = new ArrayList<Long>();
 
-    System.out.println("In searchCmpdsBySearchCriteriaBean in HelperCmpd.");
+        Session session = null;
+        Transaction tx = null;
 
-    List<Long> rtn = new ArrayList<Long>();
+        try {
 
-    Session session = null;
-    Transaction tx = null;
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    try {
+            tx = session.beginTransaction();
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            // just fetch the projection of those cmpd.id that meet the criteria
+            Criteria crit = session.createCriteria(Cmpd.class)
+                    .setProjection(Projections.property("id"))
+                    .setMaxResults(2000);
 
-      tx = session.beginTransaction();
+            Disjunction disj = Restrictions.disjunction();
 
-      // just fetch the projection of those cmpd.id that meet the criteria
-      Criteria crit = session.createCriteria(Cmpd.class)
-              .setProjection(Projections.property("id"));
+            if (listIsUsable(scb.getNscs())) {
+                // nscs to Integers
+                ArrayList<Integer> nscIntList = new ArrayList<Integer>();
+                for (String s : scb.getNscs()) {
+                    try {
+                        nscIntList.add(Integer.valueOf(s));
+                    } catch (Exception e) {
 
-      Disjunction disj = Restrictions.disjunction();
+                    }
+                }
+                if (!nscIntList.isEmpty()) {
+                    disj.add(Restrictions.in("nsc", nscIntList));
+                }
+            }
 
-      if (listIsUsable(scb.getNscs())) {
-        // nscs to Integers
-        ArrayList<Integer> nscIntList = new ArrayList<Integer>();
-        for (String s : scb.getNscs()) {
-          try {
-            nscIntList.add(Integer.valueOf(s));
-          } catch (Exception e) {
+            if (listIsUsable(scb.getCases())) {
+                disj.add(Restrictions.in("cas", scb.getCases()));
+            }
 
-          }
-        }
-        if (!nscIntList.isEmpty()) {
-          disj.add(Restrictions.in("nsc", nscIntList));
-        }
-      }
+            if ((listIsUsable(scb.getDrugNames())) || (listIsUsable(scb.getAliases()))) {
+                crit.createAlias("cmpdAliases", "aliases");
+                ArrayList<String> combinedList = new ArrayList<String>();
+                if ((scb.getAliases() != null) && !scb.getAliases().isEmpty()) {
+                    combinedList.addAll(scb.getAliases());
+                }
+                if ((scb.getDrugNames() != null) && !scb.getDrugNames().isEmpty()) {
+                    combinedList.addAll(scb.getDrugNames());
+                }
+                disj.add(Restrictions.in("aliases.alias", combinedList));
+            }
 
-      if (listIsUsable(scb.getCases())) {
-        disj.add(Restrictions.in("cas", scb.getCases()));
-      }
+            if (listIsUsable(scb.getCmpdNamedSets())) {
+                crit.createAlias("cmpdNamedSets", "namedSets");
+                disj.add(Restrictions.in("namedSets.setName", scb.getCmpdNamedSets()));
+            }
 
-      if ((listIsUsable(scb.getDrugNames())) || (listIsUsable(scb.getAliases()))) {
-        crit.createAlias("cmpdAliases", "aliases");
-        ArrayList<String> combinedList = new ArrayList<String>();
-        if ((scb.getAliases() != null) && !scb.getAliases().isEmpty()) {
-          combinedList.addAll(scb.getAliases());
-        }
-        if ((scb.getDrugNames() != null) && !scb.getDrugNames().isEmpty()) {
-          combinedList.addAll(scb.getDrugNames());
-        }
-        disj.add(Restrictions.in("aliases.alias", combinedList));
-      }
+            if (listIsUsable(scb.getProjectCodes())) {
+                crit.createAlias("cmpdProjects", "projects");
+                disj.add(Restrictions.in("projects.projectCode", scb.getProjectCodes()));
+            }
 
-      if (listIsUsable(scb.getCmpdNamedSets())) {
-        crit.createAlias("cmpdNamedSets", "namedSets");
-        disj.add(Restrictions.in("namedSets.setName", scb.getCmpdNamedSets()));
-      }
+            if (listIsUsable(scb.getPlates())) {
+                crit.createAlias("cmpdPlates", "plates");
+                disj.add(Restrictions.in("plates.plateName", scb.getPlates()));
+            }
 
-      if (listIsUsable(scb.getProjectCodes())) {
-        crit.createAlias("cmpdProjects", "projects");
-        disj.add(Restrictions.in("projects.projectCode", scb.getProjectCodes()));
-      }
+            if (listIsUsable(scb.getTargets())) {
+                crit.createAlias("cmpdTargets", "targets");
+                disj.add(Restrictions.in("targets.target", scb.getTargets()));
+            }
 
-      if (listIsUsable(scb.getPlates())) {
-        crit.createAlias("cmpdPlates", "plates");
-        disj.add(Restrictions.in("plates.plateName", scb.getPlates()));
-      }
-
-      if (listIsUsable(scb.getTargets())) {
-        crit.createAlias("cmpdTargets", "targets");
-        disj.add(Restrictions.in("targets.target", scb.getTargets()));
-      }
-
-      // add the disjunction
-      crit.add(disj);
+            // add the disjunction
+            crit.add(disj);
 
       //
-      // pChem start
+            // pChem start
+            //
+            // using reflection for sanity in PERL scripts that autogen the code (in SCRIPTS directory)
+            crit.createAlias("cmpdFragments", "frag");
+            crit.createAlias("frag.cmpdFragmentPChem", "pchem");
+
+            Class scbClass = scb.getClass();
+
+            Field f = null;
+            Integer minInt = null;
+            Integer maxInt = null;
+            Double minDbl = null;
+            Double maxDbl = null;
+
+            f = scbClass.getDeclaredField("min_molecularWeight");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_molecularWeight");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(scb);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.molecularWeight", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.molecularWeight", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.molecularWeight", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.molecularWeight", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_logD");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_logD");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(scb);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.logD", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.logD", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.logD", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.logD", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_countHydBondAcceptors");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countHydBondAcceptors");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHydBondAcceptors", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHydBondAcceptors", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHydBondAcceptors", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHydBondAcceptors", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countHydBondDonors");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countHydBondDonors");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHydBondDonors", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHydBondDonors", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHydBondDonors", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHydBondDonors", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_surfaceArea");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_surfaceArea");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(scb);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.surfaceArea", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.surfaceArea", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.surfaceArea", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.surfaceArea", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_solubility");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_solubility");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(scb);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.solubility", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.solubility", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.solubility", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.solubility", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_countRings");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countRings");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRings", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRings", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRings", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRings", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countSingleBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countSingleBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countSingleBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countSingleBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countSingleBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countSingleBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countDoubleBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countDoubleBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countDoubleBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countDoubleBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countDoubleBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countDoubleBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countTripleBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countTripleBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countTripleBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countTripleBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countTripleBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countTripleBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countRotatableBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countRotatableBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRotatableBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRotatableBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRotatableBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRotatableBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countHydrogenAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countHydrogenAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHydrogenAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHydrogenAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHydrogenAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHydrogenAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countMetalAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countMetalAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countMetalAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countMetalAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countMetalAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countMetalAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countHeavyAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countHeavyAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHeavyAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHeavyAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHeavyAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHeavyAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countPositiveAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countPositiveAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countPositiveAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countPositiveAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countPositiveAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countPositiveAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countNegativeAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countNegativeAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countNegativeAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countNegativeAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countNegativeAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countNegativeAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countRingBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countRingBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRingBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRingBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRingBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRingBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countStereoAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countStereoAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countStereoAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countStereoAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countStereoAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countStereoAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countStereoBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countStereoBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countStereoBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countStereoBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countStereoBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countStereoBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countRingAssemblies");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countRingAssemblies");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRingAssemblies", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRingAssemblies", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRingAssemblies", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRingAssemblies", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countAromaticBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countAromaticBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countAromaticBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countAromaticBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countAromaticBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countAromaticBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countAromaticRings");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_countAromaticRings");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countAromaticRings", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countAromaticRings", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countAromaticRings", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countAromaticRings", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_formalCharge");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_formalCharge");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(scb);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.formalCharge", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.formalCharge", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.formalCharge", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.formalCharge", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_theALogP");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(scb);
+
+            f = scbClass.getDeclaredField("max_theALogP");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(scb);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.theALogP", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.theALogP", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.theALogP", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.theALogP", maxDbl));
+            }
+
       //
-      // using reflection for sanity in PERL scripts that autogen the code (in SCRIPTS directory)
-      crit.createAlias("cmpdFragments", "frag");
-      crit.createAlias("frag.cmpdFragmentPChem", "pchem");
+            // pChem end
+            //
+            // criteria has projection of cmpd.id
+            rtn = crit.list();
 
-      Class scbClass = scb.getClass();
+            System.out.println("Size of cmpdIdList in searchCmpdsBySearchCriteriaBean in HelperCmpd is: " + rtn.size());
 
-      Field f = null;
-      Integer minInt = null;
-      Integer maxInt = null;
-      Double minDbl = null;
-      Double maxDbl = null;
+            tx.commit();
 
-      f = scbClass.getDeclaredField("min_molecularWeight");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_molecularWeight");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(scb);
-
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.molecularWeight", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.molecularWeight", minDbl, maxDbl));
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.molecularWeight", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.molecularWeight", maxDbl));
-      }
 
-      f = scbClass.getDeclaredField("min_logD");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(scb);
+        return rtn;
 
-      f = scbClass.getDeclaredField("max_logD");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(scb);
-
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.logD", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.logD", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.logD", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.logD", maxDbl));
-      }
-
-      f = scbClass.getDeclaredField("min_countHydBondAcceptors");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countHydBondAcceptors");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHydBondAcceptors", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHydBondAcceptors", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHydBondAcceptors", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHydBondAcceptors", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countHydBondDonors");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countHydBondDonors");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHydBondDonors", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHydBondDonors", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHydBondDonors", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHydBondDonors", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_surfaceArea");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_surfaceArea");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(scb);
-
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.surfaceArea", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.surfaceArea", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.surfaceArea", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.surfaceArea", maxDbl));
-      }
-
-      f = scbClass.getDeclaredField("min_solubility");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_solubility");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(scb);
-
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.solubility", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.solubility", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.solubility", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.solubility", maxDbl));
-      }
-
-      f = scbClass.getDeclaredField("min_countRings");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countRings");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRings", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRings", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRings", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRings", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countSingleBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countSingleBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countSingleBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countSingleBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countSingleBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countSingleBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countDoubleBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countDoubleBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countDoubleBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countDoubleBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countDoubleBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countDoubleBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countTripleBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countTripleBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countTripleBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countTripleBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countTripleBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countTripleBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countRotatableBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countRotatableBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRotatableBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRotatableBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRotatableBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRotatableBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countHydrogenAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countHydrogenAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHydrogenAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHydrogenAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHydrogenAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHydrogenAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countMetalAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countMetalAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countMetalAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countMetalAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countMetalAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countMetalAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countHeavyAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countHeavyAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHeavyAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHeavyAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHeavyAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHeavyAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countPositiveAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countPositiveAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countPositiveAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countPositiveAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countPositiveAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countPositiveAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countNegativeAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countNegativeAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countNegativeAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countNegativeAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countNegativeAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countNegativeAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countRingBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countRingBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRingBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRingBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRingBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRingBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countStereoAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countStereoAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countStereoAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countStereoAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countStereoAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countStereoAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countStereoBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countStereoBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countStereoBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countStereoBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countStereoBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countStereoBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countRingAssemblies");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countRingAssemblies");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRingAssemblies", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRingAssemblies", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRingAssemblies", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRingAssemblies", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countAromaticBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countAromaticBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countAromaticBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countAromaticBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countAromaticBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countAromaticBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countAromaticRings");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_countAromaticRings");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countAromaticRings", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countAromaticRings", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countAromaticRings", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countAromaticRings", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_formalCharge");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_formalCharge");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(scb);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.formalCharge", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.formalCharge", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.formalCharge", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.formalCharge", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_theALogP");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(scb);
-
-      f = scbClass.getDeclaredField("max_theALogP");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(scb);
-
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.theALogP", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.theALogP", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.theALogP", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.theALogP", maxDbl));
-      }
-
-      //
-      // pChem end
-      //
-      // criteria has projection of cmpd.id
-      rtn = crit.list();
-
-      System.out.println("Size of cmpdIdList in searchCmpdsBySearchCriteriaBean in HelperCmpd is: " + rtn.size());
-
-      tx.commit();
-
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
 
-    return rtn;
+    public static Long NEW_createCmpdListFromSearchCriteriaBean(
+            String listName,
+            SearchCriteriaBean scb,
+            String smilesString,
+            String currentUser) throws Exception {
 
-  }
+        System.out.println("In NEW_createCmpdListFromSearchCriteriaBean in HelperCmpd.");
 
-  public static Long NEW_createCmpdListFromSearchCriteriaBean(
-          String listName,
-          SearchCriteriaBean scb,
-          String smilesString,
-          String currentUser) throws Exception {
+        Long idOfNewCmpdList = Long.valueOf(-1);
 
-    System.out.println("In NEW_createCmpdListFromSearchCriteriaBean in HelperCmpd.");
+        Session session = null;
+        Transaction tx = null;
+        Connection conn = null;
 
-    Long idOfNewCmpdList = Long.valueOf(-1);
+        try {
 
-    Session session = null;
-    Transaction tx = null;
-    Connection conn = null;
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    try {
+            tx = session.beginTransaction();
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
+            BigInteger tempId = (BigInteger) (query.uniqueResult());
+            Long clmId = tempId.longValue();
 
-      tx = session.beginTransaction();
+            System.out.println("First clmId is: " + clmId);
 
-      Query query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
-      BigInteger tempId = (BigInteger) (query.uniqueResult());
-      Long clmId = tempId.longValue();
+            Date now = new Date();
+            XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
 
-      System.out.println("First clmId is: " + clmId);
+            Long cmpdListId = null;
 
-      Date now = new Date();
-      XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
+            java.util.Random generator = new Random();
+            long randomId = generator.nextLong();
+            if (randomId < 0) {
+                randomId = -1 * randomId;
+            }
+            cmpdListId = new Long(randomId);
 
-      Long cmpdListId = null;
+            // call search method
+            List<Long> cmpdIdList = searchCmpdsBySearchCriteriaBean(scb, currentUser);
 
-      java.util.Random generator = new Random();
-      long randomId = generator.nextLong();
-      if (randomId < 0) {
-        randomId = -1 * randomId;
-      }
-      cmpdListId = new Long(randomId);
+            System.out.println("Size of cmpdIdList in createCmpdListFromSearchCriteriaBeanin HelperCmpd is: " + cmpdIdList.size());
 
-      // call search method
-      List<Long> cmpdIdList = searchCmpdsBySearchCriteriaBean(scb, currentUser);
+            // create a new cmpdlist
+            CmpdList cl = CmpdList.Factory.newInstance();
 
-      System.out.println("Size of cmpdIdList in createCmpdListFromSearchCriteriaBeanin HelperCmpd is: " + cmpdIdList.size());
+            cl.setCmpdListId(cmpdListId);
+            cl.setListName(listName);
+            cl.setDateCreated(now);
+            cl.setListOwner(currentUser);
+            cl.setShareWith(currentUser);
+            cl.setAnchorSmiles(smilesString);
 
-      // create a new cmpdlist
-      CmpdList cl = CmpdList.Factory.newInstance();
+            session.persist(cl);
 
-      cl.setCmpdListId(cmpdListId);
-      cl.setListName(listName);
-      cl.setDateCreated(now);
-      cl.setListOwner(currentUser);
-      cl.setShareWith(currentUser);
-      cl.setAnchorSmiles(smilesString);
+            tx.commit();
 
-      session.persist(cl);
+            tx = session.beginTransaction();
 
-      tx.commit();
+            for (Long l : cmpdIdList) {
+                // System.out.println("Calling CmpdListMember.Factory.newInstance()");
+                CmpdListMember clm = CmpdListMember.Factory.newInstance();
+                clm.setCmpd((Cmpd) session.load(CmpdImpl.class, l));
+                clm.setCmpdList(cl);
 
-      tx = session.beginTransaction();
+                // not needed for persistence, added for quick(er) conversion to VO
+                cl.getCmpdListMembers().add(clm);
+            }
 
-      for (Long l : cmpdIdList) {
-        // System.out.println("Calling CmpdListMember.Factory.newInstance()");
-        CmpdListMember clm = CmpdListMember.Factory.newInstance();
-        clm.setCmpd((Cmpd) session.load(CmpdImpl.class, l));
-        clm.setCmpdList(cl);
+            System.out.println("Size of cl.getCmpdListMembers: " + cl.getCmpdListMembers().size());
 
-        // not needed for persistence, added for quick(er) conversion to VO
-        cl.getCmpdListMembers().add(clm);
-      }
-
-      System.out.println("Size of cl.getCmpdListMembers: " + cl.getCmpdListMembers().size());
-
-      cl.setCountListMembers(cl.getCmpdListMembers().size());
+            cl.setCountListMembers(cl.getCmpdListMembers().size());
 
       // write the clm to the table, batch
-      // Connection conn = session.connection();
-      SessionImpl sessionImpl = (SessionImpl) session;
-      conn = sessionImpl.connection();
+            // Connection conn = session.connection();
+            SessionImpl sessionImpl = (SessionImpl) session;
+            conn = sessionImpl.connection();
 
-      PreparedStatement pStmt = conn.prepareStatement("insert into CMPD_LIST_MEMBER (ID, LIST_MEMBER_COMMENT, CMPD_LIST_FK, CMPD_FK) values (?, ?, ?, ?)");
+            PreparedStatement pStmt = conn.prepareStatement("insert into CMPD_LIST_MEMBER (ID, LIST_MEMBER_COMMENT, CMPD_LIST_FK, CMPD_FK) values (?, ?, ?, ?)");
 
-      for (CmpdListMember clm : cl.getCmpdListMembers()) {
-        pStmt.setLong(1, clmId.longValue());
-        pStmt.setString(2, null);
-        pStmt.setLong(3, cl.getId());
-        pStmt.setLong(4, clm.getCmpd().getId());
-        clmId++;
-        pStmt.addBatch();
-      }
+            for (CmpdListMember clm : cl.getCmpdListMembers()) {
+                pStmt.setLong(1, clmId.longValue());
+                pStmt.setString(2, null);
+                pStmt.setLong(3, cl.getId());
+                pStmt.setLong(4, clm.getCmpd().getId());
+                clmId++;
+                pStmt.addBatch();
+            }
 
-      pStmt.executeBatch();
+            pStmt.executeBatch();
 
-      idOfNewCmpdList = cl.getCmpdListId();
+            idOfNewCmpdList = cl.getCmpdListId();
 
-      // update the sequence
-      clmId++;
+            // update the sequence
+            clmId++;
 
-      query = session.createSQLQuery("SELECT setval('cmpd_list_member_seq', :clmId)");
-      query.setLong("clmId", clmId);
-      query.uniqueResult();
+            query = session.createSQLQuery("SELECT setval('cmpd_list_member_seq', :clmId)");
+            query.setLong("clmId", clmId);
+            query.uniqueResult();
 
-      query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
-      tempId = (BigInteger) query.uniqueResult();
-      clmId = tempId.longValue();
+            query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
+            tempId = (BigInteger) query.uniqueResult();
+            clmId = tempId.longValue();
 
-      System.out.println("Final clmId is: " + clmId);
+            System.out.println("Final clmId is: " + clmId);
 
-      conn.commit();
-      conn.close();
+            conn.commit();
+            conn.close();
 
-      tx.commit();
+            tx.commit();
 
-    } catch (SQLException sqle) {
-      while (sqle.getNextException() != null) {
-        Exception e = sqle.getNextException();
-        e.printStackTrace();
-      }
-      throw sqle;
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-      throw e;
-    } finally {
-      if (conn != null) {
-        try {
-          conn.close();
         } catch (SQLException sqle) {
+            while (sqle.getNextException() != null) {
+                Exception e = sqle.getNextException();
+                e.printStackTrace();
+            }
+            throw sqle;
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException sqle) {
 
-          sqle.printStackTrace();
+                    sqle.printStackTrace();
+                }
+            }
+            session.close();
         }
-      }
-      session.close();
+
+        return idOfNewCmpdList;
+
     }
 
-    return idOfNewCmpdList;
+    /**
+     * @param listName
+     * @param qo
+     * @param smilesString
+     * @param currentUser
+     * @return
+     */
+    public static Long createCmpdListFromSearchCriteriaBean(
+            String listName,
+            SearchCriteriaBean qo,
+            String smilesString,
+            String currentUser) {
 
-  }
+        System.out.println("In createCmpdListFromSearchCriteriaBean in HelperCmpd.");
 
-  /**
-   * @param listName
-   * @param qo
-   * @param smilesString
-   * @param currentUser
-   * @return
-   */
-  public static Long createCmpdListFromSearchCriteriaBean(
-          String listName,
-          SearchCriteriaBean qo,
-          String smilesString,
-          String currentUser) {
+        Long rtn = Long.valueOf(-1);
 
-    System.out.println("In createCmpdListFromSearchCriteriaBean in HelperCmpd.");
+        Session session = null;
+        Transaction tx = null;
 
-    Long rtn = Long.valueOf(-1);
+        try {
 
-    Session session = null;
-    Transaction tx = null;
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    try {
+            tx = session.beginTransaction();
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
+            BigInteger tempId = (BigInteger) (query.uniqueResult());
+            Long clmId = tempId.longValue();
 
-      tx = session.beginTransaction();
+            System.out.println("First clmId is: " + clmId);
 
-      Query query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
-      BigInteger tempId = (BigInteger) (query.uniqueResult());
-      Long clmId = tempId.longValue();
+            Date now = new Date();
+            XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
 
-      System.out.println("First clmId is: " + clmId);
+            Long cmpdListId = null;
 
-      Date now = new Date();
-      XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
+            java.util.Random generator = new Random();
+            long randomId = generator.nextLong();
+            if (randomId < 0) {
+                randomId = -1 * randomId;
+            }
+            cmpdListId = new Long(randomId);
 
-      Long cmpdListId = null;
+            // just fetch the projection of the cmpd.id that meets criteria
+            Criteria crit = session.createCriteria(Cmpd.class)
+                    .setProjection(Projections.property("id"))
+                    .setMaxResults(2000);
 
-      java.util.Random generator = new Random();
-      long randomId = generator.nextLong();
-      if (randomId < 0) {
-        randomId = -1 * randomId;
-      }
-      cmpdListId = new Long(randomId);
+            Disjunction disj = Restrictions.disjunction();
 
-      // just fetch the projection of the cmpd.id that meets criteria
-      Criteria crit = session.createCriteria(Cmpd.class)
-              .setProjection(Projections.property("id"));
+            if (listIsUsable(qo.getNscs())) {
+                // nscs to Integers
+                ArrayList<Integer> nscIntList = new ArrayList<Integer>();
+                for (String s : qo.getNscs()) {
+                    try {
+                        nscIntList.add(Integer.valueOf(s));
+                    } catch (Exception e) {
 
-      Disjunction disj = Restrictions.disjunction();
+                    }
+                }
+                if (!nscIntList.isEmpty()) {
+                    disj.add(Restrictions.in("nsc", nscIntList));
+                }
+            }
 
-      if (listIsUsable(qo.getNscs())) {
-        // nscs to Integers
-        ArrayList<Integer> nscIntList = new ArrayList<Integer>();
-        for (String s : qo.getNscs()) {
-          try {
-            nscIntList.add(Integer.valueOf(s));
-          } catch (Exception e) {
+            if (listIsUsable(qo.getCases())) {
+                disj.add(Restrictions.in("cas", qo.getCases()));
+            }
 
-          }
-        }
-        if (!nscIntList.isEmpty()) {
-          disj.add(Restrictions.in("nsc", nscIntList));
-        }
-      }
+            if ((listIsUsable(qo.getDrugNames()))
+                    || (listIsUsable(qo.getAliases()))) {
+                crit.createAlias("cmpdAliases", "aliases");
+                ArrayList<String> combinedList = new ArrayList<String>();
+                if ((qo.getAliases() != null) && !qo.getAliases().isEmpty()) {
+                    combinedList.addAll(qo.getAliases());
+                }
+                if ((qo.getDrugNames() != null) && !qo.getDrugNames().isEmpty()) {
+                    combinedList.addAll(qo.getDrugNames());
+                }
+                disj.add(Restrictions.in("aliases.alias", combinedList));
+            }
 
-      if (listIsUsable(qo.getCases())) {
-        disj.add(Restrictions.in("cas", qo.getCases()));
-      }
+            if (listIsUsable(qo.getCmpdNamedSets())) {
+                crit.createAlias("cmpdNamedSets", "namedSets");
+                disj.add(Restrictions.in("namedSets.setName", qo.getCmpdNamedSets()));
+            }
 
-      if ((listIsUsable(qo.getDrugNames()))
-              || (listIsUsable(qo.getAliases()))) {
-        crit.createAlias("cmpdAliases", "aliases");
-        ArrayList<String> combinedList = new ArrayList<String>();
-        if ((qo.getAliases() != null) && !qo.getAliases().isEmpty()) {
-          combinedList.addAll(qo.getAliases());
-        }
-        if ((qo.getDrugNames() != null) && !qo.getDrugNames().isEmpty()) {
-          combinedList.addAll(qo.getDrugNames());
-        }
-        disj.add(Restrictions.in("aliases.alias", combinedList));
-      }
+            if (listIsUsable(qo.getProjectCodes())) {
+                crit.createAlias("cmpdProjects", "projects");
+                disj.add(Restrictions.in("projects.projectCode", qo.getProjectCodes()));
+            }
 
-      if (listIsUsable(qo.getCmpdNamedSets())) {
-        crit.createAlias("cmpdNamedSets", "namedSets");
-        disj.add(Restrictions.in("namedSets.setName", qo.getCmpdNamedSets()));
-      }
+            if (listIsUsable(qo.getPlates())) {
+                crit.createAlias("cmpdPlates", "plates");
+                disj.add(Restrictions.in("plates.plateName", qo.getPlates()));
+            }
 
-      if (listIsUsable(qo.getProjectCodes())) {
-        crit.createAlias("cmpdProjects", "projects");
-        disj.add(Restrictions.in("projects.projectCode", qo.getProjectCodes()));
-      }
+            if (listIsUsable(qo.getTargets())) {
+                crit.createAlias("cmpdTargets", "targets");
+                disj.add(Restrictions.in("targets.target", qo.getTargets()));
+            }
 
-      if (listIsUsable(qo.getPlates())) {
-        crit.createAlias("cmpdPlates", "plates");
-        disj.add(Restrictions.in("plates.plateName", qo.getPlates()));
-      }
-
-      if (listIsUsable(qo.getTargets())) {
-        crit.createAlias("cmpdTargets", "targets");
-        disj.add(Restrictions.in("targets.target", qo.getTargets()));
-      }
-
-      // add the disjunction
-      crit.add(disj);
+            // add the disjunction
+            crit.add(disj);
 
       //
-      // pChem start
+            // pChem start
+            //
+            crit.createAlias("cmpdFragments", "frag");
+            crit.createAlias("frag.cmpdFragmentPChem", "pchem");
+
+            Class scbClass = qo.getClass();
+
+            Field f = null;
+            Integer minInt = null;
+            Integer maxInt = null;
+            Double minDbl = null;
+            Double maxDbl = null;
+
+            f = scbClass.getDeclaredField("min_molecularWeight");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_molecularWeight");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(qo);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.molecularWeight", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.molecularWeight", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.molecularWeight", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.molecularWeight", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_logD");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_logD");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(qo);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.logD", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.logD", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.logD", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.logD", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_countHydBondAcceptors");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countHydBondAcceptors");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHydBondAcceptors", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHydBondAcceptors", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHydBondAcceptors", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHydBondAcceptors", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countHydBondDonors");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countHydBondDonors");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHydBondDonors", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHydBondDonors", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHydBondDonors", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHydBondDonors", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_surfaceArea");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_surfaceArea");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(qo);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.surfaceArea", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.surfaceArea", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.surfaceArea", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.surfaceArea", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_solubility");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_solubility");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(qo);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.solubility", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.solubility", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.solubility", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.solubility", maxDbl));
+            }
+
+            f = scbClass.getDeclaredField("min_countRings");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countRings");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRings", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRings", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRings", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRings", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countSingleBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countSingleBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countSingleBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countSingleBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countSingleBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countSingleBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countDoubleBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countDoubleBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countDoubleBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countDoubleBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countDoubleBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countDoubleBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countTripleBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countTripleBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countTripleBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countTripleBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countTripleBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countTripleBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countRotatableBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countRotatableBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRotatableBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRotatableBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRotatableBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRotatableBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countHydrogenAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countHydrogenAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHydrogenAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHydrogenAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHydrogenAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHydrogenAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countMetalAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countMetalAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countMetalAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countMetalAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countMetalAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countMetalAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countHeavyAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countHeavyAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countHeavyAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countHeavyAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countHeavyAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countHeavyAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countPositiveAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countPositiveAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countPositiveAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countPositiveAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countPositiveAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countPositiveAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countNegativeAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countNegativeAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countNegativeAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countNegativeAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countNegativeAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countNegativeAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countRingBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countRingBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRingBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRingBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRingBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRingBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countStereoAtoms");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countStereoAtoms");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countStereoAtoms", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countStereoAtoms", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countStereoAtoms", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countStereoAtoms", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countStereoBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countStereoBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countStereoBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countStereoBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countStereoBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countStereoBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countRingAssemblies");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countRingAssemblies");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countRingAssemblies", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countRingAssemblies", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countRingAssemblies", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countRingAssemblies", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countAromaticBonds");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countAromaticBonds");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countAromaticBonds", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countAromaticBonds", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countAromaticBonds", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countAromaticBonds", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_countAromaticRings");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_countAromaticRings");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.countAromaticRings", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.countAromaticRings", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.countAromaticRings", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.countAromaticRings", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_formalCharge");
+            f.setAccessible(true);
+            minInt = (Integer) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_formalCharge");
+            f.setAccessible(true);
+            maxInt = (Integer) f.get(qo);
+
+            if (minInt != null && maxInt != null) {
+                if (minInt.compareTo(maxInt) == 0) {
+                    if (minInt - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.formalCharge", minInt));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.formalCharge", minInt, maxInt));
+                }
+            } else if (minInt != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.formalCharge", minInt));
+            } else if (maxInt != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.formalCharge", maxInt));
+            }
+
+            f = scbClass.getDeclaredField("min_theALogP");
+            f.setAccessible(true);
+            minDbl = (Double) f.get(qo);
+
+            f = scbClass.getDeclaredField("max_theALogP");
+            f.setAccessible(true);
+            maxDbl = (Double) f.get(qo);
+
+            if (minDbl != null && maxDbl != null) {
+                if (minDbl.compareTo(maxDbl) == 0) {
+                    if (minDbl - 0 != 0) {
+                        crit.add(Restrictions.eq("pchem.theALogP", minDbl));
+                    }
+                } else {
+                    // between
+                    crit.add(Restrictions.between("pchem.theALogP", minDbl, maxDbl));
+                }
+            } else if (minDbl != null) {
+                // gt min
+                crit.add(Restrictions.gt("pchem.theALogP", minDbl));
+            } else if (maxDbl != null) {
+                // lt max
+                crit.add(Restrictions.lt("pchem.theALogP", maxDbl));
+            }
+
       //
-      crit.createAlias("cmpdFragments", "frag");
-      crit.createAlias("frag.cmpdFragmentPChem", "pchem");
+            // pChem end
+            //
+            List<Long> cmpdIdList = crit.list();
 
-      Class scbClass = qo.getClass();
+            if (!cmpdIdList.isEmpty()) {
 
-      Field f = null;
-      Integer minInt = null;
-      Integer maxInt = null;
-      Double minDbl = null;
-      Double maxDbl = null;
+                System.out.println("Size of cmpdIdList in createCmpdListFromSearchCriteriaBeanin HelperCmpd is: " + cmpdIdList.size());
 
-      f = scbClass.getDeclaredField("min_molecularWeight");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(qo);
+                // create a new cmpdlist
+                CmpdList cl = CmpdList.Factory.newInstance();
 
-      f = scbClass.getDeclaredField("max_molecularWeight");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(qo);
+                cl.setCmpdListId(cmpdListId);
+                cl.setListName(listName);
+                cl.setDateCreated(now);
+                cl.setListOwner(currentUser);
+                cl.setShareWith(currentUser);
+                cl.setAnchorSmiles(smilesString);
 
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.molecularWeight", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.molecularWeight", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.molecularWeight", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.molecularWeight", maxDbl));
-      }
+                session.persist(cl);
 
-      f = scbClass.getDeclaredField("min_logD");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(qo);
+                tx.commit();
 
-      f = scbClass.getDeclaredField("max_logD");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(qo);
+                tx = session.beginTransaction();
 
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.logD", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.logD", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.logD", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.logD", maxDbl));
-      }
+                for (Long l : cmpdIdList) {
+                    // System.out.println("Calling CmpdListMember.Factory.newInstance()");
+                    CmpdListMember clm = CmpdListMember.Factory.newInstance();
+                    clm.setCmpd((Cmpd) session.load(CmpdImpl.class, l));
+                    clm.setCmpdList(cl);
 
-      f = scbClass.getDeclaredField("min_countHydBondAcceptors");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
+                    // not needed for persistence, added for quick(er) conversion to VO
+                    cl.getCmpdListMembers().add(clm);
+                }
 
-      f = scbClass.getDeclaredField("max_countHydBondAcceptors");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
+                System.out.println("Size of cl.getCmpdListMembers: " + cl.getCmpdListMembers().size());
 
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHydBondAcceptors", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHydBondAcceptors", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHydBondAcceptors", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHydBondAcceptors", maxInt));
-      }
+                cl.setCountListMembers(cl.getCmpdListMembers().size());
 
-      f = scbClass.getDeclaredField("min_countHydBondDonors");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
+                // write the clm to the table, batch
+                Connection conn = session.connection();
 
-      f = scbClass.getDeclaredField("max_countHydBondDonors");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
+                PreparedStatement pStmt = conn.prepareStatement("insert into CMPD_LIST_MEMBER (ID, LIST_MEMBER_COMMENT, CMPD_LIST_FK, CMPD_FK) values (?, ?, ?, ?)");
 
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHydBondDonors", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHydBondDonors", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHydBondDonors", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHydBondDonors", maxInt));
-      }
+                for (CmpdListMember clm : cl.getCmpdListMembers()) {
+                    pStmt.setLong(1, clmId.longValue());
+                    pStmt.setString(2, null);
+                    pStmt.setLong(3, cl.getId());
+                    pStmt.setLong(4, clm.getCmpd().getId());
+                    clmId++;
+                    pStmt.addBatch();
+                }
 
-      f = scbClass.getDeclaredField("min_surfaceArea");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(qo);
+                pStmt.executeBatch();
 
-      f = scbClass.getDeclaredField("max_surfaceArea");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(qo);
+                rtn = cl.getCmpdListId();
 
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.surfaceArea", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.surfaceArea", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.surfaceArea", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.surfaceArea", maxDbl));
-      }
+                // update the sequence
+                clmId++;
 
-      f = scbClass.getDeclaredField("min_solubility");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(qo);
+                query = session.createSQLQuery("SELECT setval('cmpd_list_member_seq', :clmId)");
+                query.setLong("clmId", clmId);
+                query.uniqueResult();
 
-      f = scbClass.getDeclaredField("max_solubility");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(qo);
+                query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
+                tempId = (BigInteger) query.uniqueResult();
+                clmId = tempId.longValue();
 
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.solubility", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.solubility", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.solubility", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.solubility", maxDbl));
-      }
+                System.out.println("Final clmId is: " + clmId);
 
-      f = scbClass.getDeclaredField("min_countRings");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
+                tx.commit();
 
-      f = scbClass.getDeclaredField("max_countRings");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
+            }
 
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRings", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRings", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRings", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRings", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countSingleBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countSingleBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countSingleBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countSingleBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countSingleBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countSingleBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countDoubleBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countDoubleBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countDoubleBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countDoubleBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countDoubleBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countDoubleBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countTripleBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countTripleBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countTripleBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countTripleBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countTripleBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countTripleBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countRotatableBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countRotatableBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRotatableBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRotatableBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRotatableBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRotatableBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countHydrogenAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countHydrogenAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHydrogenAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHydrogenAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHydrogenAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHydrogenAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countMetalAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countMetalAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countMetalAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countMetalAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countMetalAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countMetalAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countHeavyAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countHeavyAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countHeavyAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countHeavyAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countHeavyAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countHeavyAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countPositiveAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countPositiveAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countPositiveAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countPositiveAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countPositiveAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countPositiveAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countNegativeAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countNegativeAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countNegativeAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countNegativeAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countNegativeAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countNegativeAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countRingBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countRingBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRingBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRingBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRingBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRingBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countStereoAtoms");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countStereoAtoms");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countStereoAtoms", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countStereoAtoms", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countStereoAtoms", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countStereoAtoms", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countStereoBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countStereoBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countStereoBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countStereoBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countStereoBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countStereoBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countRingAssemblies");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countRingAssemblies");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countRingAssemblies", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countRingAssemblies", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countRingAssemblies", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countRingAssemblies", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countAromaticBonds");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countAromaticBonds");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countAromaticBonds", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countAromaticBonds", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countAromaticBonds", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countAromaticBonds", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_countAromaticRings");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_countAromaticRings");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.countAromaticRings", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.countAromaticRings", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.countAromaticRings", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.countAromaticRings", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_formalCharge");
-      f.setAccessible(true);
-      minInt = (Integer) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_formalCharge");
-      f.setAccessible(true);
-      maxInt = (Integer) f.get(qo);
-
-      if (minInt != null && maxInt != null) {
-        if (minInt.compareTo(maxInt) == 0) {
-          if (minInt - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.formalCharge", minInt));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.formalCharge", minInt, maxInt));
-        }
-      } else if (minInt != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.formalCharge", minInt));
-      } else if (maxInt != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.formalCharge", maxInt));
-      }
-
-      f = scbClass.getDeclaredField("min_theALogP");
-      f.setAccessible(true);
-      minDbl = (Double) f.get(qo);
-
-      f = scbClass.getDeclaredField("max_theALogP");
-      f.setAccessible(true);
-      maxDbl = (Double) f.get(qo);
-
-      if (minDbl != null && maxDbl != null) {
-        if (minDbl.compareTo(maxDbl) == 0) {
-          if (minDbl - 0 != 0) {
-            crit.add(Restrictions.eq("pchem.theALogP", minDbl));
-          }
-        } else {
-          // between
-          crit.add(Restrictions.between("pchem.theALogP", minDbl, maxDbl));
-        }
-      } else if (minDbl != null) {
-        // gt min
-        crit.add(Restrictions.gt("pchem.theALogP", minDbl));
-      } else if (maxDbl != null) {
-        // lt max
-        crit.add(Restrictions.lt("pchem.theALogP", maxDbl));
-      }
-
-      //
-      // pChem end
-      //
-      List<Long> cmpdIdList = crit.list();
-
-      if (!cmpdIdList.isEmpty()) {
-
-        System.out.println("Size of cmpdIdList in createCmpdListFromSearchCriteriaBeanin HelperCmpd is: " + cmpdIdList.size());
-
-        // create a new cmpdlist
-        CmpdList cl = CmpdList.Factory.newInstance();
-
-        cl.setCmpdListId(cmpdListId);
-        cl.setListName(listName);
-        cl.setDateCreated(now);
-        cl.setListOwner(currentUser);
-        cl.setShareWith(currentUser);
-        cl.setAnchorSmiles(smilesString);
-
-        session.persist(cl);
-
-        tx.commit();
-
-        tx = session.beginTransaction();
-
-        for (Long l : cmpdIdList) {
-          // System.out.println("Calling CmpdListMember.Factory.newInstance()");
-          CmpdListMember clm = CmpdListMember.Factory.newInstance();
-          clm.setCmpd((Cmpd) session.load(CmpdImpl.class, l));
-          clm.setCmpdList(cl);
-
-          // not needed for persistence, added for quick(er) conversion to VO
-          cl.getCmpdListMembers().add(clm);
+        } catch (SQLException sqle) {
+            while (sqle.getNextException() != null) {
+                Exception e = sqle.getNextException();
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        System.out.println("Size of cl.getCmpdListMembers: " + cl.getCmpdListMembers().size());
+        return rtn;
 
-        cl.setCountListMembers(cl.getCmpdListMembers().size());
-
-        // write the clm to the table, batch
-        Connection conn = session.connection();
-
-        PreparedStatement pStmt = conn.prepareStatement("insert into CMPD_LIST_MEMBER (ID, LIST_MEMBER_COMMENT, CMPD_LIST_FK, CMPD_FK) values (?, ?, ?, ?)");
-
-        for (CmpdListMember clm : cl.getCmpdListMembers()) {
-          pStmt.setLong(1, clmId.longValue());
-          pStmt.setString(2, null);
-          pStmt.setLong(3, cl.getId());
-          pStmt.setLong(4, clm.getCmpd().getId());
-          clmId++;
-          pStmt.addBatch();
-        }
-
-        pStmt.executeBatch();
-
-        rtn = cl.getCmpdListId();
-
-        // update the sequence
-        clmId++;
-
-        query = session.createSQLQuery("SELECT setval('cmpd_list_member_seq', :clmId)");
-        query.setLong("clmId", clmId);
-        query.uniqueResult();
-
-        query = session.createSQLQuery("SELECT nextval('cmpd_list_member_seq')");
-        tempId = (BigInteger) query.uniqueResult();
-        clmId = tempId.longValue();
-
-        System.out.println("Final clmId is: " + clmId);
-
-        tx.commit();
-
-      }
-
-    } catch (SQLException sqle) {
-      while (sqle.getNextException() != null) {
-        Exception e = sqle.getNextException();
-        e.printStackTrace();
-      }
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
 
-    return rtn;
+    /**
+     * Called by structure and similarity searches
+     *
+     * @param nscIntList
+     * @param currentUser
+     * @return
+     */
+    public static List<CmpdVO> getCmpdsByNsc(List<Integer> nscIntList, String currentUser) {
 
-  }
+        //MWK TODO this doesn't call currentUser
+        List<CmpdVO> rtnList = new ArrayList<CmpdVO>();
 
-  /**
-   * Called by structure and similarity searches
-   *
-   * @param nscIntList
-   * @param currentUser
-   * @return
-   */
-  public static List<CmpdVO> getCmpdsByNsc(List<Integer> nscIntList, String currentUser) {
+        Session session = null;
+        Transaction tx = null;
 
-    //MWK TODO this doesn't call currentUser
-    List<CmpdVO> rtnList = new ArrayList<CmpdVO>();
+        try {
 
-    Session session = null;
-    Transaction tx = null;
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    try {
+            tx = session.beginTransaction();
+            Criteria cmpdCrit = session.createCriteria(Cmpd.class);
+            cmpdCrit.setMaxResults(2000);
+            cmpdCrit.add(Restrictions.in("nsc", nscIntList));
+            List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            if (!cmpdList.isEmpty()) {
 
-      tx = session.beginTransaction();
-      Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-      cmpdCrit.setMaxResults(2000);
-      cmpdCrit.add(Restrictions.in("nsc", nscIntList));
-      List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
+                List<Long> cmpdIdList = new ArrayList<Long>();
+                Long cmpdId = null;
 
-      if (!cmpdList.isEmpty()) {
-
-        List<Long> cmpdIdList = new ArrayList<Long>();
-        Long cmpdId = null;
-
-        for (Cmpd cmpd : cmpdList) {
-          cmpdId = (Long) session.getIdentifier(cmpd);
-          cmpdIdList.add(cmpdId);
-        }
+                for (Cmpd cmpd : cmpdList) {
+                    cmpdId = (Long) session.getIdentifier(cmpd);
+                    cmpdIdList.add(cmpdId);
+                }
 
 // fetch a list of cmpdViews
-        Criteria cvCrit = session.createCriteria(CmpdTable.class);
-        cvCrit.add(Restrictions.in("id", cmpdIdList));
-        cvCrit.setMaxResults(2000);
-        List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
+                Criteria cvCrit = session.createCriteria(CmpdTable.class);
+                cvCrit.add(Restrictions.in("id", cmpdIdList));
+                cvCrit.setMaxResults(2000);
+                List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
-        if (!entityCVlist.isEmpty()) {
+                if (!entityCVlist.isEmpty()) {
 
-          for (CmpdTable cv : entityCVlist) {
-            CmpdVO cVO = TransformCmpdTableToVO.translateCmpd(cv);
-            rtnList.add(cVO);
-          }
+                    for (CmpdTable cv : entityCVlist) {
+                        CmpdVO cVO = TransformCmpdTableToVO.translateCmpd(cv);
+                        rtnList.add(cVO);
+                    }
 
+                }
+
+                tx.commit();
+
+            }
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        tx.commit();
+        return rtnList;
 
-      }
-
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
 
-    return rtnList;
+    /**
+     * Called to load structure editor and called (callable?) by
+     * StructureServlet
+     *
+     * @param nsc
+     * @param currentUser
+     * @return
+     */
+    public static CmpdVO getSingleCmpdByNsc(Integer nsc, String currentUser) {
 
-  }
+        //MWK TODO this doesn't call currentUser!
+        CmpdVO rtn = new CmpdVO();
 
-  /**
-   * Called to load structure editor and called (callable?) by StructureServlet
-   *
-   * @param nsc
-   * @param currentUser
-   * @return
-   */
-  public static CmpdVO getSingleCmpdByNsc(Integer nsc, String currentUser) {
+        Session session = null;
+        Transaction tx = null;
 
-    //MWK TODO this doesn't call currentUser!
-    CmpdVO rtn = new CmpdVO();
+        try {
 
-    Session session = null;
-    Transaction tx = null;
+            session = HibernateUtil.getSessionFactory().openSession();
 
-    try {
+            tx = session.beginTransaction();
+            Criteria cmpdCrit = session.createCriteria(Cmpd.class);
+            cmpdCrit.setMaxResults(2000);
+            cmpdCrit.add(Restrictions.eq("nsc", nsc));
+            Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
 
-      session = HibernateUtil.getSessionFactory().openSession();
+            Long cmpdId = (Long) session.getIdentifier(cmpd);
 
-      tx = session.beginTransaction();
-      Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-      cmpdCrit.setMaxResults(2000);
-      cmpdCrit.add(Restrictions.eq("nsc", nsc));
-      Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
+            Criteria cvCrit = session.createCriteria(CmpdTable.class);
+            cvCrit.setMaxResults(2000);
+            cvCrit.add(Restrictions.eq("id", cmpdId));
+            CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
 
-      Long cmpdId = (Long) session.getIdentifier(cmpd);
+            rtn = TransformCmpdTableToVO.translateCmpd(entityCV);
 
-      Criteria cvCrit = session.createCriteria(CmpdTable.class);
-      cvCrit.setMaxResults(2000);
-      cvCrit.add(Restrictions.eq("id", cmpdId));
-      CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
+            tx.commit();
 
-      rtn = TransformCmpdTableToVO.translateCmpd(entityCV);
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
 
-      tx.commit();
+        return rtn;
 
-    } catch (Exception e) {
-      tx.rollback();
-      e.printStackTrace();
-    } finally {
-      session.close();
     }
-
-    return rtn;
-
-  }
 
 }

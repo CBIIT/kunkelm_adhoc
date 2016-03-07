@@ -28,37 +28,87 @@ public class Main {
     public static void main(String[] args) {
         //testTanimotoScores();
         // testSearchCriteriaBean();
-        // testCuratedStuff();
+        // testCuratedStuff();        
+        //testCreateNewName();
         
-        testCreateNewName();
-        
+        testUpdateCuratedNsc();
+
     }
 
-    public static void testCreateNewName(){
+    public static void testUpdateCuratedNsc() {
+
+        CuratedNscVO valObj = new CuratedNscVO();
         
+        valObj.setId(789227l);
+        valObj.setNsc(10000000);
+        valObj.setCas("MWK");
+        
+        CuratedNameVO cnamVO = new CuratedNameVO();
+        cnamVO.setId(15l);                
+        valObj.setPreferredName(cnamVO);
+        
+        valObj.setGenericName(cnamVO);
+        
+        ArrayList<CuratedNameVO> aliases = new ArrayList<CuratedNameVO>();
+        for (long i = 10; i < 15; i++){
+            cnamVO = new CuratedNameVO();
+            cnamVO.setId(i);
+            aliases.add(cnamVO);
+        }
+        valObj.setAliases(aliases);
+        
+        CuratedOriginatorVO coVO = new CuratedOriginatorVO();
+        coVO.setId(15l);
+        valObj.setOriginator(coVO);
+        
+        List<CuratedProjectVO> projects = new ArrayList<CuratedProjectVO>();
+        CuratedProjectVO cpVO = new CuratedProjectVO();
+        cpVO.setId(2l);
+        projects.add(cpVO);
+        valObj.setProjects(projects);
+        valObj.setProjects(null);
+        
+        CuratedTargetVO prim=new CuratedTargetVO();
+        prim.setId(35l);
+        valObj.setPrimaryTarget(prim);
+        
+        List<CuratedTargetVO> targets = new ArrayList<CuratedTargetVO>();
+        for (long i = 10; i < 25; i++){
+            CuratedTargetVO ctVO = new CuratedTargetVO();
+            ctVO.setId(i);
+            targets.add(ctVO);
+        }
+        valObj.setSecondaryTargets(targets);
+        valObj.setSecondaryTargets(null);
+        
+        HelperCuratedNsc.updateCuratedNsc(valObj);
+
+    }
+
+    public static void testCreateNewName() {
+
         CuratedNameVO newName = new CuratedNameVO();
-        
+
         newName.setValue("MWK");
         newName.setDescription("MWK desc");
         newName.setReference("MWK ref");
-        
+
         CuratedNameVO rtn = HelperCuratedNsc.createNewCuratedName(newName);
-        
+
         System.out.println(rtn.toString());
-        
+
     }
-    
+
     public static void testCuratedStuff() {
-        
+
         List<CuratedNscVO> NscList = HelperCuratedNsc.loadAllCuratedNsc();
         System.out.println("Size of NscList: " + NscList.size());
 
-        
-        for (CuratedNscVO cnVO : NscList){
+        for (CuratedNscVO cnVO : NscList) {
             System.out.println("NSC: " + cnVO.getNsc() + " size of aliases: " + cnVO.getAliases().size());
-            
+
         }
-        
+
 //        List<CuratedNameVO> NameList = HelperCuratedNsc.loadAllNames();
 //        System.out.println("Size of NameList: " + NameList.size());
 //
@@ -70,7 +120,6 @@ public class Main {
 //
 //        List<CuratedTargetVO> TargetList = HelperCuratedNsc.loadAllTargets();
 //        System.out.println("Size of TargetList: " + TargetList.size());
-
     }
 
     public static void testTanimotoScores() {

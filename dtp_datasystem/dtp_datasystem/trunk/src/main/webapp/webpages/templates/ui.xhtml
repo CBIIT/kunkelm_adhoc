@@ -104,6 +104,12 @@
       </p:blockUI>
 
       <p:blockUI block=":datasystemForm" 
+                 widgetVar="updatingBUI">
+        <h:outputText style="color: red; font-size: 40px" value="UPDATING" />  
+        <p:graphicImage name="images/ajax-loader.gif"/>  
+      </p:blockUI>
+      
+      <p:blockUI block=":datasystemForm" 
                  widgetVar="appendingBUI">
         <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
         <p:graphicImage name="images/ajax-loader.gif"/>  

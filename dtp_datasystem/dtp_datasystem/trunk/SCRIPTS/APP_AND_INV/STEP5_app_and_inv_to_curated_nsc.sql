@@ -1,60 +1,34 @@
-\set ON_ERROR_FAIL true
+\set ON_ERROR_STOP on
 
 -- nuke
 
-delete from curated_nsc cascade;
-delete from curated_name cascade;
-delete from curated_originator cascade;
-delete from curated_project cascade;
-delete from curated_target cascade;
 delete from aliases2curated_nsc_to_aliases cascade;
 delete from curated_nsc_to_secondary_targe cascade;
 delete from curated_nscs2projects cascade;
 
--- global fixes
--- these are applied to fields_and_entries
--- since white space issues will have already been fixed
+delete from curated_nsc cascade;
 
-update fields_and_entries
-set entry = 'AbbVie'
-where entry = 'Abbvie'
-and field_name = 'originator';
-
-update fields_and_entries
-set entry = 'ArQule'
-where entry = 'Arqule'
-and field_name = 'originator';
-
-update fields_and_entries
-set entry = 'AstraZeneca'
-where entry = 'Astra Zeneca'
-and field_name = 'originator';
-
-update fields_and_entries
-set entry = 'Bcr-Abl'
-where entry = 'Bcr-abl'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'DNA Alkylating'
-where entry = 'DNA alkylating'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Gamma Secretase'
-where entry = 'Gamma secretase'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'IGF1R'
-where entry = 'IGF-1R'
-and field_name in ('primary_target', 'other_targets');
+delete from curated_name cascade;
+delete from curated_originator cascade;
+delete from curated_project cascade;
+delete from curated_target cascade;
 
 
-update fields_and_entries
-set entry = 'Stat3'
-where entry in ('Stat 3', 'Stat-3')
-and field_name in ('primary_target', 'other_targets');
+
+drop sequence if exists curated_nsc_seq;
+create sequence curated_nsc_seq;        
+
+drop sequence if exists curated_name_seq;
+create sequence curated_name_seq;       
+
+drop sequence if exists curated_originator_seq;
+create sequence curated_originator_seq; 
+
+drop sequence if exists curated_project_seq;
+create sequence curated_project_seq;    
+
+drop sequence if exists curated_target_seq;
+create sequence curated_target_seq;  
 
 -- distinct names
 
@@ -67,12 +41,9 @@ from fields_and_entries
 where field_name in ('alias_names', 'generic_name', 'preferred_name')
 order by entry;
 
-drop sequence if exists temp_seq;
-create sequence temp_seq;
-
 insert into curated_name(id, value, description, reference)
 select
-nextval('temp_seq'), entry, 'from app_and_inv load', 'from app_and_inv load'
+nextval('curated_name_seq'), entry, 'from app_and_inv load', 'from app_and_inv load'
 from temp;
 
 -- distinct originators
@@ -86,31 +57,24 @@ from fields_and_entries
 where field_name = 'originator'
 order by entry;
 
-drop sequence if exists temp_seq;
-create sequence temp_seq;
-
 insert into curated_originator(id, value, description, reference)
 select
-nextval('temp_seq'), entry, 'from app_and_inv load', 'from app_and_inv load'
+nextval('curated_originator_seq'), entry, 'from app_and_inv load', 'from app_and_inv load'
 from temp;
 
 -- distinct projects
-
--- this goes back to app_and_inv, NOT fields_and_entries...
 
 drop table if exists temp;
 
 create table temp
 as
-select distinct project_code, type
-from app_and_inv
-order by project_code;
-
-drop sequence if exists temp_seq;
-create sequence temp_seq;
+select distinct entry
+from fields_and_entries
+where field_name = 'project_code'
+order by entry;
 
 insert into curated_project(id, value, description, reference)
-select nextval('temp_seq'), project_code, type, 'from app_and_inv_load'
+select nextval('curated_project_seq'), entry, 'from app_and_inv_load', 'from app_and_inv_load'
 from temp;
 
 -- distinct targets
@@ -124,12 +88,9 @@ from fields_and_entries
 where field_name in ('primary_target', 'other_targets')
 order by entry;
 
-drop sequence if exists temp_seq;
-create sequence temp_seq;
-
 insert into curated_target(id, value, description, reference)
 select
-nextval('temp_seq'), entry, 'from app_and_inv_load', 'from app_and_inv_load'
+nextval('curated_target_seq'), entry, 'from app_and_inv_load', 'from app_and_inv_load'
 from temp;
 
 -- resolve 
@@ -179,32 +140,34 @@ from temp2 t
     left outer join curated_target pt on t.primary_target = pt.value
     left outer join curated_originator o on t.originator = o.value;
 
--- load to curated_nsc
--- id is set to nsc to simplify the many-to-many mappings
+-- curated_nsc
 
 insert into curated_nsc(id, cas, nsc, preferred_name_fk, generic_name_fk, primary_target_fk, originator_fk)
-select nsc, cas, nsc, preferred_name_fk, generic_name_fk, primary_target_fk, originator_fk
+select nextval('curated_nsc_seq'), cas, nsc, preferred_name_fk, generic_name_fk, primary_target_fk, originator_fk
 from temp3;
 
 -- many-to-many
 
-insert into curated_nscs2projects(projects_fk, curated_nscs_fk)
-select
-cp.id, fae.nsc
-from fields_and_entries fae, curated_project cp
-where fae.entry = cp.value
-and fae.field_name = 'project_code';
-
 insert into aliases2curated_nsc_to_aliases(aliases_fk, curated_nsc_to_aliases_fk)
 select
-cn.id, fae.nsc
-from fields_and_entries fae, curated_name cn
+cn.id, cnsc.id
+from fields_and_entries fae, curated_name cn, curated_nsc cnsc
 where fae.entry = cn.value
+and fae.nsc = cnsc.nsc
 and fae.field_name in ('alias_names', 'generic_name', 'preferred_name');
+
+insert into curated_nscs2projects(projects_fk, curated_nscs_fk)
+select
+cp.id, cnsc.id
+from fields_and_entries fae, curated_project cp, curated_nsc cnsc
+where fae.entry = cp.value
+and fae.nsc = cnsc.nsc
+and fae.field_name = 'project_code';
 
 insert into curated_nsc_to_secondary_targe(curated_nsc_to_secondary_ta_fk, secondary_targets_fk)
 select
-fae.nsc, ct.id
-from fields_and_entries fae, curated_target ct
+cnsc.id, ct.id
+from fields_and_entries fae, curated_target ct, curated_nsc cnsc
 where fae.entry = ct.value
+and fae.nsc = cnsc.nsc
 and fae.field_name = 'other_targets';

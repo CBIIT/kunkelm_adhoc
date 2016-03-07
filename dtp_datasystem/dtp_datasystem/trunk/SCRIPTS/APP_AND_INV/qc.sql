@@ -1,4 +1,4 @@
---start: 20160302 11:55:12.350
+--start: 20160306 13:46:47.083
 drop table if exists temp;
 
 create table temp
@@ -237,5 +237,5 @@ create table temp3
 
 \copy temp3 to /tmp/app_and_inv_project_code_formatting.csv csv header
 
---start : 20160302 11:55:12.350
---finish: 20160302 11:55:12.368
+--start : 20160306 13:46:47.083
+--finish: 20160306 13:46:47.111

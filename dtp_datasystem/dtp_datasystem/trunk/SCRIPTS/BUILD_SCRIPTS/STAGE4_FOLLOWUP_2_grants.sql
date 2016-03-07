@@ -7,17 +7,17 @@ grant all on curated_originator to datasystem_user;
 grant all on curated_project to datasystem_user;                
 grant all on curated_target to datasystem_user;  
 
+grant all on curated_nsc_seq to datasystem_user;  
 grant all on curated_name_seq to datasystem_user;  
 grant all on curated_originator_seq to datasystem_user;  
 grant all on curated_project_seq to datasystem_user;  
 grant all on curated_target_seq to datasystem_user;  
 
+select setval('curated_nsc_seq', (select max(id) from curated_nsc));
 select setval('curated_name_seq', (select max(id) from curated_name));
 select setval('curated_originator_seq', (select max(id) from curated_originator));
 select setval('curated_project_seq', (select max(id) from curated_project));
 select setval('curated_target_seq', (select max(id) from curated_target));
-
-
 
 -- APP can create ad hoc cmpds
 

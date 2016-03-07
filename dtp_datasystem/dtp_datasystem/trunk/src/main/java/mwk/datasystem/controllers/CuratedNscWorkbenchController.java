@@ -5,6 +5,11 @@
  */
 package mwk.datasystem.controllers;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +36,9 @@ public class CuratedNscWorkbenchController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
 
-    private CuratedNameVO preferredName;
-    private CuratedNameVO genericName;
-    private List<CuratedNameVO> aliases;
-    private CuratedOriginatorVO originator;
-    private List<CuratedProjectVO> projects;
-    private CuratedTargetVO primaryTarget;
-    private List<CuratedTargetVO> secondaryTargets;
-
-    private CuratedNscVO selectedCuratedNsc;
+    private CuratedNscVO ref;
+    private CuratedNscVO work;
+    private Boolean changesMade;
 
     private CuratedNameVO newCuratedName;
     private CuratedOriginatorVO newCuratedOriginator;
@@ -60,13 +59,8 @@ public class CuratedNscWorkbenchController implements Serializable {
 
     @PostConstruct
     public void init() {
-        preferredName = null; //new CuratedNameVO();
-        genericName = null; //new CuratedNameVO();
-        aliases = new ArrayList<CuratedNameVO>();
-        originator = null; //new CuratedOriginatorVO();
-        projects = new ArrayList<CuratedProjectVO>();
-        primaryTarget = null; //new CuratedTargetVO();
-        secondaryTargets = new ArrayList<CuratedTargetVO>();
+        ref = new CuratedNscVO();
+        work = new CuratedNscVO();
 
         newCuratedName = new CuratedNameVO();
         newCuratedOriginator = new CuratedOriginatorVO();
@@ -74,23 +68,52 @@ public class CuratedNscWorkbenchController implements Serializable {
         newCuratedTarget = new CuratedTargetVO();
     }
 
-    public void loadCuratedNsc() {
-        preferredName = selectedCuratedNsc.getPreferredName();
-        genericName = selectedCuratedNsc.getGenericName();
-        aliases = selectedCuratedNsc.getAliases();
-        originator = selectedCuratedNsc.getOriginator();
-        projects = selectedCuratedNsc.getProjects();
-        primaryTarget = selectedCuratedNsc.getPrimaryTarget();
-        secondaryTargets = selectedCuratedNsc.getSecondaryTargets();
+    public static Object deepCopy(Object orig) {
+        Object obj = null;
+        try {
+            // Write the object out to a byte array
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(bos);
+            out.writeObject(orig);
+            out.flush();
+            out.close();
+
+            // Make an input stream from the byte array and read
+            // a copy of the object back in.
+            ObjectInputStream in = new ObjectInputStream(
+                    new ByteArrayInputStream(bos.toByteArray()));
+            obj = in.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
+        return obj;
     }
 
-    public void clearNew() {
-        newCuratedName = new CuratedNameVO();
-        newCuratedOriginator = new CuratedOriginatorVO();
-        newCuratedProject = new CuratedProjectVO();
-        newCuratedTarget = new CuratedTargetVO();
+    public String performConfigureEdit(CuratedNscVO cnVO) {
+
+        changesMade = Boolean.FALSE;
+
+        ref = cnVO;
+
+        // DEEP COPY!         
+        work = (CuratedNscVO) deepCopy(ref);
+
+        return "/webpages/curatedNscWorkbench?faces-redirect=true";
     }
-    
+
+    public String performUpdate() {
+
+        if (changesMade) {
+            HelperCuratedNsc.updateCuratedNsc(work);
+        }
+
+        return "/webpages/curatedNscTable?faces-redirect=true";
+
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="CreateNewXxx Methods">
     public String createNewCuratedName() {
 
         CuratedNameVO cnVO = HelperCuratedNsc.createNewCuratedName(newCuratedName);
@@ -107,8 +130,8 @@ public class CuratedNscWorkbenchController implements Serializable {
         return "/webpages/curatedNscWorkbench?faces-redirect=true";
 
     }
-    
-     public String createNewCuratedOriginator() {
+
+    public String createNewCuratedOriginator() {
 
         CuratedOriginatorVO cnVO = HelperCuratedNsc.createNewCuratedOriginator(newCuratedOriginator);
 
@@ -124,8 +147,8 @@ public class CuratedNscWorkbenchController implements Serializable {
         return "/webpages/curatedNscWorkbench?faces-redirect=true";
 
     }
-     
-      public String createNewCuratedProject() {
+
+    public String createNewCuratedProject() {
 
         CuratedProjectVO cnVO = HelperCuratedNsc.createNewCuratedProject(newCuratedProject);
 
@@ -141,8 +164,8 @@ public class CuratedNscWorkbenchController implements Serializable {
         return "/webpages/curatedNscWorkbench?faces-redirect=true";
 
     }
-      
-       public String createNewCuratedTarget() {
+
+    public String createNewCuratedTarget() {
 
         CuratedTargetVO cnVO = HelperCuratedNsc.createNewCuratedTarget(newCuratedTarget);
 
@@ -159,86 +182,101 @@ public class CuratedNscWorkbenchController implements Serializable {
 
     }
 
+//</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="APPEND/REMOVE">
     public void appendPreferredName(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedNameVO clVO = (CuratedNameVO) item;
-        preferredName = clVO;
+        work.setPreferredName(clVO);
     }
 
     public void removePreferredName() {
-        preferredName = null;
+        changesMade = Boolean.TRUE;
+        work.setPreferredName(null);
     }
 
     public void appendGenericName(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedNameVO clVO = (CuratedNameVO) item;
-        genericName = clVO;
+        work.setGenericName(clVO);
     }
 
     public void removeGenericName() {
-        genericName = null;
+        changesMade = Boolean.TRUE;
+        work.setGenericName(null);
     }
 
     public void appendAlias(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedNameVO clVO = (CuratedNameVO) item;
-        if (!aliases.contains(clVO)) {
-            aliases.add(clVO);
+        if (!work.getAliases().contains(clVO)) {
+            work.getAliases().add(clVO);
         }
     }
 
-    public void removeAlias(CuratedNameVO ali) {
-        if (aliases.contains(ali)) {
-            aliases.remove(ali);
+    public void removeAlias(CuratedNameVO cnVO) {
+        changesMade = Boolean.TRUE;
+        if (work.getAliases().contains(cnVO)) {
+            work.getAliases().remove(cnVO);
         }
     }
 
     public void appendOriginator(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedOriginatorVO coVO = (CuratedOriginatorVO) item;
-        originator = coVO;
+        work.setOriginator(coVO);
     }
 
     public void removeOriginator() {
-        originator = null;
+        changesMade = Boolean.TRUE;
+        work.setOriginator(null);
     }
 
     public void appendProject(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedProjectVO cpVO = (CuratedProjectVO) item;
-        if (!projects.contains(cpVO)) {
-            projects.add(cpVO);
+        if (!work.getProjects().contains(cpVO)) {
+            work.getProjects().add(cpVO);
         }
     }
 
-    public void removeProject(CuratedProjectVO proj) {
-        if (projects.contains(proj)) {
-            projects.remove(proj);
+    public void removeProject(CuratedProjectVO cpVO) {
+        changesMade = Boolean.TRUE;
+        if (work.getProjects().contains(cpVO)) {
+            work.getProjects().remove(cpVO);
         }
     }
 
     public void appendPrimaryTarget(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedTargetVO ctVO = (CuratedTargetVO) item;
-        primaryTarget = ctVO;
+        work.setPrimaryTarget(ctVO);
     }
 
     public void removePrimaryTarget() {
-        primaryTarget = null;
+        changesMade = Boolean.TRUE;
+        work.setPrimaryTarget(null);
     }
 
     public void appendSecondaryTarget(SelectEvent event) {
+        changesMade = Boolean.TRUE;
         Object item = event.getObject();
         CuratedTargetVO clVO = (CuratedTargetVO) item;
-        if (!secondaryTargets.contains(clVO)) {
-            secondaryTargets.add(clVO);
+        if (!work.getSecondaryTargets().contains(clVO)) {
+            work.getSecondaryTargets().add(clVO);
         }
     }
 
-    public void removeSecondaryTarget(CuratedTargetVO sec) {
-        if (secondaryTargets.contains(sec)) {
-            secondaryTargets.remove(sec);
+    public void removeSecondaryTarget(CuratedTargetVO ctVO) {
+        changesMade = Boolean.TRUE;
+        if (work.getSecondaryTargets().contains(ctVO)) {
+            work.getSecondaryTargets().remove(ctVO);
         }
     }
 
@@ -286,68 +324,28 @@ public class CuratedNscWorkbenchController implements Serializable {
 
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="GETTERS/SETTERS">
-    public CuratedNameVO getPreferredName() {
-        return preferredName;
+    public CuratedNscVO getRef() {
+        return ref;
     }
 
-    public void setPreferredName(CuratedNameVO preferredName) {
-        this.preferredName = preferredName;
+    public void setRef(CuratedNscVO ref) {
+        this.ref = ref;
     }
 
-    public CuratedNameVO getGenericName() {
-        return genericName;
+    public CuratedNscVO getWork() {
+        return work;
     }
 
-    public void setGenericName(CuratedNameVO genericName) {
-        this.genericName = genericName;
+    public void setWork(CuratedNscVO work) {
+        this.work = work;
     }
 
-    public List<CuratedNameVO> getAliases() {
-        return aliases;
+    public Boolean getChangesMade() {
+        return changesMade;
     }
 
-    public void setAliases(List<CuratedNameVO> aliases) {
-        this.aliases = aliases;
-    }
-
-    public CuratedOriginatorVO getOriginator() {
-        return originator;
-    }
-
-    public void setOriginator(CuratedOriginatorVO originator) {
-        this.originator = originator;
-    }
-
-    public List<CuratedProjectVO> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<CuratedProjectVO> projects) {
-        this.projects = projects;
-    }
-
-    public CuratedTargetVO getPrimaryTarget() {
-        return primaryTarget;
-    }
-
-    public void setPrimaryTarget(CuratedTargetVO primaryTarget) {
-        this.primaryTarget = primaryTarget;
-    }
-
-    public List<CuratedTargetVO> getSecondaryTargets() {
-        return secondaryTargets;
-    }
-
-    public void setSecondaryTargets(List<CuratedTargetVO> secondaryTargets) {
-        this.secondaryTargets = secondaryTargets;
-    }
-
-    public CuratedNscVO getSelectedCuratedNsc() {
-        return selectedCuratedNsc;
-    }
-
-    public void setSelectedCuratedNsc(CuratedNscVO selectedCuratedNsc) {
-        this.selectedCuratedNsc = selectedCuratedNsc;
+    public void setChangesMade(Boolean changesMade) {
+        this.changesMade = changesMade;
     }
 
     public CuratedNameVO getNewCuratedName() {
