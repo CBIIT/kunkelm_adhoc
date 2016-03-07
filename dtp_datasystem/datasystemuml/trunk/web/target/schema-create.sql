@@ -776,6 +776,14 @@
 
     create sequence CMPD_TARGET_SEQ;
 
+    create sequence CURATED_NAME_SEQ;
+
+    create sequence CURATED_NSC_SEQ;
+
     create sequence CURATED_ORIGINATOR_SEQ;
+
+    create sequence CURATED_PROJECT_SEQ;
+
+    create sequence CURATED_TARGET_SEQ;
 
     create sequence hibernate_sequence;
