@@ -55,12 +55,10 @@ public class HelperTanimotoScores {
 
       List<TanimotoScores> entityList = (List<TanimotoScores>) crit.list();
 
-      if (!entityList.isEmpty()) {
-
+      if (entityList != null && !entityList.isEmpty()) {
         for (TanimotoScores t : entityList) {
           rtnList.add(TransformAndroToVO.translateTanimotoScores(t));
         }
-
       }
 
     } catch (Exception e) {

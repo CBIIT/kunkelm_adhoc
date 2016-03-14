@@ -13,6 +13,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,9 +23,12 @@ import mwk.d3.Info;
 import mwk.d3.Node;
 import mwk.d3.TanimotoForceGraph;
 import mwk.d3.TanimotoLink;
+import mwk.datasystem.util.Comparators;
+import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperTanimotoScores;
-import static mwk.datasystem.util.HelperTanimotoScores.fetch;
+import mwk.datasystem.vo.CmpdVO;
 import mwk.datasystem.vo.TanimotoScoresVO;
+import mwk.datasystem.vo.TanimotoScoresWithCmpdObjectsVO;
 
 /**
  *
@@ -41,7 +45,10 @@ public class TanimotoForceGraphController implements Serializable {
     private String json;
 
     private Double minTan;
+    
     private ArrayList<String> fingerprintList;
+    private String selectedFingerprint;
+    
     private ArrayList<Integer> nscList;
     private ArrayList<String> drugNameList;
     private ArrayList<String> targetList;
@@ -50,34 +57,83 @@ public class TanimotoForceGraphController implements Serializable {
     public void init() {
 
         HashSet<Integer> nscSet = new HashSet<Integer>();
-        
-        // fetch the data
+        HashSet<String> drugNameSet = new HashSet<String>();
+        HashSet<String> targetSet = new HashSet<String>();
+
         ArrayList<TanimotoScoresVO> scores = HelperTanimotoScores.fetch();
-        
-        for (TanimotoScoresVO tsVO : scores){
+
+        for (TanimotoScoresVO tsVO : scores) {
             nscSet.add(tsVO.getNsc1());
             nscSet.add(tsVO.getNsc2());
         }
-        
-        this.nscList = new ArrayList<Integer>(nscSet);
-        Collections.sort(this.nscList);
-        
-        this.json = generateJson(scores);
 
-        this.minTan = 0.5d;
+        nscList = new ArrayList<Integer>(nscSet);
+        Collections.sort(nscList);
 
-        String[] fpArr = new String[]{"atompairbv_fp",
+        List<CmpdVO> cmpdVOlist = HelperCmpd.getCmpdsByNsc(nscList, "PUBLIC");
+        HashMap<Integer, CmpdVO> cmpdLookup = new HashMap<Integer, CmpdVO>();
+        for (CmpdVO cVO : cmpdVOlist) {
+            cmpdLookup.put(cVO.getNsc(), cVO);
+        }
+
+        ArrayList<TanimotoScoresWithCmpdObjectsVO> scoresList = new ArrayList<TanimotoScoresWithCmpdObjectsVO>();
+
+        for (TanimotoScoresVO tsVO : scores) {
+
+            TanimotoScoresWithCmpdObjectsVO tswcoVO = new TanimotoScoresWithCmpdObjectsVO();
+
+            CmpdVO c1 = cmpdLookup.get(tsVO.getNsc1());
+            CmpdVO c2 = cmpdLookup.get(tsVO.getNsc2());
+
+            drugNameSet.add(c1.getName());
+            drugNameSet.add(c2.getName());
+
+            // TODO: this is kludgey while the datasystem model doesn't include drugName, primaryTarget
+            if (c1.getCmpdAnnotation() != null && c1.getCmpdAnnotation().getGeneralComment() != null) {
+                targetSet.add(c1.getCmpdAnnotation().getGeneralComment());
+            }
+            if (c2.getCmpdAnnotation() != null && c2.getCmpdAnnotation().getGeneralComment() != null) {
+                targetSet.add(c2.getCmpdAnnotation().getGeneralComment());
+            }
+
+            tswcoVO.setCmpd1(cmpdLookup.get(tsVO.getNsc1()));
+            tswcoVO.setCmpd2(cmpdLookup.get(tsVO.getNsc2()));
+
+            tswcoVO.setAtomPair(tsVO.getAtomPair());
+            tswcoVO.setFeatMorgan(tsVO.getFeatMorgan());
+            tswcoVO.setLayered(tsVO.getLayered());
+            tswcoVO.setMacss(tsVO.getMacss());
+            tswcoVO.setMorganBv(tsVO.getMorganBv());
+            tswcoVO.setRdkit(tsVO.getRdkit());
+            tswcoVO.setTorsionBv(tsVO.getTorsionBv());
+
+            scoresList.add(tswcoVO);
+
+        }
+
+        drugNameList = new ArrayList<String>(drugNameSet);
+        Collections.sort(drugNameList);
+
+        targetList = new ArrayList<String>(targetSet);
+        Collections.sort(targetList);
+
+        //json = generateJson(scores);
+        json = generateJsonNew(scoresList);
+
+        minTan = 0.9d;
+
+        String[] fpArr = new String[]{
+            "atompairbv_fp",
             "featmorganbv_fp",
             "layered_fp",
             "maccs_fp",
             "morganbv_fp",
             "rdkit_fp",
             "torsionbv_fp"};
-        
-        this.fingerprintList = new ArrayList<String>(Arrays.asList(fpArr));
-        
-        this.drugNameList = new ArrayList<String>();
-        this.targetList = new ArrayList<String>();
+
+        fingerprintList = new ArrayList<String>(Arrays.asList(fpArr));
+        selectedFingerprint = "mc";       
+
     }
 
     public String reload() {
@@ -108,7 +164,7 @@ public class TanimotoForceGraphController implements Serializable {
 
     }
 
-    public static String generateJson(ArrayList<TanimotoScoresVO> scores) {
+    public static String generateJsonNew(ArrayList<TanimotoScoresWithCmpdObjectsVO> scores) {
 
         NumberFormat nf2 = new DecimalFormat();
         nf2.setMinimumFractionDigits(2);
@@ -125,8 +181,103 @@ public class TanimotoForceGraphController implements Serializable {
         ArrayList<Node> nodeList = new ArrayList<Node>();
         List<TanimotoLink> linkList = new ArrayList<TanimotoLink>();
 
-        HashSet<Integer> nscSet = new HashSet<Integer>();
+        HashSet<CmpdVO> cmpdSet = new HashSet<CmpdVO>();
 
+        for (TanimotoScoresWithCmpdObjectsVO tsVO : scores) {
+            cmpdSet.add(tsVO.getCmpd1());
+            cmpdSet.add(tsVO.getCmpd2());
+        }
+
+        // add nscSet members as nodes, and then do the lookups        
+        ArrayList<CmpdVO> cmpdList = new ArrayList<CmpdVO>(cmpdSet);
+        Collections.sort(cmpdList, new Comparators.CmpdNscComparator());
+
+        for (CmpdVO nscInt : cmpdList) {
+            Node n = new Node();
+            n.nsc = nscInt.getNsc();
+            n.drugName = nscInt.getName();
+            n.smiles = nscInt.getParentFragment().getCmpdFragmentStructure().getCanSmi();
+            n.target = nscInt.getCmpdAnnotation().getGeneralComment();
+            nodeList.add(n);
+        }
+
+        for (TanimotoScoresWithCmpdObjectsVO tswco : scores) {
+
+            TanimotoLink l = new TanimotoLink();
+
+            l.source = cmpdList.indexOf(tswco.getCmpd1());
+            l.target = cmpdList.indexOf(tswco.getCmpd2());
+
+//            l.ap = tsVO.getAtomPair();
+//            l.fm = tsVO.getFeatMorgan();
+//            l.l = tsVO.getLayered();
+//            l.mc = tsVO.getMacss();
+//            l.m = tsVO.getMorganBv();
+//            l.r = tsVO.getRdkit();
+//            l.to = tsVO.getTorsionBv();
+            
+            l.ap = round(tswco.getAtomPair(), 2);
+            l.fm = round(tswco.getFeatMorgan(), 2);
+            l.l = round(tswco.getLayered(), 2);
+            l.mc = round(tswco.getMacss(), 2);
+            l.m = round(tswco.getMorganBv(), 2);
+            l.r = round(tswco.getRdkit(), 2);
+            l.to = round(tswco.getTorsionBv(), 2);
+
+            linkList.add(l);
+
+            // System.out.println(l.source + " " + l.target + " " + l.ap + " " + l.fm + " " + l.l + " " + l.mc + " " + l.m + " " + l.r + " " + l.to);
+        }
+
+        fg.nodes = nodeList;
+        fg.links = linkList;
+
+        Gson gson = new Gson();
+        rtn = gson.toJson(fg);
+
+        return rtn;
+    }
+
+    
+    public static class LightWeightInfo{
+        Integer nsc;
+        String drugName;
+        String target;
+        String smiles;        
+
+        public LightWeightInfo(Integer nsc, String drugName, String target, String smiles) {
+            this.nsc = nsc;
+            this.drugName = drugName;
+            this.target = target;
+            this.smiles = smiles;
+        }
+            
+    }
+    
+    public static String generateJson(ArrayList<TanimotoScoresVO> scores) {
+
+        NumberFormat nf2 = new DecimalFormat();
+        nf2.setMinimumFractionDigits(2);
+        nf2.setMaximumFractionDigits(2);
+
+        String rtn = "";
+
+        TanimotoForceGraph fg = new TanimotoForceGraph();
+
+        Info i = new Info();
+        i.fingerprintType = "collated fingerprints";
+        fg.info = i;
+        
+        ArrayList<Node> nodeList = new ArrayList<Node>();
+        List<TanimotoLink> linkList = new ArrayList<TanimotoLink>();
+        
+        HashSet<Integer> nscSet = new HashSet<Integer>();
+        for (TanimotoScoresVO tsVO : scores) {
+            nscSet.add(tsVO.getNsc1());
+            nscSet.add(tsVO.getNsc2());
+        }
+        
+        HashSet<LightWeightInfo> lwiList = new HashSet<LightWeightInfo>();
         for (TanimotoScoresVO tsVO : scores) {
             nscSet.add(tsVO.getNsc1());
             nscSet.add(tsVO.getNsc2());
@@ -156,7 +307,6 @@ public class TanimotoForceGraphController implements Serializable {
 //            l.m = tsVO.getMorganBv();
 //            l.r = tsVO.getRdkit();
 //            l.to = tsVO.getTorsionBv();
-            
             l.ap = round(tsVO.getAtomPair(), 2);
             l.fm = round(tsVO.getFeatMorgan(), 2);
             l.l = round(tsVO.getLayered(), 2);
@@ -179,6 +329,7 @@ public class TanimotoForceGraphController implements Serializable {
         return rtn;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="GETTERS/SETTERS">
     public String getJson() {
         return json;
     }
@@ -201,6 +352,14 @@ public class TanimotoForceGraphController implements Serializable {
 
     public void setFingerprintList(ArrayList<String> fingerprintList) {
         this.fingerprintList = fingerprintList;
+    }
+
+    public String getSelectedFingerprint() {
+        return selectedFingerprint;
+    }
+
+    public void setSelectedFingerprint(String selectedFingerprint) {
+        this.selectedFingerprint = selectedFingerprint;
     }
 
     public ArrayList<Integer> getNscList() {
@@ -227,4 +386,5 @@ public class TanimotoForceGraphController implements Serializable {
         this.targetList = targetList;
     }
 
+//</editor-fold>
 }

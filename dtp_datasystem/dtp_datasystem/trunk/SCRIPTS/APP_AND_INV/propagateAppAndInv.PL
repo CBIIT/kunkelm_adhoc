@@ -1,0 +1,140 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Time::HiRes qw(time);
+use POSIX qw(strftime);
+
+use lib('./');
+
+use DBI;
+
+sub ltrim { my $s = shift; $s =~ s/^\s+//;       return $s };
+sub rtrim { my $s = shift; $s =~ s/\s+$//;       return $s };
+sub  trim { my $s = shift; $s =~ s/^\s+|\s+$//g; return $s };
+
+my $t = time;
+my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "--start: $startDate\n";
+
+my @sqlList = ();
+my $sql;
+
+#  ####   ######   #####  #    #  #####
+# #       #          #    #    #  #    #
+#  ####   #####      #    #    #  #    #
+#      #  #          #    #    #  #####
+# #    #  #          #    #    #  #
+#  ####   ######     #     ####   #
+
+# connect
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+
+# create app_and_inv_smiles
+
+push @sqlList, qq[
+drop table if exists app_and_inv_smiles
+];
+
+push @sqlList, qq[
+create table app_and_inv_smiles 
+as
+select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles
+from curated_nsc nsc
+left outer join curated_name gnam on nsc.generic_name_fk = gnam.id
+left outer join curated_name pnam on nsc.preferred_name_fk = pnam.id
+left outer join curated_target trg on nsc.primary_target_fk = trg.id
+left outer join cmpd_table ct on nsc.nsc = ct.nsc
+];
+
+foreach $sql(@sqlList){
+	my $sth = $dbh->prepare($sql);
+	print "$sql\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;		
+}
+
+# using list of lists
+
+$sql = qq[select nsc, generic_name, preferred_name, primary_target, smiles from app_and_inv_smiles];
+my $sth = $dbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+
+my $lol = $sth->fetchall_arrayref();
+
+# clean up
+$dbh->disconnect();
+
+
+
+
+# target of update
+
+$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+
+my $sql_synthetic_ident = qq[
+update synthetic_ident
+set drug_name = ?,
+target = ?,
+smiles = ?
+from nsc_ident
+where synthetic_ident.id = nsc_ident.id
+and nsc_ident.nsc = ?
+];
+
+my $sql_cmpd_table = qq[
+update cmpd_table
+set name = ?,
+general_comment = ?,
+can_smi = ?
+where nsc = ?
+];
+
+my $sql = qq[
+update tanimoto_scores
+set drug_name2 = ?,
+target2 = ?,
+smiles2 = ?
+where nsc2 = ?
+];
+
+
+
+my $sth = $dbh->prepare($sql);
+print "$sql\n\n";
+	
+my $nsc;
+my $genericName;
+my $preferredName;
+my $primaryTarget;
+my $smiles;
+
+my $drugName;
+
+for my $array_ref ( @$lol ) {
+	
+	($nsc, $genericName, $preferredName, $primaryTarget, $smiles) = @$array_ref;
+	
+	if (defined($genericName)){
+		$drugName = $genericName;
+	} elsif (defined($preferredName)){
+		$drugName = $preferredName;
+	} else {
+		undef $drugName;
+	}
+	
+$sth->execute($drugName, $primaryTarget, $smiles, $nsc) or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	
+}
+
+# clean up
+$dbh->disconnect();
+
+$t = time;
+my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
+$finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
+print "--start : $startDate\n";
+print "--finish: $finishDate\n";
+

@@ -227,7 +227,7 @@ public class TransformCmpdTableToVO {
         cmpdVO.setProdFormulaWeight(entityIn.getProdFormulaWeight());
         cmpdVO.setProdMolecularFormula(entityIn.getProdMolecularFormula());
         cmpdVO.setFormalCharge(entityIn.getCmpdFormalCharge());
-        
+
         try {
 
             cmpdVO.setConf(entityIn.getConf());
@@ -248,11 +248,7 @@ public class TransformCmpdTableToVO {
 
             cmpdVO.setPrefix(entityIn.getPrefix());
             cmpdVO.setNsc(entityIn.getNsc());
-            if (entityIn.getNsc() != null && entityIn.getNsc() > 0) {
-                cmpdVO.setName("NSC " + entityIn.getPrefix() + entityIn.getNsc());
-            } else {
-                cmpdVO.setName(entityIn.getName());
-            }
+            cmpdVO.setName(entityIn.getName());
             cmpdVO.setDistribution(entityIn.getDistribution());
             cmpdVO.setConf(entityIn.getConf());
             cmpdVO.setCas(entityIn.getCas());
@@ -272,7 +268,7 @@ public class TransformCmpdTableToVO {
                 cfVO.setSaltSmiles(entityIn.getSaltSmiles());
                 cmpdVO.setSaltFragment(cfVO);
             }
-            
+
             cmpdVO.setParentStoichiometry(entityIn.getParentStoichiometry());
             cmpdVO.setSaltStoichiometry(entityIn.getSaltStoichiometry());
 

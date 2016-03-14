@@ -72,7 +72,7 @@
                         <p:outputLabel for="exportButton" value="Export as Image"/>
                         <p:outputLabel for="structPanel" value="Current Structures"/>
                         
-                         <h:selectOneListbox id="fp" size="1">
+                        <h:selectOneListbox id="fp" size="1" value="#{tanimotoForceGraphController.selectedFingerprint}">
                             <f:selectItem itemLabel="atompairbv_fp_tanimoto" itemValue="ap"/>
                             <f:selectItem itemLabel="featmorganbv_fp_tanimoto" itemValue="fm"/>
                             <f:selectItem itemLabel="layered_fp_tanimoto" itemValue="l"/>

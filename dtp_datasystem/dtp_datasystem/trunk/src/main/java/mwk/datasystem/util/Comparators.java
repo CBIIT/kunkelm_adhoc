@@ -8,6 +8,7 @@ import java.util.Comparator;
 import javax.faces.model.SelectItem;
 import mwk.datasystem.domain.AdHocCmpdFragment;
 import mwk.datasystem.vo.CmpdFragmentVO;
+import mwk.datasystem.vo.CmpdVO;
 import mwk.datasystem.vo.CuratedNameVO;
 import mwk.datasystem.vo.CuratedNscVO;
 import mwk.datasystem.vo.CuratedOriginatorVO;
@@ -20,6 +21,16 @@ import mwk.datasystem.vo.CuratedTargetVO;
  */
 public class Comparators {
 
+        public static class CmpdNscComparator implements Comparator {
+
+        public int compare(Object o1, Object o2) {
+            Integer nsc1 = ((CmpdVO) o1).getNsc();
+            Integer nsc2 = ((CmpdVO) o2).getNsc();
+            return nsc1.compareTo(nsc2);
+        }
+    }
+
+    
     public static class CuratedNscComparator implements Comparator {
 
         public int compare(Object o1, Object o2) {

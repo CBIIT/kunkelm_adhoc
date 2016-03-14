@@ -467,7 +467,7 @@ public class TransformAndroToVO {
                 rtn.setPrefix(nscc.getPrefix());
                 rtn.setNsc(nscc.getNsc());
                 rtn.setCas(nscc.getCas());
-                rtn.setName("NSC " + nscc.getPrefix() + nscc.getNsc());
+                rtn.setName(nscc.getName());
                 rtn.setDistribution(nscc.getDistribution());
                 rtn.setConf(nscc.getConf());
                 rtn.setDiscreet(nscc.getDiscreet());

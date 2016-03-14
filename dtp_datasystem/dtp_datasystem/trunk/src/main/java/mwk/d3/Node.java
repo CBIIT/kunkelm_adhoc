@@ -16,6 +16,7 @@ public class Node {
     public Integer nsc;
     public String drugName;
     public String target;
+    public String smiles;
 
     public String symbol;
     public String symbolColor;

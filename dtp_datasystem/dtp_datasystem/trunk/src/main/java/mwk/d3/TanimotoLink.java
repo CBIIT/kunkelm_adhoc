@@ -15,7 +15,7 @@ public class TanimotoLink {
 
     public int source;
     public int target;
-
+    
     public Double ap;//atompairbv_fp_tanimoto
     public Double fm;//featmorganbv_fp_tanimoto
     public Double l;//layered_fp_tanimoto
