@@ -11,10 +11,10 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import mwk.microxeno.vo.AffymetrixDataVO;
+import mwk.microxeno.vo.PassageVO;
 import mwk.microxeno.vo.AffymetrixIdentifierVO;
-import mwk.microxeno.vo.PassageDataSetVO;
-import mwk.microxeno.vo.PassageAggregateVO;
+import mwk.microxeno.vo.PassageAvgSetVO;
+import mwk.microxeno.vo.PassageAvgVO;
 import mwk.microxeno.vo.PassageIdentifierVO;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
@@ -36,17 +36,17 @@ public class CollateDataSetUtil implements Serializable {
         nf2.setMaximumFractionDigits(2);
     }
 
-    public static PassageIdentifierVO createPassageIdentifier(AffymetrixDataVO incoming) {
+    public static PassageIdentifierVO createPassageIdentifier(PassageVO incoming) {
         PassageIdentifierVO rtn = new PassageIdentifierVO();
         rtn.setAffymetrixIdentifier(incoming.getAffymetrixIdentifier());
         rtn.setPassage(incoming.getPassage());
         return rtn;
     }
 
-    public static ArrayList<PassageAggregateVO> aggregateByPassage(List<AffymetrixDataVO> incomingList) {
-        ArrayList<PassageAggregateVO> rtnList = new ArrayList<PassageAggregateVO>();
-        HashMap<ReplicateAggregator, PassageAggregateVO> map = new HashMap<ReplicateAggregator, PassageAggregateVO>();
-        for (AffymetrixDataVO adVO : incomingList) {
+    public static ArrayList<PassageAvgVO> aggregateByPassage(List<PassageVO> incomingList) {
+        ArrayList<PassageAvgVO> rtnList = new ArrayList<PassageAvgVO>();
+        HashMap<ReplicateAggregator, PassageAvgVO> map = new HashMap<ReplicateAggregator, PassageAvgVO>();
+        for (PassageVO adVO : incomingList) {
             ReplicateAggregator ra = new ReplicateAggregator(
                     adVO.getAffymetrixIdentifier(),
                     adVO.getTumor(),
@@ -55,10 +55,10 @@ public class CollateDataSetUtil implements Serializable {
             if (map.containsKey(ra)) {
                 map.get(ra).getReplicates().add(adVO);
             } else {
-                PassageAggregateVO paVO = new PassageAggregateVO();
+                PassageAvgVO paVO = new PassageAvgVO();
                 paVO.setPassageIdentifier(createPassageIdentifier(adVO));
                 paVO.setTumor(adVO.getTumor());
-                ArrayList<AffymetrixDataVO> dataList = new ArrayList<AffymetrixDataVO>();
+                ArrayList<PassageVO> dataList = new ArrayList<PassageVO>();
                 dataList.add(adVO);
                 paVO.setReplicates(dataList);
                 map.put(ra, paVO);
@@ -68,8 +68,8 @@ public class CollateDataSetUtil implements Serializable {
         // step through the map and update
         for (ReplicateAggregator ra : map.keySet()) {
             ArrayList<Double> values = new ArrayList<Double>();
-            PassageAggregateVO paVO = map.get(ra);
-            for (AffymetrixDataVO adVO : paVO.getReplicates()) {
+            PassageAvgVO paVO = map.get(ra);
+            for (PassageVO adVO : paVO.getReplicates()) {
                 values.add(adVO.getValue());
             }
             double[] valArr = new double[values.size()];
@@ -84,19 +84,19 @@ public class CollateDataSetUtil implements Serializable {
         return rtnList;
     }
 
-    public static ArrayList<PassageDataSetVO> collateDataSet(List<PassageAggregateVO> passageAggregateList) {
+    public static ArrayList<PassageAvgSetVO> collateDataSet(List<PassageAvgVO> passageAggregateList) {
 
-        ArrayList<PassageDataSetVO> aedsList = new ArrayList<PassageDataSetVO>();
+        ArrayList<PassageAvgSetVO> aedsList = new ArrayList<PassageAvgSetVO>();
 
         try {
-            HashMap<PassageIdentifierVO, PassageDataSetVO> map = new HashMap<PassageIdentifierVO, PassageDataSetVO>();
-            for (PassageAggregateVO paVO : passageAggregateList) {
+            HashMap<PassageIdentifierVO, PassageAvgSetVO> map = new HashMap<PassageIdentifierVO, PassageAvgSetVO>();
+            for (PassageAvgVO paVO : passageAggregateList) {
                 if (map.containsKey(paVO.getPassageIdentifier())) {
                     map.get(paVO.getPassageIdentifier()).getTumorDatas().add(paVO);
                 } else {
-                    PassageDataSetVO dsVO = new PassageDataSetVO();
+                    PassageAvgSetVO dsVO = new PassageAvgSetVO();
                     dsVO.setPassageIdentifier(paVO.getPassageIdentifier());
-                    ArrayList<PassageAggregateVO> passages = new ArrayList<PassageAggregateVO>();
+                    ArrayList<PassageAvgVO> passages = new ArrayList<PassageAvgVO>();
                     passages.add(paVO);
                     dsVO.setTumorDatas(passages);
                     map.put(dsVO.getPassageIdentifier(), dsVO);
@@ -104,15 +104,15 @@ public class CollateDataSetUtil implements Serializable {
             }
             
             // convert the map to list
-            aedsList = new ArrayList<PassageDataSetVO>(map.values());
+            aedsList = new ArrayList<PassageAvgSetVO>(map.values());
             
             // do calculations
-            for (PassageDataSetVO pdsVO : aedsList) {
+            for (PassageAvgSetVO pdsVO : aedsList) {
                 doCalculate(pdsVO);
             }
             
             // sort
-            Collections.sort(aedsList, new Comparators.PassageDataSetComparator());
+            Collections.sort(aedsList, new Comparators.PassageAvgComparator());
             
             
         } catch (Exception e) {
@@ -122,7 +122,7 @@ public class CollateDataSetUtil implements Serializable {
         return aedsList;
     }
 
-    public static void doCalculate(PassageDataSetVO dsVO) {
+    public static void doCalculate(PassageAvgSetVO dsVO) {
         Double the_val;
         Double mean;
         Double sd;
@@ -135,7 +135,7 @@ public class CollateDataSetUtil implements Serializable {
         Double minDelta;
         Double maxDelta;
         ArrayList<Double> valColl = new ArrayList<Double>();
-        for (PassageAggregateVO paVO : dsVO.getTumorDatas()) {
+        for (PassageAvgVO paVO : dsVO.getTumorDatas()) {
             if (paVO.getMean() != null) {
                 valColl.add(paVO.getMean());
                 sum += paVO.getMean();
@@ -156,7 +156,7 @@ public class CollateDataSetUtil implements Serializable {
             //for handling unit scaling
             Double max_diff = maxVal - minVal;
             ArrayList<Double> deltaColl = new ArrayList<Double>();
-            for (PassageAggregateVO paVO : dsVO.getTumorDatas()) {
+            for (PassageAvgVO paVO : dsVO.getTumorDatas()) {
                 if (paVO.getMean() != null) {
                     the_val = paVO.getMean();
                     delta = the_val - mean;

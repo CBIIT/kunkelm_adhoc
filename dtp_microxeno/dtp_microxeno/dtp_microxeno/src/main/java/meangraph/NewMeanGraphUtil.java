@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import mwk.microxeno.vo.PassageAggregateVO;
-import mwk.microxeno.vo.PassageDataSetVO;
+import mwk.microxeno.vo.PassageAvgVO;
+import mwk.microxeno.vo.PassageAvgSetVO;
 import mwk.microxeno.vo.PassageIdentifierVO;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -35,7 +35,7 @@ public class NewMeanGraphUtil {
         nf2.setMaximumFractionDigits(2);
     }
 
-    public static HorizontalBarChartModel renderMeanGraph(PassageDataSetVO dsVO) {
+    public static HorizontalBarChartModel renderMeanGraph(PassageAvgSetVO dsVO) {
 
         HorizontalBarChartModel mnGrChMdl = new HorizontalBarChartModel();
 
@@ -64,8 +64,8 @@ public class NewMeanGraphUtil {
         xAxis.setLabel("Delta from Mean " + formattedMean);
         xAxis.setTickAngle(-90);
 
-        ArrayList<PassageAggregateVO> affyData = new ArrayList<PassageAggregateVO>(dsVO.getTumorDatas());
-        Collections.sort(affyData, new Comparators.PassageDataSetComparator());
+        ArrayList<PassageAvgVO> affyData = new ArrayList<PassageAvgVO>(dsVO.getTumorDatas());
+        Collections.sort(affyData, new Comparators.PassageAvgComparator());
 
         Double mean = dsVO.getMean();
         Double minDelta = dsVO.getMinDelta();
@@ -77,7 +77,7 @@ public class NewMeanGraphUtil {
         String valFlag;
         Double delta = 0d;
 
-        for (PassageAggregateVO adVO : affyData) {
+        for (PassageAvgVO adVO : affyData) {
             panelName = adVO.getTumor().getTumorType();
             cellLineName = adVO.getTumor().getTumorName();
             val = null;

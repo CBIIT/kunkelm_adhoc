@@ -95,13 +95,13 @@
         <dependency>
             <groupId>mwk.microxeno</groupId>
             <artifactId>microxeno-core</artifactId>
-            <version>20150529</version>            
+            <version>20160404</version>            
         </dependency>
         
         <dependency>
             <groupId>mwk.microxeno</groupId>
             <artifactId>microxeno-common</artifactId>
-            <version>20150529</version>            
+            <version>20160404</version>            
         </dependency>        
         
     </dependencies>

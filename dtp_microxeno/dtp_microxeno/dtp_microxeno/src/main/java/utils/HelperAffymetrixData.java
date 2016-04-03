@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import mwk.microxeno.vo.AffymetrixDataVO;
+import mwk.microxeno.vo.PassageVO;
 
 /**
  *
@@ -26,14 +26,14 @@ public class HelperAffymetrixData {
     long translateTime = 0;
     long translateElapsed = 0;
 
-    public List<AffymetrixDataVO> searchAffymetrixData(
+    public List<PassageVO> searchAffymetrixData(
             List<String> geneList,
             List<String> tumorList) {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
-        List<AffymetrixDataVO> voList = new ArrayList<AffymetrixDataVO>();
+        List<PassageVO> voList = new ArrayList<PassageVO>();
 
         System.out.println("Starting query in HelperAffymetrixData");
         startTime = System.currentTimeMillis();
@@ -48,7 +48,7 @@ public class HelperAffymetrixData {
                 c.add(Restrictions.in("tum.tumorName", tumorList));
             }
             if (!geneList.isEmpty()) {
-                c.add(Restrictions.in("ai.genecard", geneList));
+                c.add(Restrictions.in("ai.geneSymbol", geneList));
             }
 
             List<AffymetrixData> entityList = (List<AffymetrixData>) c.list();

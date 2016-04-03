@@ -1,3 +1,8 @@
+/* trying to address the weird pre-pended white space in autoComplete text input */
+.ui-autocomplete {
+  white-space: nowrap;
+}
+
 .ui-commandlink:focus{
     color: red !important; 
     font-size: xx-large !important; 
@@ -89,19 +94,51 @@ table.jqplot-cursor-tooltip {
     border-spacing: 0px;
 }
 
+/*
+ #    #  ######  #    #  #    #  #####     ##    #####    ####
+ ##  ##  #       ##   #  #    #  #    #   #  #   #    #  #
+ # ## #  #####   # #  #  #    #  #####   #    #  #    #   ####
+ #    #  #       #  # #  #    #  #    #  ######  #####        #
+ #    #  #       #   ##  #    #  #    #  #    #  #   #   #    #
+ #    #  ######  #    #   ####   #####   #    #  #    #   ####
+*/
+
+ul.ui-menu-child {
+  white-space: nowrap;
+  width: auto !important;
+}
+
+.ui-menuitem-text {
+	padding: 1em;
+	background-color: white;
+	color: blue;
+  font-size: 1em;
+  font-weight: bold;  
+}
+
+
+/*
+ #####    ####    #####    ##     #####  ######
+ #    #  #    #     #     #  #      #    #
+ #    #  #    #     #    #    #     #    #####
+ #####   #    #     #    ######     #    #
+ #   #   #    #     #    #    #     #    #
+ #    #   ####      #    #    #     #    ######
+*/
+
 /* Styles for rotateTableCellContent plugin*/
 table div.rotated {
-    -webkit-transform:rotate(270deg);
-    -moz-transform:rotate(270deg);
-    writing-mode:tb-rl;
-    white-space:nowrap;
+  -ms-transform:rotate(270deg); /* IE 9 */
+  -moz-transform:rotate(270deg); /* Firefox */
+  -webkit-transform:rotate(270deg); /* Safari and Chrome */
+  -o-transform:rotate(270deg); /* Opera */    
 }
 
 thead th {
-    vertical-align:top;
+  vertical-align:bottom;
 }
 
 table .vertical {
-    white-space:nowrap;
-    background-color:white;
+  white-space:nowrap;
+  background-color:white;
 }

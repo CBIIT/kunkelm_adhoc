@@ -9,20 +9,40 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="title">
+    <ui:define name="content title">
         <h:outputText value="Compound Data Heat Map" />
     </ui:define>
-    
+
+    <ui:define name="export">
+        <h1 style="margin: 0;">
+            <h:outputText value="Export Data"/>
+        </h1>
+        <p:menubar>
+            <p:menuitem ajax="false" value="Export to Excel">
+                <p:dataExporter type="xls" target="exportableHeatMapTbl" fileName="heatMapData" />    
+            </p:menuitem>
+            <p:menuitem ajax="false" value="Export as CSV">  
+                <p:dataExporter type="csv" target="exportableHeatMapTbl" fileName="heatMapData" />  
+            </p:menuitem> 
+            <p:menuitem ajax="true"
+                        value="Image VERTICAL" 
+                        onclick="exportHeatMap(#{microXenoController.heatMap.gson}, false, false)"/>  
+            <p:menuitem ajax="true"
+                        value="Image HORIZONTAL" 
+                        onclick="exportHeatMap(#{microXenoController.heatMap.gson}, true, false)"/>
+        </p:menubar>
+    </ui:define>
+
     <ui:define name="content">
 
         <script type="text/javascript">
-            $(document).ready(function(){      
+            $(document).ready(function () {
                 $("[id='microXenoForm:heatMapTbl']").rotateTableCellContent();
             });
         </script> 
-        
+
         <c:set var="heatMap" value="#{microXenoController.heatMap}"/>
-        
+
         <ui:include src="/webpages/heatMap.xhtml"/>
 
     </ui:define>

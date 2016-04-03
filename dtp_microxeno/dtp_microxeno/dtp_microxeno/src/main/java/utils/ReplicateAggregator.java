@@ -10,7 +10,7 @@
 package utils;
 
 import java.io.Serializable;
-import mwk.microxeno.vo.AffymetrixDataVO;
+import mwk.microxeno.vo.PassageVO;
 import mwk.microxeno.vo.AffymetrixIdentifierVO;
 import mwk.microxeno.vo.TumorVO;
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -42,7 +42,7 @@ public class ReplicateAggregator
     /**
      * TODO: Model Documentation for attribute replicate
      */
-    protected AffymetrixDataVO value;
+    protected PassageVO value;
 
     /**
      * Default Constructor with no properties
@@ -61,7 +61,7 @@ public class ReplicateAggregator
     public ReplicateAggregator(final AffymetrixIdentifierVO affymetrixIdentifierIn, 
             final TumorVO tumorIn, 
             final String passageIn, 
-            final AffymetrixDataVO valueIn) {
+            final PassageVO valueIn) {
         this.affymetrixIdentifier = affymetrixIdentifierIn;
         this.tumor = tumorIn;
         this.passage = passageIn;
@@ -120,11 +120,11 @@ public class ReplicateAggregator
         this.passage = value;
     }
 
-    public AffymetrixDataVO getValue() {
+    public PassageVO getValue() {
         return value;
     }
 
-    public void setValue(AffymetrixDataVO value) {
+    public void setValue(PassageVO value) {
         this.value = value;
     }
    

@@ -10,7 +10,7 @@ import java.util.List;
 import mwk.microxeno.domain.AffymetrixData;
 import mwk.microxeno.domain.AffymetrixIdentifier;
 import mwk.microxeno.domain.Tumor;
-import mwk.microxeno.vo.AffymetrixDataVO;
+import mwk.microxeno.vo.PassageVO;
 import mwk.microxeno.vo.AffymetrixIdentifierVO;
 import mwk.microxeno.vo.PassageIdentifierVO;
 import mwk.microxeno.vo.TumorVO;
@@ -21,16 +21,16 @@ import mwk.microxeno.vo.TumorVO;
  */
 public class TranslateAndroToVO {
 
-    public static ArrayList<AffymetrixDataVO> translateAffymetrixDatas(List<AffymetrixData> incoming) {
-        ArrayList<AffymetrixDataVO> rtnList = new ArrayList<AffymetrixDataVO>();
+    public static ArrayList<PassageVO> translateAffymetrixDatas(List<AffymetrixData> incoming) {
+        ArrayList<PassageVO> rtnList = new ArrayList<PassageVO>();
         for (AffymetrixData aed : incoming) {
             rtnList.add(translateAffymetrixData(aed));
         }
         return rtnList;
     }
 
-    public static AffymetrixDataVO translateAffymetrixData(AffymetrixData entity) {
-        AffymetrixDataVO rtnVO = new AffymetrixDataVO();
+    public static PassageVO translateAffymetrixData(AffymetrixData entity) {
+        PassageVO rtnVO = new PassageVO();
         if (entity != null) {
             rtnVO.setAffymetrixIdentifier(translateAffymetrixIdentifier(entity.getAffymetrixIdentifier()));
             rtnVO.setTumor(translateTumor(entity.getTumor()));

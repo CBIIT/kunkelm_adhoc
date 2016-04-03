@@ -9,26 +9,51 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="title">
-        <h:outputText value="Search Criteria" />
+    <ui:define name="content title">
+        <h:outputText value="Passage Average Data" />
+    </ui:define>
+
+    <ui:define name="export">
+        <h1 style="margin: 0;">
+            <h:outputText value="Export Data"/>
+        </h1>
+        <p:menubar>
+            <p:menuitem ajax="false" value="Export to Excel">
+                <p:dataExporter type="xls" target="pAvgTbl" fileName="passageAverageDataList" />  
+            </p:menuitem>
+            <p:menuitem ajax="false" value="Export as CSV">  
+                <p:dataExporter type="csv" target="pAvgTbl" fileName="passageAverageDataList" />  
+            </p:menuitem> 
+        </p:menubar>
     </ui:define>
 
     <ui:define name="content">
 
-        <p:dataTable value="#{microXenoController.passageDataList}"
+        <p:dataTable id="pAvgTbl"
+                     value="#{microXenoController.passageAggregateList}"
                      sortMode="multiple"
-                     var="dat">
+                     selection="#{microXenoController.selectedPassageAggregateList}"
+                     var="dat"
+                     paginator="true"
+                     paginatorPosition="top"
+                     currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
+                     rowsPerPageTemplate="10,25,50,100,250,500"
+                     rows="100"
+                     rowKey="#{dat.tumor.tumorName}#{dat.passageIdentifier.affymetrixIdentifier.probeSetId}#{dat.passageIdentifier.passage}">
+
+            <p:column selectionMode="multiple" style="width:4%" exportable="false"/>
 
             <p:column headerText="probeSetId"
                       sortBy="#{dat.passageIdentifier.affymetrixIdentifier.probeSetId}"
                       filterBy="#{dat.passageIdentifier.affymetrixIdentifier.probeSetId}">
                 <h:outputText value="#{dat.passageIdentifier.affymetrixIdentifier.probeSetId}" />
             </p:column>
-            
-            <p:column headerText="Genecard"
-                      sortBy="#{dat.passageIdentifier.affymetrixIdentifier.genecard}"
-                      filterBy="#{dat.passageIdentifier.affymetrixIdentifier.genecard}">
-                <h:outputText value="#{dat.passageIdentifier.affymetrixIdentifier.genecard}" />
+
+            <p:column headerText="Gene Symbol"
+                      sortBy="#{dat.passageIdentifier.affymetrixIdentifier.geneSymbol}"
+                      filterBy="#{dat.passageIdentifier.affymetrixIdentifier.geneSymbol}">
+                <h:outputText value="#{dat.passageIdentifier.affymetrixIdentifier.geneSymbol}" />
             </p:column>
 
             <p:column headerText="Tumor"
@@ -57,11 +82,56 @@
 
             <p:column headerText="mean"
                       sortBy="#{dat.mean}">
-                <h:outputText value="#{dat.mean}" />
+                <h:outputText value="#{dat.mean}">
+                    <f:convertNumber pattern="#.###" />    
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="StdDev"
+                      sortBy="#{dat.standardDeviation}">
+                <h:outputText value="#{dat.standardDeviation}">
+                    <f:convertNumber pattern="#.###" />    
+                </h:outputText>
             </p:column>
 
         </p:dataTable>
 
+        <p:dataTable id="ctTbl"                     
+                     var="row"  
+                     rowIndexVar="ri"                 
+                     tableStyle="width: auto;"
+                     resizableColumns="true"
+                     value="#{microXenoController.crosstabModel.gridYheaders}">       
+
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Tumor Type"/>
+                </f:facet>            
+                <h:outputText value="#{microXenoController.crosstabModel.gridYheaders[ri].tumorType}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Tumor Name"/>
+                </f:facet>            
+                <h:outputText value="#{microXenoController.crosstabModel.gridYheaders[ri].tumorName}"/>
+            </p:column>
+
+            <p:columns width="50"
+                       value="#{microXenoController.crosstabModel.gridXheaders}"                                   
+                       var="thisCol" 
+                       columnIndexVar="ci">
+
+                <f:facet name="header">
+                    <h:outputText value="#{microXenoController.crosstabModel.gridXheaders[ci].passage}"/>
+                </f:facet>
+                <h:outputText value="#{microXenoController.crosstabModel.gridXY[ci][ri].mean}">
+                    <f:convertNumber pattern="#.##"/>
+                </h:outputText>
+
+            </p:columns>
+
+        </p:dataTable>
     </ui:define>
 
 </ui:composition>

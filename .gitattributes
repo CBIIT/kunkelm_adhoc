@@ -9732,9 +9732,15 @@ dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/primefac
 dtp_microxeno/dtp_microxeno/dtp_microxeno/lib/repository/org/primefaces/primefaces/maven-metadata-local.xml -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/nb-configuration.xml -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/pom.xml -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/compactvo/MinPassageAvgVO.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/compactvo/MinPassageVO.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/controllers/ApplicationScopeBean.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/controllers/ColorWranglingController.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/controllers/MicroXenoController.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/converters/GeneSymbolConverter.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/converters/GeneTitleConverter.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/converters/ProbeSetIdConverter.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/converters/TumorNameConverter.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/heatmap/HeatMap.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/heatmap/HeatMapCell.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/heatmap/HeatMapHeader.java -text
@@ -9748,7 +9754,9 @@ dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/Comparators.java -
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/CrosstabModel.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/CrosstabUtil.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/HelperAffymetrixData.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/HelperAffymetrixIdentifier.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/HelperFlatData.java -text
+dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/HelperTumor.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/HibernateUtil.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/ReplicateAggregator.java -text
 dtp_microxeno/dtp_microxeno/dtp_microxeno/src/main/java/utils/SerializeDeSerialize.java -text

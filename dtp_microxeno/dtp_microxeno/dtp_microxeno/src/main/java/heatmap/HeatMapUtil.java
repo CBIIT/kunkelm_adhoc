@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import mwk.microxeno.vo.PassageIdentifierVO;
-import mwk.microxeno.vo.PassageDataSetVO;
-import mwk.microxeno.vo.PassageAggregateVO;
+import mwk.microxeno.vo.PassageAvgSetVO;
+import mwk.microxeno.vo.PassageAvgVO;
 import mwk.microxeno.vo.TumorVO;
 import utils.Comparators;
 import utils.CrosstabModel;
@@ -66,7 +66,7 @@ public class HeatMapUtil {
         return hmh;
     }
 
-    public static HeatMapCell makeHeatMapCell(PassageAggregateVO paVO) {
+    public static HeatMapCell makeHeatMapCell(PassageAvgVO paVO) {
         HeatMapCell rtn = new HeatMapCell();
         if (paVO != null && paVO.getMean() != null) {
             rtn.isNullValue = Boolean.FALSE;
@@ -87,7 +87,7 @@ public class HeatMapUtil {
         return rtn;
     }
 
-    public static HeatMap heatMapFromCrosstabModel(CrosstabModel<PassageIdentifierVO, TumorVO, PassageAggregateVO> incoming) {
+    public static HeatMap heatMapFromCrosstabModel(CrosstabModel<PassageIdentifierVO, TumorVO, PassageAvgVO> incoming) {
 
         HeatMap htMp = new HeatMap();
 

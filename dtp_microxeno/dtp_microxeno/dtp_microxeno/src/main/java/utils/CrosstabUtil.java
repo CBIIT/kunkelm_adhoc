@@ -9,8 +9,8 @@ import static heatmap.HeatMapUtil.makeHeatMapCell;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
-import mwk.microxeno.vo.PassageAggregateVO;
-import mwk.microxeno.vo.PassageDataSetVO;
+import mwk.microxeno.vo.PassageAvgVO;
+import mwk.microxeno.vo.PassageAvgSetVO;
 import mwk.microxeno.vo.PassageIdentifierVO;
 import mwk.microxeno.vo.TumorVO;
 
@@ -23,13 +23,13 @@ import mwk.microxeno.vo.TumorVO;
  */
 public class CrosstabUtil {
   
-    public static CrosstabModel<PassageIdentifierVO, TumorVO, PassageAggregateVO> makeCrosstabModel(List<PassageAggregateVO> incomingList) {
+    public static CrosstabModel<PassageIdentifierVO, TumorVO, PassageAvgVO> makeCrosstabModel(List<PassageAvgVO> incomingList) {
        
-        CrosstabModel<PassageIdentifierVO, TumorVO, PassageAggregateVO> rtn = new CrosstabModel<PassageIdentifierVO, TumorVO, PassageAggregateVO>();
+        CrosstabModel<PassageIdentifierVO, TumorVO, PassageAvgVO> rtn = new CrosstabModel<PassageIdentifierVO, TumorVO, PassageAvgVO>();
         
-        TwoDHashMap<PassageIdentifierVO, TumorVO, PassageAggregateVO> map = new TwoDHashMap<PassageIdentifierVO, TumorVO, PassageAggregateVO>();
+        TwoDHashMap<PassageIdentifierVO, TumorVO, PassageAvgVO> map = new TwoDHashMap<PassageIdentifierVO, TumorVO, PassageAvgVO>();
         
-        for (PassageAggregateVO paVO : incomingList) {
+        for (PassageAvgVO paVO : incomingList) {
             PassageIdentifierVO piVO = paVO.getPassageIdentifier();
             map.put(piVO, paVO.getTumor(), paVO);
         }
@@ -46,13 +46,13 @@ public class CrosstabUtil {
         rtn.setGridXheaders(xList);
         rtn.setGridYheaders(yList);
 
-        rtn.setGridXY(new PassageAggregateVO[xList.size()][yList.size()]);
+        rtn.setGridXY(new PassageAvgVO[xList.size()][yList.size()]);
 
         int rowCnt = 0;
         for (TumorVO tVO : yList) {
             int colCnt = 0;
             for (PassageIdentifierVO piVO : xList) {
-                PassageAggregateVO paVO = map.get(piVO, tVO);
+                PassageAvgVO paVO = map.get(piVO, tVO);
                 HeatMapCell hmc = makeHeatMapCell(paVO);
                 rtn.getGridXY()[colCnt][rowCnt] = paVO;
                 colCnt++;
@@ -68,7 +68,7 @@ public class CrosstabUtil {
      *
      * @param dsVO
      */
-    private static void doCalculate(PassageDataSetVO dsVO) {
+    private static void doCalculate(PassageAvgSetVO dsVO) {
         Double the_val;
         Double mean;
         Double sd;
@@ -81,7 +81,7 @@ public class CrosstabUtil {
         Double minDelta;
         Double maxDelta;
         ArrayList<Double> valColl = new ArrayList<Double>();
-        for (PassageAggregateVO paVO : dsVO.getTumorDatas()) {
+        for (PassageAvgVO paVO : dsVO.getTumorDatas()) {
             if (paVO.getMean() != null) {
                 valColl.add(paVO.getMean());
                 sum += paVO.getMean();
@@ -101,7 +101,7 @@ public class CrosstabUtil {
             //for handling unit scaling
             Double max_diff = maxVal - minVal;
             ArrayList<Double> deltaColl = new ArrayList<Double>();
-            for (PassageAggregateVO trVO : dsVO.getTumorDatas()) {
+            for (PassageAvgVO trVO : dsVO.getTumorDatas()) {
                 if (trVO.getMean() != null) {
                     the_val = trVO.getMean();
                     delta = the_val - mean;

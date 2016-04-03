@@ -5,53 +5,49 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+  
+    <h2 style="margin: 0;">
+        <h:outputText value="Site Navigation" />
+    </h2>    
 
-    <h:outputLink style="color: transparent; font-size: xx-small;" 
-                  value="#justBeforePageContent">
-        <h:outputText value="Skip To Page Content"/>
-    </h:outputLink>
+    <p:menubar>
 
-    <h:outputLink style="color: transparent; font-size: xx-small;" 
-                  value="#afterSiteNavigation">
-        <h:outputText value="Skip Site Navigation"/>
-    </h:outputLink>
+        <p:menuitem ajax="false"                         
+                    action="/webpages/searchCriteria.xhtml?faces-redirect=true"
+                    value="Home/Search Page"/>
 
-    <p:fieldset legend="Site Navigation">
+        <p:menuitem ajax="false"
+                    action="/webpages/affymetrixDataTable.xhtml?faces-redirect=true"
+                    value="Raw Data"/>
 
-        <p:commandButton ajax="false"
-                         style="color: blue;" 
-                         action="/documentation.xhtml?faces-redirect=true"
-                         value="Project Documentation" />
+        <p:menuitem ajax="false"
+                    action="/webpages/passageAverageDataTable.xhtml?faces-redirect=true"
+                    value="Passage Aggregate Data"/>
 
-        <p:commandButton ajax="false"
-                         style="color: blue;" 
-                         action="/downloads.xhtml?faces-redirect=true"
-                         value="Data Downloads" />
+        <p:menuitem ajax="false"
+                    action="/webpages/affyHeatMap.xhtml?faces-redirect=true"
+                    value="Heat Map"/>        
 
-        <br/>
+        <p:menuitem ajax="false"
+                    action="/webpages/affyHeatMapUnitDelta.xhtml?faces-redirect=true"
+                    value="Heat Map Unit Delta"/> 
 
-        <p:commandButton ajax="false"                         
-                         action="/webpages/searchCriteria.xhtml?faces-redirect=true"
-                         value="Home/Search Page"/>
+        <f:facet name="options">
 
-        <p:commandButton ajax="false"
-                         action="/webpages/affymetrixDataTable.xhtml?faces-redirect=true"
-                         value="Raw Data"/>
+            <p:commandButton disabled="true"
+                             ajax="false"
+                             style="color: blue;" 
+                             action="/documentation.xhtml?faces-redirect=true"
+                             value="Project Documentation" />
 
-        <p:commandButton ajax="false"
-                         action="/webpages/passageAverageDataTable.xhtml?faces-redirect=true"
-                         value="Passage Aggregate Data"/>
+            <p:commandButton disabled="true"
+                             ajax="false"
+                             style="color: blue;" 
+                             action="/downloads.xhtml?faces-redirect=true"
+                             value="Data Downloads" />
 
-        <p:commandButton ajax="false"
-                         action="/webpages/affyHeatMap.xhtml?faces-redirect=true"
-                         value="Heat Map"/>        
+        </f:facet>
 
-         <p:commandButton ajax="false"
-                         action="/webpages/affyHeatMapUnitDelta.xhtml?faces-redirect=true"
-                         value="Heat Map Unit Delta"/> 
-        
-    </p:fieldset>
-
-    <a id="afterSiteNavigation" tabindex="-1" />
+    </p:menubar>
 
 </ui:composition>

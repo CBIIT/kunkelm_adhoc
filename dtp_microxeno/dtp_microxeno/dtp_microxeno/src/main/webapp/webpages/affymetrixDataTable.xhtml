@@ -9,26 +9,57 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-    <ui:define name="title">
-        <h:outputText value="Search Criteria" />
+    <ui:define name="content title">
+        <h:outputText value="Passage Data" />
+    </ui:define>
+
+    <ui:define name="export">
+        <h1 style="margin: 0;">
+            <h:outputText value="Export Data"/>
+        </h1>
+        <p:menubar>
+            <p:menuitem ajax="false" value="Export to Excel">
+                <p:dataExporter type="xls" target="affyTbl" fileName="affymetrixDataList" />  
+            </p:menuitem>
+            <p:menuitem ajax="false" value="Export as CSV">  
+                <p:dataExporter type="csv" target="affyTbl" fileName="affymetrixDataList" />  
+            </p:menuitem> 
+        </p:menubar>
     </ui:define>
 
     <ui:define name="content">
 
-        <p:dataTable value="#{microXenoController.affymetrixDataList}"
+        <p:dataTable id="affyTbl"
+                     value="#{microXenoController.passageDataList}"
                      sortMode="multiple"
-                     var="dat">
+                     selection="#{microXenoController.selectedPassageDataList}"
+                     var="dat"
+                     paginator="true"
+                     paginatorPosition="top"
+                     currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
+                     rowsPerPageTemplate="10,25,50,100,250,500"
+                     rows="100"
+                     rowKey="#{dat.tumor.tumorName}#{dat.passageIdentifier.affymetrixIdentifier.probeSetId}#{dat.passage}#{dat.replicate}">
+
+            <p:column selectionMode="multiple" style="width:4%" exportable="false"/>
 
             <p:column headerText="ProbeSetId"
                       sortBy="#{dat.affymetrixIdentifier.probeSetId}"
                       filterBy="#{dat.affymetrixIdentifier.probeSetId}">
                 <h:outputText value="#{dat.affymetrixIdentifier.probeSetId}" />
             </p:column>
-            
-            <p:column headerText="Genecard"
-                      sortBy="#{dat.affymetrixIdentifier.genecard}"
-                      filterBy="#{dat.affymetrixIdentifier.genecard}">
-                <h:outputText value="#{dat.affymetrixIdentifier.genecard}" />
+
+            <p:column headerText="Gene Symbol"
+                      sortBy="#{dat.affymetrixIdentifier.geneSymbol}"
+                      filterBy="#{dat.affymetrixIdentifier.geneSymbol}">
+                <h:outputText value="#{dat.affymetrixIdentifier.geneSymbol}" />
+            </p:column>
+
+            <p:column headerText="Gene Title"
+                      sortBy="#{dat.affymetrixIdentifier.geneTitle}"
+                      filterBy="#{dat.affymetrixIdentifier.geneTitle}">
+                <h:outputText value="#{dat.affymetrixIdentifier.geneTitle}" />
             </p:column>
 
             <p:column headerText="Tumor"
@@ -57,7 +88,9 @@
 
             <p:column headerText="Value"
                       sortBy="#{dat.value}">
-                <h:outputText value="#{dat.value}" />
+                <h:outputText value="#{dat.value}">
+                    <f:convertNumber pattern="#.###" />    
+                </h:outputText>
             </p:column>
 
         </p:dataTable>

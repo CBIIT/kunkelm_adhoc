@@ -10,7 +10,7 @@ import java.util.List;
 import mwk.microxeno.domain.FlatData;
 import mwk.microxeno.domain.AffymetrixIdentifier;
 import mwk.microxeno.domain.Tumor;
-import mwk.microxeno.vo.AffymetrixDataVO;
+import mwk.microxeno.vo.PassageVO;
 import mwk.microxeno.vo.AffymetrixIdentifierVO;
 import mwk.microxeno.vo.PassageIdentifierVO;
 import mwk.microxeno.vo.TumorVO;
@@ -21,16 +21,16 @@ import mwk.microxeno.vo.TumorVO;
  */
 public class TranslateFlatData {
 
-    public static ArrayList<AffymetrixDataVO> translateFlatDatas(List<FlatData> incoming) {
-        ArrayList<AffymetrixDataVO> rtnList = new ArrayList<AffymetrixDataVO>();
+    public static ArrayList<PassageVO> translateFlatDatas(List<FlatData> incoming) {
+        ArrayList<PassageVO> rtnList = new ArrayList<PassageVO>();
         for (FlatData aed : incoming) {
             rtnList.add(translateFlatData(aed));
         }
         return rtnList;
     }
 
-    public static AffymetrixDataVO translateFlatData(FlatData entity) {
-        AffymetrixDataVO rtnVO = new AffymetrixDataVO();
+    public static PassageVO translateFlatData(FlatData entity) {
+        PassageVO rtnVO = new PassageVO();
         if (entity != null) {
             rtnVO.setAffymetrixIdentifier(translateAffymetrixIdentifier(entity));
             rtnVO.setTumor(translateTumor(entity));
@@ -55,7 +55,7 @@ public class TranslateFlatData {
         AffymetrixIdentifierVO rtn = new AffymetrixIdentifierVO();
         if (entity != null) {
             rtn.setAccession(entity.getAccession());
-            rtn.setGenecard(entity.getGenecard());
+            rtn.setGenecard(entity.getGeneSymbol());
             rtn.setProbeSetId(entity.getProbeSetId());
         }
         return rtn;

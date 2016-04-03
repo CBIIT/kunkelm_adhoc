@@ -12,7 +12,7 @@
             <f:facet name="first">
                 <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
                 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-                <title>MicroXeno Project</title>
+                <title>MicroXeno Project <ui:insert name="content title"/></title>
             </f:facet>
 
             <noscript>
@@ -42,31 +42,43 @@
 
         <h:body>
 
+            <h:outputLink style="color: transparent;" value="#centerContent">
+                <h:outputText value="Skip to Content"/>
+            </h:outputLink>
+
+
             <h:form id="microXenoForm">
 
                 <p:growl id="growl" showDetail="true" sticky="true" />  
 
-                <h:outputLink style="color: transparent;" value="#centerContent">
-                    <h:outputText value="Skip to Content"/>
-                </h:outputLink>
+                <a name="centerContent" tabindex="-1"/>
 
                 <p:panel style="display: block;" id="wholePage">
 
+                    <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
+
                     <a name="centerContent"/>
 
-                    <p:panel id="centerContent" style="display: block;">
+                    <ui:include src="/webpages/templates/site_nav.xhtml"/>
 
-                        <ui:include src="/webpages/templates/site_nav.xhtml"/>
+                    <h1 style="margin: 0;">
+                        <ui:insert name="content title"/>
+                    </h1>
 
-                        <ui:insert name="content"/>
-
-                    </p:panel>
+                    <ui:insert name="instructions"/>
+                    <ui:insert name="export"/>
+                    <ui:insert name="content"/>
 
                 </p:panel>
 
+                <p:blockUI widgetVar="searchingBUI" block=":microXenoForm">
+                    SEARCHING<br/>
+                    <p:graphicImage name="images/ajax-loader.gif"/>                                
+                </p:blockUI>
+
             </h:form>
 
-             <ui:include src="/webpages/dialogExportImage.xhtml"/>
+            <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
         </h:body>
 

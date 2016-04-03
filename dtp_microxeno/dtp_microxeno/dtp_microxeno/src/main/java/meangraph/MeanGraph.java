@@ -6,7 +6,7 @@ package meangraph;
 
 import java.io.Serializable;
 import mwk.microxeno.vo.AffymetrixIdentifierVO;
-import mwk.microxeno.vo.PassageDataSetVO;
+import mwk.microxeno.vo.PassageAvgSetVO;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.chart.HorizontalBarChartModel;
@@ -30,7 +30,7 @@ public class MeanGraph implements Serializable {
     private Double correlation;
     private Integer countCommonCellLines;
     //
-    private PassageDataSetVO dataSet;
+    private PassageAvgSetVO dataSet;
     private AffymetrixIdentifierVO affymetrixIdentifier;
 
     private String json;
@@ -98,11 +98,11 @@ public class MeanGraph implements Serializable {
         this.countCommonCellLines = countCommonCellLines;
     }
 
-    public PassageDataSetVO getDataSet() {
+    public PassageAvgSetVO getDataSet() {
         return dataSet;
     }
 
-    public void setDataSet(PassageDataSetVO dataSet) {
+    public void setDataSet(PassageAvgSetVO dataSet) {
         this.dataSet = dataSet;
     }
 
