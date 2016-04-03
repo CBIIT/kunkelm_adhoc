@@ -5,7 +5,7 @@
     <parent>
         <groupId>mwk.microxeno</groupId>
         <artifactId>microxeno</artifactId>
-        <version>20150529</version>
+        <version>20160404</version>
     </parent>
     <artifactId>microxeno-core</artifactId>
     <packaging>jar</packaging>

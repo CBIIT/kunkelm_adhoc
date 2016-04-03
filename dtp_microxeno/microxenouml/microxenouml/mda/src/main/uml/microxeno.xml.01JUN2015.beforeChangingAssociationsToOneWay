@@ -216,7 +216,7 @@
 					</packagedElement>
 				</packagedElement>
 				<packagedElement xmi:type='uml:Package' xmi:id='_17_0_6_fab036f_1400779656399_966703_2381' name='vo' visibility='public'>
-					<packagedElement xmi:type='uml:Class' xmi:id='_17_0_6_fab036f_1400779657408_666291_2415' name='AffymetrixDataVO' visibility='public'>
+					<packagedElement xmi:type='uml:Class' xmi:id='_17_0_6_fab036f_1400779657408_666291_2415' name='PassageVO' visibility='public'>
 						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1400779657456_92626_2501' name='eaId' visibility='public'>
 							<type xmi:type='uml:DataType' href='andromda-profile-datatype-3.4.xml.zip#_9_0_1fe00f9_1119336925531_364079_66'>
 								<xmi:Extension extender='MagicDraw UML 17.0'>
@@ -248,7 +248,7 @@
 							</type>
 						</ownedAttribute>
 					</packagedElement>
-					<packagedElement xmi:type='uml:Class' xmi:id='_17_0_6_fab036f_1400779657409_27828_2417' name='PassageDataSetVO' visibility='public'>
+					<packagedElement xmi:type='uml:Class' xmi:id='_17_0_6_fab036f_1400779657409_27828_2417' name='PassageAvgSetVO' visibility='public'>
 						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1415838276369_738661_3572' name='passageIdentifier' visibility='public' type='_17_0_6_fab036f_1432951905553_993299_2777'/>
 						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1400779657460_467837_2517' name='countTumors' visibility='public'>
 							<type xmi:type='uml:DataType' href='andromda-profile-datatype-3.4.xml.zip#_9_0_1fe00f9_1119336925531_479934_4'>
@@ -359,7 +359,7 @@
 							</type>
 						</ownedAttribute>
 					</packagedElement>
-					<packagedElement xmi:type='uml:Class' xmi:id='_17_0_6_fab036f_1432855466139_912977_2420' name='PassageAggregateVO' visibility='public'>
+					<packagedElement xmi:type='uml:Class' xmi:id='_17_0_6_fab036f_1432855466139_912977_2420' name='PassageAvgVO' visibility='public'>
 						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1433073846952_495778_2807' name='passageIdentifier' visibility='public' type='_17_0_6_fab036f_1432951905553_993299_2777'/>
 						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1432855466141_304774_2428' name='tumor' visibility='public' type='_17_0_6_fab036f_1415830889117_484180_3268'/>
 						<ownedAttribute xmi:type='uml:Property' xmi:id='_17_0_6_fab036f_1432855466140_863795_2422' name='mean' visibility='public'>

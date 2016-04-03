@@ -1,0 +1,120 @@
+2016-04-03 18:52:10,510 INFO  [AndroMDA] - discovering namespaces -
+2016-04-03 18:52:10,644 INFO  [AndroMDA] found namespace --> 'emf-uml22'
+2016-04-03 18:52:10,644 INFO  [AndroMDA]   +  registering component 'metafacades'
+2016-04-03 18:52:10,728 INFO  [AndroMDA]   +  registering component 'profile'
+2016-04-03 18:52:10,746 INFO  [AndroMDA]   +  registering component 'repository'
+2016-04-03 18:52:10,801 INFO  [AndroMDA] found namespace --> 'hibernate'
+2016-04-03 18:52:10,801 INFO  [AndroMDA]   +  registering component 'cartridge'
+2016-04-03 18:52:10,855 INFO  [AndroMDA]   +  registering component 'metafacades'
+2016-04-03 18:52:10,880 INFO  [AndroMDA]   +  registering component 'profile'
+2016-04-03 18:52:10,892 INFO  [AndroMDA] found namespace --> 'java'
+2016-04-03 18:52:10,892 INFO  [AndroMDA]   +  registering component 'cartridge'
+2016-04-03 18:52:10,908 INFO  [AndroMDA]   +  registering component 'profile'
+2016-04-03 18:52:10,913 INFO  [AndroMDA]   +  registering component 'metafacades'
+2016-04-03 18:52:10,918 INFO  [AndroMDA] found namespace --> 'netBeansMDR'
+2016-04-03 18:52:10,918 INFO  [AndroMDA]   +  registering component 'repository'
+2016-04-03 18:52:10,950 INFO  [AndroMDA] found namespace --> 'uml-1.4'
+2016-04-03 18:52:10,950 INFO  [AndroMDA]   +  registering component 'metafacades'
+2016-04-03 18:52:11,018 INFO  [AndroMDA]   +  registering component 'profile'
+2016-04-03 18:52:11,030 INFO  [AndroMDA] found namespace --> 'validation'
+2016-04-03 18:52:11,031 INFO  [AndroMDA]   +  registering component 'translation-library'
+2016-04-03 18:52:12,258 INFO  [AndroMDA] - core initialization complete: 1.959[s] -
+2016-04-03 18:52:12,265 INFO  [AndroMDA] loading model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/microxeno.uml'
+2016-04-03 18:52:12,276 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/microxeno.uml' 
+2016-04-03 18:52:12,423 INFO  [AndroMDA] referenced model --> 'jar:file:/home/mwkunkel/.m2/repository/org/eclipse/uml2/org.eclipse.uml2.uml.resources/3.1.0.v201005031530/org.eclipse.uml2.uml.resources-3.1.0.v201005031530.jar!/profiles/Standard.profile.uml' 
+2016-04-03 18:52:12,531 INFO  [AndroMDA] referenced model --> 'jar:file:/home/mwkunkel/.m2/repository/org/eclipse/uml2/org.eclipse.uml2.uml.resources/3.1.0.v201005031530/org.eclipse.uml2.uml.resources-3.1.0.v201005031530.jar!/profiles/Ecore.profile.uml#_z1OFcHjqEdy8S4Cr8Rc_NA' 
+2016-04-03 18:52:12,537 INFO  [AndroMDA] referenced model --> 'jar:file:/home/mwkunkel/.m2/repository/org/eclipse/uml2/org.eclipse.uml2.uml.resources/3.1.0.v201005031530/org.eclipse.uml2.uml.resources-3.1.0.v201005031530.jar!/profiles/Ecore.profile.uml#_0' 
+2016-04-03 18:52:12,554 INFO  [AndroMDA] referenced model --> 'jar:file:/home/mwkunkel/.m2/repository/org/eclipse/uml2/org.eclipse.uml2.uml.resources/3.1.0.v201005031530/org.eclipse.uml2.uml.resources-3.1.0.v201005031530.jar!/profiles/Ecore.profile.uml' 
+2016-04-03 18:52:12,746 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-persistence.profile.uml' 
+2016-04-03 18:52:12,858 INFO  [AndroMDA] referenced model --> 'jar:file:/home/mwkunkel/.m2/repository/org/eclipse/uml2/org.eclipse.uml2.uml.resources/3.1.0.v201005031530/org.eclipse.uml2.uml.resources-3.1.0.v201005031530.jar!/profiles/Standard.profile.uml#_yzU58YinEdqtvbnfB2L_5w' 
+2016-04-03 18:52:12,862 INFO  [AndroMDA] referenced model --> 'jar:file:/home/mwkunkel/.m2/repository/org/eclipse/uml2/org.eclipse.uml2.uml.resources/3.1.0.v201005031530/org.eclipse.uml2.uml.resources-3.1.0.v201005031530.jar!/profiles/Standard.profile.uml#_0' 
+2016-04-03 18:52:12,877 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/UML_Standard_Profile.MagicDraw_Profile.profile.uml' 
+2016-04-03 18:52:13,053 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/UML_Standard_Profile.MagicDraw_Profile.DSL_Customization.profile.uml' 
+2016-04-03 18:52:13,160 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/UML_Standard_Profile.Validation_Profile.profile.uml' 
+2016-04-03 18:52:13,282 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-common.profile.uml' 
+2016-04-03 18:52:13,383 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/UML_Standard_Profile.MagicDraw_Profile.Traceability_customization.profile.uml' 
+2016-04-03 18:52:13,423 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/UML_Standard_Profile.StandardProfileL3.profile.uml' 
+2016-04-03 18:52:13,429 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-messaging.profile.uml' 
+2016-04-03 18:52:13,446 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-presentation.profile.uml' 
+2016-04-03 18:52:13,481 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/UML_Standard_Profile.StandardProfileL2.profile.uml' 
+2016-04-03 18:52:13,557 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-service.profile.uml' 
+2016-04-03 18:52:13,586 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-process.profile.uml' 
+2016-04-03 18:52:13,605 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-webservice.profile.uml' 
+2016-04-03 18:52:13,629 INFO  [AndroMDA] referenced model --> 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/andromda-xml.profile.uml' 
+2016-04-03 18:52:13,641 INFO  [AndroMDA] - loading complete: 1.381[s] -
+2016-04-03 18:52:13,641 INFO  [AndroMDA] - validating model -
+2016-04-03 18:52:15,444 INFO  [AndroMDA] - validation complete: 1.803[s] -
+2016-04-03 18:52:15,649 INFO  [AndroMDA] Processing cartridge hibernate on model /home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/microxeno.uml
+2016-04-03 18:52:15,650 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/HibernateEntity.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:15,943 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixData.java'
+2016-04-03 18:52:16,004 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/TumorType.java'
+2016-04-03 18:52:16,096 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/Tumor.java'
+2016-04-03 18:52:16,206 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixIdentifier.java'
+2016-04-03 18:52:16,449 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/FlatData.java'
+2016-04-03 18:52:16,450 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/HibernateEntityImpl.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,459 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixDataImpl.java'
+2016-04-03 18:52:16,462 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/TumorTypeImpl.java'
+2016-04-03 18:52:16,464 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/TumorImpl.java'
+2016-04-03 18:52:16,466 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixIdentifierImpl.java'
+2016-04-03 18:52:16,468 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/FlatDataImpl.java'
+2016-04-03 18:52:16,469 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/HibernateEntityImpl.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,489 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/HibernateEntityPK.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,490 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/HibernateEmbeddedValue.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,490 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/HibernateEmbeddedValueImpl.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,529 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/org/andromda/persistence/hibernate/usertypes/HibernateByteBlobType.java'
+2016-04-03 18:52:16,563 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/org/andromda/persistence/hibernate/usertypes/HibernateStringClobType.java'
+2016-04-03 18:52:16,564 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/ejb-jar.xml.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,565 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/jboss.xml.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,565 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/HibernateSessionEJBLocator.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,566 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/HibernateSessionBean.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,566 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/HibernateSessionBeanImpl.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,567 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/HibernateSession.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,568 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ejb/HibernateSessionHome.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:16,574 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/HibernateUtils.java'
+2016-04-03 18:52:16,575 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/ehcache.xml.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,582 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/ehcache.xml'
+2016-04-03 18:52:16,582 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate3/ejb/HibernateEntityFactory.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,614 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixDataFactory.java'
+2016-04-03 18:52:16,625 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/TumorTypeFactory.java'
+2016-04-03 18:52:16,636 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/TumorFactory.java'
+2016-04-03 18:52:16,651 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixIdentifierFactory.java'
+2016-04-03 18:52:16,678 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/FlatDataFactory.java'
+2016-04-03 18:52:16,679 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/persistence.xml.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,696 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/META-INF/persistence.xml'
+2016-04-03 18:52:16,698 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate3/hibernate.cfg.xml.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,714 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/hibernate.cfg.xml'
+2016-04-03 18:52:16,715 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/test/persistence-test.xml.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,729 WARN  [org.andromda.core.cartridge.Cartridge] Template outlet location 'test-configuration' is not defined in namespace hibernate
+2016-04-03 18:52:16,730 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate/test/hibernate-test.cfg.xml.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,739 WARN  [org.andromda.core.cartridge.Cartridge] Template outlet location 'test-configuration' is not defined in namespace hibernate
+2016-04-03 18:52:16,741 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate3/hibernate.hbm.xml.vsl with 5 metafacades from 1 model elements
+2016-04-03 18:52:16,842 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixData.hbm.xml'
+2016-04-03 18:52:16,873 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/TumorType.hbm.xml'
+2016-04-03 18:52:16,944 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/Tumor.hbm.xml'
+2016-04-03 18:52:16,988 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/AffymetrixIdentifier.hbm.xml'
+2016-04-03 18:52:17,056 INFO  [AndroMDA:hibernate] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../core/target/src/main/java/mwk/microxeno/domain/FlatData.hbm.xml'
+2016-04-03 18:52:17,057 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate3/HibernateEnumeration.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,058 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate3/usertypes/HibernateEnumType.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,060 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate2/ejb/HibernateEntityFactory.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,061 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate2/hibernate.cfg.xml.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,062 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate2/hibernate.hbm.xml.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,063 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/hibernate2/HibernateEnumeration.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,066 INFO  [AndroMDA] Processing cartridge java on model /home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/src/main/uml/microxeno.uml
+2016-04-03 18:52:17,068 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/Service.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,069 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/ServiceImpl.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,070 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/ServiceImpl.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,071 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/ValueObject.vsl with 7 metafacades from 1 model elements
+2016-04-03 18:52:17,161 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/PassageVO.java'
+2016-04-03 18:52:17,241 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/PassageAvgSetVO.java'
+2016-04-03 18:52:17,422 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/AffymetrixIdentifierVO.java'
+2016-04-03 18:52:17,439 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/TumorVO.java'
+2016-04-03 18:52:17,455 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/TumorTypeVO.java'
+2016-04-03 18:52:17,518 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/PassageAvgVO.java'
+2016-04-03 18:52:17,539 INFO  [AndroMDA:java] Output: 'file:/home/mwkunkel/PROJECTS/CURRENT/dtp_microxeno/microxenouml/mda/../common/target/src/main/java/mwk/microxeno/vo/PassageIdentifierVO.java'
+2016-04-03 18:52:17,540 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/ApplicationException.vsl with 0 metafacades from 2 model elements
+2016-04-03 18:52:17,541 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/UnexpectedException.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,541 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/Enumeration.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,542 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/TypeSafeEnumeration.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,543 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/Interface.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,543 INFO  [org.andromda.core.cartridge.Cartridge] Processing templates/java/InterfaceImpl.vsl with 0 metafacades from 1 model elements
+2016-04-03 18:52:17,543 INFO  [AndroMDA] completed model processing --> TIME: 5.285[s], RESOURCES WRITTEN: 33

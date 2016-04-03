@@ -6,7 +6,7 @@
     <groupId>mwk.microxeno</groupId>
     <artifactId>microxeno</artifactId>
     <packaging>pom</packaging>
-    <version>20150529</version>
+    <version>20160404</version>
     <name>MicroXeno</name>
     <description>The MicroXeno Project.</description>
     <inceptionYear></inceptionYear>
