@@ -57,7 +57,7 @@ public class NewMeanGraphUtil {
 
         String formattedMean = (dsVO.getMean() != null) ? nf2.format(dsVO.getMean()) : "NULL";
 
-        mnGrChMdl.setTitle(piVO.getAffymetrixIdentifier().getGenecard() + " " + piVO.getPassage());
+        mnGrChMdl.setTitle(piVO.getAffymetrixIdentifier().getGeneSymbol() + " " + piVO.getPassage());
         mnGrChMdl.setStacked(true);
         mnGrChMdl.setExtender("forwardMeanGraphChartExtender");
         Axis xAxis = mnGrChMdl.getAxis(AxisType.X);

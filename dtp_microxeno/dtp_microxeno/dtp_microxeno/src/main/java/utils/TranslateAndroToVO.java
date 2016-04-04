@@ -55,19 +55,20 @@ public class TranslateAndroToVO {
         AffymetrixIdentifierVO rtn = new AffymetrixIdentifierVO();
         if (entity != null) {
             rtn.setAccession(entity.getAccession());
-            rtn.setGenecard(entity.getGenecard());
+            rtn.setGeneSymbol(entity.getGeneSymbol());
             rtn.setProbeSetId(entity.getProbeSetId());
+            rtn.setGeneTitle(entity.getGeneTitle());
         }
         return rtn;
     }
-    
+
     public static PassageIdentifierVO translatePassageIdentifier(AffymetrixData entity) {
         PassageIdentifierVO rtn = new PassageIdentifierVO();
         if (entity != null) {
             rtn.setAffymetrixIdentifier(translateAffymetrixIdentifier(entity.getAffymetrixIdentifier()));
-            rtn.setPassage(entity.getPassage());            
+            rtn.setPassage(entity.getPassage());
         }
         return rtn;
     }
-    
+
 }

@@ -4,7 +4,7 @@
 
     <groupId>dtp_microxeno</groupId>
     <artifactId>dtp_microxeno</artifactId>
-    <version>0.1</version>
+    <version>2015115</version>
     <packaging>war</packaging>
 
     <name>dtp_microxeno</name>
@@ -12,16 +12,16 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     </properties>
 
-    <dependencies>
-        
+    <dependencies>        
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.3.1</version>
-        </dependency>
-        
+        </dependency>        
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
@@ -57,12 +57,14 @@
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
-            <version>2.1.1-b04</version>
+            <!--<version>2.1.1-b04</version>-->
+            <version>2.2.6</version>            
         </dependency>
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
-            <version>2.1.1-b04</version>
+            <!--<version>2.1.1-b04</version>-->
+            <version>2.2.6</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -77,35 +79,38 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>5.1.11-MWK</version>
+            <version>5.3.9</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
-        </dependency>
-        
+        </dependency>        
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.2</version>
-        </dependency>
+        </dependency>   
         
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+            <type>jar</type>
+        </dependency>
+                       
         <dependency>
             <groupId>mwk.microxeno</groupId>
             <artifactId>microxeno-core</artifactId>
             <version>20160404</version>            
-        </dependency>
-        
+        </dependency>        
         <dependency>
             <groupId>mwk.microxeno</groupId>
-            <artifactId>microxeno-common</artifactId>
+            <artifactId>microxeno-common</artifactId> 
             <version>20160404</version>            
-        </dependency>        
-        
+        </dependency>                
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -126,6 +131,14 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${deploy.war.name}</warName>
+                    <!--
+                    <webResources>                        
+                        <resource>
+                            <directory>apache</directory>                            
+                        </resource>
+                    </webResources>
+                    -->
                 </configuration>
             </plugin>
             <plugin>
@@ -154,7 +167,43 @@
                 </executions>
             </plugin>
         </plugins>
+        
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
     </build>
+    
+    <profiles>
+        <profile>
+            <id>microxeno_local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>                
+            </activation>     
+            <properties>
+                <deploy.war.name>microxeno</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/microxenodb</deploy.db.url>
+                <deploy.db.user>microxeno_user</deploy.db.user>
+                <deploy.db.pass>microxeno_pass</deploy.db.pass>
+                <deploy.compare.url>http://localhost:8080/microxenocompare</deploy.compare.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>microxeno_dev</id>
+            <properties>
+                <deploy.war.name>microxeno</deploy.war.name>
+                <!-- using pptp database as stop-gap measure while waiting for microxeno database -->
+                <deploy.db.url>jdbc:postgresql://ncidb-d115-d:5473/pptp</deploy.db.url>
+                <deploy.db.user>pptp_user</deploy.db.user>
+                <deploy.db.pass>DtP09302pp2039U2er</deploy.db.pass>
+                <deploy.compare.url>http://localhost:8080/microxenocompare</deploy.compare.url>
+            </properties>
+        </profile>
+    </profiles>
+    
     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>

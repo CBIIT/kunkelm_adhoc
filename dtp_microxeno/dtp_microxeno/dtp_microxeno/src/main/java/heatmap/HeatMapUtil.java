@@ -57,7 +57,7 @@ public class HeatMapUtil {
         HeatMapHeader hmh = null;
         try {
             hmh = new HeatMapHeader(piVO);
-            hmh.setLabel1(piVO.getAffymetrixIdentifier().getGenecard() + " " + piVO.getPassage());
+            hmh.setLabel1(piVO.getAffymetrixIdentifier().getGeneSymbol() + " " + piVO.getPassage());
             hmh.setLabel2(piVO.getAffymetrixIdentifier().getProbeSetId() + " " + piVO.getPassage());
             hmh.setIdentString("AFFY_PROBE_SET_ID_" + piVO.getAffymetrixIdentifier().getProbeSetId() + " " + "_PASSAGE_" + piVO.getPassage());
         } catch (Exception e) {

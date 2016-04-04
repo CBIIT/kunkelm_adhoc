@@ -55,8 +55,9 @@ public class TranslateFlatData {
         AffymetrixIdentifierVO rtn = new AffymetrixIdentifierVO();
         if (entity != null) {
             rtn.setAccession(entity.getAccession());
-            rtn.setGenecard(entity.getGeneSymbol());
+            rtn.setGeneSymbol(entity.getGeneSymbol());
             rtn.setProbeSetId(entity.getProbeSetId());
+            rtn.setGeneTitle(entity.getGeneTitle());            
         }
         return rtn;
     }

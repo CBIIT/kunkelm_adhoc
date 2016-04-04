@@ -66,7 +66,7 @@ public class ApplicationScopeBean implements Serializable {
             e.printStackTrace();
         }
 
-        // createItemSelects();
+        createItemSelects();
     }
 
     private void createItemSelects() {
