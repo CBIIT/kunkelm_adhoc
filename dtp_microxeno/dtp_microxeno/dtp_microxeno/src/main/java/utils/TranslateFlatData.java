@@ -34,7 +34,7 @@ public class TranslateFlatData {
         if (entity != null) {
             rtnVO.setAffymetrixIdentifier(translateAffymetrixIdentifier(entity));
             rtnVO.setTumor(translateTumor(entity));
-            rtnVO.setEaId(entity.getEaId());
+            rtnVO.setEaFile(entity.getEaFile());
             rtnVO.setPassage(entity.getPassage());
             rtnVO.setReplicate(entity.getReplicate());
             rtnVO.setValue(entity.getValue());

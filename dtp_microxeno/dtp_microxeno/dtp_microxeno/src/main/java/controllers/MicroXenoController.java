@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import mwk.microxeno.vo.PassageVO;
 import mwk.microxeno.vo.AffymetrixIdentifierVO;
@@ -67,6 +68,14 @@ public class MicroXenoController implements Serializable {
 
     String delimiters = "[\\n\\r\\t,]+";
 
+    // applicationScopeBean
+    @ManagedProperty("#{applicationScopeBean}")
+    private ApplicationScopeBean applicationScopeBean;
+
+    public void setApplicationScopeBean(ApplicationScopeBean applicationScopeBean) {
+        this.applicationScopeBean = applicationScopeBean;
+    }
+
     public String performSearch() {
 
         try {
@@ -78,42 +87,37 @@ public class MicroXenoController implements Serializable {
             if (probeSetIdTextArea != null && !probeSetIdTextArea.isEmpty()) {
                 String[] splitString = probeSetIdTextArea.split(delimiters);
                 for (int i = 0; i < splitString.length; i++) {
-                    probeSetIdList.add(splitString[i]);
+                    probeSetIdList.add(splitString[i].trim());
                 }
             }
 
             if (geneTextArea != null && !geneTextArea.isEmpty()) {
                 String[] splitString = geneTextArea.split(delimiters);
                 for (int i = 0; i < splitString.length; i++) {
-                    geneList.add(splitString[i]);
+                    geneList.add(splitString[i].trim());
                 }
             }
 
             if (tumorTextArea != null && !tumorTextArea.isEmpty()) {
                 String[] splitString = tumorTextArea.split(delimiters);
                 for (int i = 0; i < splitString.length; i++) {
-                    tumorList.add(splitString[i]);
+                    tumorList.add(splitString[i].trim());
                 }
             }
 
             if (geneTextArea.isEmpty() && tumorTextArea.isEmpty()) {
 
                 String[] gArr = new String[]{
-                    "A1BG",
-                    "A1BG-AS1",
-                    "A1CF",
-                    "A2LD1",
-                    "A2M",
-                    "A2M-AS1",
-                    "A2ML1",
-                    "A2MP1",
-                    "A4GALT",
-                    "A4GNT",
-                    "AA06",
-                    "AAAS",
-                    "AACS",
-                    "AACSP1",
-                    "AADAC"
+                    "SATB1",
+                    "TRABD2A",
+                    "IMPG2",
+                    "RRAD",
+                    "CTSB",
+                    "ADCY1",
+                    "TM2D1",
+                    "MSL1",
+                    "RIMKLA",
+                    "FAM212B-AS1"
                 };
 
                 geneList.addAll(Arrays.asList(gArr));
@@ -190,16 +194,14 @@ public class MicroXenoController implements Serializable {
         }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        
+
         passageJson = gson.toJson(minPassageDataList);
         passageAggregateJson = gson.toJson(minPassageAggregateList);
 
-        System.out.println("passageJson: ");
-        System.out.println(passageJson);
-        
-        System.out.println("passageAggregateJson: ");
-        System.out.println(passageAggregateJson);
-        
+//        System.out.println("passageJson: ");
+//        System.out.println(passageJson);
+//        System.out.println("passageAggregateJson: ");
+//        System.out.println(passageAggregateJson);
         return "/webpages/affymetrixDataTable?faces-redirect=true";
 
     }
@@ -282,7 +284,9 @@ public class MicroXenoController implements Serializable {
     }
 
     public void appTumor(SelectEvent event) {
+
         Object item = event.getObject();
+
         TumorVO tVO = (TumorVO) item;
         if (tumorTextArea == null) {
             tumorTextArea = "";
@@ -291,12 +295,21 @@ public class MicroXenoController implements Serializable {
     }
 
     public void appTumorType(SelectEvent event) {
+
         Object item = event.getObject();
+
         TumorVO tVO = (TumorVO) item;
+
         if (tumorTextArea == null) {
             tumorTextArea = "";
         }
-        tumorTextArea = tVO.getTumorType() + "\n" + tumorTextArea;
+        
+        for (TumorVO test : applicationScopeBean.getTumorList()){
+            if (test.getTumorType().equals(tVO.getTumorType())){
+                tumorTextArea = test.getTumorName() + "\n" + tumorTextArea;
+            }
+        }
+
     }
 
     //<editor-fold defaultstate="collapsed" desc="GETTERS/SETTERS">

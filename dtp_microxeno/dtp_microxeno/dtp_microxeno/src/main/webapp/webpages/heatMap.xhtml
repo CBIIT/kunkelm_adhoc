@@ -47,7 +47,8 @@
                    style="font-size: 200%;" 
                    value="Heat Map with #{fn:length(heatMap.gridXheaderList)} columns and #{fn:length(heatMap.gridYheaderList)} rows" />
 
-    <p:dataTable id="heatMapTbl"
+    <p:dataTable id="heatMapTbl" 
+                 draggableColumns="true"
                  var="row"                  
                  rowIndexVar="rowIndex"                 
                  value="#{heatMap.gridYheaderList}"       

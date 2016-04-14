@@ -40,7 +40,7 @@
                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
                      rowsPerPageTemplate="10,25,50,100,250,500"
                      rows="100"
-                     rowKey="#{dat.tumor.tumorName}#{dat.passageIdentifier.affymetrixIdentifier.probeSetId}#{dat.passage}#{dat.replicate}">
+                     rowKey="#{dat.tumor.tumorName}#{dat.affymetrixIdentifier.probeSetId}#{dat.passage}#{dat.replicate}">
 
             <p:column selectionMode="multiple" style="width:4%" exportable="false"/>
 

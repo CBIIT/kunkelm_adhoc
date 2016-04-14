@@ -44,6 +44,8 @@ public class HelperAffymetrixData {
                     .createAlias("affymetrixIdentifier", "ai")
                     .createAlias("tumor", "tum");
 
+            c.setMaxResults(10000);
+            
             if (!tumorList.isEmpty()) {
                 c.add(Restrictions.in("tum.tumorName", tumorList));
             }

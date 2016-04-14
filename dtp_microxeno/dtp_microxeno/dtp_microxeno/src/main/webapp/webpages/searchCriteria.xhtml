@@ -49,6 +49,7 @@
                         <p:outputLabel for="probeSetIdAutoComp" value="probeSetId"/>
                         <br/>
                         <p:autoComplete id="probeSetIdAutoComp" 
+                                        widgetVar="probeSetIdAutoCompWidg" 
                                         dropdown="false"
                                         scrollHeight="150" 
                                         minQueryLength="3"    
@@ -59,7 +60,8 @@
                                         completeMethod="#{applicationScopeBean.compProbeSetId}">
 
                             <p:ajax event="itemSelect" 
-                                    listener="#{microXenoController.appProbeSetId}" 
+                                    listener="#{microXenoController.appProbeSetId}"
+                                    oncomplete="PF('probeSetIdAutoCompWidg').input.val('')"
                                     update=":microXenoForm:probeSetIdTextArea" />  
 
                         </p:autoComplete>                
@@ -71,7 +73,7 @@
                                    value="probeSetId - free form type or copy/paste - case sensitive Affymetrix identifiers: 201402_at, 201403_s_at, 201404_x_at, etc."/>
                     <br/>
                     <h:inputTextarea id="probeSetIdTextArea"
-                                     style="width: 33%;"
+                                     style="width: 33%;height: 100px;"
                                      value="#{microXenoController.probeSetIdTextArea}" />
                 </p:column>            
             </p:row>
@@ -90,6 +92,7 @@
                         <p:outputLabel for="geneSymbolAutoComp" value="Gene Symbol"/>
                         <br/>
                         <p:autoComplete id="geneSymbolAutoComp" 
+                                        widgetVar="geneSymbolAutoCompWidg"
                                         dropdown="false"
                                         scrollHeight="150" 
                                         minQueryLength="3"        
@@ -101,6 +104,7 @@
 
                             <p:ajax event="itemSelect" 
                                     listener="#{microXenoController.appGene}" 
+                                    oncomplete="PF('geneSymbolAutoCompWidg').input.val('')"
                                     update=":microXenoForm:geneTextArea" />  
 
                         </p:autoComplete>                
@@ -112,6 +116,7 @@
                         <p:outputLabel for="geneTitleAutoComp" value="Gene Name"/>
                         <br/>
                         <p:autoComplete id="geneTitleAutoComp" 
+                                        widgetVar="geneTitleAutoCompWidg"
                                         dropdown="false"
                                         scrollHeight="150" 
                                         minQueryLength="3"                                    
@@ -123,6 +128,7 @@
 
                             <p:ajax event="itemSelect" 
                                     listener="#{microXenoController.appGene}" 
+                                    oncomplete="PF('geneTitleAutoCompWidg').input.val('')"
                                     update=":microXenoForm:geneTextArea" />  
 
                         </p:autoComplete>                
@@ -135,7 +141,7 @@
                                    value="Genes - free form type or copy/paste - case sensitive HUGO identifiers: ABL1, ABCC1, etc."/>
                     <br/>
                     <h:inputTextarea id="geneTextArea" 
-                                     style="width: 33%;"
+                                     style="width: 33%;height: 100px;"
                                      value="#{microXenoController.geneTextArea}" />
                 </p:column>            
             </p:row>
@@ -154,6 +160,7 @@
                         <p:outputLabel for="tumorNameAutoComp" value="Tumor Name"/>
                         <br/>
                         <p:autoComplete id="tumorNameAutoComp" 
+                                        widgetVar="tumorNameAutoCompWidg"
                                         dropdown="true"
                                         scrollHeight="150" 
                                         minQueryLength="3"    
@@ -165,6 +172,7 @@
 
                             <p:ajax event="itemSelect" 
                                     listener="#{microXenoController.appTumor}" 
+                                    oncomplete="PF('tumorNameAutoCompWidg').input.val('')"                                    
                                     update=":microXenoForm:tumorTextArea" />  
 
                         </p:autoComplete>                
@@ -176,6 +184,7 @@
                         <p:outputLabel for="tumorTypeAutoComp" value="Tumor Type"/>
                         <br/>
                         <p:autoComplete id="tumorTypeAutoComp" 
+                                        widgetVar="tumorTypeAutoCompWidg"
                                         dropdown="true"
                                         scrollHeight="150" 
                                         minQueryLength="3"                                    
@@ -186,7 +195,8 @@
                                         completeMethod="#{applicationScopeBean.compTumorType}">
 
                             <p:ajax event="itemSelect" 
-                                    listener="#{microXenoController.appTumor}" 
+                                    listener="#{microXenoController.appTumorType}" 
+                                    oncomplete="PF('tumorTypeAutoCompWidg').input.val('')"
                                     update=":microXenoForm:tumorTextArea" />  
 
                         </p:autoComplete>                
@@ -199,7 +209,7 @@
                                    value="Tumors - free form type or copy/paste - case sensitive NCI designators: OVCAR-5, RXF 393, SW-620, etc." />
                     <br/>
                     <h:inputTextarea id="tumorTextArea"
-                                     style="width: 33%;"
+                                     style="width: 33%;height: 100px;"
                                      value="#{microXenoController.tumorTextArea}" />            
                 </p:column>
             </p:row>
@@ -214,7 +224,7 @@
         </h2> 
 
         <p:selectManyCheckbox value="#{microXenoController.passageList}" >
-            <f:selectItem itemLabel="P0" itemValue="P0" />
+            <f:selectItem itemLabel="P00" itemValue="P00" />
             <f:selectItem itemLabel="P01" itemValue="P01" />
             <f:selectItem itemLabel="P04" itemValue="P04" />
             <f:selectItem itemLabel="P05" itemValue="P05" />

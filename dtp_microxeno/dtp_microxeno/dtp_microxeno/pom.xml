@@ -4,7 +4,7 @@
 
     <groupId>dtp_microxeno</groupId>
     <artifactId>dtp_microxeno</artifactId>
-    <version>2015115</version>
+    <version>20160407</version>
     <packaging>war</packaging>
 
     <name>dtp_microxeno</name>
@@ -109,7 +109,8 @@
             <groupId>mwk.microxeno</groupId>
             <artifactId>microxeno-common</artifactId> 
             <version>20160404</version>            
-        </dependency>                
+        </dependency>      
+                                      
     </dependencies>
     <build>
         <plugins>
@@ -196,9 +197,9 @@
             <properties>
                 <deploy.war.name>microxeno</deploy.war.name>
                 <!-- using pptp database as stop-gap measure while waiting for microxeno database -->
-                <deploy.db.url>jdbc:postgresql://ncidb-d115-d:5473/pptp</deploy.db.url>
-                <deploy.db.user>pptp_user</deploy.db.user>
-                <deploy.db.pass>DtP09302pp2039U2er</deploy.db.pass>
+                <deploy.db.url>jdbc:postgresql://ncidb-d115-d:5473/microxeno</deploy.db.url>
+                <deploy.db.user>microxeno_user</deploy.db.user>
+                <deploy.db.pass>UsEr02390M1c023x</deploy.db.pass>
                 <deploy.compare.url>http://localhost:8080/microxenocompare</deploy.compare.url>
             </properties>
         </profile>

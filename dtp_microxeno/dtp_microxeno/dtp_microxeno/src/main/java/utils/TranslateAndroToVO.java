@@ -34,7 +34,7 @@ public class TranslateAndroToVO {
         if (entity != null) {
             rtnVO.setAffymetrixIdentifier(translateAffymetrixIdentifier(entity.getAffymetrixIdentifier()));
             rtnVO.setTumor(translateTumor(entity.getTumor()));
-            rtnVO.setEaId(entity.getEaId());
+            rtnVO.setEaFile(entity.getEaFile());
             rtnVO.setPassage(entity.getPassage());
             rtnVO.setReplicate(entity.getReplicate());
             rtnVO.setValue(entity.getValue());

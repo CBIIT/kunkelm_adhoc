@@ -58,6 +58,8 @@ public class HelperFlatData {
         try {
 
             Criteria c = session.createCriteria(FlatData.class);
+            
+            c.setMaxResults(10000);
 
             if (!probeSetIdList.isEmpty() && !geneList.isEmpty()) {
 

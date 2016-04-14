@@ -23,9 +23,12 @@ public class TumorNameConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
 
+        System.out.println("In TumorNameConverter.getAsObject with value: " + value);
+        
         TumorVO rtn = null;
 
         ApplicationScopeBean asb = (ApplicationScopeBean) context.getExternalContext().getApplicationMap().get("applicationScopeBean");
+        
         for (TumorVO tVO : asb.getTumorList()) {
             if (tVO.getTumorName().equals(value)) {
                 rtn = tVO;
@@ -41,9 +44,9 @@ public class TumorNameConverter implements Converter {
 
         String rtn = null;
 
-        if (value instanceof AffymetrixIdentifierVO) {
+        if (value instanceof TumorVO) {
             TumorVO tVO = (TumorVO) value;
-            rtn = tVO.getTumorType();
+            rtn = tVO.getTumorName();
         }
 
         return rtn;
