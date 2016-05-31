@@ -6,7 +6,7 @@
   <groupId>mwk.datasystem</groupId>
   <artifactId>datasystem</artifactId>
   <packaging>pom</packaging>
-  <version>20160303</version>
+  <version>20160531</version>
   <name>Datasystem UML</name>
   <description>Datasystem UML</description>
   <inceptionYear></inceptionYear>
@@ -620,7 +620,7 @@
         For Hypersonic use: hsqldb.jar
         -->
         <jdbc.driver.jar>               
-          /opt/postgresql-9.1-901.jdbc4.jar
+          /opt/postgresql-9.2-1002-jdbc4.jar
           <!--/opt/ojdbc6.jar-->
         </jdbc.driver.jar>
         <!--
