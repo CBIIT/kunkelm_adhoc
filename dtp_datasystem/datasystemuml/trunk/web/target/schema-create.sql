@@ -489,245 +489,245 @@
         primary key (ID)
     );
 
-    alter table AD_HOC_CMPD 
+    --alter table AD_HOC_CMPD 
         add constraint AD_HOC_CMPDIFKC 
         foreign key (ID) 
         references CMPD;
 
-    alter table AD_HOC_CMPD 
+    --alter table AD_HOC_CMPD 
         add constraint AD_HOC_CMPD_AD_HOC_CMPD_PARENC 
         foreign key (AD_HOC_CMPD_PARENT_FRAGMENT_FK) 
         references AD_HOC_CMPD_FRAGMENT;
 
-    alter table AD_HOC_CMPD_FRAGMENT 
+    --alter table AD_HOC_CMPD_FRAGMENT 
         add constraint AD_HOC_CMPD_FRAGMENT_AD_HOC_CH 
         foreign key (AD_HOC_CMPD_FRAGMENT_STRUCT_FK) 
         references AD_HOC_CMPD_FRAGMENT_STRUCTURE;
 
-    alter table AD_HOC_CMPD_FRAGMENT 
+    --alter table AD_HOC_CMPD_FRAGMENT 
         add constraint AD_HOC_CMPD_FRAGMENT_AD_HOC_CC 
         foreign key (AD_HOC_CMPD_FRAGMENT_P_CHEM_FK) 
         references AD_HOC_CMPD_FRAGMENT_P_CHEM;
 
-    alter table AD_HOC_CMPD_FRAGMENT 
+    --alter table AD_HOC_CMPD_FRAGMENT 
         add constraint AD_HOC_CMPD_FRAGMENT_AD_HOC_CD 
         foreign key (AD_HOC_CMPD_FK) 
         references AD_HOC_CMPD;
 
-    alter table ALIASES2CURATED_NSC_TO_ALIASES 
+    --alter table ALIASES2CURATED_NSC_TO_ALIASES 
         add constraint CURATED_NAME_CURATED_NSC_TO_AC 
         foreign key (CURATED_NSC_TO_ALIASES_FK) 
         references CURATED_NSC;
 
-    alter table ALIASES2CURATED_NSC_TO_ALIASES 
+    --alter table ALIASES2CURATED_NSC_TO_ALIASES 
         add constraint CURATED_NSC_ALIASES_FKC 
         foreign key (ALIASES_FK) 
         references CURATED_NAME;
 
-    alter table CMPD_ALIAS 
+    --alter table CMPD_ALIAS 
         add constraint CMPD_ALIAS_CMPD_ALIAS_TYPE_FKC 
         foreign key (CMPD_ALIAS_TYPE_FK) 
         references CMPD_ALIAS_TYPE;
 
-    alter table CMPD_ALIASES2NSC_CMPDS 
+    --alter table CMPD_ALIASES2NSC_CMPDS 
         add constraint CMPD_ALIAS_NSC_CMPDS_FKC 
         foreign key (NSC_CMPDS_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_ALIASES2NSC_CMPDS 
+    --alter table CMPD_ALIASES2NSC_CMPDS 
         add constraint NSC_CMPD_CMPD_ALIASES_FKC 
         foreign key (CMPD_ALIASES_FK) 
         references CMPD_ALIAS;
 
-    create index nc_cf_idx on CMPD_FRAGMENT (NSC_CMPD_FK);
+    --create index nc_cf_idx on CMPD_FRAGMENT (NSC_CMPD_FK);
 
-    alter table CMPD_FRAGMENT 
+    --alter table CMPD_FRAGMENT 
         add constraint CMPD_FRAGMENT_NSC_CMPD_FKC 
         foreign key (NSC_CMPD_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_FRAGMENT 
+    --alter table CMPD_FRAGMENT 
         add constraint CMPD_FRAGMENT_CMPD_KNOWN_SALTC 
         foreign key (CMPD_KNOWN_SALT_FK) 
         references CMPD_KNOWN_SALT;
 
-    alter table CMPD_FRAGMENT 
+    --alter table CMPD_FRAGMENT 
         add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_TC 
         foreign key (CMPD_FRAGMENT_TYPE_FK) 
         references CMPD_FRAGMENT_TYPE;
 
-    alter table CMPD_FRAGMENT 
+    --alter table CMPD_FRAGMENT 
         add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_SC 
         foreign key (CMPD_FRAGMENT_STRUCTURE_FK) 
         references CMPD_FRAGMENT_STRUCTURE;
 
-    alter table CMPD_FRAGMENT 
+    --alter table CMPD_FRAGMENT 
         add constraint CMPD_FRAGMENT_CMPD_FRAGMENT_PC 
         foreign key (CMPD_FRAGMENT_P_CHEM_FK) 
         references CMPD_FRAGMENT_P_CHEM;
 
-    alter table CMPD_LIST_MEMBER 
+    --alter table CMPD_LIST_MEMBER 
         add constraint CMPD_LIST_MEMBER_CMPD_LIST_FKC 
         foreign key (CMPD_LIST_FK) 
         references CMPD_LIST;
 
-    alter table CMPD_LIST_MEMBER 
+    --alter table CMPD_LIST_MEMBER 
         add constraint CMPD_LIST_MEMBER_CMPD_FKC 
         foreign key (CMPD_FK) 
         references CMPD;
 
-    alter table CMPD_NAMED_SETS2NSC_CMPDS 
+    --alter table CMPD_NAMED_SETS2NSC_CMPDS 
         add constraint CMPD_NAMED_SET_NSC_CMPDS_FKC 
         foreign key (NSC_CMPDS_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_NAMED_SETS2NSC_CMPDS 
+    --alter table CMPD_NAMED_SETS2NSC_CMPDS 
         add constraint NSC_CMPD_CMPD_NAMED_SETS_FKC 
         foreign key (CMPD_NAMED_SETS_FK) 
         references CMPD_NAMED_SET;
 
-    alter table CMPD_PLATES2NSC_CMPDS 
+    --alter table CMPD_PLATES2NSC_CMPDS 
         add constraint CMPD_PLATE_NSC_CMPDS_FKC 
         foreign key (NSC_CMPDS_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_PLATES2NSC_CMPDS 
+    --alter table CMPD_PLATES2NSC_CMPDS 
         add constraint NSC_CMPD_CMPD_PLATES_FKC 
         foreign key (CMPD_PLATES_FK) 
         references CMPD_PLATE;
 
-    alter table CMPD_PROJECTS2NSC_CMPDS 
+    --alter table CMPD_PROJECTS2NSC_CMPDS 
         add constraint CMPD_PROJECT_NSC_CMPDS_FKC 
         foreign key (NSC_CMPDS_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_PROJECTS2NSC_CMPDS 
+    --alter table CMPD_PROJECTS2NSC_CMPDS 
         add constraint NSC_CMPD_CMPD_PROJECTS_FKC 
         foreign key (CMPD_PROJECTS_FK) 
         references CMPD_PROJECT;
 
-    alter table CMPD_PUB_CHEM_SIDS2NSC_CMPDS 
+    --alter table CMPD_PUB_CHEM_SIDS2NSC_CMPDS 
         add constraint CMPD_PUB_CHEM_SID_NSC_CMPDS_FC 
         foreign key (NSC_CMPDS_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_PUB_CHEM_SIDS2NSC_CMPDS 
+    --alter table CMPD_PUB_CHEM_SIDS2NSC_CMPDS 
         add constraint NSC_CMPD_CMPD_PUB_CHEM_SIDS_FC 
         foreign key (CMPD_PUB_CHEM_SIDS_FK) 
         references CMPD_PUB_CHEM_SID;
 
-    alter table CMPD_RELATED 
+    --alter table CMPD_RELATED 
         add constraint CMPD_RELATED_NSC_CMPD_FKM 
         foreign key (NSC_CMPD_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_RELATED 
+    --alter table CMPD_RELATED 
         add constraint CMPD_RELATED_CMPD_RELATION_TYC 
         foreign key (CMPD_RELATION_TYPE_FK) 
         references CMPD_RELATION_TYPE;
 
-    create index cmpd_table_nsc_idx on CMPD_TABLE (NSC);
+    --create index cmpd_table_nsc_idx on CMPD_TABLE (NSC);
 
-    create index cmpd_table_cas_idx on CMPD_TABLE (CAS);
+    --create index cmpd_table_cas_idx on CMPD_TABLE (CAS);
 
-    create index cmpd_table_par_form_mol_form_idx on CMPD_TABLE (FORMULA_MOLECULAR_FORMULA);
+    --create index cmpd_table_par_form_mol_form_idx on CMPD_TABLE (FORMULA_MOLECULAR_FORMULA);
 
-    create index cmpd_table_par_mol_form_idx on CMPD_TABLE (PARENT_MOLECULAR_FORMULA);
+    --create index cmpd_table_par_mol_form_idx on CMPD_TABLE (PARENT_MOLECULAR_FORMULA);
 
-    alter table CMPD_TARGETS2NSC_CMPDS 
+    --alter table CMPD_TARGETS2NSC_CMPDS 
         add constraint CMPD_TARGET_NSC_CMPDS_FKC 
         foreign key (NSC_CMPDS_FK) 
         references NSC_CMPD;
 
-    alter table CMPD_TARGETS2NSC_CMPDS 
+    --alter table CMPD_TARGETS2NSC_CMPDS 
         add constraint NSC_CMPD_CMPD_TARGETS_FKC 
         foreign key (CMPD_TARGETS_FK) 
         references CMPD_TARGET;
 
-    alter table CURATED_NSC 
+    --alter table CURATED_NSC 
         add constraint CURATED_NSC_ORIGINATOR_FKC 
         foreign key (ORIGINATOR_FK) 
         references CURATED_ORIGINATOR;
 
-    alter table CURATED_NSC 
+    --alter table CURATED_NSC 
         add constraint CURATED_NSC_GENERIC_NAME_FKC 
         foreign key (GENERIC_NAME_FK) 
         references CURATED_NAME;
 
-    alter table CURATED_NSC 
+    --alter table CURATED_NSC 
         add constraint CURATED_NSC_PREFERRED_NAME_FKC 
         foreign key (PREFERRED_NAME_FK) 
         references CURATED_NAME;
 
-    alter table CURATED_NSC 
+    --alter table CURATED_NSC 
         add constraint CURATED_NSC_PRIMARY_TARGET_FKC 
         foreign key (PRIMARY_TARGET_FK) 
         references CURATED_TARGET;
 
-    alter table CURATED_NSCS2PROJECTS 
+    --alter table CURATED_NSCS2PROJECTS 
         add constraint CURATED_PROJECT_CURATED_NSCS_C 
         foreign key (CURATED_NSCS_FK) 
         references CURATED_NSC;
 
-    alter table CURATED_NSCS2PROJECTS 
+    --alter table CURATED_NSCS2PROJECTS 
         add constraint CURATED_NSC_PROJECTS_FKC 
         foreign key (PROJECTS_FK) 
         references CURATED_PROJECT;
 
-    alter table CURATED_NSC_TO_SECONDARY_TARGE 
+    --alter table CURATED_NSC_TO_SECONDARY_TARGE 
         add constraint CURATED_TARGET_CURATED_NSC_TOC 
         foreign key (CURATED_NSC_TO_SECONDARY_TA_FK) 
         references CURATED_NSC;
 
-    alter table CURATED_NSC_TO_SECONDARY_TARGE 
+    --alter table CURATED_NSC_TO_SECONDARY_TARGE 
         add constraint CURATED_NSC_SECONDARY_TARGETSC 
         foreign key (SECONDARY_TARGETS_FK) 
         references CURATED_TARGET;
 
-    create index nsc_cmpd_form_mol_form_idx on NSC_CMPD (FORMULA_MOLECULAR_FORMULA);
+    --create index nsc_cmpd_form_mol_form_idx on NSC_CMPD (FORMULA_MOLECULAR_FORMULA);
 
-    create index nsc_cmpd_par_mol_form_idx on NSC_CMPD (PARENT_MOLECULAR_FORMULA);
+    --create index nsc_cmpd_par_mol_form_idx on NSC_CMPD (PARENT_MOLECULAR_FORMULA);
 
-    create index nsc_cmpd_cas_idx on NSC_CMPD (CAS);
+    --create index nsc_cmpd_cas_idx on NSC_CMPD (CAS);
 
-    create index nsc_cmpd_nsc_idx on NSC_CMPD (NSC);
+    --create index nsc_cmpd_nsc_idx on NSC_CMPD (NSC);
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_LEGACY_CMPD_FKC 
         foreign key (CMPD_LEGACY_CMPD_FK) 
         references CMPD_LEGACY_CMPD;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_INVENTORY_FKC 
         foreign key (CMPD_INVENTORY_FK) 
         references CMPD_INVENTORY;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPDIFKC 
         foreign key (ID) 
         references CMPD;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_SALT_FRAGMENT_FC 
         foreign key (CMPD_SALT_FRAGMENT_FK) 
         references CMPD_FRAGMENT;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_NSC_CMPD_TYPE_FKC 
         foreign key (NSC_CMPD_TYPE_FK) 
         references NSC_CMPD_TYPE;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_PARENT_FRAGMENTC 
         foreign key (CMPD_PARENT_FRAGMENT_FK) 
         references CMPD_FRAGMENT;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_ANNOTATION_FKC 
         foreign key (CMPD_ANNOTATION_FK) 
         references CMPD_ANNOTATION;
 
-    alter table NSC_CMPD 
+    --alter table NSC_CMPD 
         add constraint NSC_CMPD_CMPD_BIO_ASSAY_FKC 
         foreign key (CMPD_BIO_ASSAY_FK) 
         references CMPD_BIO_ASSAY;
