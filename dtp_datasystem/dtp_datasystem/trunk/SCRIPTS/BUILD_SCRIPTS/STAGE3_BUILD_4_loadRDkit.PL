@@ -127,48 +127,12 @@ my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
-my $valCanSmi; my $validCanTaut; my $validCanTautStripStereo;
+my $valCanSmi; my $validCanTaut; my $validCanTautStripStereo; my $valid_ctab; my $cnt;
 $sth -> bind_columns(\$valCanSmi, \$validCanTaut, \$validCanTautStripStereo);
 print "valCanSmi validCanTaut validCanTautStripStereo\n";
 while ($sth->fetch()){
-	print "$valCanSmi $validCanTaut $validCanTautStripStereo\n";	
+	print "$valCanSmi $validCanTaut $validCanTautStripStereo $valid_ctab $cnt\n";	
 }
-
-#drop table if exists rdkit_fps;
-
-#create table rdkit_fps(
-#id bigint,
-#atompairfp bfp,
-#featmorganfp bfp,
-#morganfp bfp,
-#torsionfp bfp
-#);
-
-#insert into rdkit_fps
-#select 
-#id, 
-#atompairbv_fp(mol),
-#featmorganbv_fp(mol),
-#morganbv_fp(mol),
-#torsionbv_fp(mol)
-#from rdkit_mol;
-
-#select nsc,
-#tanimoto_dist(atompairbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.atompairfp) as atompair,
-#tanimoto_dist(featmorganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.featmorganfp) as featmorgan,
-#tanimoto_dist(morganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.morganfp) as morgan,
-#tanimoto_dist(torsionbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO'), rdkit_fps.torsionfp) as torsion
-#from rdkit_fps, rdkit_mol 
-#where rdkit_fps.id = rdkit_mol.id
-#limit 10;
-
-#set rdkit.tanimoto_threshold = 0.8;
-
-#select rdkit_mol.nsc 
-#from rdkit_fps, rdkit_mol 
-#where morganbv_fp('c1ccc2c(c1)c(cn2Cc3ccccc3)CO',2) % rdkit_fps.morganfp 
-#and 
-#rdkit_fps.id = rdkit_mol.id;
 
 # clean up
 $dbh->disconnect();

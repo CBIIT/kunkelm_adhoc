@@ -13,8 +13,6 @@ delete from curated_originator cascade;
 delete from curated_project cascade;
 delete from curated_target cascade;
 
-
-
 drop sequence if exists curated_nsc_seq;
 create sequence curated_nsc_seq;        
 
@@ -43,7 +41,7 @@ order by entry;
 
 insert into curated_name(id, value, description, reference)
 select
-nextval('curated_name_seq'), entry, 'from app_and_inv load', 'from app_and_inv load'
+nextval('curated_name_seq'), entry, 'from app_and_inv load', 'Combined IOA and AOD List 02_12_2016'
 from temp;
 
 -- distinct originators
@@ -59,7 +57,7 @@ order by entry;
 
 insert into curated_originator(id, value, description, reference)
 select
-nextval('curated_originator_seq'), entry, 'from app_and_inv load', 'from app_and_inv load'
+nextval('curated_originator_seq'), entry, 'from app_and_inv load', 'Combined IOA and AOD List 02_12_2016'
 from temp;
 
 -- distinct projects
@@ -74,7 +72,7 @@ where field_name = 'project_code'
 order by entry;
 
 insert into curated_project(id, value, description, reference)
-select nextval('curated_project_seq'), entry, 'from app_and_inv_load', 'from app_and_inv_load'
+select nextval('curated_project_seq'), entry, 'from app_and_inv_load', 'Combined IOA and AOD List 02_12_2016'
 from temp;
 
 -- distinct targets
@@ -90,7 +88,7 @@ order by entry;
 
 insert into curated_target(id, value, description, reference)
 select
-nextval('curated_target_seq'), entry, 'from app_and_inv_load', 'from app_and_inv_load'
+nextval('curated_target_seq'), entry, 'from app_and_inv_load', 'Combined IOA and AOD List 02_12_2016'
 from temp;
 
 -- resolve 
@@ -150,7 +148,7 @@ from temp3;
 
 insert into aliases2curated_nsc_to_aliases(aliases_fk, curated_nsc_to_aliases_fk)
 select
-cn.id, cnsc.id
+distinct cn.id, cnsc.id
 from fields_and_entries fae, curated_name cn, curated_nsc cnsc
 where fae.entry = cn.value
 and fae.nsc = cnsc.nsc

@@ -73,9 +73,9 @@ while ($sth->fetch()){
 }
 
 print "frags400_minFragIdx: $frags400_minFragIdx frags400_maxFragIdx: $frags400_maxFragIdx\n";
-print "fragsRemain_minFragIdx: $fragsRemain_minFragIdx fragsRemain_maxFragIdx: $fragsRemain_maxFragIdx\n";
+print "fragsRemain_minFragIdx: $fragsRemain_minFragIdx fragsRemain_maxFragIdx: $fragsRemain_maxFragIdx\n\n\n";
 print "ctab400_minFragIdx: $ctab400_minFragIdx ctab400_maxFragIdx: $ctab400_maxFragIdx\n";
-print "ctabRemain_minFragIdx: $ctabRemain_minFragIdx ctabRemain_maxFragIdx: $ctabRemain_maxFragIdx\n";
+print "ctabRemain_minFragIdx: $ctabRemain_minFragIdx ctabRemain_maxFragIdx: $ctabRemain_maxFragIdx\n\n\n";
 
 ## -- only update the fragmentindex if problems were found
 ##

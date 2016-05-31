@@ -43,9 +43,9 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 
-my @fragFileList = qw(rs3_from_plp_400k_frags rs3_from_plp_remainder_frags);
-my @nscFileList = qw(rs3_from_plp_400k_nsc rs3_from_plp_remainder_nsc);
-my @ctabFileList = qw(rs3_from_plp_400k_ctab rs3_from_plp_remainder_ctab);
+my @fragFileList = qw(rs3_from_plp_400K_frags rs3_from_plp_remainder_frags);
+my @nscFileList = qw(rs3_from_plp_400K_nsc rs3_from_plp_remainder_nsc);
+my @ctabFileList = qw(rs3_from_plp_400K_ctab rs3_from_plp_remainder_ctab);
 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
@@ -110,6 +110,7 @@ CanonicalTautomer varchar,
 NumberOfTautomers int,
 InChI_Message varchar,
 ErrorText varchar,
+ErrorDetails varchar,
 TooManyTautomers varchar
 )
 ];
@@ -163,6 +164,7 @@ my @fragColumnNames = (
 	"NumberOfTautomers",
 	"InChI_Message",
         "ErrorText",
+        "ErrorDetails",
         "TooManyTautomers"
 	);
 
@@ -184,10 +186,12 @@ foreach my $fragFileBase(@fragFileList){
 	my @fragFileHeaders = split(/,/, $firstLine);
 	
         # debug - all column names
-	# print join(",", @fragColumnNames);
-	# print "\n";
-	# print join(",", @fragFileHeaders);
-	# print "\n";
+        print "fragColumnNames - EXPECTED\n";
+	print join("\t", @fragColumnNames);
+	print "\n\n\n";
+        print "fragFileHeaders - FOUND\n";
+	print join("\t", @fragFileHeaders);
+	print "\n\n\n";
 	
 	my $equals = 0;
 	
@@ -209,18 +213,35 @@ foreach my $fragFileBase(@fragFileList){
 		
 		$overallFragOK = $overallFragOK + 1;
 		
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
 		print "$fragFileName MATCHES expected headers.\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
+                print "\n\n\n";
 		
 	} else {
 		
+		print "XXXXXX    XX       X    X\n";
+                print "X        X  X      X    X\n";
+                print "XXXXX   X    X     X    X\n";
+                print "X       XXXXXX     X    X\n";
+                print "X       X    X     X    X\n";
+                print "X       X    X     X    XXXXXX\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
 		print "$fragFileName DOES NOT MATCH expected headers.\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
+                print "\n\n\n";
 		
-		printf "%-30s | %-30s\n", "Table Column Name", "File Header";		
+		
+		printf "%-45s | %-45s\n", "Table Column Name", "File Header";		
 		foreach (my $i = 0; $i < @fragColumnNames; $i++) {		
 			if (lc $fragColumnNames[$i] ne lc $fragFileHeaders[$i]) {				
-				printf "%-30s | %-30s\n", "-----FAIL----- " . $fragColumnNames[$i] , "-----FAIL----- " . $fragFileHeaders[$i];
+				printf "%-45s | %-45s\n", "-----FAIL----- " . $fragColumnNames[$i] , "-----FAIL----- " . $fragFileHeaders[$i];
 			} else {
-				printf "%-30s | %-30s\n", $fragColumnNames[$i], $fragFileHeaders[$i];
+				printf "%-45s | %-45s\n", $fragColumnNames[$i], $fragFileHeaders[$i];
 				
 			}
 		}
@@ -317,10 +338,12 @@ foreach my $nscFileBase(@nscFileList){
 	# print "firstLine: $firstLine\n";
 	my @nscFileHeaders = split(/,/, $firstLine);
 	
-	# print join(",", @nscColumnNames);
-	# print "\n";
-	# print join(",", @nscFileHeaders);
-	# print "\n";
+        print "nscColumnNames - EXPECTED\n";
+	print join("\t", @nscColumnNames);
+	print "\n\n\n";
+        print "nscFileHeaders - FOUND\n";
+	print join("\t", @nscFileHeaders);
+	print "\n\n\n";
 	
 	my $equals = 0;
 	
@@ -341,19 +364,36 @@ foreach my $nscFileBase(@nscFileList){
 		
 		$overallNscOK = $overallNscOK + 1;
 		
+		print "--------------------------------------\n";
+                print "--------------------------------------\n";
 		print "$nscFileName MATCHES expected headers.\n";
+		print "--------------------------------------\n";
+                print "--------------------------------------\n";
+                print "\n\n\n";
 		
 		
 	} else {
 		
+		print "XXXXXX    XX       X    X\n";
+                print "X        X  X      X    X\n";
+                print "XXXXX   X    X     X    X\n";
+                print "X       XXXXXX     X    X\n";
+                print "X       X    X     X    X\n";
+                print "X       X    X     X    XXXXXX\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
 		print "$nscFileName DOES NOT MATCH expected headers.\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
+                print "\n\n\n";
 		
-		printf "%-30s | %-30s\n", "Table Column Name", "File Header";		
+		
+		printf "%-45s | %-45s\n", "Table Column Name", "File Header";		
 		foreach (my $i = 0; $i < @nscColumnNames; $i++) {		
 			if (lc $nscColumnNames[$i] ne lc $nscFileHeaders[$i]) {				
-				printf "%-30s | %-30s\n",  "-----FAIL----- " . $nscColumnNames[$i] , "-----FAIL----- " . $nscFileHeaders[$i];
+				printf "%-45s | %-45s\n",  "-----FAIL----- " . $nscColumnNames[$i] , "-----FAIL----- " . $nscFileHeaders[$i];
 			} else {
-				printf "%-30s | %-30s\n", $nscColumnNames[$i], $nscFileHeaders[$i];
+				printf "%-45s | %-45s\n", $nscColumnNames[$i], $nscFileHeaders[$i];
 			}
 		}
 		
@@ -421,10 +461,12 @@ foreach my $ctabFileBase (@ctabFileList){
 	# print "firstLine: $firstLine\n";
 	my @ctabFileHeaders = split(/,/, $firstLine);
 	
-	# print join(",", @ctabColumnNames);
-	# print "\n";
-	# print join(",", @ctabFileHeaders);
-	# print "\n";
+        print "ctabColumnNames - EXPECTED\n";
+	print join("\t", @ctabColumnNames);
+	print "\n\n\n";
+        print "ctabFileHeaders - FOUND\n";
+	print join("\t", @ctabFileHeaders);
+	print "\n\n\n";
 	
 	my $equals = 0;
 	
@@ -444,18 +486,36 @@ foreach my $ctabFileBase (@ctabFileList){
 		
 		$overallCtabOK = $overallCtabOK + 1; 
 		
+		print "--------------------------------------\n";
+                print "--------------------------------------\n";
 		print "$ctabFileName MATCHES expected headers.\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
+                print "\n\n\n";
+		
 		
 	} else {
-		
+
+                print "XXXXXX    XX       X    X\n";
+                print "X        X  X      X    X\n";
+                print "XXXXX   X    X     X    X\n";
+                print "X       XXXXXX     X    X\n";
+                print "X       X    X     X    X\n";
+                print "X       X    X     X    XXXXXX\n";
+		print "--------------------------------------\n";
+                print "--------------------------------------\n";
 		print "$ctabFileName DOES NOT MATCH expected headers.\n";
+                print "--------------------------------------\n";
+                print "--------------------------------------\n";
+                print "\n\n\n";
 		
-		printf "%-30s | %-30s\n", "Table Column Name", "File Header";		
+		
+		printf "%-45s | %-45s\n", "Table Column Name", "File Header";		
 		foreach (my $i = 0; $i < @ctabColumnNames; $i++) {		
 			if (lc $ctabColumnNames[$i] ne lc $ctabFileHeaders[$i]) {
-				printf "%-30s | %-30s\n",  "-----FAIL----- " . $ctabColumnNames[$i] , "-----FAIL----- " . $ctabFileHeaders[$i];
+				printf "%-45s | %-45s\n",  "-----FAIL----- " . $ctabColumnNames[$i] , "-----FAIL----- " . $ctabFileHeaders[$i];
 			} else {
-				printf "%-30s | %-30s\n", $ctabColumnNames[$i], $ctabFileHeaders[$i];
+				printf "%-45s | %-45s\n", $ctabColumnNames[$i], $ctabFileHeaders[$i];
 			}
 		}
 		

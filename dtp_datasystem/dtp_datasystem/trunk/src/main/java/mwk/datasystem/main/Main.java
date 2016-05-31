@@ -27,11 +27,12 @@ public class Main {
 
     public static void main(String[] args) {
         //testTanimotoScores();
-        // testSearchCriteriaBean();
-        // testCuratedStuff();        
-        //testCreateNewName();
+        //testSearchCriteriaBean();        
+        //testCuratedStuff();                
+        //testCreateNewName();        
+        // testUpdateCuratedNsc();
         
-        testUpdateCuratedNsc();
+        testDeleteCuratedNsc();
 
     }
 
@@ -39,9 +40,9 @@ public class Main {
 
         CuratedNscVO valObj = new CuratedNscVO();
         
-        valObj.setId(671l);
-        valObj.setNsc(10000000);
-        valObj.setCas("MWK");
+        valObj.setId(723l);
+        valObj.setNsc(10101010);
+        valObj.setCas("MWKchanged");
         
         CuratedNameVO cnamVO = new CuratedNameVO();
         cnamVO.setId(75l);                
@@ -81,6 +82,16 @@ public class Main {
         
         
         HelperCuratedNsc.updateCuratedNsc(valObj);
+
+    }
+    
+    public static void testDeleteCuratedNsc() {
+
+        CuratedNscVO valObj = new CuratedNscVO();
+        
+        valObj.setId(723l);
+        
+        HelperCuratedNsc.deleteCuratedNsc(valObj);
 
     }
 

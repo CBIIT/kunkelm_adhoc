@@ -19,6 +19,37 @@ my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "--start: $startDate\n";
 
+my @info = qw(
+DBI:Pg:dbname=sarcomadb;host=localhost mwkunkel donkie11 compound,nscIdent
+DBI:Pg:dbname=sclcdb;host=localhost mwkunkel donkie11 compound,nscIdent
+DBI:Pg:dbname=datasystemdb;host=localhost mwkunkel donkie11 nsc_cmpd
+DBI:Pg:dbname=sarcomacomparedb;host=localhost mwkunkel donkie11 syntheticIdent
+);
+
+my $i;
+my $j;
+
+my $db;
+my $u;
+my $pw;
+my $tbls;
+
+$i = 0;
+$j = $i + 3;
+while ($i < $#info){
+
+$db = $info[$i];
+$u = $info[$i + 1];
+$pw = $info[$i + 2];
+$tbls = $info[$i + 3];
+
+print "$i $db $u $pw $tbls\n";
+
+$i = $i + 3;
+
+}
+
+
 my @sqlList = ();
 my $sql;
 
@@ -67,40 +98,19 @@ my $lol = $sth->fetchall_arrayref();
 # clean up
 $dbh->disconnect();
 
-
-
-
 # target of update
 
-$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+#$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+#$dbh = DBI->connect("DBI:Pg:dbname=smallcell;host=ncidb-d115-d;port=5473", "sclc", "DPt09232Sm2LL204Ung", {'RaiseError' => 1});
+$dbh = DBI->connect("DBI:Pg:dbname=sarcoma;host=ncidb-d115-d;port=5473", "sarcomadev", "sar20920384220dev", {'RaiseError' => 1});
 
-my $sql_synthetic_ident = qq[
-update synthetic_ident
+my $sql = qq[
+update compound
 set drug_name = ?,
 target = ?,
 smiles = ?
-from nsc_ident
-where synthetic_ident.id = nsc_ident.id
-and nsc_ident.nsc = ?
-];
-
-my $sql_cmpd_table = qq[
-update cmpd_table
-set name = ?,
-general_comment = ?,
-can_smi = ?
 where nsc = ?
 ];
-
-my $sql = qq[
-update tanimoto_scores
-set drug_name2 = ?,
-target2 = ?,
-smiles2 = ?
-where nsc2 = ?
-];
-
-
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";

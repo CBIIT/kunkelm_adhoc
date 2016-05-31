@@ -1,8 +1,3 @@
-/*
- 
- 
- 
- */
 package mwk.datasystem.controllers;
 
 import java.io.Serializable;
@@ -51,7 +46,6 @@ public class CuratedNscController implements Serializable {
         newCuratedNsc = new CuratedNscVO();
 
         loadCuratedNscs();
-
         loadCuratedNames();
         loadCuratedOriginators();
         loadCuratedProjects();
@@ -90,11 +84,17 @@ public class CuratedNscController implements Serializable {
     }
 
     public void loadCuratedNscs() {
+        
+        System.out.println("In loadCuratedNscs in CuratedNscController.");
+        
         curatedNscs = HelperCuratedNsc.loadAllCuratedNsc();
         Collections.sort(curatedNscs, new Comparators.CuratedNscComparator());
     }
 
     public void loadCuratedNames() {
+        
+        System.out.println("In loadCuratedNames in CuratedNscController.");
+        
         _knownNames = HelperCuratedNsc.loadAllNames();
         Collections.sort(_knownNames, new Comparators.CuratedNameComparator());
         knownNamesMap = new HashMap<String, CuratedNameVO>();
@@ -104,6 +104,9 @@ public class CuratedNscController implements Serializable {
     }
 
     public void loadCuratedOriginators() {
+        
+        System.out.println("In loadCuratedOriginators in CuratedNscController.");
+        
         _knownOriginators = HelperCuratedNsc.loadAllOriginators();
         Collections.sort(_knownOriginators, new Comparators.CuratedOriginatorComparator());
         knownOriginatorsMap = new HashMap<String, CuratedOriginatorVO>();
@@ -113,6 +116,9 @@ public class CuratedNscController implements Serializable {
     }
 
     public void loadCuratedProjects() {
+        
+        System.out.println("In loadCuratedProjects in CuratedNscController.");
+        
         _knownProjects = HelperCuratedNsc.loadAllProjects();
         Collections.sort(_knownProjects, new Comparators.CuratedProjectComparator());
         knownProjectsMap = new HashMap<String, CuratedProjectVO>();
@@ -122,6 +128,9 @@ public class CuratedNscController implements Serializable {
     }
 
     public void loadCuratedTargets() {
+        
+        System.out.println("In loadCuratedTargets in CuratedNscController.");
+        
         _knownTargets = HelperCuratedNsc.loadAllTargets();
         Collections.sort(_knownTargets, new Comparators.CuratedTargetComparator());
         knownTargetsMap = new HashMap<String, CuratedTargetVO>();

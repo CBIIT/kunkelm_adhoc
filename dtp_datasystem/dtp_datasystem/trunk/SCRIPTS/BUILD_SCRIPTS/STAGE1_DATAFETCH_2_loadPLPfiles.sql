@@ -14,14 +14,14 @@
 -- #    #  #    #              #   #    #  #    #  #          #
 -- #####   #####                #   ####    ####   #          #
 
-\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_400k_frags.csv csv header null as ''
-\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_remainder_frags.csv csv header null as ''
+\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_400K_frags.csv csv header quote as '"' null as ''
+\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_remainder_frags.csv csv header quote as '"' null as ''
 
-\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_400k_nsc.csv csv header null as ''
-\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_remainder_nsc.csv csv header null as ''
+\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_400K_nsc.csv csv header quote as '"' null as ''
+\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_remainder_nsc.csv csv header quote as '"' null as ''
 
-\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_400k_ctab.csv csv header null as ''
-\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_remainder_ctab.csv csv header null as ''
+\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_400K_ctab.csv csv header quote as '"' null as ''
+\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_remainder_ctab.csv csv header quote as '"' null as ''
 
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------

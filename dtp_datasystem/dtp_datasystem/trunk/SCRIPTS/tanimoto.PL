@@ -80,8 +80,6 @@ foreach my $sql(@sqlList){
 $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 }
 
-
-
   #####    ##    #    #     #    #    #   ####    #####   ####
     #     #  #   ##   #     #    ##  ##  #    #     #    #    #
     #    #    #  # #  #     #    # ## #  #    #     #    #    #
@@ -129,7 +127,13 @@ foreach my $sql(@sqlList){
 
 my $sql = "drop table if exists temp_tanimoto_collate";
 
+ print "$sql;\n\n";
+ $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+
 $sql = "create table temp_tanimoto_collate as select all_pair_nsc.uno, all_pair_nsc.duo ";
+
+ print "$sql;\n\n";
+ $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 
 foreach my $fp(@fpList){	
 	$sql = $sql . "\n, temp_tanimoto_" . $fp . ".tanimoto as " . $fp . "_tanimoto";
@@ -189,14 +193,14 @@ $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;
  #    #  #    #  #   ##  #    #  #    #  #
  #    #  #    #  #    #   ####   #    #  ######
 
-drop table if exists temp;
-create table temp as select * from tanimoto_scores limit 0;
-alter table temp drop id;
-\copy temp from /tmp/temp_tanimoto_collate.csv csv header
-drop sequence if exists temp_seq;
-create sequence temp_seq;
-insert into tanimoto_scores
-select nextval('temp_seq'), * from temp;
+#drop table if exists temp;
+#create table temp as select * from tanimoto_scores limit 0;
+#alter table temp drop id;
+#\copy temp from /tmp/temp_tanimoto_collate.csv csv header
+#drop sequence if exists temp_seq;
+#create sequence temp_seq;
+#insert into tanimoto_scores
+#select nextval('temp_seq'), * from temp;
 
  #    #    ##    #    #  #    #    ##    #
  ##  ##   #  #   ##   #  #    #   #  #   #

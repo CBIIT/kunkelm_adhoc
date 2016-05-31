@@ -3,6 +3,11 @@
 -- since white space issues will have already been fixed
 
 update fields_and_entries
+set entry = 'DTP-110'
+where entry = 'DPT-110'
+and field_name = 'project_code';
+
+update fields_and_entries
 set entry = 'AbbVie'
 where entry = 'Abbvie'
 and field_name = 'originator';

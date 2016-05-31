@@ -34,6 +34,9 @@ push @sqlList, qq[
 create table nsc_to_load as
 select distinct nsc, category as cmpd_type
 from comb_cat
+
+where nsc not in (183489, 189352)
+
 ];
 
 push @sqlList, qq[

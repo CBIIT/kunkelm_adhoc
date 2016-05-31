@@ -77,7 +77,7 @@ public class ListManagerController implements Serializable {
         cmpdListIds = new ArrayList<Long>();
         performUpdateAvailableLists();
 
-    // APP&INV APP & INV APPROVED AND INVESTIGATIONAL
+        // APP&INV APP & INV APPROVED AND INVESTIGATIONAL
         // default activeList is set to APPROVED and INVESTIGATIONAL which is forced to be CmpdList.id = 1
         loadToActiveList(1l);
     }
@@ -170,7 +170,7 @@ public class ListManagerController implements Serializable {
 
             justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
 
-      // check for change in size of lists
+            // check for change in size of lists
             // null out the listMembers if there has been a change to force
             // re-load next time it is called
             // OTHERWISE just update list-level info
@@ -185,13 +185,13 @@ public class ListManagerController implements Serializable {
 
                 if (listMap.containsKey(fetchedList.getId())) {
 
-          // existing list
+                    // existing list
                     // update list-level info and fetch data if count has changed
                     CmpdListVO curList = listMap.get(fetchedList.getId());
                     // how many current members
                     Integer curCountMembers = curList.getCountListMembers();
 
-          // if the number of members has changed
+                    // if the number of members has changed
                     // then null out listMembers to force re-fetch the next time it is called
                     if (fetchedList.getCountListMembers().intValue() != curList.getCountListMembers().intValue()) {
 
@@ -285,8 +285,15 @@ public class ListManagerController implements Serializable {
 
         System.out.println("Entering performLoadList(CmpdListVO clVO)");
 
-        CmpdListVO voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
-        clVO.setCmpdListMembers(voList.getCmpdListMembers());
+        CmpdListVO voList = null;
+
+        if (clVO != null) {
+            voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
+        }
+
+        if (voList != null) {
+            clVO.setCmpdListMembers(voList.getCmpdListMembers());
+        }
 
         sessionController.configurationBean.performUpdateColumns();
 
@@ -461,7 +468,7 @@ public class ListManagerController implements Serializable {
                     //add a picture shape
                     ClientAnchor anchor = helper.createClientAnchor();
 
-          //set top-left corner of the picture,
+                    //set top-left corner of the picture,
                     //subsequent call of Picture#resize() will operate relative to it
                     anchor.setCol1(18);
                     anchor.setRow1(row.getRowNum());

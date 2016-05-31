@@ -4,9 +4,8 @@
 package mwk.datasystem.util;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import mwk.datasystem.domain.CuratedName;
 import mwk.datasystem.domain.CuratedNameImpl;
 import mwk.datasystem.domain.CuratedNsc;
@@ -25,7 +24,6 @@ import mwk.datasystem.vo.CuratedTargetVO;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -193,6 +191,58 @@ public class HelperCuratedNsc {
         return rtn;
     }
 
+    public static void deleteCuratedNsc(CuratedNscVO voIn) {
+
+        System.out.println("In deleteCuratedNsc in HelperCuratedNsc");
+        System.out.println("voIn: " + voIn.toString());
+
+        CuratedNscVO rtn = null;
+
+        Session session = null;
+        Transaction tx = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            CuratedNsc ent = (CuratedNsc) session.get(CuratedNscImpl.class, voIn.getId());
+
+//            ent.setPreferredName(null);
+//            ent.setGenericName(null);
+            List<CuratedName> aliaToRemove = new ArrayList<CuratedName>(ent.getAliases());
+            for (CuratedName cn : aliaToRemove) {
+                ent.getAliases().remove(cn);
+                cn.getCuratedNscToAliases().remove(ent);
+            }
+
+//            ent.setOriginator(null);
+            List<CuratedProject> projToRemove = new ArrayList<CuratedProject>(ent.getProjects());
+            for (CuratedProject cp : projToRemove) {
+                ent.getProjects().remove(cp);
+                cp.getCuratedNscs().remove(ent);
+            }
+
+//            ent.setPrimaryTarget(null);
+            List<CuratedTarget> targToRemove = new ArrayList<CuratedTarget>(ent.getSecondaryTargets());
+            for (CuratedTarget ct : targToRemove) {
+                ent.getSecondaryTargets().remove(ct);
+                ct.getCuratedNscToSecondaryTargets().remove(ent);
+            }
+
+            session.delete(ent);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        } finally {
+            session.close();
+        }
+
+    }
+
     public static void updateCuratedNsc(CuratedNscVO voIn) {
 
         System.out.println("In updateCuratedNsc in HelperCuratedNsc");
@@ -351,35 +401,6 @@ public class HelperCuratedNsc {
             session.close();
         }
 
-    }
-
-    public static void deleteCuratedNsc(CuratedNscVO cnVO) {
-
-        System.out.println("In delete CuratedNsc in HelperCuratedNsc");
-        System.out.println("cnVO: " + cnVO.toString());
-
-        Session session = null;
-        Transaction tx = null;
-
-        try {
-
-            session = HibernateUtil.getSessionFactory().openSession();
-            tx = session.beginTransaction();
-
-            Criteria cnCrit = session.createCriteria(CuratedNsc.class)
-                    .add(Restrictions.eq("id", cnVO.getId()));
-
-            CuratedNsc entity = (CuratedNsc) cnCrit.uniqueResult();
-            session.delete(entity);
-
-            tx.commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            tx.rollback();
-        } finally {
-            session.close();
-        }
     }
 
     public static CuratedNameVO createNewCuratedName(CuratedNameVO voIn) {

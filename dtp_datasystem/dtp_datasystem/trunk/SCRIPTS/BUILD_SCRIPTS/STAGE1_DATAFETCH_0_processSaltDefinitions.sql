@@ -12,24 +12,67 @@ name varchar(1024)
 
 -- import salts processed as fragments through Pipeline Pilot
 
+--drop table if exists processed_salts;
+
+--create table processed_salts(
+--source varchar,
+--salt_name varchar,	
+--smiles varchar,	
+--can_smi varchar,	
+--can_taut varchar,	
+--can_taut_strip_stereo varchar,	
+--inchi varchar,
+--inchikey varchar,
+--molecular_weight double precision,
+--molecular_formula varchar,
+--canonicaltautomer varchar,
+--numberoftautomers varchar
+--);
+
+--\copy processed_salts from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/processedSaltsOut.tsv csv header delimiter as E'\t'
+
+
+-- new salt file from DZ
+
 drop table if exists processed_salts;
 
 create table processed_salts(
-source varchar,
-salt_name varchar,	
-smiles varchar,	
-can_smi varchar,	
-can_taut varchar,	
-can_taut_strip_stereo varchar,	
-inchi varchar,
-inchikey varchar,
-molecular_weight double precision,
+salt_name varchar,
+formula varchar,
+weight double precision,
+charge int,
+smiles varchar,
+can_smi varchar,
+can_taut varchar,
+can_taut_strip_stereo varchar,
 molecular_formula varchar,
-canonicaltautomer varchar,
-numberoftautomers varchar
+molecular_weight double precision,
+formalcharge int,
+num_atoms int,
+num_bonds int,
+num_hydrogens int,
+num_positiveatoms int,
+num_negativeatoms int,
+num_dativebonds int,
+canonicaltautomer boolean,
+numberoftautomers int
 );
 
-\copy processed_salts from /home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/processedSaltsOut.tsv csv header delimiter as E'\t'
+\copy processed_salts from /home/mwkunkel/saltsFromDZprocessed.csv csv header quote as '"' null as ''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- same salts
 
@@ -39,8 +82,8 @@ create table unique_salts
 as
 select can_smi, can_taut, can_taut_strip_stereo, molecular_formula, molecular_weight, 
 count(*), 
-array_to_string(array_agg(distinct salt_name), ', ') as names, 
-array_to_string(array_agg(distinct source), ', ') as sources 
+array_to_string(array_agg(distinct salt_name), ', ') as names
+--array_to_string(array_agg(distinct source), ', ') as sources 
 from processed_salts
 
 group by 1, 2, 3, 4, 5 order by 2 desc;
@@ -61,8 +104,8 @@ select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt
 -- exclude solvents
 
 insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment)
-select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight, sources
-from unique_salts
+select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, names, Molecular_Formula, Molecular_Weight, 'ChemReg'
+from unique_salts;
 where sources not like '%olvent%';
 
 alter table cmpd_known_salt add fixed varchar;

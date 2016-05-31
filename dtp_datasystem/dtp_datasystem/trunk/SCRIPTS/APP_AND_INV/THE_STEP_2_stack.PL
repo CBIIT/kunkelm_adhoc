@@ -62,21 +62,29 @@ foreach $whichField(@multiEntryFields){
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
 	my $nsc;
+        my $trimmedNsc;
+
         my $cas;
+        my $trimmedCas;
+
 	my $val;
+
 	my @splitVal;
 	my $indivVal;
 	my $trimmedVal;
 	
 	$sth->bind_columns(\($nsc, $cas, $val));
 	while ($sth->fetch){    
+
+                $trimmedCas = trim($cas);
+
 		@splitVal = split(';', $val);
 		foreach $indivVal(@splitVal){
 			$trimmedVal = trim($indivVal);
                         if (length($trimmedVal) > 0){
 			$dbh->do('insert into fields_and_entries (nsc, cas, field_name, entry) values (?,?,?,?)',
 				undef,
-				$nsc, $cas, $whichField, $trimmedVal);  
+				$nsc, $trimmedCas, $whichField, $trimmedVal);  
                 }
     }    
   }

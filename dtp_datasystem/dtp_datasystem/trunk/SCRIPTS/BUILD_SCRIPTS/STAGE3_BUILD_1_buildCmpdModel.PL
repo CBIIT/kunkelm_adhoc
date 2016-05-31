@@ -19,8 +19,6 @@ print "start: $startDate\n";
 # connect
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
 
-goto skipToHere;
-
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -51,13 +49,11 @@ my @tablesToNuke = (
 	"nsc_cmpd",
 	"nsc_cmpd_type"); 
 
-foreach my $tableToNuke(@tablesToNuke){
-	
+foreach my $tableToNuke(@tablesToNuke){	
 	my $tempSql = qq[truncate table $tableToNuke cascade];	
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-	
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;		
 }
 
 # set up for cmpd_types
@@ -191,9 +187,7 @@ num_triplebonds,
 num_rotatablebonds,     
 num_hydrogens,      
 num_metalatoms,         
-# this is wrong!  this is wrong!  this is wrong!
-# (num_atoms - num_hydrogens),         
-num_atoms, #as num_heavyatoms
+num_atoms,
 num_positiveatoms,      
 num_negativeatoms,      
 num_ringbonds,          
@@ -498,8 +492,6 @@ my $tempSql = qq[create index tna_nsc on temp_nsc_agg(nsc)];
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
-skipToHere:
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

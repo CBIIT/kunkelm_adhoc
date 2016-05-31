@@ -26,7 +26,7 @@
             <column name="NSC" not-null="false" unique="true" sql-type="INTEGER"/>
             <type name="java.lang.Integer"/>
         </property>
-        <set name="aliases" table="ALIASES2CURATED_NSC_TO_ALIASES" order-by="ALIASES_FK" lazy="false" fetch="join" inverse="true" cascade="delete">
+        <set name="aliases" table="ALIASES2CURATED_NSC_TO_ALIASES" order-by="ALIASES_FK" lazy="false" fetch="join" inverse="true" cascade="none">
             <key foreign-key="CURATED_NAME_CURATED_NSC_TO_AC">
                 <column name="CURATED_NSC_TO_ALIASES_FK" sql-type="BIGINT"/>
             </key>
@@ -34,7 +34,7 @@
                 <column name="ALIASES_FK" sql-type="BIGINT"/>
             </many-to-many>
         </set>
-        <set name="secondaryTargets" table="CURATED_NSC_TO_SECONDARY_TARGE" order-by="SECONDARY_TARGETS_FK" lazy="false" fetch="join" inverse="true" cascade="delete">
+        <set name="secondaryTargets" table="CURATED_NSC_TO_SECONDARY_TARGE" order-by="SECONDARY_TARGETS_FK" lazy="false" fetch="join" inverse="true" cascade="none">
             <key foreign-key="CURATED_TARGET_CURATED_NSC_TOC">
                 <column name="CURATED_NSC_TO_SECONDARY_TA_FK" sql-type="BIGINT"/>
             </key>
@@ -42,16 +42,16 @@
                 <column name="SECONDARY_TARGETS_FK" sql-type="BIGINT"/>
             </many-to-many>
         </set>
-        <many-to-one name="preferredName" class="mwk.datasystem.domain.CuratedNameImpl" cascade="delete" foreign-key="CURATED_NSC_PREFERRED_NAME_FKC" not-null="false" lazy="false" fetch="join">
+        <many-to-one name="preferredName" class="mwk.datasystem.domain.CuratedNameImpl" cascade="none" foreign-key="CURATED_NSC_PREFERRED_NAME_FKC" not-null="false" lazy="false" fetch="join">
             <column name="PREFERRED_NAME_FK" not-null="false" sql-type="BIGINT"/>
         </many-to-one>
-        <many-to-one name="genericName" class="mwk.datasystem.domain.CuratedNameImpl" cascade="delete" foreign-key="CURATED_NSC_GENERIC_NAME_FKC" not-null="false" lazy="false" fetch="join">
+        <many-to-one name="genericName" class="mwk.datasystem.domain.CuratedNameImpl" cascade="none" foreign-key="CURATED_NSC_GENERIC_NAME_FKC" not-null="false" lazy="false" fetch="join">
             <column name="GENERIC_NAME_FK" not-null="false" sql-type="BIGINT"/>
         </many-to-one>
-        <many-to-one name="primaryTarget" class="mwk.datasystem.domain.CuratedTargetImpl" cascade="delete" foreign-key="CURATED_NSC_PRIMARY_TARGET_FKC" not-null="false" lazy="false" fetch="join">
+        <many-to-one name="primaryTarget" class="mwk.datasystem.domain.CuratedTargetImpl" cascade="none" foreign-key="CURATED_NSC_PRIMARY_TARGET_FKC" not-null="false" lazy="false" fetch="join">
             <column name="PRIMARY_TARGET_FK" not-null="false" sql-type="BIGINT"/>
         </many-to-one>
-        <set name="projects" table="CURATED_NSCS2PROJECTS" order-by="PROJECTS_FK" lazy="false" fetch="join" inverse="true" cascade="delete">
+        <set name="projects" table="CURATED_NSCS2PROJECTS" order-by="PROJECTS_FK" lazy="false" fetch="join" inverse="true" cascade="none">
             <key foreign-key="CURATED_PROJECT_CURATED_NSCS_C">
                 <column name="CURATED_NSCS_FK" sql-type="BIGINT"/>
             </key>
@@ -59,7 +59,7 @@
                 <column name="PROJECTS_FK" sql-type="BIGINT"/>
             </many-to-many>
         </set>
-        <many-to-one name="originator" class="mwk.datasystem.domain.CuratedOriginatorImpl" cascade="delete" foreign-key="CURATED_NSC_ORIGINATOR_FKC" not-null="false" lazy="false" fetch="join">
+        <many-to-one name="originator" class="mwk.datasystem.domain.CuratedOriginatorImpl" cascade="none" foreign-key="CURATED_NSC_ORIGINATOR_FKC" not-null="false" lazy="false" fetch="join">
             <column name="ORIGINATOR_FK" not-null="false" sql-type="BIGINT"/>
         </many-to-one>
     </class>
