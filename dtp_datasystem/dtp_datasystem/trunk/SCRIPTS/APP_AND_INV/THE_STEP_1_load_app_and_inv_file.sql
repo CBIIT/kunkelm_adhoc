@@ -13,6 +13,15 @@ type varchar,
 project_code varchar
 );
 
-\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/Combined IOA and AOD List 02_12_2016_MWK_FIXED_with_sarc_and_sclc_compounds.csv' csv header
+\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/APP_AND_INV_25_MAY_2016.tsv' csv header null as '' delimiter as E'\t'
+
+update app_and_inv 
+set nsc = trim(both ' ' from nsc);
+
+update app_and_inv 
+set cas = trim(both ' ' from cas);
+
+update app_and_inv
+set cas = 'no cas' where cas is null;
 
 create index aai_nsc_idx on app_and_inv(nsc);

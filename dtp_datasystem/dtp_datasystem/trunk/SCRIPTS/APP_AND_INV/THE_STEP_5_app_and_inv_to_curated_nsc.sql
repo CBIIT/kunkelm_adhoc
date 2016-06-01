@@ -41,7 +41,7 @@ order by entry;
 
 insert into curated_name(id, value, description, reference)
 select
-nextval('curated_name_seq'), entry, 'from app_and_inv load', 'Combined IOA and AOD List 02_12_2016'
+nextval('curated_name_seq'), entry, 'from app_and_inv load', 'Combined IOA and AOD List'
 from temp;
 
 -- distinct originators
@@ -57,7 +57,7 @@ order by entry;
 
 insert into curated_originator(id, value, description, reference)
 select
-nextval('curated_originator_seq'), entry, 'from app_and_inv load', 'Combined IOA and AOD List 02_12_2016'
+nextval('curated_originator_seq'), entry, 'from app_and_inv load', 'Combined IOA and AOD List'
 from temp;
 
 -- distinct projects
@@ -72,7 +72,7 @@ where field_name = 'project_code'
 order by entry;
 
 insert into curated_project(id, value, description, reference)
-select nextval('curated_project_seq'), entry, 'from app_and_inv_load', 'Combined IOA and AOD List 02_12_2016'
+select nextval('curated_project_seq'), entry, 'from app_and_inv_load', 'Combined IOA and AOD List'
 from temp;
 
 -- distinct targets

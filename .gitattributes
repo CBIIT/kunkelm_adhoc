@@ -9470,6 +9470,7 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/combo.csv -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/APP_AND_INV_25_MAY_2016.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax[!!-~]02.03.15.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax[!!-~]07.24.15.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax02.03.15.biologicals.csv -text
@@ -9491,6 +9492,8 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_2_stack.PL -tex
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_3_generateQCsql.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_4_fix.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_5_app_and_inv_to_curated_nsc.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Jun01at05-44-EDT.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Jun01at05-52-EDT.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Mar15at10-51-EDT.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/propagateAppAndInv.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qc.sql -text

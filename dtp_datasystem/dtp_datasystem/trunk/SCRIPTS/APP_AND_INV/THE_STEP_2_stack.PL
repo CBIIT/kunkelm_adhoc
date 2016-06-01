@@ -12,7 +12,7 @@ use DBI;
 
 sub ltrim { my $s = shift; $s =~ s/^\s+//;       return $s };
 sub rtrim { my $s = shift; $s =~ s/\s+$//;       return $s };
-sub  trim { my $s = shift; $s =~ s/^\s+|\s+$//g; return $s };
+sub  trim { my $s = shift; if ($s){ $s =~ s/^\s+|\s+$//g; } else { $s = '' } return $s };
 
 my $t = time;
 my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
@@ -25,8 +25,8 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 my @sqlList = ();
 my $sql;
 
-my @multiEntryFields = ("generic_name", "preferred_name", "alias_names", "other_targets", "project_code");
-my @singleEntryFields = ("originator", "primary_target");
+my @multiEntryFields = ("alias_names", "other_targets");
+my @singleEntryFields = ("generic_name", "preferred_name", "originator", "primary_target", "type", "project_code");
 my $whichField;
 
 #  ####   ######   #####  #    #  #####
