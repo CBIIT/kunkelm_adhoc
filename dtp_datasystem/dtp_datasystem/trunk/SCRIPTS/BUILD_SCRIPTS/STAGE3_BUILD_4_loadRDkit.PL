@@ -128,7 +128,7 @@ print "$sql\n\n";
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my $valCanSmi; my $validCanTaut; my $validCanTautStripStereo; my $valid_ctab; my $cnt;
-$sth -> bind_columns(\$valCanSmi, \$validCanTaut, \$validCanTautStripStereo);
+$sth -> bind_columns(\$valCanSmi, \$validCanTaut, \$validCanTautStripStereo, \$valid_ctab, \$cnt);
 print "valCanSmi validCanTaut validCanTautStripStereo\n";
 while ($sth->fetch()){
 	print "$valCanSmi $validCanTaut $validCanTautStripStereo $valid_ctab $cnt\n";	

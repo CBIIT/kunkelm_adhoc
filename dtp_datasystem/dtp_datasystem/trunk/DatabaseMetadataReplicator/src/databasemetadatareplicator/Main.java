@@ -69,9 +69,12 @@ public class Main {
         "jdbc:postgresql://localhost:5432/datasystemdb",
         "mwkunkel",
         "donkie11",
-        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
-        "oncology",
-        "OnC0L029302802K1t"
+        "jdbc:postgresql://localhost:5432/oncologydrugsdb",
+        "mwkunkel",
+        "donkie11"
+//        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
+//        "oncology",
+//        "OnC0L029302802K1t"
     };
 
     // compare to oncologydrugs
@@ -79,9 +82,12 @@ public class Main {
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
-        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
-        "oncology",
-        "OnC0L029302802K1t"
+        "jdbc:postgresql://localhost:5432/oncologydrugsdb",
+        "mwkunkel",
+        "donkie11"
+//        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
+//        "oncology",
+//        "OnC0L029302802K1t"
     };
 
     // private compare to public compare
@@ -89,13 +95,12 @@ public class Main {
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
-        //        "jdbc:postgresql://ncidb-d115-d:5473/pubcompare",
-        //        "publiccompare",
-        //        "P3b092094wlC0m3"
-        //        
-        "jdbc:postgresql://localhost:5432/publiccomparedb",
-        "mwkunkel",
-        "donkie11"
+        "jdbc:postgresql://ncidb-d115-d:5473/pubcompare",
+        "publiccompare",
+        "P3b092094wlC0m3"
+//        "jdbc:postgresql://localhost:5432/publiccomparedb",
+//        "mwkunkel",
+//        "donkie11"
     };
 
     static final String[] datasystemTableNamesAndWhereClauses = new String[]{
@@ -108,45 +113,46 @@ public class Main {
         "cmpd_alias_type", "",
         "cmpd_relation_type", "",
         "cmpd_fragment_type", "",
-        "cmpd_inventory", " where id in (select nsc from for_export)",
-        "cmpd_annotation", " where id in (select nsc from for_export)",
-        "cmpd_bio_assay", " where id in (select nsc from for_export)",
-        "cmpd_legacy_cmpd", " where id in (select nsc from for_export)",
-        "cmpd_table", " where nsc in (select nsc from for_export)",
-        "cmpd", " where id in (select nsc from for_export)",
-        "nsc_cmpd", " where nsc in (select nsc from for_export)",
-        "cmpd_fragment", " where nsc_cmpd_fk in (select nsc from for_export)",
-        "cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from for_export))",
-        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
+        "cmpd_inventory", " where id in (select nsc from nsc_for_public_release)",
+        "cmpd_annotation", " where id in (select nsc from nsc_for_public_release)",
+        "cmpd_bio_assay", " where id in (select nsc from nsc_for_public_release)",
+        "cmpd_legacy_cmpd", " where id in (select nsc from nsc_for_public_release)",
+        "cmpd_table", " where nsc in (select nsc from nsc_for_public_release)",
+        "cmpd", " where id in (select nsc from nsc_for_public_release)",
+        "nsc_cmpd", " where nsc in (select nsc from nsc_for_public_release)",
+        "cmpd_fragment", " where nsc_cmpd_fk in (select nsc from nsc_for_public_release)",
+        "cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_public_release)",
         // "cmpd_list", "NO NO NO",
         // "cmpd_list_member", "NO NO NO",
-        "cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from for_export))",
-        "cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from for_export)",
-        "cmpd_related", " where nsc_cmpd_fk in (select nsc from for_export)",
-        "rdkit_mol", " where nsc in (select nsc from for_export)"
+        "cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_public_release)",
+        "cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_public_release)",
+        "cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_public_release)",
+        "cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_public_release)",
+        "cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_public_release))",
+        "cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_public_release)",
+        "cmpd_related", " where nsc_cmpd_fk in (select nsc from nsc_for_public_release)",
+        "rdkit_mol", " where nsc in (select nsc from nsc_for_public_release)"
     };
 
     static final String[] compareTableNamesAndWhereClauses = new String[]{
         //"affymetrix_ident", "NO NO NO",
-        "build_date", "",
-        "cell_line_data_set", " where id in (select id from dtp_cell_line_data_set where id in (select id from nsc_ident where nsc in (select nsc from for_export)))",
-        "cell_line_data_set_ident", " where id in (select id from nsc_ident where nsc in (select nsc from for_export))",
-        "cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from for_export)))",
-        "compare_cell_line", "",
-        //"compare_result", "NO NO NO",
-        "conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from for_export))",
-        "conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from for_export)))",
-        "dtp_cell_line_data_set", " where cell_line_data_set_ident_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from for_export)))",
+//        "build_date", "",
+//        "cell_line_data_set", " where id in (select id from dtp_cell_line_data_set where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
+//        "cell_line_data_set_ident", " where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release))",
+//        "cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
+//        "compare_cell_line", "",
+//        //"compare_result", "NO NO NO",
+//        "conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_public_release))",
+//        "conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_public_release)))",
+        "dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
+        "dtp_test_result", " where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release))",
         //"grid_compare_columns", "NO NO NO",
         //"grid_compare_job", "NO NO NO",
         //"grid_compare_rows", "NO NO NO",
@@ -155,21 +161,21 @@ public class Main {
         "named_target_set", "",
         //"nano_string_ident", "NO NO NO",
         //"nat_prod_ident", "NO NO NO",
-        "nsc_compound", " where nsc in (select nsc from for_export)",
-        "nsc_ident", " where nsc in (select nsc from for_export)",
+        "nsc_compound", " where nsc in (select nsc from nsc_for_public_release)",
+        "nsc_ident", " where nsc in (select nsc from nsc_for_public_release)",
         //"require_use_ignore", "NO NO NO",
         //"standard_compare_job", "NO NO NO",
         "synthetic_ident", "",
-        "test_result", " where cell_line_data_set_fk in (select id from nsc_ident where nsc in (select nsc from for_export))",
+        "test_result", " where cell_line_data_set_fk in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release))",
         "test_result_type", "", //"uploaded_cell_line_data_set", "NO NO NO",
-        //"uploaded_ident", "NO NO NO",
-        //"uploaded_test_result", "NO NO NO"
+    //"uploaded_ident", "NO NO NO",
+    //"uploaded_test_result", "NO NO NO"
     };
 
     public static void main(String[] args) {
 
-        String[] whichConnectionInfo = datasystem_pgToOra; //datasystemToOncologyDrugs;
-        String[] whichTableNamesAndWhereClauses = pgToOraWhereClauses; //datasystemTableNamesAndWhereClauses;
+        String[] whichConnectionInfo = comparePrivateToPublic;
+        String[] whichTableNamesAndWhereClauses = compareTableNamesAndWhereClauses;
 
         Connection destConn = null;
         Connection sourceConn = null;
@@ -184,7 +190,7 @@ public class Main {
             // archive constraint drop/create statements            
             // ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
             // drop constraints before build
-            // ConstraintManagement.dropConstraints(destConn);
+//            ConstraintManagement.dropConstraints(destConn);
             for (int i = 0; i < whichTableNamesAndWhereClauses.length; i += 2) {
                 String curTbl = whichTableNamesAndWhereClauses[i];
                 String whereClause = whichTableNamesAndWhereClauses[i + 1];
@@ -196,7 +202,7 @@ public class Main {
 
             // recreate the constraints
 //            ConstraintManagement.createConstraints(destConn);
-//            System.out.println("Done! in Main");
+            System.out.println("Done! in Main");
 
             sourceConn.close();
             destConn.close();

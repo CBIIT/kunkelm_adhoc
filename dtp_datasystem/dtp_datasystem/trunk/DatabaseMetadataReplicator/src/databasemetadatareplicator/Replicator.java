@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Replicator {
 
-    public static final Integer BATCH_SIZE = 50; //50000;
+    public static final Integer BATCH_SIZE = 50000;
 
     public static void useMetadata(
             Connection sourceConn,

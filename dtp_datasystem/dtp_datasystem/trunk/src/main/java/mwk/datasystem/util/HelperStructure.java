@@ -29,7 +29,7 @@ public class HelperStructure {
 
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String sqlQuery = "select nsc from rdkit_mol where '" + smiles + "' @= mol " + limitClause;
+            String sqlQuery = "select nsc from rdkit_mol where '" + smiles + "'::mol @= mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);
@@ -59,7 +59,7 @@ public class HelperStructure {
 
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "' <@ mol " + limitClause;
+            String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "'::mol <@ mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);
@@ -123,7 +123,7 @@ public class HelperStructure {
 
             session = HibernateUtil.getSessionFactory().openSession();
 
-            String sqlQuery = "select nsc from rdkit_mol  where cast('" + substructureSmiles + "' as qmol) <@ mol " + limitClause;
+            String sqlQuery = "select nsc from rdkit_mol  where '" + substructureSmiles + "'::qmol <@ mol " + limitClause;
 
             tx = session.beginTransaction();
             Query q = session.createSQLQuery(sqlQuery);

@@ -40,45 +40,44 @@ public class FetchFromProd {
 
 //    MUST DISABLE AUTOCOMMIT for fetchForward cursor (batch fetches) to work
 //    EACH ResultSet MUST also have fetchDirection set FETCH_FORWARD
-            
             oraConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
             System.out.println();
             System.out.println("Starting: fetchLegacyCmpd");
             fetchLegacyCmpd(pgConn, oraConn);
-            
-//            System.out.println();
-//            System.out.println("Starting: fetchBioDataCounts");
-//            fetchBioDataCounts(pgConn, oraConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchMtxt");
-//            fetchMtxt(pgConn, oraConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchInventory");
-//            fetchInventory(pgConn, oraConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchChemNames");
-//            fetchChemNames(pgConn, oraConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchPubChemId");
-//            fetchPubChemId(pgConn, oraConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchProjects");
-//            fetchProjects(pgConn, oraConn);
-//            
-//            System.out.println();
-//            System.out.println("Starting: fetchPlatedSets");
-//            fetchPlatedSets(pgConn, oraConn);
-//            
-//            System.out.println();
-//            System.out.println("Starting: fetchProjects");
-//            fetchProjects(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchBioDataCounts");
+            fetchBioDataCounts(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchMtxt");
+            fetchMtxt(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchInventory");
+            fetchInventory(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchChemNames");
+            fetchChemNames(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchPubChemId");
+            fetchPubChemId(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchProjects");
+            fetchProjects(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchPlatedSets");
+            fetchPlatedSets(pgConn, oraConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchProjects");
+            fetchProjects(pgConn, oraConn);
 
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
@@ -294,7 +293,7 @@ public class FetchFromProd {
         pgStmt.execute(sqlString);
 
     }
-    
+
     public static void fetchMtxt(
             Connection pgConn,
             Connection oraConn) throws Exception {
@@ -777,9 +776,8 @@ public class FetchFromProd {
     public static void fetchPlatedSets(
             Connection pgConn,
             Connection oraConn) throws Exception {
-        
-// have to add distinct filter since DIS tracks different interations of same plate
 
+// have to add distinct filter since DIS tracks different interations of same plate
         Statement oraStmt = null;
         Statement pgStmt = null;
         PreparedStatement pgPrepStmt = null;

@@ -5,7 +5,6 @@
  */
 package fetchfromchembl;
 
-import fetchfromprod.*;
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.apache.log4j.Logger;
 
 /**
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
 public class FetchFromChembl {
 
     private static final Logger lgr = Logger.getLogger("GLOBAL");
-    
+
     private static final int BATCH_FETCH_SIZE = 10000;
     private static final int BATCH_INSERT_SIZE = 10000;
 
@@ -36,7 +37,7 @@ public class FetchFromChembl {
             System.out.println("Starting main in FetchFromChembl.");
 
             System.out.println("Registering drivers.");
-            
+
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             DriverManager.registerDriver(new org.postgresql.Driver());
 
@@ -44,11 +45,10 @@ public class FetchFromChembl {
             oraConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
 
             System.out.println("Opening pgConn");
-            pgConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/chembl_20", "mwkunkel", "donkie11");
+            pgConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
 
 //    MUST DISABLE AUTOCOMMIT for fetchForward cursor (batch fetches) to work
 //    EACH ResultSet MUST also have fetchDirection set FETCH_FORWARD
-            
             oraConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
@@ -96,7 +96,7 @@ public class FetchFromChembl {
         Statement pgStmt = null;
         PreparedStatement pgPrepStmt = null;
         ResultSet resSet = null;
-        String sqlString;
+        String sql;
         String prepStmtString;
 
         long startTime = 0;
@@ -109,82 +109,94 @@ public class FetchFromChembl {
         try {
 
             pgStmt = pgConn.createStatement();
-            
+
             oraStmt = oraConn.createStatement();
             oraStmt.setFetchDirection(ResultSet.FETCH_FORWARD);
             oraStmt.setFetchSize(BATCH_FETCH_SIZE);
 
-            sqlString = "drop table if exists my_chembl";
-            System.out.println(sqlString);
-            pgStmt.execute(sqlString);
+//            sql = "drop table if exists my_chembl21";
+//            System.out.println(sql);
+//            pgStmt.execute(sql);
+//
+//            sql = "create table my_chembl21 ("
+//                    + " chembl_id varchar, "
+//                    + " can_smi varchar, "
+//                    + " can_taut varchar, "
+//                    + " can_taut_strip_stereo varchar, "
+//                    + " inchi varchar,"
+//                    + " inchikey varchar)";
+//            System.out.println(sql);
+//            pgStmt.execute(sql);
+//
+//            sql = "select chembl_id, can_smi, can_taut, can_taut_strip_stereo, inchi, inchikey from ops$kunkel.my_chembl21";
+//            System.out.println(sql);
+//
+//            resSet = oraStmt.executeQuery(sql);
+//            resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
+//            resSet.setFetchSize(BATCH_FETCH_SIZE);
+//
+//            prepStmtString = "insert into my_chembl21(chembl_id, can_smi, can_taut, can_taut_strip_stereo, inchi, inchikey) values(?,?,?,?,?,?)";
+//            pgPrepStmt = pgConn.prepareStatement(prepStmtString);
+//
+//            startTime = System.currentTimeMillis();
+//
+//            while (resSet.next()) {
+//
+//                batCnt++;
+//
+//                pgPrepStmt.setString(1, resSet.getString("chembl_id"));
+//                pgPrepStmt.setString(2, resSet.getString("can_smi"));
+//                pgPrepStmt.setString(3, resSet.getString("can_taut"));
+//                pgPrepStmt.setString(4, resSet.getString("can_taut_strip_stereo"));
+//                pgPrepStmt.setString(5, resSet.getString("inchi"));
+//                pgPrepStmt.setString(6, resSet.getString("inchikey"));
+//
+//                pgPrepStmt.addBatch();
+//
+//                if (batCnt > BATCH_FETCH_SIZE) {
+//                    totBatCnt += batCnt;
+//                    cumCnt += batCnt;
+//
+//                    if (totBatCnt > totalBatchSize) {
+//                        totBatCnt = 0;
+//                        elapsedTime = System.currentTimeMillis() - startTime;
+//
+//                        startTime = System.currentTimeMillis();
+//                        lgr.info("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
+//                        System.out.println("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
+//                    }
+//                    pgPrepStmt.executeBatch();
+//                    pgConn.commit();
+//                    batCnt = 0;
+//                }
+//            }
+//            pgPrepStmt.executeBatch();
+//            pgConn.commit();
 
-            sqlString = "create table my_chembl ("
-                    + "chembl_id varchar, "
-                    + "molregno integer, "
-                    + "can_smi varchar, "
-                    + "taut_can_smi varchar, "
-                    + "taut_nostereo_can_smi varchar, "
-                    + "inchi varchar,"
-                    + "inchikey varchar)";
-            System.out.println(sqlString);
-            pgStmt.execute(sqlString);
+            String[] idxCols = new String[]{
+                "chembl_id",
+                "can_smi",
+                "can_taut",
+                "can_taut_strip_stereo"
+            };
 
-            sqlString = "select chembl_id, molregno, can_smi, taut_can_smi, taut_nostereo_can_smi, inchi, inchikey "
-                    + "from ops$kunkel.my_chembl";
-            System.out.println(sqlString);
-            
-            resSet = oraStmt.executeQuery(sqlString);
-            resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
-            resSet.setFetchSize(BATCH_FETCH_SIZE);
+            ArrayList<String> idxColList = new ArrayList<String>(Arrays.asList(idxCols));
 
-            prepStmtString = "insert into my_chembl(chembl_id, molregno, can_smi, taut_can_smi, taut_nostereo_can_smi, inchi, inchikey) values(?,?,?,?,?,?,?)";
-            pgPrepStmt = pgConn.prepareStatement(prepStmtString);
+            ArrayList<String> sqlList = new ArrayList<String>();
 
-            startTime = System.currentTimeMillis();
-
-            while (resSet.next()) {
-
-                batCnt++;
-
-                pgPrepStmt.setString(1, resSet.getString("chembl_id"));
-                pgPrepStmt.setInt(2, resSet.getInt("molregno"));
-                pgPrepStmt.setString(3, resSet.getString("can_smi"));
-                pgPrepStmt.setString(4, resSet.getString("taut_can_smi"));
-                pgPrepStmt.setString(5, resSet.getString("taut_nostereo_can_smi"));
-                pgPrepStmt.setString(6, resSet.getString("inchi"));
-                pgPrepStmt.setString(7, resSet.getString("inchikey"));
-
-                pgPrepStmt.addBatch();
-
-                if (batCnt > BATCH_FETCH_SIZE) {
-                    totBatCnt += batCnt;
-                    cumCnt += batCnt;
-                    
-                    if (totBatCnt > totalBatchSize) {
-                        totBatCnt = 0;
-                        elapsedTime = System.currentTimeMillis() - startTime;
-
-                        startTime = System.currentTimeMillis();
-                        lgr.info("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
-                    }
-                    pgPrepStmt.executeBatch();
-                    pgConn.commit();
-                    batCnt = 0;
-                }
+            for (String colName : idxColList) {
+                sqlList.add("drop index if exists my_chembl21_" + colName + "_idx");
+                sqlList.add("create index my_chembl21_" + colName + "_idx on my_chembl21(" + colName + ")");
             }
-            pgPrepStmt.executeBatch();
-            pgConn.commit();
 
-            sqlString = "drop index if exists my_chembl_molregno";
-            System.out.println(sqlString);
-            pgStmt.execute(sqlString);
-
-            sqlString = "create index my_chembl_molregno on my_chembl(molregno)";
-            System.out.println(sqlString);
-            pgStmt.execute(sqlString);
+            for (String s : sqlList) {
+                System.out.println(s);
+                pgStmt.execute(s);
+            }
 
         } catch (Exception e) {
             handleCatch(e, oraStmt, pgStmt, pgPrepStmt, resSet);
+            e.printStackTrace();
             throw new Exception("Caught and handled Exception.");
         } finally {
             handleFinally(oraStmt, pgStmt, pgPrepStmt, resSet);
