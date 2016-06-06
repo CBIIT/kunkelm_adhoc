@@ -31,82 +31,40 @@ and field_name = 'originator';
 -- \__\__,_|_|  \__, |\___|\__|___/
 --              |___/              
 
-update fields_and_entries
-set entry = 'Bcr-Abl'
-where entry = 'Bcr-abl'
-and field_name in ('primary_target', 'other_targets');
+drop table if exists target_fixes;
+
+create table target_fixes(
+fix varchar,
+orig varchar
+);
+
+insert into target_fixes values('Bcr-Abl', 'Bcr-abl');
+insert into target_fixes values('Cdk', 'CDK');
+insert into target_fixes values('Chk1', 'Chk-1');
+insert into target_fixes values('Erk1', 'ERK1');
+insert into target_fixes values('Flt3', 'Flt-3');
+insert into target_fixes values('IGF1R', 'IGF-1R');
+insert into target_fixes values('Ret', 'RET');
+insert into target_fixes values('Stat3', 'Stat-3');
+ insert into target_fixes values('Stat3', 'Stat 3');
+insert into target_fixes values('Tie2', 'Tie-2');
+insert into target_fixes values('TopoII', 'TOPO II');
+ insert into target_fixes values('TopoII', 'Topo II');
+
+insert into target_fixes values('DNA alkylator or DNA alkylating','DNA Alkylator');
+insert into target_fixes values('DNA alkylator or DNA alkylating','DNA alkylating');
+ insert into target_fixes values('DNA alkylator or DNA alkylating','DNA Alkylating');
+insert into target_fixes values('DNA damaging', 'DNA-damaging');
+
+insert into target_fixes values('Gamma secretase', 'Gamma Secretase');
+
+insert into target_fixes values('Ribonucleotide reductase', 'ribonucleotide reductase');
+
+insert into target_fixes values('Thymidylate synthase', 'thymidylate synthase');
+insert into target_fixes values('Thymidylate synthase', 'Thymidylate Synthase');
 
 update fields_and_entries
-set entry = 'Cdk'
-where entry = 'CDK'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Flt3'
-where entry = 'Flt-3'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Ret'
-where entry = 'RET'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Tie2'
-where entry = 'Tie-2'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Chk1'
-where entry = 'Chk-1'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'DNA alkylator'
-where entry = 'DNA Alkylator'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Gamma secretase'
-where entry = 'Gamma Secretase'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Ribonucleotide reductase'
-where entry = 'ribonucleotide reductase'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Stat3'
-where ( entry = 'Stat-3' or entry = 'Stat 3' )
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'Thymidylate synthase'
-where ( entry = 'thymidylate synthase' or entry = 'Thymidylate Synthase' )
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'TopoII'
-where ( entry = 'TOPO II' or entry = 'Topo II' )
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'DNA damaging'
-where entry = 'DNA-damaging'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'ErkI'
-where entry = 'ERK1'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = 'IGF1R'
-where entry = 'IGF-1R'
-and field_name in ('primary_target', 'other_targets');
-
-update fields_and_entries
-set entry = ''
-where entry = ''
-and field_name in ('primary_target', 'other_targets');
+set entry = target_fixes.fix
+from target_fixes
+where entry = target_fixes.orig
+and (field_name  = 'primary_target' or field_name = 'other_targets');

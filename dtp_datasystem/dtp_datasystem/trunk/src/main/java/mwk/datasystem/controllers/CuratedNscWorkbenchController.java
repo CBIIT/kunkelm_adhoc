@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -291,6 +292,7 @@ public class CuratedNscWorkbenchController implements Serializable {
                 suggestions.add(cnVO);
             }
         }
+        Collections.sort(suggestions);
         return suggestions;
     }
 
@@ -301,6 +303,7 @@ public class CuratedNscWorkbenchController implements Serializable {
                 suggestions.add(cnVO);
             }
         }
+        Collections.sort(suggestions);
         return suggestions;
     }
 
@@ -311,6 +314,7 @@ public class CuratedNscWorkbenchController implements Serializable {
                 suggestions.add(cnVO);
             }
         }
+        Collections.sort(suggestions);
         return suggestions;
     }
 
@@ -321,6 +325,7 @@ public class CuratedNscWorkbenchController implements Serializable {
                 suggestions.add(cnVO);
             }
         }
+        Collections.sort(suggestions);
         return suggestions;
     }
 

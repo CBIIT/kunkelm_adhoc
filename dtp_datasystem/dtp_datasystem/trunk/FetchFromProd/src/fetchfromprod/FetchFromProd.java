@@ -1,5 +1,8 @@
 package fetchfromprod;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
+import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.io.iterator.IteratingSDFReader;
 
 /**
  *
@@ -21,7 +28,7 @@ public class FetchFromProd {
 
     public static void main(String[] args) {
 
-        Connection oraConn = null;
+        Connection srcConn = null;
         Connection pgConn = null;
 
         try {
@@ -29,67 +36,100 @@ public class FetchFromProd {
             System.out.println("Starting main.");
 
             System.out.println("Registering drivers.");
-            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+//            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             DriverManager.registerDriver(new org.postgresql.Driver());
 
-            System.out.println("Opening oraConn");
-            oraConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
-
+            System.out.println("Opening srcConn");
+             srcConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
+            //srcConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
+            
             System.out.println("Opening pgConn");
             pgConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
 
 //    MUST DISABLE AUTOCOMMIT for fetchForward cursor (batch fetches) to work
 //    EACH ResultSet MUST also have fetchDirection set FETCH_FORWARD
-            oraConn.setAutoCommit(false);
+
+            srcConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
-            System.out.println();
-            System.out.println("Starting: fetchLegacyCmpd");
-            fetchLegacyCmpd(pgConn, oraConn);
+//            doSetupForSDFileParse(pgConn);
+//            doParse(pgConn, "/home/mwkunkel/Open_2D_Oct2014.sdf");
 
-            System.out.println();
-            System.out.println("Starting: fetchBioDataCounts");
-            fetchBioDataCounts(pgConn, oraConn);
+                NewParseAndFragment parser = new NewParseAndFragment();
+                
+                parser.processFragments(srcConn, pgConn);
 
-            System.out.println();
-            System.out.println("Starting: fetchMtxt");
-            fetchMtxt(pgConn, oraConn);
+// _ __ _   _ _ __  
+//| '__| | | | '_ \ 
+//| |  | |_| | | | |
+//|_|   \__,_|_| |_|
+//                  
+//                   _                ____ ____  _  ___           _ _     _ 
+//  __ _ _ __   __ _| |_   _ _______ / ___|  _ \| |/ / |__  _   _(_) | __| |
+// / _` | '_ \ / _` | | | | |_  / _ \ |   | | | | ' /| '_ \| | | | | |/ _` |
+//| (_| | | | | (_| | | |_| |/ /  __/ |___| |_| | . \| |_) | |_| | | | (_| |
+// \__,_|_| |_|\__,_|_|\__, /___\___|\____|____/|_|\_\_.__/ \__,_|_|_|\__,_|
+//                     |___/                                                
+//           _   _         ____   ____ ____  ___ ____ _____ ____  
+// ___  __ _| | (_)_ __   / ___| / ___|  _ \|_ _|  _ \_   _/ ___| 
+/// __|/ _` | | | | '_ \  \___ \| |   | |_) || || |_) || | \___ \ 
+//\__ \ (_| | | | | | | |  ___) | |___|  _ < | ||  __/ | |  ___) |
+//|___/\__, |_| |_|_| |_| |____/ \____|_| \_\___|_|    |_| |____/ 
+//        |_|                                                     
+                
+                
+                
+                
+                
+                
+                
 
-            System.out.println();
-            System.out.println("Starting: fetchInventory");
-            fetchInventory(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchChemNames");
-            fetchChemNames(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchPubChemId");
-            fetchPubChemId(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchProjects");
-            fetchProjects(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchPlatedSets");
-            fetchPlatedSets(pgConn, oraConn);
-
-            System.out.println();
-            System.out.println("Starting: fetchProjects");
-            fetchProjects(pgConn, oraConn);
-
+//            System.out.println();
+//            System.out.println("Starting: fetchLegacyCmpd");
+//            fetchLegacyCmpd(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchBioDataCounts");
+//            fetchBioDataCounts(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchMtxt");
+//            fetchMtxt(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchInventory");
+//            fetchInventory(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchChemNames");
+//            fetchChemNames(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchPubChemId");
+//            fetchPubChemId(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchProjects");
+//            fetchProjects(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchPlatedSets");
+//            fetchPlatedSets(pgConn, srcConn);
+//
+//            System.out.println();
+//            System.out.println("Starting: fetchProjects");
+//            fetchProjects(pgConn, srcConn);
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
             e.printStackTrace();
         } finally {
-            if (oraConn != null) {
-                System.out.println("Closing oraConn.");
+            if (srcConn != null) {
+                System.out.println("Closing srcConn.");
                 try {
-                    oraConn.close();
-                    oraConn = null;
+                    srcConn.close();
+                    srcConn = null;
                 } catch (SQLException sqle) {
-                    System.out.println("Error in closing oraConn " + sqle.getMessage());
+                    System.out.println("Error in closing srcConn " + sqle.getMessage());
                     Exception ex;
                     while ((ex = sqle.getNextException()) != null) {
                         System.out.println(ex.getMessage());
@@ -114,7 +154,7 @@ public class FetchFromProd {
 
     public static void fetchBioDataCounts(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         try {
 
@@ -152,7 +192,7 @@ public class FetchFromProd {
                 if (i % 2 == 0) {
                     tableName = paramArray[i];
                     fetchBioDataQueryString = paramArray[i + 1];
-                    genericBioDataCount(pgConn, oraConn, tableName, fetchBioDataQueryString);
+                    genericBioDataCount(pgConn, srcConn, tableName, fetchBioDataQueryString);
                 }
             }
 
@@ -164,7 +204,7 @@ public class FetchFromProd {
 
     protected static void genericBioDataCount(
             Connection pgConn,
-            Connection oraConn,
+            Connection srcConn,
             String tableName,
             String fetchBioDataQueryString
     ) throws Exception {
@@ -186,7 +226,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             String sqlString = "drop table if exists " + tableName;
             System.out.println(sqlString);
@@ -256,7 +296,7 @@ public class FetchFromProd {
 
     protected static void consolidateBioDataCounts(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         Statement oraStmt = null;
         Statement pgStmt = null;
@@ -296,7 +336,7 @@ public class FetchFromProd {
 
     public static void fetchMtxt(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         Statement oraStmt = null;
         Statement pgStmt = null;
@@ -314,7 +354,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             sqlString = "drop table if exists prod_mtxt";
             System.out.println(sqlString);
@@ -386,7 +426,7 @@ public class FetchFromProd {
 
     public static void fetchInventory(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         Statement oraStmt = null;
         Statement pgStmt = null;
@@ -404,7 +444,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             sqlString = "drop table if exists prod_inventory";
             System.out.println(sqlString);
@@ -474,7 +514,7 @@ public class FetchFromProd {
 
     public static void fetchChemNames(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         Statement oraStmt = null;
         Statement pgStmt = null;
@@ -492,7 +532,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             sqlString = "drop table if exists prod_chem_name";
             System.out.println(sqlString);
@@ -574,12 +614,12 @@ public class FetchFromProd {
 
     public static void fetchPubChemId(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
     }
 
     public static void fetchLegacyCmpd(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         Statement oraStmt = null;
         Statement pgStmt = null;
@@ -598,7 +638,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             sqlString = "drop table if exists prod_legacy_cmpd";
             System.out.println(sqlString);
@@ -677,7 +717,7 @@ public class FetchFromProd {
 
     public static void fetchProjects(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
         Statement oraStmt = null;
         Statement pgStmt = null;
@@ -695,7 +735,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             sqlString = "drop table if exists prod_projects";
             System.out.println(sqlString);
@@ -775,7 +815,7 @@ public class FetchFromProd {
 
     public static void fetchPlatedSets(
             Connection pgConn,
-            Connection oraConn) throws Exception {
+            Connection srcConn) throws Exception {
 
 // have to add distinct filter since DIS tracks different interations of same plate
         Statement oraStmt = null;
@@ -794,7 +834,7 @@ public class FetchFromProd {
         try {
 
             pgStmt = pgConn.createStatement();
-            oraStmt = oraConn.createStatement();
+            oraStmt = srcConn.createStatement();
 
             sqlString = "drop table if exists prod_plated_sets";
             System.out.println(sqlString);
@@ -858,6 +898,141 @@ public class FetchFromProd {
         } finally {
             handleFinally(oraStmt, pgStmt, pgPrepStmt, resSet);
         }
+    }
+
+    public static void doParse(Connection pgConn, String fullFilePath) {
+
+        PreparedStatement pgPrepStmt = null;
+
+        Integer nsc = -10101;
+        String cas = "no cas";
+        String prod_mf = "no prod_mf";
+        Double prod_mw = -10101d;
+        String ctab = "no ctab";
+
+        try {
+
+            String prepStmtString = "insert into parsed_from_sdfile(nsc, cas, prod_mf, prod_mw, ctab) values( ?,?,?,?,?)";
+            pgPrepStmt = pgConn.prepareStatement(prepStmtString);
+
+            File sdfFile = new File(fullFilePath);
+
+            IteratingSDFReader reader = new IteratingSDFReader(new FileInputStream(sdfFile), DefaultChemObjectBuilder.getInstance());
+
+            StringWriter sw = new StringWriter();
+            MDLV2000Writer writer = new MDLV2000Writer(sw);
+
+            int molCnt = 0;
+
+            while (reader.hasNext()) {
+
+                molCnt++;
+
+                IAtomContainer molecule = (IAtomContainer) reader.next();
+
+//                Map<Object, Object> propMap = molecule.getProperties();
+//                for (Object key : propMap.keySet()){
+//                    System.out.println("propMap key: " + key);
+//                }
+                nsc = -10101;
+                try {
+                    nsc = Integer.parseInt(molecule.getProperty("NSC").toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                cas = "no cas";
+                if (molecule.getProperty("CAS") != null) {
+                    cas = molecule.getProperty("CAS");
+                }
+
+                prod_mf = "no prod_mf";
+                if (molecule.getProperty("Molecular Formula in DIS") != null) {
+                    prod_mf = molecule.getProperty("Molecular Formula in DIS");
+                }
+
+                prod_mw = -10101d;
+                if (molecule.getProperty("Molecular Weight (nearest integer)") != null) {
+                    try {
+                        prod_mw = Double.parseDouble(molecule.getProperty("Molecular Weight (nearest integer)").toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                sw.getBuffer().setLength(0);
+                writer.writeMolecule(molecule);
+                ctab = sw.toString();
+
+//                System.out.println("NSC: " + nsc);
+//                System.out.println("CAS: " + cas);
+//                System.out.println("Molecular Formula in DIS: " + prod_mf);
+//                System.out.println("Molecular Weight (nearest integer): " + prod_mw);
+//                System.out.println("ctab: ");
+//                System.out.println(ctab);
+                System.out.println("molCnt: " + molCnt + " NSC: " + nsc);
+//                System.out.println(molCnt % BATCH_INSERT_SIZE);
+                pgPrepStmt.setInt(1, nsc);
+                pgPrepStmt.setString(2, cas);
+                pgPrepStmt.setString(3, prod_mf);
+                pgPrepStmt.setDouble(4, prod_mw);
+                pgPrepStmt.setString(5, ctab);
+
+                pgPrepStmt.addBatch();
+
+                if (molCnt % BATCH_INSERT_SIZE == 0) {
+                    System.out.println("---------------------------Executing batch insert.");
+                    pgPrepStmt.executeBatch();
+                    pgConn.commit();
+                }
+
+            }
+
+            // stragglers
+            pgPrepStmt.executeBatch();
+            pgConn.commit();
+
+        } catch (Exception e) {
+            System.out.println("Outer exception in doParse.  NSC: " + nsc);
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void doSetupForSDFileParse(Connection pgConn) {
+
+        Statement pgStmt = null;
+
+        try {
+
+            pgStmt = pgConn.createStatement();
+
+            String sqlString = "drop table if exists parsed_from_sdfile";
+            System.out.println(sqlString);
+            pgStmt.execute(sqlString);
+
+            sqlString = "create table parsed_from_sdfile(nsc int, cas varchar, prod_mf varchar, prod_mw double precision, ctab varchar)";
+            System.out.println(sqlString);
+            pgStmt.execute(sqlString);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pgStmt != null) {
+                //System.out.println("---------Closing pgStmt.");
+                try {
+                    pgStmt.close();
+                    pgStmt = null;
+                } catch (SQLException sqle) {
+                    System.out.println("---------Error in closing pgStmt " + sqle.getMessage());
+                    Exception ex;
+                    while ((ex = sqle.getNextException()) != null) {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
+        }
+
     }
 
     public static void handleCatch(

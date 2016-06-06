@@ -90,6 +90,14 @@ foreach $whichField(@multiEntryFields){
   }
 }
 
+#  ####      #    #    #   ####   #       ######   #####   ####   #    #   ####
+# #          #    ##   #  #    #  #       #          #    #    #  ##   #  #
+#  ####      #    # #  #  #       #       #####      #    #    #  # #  #   ####
+#      #     #    #  # #  #  ###  #       #          #    #    #  #  # #       #
+# #    #     #    #   ##  #    #  #       #          #    #    #  #   ##  #    #
+#  ####      #    #    #   ####   ######  ######     #     ####   #    #   ####
+
+
 foreach $whichField(@singleEntryFields){
 	
 	$sql = qq[select nsc, cas, $whichField from app_and_inv where $whichField is not null and length($whichField) > 0];

@@ -9398,12 +9398,14 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/Ex
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/ParkingLot.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/build.xml -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/cdk-1.5.10.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/jaxb-api-2.2.12.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/jaxb-impl-2.1.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/log4j-1.2.17.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/nblibraries.properties -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/ojdbc6.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/postgresql-9.1-901.jdbc4.jar -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/lib/postgresql-9.2-1002-jdbc4.jar -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/manifest.mf -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/nbproject/build-impl.xml -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/nbproject/genfiles.properties -text
@@ -9459,7 +9461,11 @@ dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clin
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clinicaltrials/VocabTermStruct.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/clinicaltrialsgov/mwk/clinicaltrials/jaxb.index -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromchembl/FetchFromChembl.java -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromprod/CalcContainer.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromprod/FetchFromProd.java -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromprod/NewParseAndFragment.java -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromprod/SaltsAndRelated.java -text
+dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/fetchfromprod/StructureContainer.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/log4j.properties -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/StringPair.java -text
@@ -9479,12 +9485,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.04july2015.bio
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.04july2015.smallmol.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.mwk.10oct2015.xls -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/loadCmax.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016.xlsx -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016_MWK_FIXED.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016_MWK_FIXED.ods -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016_MWK_FIXED_with_sarc_and_sclc_compounds.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]02_12_2016_MWK_FIXED_with_sarc_and_sclc_compounds.ods -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/FULL_BUILD_COMMANDS -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_1_load_app_and_inv_file.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_1_load_app_and_inv_file_REIMPORT.sql -text
@@ -9531,6 +9531,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/newParentAndSaltModel.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/nscNeedLegacyImage.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/nscWithMulti.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/WRANGLING/formCriteriaFromTable.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/analyzeCDKbuild.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/cancelPostgresProcess -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/clean_up_ad_hoc.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/make_lists_by_cmpd_type.PL -text
