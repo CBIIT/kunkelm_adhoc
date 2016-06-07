@@ -44,6 +44,10 @@ select setval('curated_project_seq', (select max(id) from curated_project));
 select setval('curated_target_seq', (select max(id) from curated_target));
 
 -- APP can create ad hoc cmpds
+-- so it has to be able to create cmpd
+
+grant select, insert, update, delete on cmpd  to datasystem_user;
+grant select, insert, update, delete on cmpd  to oncology_user;
 
 grant select, insert, update, delete on ad_hoc_cmpd  to datasystem_user;
 grant select, insert, update, delete on ad_hoc_cmpd  to oncology_user;
@@ -56,12 +60,7 @@ grant select, insert, update, delete on ad_hoc_cmpd_fragment_p_chem  to oncology
     
 grant select, insert, update, delete on ad_hoc_cmpd_fragment_structure  to datasystem_user;
 grant select, insert, update, delete on ad_hoc_cmpd_fragment_structure  to oncology_user;
- 
 
-
-grant select on cmpd  to datasystem_user;
-grant select on cmpd  to oncology_user;
- 
 grant select on cmpd_fragment  to datasystem_user;
 grant select on cmpd_fragment  to oncology_user;
                   

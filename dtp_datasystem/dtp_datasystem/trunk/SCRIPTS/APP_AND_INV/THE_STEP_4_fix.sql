@@ -2,6 +2,19 @@
 -- these are applied to fields_and_entries
 -- since white space issues will have already been fixed
 
+--                 _           _       
+-- _ __  _ __ ___ (_) ___  ___| |_ ___ 
+--| '_ \| '__/ _ \| |/ _ \/ __| __/ __|
+--| |_) | | | (_) | |  __/ (__| |_\__ \
+--| .__/|_|  \___// |\___|\___|\__|___/
+--|_|           |__/                   
+
+update fields_and_entries
+set entry = 'DTP-110'
+where entry = 'DPT-110'
+and field_name = 'project_code';
+
+
 --            _       _             _                 
 --  ___  _ __(_) __ _(_)_ __   __ _| |_ ___  _ __ ___ 
 -- / _ \| '__| |/ _` | | '_ \ / _` | __/ _ \| '__/ __|
