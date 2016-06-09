@@ -36,13 +36,13 @@
                 <p:outputLabel for="preferredNameAutoComp" value="Preferred Name" />
                 <br/>
                 <p:autoComplete id="preferredNameAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3"  
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedName}"
                                 var="preferredNameAutoCompVar" 
                                 itemLabel="#{preferredNameAutoCompVar.value}" 
-                                itemValue="#{preferredNameAutoCompVar}" 
+                                itemValue="#{preferredNameAutoCompVar}"  
                                 converter="#{curatedNameConverter}" 
                                 forceSelection="true">      
 
@@ -100,7 +100,7 @@
                 <p:outputLabel for="genericNameAutoComp" value="Generic Name" />
                 <br/>
                 <p:autoComplete id="genericNameAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3" 
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedName}"
@@ -164,7 +164,7 @@
                 <p:outputLabel for="aliasesAutoComp" value="Aliases" />
                 <br/>
                 <p:autoComplete id="aliasesAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3" 
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedName}"
@@ -228,7 +228,7 @@
                 <p:outputLabel for="originatorAutoComp" value="Originator" />
                 <br/>
                 <p:autoComplete id="originatorAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3" 
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedOriginator}"
@@ -292,7 +292,7 @@
                 <p:outputLabel for="projectsAutoComp" value="Projects" />
                 <br/>
                 <p:autoComplete id="projectsAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3" 
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedProject}"
@@ -356,7 +356,7 @@
                 <p:outputLabel for="primaryTargetAutoComp" value="Primary Target" />
                 <br/>
                 <p:autoComplete id="primaryTargetAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3" 
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedTarget}"
@@ -420,7 +420,7 @@
                 <p:outputLabel for="secondaryTargetsAutoComp" value="Secondary Targets" />
                 <br/>
                 <p:autoComplete id="secondaryTargetsAutoComp"
-                                dropdown="false"
+                                dropdown="true"
                                 scrollHeight="500"
                                 minQueryLength="3" 
                                 completeMethod="#{curatedNscWorkbenchController.completeCuratedTarget}"

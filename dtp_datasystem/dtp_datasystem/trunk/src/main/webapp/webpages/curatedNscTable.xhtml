@@ -33,15 +33,16 @@
             <p:menuitem value="Create New CuratedNsc" onclick="PF('create_new_curated_nsc_dlg').show();"/>
         </p:menubar>
 
-        <p:dataTable id="curatedNscs"
-                     tableStyle="width: auto;"
+        <p:dataTable id="curatedNscs"                     
                      resizableColumns="true"
                      var="nsc"
                      value="#{curatedNscController.curatedNscs}"
-                     paginator="true" 
-                     rows="10" 
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                     rowsPerPageTemplate="10,25,50,100,250,500,1000,2000">
+                      paginator="true"                     
+                     rows="100"                        
+                      paginatorPosition="top"
+                      currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"
+                     rowsPerPageTemplate="10,25,50,100,250,500,1000">
 
             <f:facet name="header">  
                 <h:outputText value="#{fn:length(curatedNscController.curatedNscs)} Curated NSC"/>
@@ -62,60 +63,90 @@
 
             <!-- free-form -->
 
-            <p:column resizable="true" headerText="nsc" sortBy="#{nsc.nsc}" filterBy="#{nsc.nsc}">                                            
+            <p:column resizable="true" 
+                      headerText="NSC" 
+                      sortBy="#{nsc.nsc}"  
+                      filterMatchMode="contains" 
+                      filterBy="#{nsc.nsc}">                                            
                 <h:outputText value="#{nsc.nsc}" />                              
             </p:column>
 
-            <p:column resizable="true" headerText="cas" sortBy="#{nsc.cas}" filterBy="#{nsc.cas}">              
+            <p:column resizable="true" 
+                      headerText="CAS" 
+                      sortBy="#{nsc.cas}" 
+                      filterMatchMode="contains" 
+                      filterBy="#{nsc.cas}">              
                 <h:outputText value="#{nsc.cas}" />                              
             </p:column>
 
-            <p:column resizable="true" headerText="genericName"  sortBy="#{nsc.genericName.value}" filterBy="#{nsc.genericName.value}">              
+            <p:column resizable="true" 
+                      headerText="Generic Name"  
+                      sortBy="#{nsc.genericName.value}" 
+                      filterMatchMode="contains" 
+                      filterBy="#{nsc.genericName.value}">              
                 <h:outputText value="#{nsc.genericName.value}" />                              
             </p:column>
 
-            <p:column resizable="true" headerText="preferredName" sortBy="#{nsc.preferredName.value}" filterBy="#{nsc.preferredName.value}">                            
+            <p:column resizable="true" 
+                      headerText="Preffered Name" 
+                      sortBy="#{nsc.preferredName.value}" 
+                      filterMatchMode="contains" 
+                      filterBy="#{nsc.preferredName.value}">                            
                 <h:outputText value="#{nsc.preferredName.value}" />
             </p:column>
 
-            <p:column  exportable="false" resizable="true" headerText="aliases">      
+            <p:column  exportable="false" resizable="true" 
+                       headerText="Aliases">      
                 <p:dataList var="prop" 
                             value="#{nsc.aliases}">                                
                     <h:outputText style="white-space: pre-line" value="#{prop.value}" />
                 </p:dataList>                
             </p:column>
 
-            <p:column style="display: none;" resizable="true" headerText="aliases">      
+            <p:column style="display: none;" resizable="true" 
+                      headerText="Aliases">      
                 <h:outputText value="#{curatedNscController.getDelimitedNames(nsc.aliases)}"/>
             </p:column>
 
-            <p:column resizable="true" headerText="originator" sortBy="#{nsc.originator.value}" filterBy="#{nsc.originator.value}">              
+            <p:column resizable="true" 
+                      headerText="Originator" 
+                      sortBy="#{nsc.originator.value}" 
+                      filterMatchMode="contains" 
+                      filterBy="#{nsc.originator.value}">              
                 <h:outputText value="#{nsc.originator.value}" />                
             </p:column>
 
-            <p:column exportable="false" resizable="true" headerText="projects">      
+            <p:column exportable="false" resizable="true" 
+                      headerText="Projects">      
                 <p:dataList var="prop" 
                             value="#{nsc.projects}">                                
                     <h:outputText style="white-space: pre-line" value="#{prop.value}" />
                 </p:dataList>                
             </p:column>
 
-            <p:column style="display: none;" resizable="true" headerText="projects">      
+            <p:column style="display: none;" resizable="true" 
+                      headerText="Projects">      
                 <h:outputText value="#{curatedNscController.getDelimitedProjects(nsc.projects)}"/>
             </p:column>
 
-            <p:column resizable="true" headerText="primaryTarget"  sortBy="#{nsc.primaryTarget.value}" filterBy="#{nsc.primaryTarget.value}">                            
+            <p:column resizable="true" 
+                      headerText="Primary Target"  
+                      sortBy="#{nsc.primaryTarget.value}" 
+                      filterMatchMode="contains" 
+                      filterBy="#{nsc.primaryTarget.value}">                            
                 <h:outputText value="#{nsc.primaryTarget.value}" />
             </p:column>
 
-            <p:column exportable="false" resizable="true" headerText="secondaryTargets">                              
+            <p:column exportable="false" resizable="true" 
+                      headerText="Secondary Targets">                              
                 <p:dataList var="prop" 
                             value="#{nsc.secondaryTargets}">                                
                     <h:outputText style="white-space: pre-line" value="#{prop.value}" />
                 </p:dataList>
             </p:column>
 
-            <p:column style="display: none;" resizable="true" headerText="secondaryTargets">      
+            <p:column style="display: none;" resizable="true" 
+                      headerText="Secondary Targets">      
                 <h:outputText value="#{curatedNscController.getDelimitedTargets(nsc.secondaryTargets)}"/>
             </p:column>
 
