@@ -47,5 +47,11 @@ as
 select pfs.nsc, prod_mf, prod_mw, array_to_string(array_agg(m_f.mf), '.') as mf, sum(m_f.mw) as mw
 from parsed_from_sdfile pfs, full_mol_frag m_f
 where pfs.nsc = m_f.nsc
-and prod_mf like '%.%'
+--and prod_mf like '%.%'
 group by pfs.nsc, prod_mf, prod_mw;
+
+select nsc, prod_mf from parsed_from_sdfile
+where prod_mf like '%R%'
+and nsc in (
+    select nsc from full_mol_frag_r_group
+);
