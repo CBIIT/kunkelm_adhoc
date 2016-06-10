@@ -82,7 +82,7 @@ public class Main {
         "jdbc:postgresql://localhost:5432/privatecomparedb",
         "mwkunkel",
         "donkie11",
-        "jdbc:postgresql://localhost:5432/oncologydrugsdb",
+        "jdbc:postgresql://localhost:5432/oncologydrugscomparedb",
         "mwkunkel",
         "donkie11"
 //        "jdbc:postgresql://ncidb-d115-d:5474/oncology",
@@ -142,15 +142,15 @@ public class Main {
     };
 
     static final String[] compareTableNamesAndWhereClauses = new String[]{
-        //"affymetrix_ident", "NO NO NO",
-//        "build_date", "",
-//        "cell_line_data_set", " where id in (select id from dtp_cell_line_data_set where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
-//        "cell_line_data_set_ident", " where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release))",
-//        "cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
-//        "compare_cell_line", "",
-//        //"compare_result", "NO NO NO",
-//        "conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_public_release))",
-//        "conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_public_release)))",
+//        "affymetrix_ident", "NO NO NO",
+        "build_date", "",
+        "cell_line_data_set", " where id in (select id from dtp_cell_line_data_set where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
+        "cell_line_data_set_ident", " where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release))",
+        "cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
+        "compare_cell_line", "",
+//        "compare_result", "NO NO NO",
+        "conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_public_release))",
+        "conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_public_release)))",
         "dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_ident where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release)))",
         "dtp_test_result", " where id in (select id from nsc_ident where nsc in (select nsc from nsc_for_public_release))",
         //"grid_compare_columns", "NO NO NO",
