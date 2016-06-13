@@ -5,16 +5,16 @@
  */
 package databasemetadatareplicator;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -44,6 +44,13 @@ public class NewMain {
         connMap.put("datasystemdb_local", new ConnectionInfo(
                 "datasystemdb_local",
                 "jdbc:postgresql://localhost:5432/datasystemdb",
+                "mwkunkel",
+                "donkie11"
+        ));
+
+        connMap.put("fakedatasystemdb_local", new ConnectionInfo(
+                "fakedatasystemdb_local",
+                "jdbc:postgresql://localhost:5432/fakedatasystemdb",
                 "mwkunkel",
                 "donkie11"
         ));
@@ -150,6 +157,24 @@ public class NewMain {
         datasystem_tawc.add(new TableAndWhereClause("cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
         datasystem_tawc.add(new TableAndWhereClause("cmpd_related", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
         datasystem_tawc.add(new TableAndWhereClause("rdkit_mol", " where nsc in (select nsc from nsc_for_export)"));
+        /*
+        
+        
+        
+   curated   
+        
+        
+        
+        
+         */
+        datasystem_tawc.add(new TableAndWhereClause("curated_name", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_nsc", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_nsc_smiles", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_nsc_to_secondary_targe", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_nscs2projects", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_originator", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_project", ""));
+        datasystem_tawc.add(new TableAndWhereClause("curated_target", ""));
 
     }
 
@@ -197,10 +222,17 @@ public class NewMain {
 
     public static void main(String[] args) {
 
-        //Conn srcInfo = connMap.get("privatecomparedb_local");
-        ConnectionInfo srcInfo = connMap.get("sarcomacomparedb_local");
-        ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
-        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
+        // COMPARE
+        //
+//        //Conn srcInfo = connMap.get("privatecomparedb_local");
+//        ConnectionInfo srcInfo = connMap.get("sarcomacomparedb_local");
+//        ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
+//        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
+        ConnectionInfo srcInfo = connMap.get("datasystemdb_local");
+        ConnectionInfo destInfo = connMap.get("sarcomacomparedb_local");
+        
+//        ConnectionInfo destInfo = connMap.get("fakedatasystemdb_local");
+        ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
 
         Connection srcConn = null;
         Connection destConn = null;
@@ -213,29 +245,10 @@ public class NewMain {
             srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
             destConn = DriverManager.getConnection(destInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
 
-            prepareCompareIdents(srcConn);
+            // propagateCompare(srcConn, destConn);
+            // propagateDataSystem(srcConn, destConn);
+            propagateCuratedNsc(srcConn, destConn);
 
-            // archive constraints
-            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);            
-            
-            // drop constraints
-            IndexAndConstraintManagement.dropConstraints(destConn);
-            
-            for (TableAndWhereClause tawc : tawcList) {
-
-                // scrape out anything remaining
-                Replicator.nuke(destConn, tawc.tableName);
-                
-                // replicate the tables
-                if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
-                    Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
-                }
-                
-            }
-
-            // recreate constraints
-            IndexAndConstraintManagement.createConstraints(destConn);
-            
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -266,7 +279,141 @@ public class NewMain {
             }
         }
     }
-    
+
+    public static void propagateCuratedNsc(Connection srcConn, Connection destConn) throws Exception {
+
+        Statement srcStmt = null;
+        Statement destStmt = null;
+        ResultSet rs = null;
+        PreparedStatement destPrepStmt = null;
+
+        try {
+
+            srcStmt = srcConn.createStatement();
+            destStmt = destConn.createStatement();
+
+            // source (probably almost always datasystemdb_local
+            String sqlStr = "drop table if exists curated_nsc_smiles";
+
+            System.out.println(sqlStr);
+            srcStmt.executeUpdate(sqlStr);
+
+            sqlStr = "create table curated_nsc_smiles "
+                    + " as "
+                    + " select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles "
+                    + " from curated_nsc nsc "
+                    + " left outer join curated_name gnam on nsc.generic_name_fk = gnam.id "
+                    + " left outer join curated_name pnam on nsc.preferred_name_fk = pnam.id "
+                    + " left outer join curated_target trg on nsc.primary_target_fk = trg.id "
+                    + " left outer join cmpd_table ct on nsc.nsc = ct.nsc ";
+
+            System.out.println(sqlStr);
+            srcStmt.executeUpdate(sqlStr);
+
+            // dest
+            sqlStr = "drop table if exists curated_nsc_smiles";
+
+            System.out.println(sqlStr);
+            destStmt.executeUpdate(sqlStr);
+
+            sqlStr = "create table curated_nsc_smiles( "
+                    + " nsc int, "
+                    + " generic_name varchar, "
+                    + " preferred_name varchar, "
+                    + " primary_target varchar, "
+                    + " smiles varchar)";
+
+            System.out.println(sqlStr);
+            destStmt.executeUpdate(sqlStr);
+
+            // update
+            sqlStr = "insert into curated_nsc_smiles(nsc, generic_name, preferred_name, primary_target, smiles) values (?,?,?,?,?)";
+
+            System.out.println(sqlStr);
+            destPrepStmt = destConn.prepareStatement(sqlStr);
+
+            sqlStr = "select nsc, generic_name, preferred_name, primary_target, smiles from curated_nsc_smiles";
+
+            System.out.println(sqlStr);
+            rs = srcStmt.executeQuery(sqlStr);
+
+            while (rs.next()) {
+
+                destPrepStmt.setInt(1, rs.getInt("nsc"));
+                destPrepStmt.setString(2, rs.getString("generic_name"));
+                destPrepStmt.setString(3, rs.getString("preferred_name"));
+                destPrepStmt.setString(4, rs.getString("primary_target"));
+                destPrepStmt.setString(5, rs.getString("smiles"));
+
+                destPrepStmt.execute();
+
+            }
+
+            rs.close();
+            destPrepStmt.close();
+            
+            // the update statement depends on which connection has been called
+
+            sqlStr = "update synthetic_ident "
+                    + " set drug_name = curated_nsc_smiles.generic_name, "
+                    + " target = curated_nsc_smiles.primary_target, "
+                    + " smiles = curated_nsc_smiles.smiles "
+                    + " from curated_nsc_smiles, nsc_ident "
+                    + " where synthetic_ident.id = nsc_ident.id "
+                    + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
+                    + " and synthetic_ident.drug_name is null";
+            
+            System.out.println(sqlStr);
+            destStmt.executeUpdate(sqlStr);
+            
+            sqlStr = "update synthetic_ident "
+                    + " set drug_name = curated_nsc_smiles.preferred_name, "
+                    + " target = curated_nsc_smiles.primary_target, "
+                    + " smiles = curated_nsc_smiles.smiles "
+                    + " from curated_nsc_smiles, nsc_ident "
+                    + " where synthetic_ident.id = nsc_ident.id "
+                    + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
+                    + " and synthetic_ident.drug_name is null";
+            
+            System.out.println(sqlStr);
+            destStmt.executeUpdate(sqlStr);
+            
+            srcStmt.close();
+            destStmt.close();
+
+            System.out.println("Done! in propagateCuratedNsc");
+
+        } catch (Exception e) {
+            System.out.println("Exception in propagateCuratedNsc:");
+            System.out.println(e);
+            throw (e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                    rs = null;
+                }
+                if (srcStmt != null) {
+                    srcStmt.close();
+                    srcStmt = null;
+                }
+                if (destStmt != null) {
+                    destStmt.close();
+                    destStmt = null;
+                }
+                if (destPrepStmt != null) {
+                    destPrepStmt.close();
+                    destPrepStmt = null;
+                }
+            } catch (Exception e) {
+                System.out.println("Exception in finally clause in propagateCuratedNsc: " + e);
+                e.printStackTrace();
+                throw (e);
+            }
+        }
+
+    }
+
     public static void propagateCompare(Connection srcConn, Connection destConn) throws Exception {
 
         ArrayList<TableAndWhereClause> tawcList = compare_tawc;
@@ -276,40 +423,34 @@ public class NewMain {
             prepareCompareIdents(srcConn);
 
             // archive constraints
-            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);            
-            
+            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);
+
             // drop constraints
             IndexAndConstraintManagement.dropConstraints(destConn);
-            
+
             for (TableAndWhereClause tawc : tawcList) {
 
                 // scrape out anything remaining
                 Replicator.nuke(destConn, tawc.tableName);
-                
+
                 // replicate the tables
                 if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
                     Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
                 }
-                
+
             }
 
             // recreate constraints
             IndexAndConstraintManagement.createConstraints(destConn);
-            
+
             System.out.println("Done! in propagateCompare");
-
-            srcConn.close();
-            destConn.close();
-
-            srcConn = null;
-            destConn = null;
 
         } catch (Exception e) {
             System.out.println("Caught Exception " + e + " in propagateCompare");
             e.printStackTrace();
             throw e;
         } finally {
-            
+
         }
     }
 
@@ -319,47 +460,38 @@ public class NewMain {
 
         try {
 
-            prepareCompareIdents(srcConn);
-
             // archive constraints
-            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);            
-            
+            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);
+
             // drop constraints
             IndexAndConstraintManagement.dropConstraints(destConn);
-            
+
             for (TableAndWhereClause tawc : tawcList) {
 
                 // scrape out anything remaining
                 Replicator.nuke(destConn, tawc.tableName);
-                
+
                 // replicate the tables
                 if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
                     Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
                 }
-                
+
             }
 
             // recreate constraints
             IndexAndConstraintManagement.createConstraints(destConn);
-            
+
             System.out.println("Done! in propagateDataSystem");
-
-            srcConn.close();
-            destConn.close();
-
-            srcConn = null;
-            destConn = null;
 
         } catch (Exception e) {
             System.out.println("Caught Exception " + e + " in propagateDataSystem");
             e.printStackTrace();
             throw e;
         } finally {
-            
+
         }
     }
 
-    
     public static void prepareCompareIdents(Connection conn)
             throws Exception {
 
