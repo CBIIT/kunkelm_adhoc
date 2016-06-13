@@ -185,7 +185,7 @@ public class Replicator {
 
             System.out.println("-----Deleting from table: " + tblName);
             int result = destStmt.executeUpdate("delete from " + tblName);
-
+            
             destStmt.close();
             destStmt = null;
 
