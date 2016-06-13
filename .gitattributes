@@ -9390,8 +9390,8 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonres
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.class -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ConnectionInfo.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ConstraintManagement.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/GetPublicRelease.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/IndexAndConstraintManagement.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/NewMain.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Replicator.java -text

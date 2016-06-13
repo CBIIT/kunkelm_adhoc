@@ -26,8 +26,6 @@ public class NewMain {
     static Map<String, ConnectionInfo> connMap = new HashMap<String, ConnectionInfo>();
 
     static {
-        
-        
 
         connMap.put("microxenodb_local", new ConnectionInfo(
                 "microxenodb_local",
@@ -91,7 +89,7 @@ public class NewMain {
                 "mwkunkel",
                 "donkie11"
         ));
-        
+
         Set<String> dbNameSet = connMap.keySet();
         ArrayList<String> dbNameList = new ArrayList<String>(dbNameSet);
         Collections.sort(dbNameList);
@@ -99,7 +97,6 @@ public class NewMain {
         for (String dbName : dbNameList) {
             connMap.get(dbName).asProperties();
         }
-       
 
     }
 
@@ -203,7 +200,6 @@ public class NewMain {
         //Conn srcInfo = connMap.get("privatecomparedb_local");
         ConnectionInfo srcInfo = connMap.get("sarcomacomparedb_local");
         ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
-
         ArrayList<TableAndWhereClause> tawcList = compare_tawc;
 
         Connection srcConn = null;
@@ -217,27 +213,29 @@ public class NewMain {
             srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
             destConn = DriverManager.getConnection(destInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
 
-            prepareIdents(srcConn);
+            prepareCompareIdents(srcConn);
 
-//             // archive constraint drop/create statements                        
-//             ConstraintManagement.saveConstraints(destConn, whichTableNamesAndWhereClauses);
-//
-//             // drop constraints before build
-//             ConstraintManagement.dropConstraints(destConn);
-//
-//            for (TableAndWhereClause tawc : tawcList) {
-//
-//                // scrape out anything remaining
-//                Replicator.nuke(destConn, tawc.tableName);
-//                // replicate the tables
-//
-//                if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
-//                    Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
-//                }
-//            }
+            // archive constraints
+            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);            
+            
+            // drop constraints
+            IndexAndConstraintManagement.dropConstraints(destConn);
+            
+            for (TableAndWhereClause tawc : tawcList) {
 
-//            // recreate the constraints
-//            ConstraintManagement.createConstraints(destConn);
+                // scrape out anything remaining
+                Replicator.nuke(destConn, tawc.tableName);
+                
+                // replicate the tables
+                if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
+                    Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
+                }
+                
+            }
+
+            // recreate constraints
+            IndexAndConstraintManagement.createConstraints(destConn);
+            
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -268,8 +266,101 @@ public class NewMain {
             }
         }
     }
+    
+    public static void propagateCompare(Connection srcConn, Connection destConn) throws Exception {
 
-    public static void prepareIdents(Connection conn)
+        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
+
+        try {
+
+            prepareCompareIdents(srcConn);
+
+            // archive constraints
+            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);            
+            
+            // drop constraints
+            IndexAndConstraintManagement.dropConstraints(destConn);
+            
+            for (TableAndWhereClause tawc : tawcList) {
+
+                // scrape out anything remaining
+                Replicator.nuke(destConn, tawc.tableName);
+                
+                // replicate the tables
+                if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
+                    Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
+                }
+                
+            }
+
+            // recreate constraints
+            IndexAndConstraintManagement.createConstraints(destConn);
+            
+            System.out.println("Done! in propagateCompare");
+
+            srcConn.close();
+            destConn.close();
+
+            srcConn = null;
+            destConn = null;
+
+        } catch (Exception e) {
+            System.out.println("Caught Exception " + e + " in propagateCompare");
+            e.printStackTrace();
+            throw e;
+        } finally {
+            
+        }
+    }
+
+    public static void propagateDataSystem(Connection srcConn, Connection destConn) throws Exception {
+
+        ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
+
+        try {
+
+            prepareCompareIdents(srcConn);
+
+            // archive constraints
+            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);            
+            
+            // drop constraints
+            IndexAndConstraintManagement.dropConstraints(destConn);
+            
+            for (TableAndWhereClause tawc : tawcList) {
+
+                // scrape out anything remaining
+                Replicator.nuke(destConn, tawc.tableName);
+                
+                // replicate the tables
+                if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
+                    Replicator.useMetadata(srcConn, destConn, tawc.tableName, tawc.whereClause);
+                }
+                
+            }
+
+            // recreate constraints
+            IndexAndConstraintManagement.createConstraints(destConn);
+            
+            System.out.println("Done! in propagateDataSystem");
+
+            srcConn.close();
+            destConn.close();
+
+            srcConn = null;
+            destConn = null;
+
+        } catch (Exception e) {
+            System.out.println("Caught Exception " + e + " in propagateDataSystem");
+            e.printStackTrace();
+            throw e;
+        } finally {
+            
+        }
+    }
+
+    
+    public static void prepareCompareIdents(Connection conn)
             throws Exception {
 
         Statement stmt = null;
@@ -280,6 +371,7 @@ public class NewMain {
             stmt = conn.createStatement();
 
             // set up for stacking ids for nsc, and mol_targ
+            //
             // EXPECTS to find nsc_for_export(prefix, nsc)
             // EXPECTS to find molt_id_for_eport(molt_id)
             String sqlStr = "drop table if exists cell_line_data_set_ident_for_export";
