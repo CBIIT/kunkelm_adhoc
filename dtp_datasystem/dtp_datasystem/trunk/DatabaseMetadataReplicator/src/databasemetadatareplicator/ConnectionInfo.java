@@ -19,12 +19,16 @@ public class ConnectionInfo {
     public String dbUrl;
     public String dbUser;
     public String dbPass;
+    public Boolean doCompareTables;
+    public Boolean doDataSystemTables;
 
-    public ConnectionInfo(String connectionName, String dbUrl, String dbUser, String dbPass) {
+    public ConnectionInfo(String connectionName, String dbUrl, String dbUser, String dbPass, Boolean doCompareTables, Boolean doDataSystemTables) {
         this.connectionName = connectionName;
         this.dbUrl = dbUrl;
         this.dbUser = dbUser;
         this.dbPass = dbPass;
+        this.doCompareTables = doCompareTables;
+        this.doDataSystemTables = doDataSystemTables;
     }
 
     public void asProperties() {

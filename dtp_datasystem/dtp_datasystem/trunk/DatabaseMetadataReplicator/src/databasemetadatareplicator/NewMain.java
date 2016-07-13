@@ -31,70 +31,90 @@ public class NewMain {
                 "microxenodb_local",
                 "jdbc:postgresql://localhost:5432/microxenodb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.FALSE,
+                Boolean.FALSE
         ));
 
         connMap.put("microxenodb_dev", new ConnectionInfo(
                 "microxenodb_dev",
                 "jdbc:postgresql://ncidb-d115-d.nci.nih.gov:5473/microxeno",
                 "microxeno",
-                "M1cr0x0293025en0"
+                "M1cr0x0293025en0",
+                Boolean.FALSE,
+                Boolean.FALSE
         ));
 
         connMap.put("datasystemdb_local", new ConnectionInfo(
                 "datasystemdb_local",
                 "jdbc:postgresql://localhost:5432/datasystemdb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.FALSE,
+                Boolean.TRUE
         ));
 
         connMap.put("fakedatasystemdb_local", new ConnectionInfo(
                 "fakedatasystemdb_local",
                 "jdbc:postgresql://localhost:5432/fakedatasystemdb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.FALSE,
+                Boolean.TRUE
         ));
 
         connMap.put("oncologydrugsdb_local", new ConnectionInfo(
                 "oncologydrugsdb_local",
                 "jdbc:postgresql://localhost:5432/oncologydrugsdb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.TRUE,
+                Boolean.TRUE
         ));
 
         connMap.put("oncologydrugsdb_dev", new ConnectionInfo(
                 "oncologydrugsdb_dev",
                 "jdbc:postgresql://ncidb-d115-d:5474/oncology",
                 "oncology",
-                "OnC0L029302802K1t"
+                "OnC0L029302802K1t",
+                Boolean.TRUE,
+                Boolean.TRUE
         ));
 
         connMap.put("publiccomparedb_local", new ConnectionInfo(
                 "publiccomparedb_local",
                 "jdbc:postgresql://localhost:5432/publiccomparedb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.TRUE,
+                Boolean.FALSE
         ));
 
         connMap.put("publiccomparedb_dev", new ConnectionInfo(
                 "publiccomparedb_dev",
                 "jdbc:postgresql://ncidb-d115-d:5473/pubcompare",
                 "publiccompare",
-                "P3b092094wlC0m3"
+                "P3b092094wlC0m3",
+                Boolean.TRUE,
+                Boolean.FALSE
         ));
 
         connMap.put("privatecomparedb_local", new ConnectionInfo(
                 "privatecomparedb_local",
                 "jdbc:postgresql://localhost:5432/privatecomparedb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.TRUE,
+                Boolean.FALSE
         ));
 
         connMap.put("sarcomacomparedb_local", new ConnectionInfo(
                 "sarcomacomparedb_local",
                 "jdbc:postgresql://localhost:5432/sarcomacomparedb",
                 "mwkunkel",
-                "donkie11"
+                "donkie11",
+                Boolean.TRUE,
+                Boolean.FALSE
         ));
 
         Set<String> dbNameSet = connMap.keySet();
@@ -229,8 +249,8 @@ public class NewMain {
 //        ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
 //        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
         ConnectionInfo srcInfo = connMap.get("datasystemdb_local");
-        ConnectionInfo destInfo = connMap.get("sarcomacomparedb_local");
-        
+        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
+
 //        ConnectionInfo destInfo = connMap.get("fakedatasystemdb_local");
         ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
 
@@ -247,7 +267,7 @@ public class NewMain {
 
             // propagateCompare(srcConn, destConn);
             // propagateDataSystem(srcConn, destConn);
-            propagateCuratedNsc(srcConn, destConn);
+            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
 
             System.out.println("Done! in NewMain");
 
@@ -280,7 +300,7 @@ public class NewMain {
         }
     }
 
-    public static void propagateCuratedNsc(Connection srcConn, Connection destConn) throws Exception {
+    public static void propagateCuratedNsc(Connection srcConn, Connection destConn, Boolean doCompareTables, Boolean doDataSystemTables) throws Exception {
 
         Statement srcStmt = null;
         Statement destStmt = null;
@@ -293,12 +313,13 @@ public class NewMain {
             destStmt = destConn.createStatement();
 
             // source (probably almost always datasystemdb_local
-            String sqlStr = "drop table if exists curated_nsc_smiles";
+            String srcSqlStr = "drop table if exists curated_nsc_smiles";
 
-            System.out.println(sqlStr);
-            srcStmt.executeUpdate(sqlStr);
+            System.out.println(srcSqlStr);
+            System.out.println();
+            srcStmt.executeUpdate(srcSqlStr);
 
-            sqlStr = "create table curated_nsc_smiles "
+            srcSqlStr = "create table curated_nsc_smiles "
                     + " as "
                     + " select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles "
                     + " from curated_nsc nsc "
@@ -307,35 +328,40 @@ public class NewMain {
                     + " left outer join curated_target trg on nsc.primary_target_fk = trg.id "
                     + " left outer join cmpd_table ct on nsc.nsc = ct.nsc ";
 
-            System.out.println(sqlStr);
-            srcStmt.executeUpdate(sqlStr);
+            System.out.println(srcSqlStr);
+            System.out.println();
+            srcStmt.executeUpdate(srcSqlStr);
 
-            // dest
-            sqlStr = "drop table if exists curated_nsc_smiles";
+            // dest            
+            String destSqlStr = "drop table if exists curated_nsc_smiles";
 
-            System.out.println(sqlStr);
-            destStmt.executeUpdate(sqlStr);
+            System.out.println(destSqlStr);
+            System.out.println();
+            destStmt.executeUpdate(destSqlStr);
 
-            sqlStr = "create table curated_nsc_smiles( "
+            destSqlStr = "create table curated_nsc_smiles( "
                     + " nsc int, "
                     + " generic_name varchar, "
                     + " preferred_name varchar, "
                     + " primary_target varchar, "
                     + " smiles varchar)";
 
-            System.out.println(sqlStr);
-            destStmt.executeUpdate(sqlStr);
+            System.out.println(destSqlStr);
+            System.out.println();
+            destStmt.executeUpdate(destSqlStr);
 
-            // update
-            sqlStr = "insert into curated_nsc_smiles(nsc, generic_name, preferred_name, primary_target, smiles) values (?,?,?,?,?)";
+            // update            
+            destSqlStr = "insert into curated_nsc_smiles(nsc, generic_name, preferred_name, primary_target, smiles) values (?,?,?,?,?)";
 
-            System.out.println(sqlStr);
-            destPrepStmt = destConn.prepareStatement(sqlStr);
+            System.out.println(destSqlStr);
+            System.out.println();
+            destPrepStmt = destConn.prepareStatement(destSqlStr);
 
-            sqlStr = "select nsc, generic_name, preferred_name, primary_target, smiles from curated_nsc_smiles";
+            destSqlStr = "select nsc, generic_name, preferred_name, primary_target, smiles from curated_nsc_smiles";
 
-            System.out.println(sqlStr);
-            rs = srcStmt.executeQuery(sqlStr);
+            System.out.println(destSqlStr);
+            System.out.println();
+            rs = srcStmt.executeQuery(destSqlStr);
 
             while (rs.next()) {
 
@@ -351,33 +377,125 @@ public class NewMain {
 
             rs.close();
             destPrepStmt.close();
-            
-            // the update statement depends on which connection has been called
 
-            sqlStr = "update synthetic_ident "
-                    + " set drug_name = curated_nsc_smiles.generic_name, "
-                    + " target = curated_nsc_smiles.primary_target, "
-                    + " smiles = curated_nsc_smiles.smiles "
-                    + " from curated_nsc_smiles, nsc_ident "
-                    + " where synthetic_ident.id = nsc_ident.id "
-                    + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
-                    + " and synthetic_ident.drug_name is null";
-            
-            System.out.println(sqlStr);
-            destStmt.executeUpdate(sqlStr);
-            
-            sqlStr = "update synthetic_ident "
-                    + " set drug_name = curated_nsc_smiles.preferred_name, "
-                    + " target = curated_nsc_smiles.primary_target, "
-                    + " smiles = curated_nsc_smiles.smiles "
-                    + " from curated_nsc_smiles, nsc_ident "
-                    + " where synthetic_ident.id = nsc_ident.id "
-                    + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
-                    + " and synthetic_ident.drug_name is null";
-            
-            System.out.println(sqlStr);
-            destStmt.executeUpdate(sqlStr);
-            
+            // updating target tables
+            if (doCompareTables) {
+
+                // first, try generic_name
+                // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
+                destSqlStr = "update synthetic_ident "
+                        + " set drug_name = curated_nsc_smiles.generic_name, "
+                        + " target = curated_nsc_smiles.primary_target, "
+                        + " smiles = curated_nsc_smiles.smiles "
+                        + " from curated_nsc_smiles, nsc_ident "
+                        + " where synthetic_ident.id = nsc_ident.id "
+                        + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
+                        + " and synthetic_ident.drug_name is null";
+
+                System.out.println(destSqlStr);
+                System.out.println();
+                destStmt.executeUpdate(destSqlStr);
+
+                // then, try preferred_name
+                // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
+                destSqlStr = "update synthetic_ident "
+                        + " set drug_name = curated_nsc_smiles.preferred_name, "
+                        + " target = curated_nsc_smiles.primary_target, "
+                        + " smiles = curated_nsc_smiles.smiles "
+                        + " from curated_nsc_smiles, nsc_ident "
+                        + " where synthetic_ident.id = nsc_ident.id "
+                        + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
+                        + " and synthetic_ident.drug_name is null";
+
+                System.out.println(destSqlStr);
+                System.out.println();
+                destStmt.executeUpdate(destSqlStr);
+
+            }
+
+            if (doDataSystemTables) {
+
+                // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
+                String[] sqlArr = new String[]{
+                    "update nsc_cmpd "
+                    + " set name = curated_nsc_smiles.generic_name "
+                    + " from curated_nsc_smiles "
+                    + " where nsc_cmpd.nsc = curated_nsc_smiles.nsc "
+                    + " and nsc_cmpd.name is null",
+                    //
+                    "update cmpd_table "
+                    + " set name = curated_nsc_smiles.generic_name "
+                    + " from curated_nsc_smiles "
+                    + " where cmpd_table.nsc = curated_nsc_smiles.nsc "
+                    + " and cmpd_table.name is null",
+                    //
+                    "update nsc_cmpd "
+                    + " set name = curated_nsc_smiles.preferred_name "
+                    + " from curated_nsc_smiles "
+                    + " where nsc_cmpd.nsc = curated_nsc_smiles.nsc "
+                    + " and nsc_cmpd.name is null",
+                    //
+                    "update cmpd_table "
+                    + " set name = curated_nsc_smiles.preferred_name "
+                    + " from curated_nsc_smiles "
+                    + " where cmpd_table.nsc = curated_nsc_smiles.nsc "
+                    + " and cmpd_table.name is null",
+                    //
+                    // targets
+                    // targets
+                    // targets
+                    //
+                    "drop table if exists distinct_targets",
+                    //
+                    "create table distinct_targets "
+                    + " as select distinct primary_target "
+                    + " from  curated_nsc_smiles",
+                    //
+                    "drop table if exists targets_to_add",
+                    //
+                    "create table targets_to_add  "
+                    + " as select primary_target "
+                    + " from distinct_targets  "
+                    + " except "
+                    + " select  target from cmpd_target",
+                    //
+                    "insert into cmpd_target(id, target)  "
+                    + " select nextval('cmpd_target_seq'), primary_target  "
+                    + " from targets_to_add",
+                    //
+                    "drop table if exists nsc_target_to_add",
+                    //
+                    "create table nsc_target_to_add "
+                    + " as select nsc, primary_target "
+                    + " from curated_nsc_smiles cns "
+                    + " except "
+                    + " select nsc, target "
+                    + " from nsc_cmpd nc, cmpd_targets2nsc_cmpds ct2nc, cmpd_target ct "
+                    + " where ct2nc.nsc_cmpds_fk = nc.id "
+                    + " and ct2nc.cmpd_targets_fk = ct.id",
+                    //
+                    "insert into cmpd_targets2nsc_cmpds(nsc_cmpds_fk, cmpd_targets_fk) "
+                    + " select nc.id, ct.id "
+                    + " from nsc_target_to_add ntta, nsc_cmpd nc, cmpd_target ct "
+                    + " where "
+                    + " ntta.nsc = nc.nsc "
+                    + " and ntta.primary_target = ct.target",
+                    //
+                    "update cmpd_table"
+                    + " set formatted_targets_string = primary_target"
+                    + " from nsc_target_to_add"
+                    + " where cmpd_table.nsc = nsc_target_to_add.nsc;"
+
+                };
+
+                for (String sqlStr : sqlArr) {
+                    System.out.println(sqlStr);
+                    System.out.println();
+                    destStmt.executeUpdate(sqlStr);
+                }
+
+            }
+
             srcStmt.close();
             destStmt.close();
 
