@@ -177,6 +177,7 @@ public class NewMain {
         datasystem_tawc.add(new TableAndWhereClause("cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
         datasystem_tawc.add(new TableAndWhereClause("cmpd_related", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
         datasystem_tawc.add(new TableAndWhereClause("rdkit_mol", " where nsc in (select nsc from nsc_for_export)"));
+        datasystem_tawc.add(new TableAndWhereClause("tanimoto_scores", " where nsc1 in (select nsc from nsc_for_export) and nsc2 in (select nsc from nsc_for_export)"));
         /*
         
         
@@ -189,7 +190,6 @@ public class NewMain {
          */
         datasystem_tawc.add(new TableAndWhereClause("curated_name", ""));
         datasystem_tawc.add(new TableAndWhereClause("curated_nsc", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_nsc_smiles", ""));
         datasystem_tawc.add(new TableAndWhereClause("curated_nsc_to_secondary_targe", ""));
         datasystem_tawc.add(new TableAndWhereClause("curated_nscs2projects", ""));
         datasystem_tawc.add(new TableAndWhereClause("curated_originator", ""));
@@ -209,8 +209,8 @@ public class NewMain {
         compare_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
         compare_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
         // still need to handle this!
-        compare_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_export))"));
-        compare_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where nsc in (select nsc from nsc_for_export)))"));
+        compare_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export))"));
+        compare_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export)))"));
 
         compare_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
 
@@ -227,7 +227,7 @@ public class NewMain {
         compare_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
 
         // still need to handle this!        
-        compare_tawc.add(new TableAndWhereClause("nsc_compound", " where nsc in (select nsc from nsc_for_export)"));
+        compare_tawc.add(new TableAndWhereClause("nsc_compound", " where (prefix, nsc) in (select prefix, nsc from nsc_for_export)"));
 
         compare_tawc.add(new TableAndWhereClause("nsc_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("require_use_ignore", "DO NOT REPLICATE"));
@@ -240,16 +240,12 @@ public class NewMain {
         compare_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
     }
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
 
-        // COMPARE
-        //
-//        //Conn srcInfo = connMap.get("privatecomparedb_local");
-//        ConnectionInfo srcInfo = connMap.get("sarcomacomparedb_local");
-//        ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
-//        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
-        ConnectionInfo srcInfo = connMap.get("datasystemdb_local");
-        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
+//         COMPARE
+//        
+        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_dev");
 
 //        ConnectionInfo destInfo = connMap.get("fakedatasystemdb_local");
         ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
@@ -260,14 +256,22 @@ public class NewMain {
         try {
 
             DriverManager.registerDriver(new org.postgresql.Driver());
-            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+            // DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+
+            System.out.println();
+            System.out.println("srcInfo: ");
+            srcInfo.asProperties();
+
+            System.out.println();
+            System.out.println("destInfo: ");
+            destInfo.asProperties();
 
             srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
-            destConn = DriverManager.getConnection(destInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
+            destConn = DriverManager.getConnection(destInfo.dbUrl, destInfo.dbUser, destInfo.dbPass);
 
             // propagateCompare(srcConn, destConn);
-            // propagateDataSystem(srcConn, destConn);
-            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+            propagateDataSystem(srcConn, destConn);            
+            // propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
 
             System.out.println("Done! in NewMain");
 
@@ -417,6 +421,15 @@ public class NewMain {
 
                 // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
                 String[] sqlArr = new String[]{
+                    //
+                    // NUCLEAR OPTION!
+                    // DANGER! DANGER! DANGER!
+                    "update nsc_cmpd set name = null",
+                    //
+                    // NUCLEAR OPTION!
+                    // DANGER! DANGER! DANGER!
+                    "update cmpd_table set name = null",
+                    //
                     "update nsc_cmpd "
                     + " set name = curated_nsc_smiles.generic_name "
                     + " from curated_nsc_smiles "
