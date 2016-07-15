@@ -188,8 +188,7 @@ function setGlobals() {
         drawIt();
     });
 
-    var formField = d3.select("#theForm\\:jsonStr");
-    var j = JSON.parse(formField[0][0].value);
+    var j = hidddden;
 
 //    console.log('j');
 //    console.log(j);

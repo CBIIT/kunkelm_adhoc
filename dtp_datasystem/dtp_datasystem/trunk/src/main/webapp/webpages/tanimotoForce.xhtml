@@ -43,9 +43,15 @@
 
             <h:outputScript library="js" name="d3.js"/>
             <script type="text/javascript" src="./tanimotoForce.js"></script>
-
             <h:outputScript library="js" name="rgbcolor.js"/> 
             <h:outputScript library="js" name="canvg.js"/>
+
+            <script>
+                var hidddden = #{tanimotoForceGraphController.json};
+//                jQuery(document).ready(function () {
+//                    doHeatMap();
+//                });
+            </script>
 
 
         </h:head>
@@ -53,12 +59,9 @@
         <h:body onload="setGlobals(); drawIt();">
 
             <h:form id="theForm">
-                
+
                 <p:commandButton action="#{tanimotoForceGraphController.reload()}"
                                  value="RELOAD DATA"/>
-
-                <h:inputHidden id="jsonStr" 
-                               value="#{tanimotoForceGraphController.json}"/>
 
                 <div>
 
@@ -71,7 +74,7 @@
                         <p:outputLabel for="multitarg" value="Highlight Targets"/>                        
                         <p:outputLabel for="exportButton" value="Export as Image"/>
                         <p:outputLabel for="structPanel" value="Current Structures"/>
-                        
+
                         <h:selectOneListbox id="fp" size="1" value="#{tanimotoForceGraphController.selectedFingerprint}">
                             <f:selectItem itemLabel="atompairbv_fp_tanimoto" itemValue="ap"/>
                             <f:selectItem itemLabel="featmorganbv_fp_tanimoto" itemValue="fm"/>
@@ -109,7 +112,7 @@
                             <f:selectItem itemLabel="0.975" itemValue="0.975"/>
                             <f:selectItem itemLabel="1" itemValue="1"/>                        
                         </h:selectOneListbox>
-                       
+
                         <h:selectManyListbox id="multinsc"
                                              size="5">
                             <f:selectItems value="#{tanimotoForceGraphController.nscList}"
@@ -125,7 +128,7 @@
                                            itemLabel="#{nam}"
                                            itemValue="#{nam}"/>
                         </h:selectManyListbox>                        
-                        
+
                         <h:selectManyListbox id="multitarg"
                                              size="5">
                             <f:selectItems value="#{tanimotoForceGraphController.targetList}"

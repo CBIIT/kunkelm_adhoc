@@ -152,58 +152,6 @@ public class StructureSearchController implements Serializable {
 
     }
 
-    public String performSmartsSearch() {
-
-        String smartsString = this.smilesFromCtabFromEditor;
-
-        // double bonds to any bond
-        smartsString = smartsString.replaceAll("=", "~");
-
-        // disguise chlorine as HIDDEN (no "C" or "c"), replace C and c then restore chlorine
-        smartsString = smartsString.replaceAll("Cl", "HIDDEN").replaceAll("C", "[#6]").replaceAll("c", "[#6]").replaceAll("HIDDEN", "Cl");
-
-        // same exercise for nitrogen, oxygen, sulfur, phosphorus, but no need to disguise other elements
-        smartsString = smartsString.replaceAll("N", "[#7]").replaceAll("n", "[#7]");
-        smartsString = smartsString.replaceAll("O", "[#8]").replaceAll("o", "[#8]");
-
-        smartsString = smartsString.replaceAll("P", "[#15]").replaceAll("p", "[#15]");
-        smartsString = smartsString.replaceAll("S", "[#16]").replaceAll("s", "[#16]");
-
-        FacesMessage msg = new FacesMessage(
-                FacesMessage.SEVERITY_INFO,
-                "SMILES string and SMARTS string: ",
-                this.smilesFromCtabFromEditor + " " + smartsString);
-
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        System.out.println("smilesString: " + this.smilesFromCtabFromEditor);
-        System.out.println("smartsString: " + smartsString);
-
-        List<Integer> nscIntList = HelperStructure.findNSCsBySmartsSubstructure(smartsString);
-
-        List<CmpdVO> cmpds = HelperCmpd.getCmpdsByNsc(nscIntList, sessionController.getLoggedUser());
-
-        List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
-
-        for (CmpdVO cVO : cmpds) {
-            CmpdListMemberVO clmVO = new CmpdListMemberVO();
-            clmVO.setCmpd(cVO);
-            clmList.add(clmVO);
-        }
-
-        CmpdListVO clVO = new CmpdListVO();
-
-        clVO.setListName("SMARTS Search Results");
-        clVO.setListOwner(sessionController.getLoggedUser());
-
-        clVO.setCmpdListMembers(clmList);
-
-        listManagerController.getListManagerBean().tempList = clVO;
-
-        return null;
-
-    }
-
     public String performLandingLoadEditor() {
 
         System.out.println("In performLandingLoadEditor in StructureSearchController.");
@@ -386,7 +334,6 @@ public class StructureSearchController implements Serializable {
 
         return "/webpages/chemDoodle.xhtml?faces-redirect=true";
     }
-
     
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
     public String getMessage() {

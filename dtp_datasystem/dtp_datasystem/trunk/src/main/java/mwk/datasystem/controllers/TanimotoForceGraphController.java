@@ -45,10 +45,10 @@ public class TanimotoForceGraphController implements Serializable {
     private String json;
 
     private Double minTan;
-    
+
     private ArrayList<String> fingerprintList;
     private String selectedFingerprint;
-    
+
     private ArrayList<Integer> nscList;
     private ArrayList<String> drugNameList;
     private ArrayList<String> targetList;
@@ -132,7 +132,7 @@ public class TanimotoForceGraphController implements Serializable {
             "torsionbv_fp"};
 
         fingerprintList = new ArrayList<String>(Arrays.asList(fpArr));
-        selectedFingerprint = "mc";       
+        selectedFingerprint = "mc";
 
     }
 
@@ -165,10 +165,6 @@ public class TanimotoForceGraphController implements Serializable {
     }
 
     public static String generateJsonNew(ArrayList<TanimotoScoresWithCmpdObjectsVO> scores) {
-
-        NumberFormat nf2 = new DecimalFormat();
-        nf2.setMinimumFractionDigits(2);
-        nf2.setMaximumFractionDigits(2);
 
         String rtn = "";
 
@@ -208,21 +204,13 @@ public class TanimotoForceGraphController implements Serializable {
             l.source = cmpdList.indexOf(tswco.getCmpd1());
             l.target = cmpdList.indexOf(tswco.getCmpd2());
 
-//            l.ap = tsVO.getAtomPair();
-//            l.fm = tsVO.getFeatMorgan();
-//            l.l = tsVO.getLayered();
-//            l.mc = tsVO.getMacss();
-//            l.m = tsVO.getMorganBv();
-//            l.r = tsVO.getRdkit();
-//            l.to = tsVO.getTorsionBv();
-            
-            l.ap = round(tswco.getAtomPair(), 2);
-            l.fm = round(tswco.getFeatMorgan(), 2);
-            l.l = round(tswco.getLayered(), 2);
-            l.mc = round(tswco.getMacss(), 2);
-            l.m = round(tswco.getMorganBv(), 2);
-            l.r = round(tswco.getRdkit(), 2);
-            l.to = round(tswco.getTorsionBv(), 2);
+            l.ap = round(tswco.getAtomPair(), 3);
+            l.fm = round(tswco.getFeatMorgan(), 3);
+            l.l = round(tswco.getLayered(), 3);
+            l.mc = round(tswco.getMacss(), 3);
+            l.m = round(tswco.getMorganBv(), 3);
+            l.r = round(tswco.getRdkit(), 3);
+            l.to = round(tswco.getTorsionBv(), 3);
 
             linkList.add(l);
 
@@ -238,12 +226,12 @@ public class TanimotoForceGraphController implements Serializable {
         return rtn;
     }
 
-    
-    public static class LightWeightInfo{
+    public static class LightWeightInfo {
+
         Integer nsc;
         String drugName;
         String target;
-        String smiles;        
+        String smiles;
 
         public LightWeightInfo(Integer nsc, String drugName, String target, String smiles) {
             this.nsc = nsc;
@@ -251,9 +239,9 @@ public class TanimotoForceGraphController implements Serializable {
             this.target = target;
             this.smiles = smiles;
         }
-            
+
     }
-    
+
     public static String generateJson(ArrayList<TanimotoScoresVO> scores) {
 
         NumberFormat nf2 = new DecimalFormat();
@@ -267,16 +255,16 @@ public class TanimotoForceGraphController implements Serializable {
         Info i = new Info();
         i.fingerprintType = "collated fingerprints";
         fg.info = i;
-        
+
         ArrayList<Node> nodeList = new ArrayList<Node>();
         List<TanimotoLink> linkList = new ArrayList<TanimotoLink>();
-        
+
         HashSet<Integer> nscSet = new HashSet<Integer>();
         for (TanimotoScoresVO tsVO : scores) {
             nscSet.add(tsVO.getNsc1());
             nscSet.add(tsVO.getNsc2());
         }
-        
+
         HashSet<LightWeightInfo> lwiList = new HashSet<LightWeightInfo>();
         for (TanimotoScoresVO tsVO : scores) {
             nscSet.add(tsVO.getNsc1());
@@ -300,20 +288,13 @@ public class TanimotoForceGraphController implements Serializable {
             l.source = nscList.indexOf(tsVO.getNsc1());
             l.target = nscList.indexOf(tsVO.getNsc2());
 
-//            l.ap = tsVO.getAtomPair();
-//            l.fm = tsVO.getFeatMorgan();
-//            l.l = tsVO.getLayered();
-//            l.mc = tsVO.getMacss();
-//            l.m = tsVO.getMorganBv();
-//            l.r = tsVO.getRdkit();
-//            l.to = tsVO.getTorsionBv();
-            l.ap = round(tsVO.getAtomPair(), 2);
-            l.fm = round(tsVO.getFeatMorgan(), 2);
-            l.l = round(tsVO.getLayered(), 2);
-            l.mc = round(tsVO.getMacss(), 2);
-            l.m = round(tsVO.getMorganBv(), 2);
-            l.r = round(tsVO.getRdkit(), 2);
-            l.to = round(tsVO.getTorsionBv(), 2);
+            l.ap = round(tsVO.getAtomPair(), 3);
+            l.fm = round(tsVO.getFeatMorgan(), 3);
+            l.l = round(tsVO.getLayered(), 3);
+            l.mc = round(tsVO.getMacss(), 3);
+            l.m = round(tsVO.getMorganBv(), 3);
+            l.r = round(tsVO.getRdkit(), 3);
+            l.to = round(tsVO.getTorsionBv(), 3);
 
             linkList.add(l);
 

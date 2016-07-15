@@ -1,6 +1,27 @@
+function toPng() {
+
+    var $container = $('#histoForm\\:histoDiv');
+    // Canvg requires trimmed content
+    var content = $container.html().trim();
+    var theCanvas = document.createElement('canvas');
+    canvg(theCanvas, content, {renderCallback: function () {
+            var imag = document.createElement("img");
+            imag.src = theCanvas.toDataURL("image/png");
+            $("[id='exportableImageOutputPanel']").empty();
+            $("[id='exportableImageOutputPanel']").append(imag);
+            PF('exportImageDlg').show();
+        }});
+    /*
+     canvg(theCanvas, content, { renderCallback: function () {
+     var img = theCanvas.toDataURL("image/png");
+     window.open(img);
+     }});
+     */
+}
+
 var theData = [];
 
-var allFingerprints = ['ap','fm','l','mc','m','r','to'];
+var allFingerprints = ['ap', 'fm', 'l', 'mc', 'm', 'r', 'to'];
 
 var unitDim = 20;
 var theFontSize = unitDim;
@@ -27,18 +48,20 @@ function clearScats() {
 
 function loadData() {
 
-    var formField = d3.select("#configForm\\:jsonStr");
-    var j = JSON.parse(formField[0][0].value);
-    
+    var j = hidddden;
+
     console.log('j');
     console.log(j);
 
-    j.links.forEach(function(d, i) {
-        theData.push(d);
+    j.links.forEach(function (d, i) {
+
+        if (i % 500 === 0){
+            theData.push(d);
+        }
     });
 
     // change listeners
-    d3.select("#configForm\\:fp").on("change", function() {        
+    d3.select("#configForm\\:fp").on("change", function () {
         doHistos();
         doScats();
     });
@@ -71,7 +94,7 @@ function doHistos() {
             .append("g")
             .attr("transform", "translate(" + overallMargin.left + "," + overallMargin.top + ")");
 
-    allFingerprints.sort().forEach(function(prop, idx) {
+    allFingerprints.sort().forEach(function (prop, idx) {
 
         var theTitle = prop;
 
@@ -107,11 +130,11 @@ function doHistos() {
         // A formatter for counts.
         var formatCount = d3.format(",.0f");
 
-        var minProp = d3.min(theData, function(d) {
+        var minProp = d3.min(theData, function (d) {
             return d[prop];
         });
 
-        var maxProp = d3.max(theData, function(d) {
+        var maxProp = d3.max(theData, function (d) {
             return d[prop];
         });
 
@@ -123,12 +146,12 @@ function doHistos() {
 
         var histogram = d3.layout.histogram();
 
-        var data = histogram.value(function(d) {
+        var data = histogram.value(function (d) {
             return d[prop];
         })(theData);
 
         var y = d3.scale.linear()
-                .domain([0, d3.max(data, function(d) {
+                .domain([0, d3.max(data, function (d) {
                         return d.y;
                     })])
                 .range([plotAreaHeight, 0]);
@@ -145,7 +168,7 @@ function doHistos() {
                 .data(data)
                 .enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", function(d) {
+                .attr("transform", function (d) {
                     return "translate(" + x(d.x) + "," + y(d.y) + ")";
                 });
 
@@ -156,10 +179,10 @@ function doHistos() {
                 .attr("stroke", "black")
                 .attr("fill", "blue")
                 .attr("shape-rendering", "crispEdges")
-                .attr("height", function(d) {
+                .attr("height", function (d) {
                     return plotAreaHeight - y(d.y);
                 })
-                .on("click", function(d) {
+                .on("click", function (d) {
                     console.log('property: ' + prop + ' bar x: ' + d.x + ' bar dx: ' + d.dx);
                 });
 
@@ -172,7 +195,7 @@ function doHistos() {
                 .style("font", theFontSize + "px courier")
                 .style("stroke", "blue")
                 .style("fill", "blue")
-                .text(function(d) {
+                .text(function (d) {
                     return formatCount(d.y);
                 });
 
@@ -203,8 +226,8 @@ function doScats() {
     var scatOverallHeight = allFingerprints.length * unitHeight + overallMargin.top + overallMargin.bottom;
 
     clearScats();
-    
-  
+
+
     // the all-encompassing svg
     var svg = d3.select("#scatForm\\:scatDiv").append("svg")
             .attr("width", scatOverallWidth)
@@ -212,8 +235,8 @@ function doScats() {
             .append("g")
             .attr("transform", "translate(" + overallMargin.left + "," + overallMargin.top + ")");
 
-    allFingerprints.sort().forEach(function(outerProp, outerIdx) {
-        allFingerprints.sort().forEach(function(innerProp, innerIdx) {
+    allFingerprints.sort().forEach(function (outerProp, outerIdx) {
+        allFingerprints.sort().forEach(function (innerProp, innerIdx) {
 
             var theTitle = outerProp + " vs " + innerProp;
 
@@ -273,19 +296,19 @@ function doScats() {
                     .text(outerProp);
 
 
-            var minX = d3.min(theData, function(d) {
+            var minX = d3.min(theData, function (d) {
                 return d[innerProp];
             });
 
-            var maxX = d3.max(theData, function(d) {
+            var maxX = d3.max(theData, function (d) {
                 return d[innerProp];
             });
 
-            var minY = d3.min(theData, function(d) {
+            var minY = d3.min(theData, function (d) {
                 return d[outerProp];
             });
 
-            var maxY = d3.max(theData, function(d) {
+            var maxY = d3.max(theData, function (d) {
                 return d[outerProp];
             });
 
@@ -296,7 +319,7 @@ function doScats() {
             var y = d3.scale.linear()
                     .domain([minY, maxY])
                     .range([plotAreaHeight, 0]);
-                
+
             var xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom");
@@ -318,20 +341,20 @@ function doScats() {
                     .data(theData)
                     .enter()
                     .append("circle")
-                    .attr("cx", function(d) {
+                    .attr("cx", function (d) {
                         return d[innerProp] && d[outerProp] ? x(d[innerProp]) : 0;
                     })
-                    .attr("cy", function(d) {
+                    .attr("cy", function (d) {
                         return d[innerProp] && d[outerProp] ? y(d[outerProp]) : 0;
                     })
-                    .attr("r",  function(d) {
+                    .attr("r", function (d) {
                         return d[innerProp] && d[outerProp] ? unitDim / 4 : 0;
                     })
                     .attr("fill", "red");
 
-                    
-                    
+
+
         });// innerProp
     });// outerProp
-    
+
 }

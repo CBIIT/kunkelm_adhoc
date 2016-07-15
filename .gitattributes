@@ -9740,10 +9740,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/histoScat.xhtml 
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/histoScatCheckpointSun1130.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/histoScatCheckpointTues1100.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/scatterMatrix.js -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoForce.js -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoForce.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoHistoScat.js -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/tanimotoHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogExportImage.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDetails.xhtml -text
@@ -9751,6 +9747,12 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat_ORIGINAL_MULTI_FORM.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat_ORIGINAL_MULTI_FORM.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_menu_bar.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text

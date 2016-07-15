@@ -129,6 +129,8 @@ public class ListManagerController implements Serializable {
     }
 
     public String performUpdateAvailableLists() {
+        
+        List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
 
         // MWK 26FEB2016 Why is this here?  A fix for ancient problems, long forgotten?
         if (listManagerBean == null) {
@@ -138,8 +140,6 @@ public class ListManagerController implements Serializable {
         }
 
         try {
-
-            List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
 
             // parse text areas
             String[] splitStrings = null;
@@ -168,7 +168,11 @@ public class ListManagerController implements Serializable {
                 }
             }
 
-            justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
+            try {
+                justFetchedLists = HelperCmpdList.searchCmpdLists(listNames, cmpdListIds, sessionController.getLoggedUser());
+            } catch (Exception e) {
+
+            }
 
             // check for change in size of lists
             // null out the listMembers if there has been a change to force

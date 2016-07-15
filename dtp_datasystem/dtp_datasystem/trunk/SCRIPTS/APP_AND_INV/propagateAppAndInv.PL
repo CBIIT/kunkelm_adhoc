@@ -102,15 +102,24 @@ $dbh->disconnect();
 
 #$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
 #$dbh = DBI->connect("DBI:Pg:dbname=smallcell;host=ncidb-d115-d;port=5473", "sclc", "DPt09232Sm2LL204Ung", {'RaiseError' => 1});
-$dbh = DBI->connect("DBI:Pg:dbname=sarcoma;host=ncidb-d115-d;port=5473", "sarcomadev", "sar20920384220dev", {'RaiseError' => 1});
+#$dbh = DBI->connect("DBI:Pg:dbname=sarcoma;host=ncidb-d115-d;port=5473", "sarcomadev", "sar20920384220dev", {'RaiseError' => 1});
 
-my $sql = qq[
-update compound
-set drug_name = ?,
-target = ?,
-smiles = ?
-where nsc = ?
-];
+$dbh = DBI->connect("DBI:Pg:dbname=oncology;host=ncidb-d115-d;port=5474", "oncology", "OnC0L029302802K1t", {'RaiseError' => 1});
+
+#my $sql = qq[
+#update compound
+#set drug_name = ?,
+#target = ?,
+#smiles = ?
+#where nsc = ?
+#];
+
+
+
+
+
+
+
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";

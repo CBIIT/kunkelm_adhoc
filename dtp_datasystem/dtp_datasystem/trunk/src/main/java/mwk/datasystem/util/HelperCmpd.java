@@ -235,6 +235,8 @@ public class HelperCmpd {
                     .setProjection(Projections.property("id"))
                     .setMaxResults(2000);
 
+            crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
             Disjunction disj = Restrictions.disjunction();
 
             if (listIsUsable(scb.getNscs())) {
@@ -291,7 +293,7 @@ public class HelperCmpd {
             // add the disjunction
             crit.add(disj);
 
-      //
+            //
             // pChem start
             //
             // using reflection for sanity in PERL scripts that autogen the code (in SCRIPTS directory)
@@ -956,7 +958,7 @@ public class HelperCmpd {
                 crit.add(Restrictions.lt("pchem.theALogP", maxDbl));
             }
 
-      //
+            //
             // pChem end
             //
             // criteria has projection of cmpd.id
@@ -1050,7 +1052,7 @@ public class HelperCmpd {
 
             cl.setCountListMembers(cl.getCmpdListMembers().size());
 
-      // write the clm to the table, batch
+            // write the clm to the table, batch
             // Connection conn = session.connection();
             SessionImpl sessionImpl = (SessionImpl) session;
             conn = sessionImpl.connection();
@@ -1220,7 +1222,7 @@ public class HelperCmpd {
             // add the disjunction
             crit.add(disj);
 
-      //
+            //
             // pChem start
             //
             crit.createAlias("cmpdFragments", "frag");
@@ -1884,7 +1886,7 @@ public class HelperCmpd {
                 crit.add(Restrictions.lt("pchem.theALogP", maxDbl));
             }
 
-      //
+            //
             // pChem end
             //
             List<Long> cmpdIdList = crit.list();

@@ -17,9 +17,16 @@
             </f:facet>
 
             <h:outputScript library="js" name="d3.js"/>            
-            <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
-            <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
+            <h:outputScript library="js" name="rgbcolor.js"/> 
+            <h:outputScript library="js" name="canvg.js"/>
             <script type="text/javascript" src="./tanimotoHistoScat.js"></script>
+
+            <script>
+                var hidddden = #{tanimotoForceGraphController.json};
+                jQuery(document).ready(function () {
+                    doHeatMap();
+                });
+            </script>
 
             <style>
                 body {
@@ -49,9 +56,6 @@
 
             <h:form id="configForm">
 
-                <h:inputHidden id="jsonStr" 
-                               value="#{tanimotoForceGraphController.json}"/>
-
                 <p:outputPanel id="configDiv">
 
                     <p:outputLabel for="fp" value="Which Fingerprint"/>
@@ -71,6 +75,11 @@
 
             <h:form id="histoForm">
 
+                <h:commandButton id="exportButton" 
+                                 type="button" 
+                                 value="Export as Image"
+                                 onclick="toPng()"/>
+
                 <h1>Histograms</h1>
 
                 <p:outputPanel id="histoDiv">
@@ -86,8 +95,6 @@
                 </p:outputPanel>
 
             </h:form>
-
-            <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
         </h:body>
 
