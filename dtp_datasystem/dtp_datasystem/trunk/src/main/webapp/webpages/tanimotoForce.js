@@ -7,7 +7,7 @@ function toPng() {
 
     var theCanvas = document.createElement('canvas');
 
-    canvg(theCanvas, content, {renderCallback: function() {
+    canvg(theCanvas, content, {renderCallback: function () {
             var imag = document.createElement("img");
             imag.src = theCanvas.toDataURL("image/png");
             $("[id='exportableImageOutputPanel']").empty();
@@ -52,7 +52,7 @@ function appendStruct(s, t) {
 
     var structPanelVar = d3.select("#datasystemForm\\:structPanel_content");
 
-    var imgUrl = function(s, t) {
+    var imgUrl = function (s, t) {
         return 'http://localhost:8080/sarcomacompare/StructureServlet?smiles=' + s + '&title=' + t;
     }
 
@@ -85,12 +85,21 @@ function setGlobals() {
 
     force = d3.layout.force()
             .charge(-120)
-            .linkDistance(function(lnk, i) {
-                console.log('lnk: ' + lnk);
-                return lnk.l * 200 + 100;
+            .linkDistance(function (lnk, i) {
+                console.log('lnk');
+                console.log(lnk);
+
+                // return lnk.value * 200 + 100;
+
+                /*    
+                 The links are scaled to a range from the current minimum tanimoto to 1.        
+                 */
+
+                return ((lnk.value - globalMinTan) / (1 - globalMinTan)) * 200 + 50;
+
             })
             .size([width, height]);
-            //.size([width * 0.75, height * 0.75]);
+    //.size([width * 0.75, height * 0.75]);
 
     force2 = d3.layout.force().gravity(0).linkDistance(100).linkStrength(8).charge(-100).size([width * 0.75, height * 0.75]);
 
@@ -102,20 +111,20 @@ function setGlobals() {
     whichFingerprint = fpField[0][0].value;
     console.log('init whichFingerprint: ' + whichFingerprint);
 
-    d3.select("#datasystemForm\\:fp").on("change", function() {
+    d3.select("#datasystemForm\\:fp").on("change", function () {
 
         whichFingerprint = this.value;
         console.log('new fp: ' + whichFingerprint);
 
         // update allLinks
-        allLinks.forEach(function(lnk) {
+        allLinks.forEach(function (lnk) {
             lnk.value = lnk[whichFingerprint];
-            // console.log('lnk.value: ' + lnk.value);
+            lnk.color = dynamicLinkColor(lnk.value);
         });
 
         filtLinks = [];
 
-        allLinks.forEach(function(lnk) {
+        allLinks.forEach(function (lnk) {
             if (Number(lnk.value) > globalMinTan)
                 filtLinks.push(lnk);
         });
@@ -125,7 +134,7 @@ function setGlobals() {
 
     });
 
-    d3.select("#datasystemForm\\:mintan").on("change", function() {
+    d3.select("#datasystemForm\\:mintan").on("change", function () {
 
         globalMinTan = Number(this.value);
 
@@ -133,7 +142,7 @@ function setGlobals() {
 
         filtLinks = [];
 
-        allLinks.forEach(function(lnk) {
+        allLinks.forEach(function (lnk) {
             // console.log('lnk.value: ' + lnk.value);
             // console.log('globalMinTan: ' + globalMinTan);    		
             if (Number(lnk.value) > globalMinTan)
@@ -144,10 +153,10 @@ function setGlobals() {
         drawIt();
     });
 
-    d3.select("#datasystemForm\\:multinsc").on("change", function() {
+    d3.select("#datasystemForm\\:multinsc").on("change", function () {
         console.log('change in multinsc');
         selNscs = [];
-        d3.select(this).selectAll("option").filter(function(d, i) {
+        d3.select(this).selectAll("option").filter(function (d, i) {
             if (this.selected)
                 selNscs.push(parseInt(this.value));
         });
@@ -159,25 +168,25 @@ function setGlobals() {
         drawIt();
     });
 
-    d3.select("#datasystemForm\\:multidrugname").on("change", function() {
+    d3.select("#datasystemForm\\:multidrugname").on("change", function () {
         console.log('change in multidrugname');
         selDrugNames = [];
-        d3.select(this).selectAll("option").filter(function(d, i) {
+        d3.select(this).selectAll("option").filter(function (d, i) {
             if (this.selected)
                 selDrugNames.push(this.value);
         });
-        
+
         console.log('selDrugNames:');
         console.log(selDrugNames);
-        
+
         viz.selectAll("*").remove();
         drawIt();
     });
 
-    d3.select("#datasystemForm\\:multitarg").on("change", function() {
+    d3.select("#datasystemForm\\:multitarg").on("change", function () {
         console.log('change in multitarg');
         selTargets = [];
-        d3.select(this).selectAll("option").filter(function(d, i) {
+        d3.select(this).selectAll("option").filter(function (d, i) {
             if (this.selected)
                 selTargets.push(this.value);
         });
@@ -194,7 +203,7 @@ function setGlobals() {
 //    console.log('j');
 //    console.log(j);
 
-    j.nodes.forEach(function(entry) {
+    j.nodes.forEach(function (entry) {
         allNodes.push(entry);
     });
 
@@ -202,7 +211,7 @@ function setGlobals() {
     // default to atompair => link.ap
     // whichFingerprint = 'ap';
 
-    j.links.forEach(function(entry) {
+    j.links.forEach(function (entry) {
 
         // console.log(entry);  		
         // console.log('whichFingerprint: ' + whichFingerprint);
@@ -214,11 +223,11 @@ function setGlobals() {
             allLinks.push(entry);
     });
 
-    j.nodes.forEach(function(entry) {
+    j.nodes.forEach(function (entry) {
         filtNodes.push(entry);
     });
 
-    j.links.forEach(function(entry) {
+    j.links.forEach(function (entry) {
         if (entry.value > globalMinTan) {
             filtLinks.push(entry);
         }
@@ -239,7 +248,7 @@ function setGlobals() {
 
     var txtCnt = 0;
 
-    keys.forEach(function(ky) {
+    keys.forEach(function (ky) {
         txtCnt++;
         if (Array.isArray(j.info[ky])) {
             viz.append("svg:text").text('Count of ' + ky + ': ' + j.info[ky].length).attr("x", 10).attr("y", txtCnt * 20).style("fill", "blue");
@@ -261,7 +270,7 @@ function drawIt() {
 
     var cnt = 0;
 
-    filtNodes.forEach(function(nod) {
+    filtNodes.forEach(function (nod) {
 
         if (selTargets.indexOf(nod.target) > -1 || selDrugNames.indexOf(nod.drugName) > -1 || selNscs.indexOf(nod.nsc) > -1) {
 
@@ -295,12 +304,12 @@ function drawIt() {
             .append("line")
             .attr("class", "link")
             .style("stroke-width", 4)
-            .style("stroke", function(d) {
+            .style("stroke", function (d) {
                 return d.color ? d.color : 'gray'; // return d.color;
             })
             .style("stroke-opacity", 0.6);
 
-    link.append("title").text(function(d) {
+    link.append("title").text(function (d) {
         return 'fp: ' + whichFingerprint + ' value: ' + d.value + ' nsc1: ' + d.source.nsc + ' nsc2: ' + d.target.nsc;
     });
 
@@ -308,22 +317,22 @@ function drawIt() {
 
     // symbol based on extended node
 
-    var circle = node.append("svg:path").attr("d", d3.svg.symbol().type(function(d) {
+    var circle = node.append("svg:path").attr("d", d3.svg.symbol().type(function (d) {
         return 'circle'; // return d.symbol;
-    }).size(function(d) {
+    }).size(function (d) {
         return selTargets.indexOf(d.target) > -1 || selDrugNames.indexOf(d.drugName) > -1 || selNscs.indexOf(d.nsc) > -1 ? 300 : 100
-    })).attr("fill", function(d) {
+    })).attr("fill", function (d) {
         d.mwkcolor = catColor(selTargets.indexOf(d.target));
         return selTargets.indexOf(d.target) > -1 || selDrugNames.indexOf(d.drugName) > -1 || selNscs.indexOf(d.nsc) > -1 ? d.mwkcolor : d.symbolColor;
     }).attr("stroke", "black");
 
-    node.append("title").text(function(d) {
+    node.append("title").text(function (d) {
         return "NSC: " + d.nsc + " drugName: " + d.drugName + "target: " + d.target;
     });
 
     var anchorLink = viz.selectAll("line.anchorLink").data(labelAnchorLinks).enter().append("svg:line").attr("class", "anchorLink").style("stroke", "red");
 
-    var anchorNode = viz.selectAll("g.anchorNode").data(force2.nodes()).enter().append("svg:g").attr("class", "anchorNode").each(function(d, i) {
+    var anchorNode = viz.selectAll("g.anchorNode").data(force2.nodes()).enter().append("svg:g").attr("class", "anchorNode").each(function (d, i) {
 
         d3.select(this).append("svg:circle").attr("r", 0).style("fill", "red");
 
@@ -338,7 +347,7 @@ function drawIt() {
 
                 var newSvg = d3.select(this).append("svg").attr("width", 100).attr("height", 100).append("svg:g");
                 newSvg.append("svg:rect").attr("x", 0).attr("y", 0).attr("width", 100).attr("height", 100).attr("fill", "green");
-                newSvg.append("svg:image").attr("x", 10).attr("y", 10).attr("xlink:href", function(d) {
+                newSvg.append("svg:image").attr("x", 10).attr("y", 10).attr("xlink:href", function (d) {
                     return 'http://localhost:8080/sarcomacompare/StructureServlet?smiles=' + d.node.smiles + '&title=' + d.node.nsc;
                 }).attr("width", 80).attr("height", 80);
 
@@ -354,11 +363,11 @@ function drawIt() {
                 console.log('d.node:');
                 console.log(d.node);
 
-                t.append("svg:text").text(function(d) {
+                t.append("svg:text").text(function (d) {
                     return d.node.target;
                 }).style("fill", d.node.mwkcolor).attr("font-size", "40");
 
-                t.append("svg:text").text(function(d) {
+                t.append("svg:text").text(function (d) {
                     return d.node.drugName ? d.node.nsc + ' ' + d.node.drugName : d.node.nsc;
                 }).style("fill", d.node.mwkcolor).attr("y", 20);
 
@@ -368,7 +377,7 @@ function drawIt() {
 //                console.log('d.node:');
 //                console.log(d.node);
 
-                t.append("svg:text").text(function(d) {
+                t.append("svg:text").text(function (d) {
                     return d.node.geneSymbol ? d.node.moltId + ' ' + d.node.geneSymbol + ' ' + d.node.target : d.node.moltId + ' ' + d.node.target;
                 }).style("fill", d.node.mwkcolor);
 
@@ -381,35 +390,35 @@ function drawIt() {
 
     });
 
-    var updateLink = function() {
-        this.attr("x1", function(d) {
+    var updateLink = function () {
+        this.attr("x1", function (d) {
             return d.source.x;
-        }).attr("y1", function(d) {
+        }).attr("y1", function (d) {
             return d.source.y;
-        }).attr("x2", function(d) {
+        }).attr("x2", function (d) {
             return d.target.x;
-        }).attr("y2", function(d) {
+        }).attr("y2", function (d) {
             return d.target.y;
         });
     }
 
-    var updateNode = function() {
-        this.attr("transform", function(d) {
+    var updateNode = function () {
+        this.attr("transform", function (d) {
             return "translate(" + d.x + "," + d.y + ")";
         });
     }
-    
+
 //    http://bl.ocks.org/mbostock/1129492
 //    node.attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
 //        .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
 
-    force.on("tick", function() {
+    force.on("tick", function () {
 
         force2.start();
 
         node.call(updateNode);
 
-        anchorNode.each(function(d, i) {
+        anchorNode.each(function (d, i) {
 
             if (d.type === 'par') {
                 d.x = d.node.x;
@@ -433,35 +442,8 @@ function drawIt() {
         anchorLink.call(updateLink);
     });
 
-
-
-// debug links from nodes
-    // go through all links
-
-    //http://stackoverflow.com/questions/8739072/highlight-selected-node-its-links-and-its-children-in-a-d3-force-directed-grap
-
+//http://stackoverflow.com/questions/8739072/highlight-selected-node-its-links-and-its-children-in-a-d3-force-directed-grap
 //http://stackoverflow.com/questions/22116909/selecting-path-within-g-element-and-change-style
-
-    filtLinks.forEach(function(lnk) {
-        if ((lnk.source.nsc === 756656 || lnk.target.nsc === 756656) && (lnk.source.nsc === 762382 || lnk.target.nsc === 762382)) {
-            console.log('lnk.s: ' + lnk.source.nsc + ' lnk.t: ' + lnk.target.nsc);
-        }
-    });
-
-    /*
-     filtLinks.forEach(function(lnk1) {
-     filtLinks.forEach(function(lnk2) {
-     if (lnk1.source.nsc != lnk1.target.nsc && lnk1.source.nsc === lnk2.target.nsc && lnk1.target.nsc === lnk2.source.nsc) {
-     console.log('dup link: ' + lnk1.source.nsc + ' ' + lnk1.target.nsc + ' to ' + lnk2.source.nsc + ' ' + lnk2.target.nsc);
-     }
-     });
-     });
-     */
-
-    //viz.selectAll(".link").select("title").each(function(){
-    //		console.log('select title');
-    //		console.log(this);
-    //});
 
 }
 

@@ -415,15 +415,16 @@ public class HelperTanimoto {
                         Integer n1 = rs.getInt("nsc1");
                         Integer n2 = rs.getInt("nsc2");
                         
-                        System.out.println("nsc1: " + n1 + " nsc2: " + n2);
+//                        System.out.println("nsc1: " + n1 + " nsc2: " + n2);
                         
                         CmpdVO cVO1 = nscCmpdMap.get(n1);
                         CmpdVO cVO2 = nscCmpdMap.get(n2);
                         
-                        System.out.println("cmpd1.nsc: " + cVO1.getNsc() + " cmpd2.nsc: " + cVO2.getNsc());
+//                        System.out.println("cmpd1.nsc: " + cVO1.getNsc() + " cmpd2.nsc: " + cVO2.getNsc());
                         
                         tswcoVO.setCmpd1(cVO1);
                         tswcoVO.setCmpd2(cVO2);
+                        
                         tswcoVO.setAtomPairBv(rs.getDouble("atompairbv_fp"));
                         tswcoVO.setFeatMorganBv(rs.getDouble("featmorganbv_fp"));
                         tswcoVO.setLayered(rs.getDouble("layered_fp"));

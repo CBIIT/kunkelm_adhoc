@@ -126,7 +126,18 @@ public class TanimotoController implements Serializable {
             n.nsc = nscInt.getNsc();
             n.drugName = nscInt.getName();
             n.smiles = nscInt.getParentFragment().getCmpdFragmentStructure().getCanSmi();
-            n.target = nscInt.getCmpdAnnotation().getGeneralComment();
+
+            StringBuilder targetSb = new StringBuilder();
+            for (String t : nscInt.getTargets()) {
+                targetSb.append(t);
+                targetSb.append(" ");
+            }
+            if (targetSb.length() > 0) {
+                //if anything was appended, remove the trailing space
+                targetSb.deleteCharAt(targetSb.length() - 1);
+                n.target = targetSb.toString();
+            }
+
             nodeList.add(n);
         }
 
@@ -144,7 +155,7 @@ public class TanimotoController implements Serializable {
             l.m = round(tswco.getMorganBv(), 3);
             l.r = round(tswco.getRdkit(), 3);
             l.to = round(tswco.getTorsionBv(), 3);
-            
+
             l.color = ColorWranglingController.colorByCorrelation(l.mc.toString());
 
             linkList.add(l);

@@ -1,3 +1,53 @@
+function dynamicLinkColor(tanimotoScore) {
+
+    var lowCut = 0.6;
+    var midCut = 0.8;
+    var highCut = 1;
+
+    var redPart = 255;
+    var greenPart = 255;
+    var bluePart = 255;
+
+    if (tanimotoScore == null) {
+        // default return is 255, 255, 255
+    } else if (String(tanimotoScore).substring(0, 4) === 'NULL') {
+    	    
+        redPart = 0;
+        greenPart = 0;
+        bluePart = 0;
+
+    } else {
+
+        var dVal = Number(tanimotoScore);
+
+        if (dVal == null) {
+        } else {
+
+            if (dVal < lowCut) {
+                dVal = lowCut;
+            }
+            if (dVal > highCut) {
+                dVal = highCut;
+            }
+            if (dVal > midCut) {
+                var fracDist = (dVal - midCut) / (highCut - midCut);
+                redPart = 255;
+                greenPart = 255 - Math.round(255 * fracDist);
+                bluePart = 0;
+            } else {
+                var fracDist = (dVal - lowCut) / (midCut - lowCut);
+                redPart = Math.round(255 * fracDist);
+                greenPart = 255;
+                bluePart = 0;
+            }
+        }
+    }
+
+    return "rgb(" + redPart + "," + greenPart + "," + bluePart + ")";
+}
+
+
+
 function exportChart(widget) {
     console.log("In exportChart.");
     console.log("widget is: " + widget);
