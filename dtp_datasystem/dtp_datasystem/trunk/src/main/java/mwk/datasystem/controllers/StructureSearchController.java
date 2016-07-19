@@ -193,7 +193,7 @@ public class StructureSearchController implements Serializable {
         if (ctab != null) {
             ctabForLoad = ctab;
             message = "PerformLoadEditorBySmiles success.";
-                    errorMessage = "";
+            errorMessage = "";
         } else {
             message = "Unable to create ctab from smilesForLoad: " + smilesForLoad;
             errorMessage = "Unable to create ctab from smilesForLoad: " + smilesForLoad;
@@ -269,7 +269,7 @@ public class StructureSearchController implements Serializable {
         return null;
     }
 
-      public String landingPerformLoadEditorByNsc() {
+    public String landingPerformLoadEditorByNsc() {
 
         System.out.println("In landingPerformLoadEditorByNsc in StructureSearchController");
         System.out.println("In landingPerformLoadEditorByNsc in nscForLoad is: " + nscForLoad);
@@ -334,7 +334,7 @@ public class StructureSearchController implements Serializable {
 
         return "/webpages/chemDoodle.xhtml?faces-redirect=true";
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
     public String getMessage() {
         return message;

@@ -59,6 +59,14 @@ public class ListContentController implements Serializable {
     public void setListManagerController(ListManagerController listManagerController) {
         this.listManagerController = listManagerController;
     }
+    
+    // reach-through to tanimotoController
+    @ManagedProperty(value = "#{tanimotoController}")
+    private TanimotoController tanimotoController;
+
+    public void setTanimotoController(TanimotoController tanimotoController) {
+        this.tanimotoController = tanimotoController;
+    }
 
     private SearchCriteriaBean scb;
 
@@ -79,6 +87,11 @@ public class ListContentController implements Serializable {
     public String performConfigureDelete() {
         // placeholder action to populate selectedListMembers
         return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
+    }
+    
+    public String fakeAction(){
+        // placeholder action to populate selectedListMembers
+        return null;
     }
 
     /**

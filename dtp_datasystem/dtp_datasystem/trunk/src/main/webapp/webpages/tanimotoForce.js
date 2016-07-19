@@ -1,6 +1,6 @@
 function toPng() {
 
-    var $container = $('#divForD3');
+    var $container = $('#datasystemForm\\:divForD3');
 
     // Canvg requires trimmed content
     var content = $container.html().trim();
@@ -50,7 +50,7 @@ var force2;
 
 function appendStruct(s, t) {
 
-    var structPanelVar = d3.select("#theForm\\:structPanel_content");
+    var structPanelVar = d3.select("#datasystemForm\\:structPanel_content");
 
     var imgUrl = function(s, t) {
         return 'http://localhost:8080/sarcomacompare/StructureServlet?smiles=' + s + '&title=' + t;
@@ -61,7 +61,7 @@ function appendStruct(s, t) {
 
 function changeStruct(s, t) {
 
-    var structVar = d3.select("#theForm\\:struct");
+    var structVar = d3.select("#datasystemForm\\:struct");
 
     console.log('structVar');
     console.log(structVar);
@@ -72,7 +72,7 @@ function changeStruct(s, t) {
 
 function setGlobals() {
 
-    viz = d3.select("#divForD3")
+    viz = d3.select("#datasystemForm\\:divForD3")
             .append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -86,6 +86,7 @@ function setGlobals() {
     force = d3.layout.force()
             .charge(-120)
             .linkDistance(function(lnk, i) {
+                console.log('lnk: ' + lnk);
                 return lnk.l * 200 + 100;
             })
             .size([width, height]);
@@ -93,15 +94,15 @@ function setGlobals() {
 
     force2 = d3.layout.force().gravity(0).linkDistance(100).linkStrength(8).charge(-100).size([width * 0.75, height * 0.75]);
 
-    var mintanField = d3.select("#theForm\\:mintan");
+    var mintanField = d3.select("#datasystemForm\\:mintan");
     globalMinTan = Number(mintanField[0][0].value);
     console.log('init globalMinTan: ' + globalMinTan);
 
-    var fpField = d3.select("#theForm\\:fp");
+    var fpField = d3.select("#datasystemForm\\:fp");
     whichFingerprint = fpField[0][0].value;
     console.log('init whichFingerprint: ' + whichFingerprint);
 
-    d3.select("#theForm\\:fp").on("change", function() {
+    d3.select("#datasystemForm\\:fp").on("change", function() {
 
         whichFingerprint = this.value;
         console.log('new fp: ' + whichFingerprint);
@@ -124,7 +125,7 @@ function setGlobals() {
 
     });
 
-    d3.select("#theForm\\:mintan").on("change", function() {
+    d3.select("#datasystemForm\\:mintan").on("change", function() {
 
         globalMinTan = Number(this.value);
 
@@ -143,7 +144,7 @@ function setGlobals() {
         drawIt();
     });
 
-    d3.select("#theForm\\:multinsc").on("change", function() {
+    d3.select("#datasystemForm\\:multinsc").on("change", function() {
         console.log('change in multinsc');
         selNscs = [];
         d3.select(this).selectAll("option").filter(function(d, i) {
@@ -158,7 +159,7 @@ function setGlobals() {
         drawIt();
     });
 
-    d3.select("#theForm\\:multidrugname").on("change", function() {
+    d3.select("#datasystemForm\\:multidrugname").on("change", function() {
         console.log('change in multidrugname');
         selDrugNames = [];
         d3.select(this).selectAll("option").filter(function(d, i) {
@@ -173,7 +174,7 @@ function setGlobals() {
         drawIt();
     });
 
-    d3.select("#theForm\\:multitarg").on("change", function() {
+    d3.select("#datasystemForm\\:multitarg").on("change", function() {
         console.log('change in multitarg');
         selTargets = [];
         d3.select(this).selectAll("option").filter(function(d, i) {
@@ -256,7 +257,7 @@ function drawIt() {
     labelAnchorLinks = [];
 
 // clear structures
-    d3.select("#theForm\\:structPanel_content").selectAll("*").remove();
+    d3.select("#datasystemForm\\:structPanel_content").selectAll("*").remove();
 
     var cnt = 0;
 

@@ -8,30 +8,35 @@ package mwk.datasystem.controllers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import mwk.datasystem.vo.CmpdFragmentVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 
+@ManagedBean
+@SessionScoped
 public class ListManagerBean implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
 
-    protected List<CmpdListVO> selectedAvailableLists;
-    protected CmpdListVO listForDelete;
-    protected CmpdListMemberVO selectedActiveListMember;
-    protected CmpdListVO selectedAvailableList;
-    protected CmpdListVO activeList;
-    protected CmpdListVO agnosticList;
+    // available lists    
     protected List<CmpdListVO> availableLists;
+    protected CmpdListVO selectedAvailableList;
+    protected List<CmpdListVO> selectedAvailableLists;
     protected List<CmpdListVO> filteredAvailableLists;
+    // active list
+    protected CmpdListVO activeList;
+    protected CmpdListMemberVO selectedActiveListMember;
+    protected List<CmpdListMemberVO> selectedActiveListMembers;
+    protected List<CmpdListMemberVO> filteredActiveListMembers;
+    //
+    protected CmpdListVO listForDelete;
+    //    
+    protected CmpdListVO agnosticList;
     protected CmpdListMemberVO selectedTempListMember;
     protected List<CmpdListMemberVO> selectedTempListMembers;
     protected CmpdFragmentVO selectedCmpdFragment;
-    protected List<CmpdListMemberVO> selectedActiveListMembers;
-    protected List<CmpdListMemberVO> filteredActiveListMembers;
     protected CmpdListVO tempList;
 
     /**
@@ -40,7 +45,7 @@ public class ListManagerBean implements Serializable {
     public ListManagerBean() {
         reset();
     }
- 
+
     public void reset() {
         selectedAvailableLists = new ArrayList<CmpdListVO>();
         listForDelete = new CmpdListVO();

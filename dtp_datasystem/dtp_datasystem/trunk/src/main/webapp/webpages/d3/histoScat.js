@@ -4,7 +4,7 @@ var selIntProps = [];
 var selDblProps = [];
 var allSelProps = [];
 
-var unitDim = 5;
+var unitDim = 15;
 var theFontSize = unitDim;
 
 var unitWidth = 40 * unitDim;
@@ -20,11 +20,11 @@ var histosPerRow = 4;
 var overallMargin = {top: 4 * unitDim, right: 4 * unitDim, bottom: 4 * unitDim, left: 4 * unitDim};
 
 function clearHistos() {
-    d3.select("#histoForm\\:histoDiv").selectAll("*").remove();
+    d3.select("#datasystemForm\\:histoDiv").selectAll("*").remove();
 }
 
 function clearScats() {
-    d3.select("#scatForm\\:scatDiv").selectAll("*").remove();
+    d3.select("#datasystemForm\\:scatDiv").selectAll("*").remove();
 }
 
 function pollForm() {
@@ -33,14 +33,14 @@ function pollForm() {
     selDblProps = [];
     allSelProps = [];
 
-    d3.select("#configForm\\:intCbxGrd").selectAll("input").filter(function(d, i) {
+    d3.select("#datasystemForm\\:intCbxGrd").selectAll("input").filter(function (d, i) {
         if (this.checked) {
             selIntProps.push(this.value);
             allSelProps.push(this.value);
         }
     });
 
-    d3.select("#configForm\\:dblCbxGrd").selectAll("input").filter(function(d, i) {
+    d3.select("#datasystemForm\\:dblCbxGrd").selectAll("input").filter(function (d, i) {
         if (this.checked) {
             selDblProps.push(this.value);
             allSelProps.push(this.value);
@@ -50,21 +50,20 @@ function pollForm() {
 
 function loadData() {
 
-    var formField = d3.select("#configForm\\:jsonStr");
-    var j = JSON.parse(formField[0][0].value);
+    var j = hidddden;
 
-    j.forEach(function(d, i) {
+    j.forEach(function (d, i) {
         theData.push(d);
     });
 
     // change listeners
-    d3.select("#configForm\\:intCbxGrd").on("change", function() {
+    d3.select("#datasystemForm\\:intCbxGrd").on("change", function () {
         pollForm();
         doHistos();
         doScats();
     });
 
-    d3.select("#configForm\\:dblCbxGrd").on("change", function() {
+    d3.select("#datasystemForm\\:dblCbxGrd").on("change", function () {
         pollForm();
         doHistos();
         doScats();
@@ -93,13 +92,13 @@ function doHistos() {
     clearHistos();
 
     // the all-encompassing svg
-    var svg = d3.select("#histoForm\\:histoDiv").append("svg")
+    var svg = d3.select("#datasystemForm\\:histoDiv").append("svg")
             .attr("width", histoOverallWidth)
             .attr("height", histoOverallHeight)
             .append("g")
             .attr("transform", "translate(" + overallMargin.left + "," + overallMargin.top + ")");
 
-    allSelProps.sort().forEach(function(prop, idx) {
+    allSelProps.sort().forEach(function (prop, idx) {
 
         var theTitle = prop;
 
@@ -135,11 +134,11 @@ function doHistos() {
         // A formatter for counts.
         var formatCount = d3.format(",.0f");
 
-        var minProp = d3.min(theData, function(d) {
+        var minProp = d3.min(theData, function (d) {
             return d.cmpd.parentFragment.cmpdFragmentPChem[prop];
         });
 
-        var maxProp = d3.max(theData, function(d) {
+        var maxProp = d3.max(theData, function (d) {
             return d.cmpd.parentFragment.cmpdFragmentPChem[prop];
         });
 
@@ -151,12 +150,12 @@ function doHistos() {
 
         var histogram = d3.layout.histogram();
 
-        var data = histogram.value(function(d) {
+        var data = histogram.value(function (d) {
             return d.cmpd.parentFragment.cmpdFragmentPChem[prop];
         })(theData);
 
         var y = d3.scale.linear()
-                .domain([0, d3.max(data, function(d) {
+                .domain([0, d3.max(data, function (d) {
                         return d.y;
                     })])
                 .range([plotAreaHeight, 0]);
@@ -173,7 +172,7 @@ function doHistos() {
                 .data(data)
                 .enter().append("g")
                 .attr("class", "bar")
-                .attr("transform", function(d) {
+                .attr("transform", function (d) {
                     return "translate(" + x(d.x) + "," + y(d.y) + ")";
                 });
 
@@ -184,10 +183,10 @@ function doHistos() {
                 .attr("stroke", "black")
                 .attr("fill", "blue")
                 .attr("shape-rendering", "crispEdges")
-                .attr("height", function(d) {
+                .attr("height", function (d) {
                     return plotAreaHeight - y(d.y);
                 })
-                .on("click", function(d) {
+                .on("click", function (d) {
                     console.log('property: ' + prop + ' bar x: ' + d.x + ' bar dx: ' + d.dx);
                 });
 
@@ -200,7 +199,7 @@ function doHistos() {
                 .style("font", theFontSize + "px courier")
                 .style("stroke", "blue")
                 .style("fill", "blue")
-                .text(function(d) {
+                .text(function (d) {
                     return formatCount(d.y);
                 });
 
@@ -231,17 +230,17 @@ function doScats() {
     var scatOverallHeight = allSelProps.length * unitHeight + overallMargin.top + overallMargin.bottom;
 
     clearScats();
-    
-  
+
     // the all-encompassing svg
-    var svg = d3.select("#scatForm\\:scatDiv").append("svg")
+    var svg = d3.select("#datasystemForm\\:scatDiv").append("svg")
             .attr("width", scatOverallWidth)
             .attr("height", scatOverallHeight)
             .append("g")
             .attr("transform", "translate(" + overallMargin.left + "," + overallMargin.top + ")");
 
-    allSelProps.sort().forEach(function(outerProp, outerIdx) {
-        allSelProps.sort().forEach(function(innerProp, innerIdx) {
+    allSelProps.sort().forEach(function (outerProp, outerIdx) {
+
+        allSelProps.sort().forEach(function (innerProp, innerIdx) {
 
             var theTitle = outerProp + " vs " + innerProp;
 
@@ -301,19 +300,19 @@ function doScats() {
                     .text(outerProp);
 
 
-            var minX = d3.min(theData, function(d) {
+            var minX = d3.min(theData, function (d) {
                 return d.cmpd.parentFragment.cmpdFragmentPChem[innerProp];
             });
 
-            var maxX = d3.max(theData, function(d) {
+            var maxX = d3.max(theData, function (d) {
                 return d.cmpd.parentFragment.cmpdFragmentPChem[innerProp];
             });
 
-            var minY = d3.min(theData, function(d) {
+            var minY = d3.min(theData, function (d) {
                 return d.cmpd.parentFragment.cmpdFragmentPChem[outerProp];
             });
 
-            var maxY = d3.max(theData, function(d) {
+            var maxY = d3.max(theData, function (d) {
                 return d.cmpd.parentFragment.cmpdFragmentPChem[outerProp];
             });
 
@@ -324,7 +323,7 @@ function doScats() {
             var y = d3.scale.linear()
                     .domain([minY, maxY])
                     .range([plotAreaHeight, 0]);
-                
+
             var xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom");
@@ -346,20 +345,24 @@ function doScats() {
                     .data(theData)
                     .enter()
                     .append("circle")
-                    .attr("cx", function(d) {
+                    .attr("cx", function (d) {
                         return d.cmpd.parentFragment.cmpdFragmentPChem[innerProp] && d.cmpd.parentFragment.cmpdFragmentPChem[outerProp] ? x(d.cmpd.parentFragment.cmpdFragmentPChem[innerProp]) : 0;
                     })
-                    .attr("cy", function(d) {
+                    .attr("cy", function (d) {
                         return d.cmpd.parentFragment.cmpdFragmentPChem[innerProp] && d.cmpd.parentFragment.cmpdFragmentPChem[outerProp] ? y(d.cmpd.parentFragment.cmpdFragmentPChem[outerProp]) : 0;
                     })
-                    .attr("r",  function(d) {
+                    .attr("r", function (d) {
                         return d.cmpd.parentFragment.cmpdFragmentPChem[innerProp] && d.cmpd.parentFragment.cmpdFragmentPChem[outerProp] ? unitDim / 4 : 0;
                     })
-                    .attr("fill", "red");
+                    .attr("fill", "red")
+                    .on("click", function (d) {
+                        console.log('outerProp: ' + outerProp + ' innerProp: ' + innerProp + ' nsc: ' +  d.cmpd.nsc);
+                    });
 
-                    
-                    
+
+
         });// innerProp
+
     });// outerProp
-    
+
 }

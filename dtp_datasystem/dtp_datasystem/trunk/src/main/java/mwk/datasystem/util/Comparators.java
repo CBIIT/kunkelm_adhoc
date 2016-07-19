@@ -21,16 +21,36 @@ import mwk.datasystem.vo.CuratedTargetVO;
  */
 public class Comparators {
 
-        public static class CmpdNscComparator implements Comparator {
+    public static class CmpdComparator implements Comparator<CmpdVO> {
 
-        public int compare(Object o1, Object o2) {
-            Integer nsc1 = ((CmpdVO) o1).getNsc();
-            Integer nsc2 = ((CmpdVO) o2).getNsc();
-            return nsc1.compareTo(nsc2);
+        public int compare(CmpdVO cVO1, CmpdVO cVO2) {
+
+            int rtn = 0;
+
+            int id1 = -1;
+            int id2 = -1;
+
+            if (cVO1.getNscCmpdId() != null) {
+                id1 = 0;
+            } else {
+                id1 = 1;
+            }
+
+            if (id1 < id2) {
+                rtn = -1;
+            } else if (id1 > id2) {
+                rtn = 1;
+            } else if (id1 == 0) {
+                rtn = cVO1.getNsc().compareTo(cVO2.getNsc());
+            } else {
+                rtn = cVO1.getAdHocCmpdId().compareTo(cVO2.getAdHocCmpdId());
+            }
+
+            return rtn;
+
         }
     }
 
-    
     public static class CuratedNscComparator implements Comparator {
 
         public int compare(Object o1, Object o2) {

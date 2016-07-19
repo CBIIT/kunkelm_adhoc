@@ -181,10 +181,10 @@ public class TransformAndroToVO {
 
         rtn.setNsc1(entityIn.getNsc1());
         rtn.setNsc2(entityIn.getNsc2());
-        rtn.setAtomPair(entityIn.getAtomPair());
-        rtn.setFeatMorgan(entityIn.getFeatMorgan());
+        rtn.setAtomPairBv(entityIn.getAtomPairBv());
+        rtn.setFeatMorganBv(entityIn.getFeatMorganBv());
         rtn.setLayered(entityIn.getLayered());
-        rtn.setMacss(entityIn.getMacss());
+        rtn.setMaccs(entityIn.getMaccs());
         rtn.setMorganBv(entityIn.getMorganBv());
         rtn.setRdkit(entityIn.getRdkit());
         rtn.setTorsionBv(entityIn.getTorsionBv());

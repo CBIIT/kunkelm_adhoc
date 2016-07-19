@@ -1,7 +1,6 @@
 package mwk.datasystem.controllers;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.util.TemplPropUtil;
+import mwk.datasystem.vo.CmpdFragmentVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
 
 /**
@@ -27,7 +27,7 @@ import mwk.datasystem.vo.CmpdListMemberVO;
 public class HistogramController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
-    
+
     private String json;
 
     // reach-through to sessionController
@@ -63,7 +63,7 @@ public class HistogramController implements Serializable {
     // don't do this for now 'cuz calls it too often... @PostConstruct
     public void init() {
 
-          ArrayList<String> ignList = new ArrayList<String>();
+        ArrayList<String> ignList = new ArrayList<String>();
         ignList.add("id");
         ignList.add("serialVersionUID");
 
@@ -71,7 +71,7 @@ public class HistogramController implements Serializable {
         reqList.add("name");
         reqList.add("cmpdFragmentPChem");
 
-        this.propUtil = new TemplPropUtil<CmpdListMemberVO>(new CmpdListMemberVO(), ignList, reqList);
+        this.propUtil = new TemplPropUtil<CmpdFragmentVO>(new CmpdFragmentVO(), ignList);
         this.intProps = this.propUtil.getIntProps();
         this.dblProps = this.propUtil.getDblProps();
 
@@ -118,7 +118,7 @@ public class HistogramController implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         this.json = json;
 
         return "/webpages/d3/activeListHistoScat?faces-redirect=true";
@@ -135,7 +135,6 @@ public class HistogramController implements Serializable {
         return "/webpages/activeListHistograms?faces-redirect=true";
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
     public String getJson() {
         return json;
@@ -144,7 +143,7 @@ public class HistogramController implements Serializable {
     public void setJson(String json) {
         this.json = json;
     }
-    
+
     public List<String> getIntProps() {
         return intProps;
     }
@@ -202,5 +201,5 @@ public class HistogramController implements Serializable {
         this.selectedCmpdListMembers = selectedCmpdListMembers;
     }
 
-      // </editor-fold>
+    // </editor-fold>
 }

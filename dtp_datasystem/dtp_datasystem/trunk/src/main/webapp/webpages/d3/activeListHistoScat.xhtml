@@ -1,152 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-      xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"                                
+                template="/webpages/templates/ui.xhtml">
 
-    <f:view contentType="text/html">
+    <ui:define name="content">
+        <h:outputScript library="js" name="d3.js"/>            
+        <h:outputScript library="js" name="rgbcolor.js"/> 
+        <h:outputScript library="js" name="canvg.js"/>
+        <script type="text/javascript" src="./histoScat.js"></script>
 
-        <h:head>
-            <f:facet name="first">
-                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-                <title>Data System Project Histograms and ScatterPlots</title>
-            </f:facet>
+        <script>
+            var hidddden = #{histogramController.json};
+            jQuery(document).ready(function () {
+                loadData();
+            });
+        </script>
 
-            <noscript>
-                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
-            </noscript>
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
 
-            <h:outputScript library="js" name="d3.js"/>            
-            <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/rgbcolor.js"></script> 
-            <script type="text/javascript" src="http://canvg.googlecode.com/svn/trunk/canvg.js"></script>
-            <script type="text/javascript" src="./histoScat.js"></script>
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
 
-        </h:head>
+        <p:outputPanel id="configDiv">
 
-        <h:body onload="loadData();">
+            <h:outputText style="font-size: 200%;" value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(histogramController.cmpdListMembers)} Members"/>
 
-            <p:layout  fullPage="true">
+            <br/>
 
-                <p:layoutUnit position="north"  
-                              resizable="true"
-                              size="15%">	
+            <p:outputLabel for="intCbxGrd" value="Integer Properties"/>
 
-                    <h:form id="configForm" enctype="multipart/form-data">
+            <p:selectManyCheckbox id="intCbxGrd"
+                                  value="#{histogramController.intParams}"  
+                                  layout="grid"
+                                  columns="5">                                  
+                <f:selectItems value="#{histogramController.intProps}"
+                               var="itm"
+                               itemLabel="#{itm}"
+                               itemValue="#{itm}"/>
+            </p:selectManyCheckbox>
 
-                        <h:outputText style="font-size: 200%;" 
-                                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+            <p:outputLabel for="dblCbxGrd" value="Double Properties"/>
 
-                        <h:inputHidden id="jsonStr" 
-                                       value="#{histogramController.json}"/>
+            <p:selectManyCheckbox id="dblCbxGrd"
+                                  value="#{histogramController.dblParams}" 
+                                  layout="grid"
+                                  columns="5">                                  
+                <f:selectItems value="#{histogramController.dblProps}"
+                               var="itm"
+                               itemLabel="#{itm}"
+                               itemValue="#{itm}"/>
+            </p:selectManyCheckbox>
 
-                        <h:outputText style="font-size: 200%;" 
-                                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+        </p:outputPanel>
 
-                        <p:outputPanel id="configDiv">
+        <!--h:selectOneRadio id="histoSize">
+            <f:selectItem itemLabel="10" itemValue="10" />  
+            <f:selectItem itemLabel="20" itemValue="20" />  
+            <f:selectItem itemLabel="40" itemValue="40" />  
+        </h:selectOneRadio-->        
 
-                            <h:outputText style="font-size: 200%;" value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(histogramController.cmpdListMembers)} Members"/>
+        <h2>Histograms</h2>
+        
+        <p:outputPanel id="histoDiv">
+        </p:outputPanel>
 
-                            <br/>
+        <!--h:selectOneRadio id="scatSize">
+            <f:selectItem itemLabel="10" itemValue="10" />  
+            <f:selectItem itemLabel="20" itemValue="20" />  
+            <f:selectItem itemLabel="40" itemValue="40" />  
+        </h:selectOneRadio-->
 
-                            <p:outputLabel for="intCbxGrd" value="Integer Properties"/>
+        <h2>Scatter Plots</h2>
+        
+        <p:outputPanel id="scatDiv">
+        </p:outputPanel>
 
-                            <p:selectManyCheckbox id="intCbxGrd"
-                                                  value="#{histogramController.intParams}"  
-                                                  layout="grid"
-                                                  columns="5">                                  
-                                <f:selectItems value="#{histogramController.intProps}"
-                                               var="itm"
-                                               itemLabel="#{itm}"
-                                               itemValue="#{itm}"/>
-                            </p:selectManyCheckbox>
+        <!--h:selectOneRadio id="strucSize">
+            <f:selectItem itemLabel="10" itemValue="10" />  
+            <f:selectItem itemLabel="20" itemValue="20" />  
+            <f:selectItem itemLabel="40" itemValue="40" />  
+        </h:selectOneRadio-->
 
-                            <p:outputLabel for="dblCbxGrd" value="Double Properties"/>
+        <h2>Structures</h2>
+        
+        <p:outputPanel id="strucDiv">
+        </p:outputPanel>
 
-                            <p:selectManyCheckbox id="dblCbxGrd"
-                                                  value="#{histogramController.dblParams}" 
-                                                  layout="grid"
-                                                  columns="5">                                  
-                                <f:selectItems value="#{histogramController.dblProps}"
-                                               var="itm"
-                                               itemLabel="#{itm}"
-                                               itemValue="#{itm}"/>
-                            </p:selectManyCheckbox>
+        <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
+    </ui:define>
 
-                        </p:outputPanel>
-
-                    </h:form>
-
-                </p:layoutUnit>
-
-                <p:layoutUnit position="west" 
-                              resizable="true" 
-                              size="50%" 
-                              minSize="100">	
-
-                    <h:form id="histoForm" enctype="multipart/form-data">
-                        
-                         <p:selectOneRadio id="histoSize">
-                                <f:selectItem itemLabel="10" itemValue="10" />  
-                                <f:selectItem itemLabel="20" itemValue="20" />  
-                                <f:selectItem itemLabel="40" itemValue="40" />  
-                            </p:selectOneRadio>
-
-                        <p:outputPanel id="histoDiv">
-                        </p:outputPanel>
-
-                    </h:form>
-
-                </p:layoutUnit>
-
-                <p:layoutUnit position="center"
-                              resizable="true">	
-
-                    <h:form id="scatForm" enctype="multipart/form-data">
-
-                        <p:selectOneRadio id="scatSize">
-                                <f:selectItem itemLabel="10" itemValue="10" />  
-                                <f:selectItem itemLabel="20" itemValue="20" />  
-                                <f:selectItem itemLabel="40" itemValue="40" />  
-                            </p:selectOneRadio>
-                        
-                        <p:outputPanel id="scatDiv">
-                        </p:outputPanel>
-
-                    </h:form>
-
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" 
-                              resizable="true" 
-                              size="50%" 
-                              minSize="100">	
-
-                    <h:form id="strucForm" enctype="multipart/form-data">
-
-                        <p:selectOneRadio id="strucSize">
-                                <f:selectItem itemLabel="10" itemValue="10" />  
-                                <f:selectItem itemLabel="20" itemValue="20" />  
-                                <f:selectItem itemLabel="40" itemValue="40" />  
-                            </p:selectOneRadio>
-                        
-                        <p:outputPanel id="strucDiv">
-                        </p:outputPanel>
-
-                    </h:form>
-
-                </p:layoutUnit>
-
-            </p:layout>
-
-            <ui:include src="/webpages/dialogExportImage.xhtml"/>
-
-        </h:body>
-
-    </f:view>
-
-</html>
+</ui:composition>

@@ -20,7 +20,7 @@ my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=localhost", "mwkunkel
 
 my @fpList;
 push @fpList, "atompairbv_fp";                                                                           
-# push @fpList, "avalon_fp";                              
+#push @fpList, "avalon_fp";                              
 push @fpList, "featmorganbv_fp";                                                      
 push @fpList, "layered_fp";                                                                              
 push @fpList, "maccs_fp";                                                                                
@@ -30,77 +30,95 @@ push @fpList, "torsionbv_fp";
 
 #--------------------------------------------------------------------------------------------define all pair
 
-my @sqlList;
+my $sql;
 my $sth;
 
-push @sqlList, "drop table if exists all_pair_nsc";
-push @sqlList, "create table all_pair_nsc as select u.nsc as uno, d.nsc as duo from curated_nsc u, curated_nsc d where u.nsc < d.nsc";
+$sql = "drop table if exists all_pair_nsc";
+print "$sql\n";
+$sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
-foreach my $sql(@sqlList){
-	$sth = $dbh->prepare($sql);
-	print "$sql;\n\n";
-	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-}
+$sql = "create table all_pair_nsc as select u.nsc as uno, d.nsc as duo from rdkit_mol u, rdkit_mol d where u.nsc < d.nsc";
+print "$sql\n";
+$sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 #--------------------------------------------------------------------------------------------do fp
 
-@sqlList = ();
-
 foreach my $fp(@fpList){
-	push @sqlList, "drop table if exists temp_" . $fp;
-	push @sqlList, "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol where nsc in ( select nsc from curated_nsc )";
-}
-
-foreach my $sql(@sqlList){
+	
+	$sql = "drop table if exists temp_" . $fp;
+	print "$sql\n";
 	$sth = $dbh->prepare($sql);
-	print "$sql;\n\n";
-	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+	
+	$sql = "create table temp_" . $fp . " as select nsc, $fp(mol) as fp from rdkit_mol";
+	print "$sql\n";
+	$sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+	
+	#
+	#
+	# updating rdkit_mol
+	#
+	#
+	
+	$sql = "alter table rdkit_mol drop column if exists " . $fp;
+	print "$sql\n";
+	$sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+		
+	$sql = "alter table rdkit_mol add " . $fp . " bfp";
+	print "$sql\n";
+	$sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+	
+	$sql = "update rdkit_mol set " . $fp . " = $fp(mol)";
+	print "$sql\n";
+	$sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+		
 }
 
 #--------------------------------------------------------------------------------------------tanimoto
 
-@sqlList = ();
-
 foreach my $fp(@fpList){
-	# print "$fp";
-	push @sqlList, "drop table if exists temp_tanimoto_" . $fp;	
-	push @sqlList, "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
-}
-
-foreach my $sql(@sqlList){
+	print "-------------fp: $fp \n";
+	$sql = "drop table if exists temp_tanimoto_" . $fp;
+	print "$sql\n";
 	$sth = $dbh->prepare($sql);
-	print "$sql;\n\n";
-	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+	
+	$sql = "create table temp_tanimoto_" . $fp . " as select uno.nsc as nsc1, duo.nsc nsc2, tanimoto_dist(uno.fp, duo.fp) as tanimoto from temp_" . $fp . " uno, temp_" . $fp . " duo where uno.nsc < duo.nsc";
+	print "$sql\n";
+	$sth = $dbh->prepare($sql);
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 }
 
 # check on counts
-
-@sqlList = ();
-
-foreach my $fp(@fpList){
-	# print "$fp";
-	push @sqlList, "select count(*) from temp_tanimoto_" . $fp;		
-}
-
-foreach my $sql(@sqlList){
-	my $sth = $dbh->prepare($sql);
-	print "$sql;\n\n";
-	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-}
+#foreach my $fp(@fpList){
+#	print "-------------fp: $fp \n";
+#	$sql = "select count(*) from temp_tanimoto_" . $fp;
+#	print "$sql\n";
+#	$sth = $dbh->prepare($sql);
+#	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+#}
 
 #--------------------------------------------------------------------------------------------crosstab
 
-@sqlList = ();
+$sql = "drop table if exists temp_tanimoto_collate";
+print "$sql\n";
+$sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
-my $sql = "drop table if exists temp_tanimoto_collate";
-
-print "$sql;\n\n";
-#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+print "$sql--------------------------------------------\n";
+print "$sql--------------------------------------------\n";
+print "$sql--------------------------------------------\n";
 
 $sql = "create table temp_tanimoto_collate as select all_pair_nsc.uno, all_pair_nsc.duo ";
 
 foreach my $fp(@fpList){	
-	$sql = $sql . "\n, temp_tanimoto_" . $fp . ".tanimoto as " . $fp . "_tanimoto";
+	$sql = $sql . "\n, temp_tanimoto_" . $fp . ".tanimoto as " . $fp . "_tanimoto";	
 }
 
 $sql = $sql . "\n from all_pair_nsc ";
@@ -109,31 +127,26 @@ foreach my $fp(@fpList){
 	$sql = $sql . "\n left outer join temp_tanimoto_" . $fp . " on all_pair_nsc.uno = temp_tanimoto_" . $fp . ".nsc1 and all_pair_nsc.duo = temp_tanimoto_" . $fp . ".nsc2";
 }
 
-print "$sql;\n\n";
-
+print "$sql\n";
 $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 #--------------------------------------------------------------------------------------------stacked
 
-@sqlList = ();
-
 $sql = "drop table if exists temp_tanimoto_stacked";
-
-push @sqlList, $sql;
+print "$sql\n";$sth = $dbh->prepare($sql);
+$sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 $sql = "create table temp_tanimoto_stacked( uno int, duo int, fp varchar, tanimoto double precision )";
-
-push @sqlList, $sql;
+print "$sql\n";$sth = $dbh->prepare($sql);
+$sth = $dbh->prepare($sql);
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 foreach my $fp(@fpList){
 	# print "$fp";
-	push @sqlList, "insert into temp_tanimoto_stacked select nsc1, nsc2, '$fp', tanimoto from temp_tanimoto_" . $fp . " where nsc1 < nsc2";
-}
-
-foreach my $sql(@sqlList){
-	$sth = $dbh->prepare($sql);
-	print "$sql;\n\n";
+	$sql = "insert into temp_tanimoto_stacked select nsc1, nsc2, '$fp', tanimoto from temp_tanimoto_" . $fp . " where nsc1 < nsc2";
+	print "$sql\n";$sth = $dbh->prepare($sql);
 	$sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 }
@@ -176,14 +189,6 @@ foreach my $sql(@sqlList){
 #    #  #    #  #   ##  #    #  #    #  #
 #    #  #    #  #    #   ####   #    #  ######
 
-
-
-
-
-
-
-
-
 ######  #    #  #####    ####   #####    #####
 #        #  #   #    #  #    #  #    #     #
 #####     ##    #    #  #    #  #    #     #
@@ -191,24 +196,19 @@ foreach my $sql(@sqlList){
 #        #  #   #       #    #  #   #      #
 ######  #    #  #        ####   #    #     #
 
-@sqlList = ();
-
 # hard-code statement for temp_tanimoto_collate
 $sql = "\\copy temp_tanimoto_collate to /tmp/temp_tanimoto_collate.csv csv header";
-push @sqlList, $sql;
+print "$sql\n";$sth = $dbh->prepare($sql);
+#$sth = $dbh->prepare($sql);
+#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+
 
 foreach my $fp(@fpList){	            
         $sql = "\\copy temp_tanimoto_" . $fp . " to /tmp/temp_tanimoto_" . $fp . ".csv csv header";
-        push @sqlList, $sql;
+        print "$sql\n";$sth = $dbh->prepare($sql);
+	#$sth = $dbh->prepare($sql);
+	#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	        
 }
-
-foreach my $sql(@sqlList){
-	$sth = $dbh->prepare($sql);
-	print "$sql;\n\n";
-	# Can't execute \copy over DBI...   just print these out
-	# #$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-}
-
 
 # clean up
 $dbh->disconnect();

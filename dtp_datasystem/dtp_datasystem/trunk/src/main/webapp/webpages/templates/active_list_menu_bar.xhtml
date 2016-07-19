@@ -16,6 +16,9 @@
                 ajax="false"
                 actionListener="#{launchingController.performConnectToLanding()}"
                 target="_blank"/>    
+    <p:menuitem value="Tanimoto"                       
+                ajax="false"
+                action="#{tanimotoController.performRunTanimoto}"/>   
     <p:menuitem actionListener="#{listContentController.performConfigureCreate()}"
                 value="COPY to NEW LIST"
                 onclick="PF('crt_dlg').show();"/>

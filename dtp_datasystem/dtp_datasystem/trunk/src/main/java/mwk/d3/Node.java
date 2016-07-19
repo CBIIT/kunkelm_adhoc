@@ -1,8 +1,3 @@
-/*
- 
- 
- 
- */
 package mwk.d3;
 
 import mwk.datasystem.vo.CmpdVO;
