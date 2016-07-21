@@ -48,17 +48,9 @@
                   ajax="false"
                   action="/webpages/activeListForm?faces-redirect=true"/>
 
-      <p:menuitem value="Property Explorer" 
+      <p:menuitem value="PChem Property Histograms/Scatter Plots" 
                   ajax="false"
-                  actionListener="#{histogramController.handleLoadActiveList}"/>
-
-      <p:menuitem value="Tanimoto Histograms" 
-                  ajax="false"
-                  action="/webpages/tanimotoHistoScat?faces-redirect=true"/>
-
-      <p:menuitem value="Tanimoto Force Graph" 
-                  ajax="false"
-                  action="/webpages/tanimotoForce?faces-redirect=true"/>
+                  action="#{histogramController.performLoadActiveList}"/>
 
     </p:submenu>
 

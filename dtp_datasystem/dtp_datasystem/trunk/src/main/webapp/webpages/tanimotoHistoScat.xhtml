@@ -23,57 +23,61 @@
             });
         </script>
 
-        <style>
-            body {
-                font: 10px sans-serif;
-            }
-
-            .bar rect {
-                fill: steelblue;
-                shape-rendering: crispEdges;
-            }
-
-            .bar text {
-                fill: #fff;
-            }
-
-            .axis path, .axis line {
-                fill: none;
-                stroke: #000;
-                shape-rendering: crispEdges;
-            }
-
-        </style>
+        <p:commandButton value="Tanimoto Force Graph" 
+                         ajax="false"
+                         action="/webpages/tanimotoForce?faces-redirect=true"/>
 
         <p:outputPanel id="configDiv">
 
-            <p:outputLabel for="fp" value="Which Fingerprint"/>
-            <h:selectOneListbox id="fp" size="1">
-                <f:selectItem itemLabel="atompairbv_fp_tanimoto" itemValue="atompairbv_fp_tanimoto"/>
-                <f:selectItem itemLabel="featmorganbv_fp_tanimoto" itemValue="featmorganbv_fp_tanimoto"/>
-                <f:selectItem itemLabel="layered_fp_tanimoto" itemValue="layered_fp_tanimoto"/>
-                <f:selectItem itemLabel="maccs_fp_tanimoto" itemValue="maccs_fp_tanimoto"/>
-                <f:selectItem itemLabel="morganbv_fp_tanimoto" itemValue="morganbv_fp_tanimoto"/>
-                <f:selectItem itemLabel="rdkit_fp_tanimoto" itemValue="rdkit_fp_tanimoto"/>
-                <f:selectItem itemLabel="torsionbv_fp_tanimoto" itemValue="torsionbv_fp_tanimoto"/>
-            </h:selectOneListbox>
+            <p:panelGrid columns="2">
+
+                <p:outputLabel for="fp" value="Which Fingerprint"/>
+                <h:selectOneListbox id="fp" size="1">
+                    <f:selectItem itemLabel="atompairbv_fp_tanimoto" itemValue="atompairbv_fp_tanimoto"/>
+                    <f:selectItem itemLabel="featmorganbv_fp_tanimoto" itemValue="featmorganbv_fp_tanimoto"/>
+                    <f:selectItem itemLabel="layered_fp_tanimoto" itemValue="layered_fp_tanimoto"/>
+                    <f:selectItem itemLabel="maccs_fp_tanimoto" itemValue="maccs_fp_tanimoto"/>
+                    <f:selectItem itemLabel="morganbv_fp_tanimoto" itemValue="morganbv_fp_tanimoto"/>
+                    <f:selectItem itemLabel="rdkit_fp_tanimoto" itemValue="rdkit_fp_tanimoto"/>
+                    <f:selectItem itemLabel="torsionbv_fp_tanimoto" itemValue="torsionbv_fp_tanimoto"/>
+                </h:selectOneListbox>
+
+                <p:outputLabel for="histoSize" value="Histogram Dimension"/>
+                <h:selectOneListbox id="histoSize" size="1">
+                    <f:selectItem itemLabel="10" itemValue="10" />  
+                    <f:selectItem itemLabel="20" itemValue="20" />  
+                    <f:selectItem itemLabel="40" itemValue="40" />  
+                </h:selectOneListbox>
+
+                <p:outputLabel for="scatSize" value="ScatterPlot Dimension"/>
+                <h:selectOneListbox id="scatSize" size="1">
+                    <f:selectItem itemLabel="10" itemValue="10" />  
+                    <f:selectItem itemLabel="20" itemValue="20" />  
+                    <f:selectItem itemLabel="40" itemValue="40" />  
+                </h:selectOneListbox>
+
+                <h:outputText value="Histograms as Image"/>
+                
+                <h:commandButton type="button" 
+                                 value="Histograms as Image"
+                                 onclick="histosToPng()"/>
+
+                <h:outputText value="Scatter Plots as Image"/>
+                
+                <h:commandButton type="button" 
+                                 value="Scatter Plots as Image"
+                                 onclick="scatsToPng()"/>
+
+            </p:panelGrid>
 
         </p:outputPanel>
 
         <h1>Histograms</h1>
 
-        <h:commandButton type="button" 
-                         value="Export as Image"
-                         onclick="histosToPng()"/>
-
         <p:outputPanel id="histoDiv">
         </p:outputPanel>
 
         <h1>Scatter Plots</h1>
-
-        <h:commandButton type="button" 
-                         value="Export as Image"
-                         onclick="scatsToPng()"/>
 
         <p:outputPanel id="scatDiv">
         </p:outputPanel>

@@ -49,11 +49,15 @@
 
         </style>
 
-
-
         <p:commandButton action="#{tanimotoController.reload()}"
                          value="RELOAD DATA"/>
 
+        <p:spacer height="20" width="20"/>
+        
+        <p:commandButton value="Tanimoto Histograms" 
+                  ajax="false"
+                  action="/webpages/tanimotoHistoScat?faces-redirect=true"/>
+        
         <p:panelGrid columns="7">
 
             <p:outputLabel for="fp" value="Which Fingerprint"/>

@@ -42,7 +42,7 @@
     <ui:define name="content">
 
         <script>
-            jQuery(document).ready(function() {
+            jQuery(document).ready(function () {
                 $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
             });
             function doRotate() {
@@ -331,7 +331,9 @@
                       filterBy="#{cmpd.cmpdAnnotation.mtxt}"
                       filterMatchMode="contains"
                       style="text-wrap: normal; white-space: normal;">
+
                 <h:outputText value="#{cmpd.cmpdAnnotation.mtxt}"/>
+
             </p:column>
 
             <p:column headerText="pseudo atoms"
@@ -341,35 +343,50 @@
                       filterBy="#{cmpd.cmpdAnnotation.pseudoAtoms}"
                       filterMatchMode="contains"
                       style="text-wrap: normal; white-space: normal;">
+
                 <h:outputText value="#{cmpd.cmpdAnnotation.pseudoAtoms}"/>
+
             </p:column>
 
-            <!-- cmpd-level stuff -->
+            <!-- cmpd-level stuff, special case, below, for aliases, projects, plates, targets -->
 
             <p:columns resizable="true"  
-                       exportable="false"
+                       rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
+                       exportable="false" 
                        width="50"
                        value="#{sessionController.configurationBean.cmpdColumns}" 
                        var="column" 
                        columnIndexVar="colIndex"
-                       sortable="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
                        sortBy="#{cmpd[column.property]}"
-                       >
-                <!--
-                filterBy="#{cmpd[column.property]}"
-                filterFunction="#{customFilter.customFilter}">
-                -->
+                       filterBy="#{cmpd[column.property]}"
+                       filterMatchMode="contains">
 
                 <f:facet name="header">                        
                     <h:outputText value="#{column.header}"
                                   class="vertical" />
                 </f:facet>
 
-                <h:outputText rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
-                              value="#{cmpd[column.property]}"/>
+                <h:outputText value="#{cmpd[column.property]}"/>
 
-                <p:dataList rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates' or column.property eq 'targets'}"
-                            var="prop" 
+            </p:columns>
+
+            <!-- separate case for aliases, projects, plates and targets -->
+            <!-- NEED CUSTOM SORT FUNCTION? -->
+
+            <p:columns rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates' or column.property eq 'targets'}"
+                       resizable="true"  
+                       exportable="false" 
+                       width="50"
+                       value="#{sessionController.configurationBean.cmpdColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex">
+
+                <f:facet name="header">                        
+                    <h:outputText value="#{column.header}"
+                                  class="vertical" />
+                </f:facet>
+
+                <p:dataList var="prop" 
                             value="#{cmpd[column.property]}"
                             rows="5" 
                             paginator="true"
@@ -409,31 +426,34 @@
                        value="#{sessionController.configurationBean.structureColumns}" 
                        var="column" 
                        columnIndexVar="colIndex" 
-                       sortBy="#{strc[column.property]}" 
-                       >
-                <!--
-                filterBy="#{strc[column.property]}">
-                -->
+                       sortBy="#{strc[column.property]}"
+                       filterBy="#{strc[column.property]}">
+
                 <f:facet name="header">
                     <h:outputText value="#{column.header}" />
                 </f:facet>
+
                 <h:outputText value="#{strc[column.property]}" />
+
             </p:columns>
 
             <p:columns resizable="true" 
                        value="#{sessionController.configurationBean.physChemColumns}" 
                        var="column" 
                        columnIndexVar="colIndex" 
-                       sortBy="#{physchem[column.property]}" 
-                       >
-                <!--
+                       sortBy="#{physchem[column.property]}">
+
+                <!--                       
                 filterBy="#{physchem[column.property]}">
                 -->
+
                 <f:facet name="header">
                     <h:outputText value="#{column.header}"
                                   class="vertical"/>
                 </f:facet>
+
                 <h:outputText value="#{physchem[column.property]}" />
+
             </p:columns>
 
             <p:columns resizable="true" 

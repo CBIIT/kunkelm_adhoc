@@ -9631,7 +9631,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Lis
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerController.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/MenuBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SaltsWorkbenchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SearchCriteriaBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/SessionController.java -text
@@ -9740,13 +9739,14 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/verticalHeader.
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionEnded.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistoScat.js -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/cmpdListTable.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configuration.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureAppendToExistingList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureCreateNewList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureDeleteFromList.xhtml -text
@@ -9754,7 +9754,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.x
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/createList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscWorkbench.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/activeListHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/activeListHistoScat_ORIGINAL.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/cmpdListMembers.json -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/d3/collatedFingerprints.json -text
@@ -9774,8 +9773,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.js -t
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat_ORIGINAL_MULTI_FORM.js -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat_ORIGINAL_MULTI_FORM.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_menu_bar.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text

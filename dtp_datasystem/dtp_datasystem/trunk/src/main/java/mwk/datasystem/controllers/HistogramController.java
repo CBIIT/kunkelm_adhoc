@@ -87,22 +87,7 @@ public class HistogramController implements Serializable {
         this.selectedCmpdListMembers = new ArrayList<CmpdListMemberVO>();
 
     }
-
-    public void handleLoadActiveList() {
-
-        String rtn = performLoadActiveList();
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        ExternalContext extCtx = ctx.getExternalContext();
-        String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/d3/activeListHistoScat.xhtml"));
-
-        try {
-            extCtx.redirect(url);
-        } catch (IOException ioe) {
-            throw new FacesException(ioe);
-        }
-
-    }
-
+    
     public String performLoadActiveList() {
 
         this.cmpdListMembers = new ArrayList<CmpdListMemberVO>(listManagerController.getListManagerBean().activeList.getCmpdListMembers());
@@ -121,7 +106,7 @@ public class HistogramController implements Serializable {
 
         this.json = json;
 
-        return "/webpages/d3/activeListHistoScat?faces-redirect=true";
+        return "/webpages/activeListHistoScat?faces-redirect=true";
     }
 
     public String performClearSelections() {
