@@ -223,19 +223,18 @@ public class Main {
         compare_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        */
+         */
         compare_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export)"));
-        
-        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ",""));
+
+        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", ""));
         compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
-        
-        
+
         compare_tawc.add(new TableAndWhereClause("nano_string_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
         // still need to handle this!        
         compare_tawc.add(new TableAndWhereClause("nsc_compound", " where (prefix, nsc) in (select prefix, nsc from nsc_for_export)"));
         compare_tawc.add(new TableAndWhereClause("nsc_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        
+
         compare_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("synthetic_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set_for_export)"));
@@ -249,10 +248,10 @@ public class Main {
 
 //         COMPARE
 //        
-        ConnectionInfo srcInfo = connMap.get("privatecomparedb_local");
-        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo destInfo = connMap.get("sarcomacomparedb_local");
 
-        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
+        ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
 
         Connection srcConn = null;
         Connection destConn = null;
@@ -274,10 +273,11 @@ public class Main {
             destConn = DriverManager.getConnection(destInfo.dbUrl, destInfo.dbUser, destInfo.dbPass);
 
 //            prepareCompareIdentsForExport(srcConn);
-            propagateCompare(srcConn, destConn);
+//            propagateCompare(srcConn, destConn);
+//            propagateDataSystem(srcConn, destConn);
 
-            // propagateDataSystem(srcConn, destConn);
-            // propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -560,10 +560,8 @@ public class Main {
 
             // archive constraints
 //            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);
-
             // drop constraints
 //            IndexAndConstraintManagement.dropConstraints(destConn);
-
             for (TableAndWhereClause tawc : tawcList) {
 
                 // scrape out anything remaining
@@ -578,7 +576,6 @@ public class Main {
 
             // recreate constraints
 //            IndexAndConstraintManagement.createConstraints(destConn);
-
             System.out.println("Done! in propagateCompare");
 
         } catch (Exception e) {
@@ -598,10 +595,8 @@ public class Main {
 
             // archive constraints
 //            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);
-
             // drop constraints
 //            IndexAndConstraintManagement.dropConstraints(destConn);
-
             for (TableAndWhereClause tawc : tawcList) {
 
                 // scrape out anything remaining
@@ -616,7 +611,6 @@ public class Main {
 
             // recreate constraints
 //            IndexAndConstraintManagement.createConstraints(destConn);
-
             System.out.println("Done! in propagateDataSystem");
 
         } catch (Exception e) {
