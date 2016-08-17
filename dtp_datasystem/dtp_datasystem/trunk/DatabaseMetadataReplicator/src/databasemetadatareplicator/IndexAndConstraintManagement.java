@@ -19,193 +19,193 @@ import java.util.ArrayList;
  */
 public class IndexAndConstraintManagement {
 
-//    public static void saveIndexes(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
-//            throws Exception {
-//
-//        Statement destStmt = null;
-//
-//        try {
-//
-//            destConn.setAutoCommit(true);
-//            destStmt = destConn.createStatement();
-//
-//            int result = destStmt.executeUpdate("drop table if exists create_index_statements");
-//            result = destStmt.executeUpdate("drop table if exists drop_index_statements");
-//
-//            result = destStmt.executeUpdate("create table create_index_statements(stmt varchar)");
-//            result = destStmt.executeUpdate("create table drop_index_statements(stmt varchar)");
-//
-//            ArrayList<String> dropStmtList = new ArrayList<String>();
-//            ArrayList<String> creeatStmtList = new ArrayList<String>();
-//
-//            DatabaseMetaData dbMetaData = destConn.getMetaData();
-//
-//            for (TableAndWhereClause tawc : tawcList) {
-//
-//                ResultSet rs = dbMetaData.getIndexInfo(null, null, tawc.tableName, true, false);
-//
-//                while (rs.next()) {
-//
-//                    if (!rs.getString("COLUMN_NAME").equals("id")) {
-//
-//                        System.out.println(tawc.tableName + " COLUMN_NAME : " + rs.getString("COLUMN_NAME"));
-//                        System.out.println(tawc.tableName + " INDEX_NAME : " + rs.getString("INDEX_NAME"));
-//                        System.out.println(tawc.tableName + " NON_UNIQUE : " + rs.getBoolean("NON_UNIQUE"));
-//                        System.out.println(tawc.tableName + " TYPE : " + rs.getShort("TYPE"));
-//                        System.out.println(tawc.tableName + " ORDINAL_POSITION : " + rs.getInt("ORDINAL_POSITION"));
-//                        System.out.println();
-//
-//                        String dropStmt = "drop index " + rs.getString("INDEX_NAME");
-//                        dropStmtList.add(dropStmt);
-//
-//                        String createStmt = "create index " + rs.getString("INDEX_NAME") + " on " + tawc.tableName + "(" + rs.getString("COLUMN_NAME") + ")";
-//                        creeatStmtList.add(createStmt);
-//                        
-//                    }
-//                    
-//                }
-//            }
-//            
-//            String prepStmtSql = "insert into create_index_statements(stmt) values (?)";            
-//            PreparedStatement prepStmt = destConn.prepareStatement(prepStmtSql);
-//            
-//            for (String createStmt : creeatStmtList){
-//                System.out.println("createStmt: " + createStmt);
-//                prepStmt.setString(1, createStmt);
-//                prepStmt.execute();                
-//            }
-//            
-//            prepStmtSql = "insert into drop_index_statements(stmt) values (?)";            
-//            prepStmt = destConn.prepareStatement(prepStmtSql);
-//            
-//            for (String dropStmt : dropStmtList){
-//                System.out.println("dropStmt: " + dropStmt);
-//                prepStmt.setString(1, dropStmt);
-//                prepStmt.execute();                
-//            }
-//            
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw e;
-//        }
-//
-//    }
-//
-//      public static void dropIndexes(Connection destConn)
-//            throws Exception {
-//
-//        ArrayList<String> sqlList = new ArrayList<String>();
-//
-//        Statement destStmt = null;
-//
-//        try {
-//
-//            destConn.setAutoCommit(true);
-//            destStmt = destConn.createStatement();
-//
-//            ResultSet rs = destStmt.executeQuery("select stmt from drop_index_statements");
-//
-//            while (rs.next()) {
-//                String sql = rs.getString("stmt");
-//                sqlList.add(sql);
-//            }
-//            rs.close();
-//
-//            for (String sql : sqlList) {
-//                System.out.println("executeUpdate: " + sql);
-//                int rtn = destStmt.executeUpdate(sql);
-//                System.out.println("int rtn is: " + rtn);
-//            }
-//
-//            System.out.println("DONE!");
-//
-//        } catch (SQLException se) {
-//            System.out.println("SQL Exception in dropIndexes:");
-//            // Loop through the SQL Exceptions
-//            while (se != null) {
-//                System.out.println("State  : " + se.getSQLState());
-//                System.out.println("Message: " + se.getMessage());
-//                System.out.println("Error  : " + se.getErrorCode());
-//                se = se.getNextException();
-//            }
-//            // throw new Exception(se);
-//        } catch (Exception e) {
-//            System.out.println("Exception in dropIndexes:");
-//            System.out.println(e);
-//            // throw (e);
-//        } finally {
-//            try {
-//                if (destStmt != null) {
-//                    destStmt.close();
-//                    destStmt = null;
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Exception in finally clause in dropIndexes: " + e);
-//                e.printStackTrace();
-//                // throw (e);
-//            }
-//        }
-//
-//    }
-//
-//    public static void createIndexes(Connection destConn)
-//            throws Exception {
-//
-//        ArrayList<String> sqlList = new ArrayList<String>();
-//
-//        Statement destStmt = null;
-//
-//        try {
-//
-//            destConn.setAutoCommit(true);
-//            destStmt = destConn.createStatement();
-//
-//            ResultSet rs = destStmt.executeQuery("select stmt from create_index_statements");
-//
-//            while (rs.next()) {
-//                String sql = rs.getString("stmt");
-//                sqlList.add(sql);
-//            }
-//            rs.close();
-//
-//            for (String sql : sqlList) {
-//                System.out.println("executeUpdate: " + sql);
-//                int rtn = destStmt.executeUpdate(sql);
-//                System.out.println("int rtn is: " + rtn);
-//            }
-//
-//            System.out.println("DONE!");
-//
-//        } catch (SQLException se) {
-//            System.out.println("SQL Exception in createIndexes:");
-//            // Loop through the SQL Exceptions
-//            while (se != null) {
-//                System.out.println("State  : " + se.getSQLState());
-//                System.out.println("Message: " + se.getMessage());
-//                System.out.println("Error  : " + se.getErrorCode());
-//                se = se.getNextException();
-//            }
-//            throw new Exception(se);
-//        } catch (Exception e) {
-//            System.out.println("Exception in createIndexes:");
-//            System.out.println(e);
-//            throw (e);
-//        } finally {
-//            try {
-//                if (destStmt != null) {
-//                    destStmt.close();
-//                    destStmt = null;
-//                }
-//            } catch (Exception e) {
-//                System.out.println("Exception in finally clause in createIndexes: " + e);
-//                e.printStackTrace();
-//                throw (e);
-//            }
-//        }
-//
-//    }
+    public static void save_XXX_Indexes(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
+            throws Exception {
+
+        Statement destStmt = null;
+
+        try {
+
+            destConn.setAutoCommit(true);
+            destStmt = destConn.createStatement();
+
+            int result = destStmt.executeUpdate("drop table if exists create_index_statements");
+            result = destStmt.executeUpdate("drop table if exists drop_index_statements");
+
+            result = destStmt.executeUpdate("create table create_index_statements(stmt varchar)");
+            result = destStmt.executeUpdate("create table drop_index_statements(stmt varchar)");
+
+            ArrayList<String> dropStmtList = new ArrayList<String>();
+            ArrayList<String> creeatStmtList = new ArrayList<String>();
+
+            DatabaseMetaData dbMetaData = destConn.getMetaData();
+
+            for (TableAndWhereClause tawc : tawcList) {
+
+                ResultSet rs = dbMetaData.getIndexInfo(null, null, tawc.tableName, true, false);
+
+                while (rs.next()) {
+
+                    if (!rs.getString("COLUMN_NAME").equals("id")) {
+
+                        System.out.println(tawc.tableName + " COLUMN_NAME : " + rs.getString("COLUMN_NAME"));
+                        System.out.println(tawc.tableName + " INDEX_NAME : " + rs.getString("INDEX_NAME"));
+                        System.out.println(tawc.tableName + " NON_UNIQUE : " + rs.getBoolean("NON_UNIQUE"));
+                        System.out.println(tawc.tableName + " TYPE : " + rs.getShort("TYPE"));
+                        System.out.println(tawc.tableName + " ORDINAL_POSITION : " + rs.getInt("ORDINAL_POSITION"));
+                        System.out.println();
+
+                        String dropStmt = "drop index " + rs.getString("INDEX_NAME");
+                        dropStmtList.add(dropStmt);
+
+                        String createStmt = "create index " + rs.getString("INDEX_NAME") + " on " + tawc.tableName + "(" + rs.getString("COLUMN_NAME") + ")";
+                        creeatStmtList.add(createStmt);
+                        
+                    }
+                    
+                }
+            }
+            
+            String prepStmtSql = "insert into create_index_statements(stmt) values (?)";            
+            PreparedStatement prepStmt = destConn.prepareStatement(prepStmtSql);
+            
+            for (String createStmt : creeatStmtList){
+                System.out.println("createStmt: " + createStmt);
+                prepStmt.setString(1, createStmt);
+                prepStmt.execute();                
+            }
+            
+            prepStmtSql = "insert into drop_index_statements(stmt) values (?)";            
+            prepStmt = destConn.prepareStatement(prepStmtSql);
+            
+            for (String dropStmt : dropStmtList){
+                System.out.println("dropStmt: " + dropStmt);
+                prepStmt.setString(1, dropStmt);
+                prepStmt.execute();                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+    }
+
+      public static void drop_XXX_Indexes(Connection destConn)
+            throws Exception {
+
+        ArrayList<String> sqlList = new ArrayList<String>();
+
+        Statement destStmt = null;
+
+        try {
+
+            destConn.setAutoCommit(true);
+            destStmt = destConn.createStatement();
+
+            ResultSet rs = destStmt.executeQuery("select stmt from drop_index_statements");
+
+            while (rs.next()) {
+                String sql = rs.getString("stmt");
+                sqlList.add(sql);
+            }
+            rs.close();
+
+            for (String sql : sqlList) {
+                System.out.println("executeUpdate: " + sql);
+                int rtn = destStmt.executeUpdate(sql);
+                System.out.println("int rtn is: " + rtn);
+            }
+
+            System.out.println("DONE!");
+
+        } catch (SQLException se) {
+            System.out.println("SQL Exception in dropIndexes:");
+            // Loop through the SQL Exceptions
+            while (se != null) {
+                System.out.println("State  : " + se.getSQLState());
+                System.out.println("Message: " + se.getMessage());
+                System.out.println("Error  : " + se.getErrorCode());
+                se = se.getNextException();
+            }
+            // throw new Exception(se);
+        } catch (Exception e) {
+            System.out.println("Exception in dropIndexes:");
+            System.out.println(e);
+            // throw (e);
+        } finally {
+            try {
+                if (destStmt != null) {
+                    destStmt.close();
+                    destStmt = null;
+                }
+            } catch (Exception e) {
+                System.out.println("Exception in finally clause in dropIndexes: " + e);
+                e.printStackTrace();
+                // throw (e);
+            }
+        }
+
+    }
+
+    public static void create_XXX_Indexes(Connection destConn)
+            throws Exception {
+
+        ArrayList<String> sqlList = new ArrayList<String>();
+
+        Statement destStmt = null;
+
+        try {
+
+            destConn.setAutoCommit(true);
+            destStmt = destConn.createStatement();
+
+            ResultSet rs = destStmt.executeQuery("select stmt from create_index_statements");
+
+            while (rs.next()) {
+                String sql = rs.getString("stmt");
+                sqlList.add(sql);
+            }
+            rs.close();
+
+            for (String sql : sqlList) {
+                System.out.println("executeUpdate: " + sql);
+                int rtn = destStmt.executeUpdate(sql);
+                System.out.println("int rtn is: " + rtn);
+            }
+
+            System.out.println("DONE!");
+
+        } catch (SQLException se) {
+            System.out.println("SQL Exception in createIndexes:");
+            // Loop through the SQL Exceptions
+            while (se != null) {
+                System.out.println("State  : " + se.getSQLState());
+                System.out.println("Message: " + se.getMessage());
+                System.out.println("Error  : " + se.getErrorCode());
+                se = se.getNextException();
+            }
+            throw new Exception(se);
+        } catch (Exception e) {
+            System.out.println("Exception in createIndexes:");
+            System.out.println(e);
+            throw (e);
+        } finally {
+            try {
+                if (destStmt != null) {
+                    destStmt.close();
+                    destStmt = null;
+                }
+            } catch (Exception e) {
+                System.out.println("Exception in finally clause in createIndexes: " + e);
+                e.printStackTrace();
+                throw (e);
+            }
+        }
+
+    }
     
-    public static void saveConstraints(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
+    public static void save_XXX_Constraints(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
             throws Exception {
 
         StringBuilder sb = new StringBuilder();
@@ -296,7 +296,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void dropConstraints(Connection destConn)
+    public static void drop_XXX_Constraints(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -353,7 +353,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void createConstraints(Connection destConn)
+    public static void create_XXX_Constraints(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -410,7 +410,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void oracleSaveConstraints(Connection destConn, String[] tableNamesAndWhereClauses)
+    public static void oracle_XXX_SaveConstraints(Connection destConn, String[] tableNamesAndWhereClauses)
             throws Exception {
 
         StringBuilder sb = new StringBuilder();

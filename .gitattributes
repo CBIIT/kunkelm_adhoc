@@ -9392,7 +9392,7 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonres
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ConnectionInfo.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/GetPublicRelease.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/IndexAndConstraintManagement.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/NewMain.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Replicator.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/TableAndWhereClause.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/AnotherExample.java -text

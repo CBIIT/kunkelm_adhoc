@@ -22,7 +22,7 @@ import java.util.Set;
  *
  * @author mwkunkel
  */
-public class NewMain {
+public class Main {
 
     static Map<String, ConnectionInfo> connMap = new HashMap<String, ConnectionInfo>();
 
@@ -49,15 +49,6 @@ public class NewMain {
         connMap.put("datasystemdb_local", new ConnectionInfo(
                 "datasystemdb_local",
                 "jdbc:postgresql://localhost:5432/datasystemdb",
-                "mwkunkel",
-                "donkie11",
-                Boolean.FALSE,
-                Boolean.TRUE
-        ));
-
-        connMap.put("fakeoncologydrugsdb_local", new ConnectionInfo(
-                "fakeoncologydrugsdb_local",
-                "jdbc:postgresql://localhost:5432/fakeoncologydrugsdb",
                 "mwkunkel",
                 "donkie11",
                 Boolean.FALSE,
@@ -203,6 +194,7 @@ public class NewMain {
 
     static {
 
+        /*
         compare_tawc.add(new TableAndWhereClause("affy_dna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("affy_exon_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         
@@ -231,7 +223,8 @@ public class NewMain {
         compare_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export"));
+        */
+        compare_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export)"));
         
         compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ",""));
         compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
@@ -256,8 +249,8 @@ public class NewMain {
 
 //         COMPARE
 //        
-        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
-        ConnectionInfo destInfo = connMap.get("fakeoncologydrugsdb_local");
+        ConnectionInfo srcInfo = connMap.get("privatecomparedb_local");
+        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
 
         ArrayList<TableAndWhereClause> tawcList = compare_tawc;
 
@@ -329,13 +322,13 @@ public class NewMain {
             destStmt = destConn.createStatement();
 
             // source (probably almost always datasystemdb_local
-            String srcSqlStr = "drop table if exists curated_nsc_smiles";
+            String srcSqlStr = "drop table if exists curated_nsc_smiles_src";
 
             System.out.println(srcSqlStr);
             System.out.println();
             srcStmt.executeUpdate(srcSqlStr);
 
-            srcSqlStr = "create table curated_nsc_smiles "
+            srcSqlStr = "create table curated_nsc_smiles_src "
                     + " as "
                     + " select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles "
                     + " from curated_nsc nsc "
@@ -349,13 +342,13 @@ public class NewMain {
             srcStmt.executeUpdate(srcSqlStr);
 
             // dest            
-            String destSqlStr = "drop table if exists curated_nsc_smiles";
+            String destSqlStr = "drop table if exists curated_nsc_smiles_dest";
 
             System.out.println(destSqlStr);
             System.out.println();
             destStmt.executeUpdate(destSqlStr);
 
-            destSqlStr = "create table curated_nsc_smiles( "
+            destSqlStr = "create table curated_nsc_smiles_dest( "
                     + " nsc int, "
                     + " generic_name varchar, "
                     + " preferred_name varchar, "
@@ -367,17 +360,17 @@ public class NewMain {
             destStmt.executeUpdate(destSqlStr);
 
             // update            
-            destSqlStr = "insert into curated_nsc_smiles(nsc, generic_name, preferred_name, primary_target, smiles) values (?,?,?,?,?)";
+            destSqlStr = "insert into curated_nsc_smiles_dest(nsc, generic_name, preferred_name, primary_target, smiles) values (?,?,?,?,?)";
 
             System.out.println(destSqlStr);
             System.out.println();
             destPrepStmt = destConn.prepareStatement(destSqlStr);
 
-            destSqlStr = "select nsc, generic_name, preferred_name, primary_target, smiles from curated_nsc_smiles";
+            srcSqlStr = "select nsc, generic_name, preferred_name, primary_target, smiles from curated_nsc_smiles_src";
 
-            System.out.println(destSqlStr);
+            System.out.println(srcSqlStr);
             System.out.println();
-            rs = srcStmt.executeQuery(destSqlStr);
+            rs = srcStmt.executeQuery(srcSqlStr);
 
             while (rs.next()) {
 
@@ -400,12 +393,12 @@ public class NewMain {
                 // first, try generic_name
                 // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
                 destSqlStr = "update synthetic_ident "
-                        + " set drug_name = curated_nsc_smiles.generic_name, "
-                        + " target = curated_nsc_smiles.primary_target, "
-                        + " smiles = curated_nsc_smiles.smiles "
-                        + " from curated_nsc_smiles, nsc_ident "
+                        + " set drug_name = curated_nsc_smiles_dest.generic_name, "
+                        + " target = curated_nsc_smiles_dest.primary_target, "
+                        + " smiles = curated_nsc_smiles_dest.smiles "
+                        + " from curated_nsc_smiles_dest, nsc_ident "
                         + " where synthetic_ident.id = nsc_ident.id "
-                        + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
+                        + " and nsc_ident.nsc = curated_nsc_smiles_dest.nsc"
                         + " and synthetic_ident.drug_name is null";
 
                 System.out.println(destSqlStr);
@@ -415,12 +408,12 @@ public class NewMain {
                 // then, try preferred_name
                 // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
                 destSqlStr = "update synthetic_ident "
-                        + " set drug_name = curated_nsc_smiles.preferred_name, "
-                        + " target = curated_nsc_smiles.primary_target, "
-                        + " smiles = curated_nsc_smiles.smiles "
-                        + " from curated_nsc_smiles, nsc_ident "
+                        + " set drug_name = curated_nsc_smiles_dest.preferred_name, "
+                        + " target = curated_nsc_smiles_dest.primary_target, "
+                        + " smiles = curated_nsc_smiles_dest.smiles "
+                        + " from curated_nsc_smiles_dest, nsc_ident "
                         + " where synthetic_ident.id = nsc_ident.id "
-                        + " and nsc_ident.nsc = curated_nsc_smiles.nsc"
+                        + " and nsc_ident.nsc = curated_nsc_smiles_dest.nsc"
                         + " and synthetic_ident.drug_name is null";
 
                 System.out.println(destSqlStr);
@@ -443,27 +436,27 @@ public class NewMain {
                     "update cmpd_table set name = null",
                     //
                     "update nsc_cmpd "
-                    + " set name = curated_nsc_smiles.generic_name "
-                    + " from curated_nsc_smiles "
-                    + " where nsc_cmpd.nsc = curated_nsc_smiles.nsc "
+                    + " set name = curated_nsc_smiles_dest.generic_name "
+                    + " from curated_nsc_smiles_dest "
+                    + " where nsc_cmpd.nsc = curated_nsc_smiles_dest.nsc "
                     + " and nsc_cmpd.name is null",
                     //
                     "update cmpd_table "
-                    + " set name = curated_nsc_smiles.generic_name "
-                    + " from curated_nsc_smiles "
-                    + " where cmpd_table.nsc = curated_nsc_smiles.nsc "
+                    + " set name = curated_nsc_smiles_dest.generic_name "
+                    + " from curated_nsc_smiles_dest "
+                    + " where cmpd_table.nsc = curated_nsc_smiles_dest.nsc "
                     + " and cmpd_table.name is null",
                     //
                     "update nsc_cmpd "
-                    + " set name = curated_nsc_smiles.preferred_name "
-                    + " from curated_nsc_smiles "
-                    + " where nsc_cmpd.nsc = curated_nsc_smiles.nsc "
+                    + " set name = curated_nsc_smiles_dest.preferred_name "
+                    + " from curated_nsc_smiles_dest "
+                    + " where nsc_cmpd.nsc = curated_nsc_smiles_dest.nsc "
                     + " and nsc_cmpd.name is null",
                     //
                     "update cmpd_table "
-                    + " set name = curated_nsc_smiles.preferred_name "
-                    + " from curated_nsc_smiles "
-                    + " where cmpd_table.nsc = curated_nsc_smiles.nsc "
+                    + " set name = curated_nsc_smiles_dest.preferred_name "
+                    + " from curated_nsc_smiles_dest "
+                    + " where cmpd_table.nsc = curated_nsc_smiles_dest.nsc "
                     + " and cmpd_table.name is null",
                     //
                     // targets
@@ -474,7 +467,7 @@ public class NewMain {
                     //
                     "create table distinct_targets "
                     + " as select distinct primary_target "
-                    + " from  curated_nsc_smiles",
+                    + " from  curated_nsc_smiles_dest",
                     //
                     "drop table if exists targets_to_add",
                     //
@@ -492,7 +485,7 @@ public class NewMain {
                     //
                     "create table nsc_target_to_add "
                     + " as select nsc, primary_target "
-                    + " from curated_nsc_smiles cns "
+                    + " from curated_nsc_smiles_dest cns "
                     + " except "
                     + " select nsc, target "
                     + " from nsc_cmpd nc, cmpd_targets2nsc_cmpds ct2nc, cmpd_target ct "
@@ -566,10 +559,10 @@ public class NewMain {
             prepareCompareIdentsForExport(srcConn);
 
             // archive constraints
-            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);
+//            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);
 
             // drop constraints
-            IndexAndConstraintManagement.dropConstraints(destConn);
+//            IndexAndConstraintManagement.dropConstraints(destConn);
 
             for (TableAndWhereClause tawc : tawcList) {
 
@@ -584,7 +577,7 @@ public class NewMain {
             }
 
             // recreate constraints
-            IndexAndConstraintManagement.createConstraints(destConn);
+//            IndexAndConstraintManagement.createConstraints(destConn);
 
             System.out.println("Done! in propagateCompare");
 
@@ -604,10 +597,10 @@ public class NewMain {
         try {
 
             // archive constraints
-            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);
+//            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);
 
             // drop constraints
-            IndexAndConstraintManagement.dropConstraints(destConn);
+//            IndexAndConstraintManagement.dropConstraints(destConn);
 
             for (TableAndWhereClause tawc : tawcList) {
 
@@ -622,7 +615,7 @@ public class NewMain {
             }
 
             // recreate constraints
-            IndexAndConstraintManagement.createConstraints(destConn);
+//            IndexAndConstraintManagement.createConstraints(destConn);
 
             System.out.println("Done! in propagateDataSystem");
 
