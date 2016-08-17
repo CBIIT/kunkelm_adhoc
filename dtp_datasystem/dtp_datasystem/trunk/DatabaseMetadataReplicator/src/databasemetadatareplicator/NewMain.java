@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,9 +55,9 @@ public class NewMain {
                 Boolean.TRUE
         ));
 
-        connMap.put("fakedatasystemdb_local", new ConnectionInfo(
-                "fakedatasystemdb_local",
-                "jdbc:postgresql://localhost:5432/fakedatasystemdb",
+        connMap.put("fakeoncologydrugsdb_local", new ConnectionInfo(
+                "fakeoncologydrugsdb_local",
+                "jdbc:postgresql://localhost:5432/fakeoncologydrugsdb",
                 "mwkunkel",
                 "donkie11",
                 Boolean.FALSE,
@@ -201,36 +202,47 @@ public class NewMain {
     static ArrayList<TableAndWhereClause> compare_tawc = new ArrayList<TableAndWhereClause>();
 
     static {
-        compare_tawc.add(new TableAndWhereClause("affymetrix_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+
+        compare_tawc.add(new TableAndWhereClause("affy_dna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+        compare_tawc.add(new TableAndWhereClause("affy_exon_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+        
         compare_tawc.add(new TableAndWhereClause("build_date", ""));
+        
         compare_tawc.add(new TableAndWhereClause("cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
         compare_tawc.add(new TableAndWhereClause("cell_line_data_set_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
+        
         compare_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
         compare_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
         // still need to handle this!
         compare_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export))"));
         compare_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export)))"));
-
         compare_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
-
         // handle generalization of test_result               
         compare_tawc.add(new TableAndWhereClause("dtp_test_result", " where id in (select id from test_result where cell_line_data_set_fk in (select id from cell_line_data_set_for_export))"));
-
         compare_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
+
+        compare_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
+        compare_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
+
+        compare_tawc.add(new TableAndWhereClause("micro_array_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+        compare_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+        compare_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("named_target_set", ""));
+        compare_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export"));
+        
+        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ",""));
+        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
+        
+        
         compare_tawc.add(new TableAndWhereClause("nano_string_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
-
         // still need to handle this!        
         compare_tawc.add(new TableAndWhereClause("nsc_compound", " where (prefix, nsc) in (select prefix, nsc from nsc_for_export)"));
-
         compare_tawc.add(new TableAndWhereClause("nsc_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("require_use_ignore", "DO NOT REPLICATE"));
+        
         compare_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("synthetic_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set_for_export)"));
@@ -240,15 +252,14 @@ public class NewMain {
         compare_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
     }
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
 //         COMPARE
 //        
         ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
-        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_dev");
+        ConnectionInfo destInfo = connMap.get("fakeoncologydrugsdb_local");
 
-//        ConnectionInfo destInfo = connMap.get("fakedatasystemdb_local");
-        ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
+        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
 
         Connection srcConn = null;
         Connection destConn = null;
@@ -269,10 +280,11 @@ public static void main(String[] args) {
             srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
             destConn = DriverManager.getConnection(destInfo.dbUrl, destInfo.dbUser, destInfo.dbPass);
 
-            // propagateCompare(srcConn, destConn);
-            propagateDataSystem(srcConn, destConn);            
-            // propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+//            prepareCompareIdentsForExport(srcConn);
+            propagateCompare(srcConn, destConn);
 
+            // propagateDataSystem(srcConn, destConn);
+            // propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -551,7 +563,7 @@ public static void main(String[] args) {
 
         try {
 
-            prepareCompareIdents(srcConn);
+            prepareCompareIdentsForExport(srcConn);
 
             // archive constraints
             IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);
@@ -623,8 +635,10 @@ public static void main(String[] args) {
         }
     }
 
-    public static void prepareCompareIdents(Connection conn)
+    public static void prepareCompareIdentsForExport(Connection conn)
             throws Exception {
+
+        System.out.println("In prepareCompareIdentsForExport");
 
         Statement stmt = null;
 
@@ -636,32 +650,48 @@ public static void main(String[] args) {
             // set up for stacking ids for nsc, and mol_targ
             //
             // EXPECTS to find nsc_for_export(prefix, nsc)
-            // EXPECTS to find molt_id_for_eport(molt_id)
-            String sqlStr = "drop table if exists cell_line_data_set_ident_for_export";
-            System.out.println(sqlStr);
-            stmt.executeUpdate(sqlStr);
+            // EXPECTS to find target_set_name_for_export(target_set_name);
+//drop table if exists nsc_for_export;
+//create table nsc_for_export(prefix varchar, nsc int);
+//insert into nsc_for_export select distinct prefix, nsc from nsc_ident limit 10;
+//            
+//drop table if exists target_set_names_for_export;
+//create table target_set_names_for_export(target_set_name varchar);
+//insert into target_set_names_for_export(target_set_name) values ('MIR_ISRAEL');
+//insert into target_set_names_for_export(target_set_name) values ('WEINSTEIN_CROCE_MIR');
+//insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_2H');
+//insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_6H');
+//insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_24H');	                        
+            String[] dcArr = new String[]{
+                "drop table if exists cell_line_data_set_ident_for_export",
+                "drop table if exists cell_line_data_set_for_export",
+                "create table cell_line_data_set_ident_for_export(id bigint)",
+                "create table cell_line_data_set_for_export(id bigint)"
+            };
 
-            sqlStr = "drop table if exists cell_line_data_set_for_export";
-            System.out.println(sqlStr);
-            stmt.executeUpdate(sqlStr);
+            ArrayList<String> dcList = new ArrayList<String>(Arrays.asList(dcArr));
 
-            sqlStr = "create table cell_line_data_set_ident_for_export(id bigint)";
-            System.out.println(sqlStr);
-            stmt.executeUpdate(sqlStr);
+            for (String sql : dcList) {
+                System.out.println(sql);
+                stmt.executeUpdate(sql);
+            }
 
-            sqlStr = "create table cell_line_data_set_for_export(id bigint)";
-            System.out.println(sqlStr);
-            stmt.executeUpdate(sqlStr);
-
-            sqlStr = "insert into cell_line_data_set_ident_for_export(id) "
+            // NSC
+            String sqlStr = "insert into cell_line_data_set_ident_for_export(id) "
                     + "select id from nsc_ident "
                     + "where (prefix, nsc) in (select prefix, nsc from nsc_for_export)";
             System.out.println(sqlStr);
             stmt.executeUpdate(sqlStr);
 
+            // MolTarg from named_target_set
             sqlStr = "insert into cell_line_data_set_ident_for_export(id) "
-                    + "select id from mol_targ_ident "
-                    + "where molt_id in (select molt_id from molt_id_for_export)";
+                    + " select cell_line_data_sets_fk "
+                    + " from named_target_set nts, cell_line_data_sets2named_targ clds2nts "
+                    + " where clds2nts.named_target_sets_fk = nts.id "
+                    + " and nts.target_set_name in ( "
+                    + " select target_set_name from target_set_names_for_export "
+                    + " )";
+
             System.out.println(sqlStr);
             stmt.executeUpdate(sqlStr);
 
@@ -674,7 +704,7 @@ public static void main(String[] args) {
             System.out.println("DONE!");
 
         } catch (SQLException se) {
-            System.out.println("SQL Exception in prepareIdents:");
+            System.out.println("SQL Exception in prepareCompareIdentsForExport:");
             // Loop through the SQL Exceptions
             while (se != null) {
                 System.out.println("State  : " + se.getSQLState());
