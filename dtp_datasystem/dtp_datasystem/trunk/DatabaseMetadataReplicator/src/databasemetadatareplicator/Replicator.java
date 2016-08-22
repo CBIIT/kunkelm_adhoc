@@ -63,7 +63,7 @@ public class Replicator {
             if (tblName.equals("publicrelease")) {
                 selStr = "select * from structure_edit.publicrelease";
             } else {
-                selStr = "select * from " + tblName + whereClause;
+                selStr = "select " + tblName + ".* from " + tblName + whereClause;
             }
 
             System.out.println("-----" + selStr);

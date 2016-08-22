@@ -11,7 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -29,14 +33,36 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            int result = destStmt.executeUpdate("drop table if exists create_index_statements");
-            result = destStmt.executeUpdate("drop table if exists drop_index_statements");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+            Date date = Calendar.getInstance().getTime();
+            String dateStr = dateFormat.format(date);
 
-            result = destStmt.executeUpdate("create table create_index_statements(stmt varchar)");
-            result = destStmt.executeUpdate("create table drop_index_statements(stmt varchar)");
+            System.out.println("dateStr: " + dateStr);
+
+            try {
+                String sqlStr = "create table crt_idx_stmts_" + dateStr + " as select * from crt_idx_stmts";
+                System.out.println(sqlStr);
+                int result = destStmt.executeUpdate(sqlStr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                String sqlStr = "create table drp_idx_stmts_" + dateStr + " as select * from drp_idx_stmts";
+                System.out.println(sqlStr);
+                int result = destStmt.executeUpdate(sqlStr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            int result = destStmt.executeUpdate("drop table if exists crt_idx_stmts");
+            result = destStmt.executeUpdate("drop table if exists drp_idx_stmts");
+
+            result = destStmt.executeUpdate("create table crt_idx_stmts(stmt varchar)");
+            result = destStmt.executeUpdate("create table drp_idx_stmts(stmt varchar)");
 
             ArrayList<String> dropStmtList = new ArrayList<String>();
-            ArrayList<String> creeatStmtList = new ArrayList<String>();
+            ArrayList<String> createStmtList = new ArrayList<String>();
 
             DatabaseMetaData dbMetaData = destConn.getMetaData();
 
@@ -48,42 +74,41 @@ public class IndexAndConstraintManagement {
 
                     if (!rs.getString("COLUMN_NAME").equals("id")) {
 
-                        System.out.println(tawc.tableName + " COLUMN_NAME : " + rs.getString("COLUMN_NAME"));
-                        System.out.println(tawc.tableName + " INDEX_NAME : " + rs.getString("INDEX_NAME"));
-                        System.out.println(tawc.tableName + " NON_UNIQUE : " + rs.getBoolean("NON_UNIQUE"));
-                        System.out.println(tawc.tableName + " TYPE : " + rs.getShort("TYPE"));
-                        System.out.println(tawc.tableName + " ORDINAL_POSITION : " + rs.getInt("ORDINAL_POSITION"));
-                        System.out.println();
-
+//                        System.out.println(tawc.tableName + " COLUMN_NAME : " + rs.getString("COLUMN_NAME"));
+//                        System.out.println(tawc.tableName + " INDEX_NAME : " + rs.getString("INDEX_NAME"));
+//                        System.out.println(tawc.tableName + " NON_UNIQUE : " + rs.getBoolean("NON_UNIQUE"));
+//                        System.out.println(tawc.tableName + " TYPE : " + rs.getShort("TYPE"));
+//                        System.out.println(tawc.tableName + " ORDINAL_POSITION : " + rs.getInt("ORDINAL_POSITION"));
+//                        System.out.println();
                         String dropStmt = "drop index " + rs.getString("INDEX_NAME");
                         dropStmtList.add(dropStmt);
 
                         String createStmt = "create index " + rs.getString("INDEX_NAME") + " on " + tawc.tableName + "(" + rs.getString("COLUMN_NAME") + ")";
-                        creeatStmtList.add(createStmt);
-                        
+                        createStmtList.add(createStmt);
+
                     }
-                    
+
                 }
             }
-            
-            String prepStmtSql = "insert into create_index_statements(stmt) values (?)";            
+
+            String prepStmtSql = "insert into crt_idx_stmts(stmt) values (?)";
             PreparedStatement prepStmt = destConn.prepareStatement(prepStmtSql);
-            
-            for (String createStmt : creeatStmtList){
+
+            for (String createStmt : createStmtList) {
                 System.out.println("createStmt: " + createStmt);
                 prepStmt.setString(1, createStmt);
-                prepStmt.execute();                
+                prepStmt.execute();
             }
-            
-            prepStmtSql = "insert into drop_index_statements(stmt) values (?)";            
+
+            prepStmtSql = "insert into drp_idx_stmts(stmt) values (?)";
             prepStmt = destConn.prepareStatement(prepStmtSql);
-            
-            for (String dropStmt : dropStmtList){
+
+            for (String dropStmt : dropStmtList) {
                 System.out.println("dropStmt: " + dropStmt);
                 prepStmt.setString(1, dropStmt);
-                prepStmt.execute();                
+                prepStmt.execute();
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -91,7 +116,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-      public static void drop_XXX_Indexes(Connection destConn)
+    public static void drop_XXX_Indexes(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -103,7 +128,7 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            ResultSet rs = destStmt.executeQuery("select stmt from drop_index_statements");
+            ResultSet rs = destStmt.executeQuery("select stmt from drp_idx_stmts");
 
             while (rs.next()) {
                 String sql = rs.getString("stmt");
@@ -160,7 +185,7 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            ResultSet rs = destStmt.executeQuery("select stmt from create_index_statements");
+            ResultSet rs = destStmt.executeQuery("select stmt from crt_idx_stmts");
 
             while (rs.next()) {
                 String sql = rs.getString("stmt");
@@ -204,7 +229,7 @@ public class IndexAndConstraintManagement {
         }
 
     }
-    
+
     public static void save_XXX_Constraints(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
             throws Exception {
 
@@ -231,13 +256,33 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            int result = destStmt.executeUpdate("drop table if exists create_constraint_statements");
-            result = destStmt.executeUpdate("drop table if exists drop_constraint_statements");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+            Date date = Calendar.getInstance().getTime();
+            String dateStr = dateFormat.format(date);
 
-            result = destStmt.executeUpdate("create table create_constraint_statements(stmt varchar)");
-            result = destStmt.executeUpdate("create table drop_constraint_statements(stmt varchar)");
+            try {
+                String sqlStr = "create table crt_cnst_stmts_" + dateStr + " as select * from crt_cnst_stmts";
+                System.out.println(sqlStr);
+                int result = destStmt.executeUpdate(sqlStr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            String createConstraintsSql = "insert into create_constraint_statements(stmt)\n"
+            try {
+                String sqlStr = "create table drp_cnst_stmts_" + dateStr + " as select * from drp_cnst_stmts";
+                System.out.println(sqlStr);
+                int result = destStmt.executeUpdate(sqlStr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            int result = destStmt.executeUpdate("drop table if exists crt_cnst_stmts");
+            result = destStmt.executeUpdate("drop table if exists drp_cnst_stmts");
+
+            result = destStmt.executeUpdate("create table crt_cnst_stmts(stmt varchar)");
+            result = destStmt.executeUpdate("create table drp_cnst_stmts(stmt varchar)");
+
+            String createConstraintsSql = "insert into crt_cnst_stmts(stmt)\n"
                     + "SELECT 'ALTER TABLE '||nspname||'.'||relname||' ADD CONSTRAINT '||conname||' '||pg_get_constraintdef(pg_constraint.oid)||';' as statement\n"
                     + "FROM pg_constraint\n"
                     + "INNER JOIN pg_class ON conrelid = pg_class.oid\n"
@@ -251,7 +296,7 @@ public class IndexAndConstraintManagement {
             System.out.println(createConstraintsSql);
             result = destStmt.executeUpdate(createConstraintsSql);
 
-            String dropConstraintsSql = "insert into drop_constraint_statements(stmt)\n"
+            String dropConstraintsSql = "insert into drp_cnst_stmts(stmt)\n"
                     + "SELECT 'ALTER TABLE '||nspname||'.'||relname||' DROP CONSTRAINT '||conname||' cascade;' as statement \n"
                     + "FROM pg_constraint \n"
                     + "INNER JOIN pg_class ON conrelid = pg_class.oid \n"
@@ -308,7 +353,7 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            ResultSet rs = destStmt.executeQuery("select stmt from drop_constraint_statements");
+            ResultSet rs = destStmt.executeQuery("select stmt from drp_cnst_stmts");
 
             while (rs.next()) {
                 String sql = rs.getString("stmt");
@@ -365,7 +410,7 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            ResultSet rs = destStmt.executeQuery("select stmt from create_constraint_statements");
+            ResultSet rs = destStmt.executeQuery("select stmt from crt_cnst_stmts");
 
             while (rs.next()) {
                 String sql = rs.getString("stmt");
@@ -438,13 +483,13 @@ public class IndexAndConstraintManagement {
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
-            int result = destStmt.executeUpdate("drop table create_constraint_statements");
-            result = destStmt.executeUpdate("drop table drop_constraint_statements");
+            int result = destStmt.executeUpdate("drop table crt_cnst_stmts");
+            result = destStmt.executeUpdate("drop table drp_cnst_stmts");
 
-            result = destStmt.executeUpdate("create table create_constraint_statements(stmt clob)");
-            result = destStmt.executeUpdate("create table drop_constraint_statements(stmt clob)");
+            result = destStmt.executeUpdate("create table crt_cnst_stmts(stmt clob)");
+            result = destStmt.executeUpdate("create table drp_cnst_stmts(stmt clob)");
 
-            String createConstraintsSql = "insert into create_constraint_statements(stmt)\n"
+            String createConstraintsSql = "insert into crt_cnst_stmts(stmt)\n"
                     + "select 'alter table '||table_name||' enable constraint '||CONSTRAINT_NAME||'' from user_constraints where owner='DIS_CLEANED'"
                     + "and CONSTRAINT_NAME not like '%pkey'\n"
                     + "AND TABLE_NAME in (\n"
@@ -454,7 +499,7 @@ public class IndexAndConstraintManagement {
             System.out.println(createConstraintsSql);
             result = destStmt.executeUpdate(createConstraintsSql);
 
-            String disableConstraintsSql = "insert into drop_constraint_statements(stmt)\n"
+            String disableConstraintsSql = "insert into drp_cnst_stmts(stmt)\n"
                     + "select 'alter table '||table_name||' drop constraint '||CONSTRAINT_NAME||' cascade' from user_constraints where owner='DIS_CLEANED'"
                     + "and CONSTRAINT_NAME not like '%pkey'\n"
                     + "AND TABLE_NAME in (\n"

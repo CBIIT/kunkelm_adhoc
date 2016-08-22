@@ -24,6 +24,77 @@ import java.util.Set;
  */
 public class Main {
 
+    public static void main(String[] args) {
+
+//         COMPARE
+//        
+        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo destInfo = connMap.get("sarcomacomparedb_local");
+
+        ArrayList<TableAndWhereClause> tawcList = cj_tawc;
+
+        Connection srcConn = null;
+        Connection destConn = null;
+
+        try {
+
+            DriverManager.registerDriver(new org.postgresql.Driver());
+            // DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+
+            System.out.println();
+            System.out.println("srcInfo: ");
+            srcInfo.asProperties();
+
+            System.out.println();
+            System.out.println("destInfo: ");
+            destInfo.asProperties();
+
+            srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
+            destConn = DriverManager.getConnection(destInfo.dbUrl, destInfo.dbUser, destInfo.dbPass);
+
+            IndexAndConstraintManagement.save_XXX_Constraints(destConn, tawcList);
+            IndexAndConstraintManagement.save_XXX_Indexes(destConn, tawcList);
+
+//            IndexAndConstraintManagement.drop_XXX_Indexes(destConn);            
+//            IndexAndConstraintManagement.drop_XXX_Constraints(destConn);
+            // nuke
+//            nukeAllDestinationTables(srcConn, destConn, tawcList);
+//            prepareCompareIdentsForExport(srcConn);
+//            propagateCompare(srcConn, destConn, tawcList);
+//            propagateDataSystem(srcConn, destConn);
+//            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+//            IndexAndConstraintManagement.create_XXX_Constraints(destConn);
+            System.out.println("Done! in NewMain");
+
+            srcConn.close();
+            destConn.close();
+
+            srcConn = null;
+            destConn = null;
+
+        } catch (Exception e) {
+            System.out.println("Caught Exception " + e + " in DatasystemReplicator.main");
+            e.printStackTrace();
+        } finally {
+            if (destConn != null) {
+                try {
+                    destConn.close();
+                    destConn = null;
+                } catch (SQLException ex) {
+                    System.out.println("Error in closing destConn");
+                }
+            }
+            if (srcConn != null) {
+                try {
+                    srcConn.close();
+                    srcConn = null;
+                } catch (SQLException ex) {
+                    System.out.println("Error in closing srcConn");
+                }
+            }
+        }
+    }
+
     static Map<String, ConnectionInfo> connMap = new HashMap<String, ConnectionInfo>();
 
     static {
@@ -194,47 +265,35 @@ public class Main {
 
     static {
 
-        /*
         compare_tawc.add(new TableAndWhereClause("affy_dna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("affy_exon_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        
         compare_tawc.add(new TableAndWhereClause("build_date", ""));
-        
         compare_tawc.add(new TableAndWhereClause("cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
         compare_tawc.add(new TableAndWhereClause("cell_line_data_set_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        
         compare_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
         compare_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
         // still need to handle this!
         compare_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export))"));
         compare_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export)))"));
         compare_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
-        // handle generalization of test_result               
         compare_tawc.add(new TableAndWhereClause("dtp_test_result", " where id in (select id from test_result where cell_line_data_set_fk in (select id from cell_line_data_set_for_export))"));
         compare_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
-
         compare_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
-
         compare_tawc.add(new TableAndWhereClause("micro_array_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-         */
         compare_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export)"));
-
-        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", ""));
         compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
-
         compare_tawc.add(new TableAndWhereClause("nano_string_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
         // still need to handle this!        
         compare_tawc.add(new TableAndWhereClause("nsc_compound", " where (prefix, nsc) in (select prefix, nsc from nsc_for_export)"));
         compare_tawc.add(new TableAndWhereClause("nsc_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-
         compare_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
         compare_tawc.add(new TableAndWhereClause("synthetic_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
         compare_tawc.add(new TableAndWhereClause("test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set_for_export)"));
@@ -244,69 +303,55 @@ public class Main {
         compare_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
     }
 
-    public static void main(String[] args) {
+    static ArrayList<TableAndWhereClause> cj_tawc = new ArrayList<TableAndWhereClause>();
 
-//         COMPARE
-//        
-        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
-        ConnectionInfo destInfo = connMap.get("sarcomacomparedb_local");
+    static {
 
-        ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
+        cj_tawc.add(new TableAndWhereClause("affy_dna_ident", " , cell_line_data_set_ident_for_export where affy_dna_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("affy_exon_ident", " , cell_line_data_set_ident_for_export where affy_exon_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("build_date", ""));
 
-        Connection srcConn = null;
-        Connection destConn = null;
+        cj_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " , named_target_set, target_set_names_for_export where cell_line_data_sets2named_targ.named_target_sets_fk = named_target_set.id and named_target_set.target_set_name = target_set_names_for_export.target_set_name"));
+        cj_tawc.add(new TableAndWhereClause("named_target_set", " , target_set_names_for_export where named_target_set.target_set_name = target_set_names_for_export.target_set_name"));
 
-        try {
+        cj_tawc.add(new TableAndWhereClause("cell_line_data_set", " , cell_line_data_set_for_export where cell_line_data_set.id = cell_line_data_set_for_export.id"));
 
-            DriverManager.registerDriver(new org.postgresql.Driver());
-            // DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+        cj_tawc.add(new TableAndWhereClause("micro_array_ident", " , cell_line_data_set_ident_for_export where micro_array_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("micro_rna_ident", " , cell_line_data_set_ident_for_export where micro_rna_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " , cell_line_data_set_ident_for_export where mol_targ_catch_all_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("mol_targ_ident", " , cell_line_data_set_ident_for_export where mol_targ_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("nano_string_ident", " , cell_line_data_set_ident_for_export where nano_string_ident.id = cell_line_data_set_ident_for_export.id"));
 
-            System.out.println();
-            System.out.println("srcInfo: ");
-            srcInfo.asProperties();
+        cj_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("nsc_ident", " , cell_line_data_set_ident_for_export where nsc_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("synthetic_ident", " , cell_line_data_set_ident_for_export where synthetic_ident.id = cell_line_data_set_ident_for_export.id"));
 
-            System.out.println();
-            System.out.println("destInfo: ");
-            destInfo.asProperties();
+        cj_tawc.add(new TableAndWhereClause("cell_line_data_set_ident", " , cell_line_data_set_ident_for_export where cell_line_data_set_ident.id = cell_line_data_set_ident_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
+        cj_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
+// still need to handle this!
+        cj_tawc.add(new TableAndWhereClause("conc_resp_assay", " , nsc_compound, nsc_for_export where nsc_compound_fk = nsc_compound.id and nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
+        cj_tawc.add(new TableAndWhereClause("conc_resp_element", " , conc_resp_assay, nsc_compound, nsc_for_export where conc_resp_element.conc_resp_assay_fk = conc_resp_assay.id and conc_resp_assay.nsc_compound_fk = nsc_compound.id and nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
 
-            srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
-            destConn = DriverManager.getConnection(destInfo.dbUrl, destInfo.dbUser, destInfo.dbPass);
+        cj_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " , cell_line_data_set_for_export where dtp_cell_line_data_set.id = cell_line_data_set_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("dtp_test_result", " , test_result, cell_line_data_set_for_export where dtp_test_result.id = test_result.id and test_result.cell_line_data_set_fk = cell_line_data_set_for_export.id"));
 
-//            prepareCompareIdentsForExport(srcConn);
-//            propagateCompare(srcConn, destConn);
-//            propagateDataSystem(srcConn, destConn);
+        cj_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
 
-            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+// still need to handle this!        
+        cj_tawc.add(new TableAndWhereClause("nsc_compound", " , nsc_for_export where nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
+        cj_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("test_result", " , cell_line_data_set_for_export where test_result.cell_line_data_set_fk = cell_line_data_set_for_export.id"));
+        cj_tawc.add(new TableAndWhereClause("test_result_type", ""));
+        cj_tawc.add(new TableAndWhereClause("uploaded_cell_line_data_set", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("uploaded_ident", "DO NOT REPLICATE"));
+        cj_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
 
-            System.out.println("Done! in NewMain");
-
-            srcConn.close();
-            destConn.close();
-
-            srcConn = null;
-            destConn = null;
-
-        } catch (Exception e) {
-            System.out.println("Caught Exception " + e + " in DatasystemReplicator.main");
-            e.printStackTrace();
-        } finally {
-            if (destConn != null) {
-                try {
-                    destConn.close();
-                    destConn = null;
-                } catch (SQLException ex) {
-                    System.out.println("Error in closing destConn");
-                }
-            }
-            if (srcConn != null) {
-                try {
-                    srcConn.close();
-                    srcConn = null;
-                } catch (SQLException ex) {
-                    System.out.println("Error in closing srcConn");
-                }
-            }
-        }
     }
 
     public static void propagateCuratedNsc(Connection srcConn, Connection destConn, Boolean doCompareTables, Boolean doDataSystemTables) throws Exception {
@@ -550,16 +595,31 @@ public class Main {
 
     }
 
-    public static void propagateCompare(Connection srcConn, Connection destConn) throws Exception {
+    public static void nukeAllDestinationTables(Connection srcConn, Connection destConn, ArrayList<TableAndWhereClause> tawcList) throws Exception {
 
-        ArrayList<TableAndWhereClause> tawcList = compare_tawc;
+        try {
+
+            for (TableAndWhereClause tawc : tawcList) {
+                Replicator.nuke(destConn, tawc.tableName);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Caught Exception " + e + " in nukeAllDestinationTables");
+            e.printStackTrace();
+            throw e;
+        } finally {
+
+        }
+    }
+
+    public static void propagateCompare(Connection srcConn, Connection destConn, ArrayList<TableAndWhereClause> tawcList) throws Exception {
 
         try {
 
             prepareCompareIdentsForExport(srcConn);
 
             // archive constraints
-//            IndexAndConstraintManagement.saveConstraints(destConn, compare_tawc);
+//            IndexAndConstraintManagement.saveConstraints(destConn, cj_tawc);
             // drop constraints
 //            IndexAndConstraintManagement.dropConstraints(destConn);
             for (TableAndWhereClause tawc : tawcList) {
