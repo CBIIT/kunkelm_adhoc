@@ -40,25 +40,26 @@ public class FetchFromProd {
             DriverManager.registerDriver(new org.postgresql.Driver());
 
             System.out.println("Opening srcConn");
-             srcConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
-            //srcConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
-            
+            srcConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
+//            srcConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
+
             System.out.println("Opening pgConn");
             pgConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
 
 //    MUST DISABLE AUTOCOMMIT for fetchForward cursor (batch fetches) to work
 //    EACH ResultSet MUST also have fetchDirection set FETCH_FORWARD
-
             srcConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
-//            doSetupForSDFileParse(pgConn);
+//            System.out.println();
+//            System.out.println("Starting: fetchRawCmpd");
+//            fetchRawCmpd(pgConn, srcConn);
+
+//            doSetupForSDFileParse(pgConn);//
 //            doParse(pgConn, "/home/mwkunkel/Open_2D_Oct2014.sdf");
-
-                NewParseAndFragment parser = new NewParseAndFragment();
-                
-                parser.processFragments(srcConn, pgConn);
-
+//
+            NewParseAndFragment parser = new NewParseAndFragment();
+            parser.processFragments(srcConn, pgConn);
 // _ __ _   _ _ __  
 //| '__| | | | '_ \ 
 //| |  | |_| | | | |
@@ -76,17 +77,6 @@ public class FetchFromProd {
 //\__ \ (_| | | | | | | |  ___) | |___|  _ < | ||  __/ | |  ___) |
 //|___/\__, |_| |_|_| |_| |____/ \____|_| \_\___|_|    |_| |____/ 
 //        |_|                                                     
-                
-                
-                
-                
-                
-                
-                
-
-//            System.out.println();
-//            System.out.println("Starting: fetchLegacyCmpd");
-//            fetchLegacyCmpd(pgConn, srcConn);
 //
 //            System.out.println();
 //            System.out.println("Starting: fetchBioDataCounts");
@@ -538,7 +528,7 @@ public class FetchFromProd {
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create table prod_chem_name (cmpd_id bigint, nsc int, chem_name varchar(1024), chem_name_type varchar(1024))";
+            sqlString = "create table prod_chem_name (cmpd_id bigint, nsc int, chem_name varchar, chem_name_type varchar)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
@@ -617,7 +607,7 @@ public class FetchFromProd {
             Connection srcConn) throws Exception {
     }
 
-    public static void fetchLegacyCmpd(
+    public static void fetchRawCmpd(
             Connection pgConn,
             Connection srcConn) throws Exception {
 
@@ -640,30 +630,32 @@ public class FetchFromProd {
             pgStmt = pgConn.createStatement();
             oraStmt = srcConn.createStatement();
 
-            sqlString = "drop table if exists prod_legacy_cmpd";
+            sqlString = "drop table if exists prod_raw_cmpd";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create table prod_legacy_cmpd ("
+            sqlString = "create table prod_raw_cmpd ("
                     + "nsc integer, "
                     + "cas integer, "
                     + "conf varchar(32), "
                     + "distribution_code varchar(32), "
-                    + "mf varchar(1024), "
-                    + "mw double precision)";
+                    + "mf varchar, "
+                    + "mw double precision,"
+                    + "ctab varchar)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "select nsc, cas, conf, distribution_code, mf, mw "
-                    + "from ops$oradis.dis_cmpd "
+            sqlString = "select nsc, cas, conf, distribution_code, mf, mw, object_contents as ctab "
+                    + "from ops$oradis.dis_cmpd, rs3_structure_object r "
                     + "where prefix = 'S' "
                     + "and nsc is not null "
-                    + "and nsc != 0";
+                    + "and cmpd_id = structure_id "
+                    + "and r.object_type = 'M'";
             System.out.println(sqlString);
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
 
-            prepStmtString = "insert into prod_legacy_cmpd(nsc, cas, conf, distribution_code, mf, mw) values(?,?,?,?,?,?)";
+            prepStmtString = "insert into prod_raw_cmpd(nsc, cas, conf, distribution_code, mf, mw, ctab) values(?,?,?,?,?,?,?)";
             pgPrepStmt = pgConn.prepareStatement(prepStmtString);
 
             startTime = System.currentTimeMillis();
@@ -679,6 +671,11 @@ public class FetchFromProd {
                 pgPrepStmt.setString(5, resSet.getString("mf"));
                 pgPrepStmt.setDouble(6, resSet.getDouble("mw"));
 
+                byte[] blobbytes = resSet.getBytes("ctab");
+                String text = new String(blobbytes);
+
+                pgPrepStmt.setString(7, text);
+
                 pgPrepStmt.addBatch();
 
                 if (batCnt > BATCH_FETCH_SIZE) {
@@ -689,6 +686,7 @@ public class FetchFromProd {
                         elapsedTime = System.currentTimeMillis() - startTime;
 
                         startTime = System.currentTimeMillis();
+                        System.out.println("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
                         lgr.info("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
                     }
                     pgPrepStmt.executeBatch();
@@ -699,11 +697,11 @@ public class FetchFromProd {
             pgPrepStmt.executeBatch();
             pgConn.commit();
 
-            sqlString = "drop index if exists prod_legacy_cmpd_nsc";
+            sqlString = "drop index if exists prod_raw_cmpd_nsc";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create index prod_legacy_cmpd_nsc on prod_legacy_cmpd(nsc)";
+            sqlString = "create index prod_raw_cmpd_nsc on prod_raw_cmpd(nsc)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
@@ -741,7 +739,7 @@ public class FetchFromProd {
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create table prod_projects (nsc int, project_code varchar(1024), description varchar(1024))";
+            sqlString = "create table prod_projects (nsc int, project_code varchar, description varchar)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
@@ -840,7 +838,7 @@ public class FetchFromProd {
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create table prod_plated_sets (nsc int, plate_set varchar(1024))";
+            sqlString = "create table prod_plated_sets (nsc int, plate_set varchar)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 

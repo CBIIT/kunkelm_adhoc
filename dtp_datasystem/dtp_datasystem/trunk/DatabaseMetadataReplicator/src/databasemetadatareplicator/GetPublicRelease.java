@@ -18,19 +18,7 @@ import java.util.ArrayList;
  */
 public class GetPublicRelease {
 
-    // datasystem to oncologydrugs
-    static final String[] ds2od = new String[]{
-        "jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov",
-        "ops$kunkel",
-        "donkie",
-        "jdbc:postgresql://localhost:5432/privatecomparedb",
-        "mwkunkel",
-        "donkie11"
-    };
-
     public static void main(String[] args) {
-
-        String[] whichConnectionInfo = ds2od; // compare2od;
 
         Connection sourceConn = null;
         Connection destConn = null;
@@ -43,17 +31,17 @@ public class GetPublicRelease {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             DriverManager.registerDriver(new org.postgresql.Driver());
 
-            sourceConn = DriverManager.getConnection(whichConnectionInfo[0], whichConnectionInfo[1], whichConnectionInfo[2]);
-            destConn = DriverManager.getConnection(whichConnectionInfo[3], whichConnectionInfo[4], whichConnectionInfo[5]);
+            sourceConn = DriverManager.getConnection("jdbc:oracle:thin:@//dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
+            destConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/privatecomparedb", "mwkunkel", "donkie11");
 
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
 
             int result = destStmt.executeUpdate("drop table if exists publicrelease");
             result = destStmt.executeUpdate("create table publicrelease(nsc int)");
-            
+
             Replicator.useMetadata(sourceConn, destConn, "publicrelease", "");
-            
+
             System.out.println("Done! in Main");
 
             sourceConn.close();

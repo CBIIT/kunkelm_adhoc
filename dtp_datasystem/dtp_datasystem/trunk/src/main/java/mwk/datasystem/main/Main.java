@@ -12,6 +12,7 @@ import java.util.List;
 import mwk.datasystem.controllers.SearchCriteriaBean;
 import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperCuratedNsc;
+import mwk.datasystem.util.HelperStructure;
 import mwk.datasystem.util.HelperTanimoto;
 import mwk.datasystem.util.TemplPropUtil;
 import mwk.datasystem.vo.CmpdVO;
@@ -32,21 +33,35 @@ public class Main {
     public static final Boolean DEBUG = Boolean.TRUE;
 
     public static void main(String[] args) {
+        testSubstructureSearch();
+    }
+
+    public static void tanimoto() {
 
         Integer[] intArr = new Integer[]{740, 750, 752, 755, 762, 1390, 3053, 3088, 6396, 8806};
-        
+
         ArrayList<Integer> nscIntList = new ArrayList<Integer>(Arrays.asList(intArr));
-        
+
         List<CmpdVO> cVOlist = HelperCmpd.getCmpdsByNsc(nscIntList, "PUBLIC");
         ArrayList<CmpdVO> cl = new ArrayList<CmpdVO>(cVOlist);
-        
+
         ArrayList<TanimotoScoresWithCmpdObjectsVO> resList = HelperTanimoto.doTanimoto(cl);
-        
+
         System.out.println("resList.size(): " + resList.size());
-        
-        for (TanimotoScoresWithCmpdObjectsVO tswcoVO : resList){
+
+        for (TanimotoScoresWithCmpdObjectsVO tswcoVO : resList) {
             System.out.println("nsc1: " + tswcoVO.getCmpd1().getNsc() + " nsc2: " + tswcoVO.getCmpd2().getNsc() + " atompairbv_fp" + tswcoVO.getAtomPairBv());
         }
+
+    }
+
+    public static void testSubstructureSearch() {
+
+        String str743380 = "c1cn(Cc2ccccc2)c3ccccc13";
+        String str163027 = "OC1C2C(CC1(C)C)C(=O)C34OC3C(=O)C5(CO5)C24C";
+
+        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(str163027);
+        System.out.println("nscIntList.size(): " + nscIntList.size());
 
     }
 

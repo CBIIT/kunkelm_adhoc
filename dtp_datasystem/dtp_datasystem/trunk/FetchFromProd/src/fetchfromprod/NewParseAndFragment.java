@@ -116,13 +116,7 @@ public class NewParseAndFragment {
 
     public void processFragments(Connection postgresConn, Connection postgresInsertConn) {
 
-        // subset        
-        // String sqlString = "select nsc, prod_mf as mf, ctab as strc from parsed_from_sdfile where nsc in ( 2965, 2965, 6373, 6374, 6379, 6381, 6384, 6385, 6387, 9163, 9163, 9163, 9163, 9681, 9987, 10676, 18268, 18268, 19804, 19804, 35608, 35608, 35608, 36653, 40927, 40928, 46015, 46015, 46015, 46016, 46016, 46016, 56750, 58880, 59259) order by nsc";
-        
-        String sqlString = "select nsc, prod_mf as mf, ctab as strc from parsed_from_sdfile where nsc in ( 6373, 6374, 6379) order by nsc";
-        
-        // full
-        // String sqlString = "select nsc, prod_mf as mf, ctab as strc from parsed_from_sdfile order by nsc";
+         String sqlString = "select nsc, mf, ctab as strc from prod_raw_cmpd where nsc > 169370 order by nsc";
 
         Statement postgresStmt = null;
         PreparedStatement postgresPrepStmt = null;
@@ -148,25 +142,25 @@ public class NewParseAndFragment {
             postgresStmt.setFetchSize(BATCH_FETCH_SIZE);
             String[] sqlArray = new String[]{
                 "drop table if exists mol_cannot_parse",
-                "create table mol_cannot_parse(nsc int, mf varchar(1024), message varchar(1024))",
+                "create table mol_cannot_parse(nsc int, mf varchar, message varchar)",
                 "drop table if exists mol_frag",
-                "create table mol_frag(nsc int, frag_id int, count_atoms int, count_pseudo_atoms int, count_bonds int, ctab text, smiles text, inchi text, inchi_aux text, alogp double precision, hba int, hbd int, psa double precIsion, mf varchar(1024), mw double precision, processing_messages varchar(1024))",
+                "create table mol_frag(nsc int, frag_id int, count_atoms int, count_pseudo_atoms int, count_bonds int, ctab text, smiles text, inchi text, inchi_aux text, alogp double precision, hba int, hbd int, psa double precIsion, mf varchar, mw double precision, processing_messages varchar)",
                 "drop table if exists mol_no_frag",
-                "create table mol_no_frag(nsc int, strc_id int, mf varchar(1024))",
+                "create table mol_no_frag(nsc int, strc_id int, mf varchar)",
                 "drop table if exists mol_frag_r_group",
-                "create table mol_frag_r_group(nsc int, frag_id int, mf varchar(1024))",
+                "create table mol_frag_r_group(nsc int, frag_id int, mf varchar)",
                 "drop table if exists mol_frag_pseudo_atom",
-                "create table mol_frag_pseudo_atom(nsc int, frag_id int, mf varchar(1024), atom_label varchar(1024))",
+                "create table mol_frag_pseudo_atom(nsc int, frag_id int, mf varchar, atom_label varchar)",
                 "drop table if exists mol_frag_null_atom_type",
-                "create table mol_frag_null_atom_type(nsc int, frag_id int, mf varchar(1024), atom_label varchar(1024))"
+                "create table mol_frag_null_atom_type(nsc int, frag_id int, mf varchar, atom_label varchar)"
             };
 
-            for (int i = 0; i < sqlArray.length; i++) {
-                String sqlStr = sqlArray[i];
-                System.out.println(sqlStr);
-                postgresStmt.execute(sqlStr);
-                postgresConn.commit();
-            }
+//            for (int i = 0; i < sqlArray.length; i++) {
+//                String sqlStr = sqlArray[i];
+//                System.out.println(sqlStr);
+//                postgresStmt.execute(sqlStr);
+//                postgresConn.commit();
+//            }
 
             String molCanNotParseStmtString = "insert into  mol_cannot_parse(nsc, mf, message) values (?,?,?)";
             molCanNotParsePrepStmt = postgresInsertConn.prepareStatement(molCanNotParseStmtString);
@@ -261,6 +255,7 @@ public class NewParseAndFragment {
 
                         molNoFragPrepStmt.setInt(1, nsc);
                         molNoFragPrepStmt.setString(2, mf);
+                        
                         molNoFragPrepStmt.execute();
                         postgresInsertConn.commit();
 
@@ -285,6 +280,7 @@ public class NewParseAndFragment {
                                     pseudoAtomPrepStmt.setInt(2, fragmentId);
                                     pseudoAtomPrepStmt.setString(3, mf);
                                     pseudoAtomPrepStmt.setString(4, atomSymbol);
+                                    
                                     pseudoAtomPrepStmt.execute();
                                     postgresInsertConn.commit();
                                 }
@@ -297,6 +293,7 @@ public class NewParseAndFragment {
                                     nullAtomTypePrepStmt.setInt(2, fragmentId);
                                     nullAtomTypePrepStmt.setString(3, mf);
                                     nullAtomTypePrepStmt.setString(4, atomSymbol);
+                                    
                                     nullAtomTypePrepStmt.execute();
                                     postgresInsertConn.commit();
                                 }
@@ -306,6 +303,7 @@ public class NewParseAndFragment {
                                 molFragRgroupPrepStmt.setInt(1, nsc);
                                 molFragRgroupPrepStmt.setInt(2, fragmentId);
                                 molFragRgroupPrepStmt.setString(3, mf);
+                                
                                 molFragRgroupPrepStmt.execute();
                                 postgresInsertConn.commit();
                             }
@@ -408,6 +406,7 @@ public class NewParseAndFragment {
                                 molFragPrepStmt.setString(14, calcRtn.mf);
                                 molFragPrepStmt.setDouble(15, calcRtn.mw);
                                 molFragPrepStmt.setString(16, null);
+                                
                                 molFragPrepStmt.execute();
                                 postgresInsertConn.commit();
 

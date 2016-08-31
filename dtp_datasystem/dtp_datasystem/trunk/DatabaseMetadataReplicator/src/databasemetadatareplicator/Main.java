@@ -26,10 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-//         COMPARE
-//        
-        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
-        ConnectionInfo destInfo = connMap.get("sarcomacomparedb_local");
+        ConnectionInfo srcInfo = connMap.get("privatecomparedb_local");
+        ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
 
         ArrayList<TableAndWhereClause> tawcList = cj_tawc;
 
@@ -52,18 +50,24 @@ public class Main {
             srcConn = DriverManager.getConnection(srcInfo.dbUrl, srcInfo.dbUser, srcInfo.dbPass);
             destConn = DriverManager.getConnection(destInfo.dbUrl, destInfo.dbUser, destInfo.dbPass);
 
-            IndexAndConstraintManagement.save_XXX_Constraints(destConn, tawcList);
-            IndexAndConstraintManagement.save_XXX_Indexes(destConn, tawcList);
-
-//            IndexAndConstraintManagement.drop_XXX_Indexes(destConn);            
-//            IndexAndConstraintManagement.drop_XXX_Constraints(destConn);
-            // nuke
-//            nukeAllDestinationTables(srcConn, destConn, tawcList);
+//            IndexAndConstraintManagement.save_XXX_Constraints(destConn, tawcList);
+//            IndexAndConstraintManagement.save_XXX_Indexes(destConn, tawcList);
+//
 //            prepareCompareIdentsForExport(srcConn);
-//            propagateCompare(srcConn, destConn, tawcList);
-//            propagateDataSystem(srcConn, destConn);
+//
+//            IndexAndConstraintManagement.drop_XXX_Indexes(destConn);
+//            IndexAndConstraintManagement.drop_XXX_Constraints(destConn);
+//            
+//            nukeAllDestinationTables(srcConn, destConn, tawcList);
+//            
+            propagateCompare(srcConn, destConn, tawcList);
+
+//            propagateDataSystem(srcConn, destConn, tawcList);
 //            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+//            
+//            IndexAndConstraintManagement.create_XXX_Indexes(destConn);
 //            IndexAndConstraintManagement.create_XXX_Constraints(destConn);
+
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -190,57 +194,57 @@ public class Main {
 
     }
 
-    static ArrayList<TableAndWhereClause> microxeno_tawc = new ArrayList<TableAndWhereClause>();
+    static ArrayList<TableAndWhereClause> mx_tawc = new ArrayList<TableAndWhereClause>();
 
     static {
 
-        microxeno_tawc.add(new TableAndWhereClause("affymetrix_Identifier", ""));
-        microxeno_tawc.add(new TableAndWhereClause("tumor", ""));
-        microxeno_tawc.add(new TableAndWhereClause("tumor_type", ""));
-        microxeno_tawc.add(new TableAndWhereClause("flat_data", ""));
+        mx_tawc.add(new TableAndWhereClause("affymetrix_Identifier", ""));
+        mx_tawc.add(new TableAndWhereClause("tumor", ""));
+        mx_tawc.add(new TableAndWhereClause("tumor_type", ""));
+        mx_tawc.add(new TableAndWhereClause("flat_data", ""));
 
     }
 
-    static ArrayList<TableAndWhereClause> datasystem_tawc = new ArrayList<TableAndWhereClause>();
+    static ArrayList<TableAndWhereClause> ds_tawc = new ArrayList<TableAndWhereClause>();
 
     static {
 
-        datasystem_tawc.add(new TableAndWhereClause("ad_hoc_cmpd", "DO NOT REPLICATE"));
-        datasystem_tawc.add(new TableAndWhereClause("ad_hoc_cmpd_fragment", "DO NOT REPLICATE"));
-        datasystem_tawc.add(new TableAndWhereClause("ad_hoc_cmpd_fragment_p_chem", "DO NOT REPLICATE"));
-        datasystem_tawc.add(new TableAndWhereClause("ad_hoc_cmpd_fragment_structure", "DO NOT REPLICATE"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_known_salt", ""));
-        datasystem_tawc.add(new TableAndWhereClause("nsc_cmpd_type", ""));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_alias_type", ""));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_relation_type", ""));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_fragment_type", ""));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_inventory", " where id in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_annotation", " where id in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_bio_assay", " where id in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_legacy_cmpd", " where id in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_table", " where nsc in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd", " where id in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("nsc_cmpd", " where nsc in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_fragment", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_list", "DO NOT REPLICATE"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_list_member", "DO NOT REPLICATE"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("cmpd_related", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("rdkit_mol", " where nsc in (select nsc from nsc_for_export)"));
-        datasystem_tawc.add(new TableAndWhereClause("tanimoto_scores", " where nsc1 in (select nsc from nsc_for_export) and nsc2 in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("ad_hoc_cmpd", "DO NOT REPLICATE"));
+        ds_tawc.add(new TableAndWhereClause("ad_hoc_cmpd_fragment", "DO NOT REPLICATE"));
+        ds_tawc.add(new TableAndWhereClause("ad_hoc_cmpd_fragment_p_chem", "DO NOT REPLICATE"));
+        ds_tawc.add(new TableAndWhereClause("ad_hoc_cmpd_fragment_structure", "DO NOT REPLICATE"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_known_salt", ""));
+        ds_tawc.add(new TableAndWhereClause("nsc_cmpd_type", ""));
+        ds_tawc.add(new TableAndWhereClause("cmpd_alias_type", ""));
+        ds_tawc.add(new TableAndWhereClause("cmpd_relation_type", ""));
+        ds_tawc.add(new TableAndWhereClause("cmpd_fragment_type", ""));
+        ds_tawc.add(new TableAndWhereClause("cmpd_inventory", " where id in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_annotation", " where id in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_bio_assay", " where id in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_legacy_cmpd", " where id in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_table", " where nsc in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd", " where id in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("nsc_cmpd", " where nsc in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_fragment", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_fragment_p_chem", " where id in (select cmpd_fragment_p_chem_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_fragment_structure", " where id in (select cmpd_fragment_structure_fk from cmpd_fragment where nsc_cmpd_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_alias", " where id in (select cmpd_aliases_fk from cmpd_aliases2nsc_cmpds where cmpd_aliases2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_aliases2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_list", "DO NOT REPLICATE"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_list_member", "DO NOT REPLICATE"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_named_set", " where id in (select cmpd_named_sets_fk from cmpd_named_sets2nsc_cmpds where cmpd_named_sets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_named_sets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_plate", " where id in (select cmpd_plates_fk from cmpd_plates2nsc_cmpds where cmpd_plates2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_plates2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_project", " where id in (select cmpd_projects_fk from cmpd_projects2nsc_cmpds where cmpd_projects2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_projects2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_pub_chem_sid", " where id in (select cmpd_pub_chem_sids_fk from cmpd_pub_chem_sids2nsc_cmpds where cmpd_pub_chem_sids2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_pub_chem_sids2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("cmpd_related", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("rdkit_mol", " where nsc in (select nsc from nsc_for_export)"));
+        ds_tawc.add(new TableAndWhereClause("tanimoto_scores", " where nsc1 in (select nsc from nsc_for_export) and nsc2 in (select nsc from nsc_for_export)"));
         /*
         
         
@@ -251,58 +255,77 @@ public class Main {
         
         
          */
-        datasystem_tawc.add(new TableAndWhereClause("curated_name", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_nsc", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_nsc_to_secondary_targe", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_nscs2projects", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_originator", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_project", ""));
-        datasystem_tawc.add(new TableAndWhereClause("curated_target", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_name", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_nsc", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_nsc_to_secondary_targe", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_nscs2projects", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_originator", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_project", ""));
+        ds_tawc.add(new TableAndWhereClause("curated_target", ""));
 
     }
 
-    static ArrayList<TableAndWhereClause> compare_tawc = new ArrayList<TableAndWhereClause>();
-
-    static {
-
-        compare_tawc.add(new TableAndWhereClause("affy_dna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("affy_exon_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("build_date", ""));
-        compare_tawc.add(new TableAndWhereClause("cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("cell_line_data_set_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
-        compare_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
-        // still need to handle this!
-        compare_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export))"));
-        compare_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export)))"));
-        compare_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("dtp_test_result", " where id in (select id from test_result where cell_line_data_set_fk in (select id from cell_line_data_set_for_export))"));
-        compare_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("micro_array_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("nano_string_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
-        // still need to handle this!        
-        compare_tawc.add(new TableAndWhereClause("nsc_compound", " where (prefix, nsc) in (select prefix, nsc from nsc_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("nsc_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("synthetic_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set_for_export)"));
-        compare_tawc.add(new TableAndWhereClause("test_result_type", ""));
-        compare_tawc.add(new TableAndWhereClause("uploaded_cell_line_data_set", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("uploaded_ident", "DO NOT REPLICATE"));
-        compare_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
-    }
-
+//    static ArrayList<TableAndWhereClause> c_tawc = new ArrayList<TableAndWhereClause>();
+//
+//    static {
+//
+////        c_tawc.add(new TableAndWhereClause("affy_dna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("affy_exon_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("build_date", ""));
+////        c_tawc.add(new TableAndWhereClause("cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("cell_line_data_set_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
+////        c_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
+////        // still need to handle this!
+////        c_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export))"));
+////        c_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export)))"));
+////        c_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("dtp_test_result", " where id in (select id from test_result where cell_line_data_set_fk in (select id from cell_line_data_set_for_export))"));
+////        c_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("micro_array_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where cell_line_data_sets_fk in (select id from cell_line_data_set_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
+////        c_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
+////        // still need to handle this!
+//        c_tawc.add(new TableAndWhereClause("nsc_compound", " where (prefix, nsc) in (select prefix, nsc from nsc_for_export)"));
+//        c_tawc.add(new TableAndWhereClause("conc_resp_assay", " where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export))"));
+//        c_tawc.add(new TableAndWhereClause("conc_resp_element", " where conc_resp_assay_fk in (select id from conc_resp_assay where nsc_compound_fk in (select id from nsc_compound where (prefix, nsc) in (select prefix, nsc from nsc_for_export)))"));
+////        c_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " where id in (select id from cell_line_data_set_for_export)"));
+////        // handle generalization of test_result               
+////        // c_tawc.add(new TableAndWhereClause("dtp_test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set_for_export))"));
+////        c_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("micro_array_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("micro_rna_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("mol_targ_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("named_target_set", " where target_set_name in (select target_set_name from target_set_names_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " where named_target_sets_fk in (select id from named_target_set where target_set_name in (select target_set_name from target_set_names_for_export))"));
+////        c_tawc.add(new TableAndWhereClause("nano_string_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
+////  
+////        c_tawc.add(new TableAndWhereClause("nsc_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("synthetic_ident", " where id in (select id from cell_line_data_set_ident_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("test_result", " where cell_line_data_set_fk in (select id from cell_line_data_set_for_export)"));
+////        c_tawc.add(new TableAndWhereClause("test_result_type", ""));
+////        c_tawc.add(new TableAndWhereClause("uploaded_cell_line_data_set", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("uploaded_ident", "DO NOT REPLICATE"));
+////        c_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
+//    }
     static ArrayList<TableAndWhereClause> cj_tawc = new ArrayList<TableAndWhereClause>();
 
     static {
@@ -310,48 +333,38 @@ public class Main {
         cj_tawc.add(new TableAndWhereClause("affy_dna_ident", " , cell_line_data_set_ident_for_export where affy_dna_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("affy_exon_ident", " , cell_line_data_set_ident_for_export where affy_exon_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("build_date", ""));
-
         cj_tawc.add(new TableAndWhereClause("cell_line_data_sets2named_targ", " , named_target_set, target_set_names_for_export where cell_line_data_sets2named_targ.named_target_sets_fk = named_target_set.id and named_target_set.target_set_name = target_set_names_for_export.target_set_name"));
         cj_tawc.add(new TableAndWhereClause("named_target_set", " , target_set_names_for_export where named_target_set.target_set_name = target_set_names_for_export.target_set_name"));
-
         cj_tawc.add(new TableAndWhereClause("cell_line_data_set", " , cell_line_data_set_for_export where cell_line_data_set.id = cell_line_data_set_for_export.id"));
-
         cj_tawc.add(new TableAndWhereClause("micro_array_ident", " , cell_line_data_set_ident_for_export where micro_array_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("micro_rna_ident", " , cell_line_data_set_ident_for_export where micro_rna_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("mol_targ_catch_all_ident", " , cell_line_data_set_ident_for_export where mol_targ_catch_all_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("mol_targ_ident", " , cell_line_data_set_ident_for_export where mol_targ_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("nano_string_ident", " , cell_line_data_set_ident_for_export where nano_string_ident.id = cell_line_data_set_ident_for_export.id"));
-
         cj_tawc.add(new TableAndWhereClause("nat_prod_ident", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("nsc_ident", " , cell_line_data_set_ident_for_export where nsc_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("synthetic_ident", " , cell_line_data_set_ident_for_export where synthetic_ident.id = cell_line_data_set_ident_for_export.id"));
-
         cj_tawc.add(new TableAndWhereClause("cell_line_data_set_ident", " , cell_line_data_set_ident_for_export where cell_line_data_set_ident.id = cell_line_data_set_ident_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("compare_cell_line", ""));
         cj_tawc.add(new TableAndWhereClause("compare_result", "DO NOT REPLICATE"));
-// still need to handle this!
-        cj_tawc.add(new TableAndWhereClause("conc_resp_assay", " , nsc_compound, nsc_for_export where nsc_compound_fk = nsc_compound.id and nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
-        cj_tawc.add(new TableAndWhereClause("conc_resp_element", " , conc_resp_assay, nsc_compound, nsc_for_export where conc_resp_element.conc_resp_assay_fk = conc_resp_assay.id and conc_resp_assay.nsc_compound_fk = nsc_compound.id and nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
+////////////        cj_tawc.add(new TableAndWhereClause("nsc_compound", " , nsc_for_export where nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
+////////////        cj_tawc.add(new TableAndWhereClause("conc_resp_assay", " , nsc_compound, nsc_for_export where nsc_compound_fk = nsc_compound.id and nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
+////////////        cj_tawc.add(new TableAndWhereClause("conc_resp_element", " , conc_resp_assay, nsc_compound, nsc_for_export where conc_resp_element.conc_resp_assay_fk = conc_resp_assay.id and conc_resp_assay.nsc_compound_fk = nsc_compound.id and nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
 
         cj_tawc.add(new TableAndWhereClause("dtp_cell_line_data_set", " , cell_line_data_set_for_export where dtp_cell_line_data_set.id = cell_line_data_set_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("dtp_test_result", " , test_result, cell_line_data_set_for_export where dtp_test_result.id = test_result.id and test_result.cell_line_data_set_fk = cell_line_data_set_for_export.id"));
-
         cj_tawc.add(new TableAndWhereClause("grid_compare_columns", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("grid_compare_job", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("grid_compare_rows", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("job", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("job_for_req_cell_lines2require", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("ignore_cell_lines2job_for_ign_", "DO NOT REPLICATE"));
-
-// still need to handle this!        
-        cj_tawc.add(new TableAndWhereClause("nsc_compound", " , nsc_for_export where nsc_compound.prefix = nsc_for_export.prefix and nsc_compound.nsc = nsc_for_export.nsc"));
         cj_tawc.add(new TableAndWhereClause("standard_compare_job", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("test_result", " , cell_line_data_set_for_export where test_result.cell_line_data_set_fk = cell_line_data_set_for_export.id"));
         cj_tawc.add(new TableAndWhereClause("test_result_type", ""));
         cj_tawc.add(new TableAndWhereClause("uploaded_cell_line_data_set", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("uploaded_ident", "DO NOT REPLICATE"));
         cj_tawc.add(new TableAndWhereClause("uploaded_test_result", "DO NOT REPLICATE"));
-
     }
 
     public static void propagateCuratedNsc(Connection srcConn, Connection destConn, Boolean doCompareTables, Boolean doDataSystemTables) throws Exception {
@@ -616,16 +629,7 @@ public class Main {
 
         try {
 
-            prepareCompareIdentsForExport(srcConn);
-
-            // archive constraints
-//            IndexAndConstraintManagement.saveConstraints(destConn, cj_tawc);
-            // drop constraints
-//            IndexAndConstraintManagement.dropConstraints(destConn);
             for (TableAndWhereClause tawc : tawcList) {
-
-                // scrape out anything remaining
-                Replicator.nuke(destConn, tawc.tableName);
 
                 // replicate the tables
                 if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
@@ -634,8 +638,6 @@ public class Main {
 
             }
 
-            // recreate constraints
-//            IndexAndConstraintManagement.createConstraints(destConn);
             System.out.println("Done! in propagateCompare");
 
         } catch (Exception e) {
@@ -647,20 +649,11 @@ public class Main {
         }
     }
 
-    public static void propagateDataSystem(Connection srcConn, Connection destConn) throws Exception {
-
-        ArrayList<TableAndWhereClause> tawcList = datasystem_tawc;
+    public static void propagateDataSystem(Connection srcConn, Connection destConn, ArrayList<TableAndWhereClause> tawcList) throws Exception {
 
         try {
 
-            // archive constraints
-//            IndexAndConstraintManagement.saveConstraints(destConn, tawcList);
-            // drop constraints
-//            IndexAndConstraintManagement.dropConstraints(destConn);
             for (TableAndWhereClause tawc : tawcList) {
-
-                // scrape out anything remaining
-                Replicator.nuke(destConn, tawc.tableName);
 
                 // replicate the tables
                 if (!tawc.whereClause.equals("DO NOT REPLICATE")) {
@@ -682,7 +675,7 @@ public class Main {
         }
     }
 
-    public static void prepareCompareIdentsForExport(Connection conn)
+    public static void prepareCompareIdentsForExport(Connection srcConn)
             throws Exception {
 
         System.out.println("In prepareCompareIdentsForExport");
@@ -691,24 +684,63 @@ public class Main {
 
         try {
 
-            conn.setAutoCommit(true);
-            stmt = conn.createStatement();
+            srcConn.setAutoCommit(true);
+            stmt = srcConn.createStatement();
 
-            // set up for stacking ids for nsc, and mol_targ
-            //
             // EXPECTS to find nsc_for_export(prefix, nsc)
             // EXPECTS to find target_set_name_for_export(target_set_name);
-//drop table if exists nsc_for_export;
-//create table nsc_for_export(prefix varchar, nsc int);
-//insert into nsc_for_export select distinct prefix, nsc from nsc_ident limit 10;
-//            
-//drop table if exists target_set_names_for_export;
-//create table target_set_names_for_export(target_set_name varchar);
-//insert into target_set_names_for_export(target_set_name) values ('MIR_ISRAEL');
-//insert into target_set_names_for_export(target_set_name) values ('WEINSTEIN_CROCE_MIR');
-//insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_2H');
-//insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_6H');
-//insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_24H');	                        
+/*
+            
+ONCOLOGY DRUGS
+            
+drop table if exists app_and_inv;
+
+create table app_and_inv(
+generic_name varchar,
+preferred_name varchar,
+alias_names varchar,
+originator varchar,
+nsc int,
+cas varchar,
+primary_target varchar,
+other_targets varchar,
+type varchar,
+project_code varchar
+);
+
+\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/APP_AND_INV_25_MAY_2016.csv' csv header null as '' delimiter as E'\t'
+            
+drop table if exists nsc_for_export;
+create table nsc_for_export(prefix varchar, nsc int);
+insert into nsc_for_export(prefix, nsc) select 'S', nsc from app_and_inv;
+                        
+drop table if exists target_set_names_for_export;
+create table target_set_names_for_export(target_set_name varchar);
+            
+insert into target_set_names_for_export(target_set_name) values ('MIR_ISRAEL');
+insert into target_set_names_for_export(target_set_name) values ('WEINSTEIN_CROCE_MIR');
+insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_2H');
+            
+PUBLIC COMPARE            
+            
+drop table if exists nsc_for_export;
+create table nsc_for_export(prefix varchar, nsc int);
+insert into nsc_for_export(prefix, nsc) select 'S', nsc from publicrelease;
+                        
+drop table if exists target_set_names_for_export;
+create table target_set_names_for_export(target_set_name varchar);
+           
+insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_MOCK_TX_2H');
+insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_NOVARTIS');
+insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_GENELOGIC_U133');
+insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERIES_MICROARRAY_CHIRON');
+insert into target_set_names_for_export(target_set_name) values ('MIR_ISRAEL');
+insert into target_set_names_for_export(target_set_name) values ('WEINSTEIN_CROCE_MIR');            
+            
+*/
+            
+
+            
             String[] dcArr = new String[]{
                 "drop table if exists cell_line_data_set_ident_for_export",
                 "drop table if exists cell_line_data_set_for_export",
@@ -725,8 +757,11 @@ public class Main {
 
             // NSC
             String sqlStr = "insert into cell_line_data_set_ident_for_export(id) "
-                    + "select id from nsc_ident "
-                    + "where (prefix, nsc) in (select prefix, nsc from nsc_for_export)";
+                    + " select ni.id "
+                    + " from nsc_ident ni, nsc_for_export nfe "
+                    + " where ni.prefix = nfe.prefix"
+                    + " and ni.nsc = nfe.nsc"
+                    + " and ni.exp_id = 'AVGDATA'";
             System.out.println(sqlStr);
             stmt.executeUpdate(sqlStr);
 
@@ -745,6 +780,14 @@ public class Main {
             sqlStr = "insert into cell_line_data_set_for_export(id) "
                     + "select id from cell_line_data_set "
                     + "where cell_line_data_set_ident_fk in (select id from cell_line_data_set_ident_for_export)";
+            System.out.println(sqlStr);
+            stmt.executeUpdate(sqlStr);
+
+            sqlStr = "create index cldsfe_id_idx on cell_line_data_set_for_export(id)";
+            System.out.println(sqlStr);
+            stmt.executeUpdate(sqlStr);
+
+            sqlStr = "create index cldsife_id_idx on cell_line_data_set_ident_for_export(id)";
             System.out.println(sqlStr);
             stmt.executeUpdate(sqlStr);
 
