@@ -36,43 +36,40 @@ name varchar(1024)
 
 drop table if exists processed_salts;
 
+--create table processed_salts(
+--salt_name varchar,
+--formula varchar,
+--weight double precision,
+--charge int,
+--smiles varchar,
+--can_smi varchar,
+--can_taut varchar,
+--can_taut_strip_stereo varchar,
+--molecular_formula varchar,
+--molecular_weight double precision,
+--formalcharge int,
+--num_atoms int,
+--num_bonds int,
+--num_hydrogens int,
+--num_positiveatoms int,
+--num_negativeatoms int,
+--num_dativebonds int,
+--canonicaltautomer boolean,
+--numberoftautomers int
+--);
+
+drop table if exists processed_salts;
+
 create table processed_salts(
-salt_name varchar,
-formula varchar,
-weight double precision,
-charge int,
-smiles varchar,
-can_smi varchar,
-can_taut varchar,
-can_taut_strip_stereo varchar,
-molecular_formula varchar,
-molecular_weight double precision,
-formalcharge int,
-num_atoms int,
-num_bonds int,
-num_hydrogens int,
-num_positiveatoms int,
-num_negativeatoms int,
-num_dativebonds int,
-canonicaltautomer boolean,
-numberoftautomers int
-);
+salt_name varchar,	
+can_smi varchar,	
+can_taut varchar,	
+can_taut_strip_stereo varchar,	
+molecular_formula varchar,	
+molecular_weight double precision,	
+charge int);
 
-\copy processed_salts from /home/mwkunkel/saltsFromDZprocessed.csv csv header quote as '"' null as ''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\copy processed_salts from /home/mwkunkel/processedSaltsOut.sdfFromDz.tsv csv header quote as '"' null as '' delimiter as E'\t'
 
 -- same salts
 

@@ -67,7 +67,6 @@ public class Main {
 //            
 //            IndexAndConstraintManagement.create_XXX_Indexes(destConn);
 //            IndexAndConstraintManagement.create_XXX_Constraints(destConn);
-
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -243,16 +242,12 @@ public class Main {
         ds_tawc.add(new TableAndWhereClause("cmpd_target", " where id in (select cmpd_targets_fk from cmpd_targets2nsc_cmpds where cmpd_targets2nsc_cmpds.nsc_cmpds_fk in (select nsc from nsc_for_export))"));
         ds_tawc.add(new TableAndWhereClause("cmpd_targets2nsc_cmpds", " where nsc_cmpds_fk in (select nsc from nsc_for_export)"));
         ds_tawc.add(new TableAndWhereClause("cmpd_related", " where nsc_cmpd_fk in (select nsc from nsc_for_export)"));
-        ds_tawc.add(new TableAndWhereClause("rdkit_mol", " where nsc in (select nsc from nsc_for_export)"));
+        // rdkit_mol has to be handled separately
+        // ds_tawc.add(new TableAndWhereClause("rdkit_mol", " where nsc in (select nsc from nsc_for_export)"));
         ds_tawc.add(new TableAndWhereClause("tanimoto_scores", " where nsc1 in (select nsc from nsc_for_export) and nsc2 in (select nsc from nsc_for_export)"));
         /*
         
-        
-        
    curated   
-        
-        
-        
         
          */
         ds_tawc.add(new TableAndWhereClause("curated_name", ""));
@@ -675,6 +670,77 @@ public class Main {
         }
     }
 
+    public static void populateRdkitMol(Connection destConn) throws Exception {
+
+        Statement stmt = null;
+
+        try {
+
+            destConn.setAutoCommit(true);
+            stmt = destConn.createStatement();
+
+            String sqlStr = "drop table if exists rdkit_validity";
+
+            sqlStr = "create table rdkit_validity "
+                    + " as "
+                    + " select nsc, is_valid_smiles(can_smi::cstring) as valid_can_smi, "
+                    + " is_valid_smiles(can_taut::cstring) as valid_can_taut, "
+                    + " is_valid_smiles(can_taut_strip_stereo::cstring) as valid_can_taut_strip_stereo, "
+                    + " is_valid_ctab(ctab::cstring) as valid_ctab "
+                    + " from cmpd_table where can_smi is not null";
+
+            sqlStr = "create index rdkv_nsc on rdkit_validity(nsc)";
+
+            sqlStr = "insert into rdkit_mol(id, nsc, mol, mol_from_ctab) "
+                    + " select ct.nsc, ct.nsc, mol_from_smiles(ct.can_taut::cstring), mol_from_ctab(ctab::cstring) "
+                    + " from cmpd_table ct, rdkit_validity v "
+                    + " where ct.nsc = v.nsc "
+                    + " and v.valid_can_taut = 't' "
+                    + " and v.valid_ctab = 't'";
+
+            
+            
+            sqlStr = "drop table if exists rdkit_mol";
+            System.out.println(sqlStr);
+            stmt.executeUpdate(sqlStr);
+
+            sqlStr = "create table rdkit_mol(id bigin, nsc int, mol mol, mol_from_ctab mol)";
+            System.out.println(sqlStr);
+            stmt.executeUpdate(sqlStr);
+
+            sqlStr = "insert into rdkit_mol(id, nsc, mol, mol_from_ctab) select nsc, nsc, mol_from_smiles(can_taut), mol_from_ctab(ctab) from cmpd_table";
+            System.out.println(sqlStr);
+            stmt.executeUpdate(sqlStr);
+
+        } catch (SQLException se) {
+            System.out.println("SQL Exception in prepareCompareIdentsForExport:");
+            // Loop through the SQL Exceptions
+            while (se != null) {
+                System.out.println("State  : " + se.getSQLState());
+                System.out.println("Message: " + se.getMessage());
+                System.out.println("Error  : " + se.getErrorCode());
+                se = se.getNextException();
+            }
+            throw new Exception(se);
+        } catch (Exception e) {
+            System.out.println("Exception in saveConstraints:");
+            System.out.println(e);
+            throw (e);
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                    stmt = null;
+                }
+            } catch (Exception e) {
+                System.out.println("Exception in finally clause in saveConstraints: " + e);
+                e.printStackTrace();
+                throw (e);
+            }
+        }
+
+    }
+
     public static void prepareCompareIdentsForExport(Connection srcConn)
             throws Exception {
 
@@ -737,10 +803,7 @@ insert into target_set_names_for_export(target_set_name) values ('MOLTID_GC_SERI
 insert into target_set_names_for_export(target_set_name) values ('MIR_ISRAEL');
 insert into target_set_names_for_export(target_set_name) values ('WEINSTEIN_CROCE_MIR');            
             
-*/
-            
-
-            
+             */
             String[] dcArr = new String[]{
                 "drop table if exists cell_line_data_set_ident_for_export",
                 "drop table if exists cell_line_data_set_for_export",

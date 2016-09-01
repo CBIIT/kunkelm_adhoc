@@ -6,7 +6,7 @@
     </context-param>
     <context-param>
         <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-        <param-value>client</param-value>
+        <param-value>server</param-value>
     </context-param>
     <context-param>
         <param-name>primefaces.FONT_AWESOME</param-name>
@@ -98,6 +98,8 @@
     <security-role>
         <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
     </security-role>
+    
+    <!--
     <Realm className="org.apache.catalina.realm.CombinedRealm">
         <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
         <Realm allRolesMode="authOnly" className="org.apache.catalina.realm.JNDIRealm" 
@@ -113,5 +115,6 @@
                sizeLimit="0" 
                userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"/>
     </Realm>
+    -->
     
 </web-app>
