@@ -9498,6 +9498,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_5_app_and_inv_t
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Jun01at05-44-EDT.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Jun01at05-52-EDT.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Mar15at10-51-EDT.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/propagate.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/propagateAppAndInv.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qc.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qcOnCasNumbers.sql -text
