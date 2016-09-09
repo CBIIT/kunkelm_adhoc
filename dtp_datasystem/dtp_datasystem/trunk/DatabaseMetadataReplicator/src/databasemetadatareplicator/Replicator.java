@@ -112,7 +112,7 @@ public class Replicator {
                     startTime = System.currentTimeMillis();
 
                     cumCnt += prepStmtCounter;
-                    System.out.println("-----prepStmt.batch size is " + BATCH_SIZE + ".  Executing. cumCnt: " + cumCnt + " elapsedTime: " + elapsedTime);
+                    System.out.println(tblName + " -----prepStmt.batch size is " + BATCH_SIZE + ".  Executing. cumCnt: " + cumCnt + " elapsedTime: " + elapsedTime);
                     prepStmt.executeBatch();
                     prepStmtCounter = 0;
                 }

@@ -27,7 +27,7 @@ public class Main {
     public static void main(String[] args) {
 
         ConnectionInfo srcInfo = connMap.get("privatecomparedb_local");
-        ConnectionInfo destInfo = connMap.get("publiccomparedb_local");
+        ConnectionInfo destInfo = connMap.get("privatecomparedb_local");
 
         ArrayList<TableAndWhereClause> tawcList = cj_tawc;
 
@@ -57,16 +57,19 @@ public class Main {
 //
 //            IndexAndConstraintManagement.drop_XXX_Indexes(destConn);
 //            IndexAndConstraintManagement.drop_XXX_Constraints(destConn);
-//            
+//
 //            nukeAllDestinationTables(srcConn, destConn, tawcList);
-//            
-            propagateCompare(srcConn, destConn, tawcList);
-
+////
+//            propagateCompare(srcConn, destConn, tawcList);
+//
 //            propagateDataSystem(srcConn, destConn, tawcList);
 //            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
-//            
+//
 //            IndexAndConstraintManagement.create_XXX_Indexes(destConn);
 //            IndexAndConstraintManagement.create_XXX_Constraints(destConn);
+//
+            updateSequences(destConn);
+
             System.out.println("Done! in NewMain");
 
             srcConn.close();
@@ -168,6 +171,15 @@ public class Main {
         connMap.put("privatecomparedb_local", new ConnectionInfo(
                 "privatecomparedb_local",
                 "jdbc:postgresql://localhost:5432/privatecomparedb",
+                "mwkunkel",
+                "donkie11",
+                Boolean.TRUE,
+                Boolean.FALSE
+        ));
+
+        connMap.put("comparedb_local", new ConnectionInfo(
+                "privatecomparedb_local",
+                "jdbc:postgresql://localhost:5432/comparedb",
                 "mwkunkel",
                 "donkie11",
                 Boolean.TRUE,
@@ -698,8 +710,6 @@ public class Main {
                     + " and v.valid_can_taut = 't' "
                     + " and v.valid_ctab = 't'";
 
-            
-            
             sqlStr = "drop table if exists rdkit_mol";
             System.out.println(sqlStr);
             stmt.executeUpdate(sqlStr);
@@ -880,6 +890,86 @@ insert into target_set_names_for_export(target_set_name) values ('WEINSTEIN_CROC
                 System.out.println("Exception in finally clause in saveConstraints: " + e);
                 e.printStackTrace();
                 throw (e);
+            }
+        }
+
+    }
+
+    public static void updateSequences(Connection postgresConn) throws Exception {
+
+        String[] seqBaseNameArray = new String[]{
+            "cell_line_data_set_ident",
+            "cell_line_data_set",
+            "compare_cell_line",
+            "compare_result",
+            "conc_resp_assay",
+            "conc_resp_element",
+            "job",
+            "named_target_set",
+            "nsc_compound",
+            "test_result",
+            "test_result_type"
+        };
+
+        String highValQuery;
+        String setValQuery;
+
+        int highVal = 0;
+
+        Statement postgresQuery = null;
+        PreparedStatement postgresPrepStmt = null;
+
+        ResultSet rs = null;
+
+        try {
+
+            postgresQuery = postgresConn.createStatement();
+
+            for (int i = 0; i < seqBaseNameArray.length; i++) {
+
+                highValQuery = "select max(id) from " + seqBaseNameArray[i];
+                setValQuery = "select setval('" + seqBaseNameArray[i] + "_seq', ?)";
+
+                System.out.println(highValQuery);
+                System.out.println(setValQuery);
+
+                rs = postgresQuery.executeQuery(highValQuery);
+
+                while (rs.next()) {
+                    highVal = rs.getInt("max");
+                }
+
+                System.out.println("Value of max(id) in table: " + seqBaseNameArray[i] + " is: " + highVal);
+
+                if (highVal > 0) {
+                    postgresPrepStmt = postgresConn.prepareStatement(setValQuery);
+                    postgresPrepStmt.setInt(1, highVal);
+                    postgresPrepStmt.execute();
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Caught Exception " + e + " in doFetchAndInsert");
+            e.printStackTrace();
+            throw e;
+        } finally {
+//Close connection
+            if (postgresQuery != null) {
+                try {
+                    postgresQuery.close();
+                    postgresQuery = null;
+                } catch (SQLException ex) {
+                    System.out.println("Error in closing postgresQuery in doFetchAndInsert");
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                    rs = null;
+                } catch (SQLException ex) {
+                    System.out.println("Error in closing rs in doFetchAndInsert");
+                }
             }
         }
 
