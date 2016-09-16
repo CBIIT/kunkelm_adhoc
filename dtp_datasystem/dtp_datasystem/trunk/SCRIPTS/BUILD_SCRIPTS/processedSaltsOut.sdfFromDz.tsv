@@ -1,0 +1,331 @@
+Name	can_smi	can_taut	can_taut_strip_stereo	Molecular_Formula	Molecular_Weight	Charge
+(9Z)-Octadecenoate	CCCCCCCCC=CCCCCCCCC(=O)[O-]	CCCCCCCCC=CCCCCCCCC(=O)[O-]	CCCCCCCCC=CCCCCCCCC(=O)[O-]	C18H33O2	281.45342	-1
+(E)-octadec-9-enoate	CCCCCCCC\C=C\CCCCCCCC(=O)[O-]	CCCCCCCC\C=C\CCCCCCCC(=O)[O-]	CCCCCCCCC=CCCCCCCCC(=O)[O-]	C18H33O2	281.45342	-1
+(Z)-Cinnamic acid	OC(=O)C=Cc1ccccc1	OC(=O)C=Cc1ccccc1	OC(=O)C=Cc1ccccc1	C9H8O2	148.15862	0
+1,4-dimethylpiperazine	CN1CCN(C)CC1	CN1CCN(C)CC1	CN1CCN(C)CC1	C6H14N2	114.18876	0
+1-ethylpiperidine	CCN1CCCCC1	CCN1CCCCC1	CCN1CCCCC1	C7H15N	113.20069	0
+2,3,4,5,6,7-hexahydroxyheptanoate	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	C7H13O8	225.17332	-1
+2,4,5-trichlorophenolate	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	C6H2Cl3O	196.43848	-1
+2,4,6-trimethylbenzenesulfonic acid	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	C9H12O3S	200.25478	0
+2,4,6-trinitrophenolate	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H2N3O7	228.09598	-1
+2-(pyridin-2-yl)acetic acid	OC(=O)Cc1ccccn1	OC(=O)Cc1ccccn1	OC(=O)Cc1ccccn1	C7H7NO2	137.13598	0
+2-acetoxybenzoic acid	CC(=O)Oc1ccccc1C(=O)O	CC(=O)Oc1ccccc1C(=O)O	CC(=O)Oc1ccccc1C(=O)O	C9H8O4	180.15742	0
+2-aminobenzenesufonic acid	Nc1ccc(cc1)S(=O)(=O)O	Nc1ccc(cc1)S(=O)(=O)O	Nc1ccc(cc1)S(=O)(=O)O	C6H7NO3S	173.18968	0
+2-hydroxyacetic acid	OCC(=O)O	OCC(=O)O	OCC(=O)O	C2H4O3	76.05136	0
+2-hydroxyethanaminium	[NH3+]CCO	[NH3+]CCO	[NH3+]CCO	C2H8NO	62.09102	1
+2-hydroxyethanesulfonate	OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	OCCS(=O)(=O)[O-]	C2H5O4S	125.12369	-1
+2-hydroxyethanesulfonic acid	OCCS(=O)(=O)O	OCCS(=O)(=O)O	OCCS(=O)(=O)O	C2H6O4S	126.13163	0
+2-hydroxyfumaric acid	OC(=O)\C=C(/O)\C(=O)O	OC(=O)\C=C(/O)\C(=O)O	OC(=O)C=C(O)C(=O)O	C4H4O5	132.07155	0
+2-methylbenzenesulfonic acid	Cc1ccccc1S(=O)(=O)O	Cc1ccccc1S(=O)(=O)O	Cc1ccccc1S(=O)(=O)O	C7H8O3S	172.20162	0
+2-methylfumaric acid	C\C(=C/C(=O)O)\C(=O)O	C\C(=C/C(=O)O)\C(=O)O	CC(=CC(=O)O)C(=O)O	C5H6O4	130.09874	0
+2-methylpropan-2-amine	CC(C)(C)N	CC(C)(C)N	CC(C)(C)N	C4H11N	73.13683	0
+2-oxopentanedioic acid	OC(=O)CCC(=O)C(=O)O	OC(=O)CCC(=O)C(=O)O	OC(=O)CCC(=O)C(=O)O	C5H6O5	146.09814	0
+2-phenoxybenzoic acid	OC(=O)c1ccccc1Oc2ccccc2	OC(=O)c1ccccc1Oc2ccccc2	OC(=O)c1ccccc1Oc2ccccc2	C13H10O3	214.2167	0
+2-phenylacetic acid	OC(=O)Cc1ccccc1	OC(=O)Cc1ccccc1	OC(=O)Cc1ccccc1	C8H8O2	136.14792	0
+3-cyclohexylpropanoic acid	OC(=O)CCC1CCCCC1	OC(=O)CCC1CCCCC1	OC(=O)CCC1CCCCC1	C9H16O2	156.22214	0
+3-dimethylaminopropanoic acid	CN(C)CCC(=O)O	CN(C)CCC(=O)O	CN(C)CCC(=O)O	C5H11NO2	117.14634	0
+3-methylbenzenesulfonic acid	Cc1cccc(c1)S(=O)(=O)O	Cc1cccc(c1)S(=O)(=O)O	Cc1cccc(c1)S(=O)(=O)O	C7H8O3S	172.20162	0
+3-phenylpropanoic acid	OC(=O)CCc1ccccc1	OC(=O)CCc1ccccc1	OC(=O)CCc1ccccc1	C9H10O2	150.1745	0
+4-amino-2-hydroxybenzoic acid	Nc1ccc(C(=O)O)c(O)c1	Nc1ccc(C(=O)O)c(O)c1	Nc1ccc(C(=O)O)c(O)c1	C7H7NO3	153.13537	0
+4-chlorobenzenesulfonate	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	C6H4ClO3S	191.61216	-1
+4-chlorobenzenesulfonic acid	OS(=O)(=O)c1ccc(Cl)cc1	OS(=O)(=O)c1ccc(Cl)cc1	OS(=O)(=O)c1ccc(Cl)cc1	C6H5ClO3S	192.6201	0
+4-Methylmorpholine	CN1CCOCC1	CN1CCOCC1	CN1CCOCC1	C5H11NO	101.14694	0
+4-phenylcyclohexylamine	NC1CCC(CC1)c2ccccc2	NC1CCC(CC1)c2ccccc2	NC1CCC(CC1)c2ccccc2	C12H17N	175.27008	0
+4-phenylcyclohexylammonium	[NH3+]C1CCC(CC1)c2ccccc2	[NH3+]C1CCC(CC1)c2ccccc2	[NH3+]C1CCC(CC1)c2ccccc2	C12H18N	176.27802	1
+5-oxopyrrolidine-2-carboxylic acid	OC(=O)C1CCC(=O)N1	OC(=O)C1CCC(=O)N1	OC(=O)C1CCC(=O)N1	C5H7NO3	129.11397	0
+Acetate	CC(=O)[O-]	CC(=O)[O-]	CC(=O)[O-]	C2H3O2	59.04402	-1
+Acetic acid	CC(=O)O	CC(=O)O	CC(=O)O	C2H4O2	60.05196	0
+adamantane-1-carboxylic acid	OC(=O)C12CC3CC(CC(C3)C1)C2	OC(=O)C12CC3CC(CC(C3)C1)C2	OC(=O)C12CC3CC(CC(C3)C1)C2	C11H16O2	180.24354	0
+Adipate	[O-]C(=O)CCCCC(=O)[O-]	[O-]C(=O)CCCCC(=O)[O-]	[O-]C(=O)CCCCC(=O)[O-]	C6H8O4	144.12532	-2
+Adipic acid	OC(=O)CCCCC(=O)O	OC(=O)CCCCC(=O)O	OC(=O)CCCCC(=O)O	C6H10O4	146.1412	0
+Aluminium	[Al+3]	[Al+3]	[Al+3]	Al	26.98153	3
+Ammonia	N	N	N	H3N	17.03052	0
+Ammonium	[NH4+]	[NH4+]	[NH4+]	H4N	18.03846	1
+Antimony(III)	[Sb+3]	[Sb+3]	[Sb+3]	Sb	121.76	3
+Arginine	NC(CCCNC(=N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	C6H14N4O2	174.20095	0
+Ascorbic acid	OCC(O)C1OC(=O)C(=C1O)O	OCC(O)c1oc(O)c(O)c1O	OCC(O)c1oc(O)c(O)c1O	C6H8O6	176.12411	0
+Aspartate	NC(CC(=O)[O-])C(=O)[O-]	NC(CC(=O)[O-])C(=O)[O-]	NC(CC(=O)[O-])C(=O)[O-]	C4H5NO4	131.08679	-2
+Aspartic acid	NC(CC(=O)O)C(=O)O	NC(CC(=O)O)C(=O)O	NC(CC(=O)O)C(=O)O	C4H7NO4	133.10268	0
+Barbituric Acid	O=C1CC(=O)NC(=O)N1	O=C1CC(=O)NC(=O)N1	O=C1CC(=O)NC(=O)N1	C4H4N2O3	128.08615	0
+Barium	[Ba+2]	[Ba+2]	[Ba+2]	Ba	137.327	2
+Benzathine	C(CNCc1ccccc1)NCc2ccccc2	C(CNCc1ccccc1)NCc2ccccc2	C(CNCc1ccccc1)NCc2ccccc2	C16H20N2	240.3434	0
+Benzenesulfonate	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	C6H5O3S	157.16709	-1
+Benzenesulfonic acid	OS(=O)(=O)c1ccccc1	OS(=O)(=O)c1ccccc1	OS(=O)(=O)c1ccccc1	C6H6O3S	158.17504	0
+Benzoate	[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	[O-]C(=O)c1ccccc1	C7H5O2	121.1134	-1
+Benzoic acid	OC(=O)c1ccccc1	OC(=O)c1ccccc1	OC(=O)c1ccccc1	C7H6O2	122.12134	0
+Beryllium	[Be+2]	[Be+2]	[Be+2]	Be	9.01218	2
+Bismuth(III)	[Bi+3]	[Bi+3]	[Bi+3]	Bi	208.98038	3
+Boric acid	OB(O)O	OB(O)O	OB(O)O	BH3O3	61.83302	0
+Bromide	[Br-]	[Br-]	[Br-]	Br	79.904	-1
+Butyrate	CCCC(=O)[O-]	CCCC(=O)[O-]	CCCC(=O)[O-]	C4H7O2	87.09718	-1
+Butyric acid	CCCC(=O)O	CCCC(=O)O	CCCC(=O)O	C4H8O2	88.10512	0
+Cadmium(II)	[Cd+2]	[Cd+2]	[Cd+2]	Cd	112.411	2
+Calcium	[Ca+2]	[Ca+2]	[Ca+2]	Ca	40.078	2
+Camphorsulfonate	CC1(C)[C@@H]2CC[C@@]1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)[C@@H]2CC[C@@]1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887	-1
+camphorsulfonate (alternate drawing)	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887	-1
+Carbonate	[O-]C(=O)[O-]	[O-]C(=O)[O-]	[O-]C(=O)[O-]	CO3	60.0089	-2
+Carbonic acid	OC(=O)O	OC(=O)O	OC(=O)O	CH2O3	62.02478	0
+Carboxyformate	OC(=O)C(=O)[O-]	OC(=O)C(=O)[O-]	OC(=O)C(=O)[O-]	C2HO4	89.02694	-1
+Cerium(III)	[Ce+3]	[Ce+3]	[Ce+3]	Ce	140.116	3
+Cesium(I)	[Cs+]	[Cs+]	[Cs+]	Cs	132.90545	1
+Chloride	[Cl-]	[Cl-]	[Cl-]	Cl	35.453	-1
+Choline	C[N+](C)(C)CCO	C[N+](C)(C)CCO	C[N+](C)(C)CCO	C5H14NO	104.17075	1
+Cinnamic acid	OC(=O)\C=C\c1ccccc1	OC(=O)\C=C\c1ccccc1	OC(=O)C=Cc1ccccc1	C9H8O2	148.15862	0
+Citrate	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	C6H5O7	189.0997	-3
+Citric Acid	OC(=O)CC(O)(CC(=O)O)C(=O)O	OC(=O)CC(O)(CC(=O)O)C(=O)O	OC(=O)CC(O)(CC(=O)O)C(=O)O	C6H8O7	192.12352	0
+Cobalt(II)	[Co+2]	[Co+2]	[Co+2]	Co	58.9332	2
+Copper(II)	[Cu+2]	[Cu+2]	[Cu+2]	Cu	63.546	2
+Cyclohexanamine	NC1CCCCC1	NC1CCCCC1	NC1CCCCC1	C6H13N	99.17412	0
+cyclohexanecarboxylic acid	OC(=O)C1CCCCC1	OC(=O)C1CCCCC1	OC(=O)C1CCCCC1	C7H12O2	128.16897	0
+Cyclohexylsulfamic acid	OS(=O)(=O)NC1CCCCC1	OS(=O)(=O)NC1CCCCC1	OS(=O)(=O)NC1CCCCC1	C6H13NO3S	179.23732	0
+Cyclopentadienyl	[cH-]1cccc1	[cH-]1cccc1	[cH-]1cccc1	C5H5	65.0932	-1
+Cyclopropanamine	NC1CC1	NC1CC1	NC1CC1	C3H7N	57.09438	0
+D-Aspartate	N[C@H](CC(=O)O)C(=O)[O-]	N[C@H](CC(=O)O)C(=O)[O-]	NC(CC(=O)O)C(=O)[O-]	C4H6NO4	132.09474	-1
+D-Aspartic acid	N[C@H](CC(=O)O)C(=O)O	N[C@H](CC(=O)O)C(=O)O	NC(CC(=O)O)C(=O)O	C4H7NO4	133.10268	0
+D-Glutamate	N[C@H](CCC(=O)O)C(=O)[O-]	N[C@H](CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	C5H8NO4	146.12132	-1
+D-Glutamic acid	N[C@H](CCC(=O)O)C(=O)O	N[C@H](CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12926	0
+D-Lactic acid	C[C@@H](O)C(=O)O	C[C@@H](O)C(=O)O	CC(O)C(=O)O	C3H6O3	90.07794	0
+D-Tartaric acid	O[C@@H]([C@H](O)C(=O)O)C(=O)O	O[C@@H]([C@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	0
+D-Tartrate	O[C@@H]([C@H](O)C(=O)[O-])C(=O)[O-]	O[C@@H]([C@H](O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095	-2
+Decanoic acid	CCCCCCCCCC(=O)O	CCCCCCCCCC(=O)O	CCCCCCCCCC(=O)O	C10H20O2	172.2646	0
+Dichromate	[O-][Cr](=O)(=O)O[Cr](=O)(=O)[O-]	[O-][Cr](=O)(=O)O[Cr](=O)(=O)[O-]	[O-][Cr](=O)(=O)O[Cr](=O)(=O)[O-]	Cr2O7	215.988	-2
+Dichromic acid	O[Cr](=O)(=O)O[Cr](=O)(=O)O	O[Cr](=O)(=O)O[Cr](=O)(=O)O	O[Cr](=O)(=O)O[Cr](=O)(=O)O	Cr2H2O7	218.00387	0
+Dicyclohexylamine	C1CCC(CC1)NC2CCCCC2	C1CCC(CC1)NC2CCCCC2	C1CCC(CC1)NC2CCCCC2	C12H23N	181.31772	0
+Diethanolamine	OCCNCCO	OCCNCCO	OCCNCCO	C4H11NO2	105.13563	0
+Diethylamine	CCNCC	CCNCC	CCNCC	C4H11N	73.13684	0
+Diethylammonium	CC[NH2+]CC	CC[NH2+]CC	CC[NH2+]CC	C4H12N	74.14478	1
+Dihydrogenphosphate	OP(=O)(O)[O-]	OP(=O)(O)[O-]	OP(=O)(O)[O-]	H2O4P	96.98724	-1
+dimethyl sulfoxide	CS(=O)C	CS(=O)C	CS(=O)C	C2H6OS	78.13344	0
+DL-Lysine	NCCCCC(N)C(=O)O	NCCCCC(N)C(=O)O	NCCCCC(N)C(=O)O	C6H14N2O2	146.18755	0
+Dodecanoate	CCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCC(=O)[O-]	C12H23O2	199.30982	-1
+Dodecanoic acid	CCCCCCCCCCCC(=O)O	CCCCCCCCCCCC(=O)O	CCCCCCCCCCCC(=O)O	C12H24O2	200.31776	0
+dodecylhydrogensulfate	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744	0
+Dysprosium(III)	[Dy+3]	[Dy+3]	[Dy+3]	Dy	162.5	3
+Erbium(III)	[Er+3]	[Er+3]	[Er+3]	Er	167.25899	3
+Ethanamine	CCN	CCN	CCN	C2H7N	45.08368	0
+Ethane-1,2-diamine	NCCN	NCCN	NCCN	C2H8N2	60.09832	0
+ethane-1,2-disulfonic acid	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	C2H6O6S2	190.19544	0
+Ethanesulfonate	CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	CCS(=O)(=O)[O-]	C2H5O3S	109.12429	-1
+Ethanesulfonic acid	CCS(=O)(=O)O	CCS(=O)(=O)O	CCS(=O)(=O)O	C2H6O3S	110.13223	0
+Ethanolamine	NCCO	NCCO	NCCO	C2H7NO	61.08308	0
+Ethylenediaminetetraacetate (EDTA)	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	C10H12N2O8	288.21088	-4
+Ethylenediaminetetraacetic acid (H4EDTA)	OC(=O)CN(CCN(CC(=O)O)CC(=O)O)CC(=O)O	OC(=O)CN(CCN(CC(=O)O)CC(=O)O)CC(=O)O	OC(=O)CN(CCN(CC(=O)O)CC(=O)O)CC(=O)O	C10H16N2O8	292.24264	0
+Ethylhydrogencarbonate	CCOC(=O)O	CCOC(=O)O	CCOC(=O)O	C3H6O3	90.07794	0
+Ethylhydrogensulfate	CCOS(=O)(=O)O	CCOS(=O)(=O)O	CCOS(=O)(=O)O	C2H6O4S	126.13163	0
+Ethylsulfamic acid	CCNS(=O)(=O)O	CCNS(=O)(=O)O	CCNS(=O)(=O)O	C2H7NO3S	125.14687	0
+Ethylsulfate	CCOS(=O)(=O)[O-]	CCOS(=O)(=O)[O-]	CCOS(=O)(=O)[O-]	C2H5O4S	125.12369	-1
+Europium(III)	[Eu+3]	[Eu+3]	[Eu+3]	Eu	151.964	3
+Fluoride	[F-]	[F-]	[F-]	F	18.9984	-1
+Formate	[O-]C=O	[O-]C=O	[O-]C=O	CHO2	45.01744	-1
+Formic acid	OC=O	OC=O	OC=O	CH2O2	46.02538	0
+Fumarate	[O-]C(=O)\C=C\C(=O)[O-]	[O-]C(=O)\C=C\C(=O)[O-]	[O-]C(=O)C=CC(=O)[O-]	C4H2O4	114.05627	-2
+Fumaric Acid	OC(=O)\C=C\C(=O)O	OC(=O)\C=C\C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216	0
+Gadolinium(III)	[Gd+3]	[Gd+3]	[Gd+3]	Gd	157.25	3
+Gallium(III)	[Ga+3]	[Ga+3]	[Ga+3]	Ga	69.723	3
+Glutamate	NC(CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	C5H8NO4	146.12132	-1
+Glutamic acid	NC(CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12926	0
+Gold(I)	[Au+]	[Au+]	[Au+]	Au	196.96655	1
+Heptanedioic acid	OC(=O)CCCCCC(=O)O	OC(=O)CCCCCC(=O)O	OC(=O)CCCCCC(=O)O	C7H12O4	160.16778	0
+Hexafluorophosphate	F[P-](F)(F)(F)(F)F	F[P-](F)(F)(F)(F)F	F[P-](F)(F)(F)(F)F	F6P	144.96418	-1
+Hydrogen Hexafluorophosphate	F[PH](F)(F)(F)(F)F	F[PH](F)(F)(F)(F)F	F[PH](F)(F)(F)(F)F	F6HP	145.97212	0
+Holmium(III)	[Ho+3]	[Ho+3]	[Ho+3]	Ho	164.93032	3
+Hydrobromide	[Br-]	[Br-]	[Br-]	Br	79.904	0
+Hydrochloride	[Cl-]	[Cl-]	[Cl-]	Cl	35.453	0
+Hydrofluoride	[F-]	[F-]	[F-]	F	18.9984	0
+Hydrogen carbonate	OC(=O)[O-]	OC(=O)[O-]	OC(=O)[O-]	CHO3	61.01684	-1
+hydrogen fumarate	OC(=O)C=CC(=O)[O-]	OC(=O)C=CC(=O)[O-]	OC(=O)C=CC(=O)[O-]	C4H3O4	115.06422	-1
+Hydrogen sulfate	OS(=O)(=O)[O-]	OS(=O)(=O)[O-]	OS(=O)(=O)[O-]	HO4S	97.07053	-1
+Hydrogen sulfite	[O-]S(=O)=O	[O-]S(=O)=O	[O-]S(=O)=O	HO3S	81.07113	-1
+Bitartrate	OC(C(O)C(=O)[O-])C(=O)O	OC(C(O)C(=O)[O-])C(=O)O	OC(C(O)C(=O)[O-])C(=O)O	C4H5O6	149.07889	-1
+Hydroiodide	[I-]	[I-]	[I-]	I	126.90447	0
+Hydroxide	[OH-]	[OH-]	[OH-]	HO	17.00734	-1
+Indium(III)	[In+3]	[In+3]	[In+3]	In	114.818	3
+Iodide	[I-]	[I-]	[I-]	I	126.90447	-1
+Iridium(II)	[Ir+2]	[Ir+2]	[Ir+2]	Ir	192.217	2
+Iron (II)	[Fe+2]	[Fe+2]	[Fe+2]	Fe	55.845	2
+Iron (III)	[Fe+2]	[Fe+2]	[Fe+2]	Fe	55.845	3
+Isocitrate	OC(C(CC(=O)[O-])C(=O)[O-])C(=O)[O-]	OC(C(CC(=O)[O-])C(=O)[O-])C(=O)[O-]	OC(C(CC(=O)[O-])C(=O)[O-])C(=O)[O-]	C6H5O7	189.0997	-3
+Isocitric acid	OC(C(CC(=O)O)C(=O)O)C(=O)O	OC(C(CC(=O)O)C(=O)O)C(=O)O	OC(C(CC(=O)O)C(=O)O)C(=O)O	C6H8O7	192.12352	0
+Isonicotinate	[O-]C(=O)c1ccncc1	[O-]C(=O)c1ccncc1	[O-]C(=O)c1ccncc1	C6H4NO2	122.10146	-1
+Isothiocyanate	[N-]=C=S	[N-]=C=S	[N-]=C=S	CNS	58.0824	-1
+L-arginine	N[C@@H](CCCN=C(N)N)C(=O)O	N[C@@H](CCCN=C(N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	C6H14N4O2	174.20095	0
+L-Aspartate	N[C@@H](CC(=O)O)C(=O)[O-]	N[C@@H](CC(=O)O)C(=O)[O-]	NC(CC(=O)O)C(=O)[O-]	C4H6NO4	132.09474	-1
+L-Aspartic acid	N[C@@H](CC(=O)O)C(=O)O	N[C@@H](CC(=O)O)C(=O)O	NC(CC(=O)O)C(=O)O	C4H7NO4	133.10268	0
+L-Glutamate	N[C@@H](CCC(=O)O)C(=O)[O-]	N[C@@H](CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	C5H8NO4	146.12132	-1
+L-Glutamic acid	N[C@@H](CCC(=O)O)C(=O)O	N[C@@H](CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12926	0
+L-Tartaric acid	O[C@H]([C@@H](O)C(=O)O)C(=O)O	O[C@H]([C@@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	0
+L-Tartrate	O[C@H]([C@@H](O)C(=O)[O-])C(=O)[O-]	O[C@H]([C@@H](O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095	-2
+Lactate	CC(O)C(=O)[O-]	CC(O)C(=O)[O-]	CC(O)C(=O)[O-]	C3H5O3	89.07	-1
+Lactic acid	CC(O)C(=O)O	CC(O)C(=O)O	CC(O)C(=O)O	C3H6O3	90.07794	0
+Lanthanum(III)	[La+3]	[La+3]	[La+3]	La	138.90549	3
+Lithium	[Li+]	[Li+]	[Li+]	Li	6.941	1
+Lutetium(III)	[Lu+3]	[Lu+3]	[Lu+3]	Lu	174.967	3
+Mandelic acid	OC(C(=O)O)c1ccccc1	OC(C(=O)O)c1ccccc1	OC(C(=O)O)c1ccccc1	C8H8O3	152.14732	0
+Magnesium	[Mg+2]	[Mg+2]	[Mg+2]	Mg	24.305	2
+Malate	OC(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])C(=O)[O-]	C4H4O5	132.07156	-2
+Maleate	[O-]C(=O)\C=C/C(=O)[O-]	[O-]C(=O)\C=C/C(=O)[O-]	[O-]C(=O)C=CC(=O)[O-]	C4H2O4	114.05627	-2
+Maleic Acid	OC(=O)\C=C/C(=O)O	OC(=O)\C=C/C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216	0
+Malic acid	OC(CC(=O)O)C(=O)O	OC(CC(=O)O)C(=O)O	OC(CC(=O)O)C(=O)O	C4H6O5	134.08743	0
+malonic acid	OC(=O)CC(=O)O	OC(=O)CC(=O)O	OC(=O)CC(=O)O	C3H4O4	104.06146	0
+Manganate	[O-][Mn](=O)(=O)[O-]	[O-][Mn](=O)(=O)[O-]	[O-][Mn](=O)(=O)[O-]	MnO4	118.93564	-2
+Manganese(VII)	[Mn+7]	[Mn+7]	[Mn+7]	Mn	54.93804	7
+Meglumine	CNCC(O)C(O)C(O)C(O)CO	CNCC(O)C(O)C(O)C(O)CO	CNCC(O)C(O)C(O)C(O)CO	C7H17NO5	195.21358	0
+Mercury(I)	[Hg+]	[Hg+]	[Hg+]	Hg	200.59	1
+meso-Tartaric acid	O[C@H]([C@H](O)C(=O)O)C(=O)O	O[C@H]([C@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	0
+meso-Tartrate	O[C@H]([C@H](O)C(=O)[O-])C(=O)[O-]	O[C@H]([C@H](O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095	-2
+Methanesulfonate	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CS(=O)(=O)[O-]	CH3O3S	95.09772	-1
+Methanesulfonic Acid	CS(=O)(=O)O	CS(=O)(=O)O	CS(=O)(=O)O	CH4O3S	96.10566	0
+methyl sulfate	COS(=O)(=O)[O-]	COS(=O)(=O)[O-]	COS(=O)(=O)[O-]	CH3O4S	111.09711	-1
+Methylsulfamic acid	CNS(=O)(=O)O	CNS(=O)(=O)O	CNS(=O)(=O)O	CH5NO3S	111.12029	0
+Methylsulfuric Acid	COS(=O)(=O)O	COS(=O)(=O)O	COS(=O)(=O)O	CH4O4S	112.10506	0
+Morpholine	C1COCCN1	C1COCCN1	C1COCCN1	C4H9NO	87.12036	0
+naphthalene-1,5-disulfonate	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	C10H6O6S2	286.28103	-2
+naphthalene-1,5-disulfonic acid	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	C10H8O6S2	288.29692	0
+Neodymium(III)	[Nd+3]	[Nd+3]	[Nd+3]	Nd	144.24	3
+Nickel(II)	[Ni+2]	[Ni+2]	[Ni+2]	Ni	58.6934	2
+Nicotinate	[O-]C(=O)c1cccnc1	[O-]C(=O)c1cccnc1	[O-]C(=O)c1cccnc1	C6H4NO2	122.10146	-1
+Nicotinic acid	OC(=O)c1cccnc1	OC(=O)c1cccnc1	OC(=O)c1cccnc1	C6H5NO2	123.1094	0
+Nitrate	[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	[O-][N+](=O)[O-]	NO3	62.0049	-1
+Nitric Acid	O[N+](=O)[O-]	O[N+](=O)[O-]	O[N+](=O)[O-]	HNO3	63.01284	0
+Nitrite	[O-]N=O	[O-]N=O	[O-]N=O	NO2	46.0055	-1
+Nitrous acid	ON=O	ON=O	ON=O	HNO2	47.01344	0
+nonanedioic acid	OC(=O)CCCCCCCC(=O)O	OC(=O)CCCCCCCC(=O)O	OC(=O)CCCCCCCC(=O)O	C9H16O4	188.22094	0
+Octadecyldihydrogenphosphate	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	C18H39O4P	350.47362	0
+Octanedioic acid	OC(=O)CCCCCCC(=O)O	OC(=O)CCCCCCC(=O)O	OC(=O)CCCCCCC(=O)O	C8H14O4	174.19436	0
+Octanoic acid	CCCCCCCC(=O)O	CCCCCCCC(=O)O	CCCCCCCC(=O)O	C8H16O2	144.21143	0
+orotate	[O-]C(=O)C1=CC(=O)NC(=O)N1	Oc1cc(nc(O)n1)C(=O)[O-]	Oc1cc(nc(O)n1)C(=O)[O-]	C5H3N2O4	155.08832	-1
+Orotic acid (alternate drawing)	OC(=O)c1cc(O)nc(O)n1	OC(=O)C1=CC(=O)NC(=O)N1	OC(=O)C1=CC(=O)NC(=O)N1	C5H4N2O4	156.09625	0
+Orotic acid	OC(=O)C1=CC(=O)NC(=O)N1	OC(=O)C1=CC(=O)NC(=O)N1	OC(=O)C1=CC(=O)NC(=O)N1	C5H4N2O4	156.09625	0
+Oxalate	[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	C2O4	88.019	-2
+Oxalic acid	OC(=O)C(=O)O	OC(=O)C(=O)O	OC(=O)C(=O)O	C2H2O4	90.03488	0
+Pamoate	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	C23H14O6	386.35365	-2
+Pamoic Acid	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	C23H16O6	388.36953	0
+Perchlorate	[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	[O-]Cl(=O)(=O)=O	ClO4	99.4506	-1
+Perchloric acid	OCl(=O)(=O)=O	OCl(=O)(=O)=O	OCl(=O)(=O)=O	ClHO4	100.45853	0
+Permanganate	[O-][Mn](=O)(=O)=O	[O-][Mn](=O)(=O)=O	[O-][Mn](=O)(=O)=O	MnO4	118.93564	-1
+Phosphate	[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	O4P	94.97136	-3
+Phosphite (PO3)	[O-]P([O-])[O-]	[O-]P([O-])[O-]	[O-]P([O-])[O-]	O3P	78.97196	-3
+Phosphonate (HPO3)	[O-]P(=O)[O-]	[O-]P(=O)[O-]	[O-]P(=O)[O-]	HO3P	79.9799	-2
+Phosphonic acid	OP(=O)O	OP(=O)O	OP(=O)O	H3O3P	81.99578	0
+Phosphoric Acid	OP(=O)(O)O	OP(=O)(O)O	OP(=O)(O)O	H3O4P	97.99518	0
+Phosphorous acid	OP(O)O	OP(O)O	OP(O)O	H3O3P	81.99578	0
+Phthalic acid	OC(=O)c1ccccc1C(=O)O	OC(=O)c1ccccc1C(=O)O	OC(=O)c1ccccc1C(=O)O	C8H6O4	166.13084	0
+Picric acid	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H3N3O7	229.10392	0
+Piperazine	C1CNCCN1	C1CNCCN1	C1CNCCN1	C4H10N2	86.1356	0
+Piperidine	C1CCNCC1	C1CCNCC1	C1CCNCC1	C5H11N	85.14754	0
+Potassium	[K+]	[K+]	[K+]	K	39.0983	1
+Praseodymium(III)	[Pr+3]	[Pr+3]	[Pr+3]	Pr	140.90764	3
+propane-1,3-diamine	NCCCN	NCCCN	NCCCN	C3H10N2	74.1249	0
+Propanoate	CCC(=O)[O-]	CCC(=O)[O-]	CCC(=O)[O-]	C3H5O2	73.0706	-1
+Propionic acid	CCC(=O)O	CCC(=O)O	CCC(=O)O	C3H6O2	74.07854	0
+protonated Benzathine	C(C[NH2+]Cc1ccccc1)[NH2+]Cc2ccccc2	C(C[NH2+]Cc1ccccc1)[NH2+]Cc2ccccc2	C(C[NH2+]Cc1ccccc1)[NH2+]Cc2ccccc2	C16H22N2	242.35928	2
+protonated Meglumine	C[NH2+]CC(O)C(O)C(O)C(O)CO	C[NH2+]CC(O)C(O)C(O)C(O)CO	C[NH2+]CC(O)C(O)C(O)C(O)CO	C7H18NO5	196.22152	1
+protonated Piperazine	C1C[NH2+]CC[NH2+]1	C1C[NH2+]CC[NH2+]1	C1C[NH2+]CC[NH2+]1	C4H12N2	88.15148	2
+protonated Tromethamine	[NH3+]C(CO)(CO)CO	[NH3+]C(CO)(CO)CO	[NH3+]C(CO)(CO)CO	C4H12NO3	122.14297	1
+Pyruvate	CC(=O)C(=O)[O-]	CC(=O)C(=O)[O-]	CC(=O)C(=O)[O-]	C3H3O3	87.05412	-1
+Pyruvic acid	CC(=O)C(=O)O	CC(=O)C(=O)O	CC(=O)C(=O)O	C3H4O3	88.06206	0
+Rhodium(II)	[Rh+2]	[Rh+2]	[Rh+2]	Rh	102.9055	2
+Rubidium(I)	[Rb+]	[Rb+]	[Rb+]	Rb	85.4678	1
+Salicylate	Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	Oc1ccccc1C(=O)[O-]	C7H5O3	137.1128	-1
+Salicylic acid	OC(=O)c1ccccc1O	OC(=O)c1ccccc1O	OC(=O)c1ccccc1O	C7H6O3	138.12074	0
+Samarium(II)	[Sm+2]	[Sm+2]	[Sm+2]	Sm	150.36	2
+Scandium(III)	[Sc+3]	[Sc+3]	[Sc+3]	Sc	44.95591	3
+Silver (I)	[Ag+]	[Ag+]	[Ag+]	Ag	107.8682	1
+Sodium	[Na+]	[Na+]	[Na+]	Na	22.98977	1
+Stearate	CCCCCCCCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCCCCCCCC(=O)[O-]	C18H35O2	283.4693	-1
+Strontium(II)	[Sr+2]	[Sr+2]	[Sr+2]	Sr	87.62	2
+Succinate	[O-]C(=O)CCC(=O)[O-]	[O-]C(=O)CCC(=O)[O-]	[O-]C(=O)CCC(=O)[O-]	C4H4O4	116.07216	-2
+Succinic acid	OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	C4H6O4	118.08804	0
+Sulfamic acid	NS(=O)(=O)O	NS(=O)(=O)O	NS(=O)(=O)O	H3NO3S	97.09371	0
+Sulfate	[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	[O-]S(=O)(=O)[O-]	O4S	96.06259	-2
+Sulfite	[O-]S(=O)[O-]	[O-]S(=O)[O-]	[O-]S(=O)[O-]	O3S	80.06319	-2
+Sulfofluoridate	[O-]S(=O)(=O)F	[O-]S(=O)(=O)F	[O-]S(=O)(=O)F	FO3S	99.0616	-1
+Sulfuric Acid	OS(=O)(=O)O	OS(=O)(=O)O	OS(=O)(=O)O	H2O4S	98.07847	0
+Sulfurous acid	OS(=O)O	OS(=O)O	OS(=O)O	H2O3S	82.07907	0
+Tartaric acid	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	0
+Tartrate	OC(C(O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095	-2
+Terbium(III)	[Tb+3]	[Tb+3]	[Tb+3]	Tb	158.92534	3
+Tetrabutylammonium	CCCC[N+](CCCC)(CCCC)CCCC	CCCC[N+](CCCC)(CCCC)CCCC	CCCC[N+](CCCC)(CCCC)CCCC	C16H36N	242.46374	1
+Tetraethylammonium	CC[N+](CC)(CC)CC	CC[N+](CC)(CC)CC	CC[N+](CC)(CC)CC	C8H20N	130.25109	1
+Tetrafluoroborate	F[B-](F)(F)F	F[B-](F)(F)F	F[B-](F)(F)F	BF4	86.80461	-1
+Thallium(I)	[Tl+]	[Tl+]	[Tl+]	Tl	204.3833	1
+Thiocyanate	[S-]C#N	[S-]C#N	[S-]C#N	CNS	58.0824	-1
+Thiocyanic acid	SC#N	SC#N	SC#N	CHNS	59.09034	0
+Thulium(II)	[Tm+2]	[Tm+2]	[Tm+2]	Tm	168.93421	2
+Tosylate	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	Cc1ccc(cc1)S(=O)(=O)[O-]	C7H7O3S	171.19368	-1
+p-Toluenesulfonic acid	Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	Cc1ccc(cc1)S(=O)(=O)O	C7H8O3S	172.20162	0
+triethanolamine	OCCN(CCO)CCO	OCCN(CCO)CCO	OCCN(CCO)CCO	C6H15NO3	149.1882	0
+Triethylamine	CCN(CC)CC	CCN(CC)CC	CCN(CC)CC	C6H15N	101.19	0
+Trifluoroacetate	[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	[O-]C(=O)C(F)(F)F	C2F3O2	113.0154	-1
+Trifluoroacetic acid	OC(=O)C(F)(F)F	OC(=O)C(F)(F)F	OC(=O)C(F)(F)F	C2HF3O2	114.02334	0
+Trifluoromethanesulfonate	[O-]S(=O)(=O)C(F)(F)F	[O-]S(=O)(=O)C(F)(F)F	[O-]S(=O)(=O)C(F)(F)F	CF3O3S	149.0691	-1
+Trifluoromethanesulfonic acid	OS(=O)(=O)C(F)(F)F	OS(=O)(=O)C(F)(F)F	OS(=O)(=O)C(F)(F)F	CHF3O3S	150.07704	0
+Tromethamine	NC(CO)(CO)CO	NC(CO)(CO)CO	NC(CO)(CO)CO	C4H11NO3	121.13503	0
+Tungsten(II)	[W+2]	[W+2]	[W+2]	W	183.84	2
+Vanadium(V)	[V+5]	[V+5]	[V+5]	V	50.9415	5
+Ytterbium(II)	[Yb+2]	[Yb+2]	[Yb+2]	Yb	173.04	2
+Yttrium(III)	[Y+3]	[Y+3]	[Y+3]	Y	88.90585	3
+Zinc(II)	[Zn+2]	[Zn+2]	[Zn+2]	Zn	65.409	2
+Zirconium(IV)	[Zr+4]	[Zr+4]	[Zr+4]	Zr	91.224	4
+Boron tetrafluoride neutral	F[B](F)(F)F	F[B](F)(F)F	F[B](F)(F)F	BF4	86.80461	0
+Boron tetrafluoride minus	[F-][B+3]([F-])([F-])[F-]	[F-][B+3]([F-])([F-])[F-]	[F-][B+3]([F-])([F-])[F-]	BF4	86.80461	-1
+Tetramethylammonium	C[N+](C)(C)C	C[N+](C)(C)C	C[N+](C)(C)C	C4H12N	74.14478	1
+Trimethylamine	CN(C)C	CN(C)C	CN(C)C	C3H9N	59.11026	0
+Triethylammonium	CC[NH+](CC)CC	CC[NH+](CC)CC	CC[NH+](CC)CC	C6H16N	102.19794	1
+Picrate	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H2N3O7	228.09598	-1
+(Z)-Cinnamate	[O-]C(=O)C=Cc1ccccc1	[O-]C(=O)C=Cc1ccccc1	[O-]C(=O)C=Cc1ccccc1	C9H7O2	147.15068	-1
+protonated 1,4-dimethylpiperazine	CN1CC[NH+](C)CC1	CN1CC[NH+](C)CC1	CN1CC[NH+](C)CC1	C6H15N2	115.1967	1
+protonated 1-ethylpiperidine	CC[NH+]1CCCCC1	CC[NH+]1CCCCC1	CC[NH+]1CCCCC1	C7H16N	114.20863	1
+2,4,6-trimethylbenzenesulfate	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	C9H11O3S	199.24684	-1
+2,6-diaminohexanoate	[NH3+]CCCCC([NH3+])C(=O)[O-]	[NH3+]CCCCC([NH3+])C(=O)[O-]	[NH3+]CCCCC([NH3+])C(=O)[O-]	C6H15N2O2	147.1955	1
+2-(pyridin-2-yl)acetate	[O-]C(=O)Cc1ccccn1	[O-]C(=O)Cc1ccccn1	[O-]C(=O)Cc1ccccn1	C7H6NO2	136.12804	-1
+2-acetoxybenzoate	CC(=O)Oc1ccccc1C(=O)[O-]	CC(=O)Oc1ccccc1C(=O)[O-]	CC(=O)Oc1ccccc1C(=O)[O-]	C9H7O4	179.14948	-1
+2-aminobenzenesulfate	Nc1ccc(cc1)S(=O)(=O)[O-]	Nc1ccc(cc1)S(=O)(=O)[O-]	Nc1ccc(cc1)S(=O)(=O)[O-]	C6H6NO3S	172.18174	-1
+2-hydroxyacetate	OCC(=O)[O-]	OCC(=O)[O-]	OCC(=O)[O-]	C2H3O3	75.04342	-1
+2-hydroxyfumarate	[O-]C(=O)\C=C(/[O-])\C(=O)[O-]	[O-]C(=O)\C=C(/[O-])\C(=O)[O-]	[O-]C(=O)C=C([O-])C(=O)[O-]	C4HO5	129.04773	-3
+2-methylbenzenesulfate	Cc1ccccc1S(=O)(=O)[O-]	Cc1ccccc1S(=O)(=O)[O-]	Cc1ccccc1S(=O)(=O)[O-]	C7H7O3S	171.19368	-1
+2-methylfumarate	C\C(=C/C(=O)[O-])\C(=O)[O-]	C\C(=C/C(=O)[O-])\C(=O)[O-]	CC(=CC(=O)[O-])C(=O)[O-]	C5H4O4	128.08285	-2
+protonated 2-methylpropan-2-amine	CC(C)(C)[NH3+]	CC(C)(C)[NH3+]	CC(C)(C)[NH3+]	C4H12N	74.14478	1
+2-oxopentanedioate	[O-]C(=O)CCC(=O)C(=O)[O-]	[O-]C(=O)CCC(=O)C(=O)[O-]	[O-]C(=O)CCC(=O)C(=O)[O-]	C5H4O5	144.08226	-2
+2-phenoxybenzoate	[O-]C(=O)c1ccccc1Oc2ccccc2	[O-]C(=O)c1ccccc1Oc2ccccc2	[O-]C(=O)c1ccccc1Oc2ccccc2	C13H9O3	213.20876	-1
+2-phenylacetate	[O-]C(=O)Cc1ccccc1	[O-]C(=O)Cc1ccccc1	[O-]C(=O)Cc1ccccc1	C8H7O2	135.13998	-1
+3-cyclohexylpropanoate	[O-]C(=O)CCC1CCCCC1	[O-]C(=O)CCC1CCCCC1	[O-]C(=O)CCC1CCCCC1	C9H15O2	155.2142	-1
+3-methylbenzenesulfate	Cc1cccc(c1)S(=O)(=O)[O-]	Cc1cccc(c1)S(=O)(=O)[O-]	Cc1cccc(c1)S(=O)(=O)[O-]	C7H7O3S	171.19368	-1
+3-phenylpropanoate	[O-]C(=O)CCc1ccccc1	[O-]C(=O)CCc1ccccc1	[O-]C(=O)CCc1ccccc1	C9H9O2	149.16656	-1
+4-amino-2-hydroxybenzoate	Nc1ccc(C(=O)[O-])c(O)c1	Nc1ccc(C(=O)[O-])c(O)c1	Nc1ccc(C(=O)[O-])c(O)c1	C7H6NO3	152.12743	-1
+protonated 4-Methylmorpholine	C[NH+]1CCOCC1	C[NH+]1CCOCC1	C[NH+]1CCOCC1	C5H12NO	102.15488	1
+5-oxopyrrolidine-2-carboxylate	[O-]C(=O)C1CCC(=O)N1	[O-]C(=O)C1CCC(=O)N1	[O-]C(=O)C1CCC(=O)N1	C5H6NO3	128.10603	-1
+Ascorbate	OCC(O)C1OC(=O)C(=C1O)[O-]	OCC(O)c1oc(O)c([O-])c1O	OCC(O)c1oc(O)c([O-])c1O	C6H7O6	175.11618	-1
+Barbiturate	O=C1CC(=O)[N-]C(=O)N1	O=C1CC(=O)[N-]C(=O)N1	O=C1CC(=O)[N-]C(=O)N1	C4H3N2O3	127.07821	-1
+Cinnamate	[O-]C(=O)\C=C\c1ccccc1	[O-]C(=O)\C=C\c1ccccc1	[O-]C(=O)C=Cc1ccccc1	C9H7O2	147.15068	-1
+cyclohexanecarboxylate	[O-]C(=O)C1CCCCC1	[O-]C(=O)C1CCCCC1	[O-]C(=O)C1CCCCC1	C7H11O2	127.16103	-1
+Cyclohexylsulfamate	[O-]S(=O)(=O)NC1CCCCC1	[O-]S(=O)(=O)NC1CCCCC1	[O-]S(=O)(=O)NC1CCCCC1	C6H12NO3S	178.22938	-1
+protonated Cyclopropanamine	[NH3+]C1CC1	[NH3+]C1CC1	[NH3+]C1CC1	C3H8N	58.10232	1
+D-Lactate	C[C@@H](O)C(=O)[O-]	C[C@@H](O)C(=O)[O-]	CC(O)C(=O)[O-]	C3H5O3	89.07	-1
+Decanoate	CCCCCCCCCC(=O)[O-]	CCCCCCCCCC(=O)[O-]	CCCCCCCCCC(=O)[O-]	C10H19O2	171.25666	-1
+protonated Dicyclohexylamine	C1CCC(CC1)[NH2+]C2CCCCC2	C1CCC(CC1)[NH2+]C2CCCCC2	C1CCC(CC1)[NH2+]C2CCCCC2	C12H24N	182.32566	1
+prontonated Diethanolamine	OCC[NH2+]CCO	OCC[NH2+]CCO	OCC[NH2+]CCO	C4H12NO2	106.14358	1
+protonated Ethanamine	CC[NH3+]	CC[NH3+]	CC[NH3+]	C2H8N	46.09162	1
+protonated Ethane-1,2-diamine	NCC[NH3+]	NCC[NH3+]	NCC[NH3+]	C2H9N2	61.10626	1
+ethane-1,2-disulfate	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956	-2
+Ethylsulfamate	CCNS(=O)(=O)[O-]	CCNS(=O)(=O)[O-]	CCNS(=O)(=O)[O-]	C2H6NO3S	124.13893	-1
+Heptanedioate	[O-]C(=O)CCCCCC(=O)[O-]	[O-]C(=O)CCCCCC(=O)[O-]	[O-]C(=O)CCCCCC(=O)[O-]	C7H10O4	158.1519	-2
+Mandelate	OC(C(=O)[O-])c1ccccc1	OC(C(=O)[O-])c1ccccc1	OC(C(=O)[O-])c1ccccc1	C8H7O3	151.13937	-1
+malonate	[O-]C(=O)CC(=O)[O-]	[O-]C(=O)CC(=O)[O-]	[O-]C(=O)CC(=O)[O-]	C3H2O4	102.04558	-2
+Methylsulfamate	CNS(=O)(=O)[O-]	CNS(=O)(=O)[O-]	CNS(=O)(=O)[O-]	CH4NO3S	110.11235	-1
+protonated Morpholine	C1COCC[NH2+]1	C1COCC[NH2+]1	C1COCC[NH2+]1	C4H10NO	88.1283	1
+nonanedioate	[O-]C(=O)CCCCCCCC(=O)[O-]	[O-]C(=O)CCCCCCCC(=O)[O-]	[O-]C(=O)CCCCCCCC(=O)[O-]	C9H14O4	186.20506	-2
+Octanedioate	[O-]C(=O)CCCCCCC(=O)[O-]	[O-]C(=O)CCCCCCC(=O)[O-]	[O-]C(=O)CCCCCCC(=O)[O-]	C8H12O4	172.17848	-2
+Octanoate	CCCCCCCC(=O)[O-]	CCCCCCCC(=O)[O-]	CCCCCCCC(=O)[O-]	C8H15O2	143.2035	-1
+Phthalate	[O-]C(=O)c1ccccc1C(=O)[O-]	[O-]C(=O)c1ccccc1C(=O)[O-]	[O-]C(=O)c1ccccc1C(=O)[O-]	C8H4O4	164.11496	-2
+prontonated Piperidine	C1CC[NH2+]CC1	C1CC[NH2+]CC1	C1CC[NH2+]CC1	C5H12N	86.15548	1
+prontonated propane-1,3-diamine	[NH3+]CCC[NH3+]	[NH3+]CCC[NH3+]	[NH3+]CCC[NH3+]	C3H12N2	76.14078	2
+Sulfamate	NS(=O)(=O)[O-]	NS(=O)(=O)[O-]	NS(=O)(=O)[O-]	H2NO3S	96.08577	-1
+prontonated triethanolamine	OCC[NH+](CCO)CCO	OCC[NH+](CCO)CCO	OCC[NH+](CCO)CCO	C6H16NO3	150.19613	1
+prontonated Trimethylamine	C[NH+](C)C	C[NH+](C)C	C[NH+](C)C	C3H10N	60.1182	1
+Methyl fumarate	COC(=O)\C=C\C(=O)[O-]	COC(=O)\C=C\C(=O)[O-]	COC(=O)C=CC(=O)[O-]	C5H5O4	129.0908	-1
+Methyl hydrogen fumarate	COC(=O)\C=C\C(=O)O	COC(=O)\C=C\C(=O)O	COC(=O)C=CC(=O)O	C5H6O4	130.09874	0
+L-Malate	O[C@@H](CC(=O)[O-])C(=O)[O-]	O[C@@H](CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])C(=O)[O-]	C4H4O5	132.07156	-2
+L-Malic Acid	O[C@@H](CC(=O)O)C(=O)O	O[C@@H](CC(=O)O)C(=O)O	OC(CC(=O)O)C(=O)O	C4H6O5	134.08743	0
+Pyridine	c1ccncc1	c1ccncc1	c1ccncc1	C5H5N	79.0999	0
+Pyridinium	c1cc[nH+]cc1	c1cc[nH+]cc1	c1cc[nH+]cc1	C5H6N	80.10784	1
