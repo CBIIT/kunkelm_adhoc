@@ -9529,9 +9529,11 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_1_recr
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_2_grants.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE4_FOLLOWUP_3_sequences.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGER_DANGER_cleanUpAfterBuild.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/makeNscOneLabelOnly.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/processedSaltsOut.sdfFromDz.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/twoFragOneSalt.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/updateCmpdFragmentsCmpdKnownSalt.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/newParentAndSaltModel.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/nscNeedLegacyImage.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/nscWithMulti.sql -text

@@ -35,19 +35,24 @@ create index unique_salts_can_taut on unique_salts(can_taut);
 
 vacuum analyze unique_salts;
 
+alter table unique_salts 
+alter column molecular_weight 
+type double precision
+using cast(molecular_weight as double precision);
+
 drop sequence if exists cmpd_known_salt_seq;
 
 create sequence cmpd_known_salt_seq;
+
 
 delete from cmpd_known_salt;
 
 -- dummy for 'no salt'
 
-insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment)
-select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0, 'no salt';
+insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment, salt_charge)
+select nextval('cmpd_known_salt_seq'), 'no salt', 'no salt', 'no salt', 'no salt', null, 0, 'no salt', 0;
 
-
-
-insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment)
-select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, salt_name, molecular_formula, molecular_weight, 'DZ'
+insert into cmpd_known_salt(id, can_smi, can_taut, can_taut_strip_stereo, salt_name, salt_mf, salt_mw, salt_comment, salt_charge)
+select nextval('cmpd_known_salt_seq'), can_smi, can_taut, can_taut_strip_stereo, salt_name, molecular_formula, molecular_weight, 'DZ', charge
 from unique_salts;
+
