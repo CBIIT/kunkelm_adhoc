@@ -1,5 +1,6 @@
 update cmpd_fragments
-set cmpd_known_salt_fk = null;
+set cmpd_known_salt_fk = null
+where cmpd_known_salt_fk is not null;
 
 create index cks_can_taut on cmpd_known_salt(can_taut);
 create index cks_charge on cmpd_known_salt(charge);
@@ -35,11 +36,6 @@ datasystemdb=# select distinct salt_name from by_can_taut_only where frag_id in 
  Hydroiodide
  Fluoride
 
-
-
-
-
-
 drop table if exists by_can_taut_charge;
 
 create table by_can_taut_charge
@@ -54,3 +50,10 @@ and salt.salt_charge = pchem.formal_charge;
 select salt_name, count(*) 
 from by_can_taut_charge 
 group by 1 order by 2 desc;
+
+update cmpd_fragment
+set cmpd_known_salt_fk = salt.id
+from by_can_taut_charge salt
+where cmpd_fragment.id = salt.frag_id;
+
+

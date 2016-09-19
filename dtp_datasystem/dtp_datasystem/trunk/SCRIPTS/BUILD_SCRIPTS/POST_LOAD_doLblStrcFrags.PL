@@ -45,6 +45,50 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", 
 ##  #    #  #       #               #       #   #   #    #  #    #  #    #
 ##  #    #  ######  ######          #       #    #  #    #   ####    ####
 
+# TO AVOID INSANITY of HAVING TO REWRITE THESE SCRIPTS
+
+my $sqlStmt = qq[
+drop table if exists fake_rs3_frags
+];
+
+my $sth = $dbh->prepare($sqlStmt);
+	print "$sqlStmt\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
+
+	# using entries from cmpd_table for prod_mw and prod_mf since cmpd_legacy_cmpd and nsc_cmpd don't have them
+
+my $sqlStmt = qq[
+create table fake_rs3_frags
+as
+select 
+nsc.nsc,  
+frag.id as frag_id,
+ct.molecular_formula as mf, 
+ct.molecular_weight as mw, 
+pchem.molecular_formula, 
+pchem.molecular_weight,
+struc.can_smi,
+salt.can_smi as salt_smiles,
+case when length(annot.pseudo_atoms) = 0 then null else annot.pseudo_atoms end as labelarray
+from nsc_cmpd nsc 
+left outer join cmpd_fragment frag on nsc.id = frag.nsc_cmpd_fk
+left outer join cmpd_fragment_p_chem pchem on frag.cmpd_fragment_p_chem_fk = pchem.id
+left outer join cmpd_fragment_structure struc on frag.cmpd_fragment_structure_fk = struc.id
+left outer join cmpd_table ct on nsc.nsc = ct.nscq
+left outer join cmpd_known_salt salt on frag.cmpd_known_salt_fk = salt.id
+left outer join cmpd_annotation annot on nsc.cmpd_annotation_fk = annot.id 
+];
+
+	my $sth = $dbh->prepare($sqlStmt);
+	print "$sqlStmt\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
+
+
+
+
+
+
+
 my @sqlList;
 
 push @sqlList,qq[
@@ -55,7 +99,7 @@ push @sqlList,qq[
 create table count_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
-from rs3_from_plp_frags
+from fake_rs3_frags
 group by nsc, mf, mw
 ];
 
@@ -78,7 +122,7 @@ push @sqlList,qq[
 create table count_lbl_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
-from rs3_from_plp_frags
+from fake_rs3_frags
 where labelarray is not null
 group by nsc, mf, mw
 ];
@@ -103,7 +147,7 @@ push @sqlList,qq[
 create table count_strc_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
-from rs3_from_plp_frags
+from fake_rs3_frags
 where can_smi is not null and labelarray is null
 group by nsc, mf, mw
 ];
@@ -127,7 +171,7 @@ push @sqlList,qq[
 create table count_rgrp_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
-from rs3_from_plp_frags
+from fake_rs3_frags
 where can_smi like '%[R]%' and labelarray is null
 group by nsc, mf, mw
 ];
@@ -151,7 +195,7 @@ push @sqlList,qq[
 create table count_salt_frags
 as
 select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
-from rs3_from_plp_frags
+from fake_rs3_frags
 where salt_smiles is not null
 group by nsc, mf, mw
 ];
@@ -301,7 +345,7 @@ push @sqlList,qq[
 create table comb_cat
 as
 select 'category'::varchar as category, rs3.*
-from rs3_from_plp_frags rs3
+from fake_rs3_frags rs3
 limit 0
 ];
 
@@ -311,21 +355,21 @@ my @infoList = getCategoryCriteriaList();
 
 foreach my $thisInfo (@infoList){
 	
-  print $thisInfo . "\n";
-  
-  my ($category, $count_frags, $count_lbl, $count_strc,	$count_salt) = split(/ /, $thisInfo);
-  
-  push @sqlList,qq[
-  insert into comb_cat
-  select '$category', rs3.*
-  from rs3_from_plp_frags rs3, frag_stats_with_totals fs
-  where fs.count_frags = fs.total_type_frags
-  and rs3.nsc = fs.nsc  
-  and fs.count_frags $count_frags
-  and fs.count_lbl $count_lbl
-  and fs.count_strc $count_strc
-  and fs.salt $count_salt
-  ];  
+	print $thisInfo . "\n";
+	
+	my ($category, $count_frags, $count_lbl, $count_strc,	$count_salt) = split(/ /, $thisInfo);
+	
+	push @sqlList,qq[
+	insert into comb_cat
+	select '$category', rs3.*
+	from fake_rs3_frags rs3, frag_stats_with_totals fs
+	where fs.count_frags = fs.total_type_frags
+	and rs3.nsc = fs.nsc  
+	and fs.count_frags $count_frags
+	and fs.count_lbl $count_lbl
+	and fs.count_strc $count_strc
+	and fs.salt $count_salt
+	];  
 }
 
 push @sqlList,qq[
@@ -385,7 +429,7 @@ push @sqlList,qq[
 create table missing_nsc_frags
 as
 select *
-from rs3_from_plp_frags
+from fake_rs3_frags
 where nsc in (
 select nsc from missing_nsc
 )

@@ -23,6 +23,47 @@ my @allCategories = getCategoryList();
 my @paramsList = getQualityControlCriteriaList();
 
 
+      #       #    #  #    #   ####    ####
+
+# TO AVOID INSANITY of HAVING TO REWRITE THESE SCRIPTS
+
+my $sqlStmt = qq[
+drop table if exists fake_rs3_nsc
+];
+
+my $sth = $dbh->prepare($sqlStmt);
+	#print"$sqlStmt\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
+
+
+my $sqlStmt = qq[
+create table fake_rs3_nsc
+as
+select 
+nsc.nsc, 
+ct.molecular_formula as mf, 
+ct.molecular_weight as mw,
+ct.cmpd_formal_charge as formalcharge
+from nsc_cmpd nsc, cmpd_table ct
+where nsc.nsc = ct.nsc
+];
+
+	my $sth = $dbh->prepare($sqlStmt);
+	#print"$sqlStmt\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##     _                                   _ 
 ##  __| |_ __ ___  _ __     __ _ _ __   __| |
 ## / _` | '__/ _ \| '_ \   / _` | '_ \ / _` |
@@ -46,14 +87,14 @@ my @paramsList = getQualityControlCriteriaList();
 my $sql = qq[
 drop table if exists qc_with_nsc
 ];
-print "$sql\n";
+#print"$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 my $sql = qq[
 create table qc_with_nsc (source varchar(1024), comparator varchar(1024), target varchar(1024), nsc int, invTest varchar(1024))
 ];
-print "$sql\n";
+#print"$sql\n";
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
@@ -80,6 +121,8 @@ my @critList;
 #push @critList,"inv&nci60";
 
 foreach my $thisCategory (@allCategories){
+	
+	print "thisCategory: $thisCategory\n";
 
 # MWK 22Jan2015
 # first, aggregate plp fragments for mf, fw and then 
@@ -88,7 +131,7 @@ foreach my $thisCategory (@allCategories){
 	my $sql = qq[	
 	drop table if exists temp_agg
 	];
-	print "$sql\n";
+	#print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
@@ -105,7 +148,7 @@ foreach my $thisCategory (@allCategories){
 	my $sql = qq[	
 	drop table if exists temp
 	];
-	print "$sql\n";
+	#print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
@@ -114,16 +157,18 @@ foreach my $thisCategory (@allCategories){
 	as
 	select ta.nsc, ta.mf, ta.fw, rs3.mf as prod_mf, rs3.mw as prod_mw, rs3.formalcharge as formal_charge
 	from temp_agg ta 
-  left outer join rs3_from_plp_nsc rs3
+  left outer join fake_rs3_nsc rs3
   on ta.nsc = rs3.nsc;
 	];
-	print "$sql\n";
+	#print "$sql\n";
 	my $sth = $dbh->prepare($sql);
 	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
 	foreach my $thisParams(@paramsList){
 		
 		my ($paramName,$logicClause) = split(/,/,$thisParams);
+		
+		print "paramName: $paramName, logicClause: $logicClause\n";
 		
 		##  __ _ _ __  _   _   _ __  ___  ___ 
 		## / _` | '_ \| | | | | '_ \/ __|/ __|
@@ -137,7 +182,7 @@ foreach my $thisCategory (@allCategories){
 		from temp
 		where $logicClause
 		];
-		print "$sql\n";
+		#print "$sql\n";
 		my $sth = $dbh->prepare($sql);
 		$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
@@ -155,9 +200,9 @@ foreach my $thisCategory (@allCategories){
 		where nsc in (select nsc from prod_inventory where inventory > 0)
 		and $logicClause
 		];
-		print "$sql\n";
+		#print "$sql\n";
 		my $sth = $dbh->prepare($sql);
-		# MWK quick build $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+		############## MWK while working at home $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
 		##            _  __    ___  
 		## _ __   ___(_)/ /_  / _ \ 
@@ -173,9 +218,9 @@ foreach my $thisCategory (@allCategories){
 		where nsc in (select nsc from prod_count_nci60 where the_count > 0)
 		and $logicClause
 		];
-		print "$sql\n";
+		#print"$sql\n";
 		my $sth = $dbh->prepare($sql);
-		# MWK quick build $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+		############## MWK while working at home $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
 		## _               ___                _  __    ___  
 		##(_)_ ____   __  ( _ )    _ __   ___(_)/ /_  / _ \ 
@@ -191,9 +236,9 @@ foreach my $thisCategory (@allCategories){
 		where nsc in (select nsc from prod_inventory where inventory > 0 intersect select nsc from prod_count_nci60 where the_count > 0)
 		and $logicClause
 		];
-		print "$sql\n";
+		#print"$sql\n";
 		my $sth = $dbh->prepare($sql);
-		# MWK quick build $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+		############## MWK while working at home $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
 	}
 	
@@ -223,7 +268,7 @@ vacuum analyze qc_with_nsc
 
 foreach my $sqlStmt (@sqlList){
 	my $sth = $dbh->prepare($sqlStmt);
-	print "$sqlStmt\n\n";
+	#print"$sqlStmt\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
 

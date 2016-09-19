@@ -17,7 +17,7 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 0, 'PrintError' => 1});
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -32,28 +32,25 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## #    ##         #     #         #   #           #      
 ## #     #          #####          #    #          #######
 
-# do NOT nuke cmpd_known_salt
-# it is loaded early in the build process	
+# do NOT nuke cmpd_known_salt and cmpd_legacy_cmpd
+# since they are fairly static and id = nsc
 
-my @tablesToNuke = (
-	"cmpd",                         
-	"cmpd_fragment",                
-	"cmpd_fragment_p_chem",         
-	"cmpd_fragment_structure",
-	"cmpd_fragment_type",
-	"cmpd_list",                    
-	"cmpd_list_member",
-	"cmpd_related",                 
-	"cmpd_relation_type",           
-	"cmpd_table",
-	"nsc_cmpd",
-	"nsc_cmpd_type"); 
+my @tablesToNuke = getDatasystemTableList();
+
+@tablesToNuke = grep {$_ ne "cmpd_known_salt" and $_ ne "cmpd_legacy_cmpd" } @tablesToNuke;
 
 foreach my $tableToNuke(@tablesToNuke){	
 	my $tempSql = qq[truncate table $tableToNuke cascade];	
 	my $sth = $dbh->prepare($tempSql);
 	print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;		
+	
+	print "NUKE IS DISABLED!\n";
+	print "NUKE IS DISABLED!\n";
+	print "NUKE IS DISABLED!\n";
+	print "NUKE IS DISABLED!\n";
+	print "NUKE IS DISABLED!\n";
+	
+	#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;		
 }
 
 # set up for cmpd_types
@@ -130,6 +127,77 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 
+## --------------------LEGACY
+## --------------------LEGACY
+## --------------------LEGACY
+## --------------------LEGACY
+
+#               Table "public.cmpd_legacy_cmpd"
+#         Column         |          Type           | Modifiers 
+#------------------------+-------------------------+-----------
+# id                     | bigint                  | not null
+# ctab                   | text                    | 
+# molecular_weight       | double precision        | 
+# molecular_formula      | character varying(1024) | 
+# jpg512                 | bytea                   | 
+# nsc                    | integer                 | 
+# inventory              | double precision        | 
+# count_nci60            | integer                 | 
+# mtxt                   | character varying(1024) | 
+# prod_ctab              | text                    | 
+# prod_formula_weight    | double precision        | 
+# prod_molecular_formula | character varying(1024) | 
+# gif512                 | bytea                   | 
+
+my $tempSql = qq[
+insert into cmpd_legacy_cmpd(
+id,
+molecular_weight, 
+molecular_formula,
+mtxt,
+nsc,
+inventory,
+nci60,
+prod_formula_weight,
+prod_molecular_formula
+)
+
+select (
+nsc,
+molecular_formula,
+molecular_weight,
+mtxt,
+nsc,
+case when inv.inventory is null then 0 else inv.inventory end
+case when bio.nci60 IS NULL then 0 else bio.nci60 end,
+mw,
+mf
+)
+from rs3_from_plp_nsc
+left outer join prod_bio_counts bio on cmpd_legacy_cmpd.nsc = bio.nsc  
+left outer join prod_inventory inv on cmpd_legacy_cmpd.nsc = inv.nsc
+];
+
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+my $tempSql = qq[
+update cmpd_legacy_cmpd leg
+set gif512 = kek.gif
+from kekule_images kek
+where leg.nsc = kek.nsc
+];
+
+my $sth = $dbh->prepare($tempSql);
+print "$tempSql\n\n";
+#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+
+
+## ---------------------------------------------------------
+## ---------------------------------------------------------
+## ---------------------------------------------------------
+## ---------------------------------------------------------
 
 ## #####    ####   #    #  ######  #    #
 ## #    #  #    #  #    #  #       ##  ##
@@ -573,7 +641,7 @@ temp_salt_frag.fragmentindex, -- cmpd_salt_fragment_fk
 cba.id, 		-- cmpd_bio_assay_fk,
 ci.id, 			-- cmpd_inventory_fk,
 annot.id, 	-- cmpd_annotation_fk,
-null, 			  -- cmpd_legacy_cmpd_fk,
+leg.id, 			  -- cmpd_legacy_cmpd_fk,
 tna.formal_charge
 
 from nsc_to_load ntl
@@ -585,6 +653,7 @@ left outer join prod_raw_cmpd pc on ntl.nsc = pc.nsc
 left outer join cmpd_bio_assay cba on ntl.nsc = cba.id
 left outer join cmpd_inventory ci on ntl.nsc = ci.id
 left outer join cmpd_annotation annot on ntl.nsc = annot.id,
+left outer join cmpd_legacy_cmpd leg on ntl.nsc = leg.nsc, 
 
 nsc_cmpd_type nct
 

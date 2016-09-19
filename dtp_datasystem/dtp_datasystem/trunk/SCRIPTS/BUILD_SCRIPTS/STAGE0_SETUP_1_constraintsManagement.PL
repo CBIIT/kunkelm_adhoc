@@ -17,7 +17,7 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 my @datasystemTableList = getDatasystemTableList();
 
@@ -31,7 +31,19 @@ drop table if exists drop_constraint_statements
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
-$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+### $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
+print "DANGER! WARNING! drop_constraint_statements already exists!\n";
 
 my $sql = qq[
 create table drop_constraint_statements(stmt varchar)
@@ -66,7 +78,7 @@ drop table if exists create_constraint_statements
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
-$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+### $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 
 my $sql = qq[
 create table create_constraint_statements(stmt varchar)

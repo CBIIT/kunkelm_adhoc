@@ -61,7 +61,7 @@ my $sql;
 #  ####   ######     #     ####   #
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 # create app_and_inv_smiles
 
@@ -100,12 +100,12 @@ $dbh->disconnect();
 
 # target of update
 
-#$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+#$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 #$dbh = DBI->connect("DBI:Pg:dbname=smallcell;host=ncidb-d115-d;port=5473", "sclc", "DPt09232Sm2LL204Ung", {'RaiseError' => 1});
 #$dbh = DBI->connect("DBI:Pg:dbname=sarcoma;host=ncidb-d115-d;port=5473", "sarcomadev", "sar20920384220dev", {'RaiseError' => 1});
 #$dbh = DBI->connect("DBI:Pg:dbname=oncology;host=ncidb-d115-d;port=5474", "oncology", "OnC0L029302802K1t", {'RaiseError' => 1});
 
-$dbh = DBI->connect("DBI:Pg:dbname=sarcomacomparedb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+$dbh = DBI->connect("DBI:Pg:dbname=sarcomacomparedb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 #my $sql = qq[
 #update compound

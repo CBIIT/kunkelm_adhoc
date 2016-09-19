@@ -34,8 +34,8 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
 # connect
-#my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1, AutoCommit => 0 });
-my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", "donkie11", {'RaiseError' => 1});
+#my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1, AutoCommit => 0 });
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
@@ -43,9 +43,9 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=localhost", "mwkunkel", 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 
-my @fragFileList = qw(rs3_from_plp_400K_frags rs3_from_plp_remainder_frags);
-my @nscFileList = qw(rs3_from_plp_400K_nsc rs3_from_plp_remainder_nsc);
-my @ctabFileList = qw(rs3_from_plp_400K_ctab rs3_from_plp_remainder_ctab);
+my @fragFileList = qw(rs3_from_plp_frags);
+my @nscFileList = qw(rs3_from_plp_nsc);
+my @ctabFileList = qw(rs3_from_plp_ctab);
 
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
@@ -109,9 +109,9 @@ Num_H_Donors int,
 CanonicalTautomer varchar,
 NumberOfTautomers int,
 InChI_Message varchar,
+ChargeTautomer varchar,
 ErrorText varchar,
-ErrorDetails varchar,
-TooManyTautomers varchar
+ErrorDetails varchar
 )
 ];
 
@@ -163,12 +163,12 @@ my @fragColumnNames = (
 	"CanonicalTautomer",
 	"NumberOfTautomers",
 	"InChI_Message",
-        "ErrorText",
-        "ErrorDetails",
-        "TooManyTautomers"
+	"ChargeTautomer",
+	"ErrorText",
+	"ErrorDetails"
 	);
 
-my $overallFragOK = 0;
+my $fragsOK = 0;
 
 foreach my $fragFileBase(@fragFileList){
 	
@@ -185,55 +185,51 @@ foreach my $fragFileBase(@fragFileList){
 	# print "firstLine: $firstLine\n";
 	my @fragFileHeaders = split(/,/, $firstLine);
 	
-        # debug - all column names
-        print "fragColumnNames - EXPECTED\n";
+	# debug - all column names
+	print "fragColumnNames - EXPECTED\n";
 	print join("\t", @fragColumnNames);
 	print "\n\n\n";
-        print "fragFileHeaders - FOUND\n";
+	print "fragFileHeaders - FOUND\n";
 	print join("\t", @fragFileHeaders);
 	print "\n\n\n";
-	
-	my $equals = 0;
 	
 	# comparison of list sizes
 	
 	if (@fragColumnNames != @fragFileHeaders) {
-		$equals = 0;
+		$fragsOK = 0;
 	} else {
-		$equals = 1;
+		$fragsOK = 1;
 		foreach (my $i = 0; $i < @fragColumnNames; $i++) {		
 			if (lc $fragColumnNames[$i] ne lc $fragFileHeaders[$i]) {
-				$equals = 0;
+				$fragsOK = 0;
 				last;
 			}
 		}
 	}
 	
-	if ($equals == 1){
-		
-		$overallFragOK = $overallFragOK + 1;
-		
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
+	if ($fragsOK == 1){
+				
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
 		print "$fragFileName MATCHES expected headers.\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
-                print "\n\n\n";
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
+		print "\n\n\n";
 		
 	} else {
 		
 		print "XXXXXX    XX       X    X\n";
-                print "X        X  X      X    X\n";
-                print "XXXXX   X    X     X    X\n";
-                print "X       XXXXXX     X    X\n";
-                print "X       X    X     X    X\n";
-                print "X       X    X     X    XXXXXX\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
+		print "X        X  X      X    X\n";
+		print "XXXXX   X    X     X    X\n";
+		print "X       XXXXXX     X    X\n";
+		print "X       X    X     X    X\n";
+		print "X       X    X     X    XXXXXX\n";
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
 		print "$fragFileName DOES NOT MATCH expected headers.\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
-                print "\n\n\n";
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
+		print "\n\n\n";
 		
 		
 		printf "%-45s | %-45s\n", "Table Column Name", "File Header";		
@@ -254,7 +250,7 @@ foreach my $fragFileBase(@fragFileList){
 	
 }
 
-if ($overallFragOK == 2){
+if ($fragsOK == 1){
 	
 	print join(' and ', @fragFileList) . " were OK.  Dropping and re-creating rs3_from_plp_frags table.\n\n\n";
 	
@@ -321,7 +317,7 @@ my @nscColumnNames = (
 	"Canonical_Smiles"
 	);
 
-my $overallNscOK = 0;
+my $nscOK = 0;
 
 foreach my $nscFileBase(@nscFileList){
 	
@@ -338,55 +334,49 @@ foreach my $nscFileBase(@nscFileList){
 	# print "firstLine: $firstLine\n";
 	my @nscFileHeaders = split(/,/, $firstLine);
 	
-        print "nscColumnNames - EXPECTED\n";
+	print "nscColumnNames - EXPECTED\n";
 	print join("\t", @nscColumnNames);
 	print "\n\n\n";
-        print "nscFileHeaders - FOUND\n";
+	print "nscFileHeaders - FOUND\n";
 	print join("\t", @nscFileHeaders);
 	print "\n\n\n";
 	
-	my $equals = 0;
-	
 	if (@nscColumnNames != @nscFileHeaders) {
-		$equals = 0;
+		$nscOK = 0;
 	} else {
-		$equals = 1;
+		$nscOK = 1;
 		for my $i ( 0 .. $#nscColumnNames) {		
 			if (lc($nscColumnNames[$i]) ne lc($nscFileHeaders[$i])) {				
 				my $lccol = lc($nscColumnNames[$i]);
 				my $lcfil = lc($nscFileHeaders[$i]);				
-				$equals = 0;
+				$nscOK = 0;
 			}
 		}
 	}
 	
-	if ($equals == 1){
-		
-		$overallNscOK = $overallNscOK + 1;
+	if ($nscOK == 1){
 		
 		print "--------------------------------------\n";
-                print "--------------------------------------\n";
+		print "--------------------------------------\n";
 		print "$nscFileName MATCHES expected headers.\n";
 		print "--------------------------------------\n";
-                print "--------------------------------------\n";
-                print "\n\n\n";
-		
+		print "--------------------------------------\n";
+		print "\n\n\n";
 		
 	} else {
 		
 		print "XXXXXX    XX       X    X\n";
-                print "X        X  X      X    X\n";
-                print "XXXXX   X    X     X    X\n";
-                print "X       XXXXXX     X    X\n";
-                print "X       X    X     X    X\n";
-                print "X       X    X     X    XXXXXX\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
+		print "X        X  X      X    X\n";
+		print "XXXXX   X    X     X    X\n";
+		print "X       XXXXXX     X    X\n";
+		print "X       X    X     X    X\n";
+		print "X       X    X     X    XXXXXX\n";
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
 		print "$nscFileName DOES NOT MATCH expected headers.\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
-                print "\n\n\n";
-		
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
+		print "\n\n\n";
 		
 		printf "%-45s | %-45s\n", "Table Column Name", "File Header";		
 		foreach (my $i = 0; $i < @nscColumnNames; $i++) {		
@@ -405,8 +395,8 @@ foreach my $nscFileBase(@nscFileList){
 	
 }
 
-if ($overallNscOK == 2){
-		
+if ($nscOK == 1){
+	
 	print join(' and ', @nscFileList) . " were OK.  Dropping and re-creating rs3_from_plp_nsc table.\n\n\n";
 	
 	#print "$dropNscTableSql\n";
@@ -443,7 +433,7 @@ my @ctabColumnNames = (
 	"CTAB"
 	);
 
-my $overallCtabOK = 0;
+my $ctabOK = 0;
 
 foreach my $ctabFileBase (@ctabFileList){
 	
@@ -461,53 +451,48 @@ foreach my $ctabFileBase (@ctabFileList){
 	# print "firstLine: $firstLine\n";
 	my @ctabFileHeaders = split(/,/, $firstLine);
 	
-        print "ctabColumnNames - EXPECTED\n";
+	print "ctabColumnNames - EXPECTED\n";
 	print join("\t", @ctabColumnNames);
 	print "\n\n\n";
-        print "ctabFileHeaders - FOUND\n";
+	print "ctabFileHeaders - FOUND\n";
 	print join("\t", @ctabFileHeaders);
 	print "\n\n\n";
-	
-	my $equals = 0;
-	
+		
 	if (@ctabColumnNames != @ctabFileHeaders) {
-		$equals = 0;
+		$ctabOK = 0;
 	} else {
-		$equals = 1;
+		$ctabOK = 1;
 		foreach (my $i = 0; $i < @ctabColumnNames; $i++) {		
 			if (lc $ctabColumnNames[$i] ne lc $ctabFileHeaders[$i]) {
-				$equals = 0;
+				$ctabOK = 0;
 				last;
 			}
 		}
 	}
 	
-	if ($equals == 1){
-		
-		$overallCtabOK = $overallCtabOK + 1; 
+	if ($ctabOK == 1){
 		
 		print "--------------------------------------\n";
-                print "--------------------------------------\n";
+		print "--------------------------------------\n";
 		print "$ctabFileName MATCHES expected headers.\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
-                print "\n\n\n";
-		
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
+		print "\n\n\n";
 		
 	} else {
-
-                print "XXXXXX    XX       X    X\n";
-                print "X        X  X      X    X\n";
-                print "XXXXX   X    X     X    X\n";
-                print "X       XXXXXX     X    X\n";
-                print "X       X    X     X    X\n";
-                print "X       X    X     X    XXXXXX\n";
+		
+		print "XXXXXX    XX       X    X\n";
+		print "X        X  X      X    X\n";
+		print "XXXXX   X    X     X    X\n";
+		print "X       XXXXXX     X    X\n";
+		print "X       X    X     X    X\n";
+		print "X       X    X     X    XXXXXX\n";
 		print "--------------------------------------\n";
-                print "--------------------------------------\n";
+		print "--------------------------------------\n";
 		print "$ctabFileName DOES NOT MATCH expected headers.\n";
-                print "--------------------------------------\n";
-                print "--------------------------------------\n";
-                print "\n\n\n";
+		print "--------------------------------------\n";
+		print "--------------------------------------\n";
+		print "\n\n\n";
 		
 		
 		printf "%-45s | %-45s\n", "Table Column Name", "File Header";		
@@ -527,7 +512,7 @@ foreach my $ctabFileBase (@ctabFileList){
 	
 }
 
-if ($overallCtabOK == 2){
+if ($ctabOK == 1){
 	
 	print join(' and ', @ctabFileList) . " were OK.  Dropping and re-creating rs3_from_plp_ctab table.\n\n\n";
 	
