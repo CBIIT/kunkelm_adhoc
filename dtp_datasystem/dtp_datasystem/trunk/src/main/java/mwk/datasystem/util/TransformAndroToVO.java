@@ -204,6 +204,7 @@ public class TransformAndroToVO {
             rtn.setCanTautStripStereo(entityIn.getCanTautStripStereo());
             rtn.setSaltMf(entityIn.getSaltMf());
             rtn.setSaltMw(entityIn.getSaltMw());
+            rtn.setSaltCharge(entityIn.getSaltCharge());
             rtn.setSaltName(entityIn.getSaltName());
         }
         return rtn;
