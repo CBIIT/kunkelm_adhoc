@@ -12,9 +12,10 @@ and nsc.nsc in (
     select nsc from qc_with_nsc where source = 'one_lbl_no_strc_no_salt'
 );
 
-drop table if exists nsc_one_lbl_no_info;
 
-create table nsc_one_lbl_no_info
+drop table if exists nsc_one_lbl_sna;
+
+create table nsc_one_lbl_sna
 as
 select *
 from nsc_one_lbl_only
@@ -26,13 +27,23 @@ or pseudo_atoms ilike '%Code%No%Only%'
 or pseudo_atoms ilike '%Code%Number%'
 or nsc between 900000 and 1000000;
 
+
+
+
+
+
+
 delete from nsc_one_lbl_only
 where nsc in (
-    select nsc from nsc_one_lbl_no_info
+    select nsc from nsc_one_lbl_sna
 );
 
 select count(*) from nsc_one_lbl_only;
-select count(*) from nsc_one_lbl_no_info;
+
+select count(*) from nsc_one_lbl_sna;
 
 select count(*) from nsc_one_lbl_only;
-select count(*) from nsc_one_lbl_only where nci60 > 0 or inventory > 0;
+
+select count(*) from nsc_one_lbl_only 
+where nci60 > 0 or inventory > 0;
+

@@ -9482,9 +9482,11 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/analyzeCDKbuild.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/labelWrangling.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/make_lists_by_cmpd_type.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/makeListsByCmpdType.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/makeListsByPossibleSalts.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/possibleSalts.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/possible_quaternary.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/structureNotAvailable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/structureNotAvailable.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/twoFragOneSalt.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/twoFragOneSalt.sql -text
