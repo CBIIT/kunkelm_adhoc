@@ -60,6 +60,7 @@ select distinct can_taut from possible_salts
 my $sth = $dbh->prepare($sqlStmt);
 print "$sqlStmt\n\n";
 $sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;
+
 my $canTaut;
 $sth->bind_columns(\$canTaut);
 while ($sth->fetch()){
@@ -101,6 +102,7 @@ foreach my $canTaut(@canTautList){
 	my $sth = $dbh->prepare($sqlStmt);
 	print "$sqlStmt\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;
+	
 	my $cmpdListId;
 	$sth->bind_columns(\$cmpdListId);
 	while ($sth->fetch()) {
