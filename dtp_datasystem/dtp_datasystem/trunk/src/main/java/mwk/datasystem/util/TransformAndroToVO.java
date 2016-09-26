@@ -4,8 +4,6 @@
  */
 package mwk.datasystem.util;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import mwk.datasystem.domain.AdHocCmpd;
 import mwk.datasystem.domain.AdHocCmpdFragment;
 import mwk.datasystem.domain.AdHocCmpdFragmentPChem;

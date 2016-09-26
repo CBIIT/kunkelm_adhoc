@@ -19,39 +19,22 @@ my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "--start: $startDate\n";
 
-my @info = qw(
-DBI:Pg:dbname=sarcomadb;host=localhost mwkunkel donkie11 compound,nscIdent
-DBI:Pg:dbname=sclcdb;host=localhost mwkunkel donkie11 compound,nscIdent
-DBI:Pg:dbname=datasystemdb;host=localhost mwkunkel donkie11 nsc_cmpd
-DBI:Pg:dbname=sarcomacomparedb;host=localhost mwkunkel donkie11 syntheticIdent
-);
+my ($sourcedb, $sourcehost, $sourceuser, $sourcepw, $targetdb, $targethost, $targetuser, $targetpw, $cmpdOrSynthIdent) = @ARGV;
 
-my $i;
-my $j;
-
-my $db;
-my $u;
-my $pw;
-my $tbls;
-
-$i = 0;
-$j = $i + 3;
-while ($i < $#info){
-
-$db = $info[$i];
-$u = $info[$i + 1];
-$pw = $info[$i + 2];
-$tbls = $info[$i + 3];
-
-print "$i $db $u $pw $tbls\n";
-
-$i = $i + 3;
-
+if (not defined $sourcedb or not defined $sourcehost or not defined $sourceuser or not defined $sourcepw or not defined $targetdb or not defined $targethost or not defined $targetuser or not defined $targetpw or not defined $cmpdOrSynthIdent){
+        print "Expected arguments: <sourcedb> <sourcehost> <sourceuser> <sourcepw> <targetdb> <targethost> <targetuser> <targetpw> <cmpdOrSynthIdent as compound or syntheticIdent>\n"; 
+	die "Expected arguments: <sourcedb> <sourcehost> <sourceuser> <sourcepw> <targetdb> <targethost> <targetuser> <targetpw> <cmpdOrSynthIdent as compound or syntheticIdent>\n";
 }
 
-
-my @sqlList = ();
-my $sql;
+print "sourcedb: $sourcedb\n";
+print "sourcehost: $sourcehost\n";
+print "sourceuser: $sourceuser\n";
+print "sourcepw: $sourcepw\n";
+print "targetdb: $targetdb\n";
+print "targethost: $targethost\n";
+print "targetuser: $targetuser\n";
+print "targetpw: $targetpw\n";
+print "cmpdOrSynthIdent: $cmpdOrSynthIdent\n"; 
 
 #  ####   ######   #####  #    #  #####
 # #       #          #    #    #  #    #
@@ -60,16 +43,21 @@ my $sql;
 # #    #  #          #    #    #  #
 #  ####   ######     #     ####   #
 
-# connect
-my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
+# connections
+my $sourcedbh = DBI->connect("DBI:Pg:dbname=$sourcedb;host=$sourcehost", "$sourceuser", "$sourcepw", {'RaiseError' => 1});
+my $targetdbh = DBI->connect("DBI:Pg:dbname=$targetdb;host=127.0.0.1", "$targetuser", "$targetpw", {'RaiseError' => 1});
 
 # create app_and_inv_smiles
 
-push @sqlList, qq[
+my $sql= qq[
 drop table if exists app_and_inv_smiles
 ];
 
-push @sqlList, qq[
+my $sth = $sourcedbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+
+my $sql = qq[
 create table app_and_inv_smiles 
 as
 select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles
@@ -80,54 +68,54 @@ left outer join curated_target trg on nsc.primary_target_fk = trg.id
 left outer join cmpd_table ct on nsc.nsc = ct.nsc
 ];
 
-foreach $sql(@sqlList){
-	my $sth = $dbh->prepare($sql);
-	print "$sql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;		
-}
+my $sth = $sourcedbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 # using list of lists
 
-$sql = qq[select nsc, generic_name, preferred_name, primary_target, smiles from app_and_inv_smiles];
-my $sth = $dbh->prepare($sql);
+$sql = qq[
+select nsc, generic_name, preferred_name, primary_target, smiles from app_and_inv_smiles
+];
+my $sth = $sourcedbh->prepare($sql);
 print "$sql\n\n";
 $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 
 my $lol = $sth->fetchall_arrayref();
 
-# clean up
-$dbh->disconnect();
-
 # target of update
 
-#$dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
-#$dbh = DBI->connect("DBI:Pg:dbname=smallcell;host=ncidb-d115-d;port=5473", "sclc", "DPt09232Sm2LL204Ung", {'RaiseError' => 1});
-#$dbh = DBI->connect("DBI:Pg:dbname=sarcoma;host=ncidb-d115-d;port=5473", "sarcomadev", "sar20920384220dev", {'RaiseError' => 1});
-#$dbh = DBI->connect("DBI:Pg:dbname=oncology;host=ncidb-d115-d;port=5474", "oncology", "OnC0L029302802K1t", {'RaiseError' => 1});
+my $prepsql;
 
-$dbh = DBI->connect("DBI:Pg:dbname=sarcomacomparedb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
-
-#my $sql = qq[
-#update compound
-#set drug_name = ?,
-#target = ?,
-#smiles = ?
-#where nsc = ?
-#];
-
-my $sql = qq[
-update synthetic_ident si
-set drug_name = ?,
-target = ?,
-smiles = ?
-from nsc_ident ni
-where si.id = ni.id 
-and ni.nsc = ?
-];
-
-my $sth = $dbh->prepare($sql);
-print "$sql\n\n";
+if ($cmpdOrSynthIdent eq "compound"){
 	
+	$prepsql = qq[
+	update compound
+	set drug_name = ?,
+	target = ?,
+	smiles = ?
+	where nsc = ?
+	];
+	
+} elsif ($cmpdOrSynthIdent eq "syntheticIdent"){
+	
+	$prepsql = qq[
+	update synthetic_ident si
+	set drug_name = ?,
+	target = ?,
+	smiles = ?
+	from nsc_ident ni
+	where si.id = ni.id 
+	and ni.nsc = ?
+	];
+	
+} else {
+	die "cmpdOrSynthIdent must be either compound or syntheticIdent";	
+}
+
+print "preparing targetdbh: $prepsql\n\n";
+my $sth = $targetdbh->prepare($prepsql);
+
 my $nsc;
 my $genericName;
 my $preferredName;
@@ -148,16 +136,18 @@ for my $array_ref ( @$lol ) {
 		undef $drugName;
 	}
 	
-$sth->execute($drugName, $primaryTarget, $smiles, $nsc) or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	$sth->execute($drugName, $primaryTarget, $smiles, $nsc) or die "Couldn't execute statement: $sql " . $sth->errstr;	
 	
 }
 
 # clean up
-$dbh->disconnect();
+$sourcedbh->disconnect();
+$targetdbh->disconnect();
 
 $t = time;
 my $finishDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $finishDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "--start : $startDate\n";
 print "--finish: $finishDate\n";
+
 

@@ -630,11 +630,11 @@ public class FetchFromProd {
             pgStmt = pgConn.createStatement();
             oraStmt = srcConn.createStatement();
 
-            sqlString = "drop table if exists prod_raw_cmpd";
+            sqlString = "drop table if exists prod_legacy_cmpd";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create table prod_raw_cmpd ("
+            sqlString = "create table prod_legacy_cmpd ("
                     + "nsc integer, "
                     + "cas integer, "
                     + "conf varchar(32), "
@@ -655,7 +655,7 @@ public class FetchFromProd {
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
 
-            prepStmtString = "insert into prod_raw_cmpd(nsc, cas, conf, distribution_code, mf, mw, ctab) values(?,?,?,?,?,?,?)";
+            prepStmtString = "insert into prod_legacy_cmpd(nsc, cas, conf, distribution_code, mf, mw, ctab) values(?,?,?,?,?,?,?)";
             pgPrepStmt = pgConn.prepareStatement(prepStmtString);
 
             startTime = System.currentTimeMillis();
@@ -697,11 +697,11 @@ public class FetchFromProd {
             pgPrepStmt.executeBatch();
             pgConn.commit();
 
-            sqlString = "drop index if exists prod_raw_cmpd_nsc";
+            sqlString = "drop index if exists prod_legacy_cmpd_nsc";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "create index prod_raw_cmpd_nsc on prod_raw_cmpd(nsc)";
+            sqlString = "create index prod_legacy_cmpd_nsc on prod_legacy_cmpd(nsc)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 

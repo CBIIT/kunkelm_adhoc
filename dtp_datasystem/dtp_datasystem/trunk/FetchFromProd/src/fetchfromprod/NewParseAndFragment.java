@@ -116,7 +116,7 @@ public class NewParseAndFragment {
 
     public void processFragments(Connection postgresConn, Connection postgresInsertConn) {
 
-         String sqlString = "select nsc, mf, ctab as strc from prod_raw_cmpd where nsc > 169370 order by nsc";
+         String sqlString = "select nsc, mf, ctab as strc from prod_legacy_cmpd where nsc > 169370 order by nsc";
 
         Statement postgresStmt = null;
         PreparedStatement postgresPrepStmt = null;
