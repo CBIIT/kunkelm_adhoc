@@ -7,7 +7,7 @@ use Time::HiRes qw(time);
 use POSIX qw(strftime);
 
 use lib('./');
-use DATA_SYSTEM_BUILD_PARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList);
+use DATA_SYSTEM_BUILD_PARAMETERS qw(getCategoryCriteriaList getQualityControlCriteriaList getCategoryList getDatasystemTableList);
 
 use DBI;
 
@@ -23,35 +23,6 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
-
-## #     #         #     #         #    #          #######
-## ##    #         #     #         #   #           #      
-## # #   #         #     #         #  #            #      
-## #  #  #         #     #         ###             #####  
-## #   # #         #     #         #  #            #
-## #    ##         #     #         #   #           #      
-## #     #          #####          #    #          #######
-
-# do NOT nuke cmpd_known_salt and cmpd_legacy_cmpd
-# since they are fairly static and id = nsc
-
-my @tablesToNuke = getDatasystemTableList();
-
-@tablesToNuke = grep {$_ ne "cmpd_known_salt" and $_ ne "cmpd_legacy_cmpd" } @tablesToNuke;
-
-foreach my $tableToNuke(@tablesToNuke){	
-	my $tempSql = qq[truncate table $tableToNuke cascade];	
-	my $sth = $dbh->prepare($tempSql);
-	print "$tempSql\n\n";
-	
-	print "NUKE IS DISABLED!\n";
-	print "NUKE IS DISABLED!\n";
-	print "NUKE IS DISABLED!\n";
-	print "NUKE IS DISABLED!\n";
-	print "NUKE IS DISABLED!\n";
-	
-	#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;		
-}
 
 # set up for cmpd_types
 
@@ -80,7 +51,6 @@ drop index if exists nsc_cmpd_type_cmpd_type
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
 
 my $tempSql = qq[
 create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
@@ -126,71 +96,50 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
+            Table "public.prod_legacy_cmpd"
+      Column       |         Type          | Modifiers 
+-------------------+-----------------------+-----------
+ nsc               | integer               | 
+ cas               | integer               | 
+ conf              | character varying(32) | 
+ distribution_code | character varying(32) | 
+ molecular_formula | character varying     | 
+ molecular_weight  | double precision      | 
+ ctab              | text                  | 
 
-## --------------------LEGACY
-## --------------------LEGACY
-## --------------------LEGACY
-## --------------------LEGACY
+datasystemdb=# \d cmpd_legacy_cmpd
+               Table "public.cmpd_legacy_cmpd"
+         Column         |          Type           | Modifiers 
+------------------------+-------------------------+-----------
+ id                     | bigint                  | not null
+ prod_ctab              | text                    | 
+ prod_formula_weight    | double precision        | 
+ prod_molecular_formula | character varying(1024) | 
+ gif512                 | bytea                   | 
+ nsc                    | integer                 | 
+Indexes:
+    "cmpd_legacy_cmpd_pkey" PRIMARY KEY, btree (id)
 
-#               Table "public.cmpd_legacy_cmpd"
-#         Column         |          Type           | Modifiers 
-#------------------------+-------------------------+-----------
-# id                     | bigint                  | not null
-# ctab                   | text                    | 
-# molecular_weight       | double precision        | 
-# molecular_formula      | character varying(1024) | 
-# jpg512                 | bytea                   | 
-# nsc                    | integer                 | 
-# inventory              | double precision        | 
-# count_nci60            | integer                 | 
-# mtxt                   | character varying(1024) | 
-# prod_ctab              | text                    | 
-# prod_formula_weight    | double precision        | 
-# prod_molecular_formula | character varying(1024) | 
-# gif512                 | bytea                   | 
 
 my $tempSql = qq[
-insert into cmpd_legacy_cmpd(
-id,
-molecular_weight, 
-molecular_formula,
-mtxt,
-nsc,
-inventory,
-nci60,
-prod_formula_weight,
-prod_molecular_formula
-)
-
-select (
-nsc,
-molecular_formula,
-molecular_weight,
-mtxt,
-nsc,
-case when inv.inventory is null then 0 else inv.inventory end
-case when bio.nci60 IS NULL then 0 else bio.nci60 end,
-mw,
-mf
-)
-from rs3_from_plp_nsc
-left outer join prod_bio_counts bio on cmpd_legacy_cmpd.nsc = bio.nsc  
-left outer join prod_inventory inv on cmpd_legacy_cmpd.nsc = inv.nsc
+insert into cmpd_legacy_cmpd(id,nsc,prod_molecular_formula,prod_formula_weight,prod_ctab)
+select nsc, nsc, molecular_formula, molecular_weight, ctab
+from prod_legacy_cmpd
 ];
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
 $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-my $tempSql = qq[
-update cmpd_legacy_cmpd leg
-set gif512 = kek.gif
-from kekule_images kek
-where leg.nsc = kek.nsc
-];
+#my $tempSql = qq[
+#update cmpd_legacy_cmpd leg
+#set gif512 = kek.gif
+#from kekule_images kek
+#where leg.nsc = kek.nsc
+#];
 
-my $sth = $dbh->prepare($tempSql);
-print "$tempSql\n\n";
+#my $sth = $dbh->prepare($tempSql);
+#print "$tempSql\n\n";
 #$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 
@@ -311,12 +260,13 @@ ctab.ctab,
 can_smi,
 can_taut,
 can_taut_strip_stereo 
-from rs3_from_plp_frags frags, rs3_from_plp_ctab ctab
+from rs3_from_plp_frags frags 
+	left outer join rs3_from_plp_frags_ctab ctab on frags.fragmentindex = ctab.fragmentindex
 where labelarray is null
 and frags.nsc in (
 select nsc from nsc_to_load
 )
-and frags.fragmentindex = ctab.fragmentindex];
+];
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
@@ -618,11 +568,11 @@ ntl.nsc,
 ntl.nsc,
 'S',
 ntl.nsc,
-CASE WHEN pc.conf IS NULL THEN 'unknown' ELSE pc.conf END,
-CASE WHEN pc.distribution_code IS NULL THEN 'unknown' ELSE pc.distribution_code END,
-pc.cas,
+CASE WHEN leg.conf IS NULL THEN 'unknown' ELSE leg.conf END,
+CASE WHEN leg.distribution_code IS NULL THEN 'unknown' ELSE leg.distribution_code END,
+leg.cas,
 tna.count_fragments,
-'unknown',		-- CASE when pc.discreet IS NULL THEN 'unknown' ELSE pc.discreet END,
+'unknown',		-- CASE when leg.discreet IS NULL THEN 'unknown' ELSE leg.discreet END,
 tid.identifier_string,
 tid.descriptor_string,
 
@@ -632,8 +582,8 @@ tna.formula_weight,
 temp_par_frag.molecular_formula,
 temp_par_frag.molecular_weight,
 
-pc.mf, --prod_molecular_formula
-pc.mw, --prod_formula_weight
+leg.molecular_formula, --prod_molecular_formula
+leg.molecular_weight, --prod_formula_weight
 
 nct.id, 		-- nsc_cmpd_type_fk
 temp_par_frag.fragmentindex, 	-- cmpd_parent_fragment_fk
@@ -641,7 +591,7 @@ temp_salt_frag.fragmentindex, -- cmpd_salt_fragment_fk
 cba.id, 		-- cmpd_bio_assay_fk,
 ci.id, 			-- cmpd_inventory_fk,
 annot.id, 	-- cmpd_annotation_fk,
-leg.id, 			  -- cmpd_legacy_cmpd_fk,
+leg.nsc, 			  -- cmpd_legacy_cmpd_fk,
 tna.formal_charge
 
 from nsc_to_load ntl
@@ -649,11 +599,10 @@ left outer join temp_ident_descr tid on ntl.nsc = tid.nsc
 left outer join temp_nsc_agg tna on ntl.nsc = tna.nsc
 left outer join temp_parent_fragment temp_par_frag on ntl.nsc = temp_par_frag.nsc
 left outer join temp_salt_fragment temp_salt_frag on ntl.nsc = temp_salt_frag.nsc
-left outer join prod_legacy_cmpd pc on ntl.nsc = pc.nsc
+left outer join prod_legacy_cmpd leg on ntl.nsc = leg.nsc
 left outer join cmpd_bio_assay cba on ntl.nsc = cba.id
 left outer join cmpd_inventory ci on ntl.nsc = ci.id
-left outer join cmpd_annotation annot on ntl.nsc = annot.id,
-left outer join cmpd_legacy_cmpd leg on ntl.nsc = leg.nsc, 
+left outer join cmpd_annotation annot on ntl.nsc = annot.id, 
 
 nsc_cmpd_type nct
 

@@ -36,12 +36,12 @@ public class FetchFromProd {
             System.out.println("Starting main.");
 
             System.out.println("Registering drivers.");
-//            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             DriverManager.registerDriver(new org.postgresql.Driver());
 
             System.out.println("Opening srcConn");
-            srcConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
-//            srcConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
+//            srcConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
+            srcConn = DriverManager.getConnection("jdbc:oracle:thin:@dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
 
             System.out.println("Opening pgConn");
             pgConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
@@ -51,15 +51,11 @@ public class FetchFromProd {
             srcConn.setAutoCommit(false);
             pgConn.setAutoCommit(false);
 
-//            System.out.println();
-//            System.out.println("Starting: fetchRawCmpd");
-//            fetchRawCmpd(pgConn, srcConn);
-
 //            doSetupForSDFileParse(pgConn);//
 //            doParse(pgConn, "/home/mwkunkel/Open_2D_Oct2014.sdf");
 //
-            NewParseAndFragment parser = new NewParseAndFragment();
-            parser.processFragments(srcConn, pgConn);
+//            NewParseAndFragment parser = new NewParseAndFragment();
+//            parser.processFragments(srcConn, pgConn);
 // _ __ _   _ _ __  
 //| '__| | | | '_ \ 
 //| |  | |_| | | | |
@@ -78,37 +74,42 @@ public class FetchFromProd {
 //|___/\__, |_| |_|_| |_| |____/ \____|_| \_\___|_|    |_| |____/ 
 //        |_|                                                     
 //
-//            System.out.println();
-//            System.out.println("Starting: fetchBioDataCounts");
-//            fetchBioDataCounts(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchMtxt");
-//            fetchMtxt(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchInventory");
-//            fetchInventory(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchChemNames");
-//            fetchChemNames(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchPubChemId");
-//            fetchPubChemId(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchProjects");
-//            fetchProjects(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchPlatedSets");
-//            fetchPlatedSets(pgConn, srcConn);
-//
-//            System.out.println();
-//            System.out.println("Starting: fetchProjects");
-//            fetchProjects(pgConn, srcConn);
+            System.out.println();
+            System.out.println("Starting: fetchBioDataCounts");
+            fetchBioDataCounts(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchMtxt");
+            fetchMtxt(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchInventory");
+            fetchInventory(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchChemNames");
+            fetchChemNames(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchPubChemId");
+            fetchPubChemId(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchProjects");
+            fetchProjects(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchPlatedSets");
+            fetchPlatedSets(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchProjects");
+            fetchProjects(pgConn, srcConn);
+
+            System.out.println();
+            System.out.println("Starting: fetchLegacyCmpd");
+            fetchLegacyCmpd(pgConn, srcConn);
+
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
             e.printStackTrace();
@@ -607,7 +608,7 @@ public class FetchFromProd {
             Connection srcConn) throws Exception {
     }
 
-    public static void fetchRawCmpd(
+    public static void fetchLegacyCmpd(
             Connection pgConn,
             Connection srcConn) throws Exception {
 
@@ -632,16 +633,16 @@ public class FetchFromProd {
 
             sqlString = "drop table if exists prod_legacy_cmpd";
             System.out.println(sqlString);
-            pgStmt.execute(sqlString);
+            // pgStmt.execute(sqlString);
 
             sqlString = "create table prod_legacy_cmpd ("
                     + "nsc integer, "
                     + "cas integer, "
                     + "conf varchar(32), "
                     + "distribution_code varchar(32), "
-                    + "mf varchar, "
-                    + "mw double precision,"
-                    + "ctab varchar)";
+                    + "molecular_formula varchar, "
+                    + "molecular_weight double precision,"
+                    + "ctab text)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
@@ -655,7 +656,7 @@ public class FetchFromProd {
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
 
-            prepStmtString = "insert into prod_legacy_cmpd(nsc, cas, conf, distribution_code, mf, mw, ctab) values(?,?,?,?,?,?,?)";
+            prepStmtString = "insert into prod_legacy_cmpd(nsc, cas, conf, distribution_code, molecular_formula, molecular_weight, ctab) values(?,?,?,?,?,?,?)";
             pgPrepStmt = pgConn.prepareStatement(prepStmtString);
 
             startTime = System.currentTimeMillis();

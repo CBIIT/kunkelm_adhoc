@@ -75,9 +75,9 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 # inv, nci60, etc. 
 
 my @critList;
-#push @critList,"inv"; 
-#push @critList,"nci60";
-#push @critList,"inv&nci60";
+push @critList,"inv"; 
+push @critList,"nci60";
+push @critList,"inv&nci60";
 
 foreach my $thisCategory (@allCategories){
 
@@ -95,7 +95,7 @@ foreach my $thisCategory (@allCategories){
   my $sql = qq[
 	create table temp_agg 
 	as
-	select nsc, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
+	select nsc, array_to_string(array_agg(mf), '.') as mf, sum(mw) as fw, array_to_string(array_agg(mf_neut), '.') as mf_neut, sum(mw_neut) as fw_neut
 	from comb_cat where category = '$thisCategory'
 	group by 1
 	];
@@ -112,7 +112,7 @@ foreach my $thisCategory (@allCategories){
 	my $sql = qq[
 	create table temp 
 	as
-	select ta.nsc, ta.mf, ta.fw, rs3.mf as prod_mf, rs3.mw as prod_mw, rs3.formalcharge as formal_charge
+	select ta.nsc, ta.mf, ta.fw, rs3.prod_mf, rs3.prod_mw, rs3.molecular_formula, rs3.molecular_weight, rs3.formalcharge as formal_charge
 	from temp_agg ta 
   left outer join rs3_from_plp_nsc rs3
   on ta.nsc = rs3.nsc;
@@ -157,7 +157,7 @@ foreach my $thisCategory (@allCategories){
 		];
 		print "$sql\n";
 		my $sth = $dbh->prepare($sql);
-		# MWK quick build $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+		$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
 		##            _  __    ___  
 		## _ __   ___(_)/ /_  / _ \ 
@@ -175,7 +175,7 @@ foreach my $thisCategory (@allCategories){
 		];
 		print "$sql\n";
 		my $sth = $dbh->prepare($sql);
-		# MWK quick build $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+		$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
 		## _               ___                _  __    ___  
 		##(_)_ ____   __  ( _ )    _ __   ___(_)/ /_  / _ \ 
@@ -193,7 +193,7 @@ foreach my $thisCategory (@allCategories){
 		];
 		print "$sql\n";
 		my $sth = $dbh->prepare($sql);
-		# MWK quick build $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+		$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 		
 	}
 	

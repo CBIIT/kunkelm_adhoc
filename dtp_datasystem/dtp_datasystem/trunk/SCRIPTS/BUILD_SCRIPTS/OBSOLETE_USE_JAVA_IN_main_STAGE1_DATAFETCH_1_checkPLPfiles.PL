@@ -33,6 +33,18 @@ my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+print "Use CheckPLPFiles.java in datasystem.Main\n";
+
+die("Use CheckPLPFiles.java in datasystem.Main\n");
+
 # connect
 #my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1, AutoCommit => 0 });
 my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
@@ -65,12 +77,13 @@ my $dropFragTableSql = "drop table if exists rs3_from_plp_frags";
 my $createFragTableSql = qq[
 create table rs3_from_plp_frags(
 NSC int,
-MF varchar,
-MW double precision,
+PROD_MF varchar,
+PROD_MW double precision,
 CAS varchar,
 Name varchar,
 Comment varchar,
 fragmentIndex int,
+cleanresult varchar,
 labelArray varchar,
 smiles varchar,
 can_smi varchar,
@@ -108,65 +121,96 @@ Num_H_Acceptors int,
 Num_H_Donors int,
 CanonicalTautomer varchar,
 NumberOfTautomers int,
+ErrorText varchar,	
+TransformationReactions varchar,
+AtomsChangedInReactions varchar,
 InChI_Message varchar,
+RegisterCheckErrors varchar,
+Chemistry varchar,
+Attribute varchar,
+TooManyTautomers varchar,
+CleanMessage varchar,
 ChargeTautomer varchar,
-ErrorText varchar,
-ErrorDetails varchar
+UnneutralizedParent varchar,
+BadIsotopeAtoms varchar,
+NonLinearCentralTripleBonds varchar,
+internal_null_coords varchar,
+CheshireMessage varchar,
+ErrorDetails varchar,
+Num_ComplexedFragments varchar,
+NonLinearTerminalTripleBonds varchar,
+NonLinearAlleneAtoms varchar
 )
 ];
 
 # array of expected column names for sanity check with header row in PLP files
 
-my @fragColumnNames = (
-	"NSC",
-	"MF",
-	"MW",
-	"CAS",
-	"Name",
-	"Comment",
-	"fragmentIndex",
-	"labelArray",
-	"smiles",
-	"can_smi",
-	"can_taut",
-	"can_taut_strip_stereo",
-	"InChI",
-	"InChI_AuxInfo",
-	"Molecular_Formula",
-	"Molecular_Weight",
-	"Num_Atoms",
-	"Num_Bonds",
-	"Num_Hydrogens",
-	"Num_PositiveAtoms",
-	"Num_NegativeAtoms",
-	"Num_RingBonds",
-	"Num_RotatableBonds",
-	"Num_AromaticBonds",
-	"Num_Rings",
-	"Num_AromaticRings",
-	"Num_RingAssemblies",
-	"Num_MetalAtoms",
-	"Num_StereoAtoms",
-	"Num_StereoBonds",
-	"Num_SingleBonds",
-	"Num_DoubleBonds",
-	"Num_TripleBonds",
-	"FormalCharge",
-	"CoordDimension",
-	"IsChiral",
-	"ALogP",
-	"LogD",
-	"Molecular_Solubility",
-	"Molecular_SurfaceArea",
-	"Num_H_Acceptors",
-	"Num_H_Donors",
-	"CanonicalTautomer",
-	"NumberOfTautomers",
-	"InChI_Message",
-	"ChargeTautomer",
-	"ErrorText",
-	"ErrorDetails"
-	);
+my @fragColumnNames = qw[
+	NSC
+PROD_MF
+PROD_MW
+CAS
+Name
+Comment
+fragmentIndex
+CleanResult
+labelArray
+smiles
+can_smi
+can_taut
+can_taut_strip_stereo
+InChI
+InChI_AuxInfo
+Molecular_Formula
+Molecular_Weight
+Num_Atoms
+Num_Bonds
+Num_Hydrogens
+Num_PositiveAtoms
+Num_NegativeAtoms
+Num_RingBonds
+Num_RotatableBonds
+Num_AromaticBonds
+Num_Rings
+Num_AromaticRings
+Num_RingAssemblies
+Num_MetalAtoms
+Num_StereoAtoms
+Num_StereoBonds
+Num_SingleBonds
+Num_DoubleBonds
+Num_TripleBonds
+FormalCharge
+CoordDimension
+IsChiral
+ALogP
+LogD
+Molecular_Solubility
+Molecular_SurfaceArea
+Num_H_Acceptors
+Num_H_Donors
+CanonicalTautomer
+NumberOfTautomers
+ErrorText	
+TransformationReactions
+AtomsChangedInReactions
+InChI_Message
+RegisterCheckErrors
+Chemistry
+Attribute
+TooManyTautomers
+CleanMessage
+ChargeTautomer
+UnneutralizedParent
+BadIsotopeAtoms
+NonLinearCentralTripleBonds
+internal_null_coords
+CheshireMessage
+ErrorDetails
+Num_ComplexedFragments
+NonLinearTerminalTripleBonds
+NonLinearAlleneAtoms
+	];
 
 my $fragsOK = 0;
 
@@ -532,6 +576,9 @@ if ($ctabOK == 1){
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------
+
+
+
 
 
 # clean up

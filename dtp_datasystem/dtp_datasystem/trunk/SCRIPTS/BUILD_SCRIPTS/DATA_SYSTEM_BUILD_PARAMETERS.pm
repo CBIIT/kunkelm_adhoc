@@ -11,6 +11,7 @@ $VERSION     = 1.00;
 
 # datasystem domain tables
 
+my @datasystemTableList = ();
 
 my @datasystemTableList = qw[
 ad_hoc_cmpd
@@ -59,22 +60,20 @@ rdkit_mol
 tanimoto_scores
 ];
 
-
 # ancillary tables that ought to be kept around
-
-push @datasystemTableList, "create_constraint_statements";
-push @datasystemTableList, "drop_constraint_statements";
-push @datasystemTableList, "frag_stats";
-push @datasystemTableList, "frag_stats_with_totals";
-push @datasystemTableList, "nsc_to_load";
-push @datasystemTableList, "missing_nsc";
-push @datasystemTableList, "missing_nsc_frags";
-push @datasystemTableList, "problem_nsc";
-push @datasystemTableList, "qc";
-push @datasystemTableList, "qc_overlap";
-push @datasystemTableList, "qc_with_nsc";
-push @datasystemTableList, "qc_ct";
-push @datasystemTableList, "rdkit_validity";
+#push @datasystemTableList, "create_constraint_statements";
+#push @datasystemTableList, "drop_constraint_statements";
+#push @datasystemTableList, "frag_stats";
+#push @datasystemTableList, "frag_stats_with_totals";
+#push @datasystemTableList, "nsc_to_load";
+#push @datasystemTableList, "missing_nsc";
+#push @datasystemTableList, "missing_nsc_frags";
+#push @datasystemTableList, "problem_nsc";
+#push @datasystemTableList, "qc";
+#push @datasystemTableList, "qc_overlap";
+#push @datasystemTableList, "qc_with_nsc";
+#push @datasystemTableList, "qc_ct";
+#push @datasystemTableList, "rdkit_validity";
 
 my @categoryCriteriaList;
 

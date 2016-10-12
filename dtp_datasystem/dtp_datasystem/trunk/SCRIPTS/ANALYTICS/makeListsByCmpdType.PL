@@ -92,6 +92,7 @@ foreach my $ctg(@categoryList){
 		select distinct nsc 
 		from qc_with_nsc
 		where source = '$ctg'
+		and nsc not in (183489, 189352)
 		limit 500
 		];
 		my $sth = $dbh->prepare($tempSql);

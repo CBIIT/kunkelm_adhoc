@@ -409,7 +409,12 @@ where nsc.nsc = load.nsc
 
 print "$tempSql\n\n";
 my $sth = $dbh->prepare($tempSql);
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+############################################################
+############################################################
+############################################################
+############################################################
+# temp disable while figuring out why there are tablescans on loj
+############################################################$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

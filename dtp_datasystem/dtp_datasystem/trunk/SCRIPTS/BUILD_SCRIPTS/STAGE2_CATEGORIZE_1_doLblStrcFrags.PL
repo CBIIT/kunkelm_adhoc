@@ -54,9 +54,9 @@ drop table if exists count_frags
 push @sqlList,qq[
 create table count_frags
 as
-select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags, array_to_string(array_agg(molecular_formula), '.') as mf, sum(molecular_weight) as fw
+select nsc, prod_mf, prod_mw, count(*) as count_frags, array_to_string(array_agg(mf), '.') as mf, sum(mw) as fw, sum(fc) as fc, array_to_string(array_agg(mf_neut), '.') as mf_neut, sum(mw_neut) as fw_neut, sum(fc_neut) as fc_neut
 from rs3_from_plp_frags
-group by nsc, mf, mw
+group by nsc, prod_mf, prod_mw
 ];
 
 push @sqlList,qq[
@@ -77,10 +77,10 @@ drop table if exists count_lbl_frags
 push @sqlList,qq[
 create table count_lbl_frags
 as
-select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
+select nsc, prod_mf, prod_mw, count(*) as count_frags, array_to_string(array_agg(labelarray), ',') as lbls
 from rs3_from_plp_frags
 where labelarray is not null
-group by nsc, mf, mw
+group by nsc, prod_mf, prod_mw
 ];
 
 push @sqlList,qq[
@@ -102,10 +102,10 @@ drop table if exists count_strc_frags
 push @sqlList,qq[
 create table count_strc_frags
 as
-select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
+select nsc, prod_mf, prod_mw, count(*) as count_frags
 from rs3_from_plp_frags
 where can_smi is not null and labelarray is null
-group by nsc, mf, mw
+group by nsc, prod_mf, prod_mw
 ];
 
 push @sqlList,qq[
@@ -126,10 +126,10 @@ drop table if exists count_rgrp_frags
 push @sqlList,qq[
 create table count_rgrp_frags
 as
-select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
+select nsc, prod_mf, prod_mw, count(*) as count_frags
 from rs3_from_plp_frags
 where can_smi like '%[R]%' and labelarray is null
-group by nsc, mf, mw
+group by nsc, prod_mf, prod_mw
 ];
 
 push @sqlList,qq[
@@ -150,10 +150,10 @@ drop table if exists count_salt_frags
 push @sqlList,qq[
 create table count_salt_frags
 as
-select nsc, mf as prod_mf, mw as prod_mw, count(*) as count_frags
+select nsc, prod_mf, prod_mw, count(*) as count_frags
 from rs3_from_plp_frags
 where salt_smiles is not null
-group by nsc, mf, mw
+group by nsc, prod_mf, prod_mw
 ];
 
 push @sqlList,qq[
@@ -203,9 +203,10 @@ push @sqlList,qq[
 create table problem_nsc
 as
 select
-f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw,
+f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw, f.fc, f.mf_neut, f.fw_neut, f.fc_neut,
 f.count_frags as count_frags,
 lbl.count_frags as count_lbl,
+lbl.lbls, 
 strc.count_frags as count_strc,
 (lbl.count_frags + strc.count_frags) as total_type_frags
 from
@@ -228,9 +229,10 @@ push @sqlList,qq[
 create table frag_stats
 as
 select
-f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw,
+f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw, f.fc, f.mf_neut, f.fw_neut, f.fc_neut,
 CASE when f.count_frags is null THEN 0 ELSE f.count_frags END as count_frags,
 CASE when lbl.count_frags is null THEN 0 ELSE lbl.count_frags END as count_lbl,
+lbl.lbls,
 CASE when strc.count_frags is null THEN 0 ELSE strc.count_frags END as count_strc,
 CASE when salt.count_frags is null THEN 0 ELSE salt.count_frags END as salt
 from
@@ -266,6 +268,67 @@ foreach my $sqlStmt (@sqlList){
 	print "$sqlStmt\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
+
+push @sqlList,qq[
+drop table if exists norm_errors
+];
+
+push @sqlList,qq[
+drop table if exists temp_norm
+];
+
+
+push @sqlList,qq[
+create table temp_norm
+as
+select nsc, 
+array_to_string(array_agg(distinct('errTxt:'||errortext)), ',') as et,
+array_to_string(array_agg(distinct('errDet:'||errordetails)), ',') as ed,
+array_to_string(array_agg(distinct('regErr:'||registercheckerrors)), ',') as ne
+from rs3_from_plp_frags
+where errortext is not null
+or errordetails is not null
+or registercheckerrors is not null
+group by nsc;
+];
+
+push @sqlList,qq[
+update temp_norm set et = null where length(et) = 0
+];
+
+push @sqlList,qq[
+update temp_norm set ed = null where length(ed) = 0
+];
+
+push @sqlList,qq[
+update temp_norm set ne = null where length(ne) = 0
+];
+
+push @sqlList,qq[
+create table norm_errors
+as
+select nsc, 
+coalesce(et,'')||coalesce(ed||',','')||coalesce(ne,'') as norm_errors
+from temp_norm
+];
+
+push @sqlList,qq[
+drop table if exists wrangling_with_nsc
+];
+
+push @sqlList,qq[
+create table wrangling_with_nsc
+as
+select fswt.*, inv.inventory, bio.prod_count_nci60, nerr.norm_errors, prod_mw - fw as diff_mw
+from frag_stats_with_totals fswt
+left outer join prod_inventory inv on fswt.nsc = inv.nsc 
+left outer join prod_bio_counts bio on fswt.nsc = bio.nsc
+left outer join norm_errors nerr on fswt.nsc = nerr.nsc
+];
+
+push @sqlList,qq[
+create index wrang_nsc on wrangling_with_nsc(nsc)
+];
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -398,6 +461,35 @@ foreach my $sqlStmt (@sqlList){
 	print "$sqlStmt\n\n";
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
+
+
+
+
+
+
+#select nsc, prod_mf, mf, count_frags, total_type_frags from missing_nsc order by 1 asc;
+
+#select nsc, fragmentindex, prod_mf, molecular_formula, can_smi, errordetails from missing_nsc_frags;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

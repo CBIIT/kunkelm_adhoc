@@ -34,47 +34,6 @@ my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", 
 ##  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/ |_| |_|_|  |___/\__(_)
 ## 
 
-## #    #  #    #  #    #  ######
-## ##   #  #    #  #   #   #
-## # #  #  #    #  ####    #####
-## #  # #  #    #  #  #    #
-## #   ##  #    #  #   #   #
-## #    #   ####   #    #  ######
-
-## ---------------------------------------------------------
-## ---------------------------------------------------------
-## ---------------------------------------------------------
-## ---------------------------------------------------------
-
-my @tablesToNuke = (
-	"cmpd_aliases2nsc_cmpds",
-	"cmpd_alias",                   
-	"cmpd_alias_type",      
-	"cmpd_annotation",             
-	"cmpd_bio_assay",               
-	"cmpd_inventory",               
-	"cmpd_legacy_cmpd",
-	"cmpd_plates2nsc_cmpds",        
-	"cmpd_plate",                   
-	"cmpd_projects2nsc_cmpds",      
-	"cmpd_project",                 
-	"cmpd_pub_chem_sids2nsc_cmpds", 
-	"cmpd_pub_chem_sid",            
-	"cmpd_named_set",                     
-	"cmpd_named_sets2nsc_cmpds",
-	"cmpd_targets2nsc_cmpds",
-	"cmpd_target"       
-	); 
-
-foreach my $tableToNuke(@tablesToNuke){	
-	my $tempSql = qq[
-	delete from $tableToNuke
-	];
-	my $sth = $dbh->prepare($tempSql);
-	print "$tempSql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-}
-
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -255,6 +214,7 @@ array_to_string(array_agg(labelarray), ', ') as labels
 from nsc_to_load ntl
 left outer join rs3_from_plp_frags frags
 on ntl.nsc = frags.nsc
+where labelarray is not null and length(labelarray) > 1
 group by ntl.nsc
 ]; 
 

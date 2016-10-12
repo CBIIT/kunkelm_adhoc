@@ -12,11 +12,15 @@
 -- #    #  #    #              #   #    #  #    #  #          #
 -- #####   #####                #   ####    ####   #          #
 
+
+
 \copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_frags.csv csv header quote as '"' null as ''
+
+\copy rs3_from_plp_frags_ctab from /home/mwkunkel/rs3_from_plp_frags_ctab.tsv csv header delimiter as E'\t' quote as '"' null as ''
 
 \copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_nsc.csv csv header quote as '"' null as ''
 
-\copy rs3_from_plp_ctab from /home/mwkunkel/rs3_from_plp_ctab.csv csv header quote as '"' null as ''
+\copy rs3_from_plp_problems from /home/mwkunkel/rs3_from_plp_problems.csv csv header quote as '"' null as ''
 
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
@@ -32,19 +36,25 @@
 
 create index rfpf_nsc on rs3_from_plp_frags(nsc);
 create index rfpf_fragmentindex on rs3_from_plp_frags(fragmentindex);
+create index rfpf_nsc_fragmentindex on rs3_from_plp_frags(nsc,fragmentindex);
 create index rfpf_can_smi on rs3_from_plp_frags(can_smi);
 create index rfpf_can_taut on rs3_from_plp_frags(can_taut);
 create index rfpf_can_taut_strip_stereo on rs3_from_plp_frags(can_taut_strip_stereo);
 create index rfpf_atomarray on rs3_from_plp_frags(atomarray);
+create index rfpf_salts on rs3_from_plp_frags(salts);
+create index rfpf_saltsmiles on rs3_from_plp_frags(saltsmiles);
+create index rfpf_solvents on rs3_from_plp_frags(solvents);
+create index rfpf_solventsmiles on rs3_from_plp_frags(solventsmiles);
+
+create index rfpfc_nsc on rs3_from_plp_frags_ctab(nsc);
+create index rfpfc_fragmentindex on rs3_from_plp_frags_ctab(fragmentindex);
+create index rfpfc__nsc_fragmentindex on rs3_from_plp_frags_ctab(nsc,fragmentindex);
 
 create index rfpn_nsc on rs3_from_plp_nsc(nsc);
 
-create index rfpc_nsc on rs3_from_plp_ctab(nsc);
-create index rfpc_fragmentindex on rs3_from_plp_ctab(fragmentindex);
-
 vacuum analyze rs3_from_plp_frags;
+vacuum analyze rs3_from_plp_frags_ctab;
 vacuum analyze rs3_from_plp_nsc;
-vacuum analyze rs3_from_plp_ctab;
 
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------
@@ -74,14 +84,19 @@ vacuum analyze rs3_from_plp_ctab;
 -- #    #  #    #  #          #    #    #
 --  ####   #    #  ######     #     ####
 
-alter table rs3_from_plp_frags add salt_smiles varchar(1024);
+alter table rs3_from_plp_frags drop if exists salt_smiles;
+alter table rs3_from_plp_frags drop if exists salt_id;
 
+alter table rs3_from_plp_frags add salt_smiles varchar(1024);
 alter table rs3_from_plp_frags add salt_id bigint;
 
 update rs3_from_plp_frags
-set salt_smiles = cmpd_known_salt.can_taut_strip_stereo, salt_id = cmpd_known_salt.id
+set salt_smiles = cmpd_known_salt.can_smi, salt_id = cmpd_known_salt.id
 from cmpd_known_salt
-where rs3_from_plp_frags.can_taut_strip_stereo = cmpd_known_salt.can_taut_strip_stereo;
+--where rs3_from_plp_frags.saltsmiles = cmpd_known_salt.can_smi;
+where rs3_from_plp_frags.can_taut = cmpd_known_salt.can_taut;
+
+--and rs3_from_plp_frags.formalcharge = cmpd_known_salt.salt_charge;
 
 -- #    #  #####   #####     ##     #####  ######
 -- #    #  #    #  #    #   #  #      #    #
@@ -140,3 +155,35 @@ where cks.id = swc.id;
 update cmpd_known_salt
 set count_occurences = 0
 where count_occurences is null;
+
+--salts
+
+drop table if exists temp;
+
+create table temp
+as
+select salt_smiles, array_to_string(array_agg(distinct salts), ',') as salts, count(*)
+from rs3_from_plp_frags
+where saltsmiles is not null 
+and salt_smiles is not null
+group by 1
+order by 3 desc;
+
+drop table if exists temp;
+
+create table temp
+as
+select salt_smiles, count(*) 
+from rs3_from_plp_frags
+group by 1
+order by 2 desc;
+
+
+
+
+
+
+
+
+
+

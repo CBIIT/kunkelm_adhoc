@@ -26,12 +26,12 @@ my $commaJoinedTableList = join("',\n'", @datasystemTableList);
 # TO DROP CONSTRAINTS
 
 my $sql = qq[
-drop table if exists drop_constraint_statements
+########################## drop table if exists drop_constraint_statements
 ];
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
-### $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+########################## $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 
 print "DANGER! WARNING! drop_constraint_statements already exists!\n";
 print "DANGER! WARNING! drop_constraint_statements already exists!\n";
@@ -78,7 +78,7 @@ drop table if exists create_constraint_statements
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
-### $sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $sql" . $sth->errstr;	
 
 my $sql = qq[
 create table create_constraint_statements(stmt varchar)
