@@ -9544,15 +9544,9 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGE
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/processedSaltsOut.sdfFromDz.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/testParams.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/updateCmpdFragmentsCmpdKnownSalt.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/HANDLE/crosstabQC.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/HANDLE/doHandleCategories.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/HANDLE/makeQC.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/HANDLE/makeQCwithNSC.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/HANDLE/nscToLoad.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/newParentAndSaltModel.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/nscNeedLegacyImage.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/nscWithMulti.sql -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/WRANGLING/formCriteriaFromTable.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/cancelPostgresProcess -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/clean_up_ad_hoc.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/tanimoto.PL -text
