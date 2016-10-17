@@ -26,9 +26,9 @@
         #{fn:length(saltsWorkbenchController.salts)} Known Salts
       </f:facet>
 
-      <p:ajax event="rowEdit" listener="#{saltsWorkbenchController.onRowEdit}" update=":datasystemForm:msgs" />
-      <p:ajax event="rowEditCancel" listener="#{saltsWorkbenchController.onRowCancel}" update=":datasystemForm:msgs" />
-      <p:ajax event="cellEdit" listener="#{saltsWorkbenchController.onCellEdit}" update=":datasystemForm:msgs" />
+      <p:ajax event="rowEdit" listener="#{saltsWorkbenchController.onRowEdit}" update=":datasystemForm:messages" />
+      <p:ajax event="rowEditCancel" listener="#{saltsWorkbenchController.onRowCancel}" update=":datasystemForm:messages" />
+      <p:ajax event="cellEdit" listener="#{saltsWorkbenchController.onCellEdit}" update=":datasystemForm:messages" />
 
       <p:column style="width:32px">
         <p:rowEditor />

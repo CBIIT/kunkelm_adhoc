@@ -7,7 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-                template="/webpages/templates/ui_form.xhtml">
+                template="/webpages/templates/ui.xhtml">
 
   <ui:define name="content title">
     <h:outputText value="Fragments Workbench NSC #{fragmentsWorkbenchController.cmpd.nsc}"/>
@@ -35,21 +35,13 @@
       <h:outputText style="font-weight: bold;" value="id"/>
       <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.id}"/>
       <h:outputText style="font-weight: bold;" value="molecular_weight"/>
-      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecularWeight}">
+      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.prodFormulaWeight}">
         <f:convertNumber pattern="#0.00"/>
       </h:outputText>
       <h:outputText style="font-weight: bold;" value="molecular_formula"/>
-      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.molecularFormula}"/>
+      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.prodMolecularFormula}"/>
       <h:outputText style="font-weight: bold;" value="nsc"/>
       <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.nsc}"/>
-      <h:outputText style="font-weight: bold;" value="inventory"/>                
-      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.inventory}">
-        <f:convertNumber pattern="#0.00"/>
-      </h:outputText>
-      <h:outputText style="font-weight: bold;" value="count_nci60"/>
-      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.countNci60}"/>
-      <h:outputText style="font-weight: bold;" value="mtxt"/>
-      <h:outputText value="#{fragmentsWorkbenchController.legacyCmpd.mtxt}"/>
     </p:panelGrid>
 
     <p:dataTable id="fragments"
@@ -63,9 +55,9 @@
         <h:outputText value="NSC: #{fragmentsWorkbenchController.cmpd.nsc} #{fn:length(fragmentsWorkbenchController.fragments)} Fragments"/>
       </f:facet>
 
-      <p:ajax event="rowEdit" listener="#{fragmentsWorkbenchController.onRowEdit}" update=":datasystemForm:msgs" />
-      <p:ajax event="rowEditCancel" listener="#{fragmentsWorkbenchController.onRowCancel}" update=":datasystemForm:msgs" />
-      <p:ajax event="cellEdit" listener="#{fragmentsWorkbenchController.onCellEdit}" update=":datasystemForm:msgs" />
+      <p:ajax event="rowEdit" listener="#{fragmentsWorkbenchController.onRowEdit}" update=":datasystemForm:messages" />
+      <p:ajax event="rowEditCancel" listener="#{fragmentsWorkbenchController.onRowCancel}" update=":datasystemForm:messages" />
+      <p:ajax event="cellEdit" listener="#{fragmentsWorkbenchController.onCellEdit}" update=":datasystemForm:messages" />
 
       <p:column style="width:32px">
         <p:rowEditor />
@@ -73,13 +65,6 @@
 
       <p:column headerText="id" sortBy="#{frag.id}">              
         <h:outputText value="#{frag.id}" />
-      </p:column>
-
-      <p:column headerText="comment" sortBy="#{frag.comment}">                      
-        <p:cellEditor>
-          <f:facet name="output"><h:outputText value="#{frag.comment}" /></f:facet>
-          <f:facet name="input"><p:inputText value="#{frag.comment}"/></f:facet>
-        </p:cellEditor>  
       </p:column>
 
       <p:column headerText="molecularFormula" sortBy="#{frag.cmpdFragmentPChem.molecularFormula}">                      

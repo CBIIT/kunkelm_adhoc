@@ -84,9 +84,9 @@
         #{fn:length(listManagerController.listManagerBean.availableLists)} Available Lists
       </f:facet>
 
-      <p:ajax event="rowEdit" listener="#{listManagerController.onRowEdit}" update=":datasystemForm:msgs" />
-      <p:ajax event="rowEditCancel" listener="#{listManagerController.onRowCancel}" update=":datasystemForm:msgs" />
-      <p:ajax event="cellEdit" listener="#{listManagerController.onCellEdit}" update=":datasystemForm:msgs" />
+      <p:ajax event="rowEdit" listener="#{listManagerController.onRowEdit}" update=":datasystemForm:messages" />
+      <p:ajax event="rowEditCancel" listener="#{listManagerController.onRowCancel}" update=":datasystemForm:messages" />
+      <p:ajax event="cellEdit" listener="#{listManagerController.onCellEdit}" update=":datasystemForm:messages" />
 
       <p:column style="width:32px"
                 exportable="false">

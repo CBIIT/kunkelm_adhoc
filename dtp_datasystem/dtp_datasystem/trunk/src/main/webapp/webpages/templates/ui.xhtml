@@ -6,117 +6,122 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:p="http://primefaces.org/ui">
 
-  <f:view contentType="text/html">
+    <f:view contentType="text/html">
 
-    <h:head>
-      <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-        <title>
-          #{applicationScopeBean.projectTitle} <ui:insert name="content title"/>
-        </title>
-      </f:facet>
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>
+                    #{applicationScopeBean.projectTitle} <ui:insert name="content title"/>
+                </title>
+            </f:facet>
 
-      <noscript>
-        <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
-      </noscript>
+            <noscript>
+                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
+            </noscript>
 
-      <h:outputScript library="js" name="dctdDataSystem.js"/>                
-      <h:outputScript library="js" name="canvasWrangling.js"/>
-      <h:outputScript library="js" name="verticalHeader.js"/>
-      <h:outputStylesheet library="css" name="my.css"/>
+            <h:outputScript library="js" name="dctdDataSystem.js"/>                
+            <h:outputScript library="js" name="canvasWrangling.js"/>
+            <h:outputScript library="js" name="verticalHeader.js"/>
+            <h:outputStylesheet library="css" name="my.css"/>
 
-    </h:head>
+        </h:head>
 
-    <h:body>
+        <h:body>
 
-      <h:form id="datasystemForm" enctype="multipart/form-data">
+            <h:form id="datasystemForm" enctype="multipart/form-data">
 
-        <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+                <p:growl id="messages" showDetail="true" autoUpdate="true"/>
 
-        <h:outputLink value="#centerContent">
-          <h:outputText value="Skip to Content"/>
-        </h:outputLink>
+                <p:idleMonitor timeout="#{idleController.idleWarningTimeMin * 60000}">
+                    <p:ajax event="idle" listener="#{idleController.onIdle}" update="messages" />
+                    <p:ajax event="active" listener="#{idleController.onActive}" update="messages" />
+                </p:idleMonitor>
 
-        <p:panel style="display: block;" id="wholePage">
+                <h:outputLink value="#centerContent">
+                    <h:outputText value="Skip to Content"/>
+                </h:outputLink>
 
-          <a name="centerContent"/>
+                <h:outputText value="ui #{applicationScopeBean.versionAndBuildTime} loggedUser: #{sessionController.loggedUser}"/>
 
-          <h:outputText value="#{applicationScopeBean.versionAndBuildTime}"/>
+                <p:panel style="display: block;" id="wholePage">
 
-          <br/>
+                    <a name="centerContent"/>
 
-          <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
+                    <br/>
 
-          <h1>
-            <ui:insert name="content title"/>
-          </h1>
+                    <ui:include src="/webpages/templates/datasystem_nav.xhtml"/>
 
-          <ui:insert name="alternate"/>
-          <ui:insert name="instructions"/>
-          <ui:insert name="export"/> 
-          <p:spacer height="20" width="100%"/>
-          <ui:insert name="content"/>
+                    <h1>
+                        <ui:insert name="content title"/>
+                    </h1>
 
-        </p:panel>
+                    <ui:insert name="alternate"/>
+                    <ui:insert name="instructions"/>
+                    <ui:insert name="export"/> 
+                    <p:spacer height="20" width="100%"/>
+                    <ui:insert name="content"/>
 
-        <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
-        <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
+                </p:panel>
 
-      </h:form>
+                <ui:include src="/webpages/dialogListMemberDetails.xhtml"/>
+                <ui:include src="/webpages/dialogCmpdDetails.xhtml"/>
 
-      <ui:include src="/webpages/dialogExportImage.xhtml"/>
+            </h:form>
 
-      <p:blockUI block=":datasystemForm"
-                 widgetVar="searchingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <ui:include src="/webpages/dialogExportImage.xhtml"/>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="loadingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <p:blockUI block=":datasystemForm"
+                       widgetVar="searchingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="SEARCHING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="creatingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="loadingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="LOADING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-      <p:blockUI block=":datasystemForm"
-                 widgetVar="resolvingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="creatingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="CREATING"/>  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="uploadingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <p:blockUI block=":datasystemForm"
+                       widgetVar="resolvingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="RESOLVING"/>
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="deletingBUI">
-        <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="uploadingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="UPLOADING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="updatingBUI">
-        <h:outputText style="color: red; font-size: 40px" value="UPDATING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
-      
-      <p:blockUI block=":datasystemForm" 
-                 widgetVar="appendingBUI">
-        <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
-        <p:graphicImage name="images/ajax-loader.gif"/>  
-      </p:blockUI>
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="deletingBUI">
+                <h:outputText style="color: red; font-size: 40px" value="DELETING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-    </h:body>
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="updatingBUI">
+                <h:outputText style="color: red; font-size: 40px" value="UPDATING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
 
-  </f:view>
+            <p:blockUI block=":datasystemForm" 
+                       widgetVar="appendingBUI">
+                <h:outputText style="color: green; font-size: 40px" value="APPENDING" />  
+                <p:graphicImage name="images/ajax-loader.gif"/>  
+            </p:blockUI>
+
+        </h:body>
+
+    </f:view>
 
 </html>
