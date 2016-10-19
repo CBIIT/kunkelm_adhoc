@@ -26,8 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ConnectionInfo srcInfo = connMap.get("privatecomparedb_local");
-        ConnectionInfo destInfo = connMap.get("privatecomparedb_local");
+        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
 
         ArrayList<TableAndWhereClause> tawcList = cj_tawc;
 
@@ -63,12 +63,12 @@ public class Main {
 //            propagateCompare(srcConn, destConn, tawcList);
 //
 //            propagateDataSystem(srcConn, destConn, tawcList);
-//            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
+            propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
 //
 //            IndexAndConstraintManagement.create_XXX_Indexes(destConn);
 //            IndexAndConstraintManagement.create_XXX_Constraints(destConn);
 //
-            updateSequences(destConn);
+//            updateSequences(destConn);
 
             System.out.println("Done! in NewMain");
 
@@ -393,9 +393,10 @@ public class Main {
             System.out.println();
             srcStmt.executeUpdate(srcSqlStr);
 
+            // COALESCE to pick generic_name first then preferred_name
             srcSqlStr = "create table curated_nsc_smiles_src "
                     + " as "
-                    + " select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles "
+                    + " select nsc.nsc, coalesce(gnam.value, pnam.value, '') as name, trg.value as primary_target, ct.can_smi as smiles "
                     + " from curated_nsc nsc "
                     + " left outer join curated_name gnam on nsc.generic_name_fk = gnam.id "
                     + " left outer join curated_name pnam on nsc.preferred_name_fk = pnam.id "
@@ -415,8 +416,7 @@ public class Main {
 
             destSqlStr = "create table curated_nsc_smiles_dest( "
                     + " nsc int, "
-                    + " generic_name varchar, "
-                    + " preferred_name varchar, "
+                    + " name varchar, "
                     + " primary_target varchar, "
                     + " smiles varchar)";
 
@@ -425,13 +425,13 @@ public class Main {
             destStmt.executeUpdate(destSqlStr);
 
             // update            
-            destSqlStr = "insert into curated_nsc_smiles_dest(nsc, generic_name, preferred_name, primary_target, smiles) values (?,?,?,?,?)";
+            destSqlStr = "insert into curated_nsc_smiles_dest(nsc, name, primary_target, smiles) values (?,?,?,?)";
 
             System.out.println(destSqlStr);
             System.out.println();
             destPrepStmt = destConn.prepareStatement(destSqlStr);
 
-            srcSqlStr = "select nsc, generic_name, preferred_name, primary_target, smiles from curated_nsc_smiles_src";
+            srcSqlStr = "select nsc, name, primary_target, smiles from curated_nsc_smiles_src";
 
             System.out.println(srcSqlStr);
             System.out.println();
@@ -440,10 +440,9 @@ public class Main {
             while (rs.next()) {
 
                 destPrepStmt.setInt(1, rs.getInt("nsc"));
-                destPrepStmt.setString(2, rs.getString("generic_name"));
-                destPrepStmt.setString(3, rs.getString("preferred_name"));
-                destPrepStmt.setString(4, rs.getString("primary_target"));
-                destPrepStmt.setString(5, rs.getString("smiles"));
+                destPrepStmt.setString(2, rs.getString("name"));
+                destPrepStmt.setString(3, rs.getString("primary_target"));
+                destPrepStmt.setString(4, rs.getString("smiles"));
 
                 destPrepStmt.execute();
 
@@ -455,25 +454,9 @@ public class Main {
             // updating target tables
             if (doCompareTables) {
 
-                // first, try generic_name
                 // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
                 destSqlStr = "update synthetic_ident "
-                        + " set drug_name = curated_nsc_smiles_dest.generic_name, "
-                        + " target = curated_nsc_smiles_dest.primary_target, "
-                        + " smiles = curated_nsc_smiles_dest.smiles "
-                        + " from curated_nsc_smiles_dest, nsc_ident "
-                        + " where synthetic_ident.id = nsc_ident.id "
-                        + " and nsc_ident.nsc = curated_nsc_smiles_dest.nsc"
-                        + " and synthetic_ident.drug_name is null";
-
-                System.out.println(destSqlStr);
-                System.out.println();
-                destStmt.executeUpdate(destSqlStr);
-
-                // then, try preferred_name
-                // AS WRITTEN, ONLY UPDATES nulls - WON'T OVERWRITE! (sarcomadb, e.g.)
-                destSqlStr = "update synthetic_ident "
-                        + " set drug_name = curated_nsc_smiles_dest.preferred_name, "
+                        + " set drug_name = curated_nsc_smiles_dest.name, "
                         + " target = curated_nsc_smiles_dest.primary_target, "
                         + " smiles = curated_nsc_smiles_dest.smiles "
                         + " from curated_nsc_smiles_dest, nsc_ident "
@@ -494,40 +477,31 @@ public class Main {
                     //
                     // NUCLEAR OPTION!
                     // DANGER! DANGER! DANGER!
-                    "update nsc_cmpd set name = null",
+                    // "update nsc_cmpd set name = null",
                     //
                     // NUCLEAR OPTION!
                     // DANGER! DANGER! DANGER!
-                    "update cmpd_table set name = null",
+                    //"update cmpd_table set name = null",
                     //
                     "update nsc_cmpd "
-                    + " set name = curated_nsc_smiles_dest.generic_name "
+                    + " set name = curated_nsc_smiles_dest.name "
                     + " from curated_nsc_smiles_dest "
                     + " where nsc_cmpd.nsc = curated_nsc_smiles_dest.nsc "
                     + " and nsc_cmpd.name is null",
                     //
                     "update cmpd_table "
-                    + " set name = curated_nsc_smiles_dest.generic_name "
+                    + " set name = curated_nsc_smiles_dest.name "
                     + " from curated_nsc_smiles_dest "
                     + " where cmpd_table.nsc = curated_nsc_smiles_dest.nsc "
                     + " and cmpd_table.name is null",
                     //
-                    "update nsc_cmpd "
-                    + " set name = curated_nsc_smiles_dest.preferred_name "
-                    + " from curated_nsc_smiles_dest "
-                    + " where nsc_cmpd.nsc = curated_nsc_smiles_dest.nsc "
-                    + " and nsc_cmpd.name is null",
-                    //
-                    "update cmpd_table "
-                    + " set name = curated_nsc_smiles_dest.preferred_name "
-                    + " from curated_nsc_smiles_dest "
-                    + " where cmpd_table.nsc = curated_nsc_smiles_dest.nsc "
-                    + " and cmpd_table.name is null",
-                    //
-                    // targets
-                    // targets
-                    // targets
-                    //
+                    //  #####    ##    #####    ####   ######   #####   ####
+                    //    #     #  #   #    #  #    #  #          #    #
+                    //    #    #    #  #    #  #       #####      #     ####
+                    //    #    ######  #####   #  ###  #          #         #
+                    //    #    #    #  #   #   #    #  #          #    #    #
+                    //    #    #    #  #    #   ####   ######     #     ####
+
                     "drop table if exists distinct_targets",
                     //
                     "create table distinct_targets "
@@ -540,7 +514,7 @@ public class Main {
                     + " as select primary_target "
                     + " from distinct_targets  "
                     + " except "
-                    + " select  target from cmpd_target",
+                    + " select target from cmpd_target",
                     //
                     "insert into cmpd_target(id, target)  "
                     + " select nextval('cmpd_target_seq'), primary_target  "
@@ -567,7 +541,56 @@ public class Main {
                     "update cmpd_table"
                     + " set formatted_targets_string = primary_target"
                     + " from nsc_target_to_add"
-                    + " where cmpd_table.nsc = nsc_target_to_add.nsc;"
+                    + " where cmpd_table.nsc = nsc_target_to_add.nsc",
+                    //
+
+                    //   ##    #          #      ##     ####   ######   ####
+                    //  #  #   #          #     #  #   #       #       #
+                    // #    #  #          #    #    #   ####   #####    ####
+                    // ######  #          #    ######       #  #            #
+                    // #    #  #          #    #    #  #    #  #       #    #
+                    // #    #  ######     #    #    #   ####   ######   ####
+
+                    "drop table if exists distinct_aliases",
+                    //
+                    "create table distinct_aliases "
+                    + " as select distinct name as alias"
+                    + " from  curated_nsc_smiles_dest",
+                    //
+                    "drop table if exists aliases_to_add",
+                    //
+                    "create table aliases_to_add  "
+                    + " as select alias "
+                    + " from distinct_aliases  "
+                    + " except "
+                    + " select alias from cmpd_alias",
+                    //
+                    "insert into cmpd_alias(id, alias, cmpd_alias_type_fk)  "
+                    + " select nextval('cmpd_alias_seq'), alias, 53  "
+                    + " from aliases_to_add",
+                    //
+                    "drop table if exists nsc_alias_to_add",
+                    //
+                    "create table nsc_alias_to_add "
+                    + " as select nsc, name as alias "
+                    + " from curated_nsc_smiles_dest cns "
+                    + " except "
+                    + " select nsc, alias "
+                    + " from nsc_cmpd nc, cmpd_aliases2nsc_cmpds ct2nc, cmpd_alias ct "
+                    + " where ct2nc.nsc_cmpds_fk = nc.id "
+                    + " and ct2nc.cmpd_aliases_fk = ct.id",
+                    //
+                    "insert into cmpd_aliases2nsc_cmpds(nsc_cmpds_fk, cmpd_aliases_fk) "
+                    + " select nc.id, ct.id "
+                    + " from nsc_alias_to_add ntta, nsc_cmpd nc, cmpd_alias ct "
+                    + " where "
+                    + " ntta.nsc = nc.nsc "
+                    + " and ntta.alias = ct.alias",
+                    //
+                    "update cmpd_table"
+                    + " set formatted_aliases_string = alias"
+                    + " from nsc_alias_to_add"
+                    + " where cmpd_table.nsc = nsc_alias_to_add.nsc;"
 
                 };
 
