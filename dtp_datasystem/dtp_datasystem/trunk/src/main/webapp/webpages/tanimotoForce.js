@@ -50,10 +50,10 @@ var force2;
 
 function appendStruct(s, t) {
 
-    var structPanelVar = d3.select("#datasystemForm\\:structPanel_content");
+    var structPanelVar = d3.select("#datasystemForm\\:structPanel");
 
     var imgUrl = function (s, t) {
-        return 'http://localhost:8080/sarcomacompare/StructureServlet?smiles=' + s + '&title=' + t;
+        return 'http://localhost:8080/oncologydrugs/StructureServlet?smiles=' + s + '&title=' + t;
     }
 
     structPanelVar.append("img").attr("src", imgUrl(s, t)).attr("fill", "red").attr("width", 100).attr("height", 100);
@@ -67,7 +67,7 @@ function changeStruct(s, t) {
     console.log(structVar);
     console.log('structVar.src');
     console.log(structVar[0][0].src);
-    structVar[0][0].src = 'http://localhost:8080/sarcomacompare/StructureServlet?structureDim=150&smiles=' + s + '&title=' + t;
+    structVar[0][0].src = 'http://localhost:8080/oncologydrugs/StructureServlet?structureDim=150&smiles=' + s + '&title=' + t;
 }
 
 function setGlobals() {
@@ -86,8 +86,8 @@ function setGlobals() {
     force = d3.layout.force()
             .charge(-120)
             .linkDistance(function (lnk, i) {
-                console.log('lnk');
-                console.log(lnk);
+                // console.log('lnk');
+                // console.log(lnk);
 
                 // return lnk.value * 200 + 100;
 
@@ -266,7 +266,7 @@ function drawIt() {
     labelAnchorLinks = [];
 
 // clear structures
-    d3.select("#datasystemForm\\:structPanel_content").selectAll("*").remove();
+    d3.select("#datasystemForm\\:structPanel").selectAll("*").remove();
 
     var cnt = 0;
 
@@ -343,17 +343,19 @@ function drawIt() {
 // if nsc with smiles, use a structure
 // else if nsc with drug name, or moltId then do text
 
-            if (d.node.nsc && d.node.smiles === 'ALWAYS FAILS') {
+            if (d.node.nsc && d.node.smiles) {
+
+                console.log('d.node.nsc and d.node.smiles');
 
                 var newSvg = d3.select(this).append("svg").attr("width", 100).attr("height", 100).append("svg:g");
                 newSvg.append("svg:rect").attr("x", 0).attr("y", 0).attr("width", 100).attr("height", 100).attr("fill", "green");
                 newSvg.append("svg:image").attr("x", 10).attr("y", 10).attr("xlink:href", function (d) {
-                    return 'http://localhost:8080/sarcomacompare/StructureServlet?smiles=' + d.node.smiles + '&title=' + d.node.nsc;
+                    return 'http://localhost:8080/oncologydrugs/StructureServlet?smiles=' + d.node.smiles + '&title=' + d.node.nsc;
                 }).attr("width", 80).attr("height", 80);
 
                 /* this only renders the structure
                  d3.select(this).append("image").attr("x", 10).attr("y", 10).attr("xlink:href", function(d) {
-                 return 'http://localhost:8080/sarcomacompare/StructureServlet?smiles=' + d.node.smiles + '&title=' + d.node.nsc;
+                 return 'http://localhost:8080/oncologydrugs/StructureServlet?smiles=' + d.node.smiles + '&title=' + d.node.nsc;
                  }).attr("width", 80).attr("height", 80);
                  */
 
