@@ -9481,7 +9481,6 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/combo.csv -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/WRANGLING_PARAMETERS.pm -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/analyzeCDKbuild.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/labelWrangling.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/makeListsByCmpdType.PL -text
