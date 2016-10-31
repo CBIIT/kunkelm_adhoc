@@ -19,34 +19,78 @@ my $startDate = strftime "%Y%m%d %H:%M:%S", localtime $t;
 $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "--start: $startDate\n";
 
-my ($sourcedb, $sourcehost, $sourceport, $sourceuser, $sourcepw, $targetdb, $targethost, $targetport, $targetuser, $targetpw, $cmpdOrSynthIdent) = @ARGV;
+my ($sourcedb, $sourcehost, $sourceuser, $sourcepw, $targetdb, $targethost, $targetuser, $targetpw, $cmpdOrSynthIdent) = @ARGV;
 
-if (not defined $sourcedb 
-	or not defined $sourcehost
-	or not defined $sourceport
-	or not defined $sourceuser 
-	or not defined $sourcepw 
-	or not defined $targetdb 
-	or not defined $targethost
-	or not defined $targetport
-	or not defined $targetuser 
-	or not defined $targetpw 
-	or not defined $cmpdOrSynthIdent){
-print "Expected arguments: <sourcedb> <sourcehost> <sourceport> <sourceuser> <sourcepw> <targetdb> <targethost> <targetport> <targetuser> <targetpw> <cmpdOrSynthIdent as compound or syntheticIdent>\n"; 
-die "Expected arguments: <sourcedb> <sourcehost> <sourceport> <sourceuser> <sourcepw> <targetdb> <targethost> <targetport> <targetuser> <targetpw> <cmpdOrSynthIdent as compound or syntheticIdent>\n";
-	}
-	
-	print "sourcedb: $sourcedb\n";
-	print "sourcehost: $sourcehost\n";
-	print "sourceport: $sourceport\n";
-	print "sourceuser: $sourceuser\n";
-	print "sourcepw: $sourcepw\n";
-	print "targetdb: $targetdb\n";
-	print "targethost: $targethost\n";
-	print "targethost: $targetport\n";
-	print "targetuser: $targetuser\n";
-	print "targetpw: $targetpw\n";
-	print "cmpdOrSynthIdent: $cmpdOrSynthIdent\n"; 
+if (not defined $sourcedb or not defined $sourcehost or not defined $sourceuser or not defined $sourcepw or not defined $targetdb or not defined $targethost or not defined $targetuser or not defined $targetpw or not defined $cmpdOrSynthIdent){
+	print "Expected arguments: <sourcedb> <sourcehost> <sourceport> <sourceuser> <sourcepw> <targetdb> <targethost> <targetport> <targetuser> <targetpw> <cmpdOrSynthIdent as compound or syntheticIdent>\n"; 
+	die "Expected arguments: <sourcedb> <sourcehost> <sourceport> <sourceuser> <sourcepw> <targetdb> <targethost> <targetport> <targetuser> <targetpw> <cmpdOrSynthIdent as compound or syntheticIdent>\n";
+}
+
+print "sourcedb: $sourcedb\n";
+print "sourcehost: $sourcehost\n";
+print "sourceport: $sourceport\n";
+print "sourceuser: $sourceuser\n";
+print "sourcepw: $sourcepw\n";
+print "targetdb: $targetdb\n";
+print "targethost: $targethost\n";
+print "targetport: $targetport\n";
+print "targetuser: $targetuser\n";
+print "targetpw: $targetpw\n";
+print "cmpdOrSynthIdent: $cmpdOrSynthIdent\n"; 
+
+#  ####   ######   #####  #    #  #####
+# #       #          #    #    #  #    #
+#  ####   #####      #    #    #  #    #
+#      #  #          #    #    #  #####
+# #    #  #          #    #    #  #
+#  ####   ######     #     ####   #
+
+# connections
+my $sourcedbh = DBI->connect("DBI:Pg:dbname=$sourcedb;host=$sourcehost;port=$sourceport", "$sourceuser", "$sourcepw", {'RaiseError' => 1});
+my $targetdbh = DBI->connect("DBI:Pg:dbname=$targetdb;host=$targethost;port=$targetport", "$targetuser", "$targetpw", {'RaiseError' => 1});
+
+# create app_and_inv_smiles
+
+my $sql= qq[
+drop table if exists app_and_inv_smiles
+];
+
+my $sth = $sourcedbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+
+my $sql = qq[
+create table app_and_inv_smiles 
+as
+select nsc.nsc, gnam.value as generic_name, pnam.value as preferred_name, trg.value as primary_target, ct.can_smi as smiles
+from curated_nsc nsc
+left outer join curated_name gnam on nsc.generic_name_fk = gnam.id
+left outer join curated_name pnam on nsc.preferred_name_fk = pnam.id
+left outer join curated_target trg on nsc.primary_target_fk = trg.id
+left outer join cmpd_table ct on nsc.nsc = ct.nsc
+];
+
+my $sth = $sourcedbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+
+# using list of lists
+
+$sql = qq[
+select nsc, generic_name, preferred_name, primary_target, smiles from app_and_inv_smiles
+];
+my $sth = $sourcedbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+
+my $lol = $sth->fetchall_arrayref();
+
+# target of update
+
+my $prepsql;
+
+# the sarcoma compound model
+if ($cmpdOrSynthIdent eq "compound"){
 	
 	#  ####   ######   #####  #    #  #####
 	# #       #          #    #    #  #    #
@@ -65,9 +109,8 @@ die "Expected arguments: <sourcedb> <sourcehost> <sourceport> <sourceuser> <sour
 	drop table if exists app_and_inv_smiles
 	];
 	
-	my $sth = $sourcedbh->prepare($sql);
-	print "$sql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+# the compare syntheticIdent model
+} elsif ($cmpdOrSynthIdent eq "syntheticIdent"){
 	
 	my $sql = qq[
 	create table app_and_inv_smiles 
@@ -80,18 +123,33 @@ die "Expected arguments: <sourcedb> <sourcehost> <sourceport> <sourceuser> <sour
 	left outer join cmpd_table ct on nsc.nsc = ct.nsc
 	];
 	
-	my $sth = $sourcedbh->prepare($sql);
-	print "$sql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+#the datasystem cmpd_target and cmpd_table models
+} elsif ($cmpdOrSynthIdent eq "datasystem"){
 	
-	# using list of lists
-	
-	$sql = qq[
-	select nsc, generic_name, preferred_name, primary_target, smiles from app_and_inv_smiles
+	$prepsql = qq[
+	update cmpd_table
+	set formatted_aliases_string = ?,
+	formatted_targets_string = ?,
+	smiles = ?
+	where nsc = ?	
 	];
-	my $sth = $sourcedbh->prepare($sql);
-	print "$sql\n\n";
-	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+	
+} else {
+	die "cmpdOrSynthIdent must be either compound or syntheticIdent";	
+}
+
+print "preparing targetdbh: $prepsql\n\n";
+my $sth = $targetdbh->prepare($prepsql);
+
+my $nsc;
+my $genericName;
+my $preferredName;
+my $primaryTarget;
+my $smiles;
+
+my $drugName;
+
+for my $array_ref ( @$lol ) {
 	
 	my $lol = $sth->fetchall_arrayref();
 	

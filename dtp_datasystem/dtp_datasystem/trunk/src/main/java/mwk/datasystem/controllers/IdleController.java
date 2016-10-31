@@ -29,8 +29,8 @@ public class IdleController implements Serializable {
 
     private static final long serialVersionUID = 7816871787968798179L;
 
-    private static final Integer sessionTimeLimitMin = 2;
-    private static final Integer idleWarningTimeMin = 1;
+    private static final Integer sessionTimeLimitMin = 29;
+    private static final Integer idleWarningTimeMin = 2;
 
     private Integer secondsRemaining;
     private String mostRecentView;
