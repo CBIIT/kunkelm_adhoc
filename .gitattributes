@@ -9471,7 +9471,6 @@ dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/log4j.properties -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/Main.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/StringPair.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/main/nsc_for_export.sql -text
-dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/pushtooracle/QCTablesForPenny.java -text
 dtp_datasystem/dtp_datasystem/trunk/FetchFromProd/src/writetoaccord/WriteToAccord.java -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/.~lock.combo.csv# -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/combo.csv -text
