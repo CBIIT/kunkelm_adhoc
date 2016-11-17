@@ -1,0 +1,715 @@
+Generic Name,Agent (Preferred Name),Alias Names,Originator,NSC Number,CAS #,Target,Other targets,Type,Project Code
+,peptide R18 (14-3-3 antagonist),,,756651,,14.3.3 ligand interaction,Raf; PKA; Bad; ASK1,Investigational,DTP-110
+,SW-033291,,UT Southwestern,787269,459147-39-8,15-PDGH,,Investigational,DTP-110
+cladribine,RJW-26251,,Merck,105014,4291-63-8,Adenosine deaminase,,Approved,DTP-103
+pentostatin,CI-825,PD-81565,Pfizer,218321,53910-25-1,Adenosine deaminase,,Approved,DTP-103
+,CPI-613,BBOA,Cornerstone,766888,95809-78-2,AEMD,,Investigational,DTP-110
+perifosine,KRX-0401,D-21266,Keryx Biopharmaceuticals,639966,157716-52-4,Akt,,Investigational,DTP-110
+,MK-2206,,Merck,756656,1032349-77-1,Akt,Akt1;Akt2;Akt3,Investigational,DTP-110
+,CCT-128930,,Astex,761387,885499-61-6,Akt,Akt2,Investigational,DTP-110
+,AZD-5363,,AstraZeneca,764039,1143532-39-1,Akt,Akt1;Akt2;Akt3,Investigational,DTP-110
+,GSK-690693 ,,GlaxoSmithKline,766991,937174-76-0,Akt,Akt1;Akt2;Akt3,Investigational,DTP-110
+ipatasertib,GDC-0068,RG-7440,Roche,767898,1001264-89-6,Akt,Akt1;Akt2;Akt3,Investigational,DTP-110
+,PF-4176340,,Pfizer,768070,1004990-28-6,Akt,,Investigational,DTP-110
+,PF-4176340 (inactive enantiomer),,Pfizer,768071,,Akt,,Investigational,DTP-110
+,AT-13148,,Astex,771650,1056901-62-2,Akt,,Investigational,DTP-110
+afuresertib,GSK-2110183,,GlaxoSmithKline,778305,1047644-62-1,Akt,Akt1;Akt2;Akt3,Investigational,DTP-110
+,GSK-2141795,,GlaxoSmithKline,778368,1047634-65-0,Akt,,Investigational,DTP-110
+,ARQ-092,,ArQule,791328,1313881-70-7,Akt,,Investigational,DTP-110
+,INCB-047775,,Incyte,792847,1430056-54-4,Akt,,Investigational,DTP-110
+,BAY-1125976,,Bayer,793324,1402608-02-9,Akt,,Investigational,DTP-110
+crizotinib,PF-02341066,,Pfizer,756645,877399-52-5,Alk,c-Met,Approved,DTP-103
+alectinib,CH-5424802,RG-7853,Chugai,764040,1256580-46-7,Alk,,Approved,DTP-103
+,TAE-684,,Novartis,764041,761439-42-3,Alk,,Investigational,DTP-110
+,CH-5428402 HCl,,Chugai,764821,1256589-74-8,Alk,,Investigational,DTP-110
+,ASP-3026,,Astellas,765865,1097917-15-1,Alk,,Investigational,DTP-110
+,Cephalon Alk inhibitor (Compound 45),,Cephalon,766824,1022957-12-5,Alk,,Investigational,DTP-110
+entrectinib,NMS-E628,RXDX-101,Nerviano,774769,1108743-60-7,Alk,,Investigational,DTP-110
+ceritinib,LDK-378,,Novartis,776422,1032900-25-6,Alk,,Approved,DTP-103
+,AZD-3463,,AstraZeneca,776787,1356962-20-3,Alk,IGF1R,Investigational,DTP-110
+,CEP-28122,,Cephalon,779218,1022958-60-6,Alk,,Investigational,DTP-110
+,PF-06463922,,Pfizer,780108,1454846-35-5 ,Alk,ROS1,Investigational,DTP-110
+,SOMCL-12-81,,SIMM,780163,1609203-73-7,Alk,,Investigational,DTP-110
+,CEP-37440,,Teva,781148,1391712-60-9,Alk,FAK,Investigational,DTP-110
+brigatinib,AP-26113,,Ariad,787457,1197953-54-0,Alk,,Investigational,DTP-110
+ensartinib,X-396,,Xcovery,793150,1370651-20-9,Alk,,Investigational,DTP-110
+altretamine,KB-913 ,,Sanofi,13875,645-05-6,Alkylator,,Approved,DTP-103
+lomustine,CCNU,,BMS,79037,13010-47-4,Alkylator,,Approved,DTP-103
+enzalutamide,MDV-3100,NC-54,Medivation,755605,915087-33-1,Androgen Receptor,,Approved,DTP-103
+,AZD-3514,,AstraZeneca,765776,1240299-33-5,Androgen Receptor,,Investigational,DTP-110
+,ARN-509,JNJ-56021927,Aragon Pharma,771649,956104-40-8,Androgen Receptor,,Investigational,DTP-110
+pemetrexed disodium,LY-231514,,Eli Lilly,755384,150399-23-8,Antifolate,Dihydrofolate reductase; Thymidine Synthase; GARTF,Approved,DTP-103
+mitotane,CB-313,,BMS,38721,53-19-0,Antihormone,,Approved,DTP-103
+,2-Fluoroadenosine,,,118218,146-78-1,Antimetabolite,,Investigational,DTP-110
+quercetin,LNS-5662,,Limerick BioPharma,756660,117-39-5,Antioxidant,,Investigational,DTP-110
+zolendronic acid,,,,721517,118072-93-8,Antiresorptive,,Approved,DTP-103
+arsenic trioxide,,,,92859,1327-53-3,Apoptotic,,Approved,DTP-103
+salinomycin,VS-507,,Verastem,757437,53003-10-4,Apoptotic,,Investigational,DTP-110
+omacetaxine mepasuccinate,CGX-635,,Teva,758253,26833-87-4,Apoptotic,,Approved,DTP-103
+,APR-246,,Aprea,791496,5291-32-7,Apoptotic,,Investigational,DTP-110
+exemestane,FCE-24304,,Pfizer,713563,107868-30-4,Aromatase,,Approved,DTP-103
+anastrozole,ZD-1033,,AstraZeneca,719344,120511-73-1,Aromatase,,Approved,DTP-103
+letrozole,CGS-20267,FEM-345,Novartis,719345,112809-51-5,Aromatase,,Approved,DTP-103
+,KU-55933,,Kansas Univ,787962,587871-26-9,ATM,,Investigational,DTP-110
+,AZD-0156,,AstraZeneca,792956,1821428-35-6,ATM,,Investigational,DTP-110
+,NU-6027,,AstraZeneca,756874,220036-08-8,ATR,,Investigational,DTP-110
+,VE-821,,Vertex,761070,1232410-49-9,ATR,,Investigational,DTP-110
+,Vertex ATR inhibitor Cpd 45,,Vertex,761693,1286238-55-8,ATR,,Investigational,DTP-110
+,AZD-6738 diasteromeric mixture,,AstraZeneca,777638,1352226-97-1,ATR,,Investigational,DTP-110
+,VE-822,VX-970,Vertex,777718,1232416-25-9,ATR,,Investigational,DTP-110
+,AZD-6738,,AstraZeneca,780249,1352226-97-1,ATR,,Investigational,DTP-110
+,"AZD-6738 ( R,S-isomer)",,AstraZeneca,780250,,ATR,,Investigational,DTP-110
+barasertib-HQPA,AZD-1152-HQPA,,AstraZeneca,757444,722544-51-6,Aurora,,Investigational,DTP-110
+,ENMD-2076,ENMD-981693,Entremed,758245,934353-76-1,Aurora,,Investigational,DTP-110
+,SNS-314,,Sunesis,758250,1146618-41-8,Aurora,,Investigational,DTP-110
+,ENMD-2076 Precursor,,Entremed,759094,934353-75-0,Aurora,,Investigational,DTP-110
+,CYC-116,,Cyclacel,759498,693228-63-6,Aurora,,Investigational,DTP-110
+,KW-2449,,Kyowa Hakko Kirin,759675,1000669-72-6,Aurora, Bcr-abl; Flt-3,Investigational,DTP-110
+Alisertib,MLN-8237 ,,Millennium,759677,1028486-01-2 ,Aurora,,Investigational,DTP-110
+,AT-9283,,Astex,760144,896466-04-9,Aurora,,Investigational,DTP-110
+,AMG-900,,Amgen,761069,945595-80-2,Aurora,,Investigational,DTP-110
+,SCH-1473759,,Merck,761691,1094069-99-4,Aurora,,Investigational,DTP-110
+,TAK-901,,Takeda,762151,934541-31-8,Aurora,,Investigational,DTP-110
+, AS-703569 ,R-763; R-945763,EMD Serono,763930,871357-89-0,Aurora,,Investigational,DTP-110
+ilorasertib,ABT-348,,Abbott,765889,1227939-82-3,Aurora,VEGFR,Investigational,DTP-110
+,MK-5108,VX-689,Merck,773262,1010085-13-8,Aurora,,Investigational,DTP-110
+,GSK-1070916A,,GlaxoSmithKline,777445,942918-07-2,Aurora,,Investigational,DTP-110
+danusertib,PHA-739538,,Pfizer,784415,827318-97-8,Aurora,"Ret, Bcr-abl, FGFR",Investigational,DTP-110
+,R-428,BGB-324,Rigel,765262,1037624-91-1,Axl,,Investigational,DTP-110
+,RAF-265,CHIR-265,Novartis,754357,927880-90-8,B-Raf,,Investigational,DTP-110
+,SB-590885,,GlaxoSmithKline,754362,405554-55-4,B-Raf,,Investigational,DTP-110
+,Targegen B-Raf/PDGFR inhibitor Cpd 6,,TargeGen,754364,877874-85-6,B-Raf,PDGFR,Investigational,DTP-110
+,PLX-4720,,Plexxikon,757438,918505-84-7,B-Raf,,Investigational,DTP-110
+vemurafenib,PLX-4032,,Plexxikon,761431,1029872-54-5,B-Raf,,Approved,DTP-103
+ dabrafenib,GSK-2118436B,,GlaxoSmithKline,764134,1195768-06-9,B-Raf,,Approved,DTP-103
+,ARQ-680,,ArQule,764765,1228237-45-3,B-Raf,,Investigational,DTP-110
+,CEP-32496,,Ambit,776043,1188910-76-0,B-Raf,,Investigational,DTP-110
+encorafenib,LGX-818,,Novartis,778304,1269440-17-6,B-Raf,,Investigational,DTP-110
+,TAK-632,,Takeda,778809,1228591-30-7,B-Raf,,Investigational,DTP-110
+,LY-3009120,,Eli Lilly,781761,1454682-72-4,B-Raf,,Investigational,DTP-110
+,AZ-628,,AstraZeneca,782007,878739-06-1,B-Raf,,Investigational,DTP-110
+(R)-(-)-gossypol,AT-101,BL-193,Ascenta Therapeutics,727859,90141-22-3,Bcl-2,,Investigational,DTP-110
+obatoclax      ,GX15-070,,Gemin X,756663,803712-79-0,Bcl-2,,Investigational,DTP-110
+,ABT-737 ,,Abbott,758873,852808-04-9,Bcl-2,,Investigational,DTP-110
+ navitoclax,ABT-263,RG-7433,Abbott,759659,923564-51-6,Bcl-2,,Investigational,DTP-110
+venetoclax,ABT-199,GDC-0199; RG-7601,Abbott,766270,1257044-40-8,Bcl-2,,Approved,DTP-103
+,BAM7,,Dana Farber,768536,331244-89-4,Bcl-2,,Investigational,DTP-110
+dasatinib,BMS-354825 ,,BMS,732517,863127-77-9,Bcr-Abl,c-Kit; PDGFR,Approved,DTP-103
+imatinib,STI-571,,Novartis,743414,152459-95-5,Bcr-Abl,,Approved,DTP-103
+nilotinib,AMN-107,,Novartis,747599,641571-10-0,Bcr-Abl,,Approved,DTP-103
+,bosutinib isomer,,Pfizer,755389,1391063-17-4,Bcr-Abl,Src; Lyn; Hck; Stat5,Investigational,DTP-110
+ponatinib,AP-24534,,Ariad,758487,943319-70-8,Bcr-Abl,,Approved,DTP-103
+rebastinib,DCC-2036,,Deciphera,774831,1020172-07-9,Bcr-Abl,"Src; Lyn, FGFR; Tie-2, VEGFR",Investigational,DTP-110
+,ABL-001,,Novartis,789925,1492952-76-7,Bcr-Abl,,Investigational,DTP-110
+,ABBV-075,,Abbvie,793103,1445993-26-9,BET,,Investigational,DTP-110
+,(+)-JQ1,,Dana Farber,764043,1268524-70-4,BET bromodomain,,Investigational,DTP-110
+,GSK-1210151A,I-BET-151,GlaxoSmithKline,767599,1300031-49-5,BET bromodomain,,Investigational,DTP-110
+,GSK-525762,I-BET-762,GlaxoSmithKline,774829,1260907-17-2,BET bromodomain,,Investigational,DTP-110
+,PFI-1,,Pfizer,777448,1403764-72-6,BET bromodomain,,Investigational,DTP-110
+,OTX-015,MK-8628,Mitsubishi,778747,202590-98-5,BET bromodomain,,Investigational,DTP-110
+,I-Bet-726,GSK-1324726A,GlaxoSmithKline,782763,1300031-52-0,BET bromodomain,,Investigational,DTP-110
+,CPI-0610,,Constellation,784856,1380087-89-7,BET bromodomain,,Investigational,DTP-110
+,Bet-BAY-002,,Bayer,785345,1588521-78-1,BET bromodomain,,Investigational,DTP-110
+,ARV-825,,Arvinas,789043,1818885-28-7,BET bromodomain,,Investigational,DTP-110
+,PNU-74654,,Pfizer,755984,113906-27-7,Beta-catenin,,Investigational,DTP-110
+,BGB-283,,BeiGene,793323,1446090-77-2,Braf,,Investigational,DTP-110
+ibrutinib,PCI-32765,CRA-032765,Pharmacyclics,761910,936563-96-1,BTK,,Approved,DTP-103
+spebrutinib,CC-292,AVL-292,Celgene,780020,1202757-89-8,BTK,,Investigational,DTP-110
+,RN-486,,Roche,781417,1242156-23-5,BTK,,Investigational,DTP-110
+acalabrutinib,ACP-196,,Acerta,791164,1420477-60-6,BTK,,Investigational,DTP-110
+masitinib,AB-1010,,AB Science,755400,790299-79-5,c-Kit, PDGFR; FGFR,Investigational,DTP-110
+,AMG-458,,Amgen,754346,913376-83-7,c-Met,,Investigational,DTP-110
+tivantinib,ARQ-197,,ArQule,758242,1000873-98-2,c-Met,microtubule perturbation,Investigational,DTP-110
+tepotinib,EMD-1214063,MSC-2156119,EMD Serono,758244,1100598-32-0,c-Met,,Investigational,DTP-110
+,SGX-523,,SGX,758591,1022150-57-7,c-Met,,Investigational,DTP-110
+,JNJ-38877605,,JNJ,759095,1072116-03-0,c-Met,,Investigational,DTP-110
+cabozantinib,XL-184,BMS-907351,Exelixis,761068,849217-68-1,c-Met,VEGFR; RET; c-Kit; Axl; Flt3,Approved,DTP-103
+,MK-8033 , ,Merck,761692,1196681-38-5,c-Met,,Investigational,DTP-110
+,PF-04217903,,Pfizer,763931,956905-27-4,c-Met,,Investigational,DTP-110
+,BMS-777607,ASLAN-002,BMS,764090,1196681-44-3,c-Met,RON,Investigational,DTP-110
+,MK-2461,,Merck,764580,917879-39-1,c-Met,,Investigational,DTP-110
+,S-49076 analog,,Servier,765672,1266319-57-6,c-Met, FGFR; Axl; Mer,Investigational,DTP-110
+,PHA-665752,,Pfizer,766271,477575-56-7,c-Met,,Investigational,DTP-110
+,AMG-208,,Amgen,766288,1002304-34-8,c-Met,,Investigational,DTP-110
+,EMD-1204831,,Merck Serono,767954,1100598-15-9,c-Met,,Investigational,DTP-110
+,SAR-125844,,Sanofi,771652,1116743-46-4,c-Met,,Investigational,DTP-110
+capmatinib,INCB-28060,,Incyte,777878,1029712-80-8,c-Met,,Investigational,DTP-110
+ningetinib,CT-053PTSA,,HEC Pharma,781652,1394820-69-9,c-Met,,Investigational,DTP-110
+volitinib,AZD-6094,HMPL-504,AstraZeneca,782121,1313725-88-0,c-Met,,Investigational,DTP-110
+altiratinib,DCC-2701,,Deciphera,784590,1345847-93-9,c-Met,Tie-2; VEGFR; Trk,Investigational,DTP-110
+,TAS-115,,Taiho,785306,1190836-34-0,c-Met,VEGFR,Investigational,DTP-110
+,AMG-337,,Amgen,789223,1173699-31-4,c-Met,,Investigational,DTP-110
+,10058-F4,,Univ Pittsburgh,764582,403811-55-2,c-Myc/MAX,,Investigational,DTP-110
+,10074-G5,,Univ Pittsburgh,764609,413611-93-5,c-Myc/MAX,,Investigational,DTP-110
+,GW-5074,,GlaxoSmithKline,755765,220904-83-6,c-Raf,,Investigational,DTP-110
+,ZM-336372,,Astra Zeneca,756654,208260-29-1,c-Raf,,Investigational,DTP-110
+abiraterone,JNJ-2012082,,BTG,749226,154229-19-3,C17-20 Lyase,,Approved,DTP-103
+orteronel,TAK-700,,Takeda,764488,566939-85-3,C17-20 Lyase,,Investigational,DTP-110
+,VT-464,,Vertex,783294,1610537-15-9,C17-20 Lyase,,Investigational,DTP-110
+dexrazoxone,,,,169780,24584-09-6,Cardioprotective,,Approved,DTP-103
+odanacatib,MK-0822,,Merck,766811,603139-19-1,Cathepsin,,Investigational,DTP-110
+,VBY-825,,Virobay,782457,1310340-58-9,Cathepsin,,Investigational,DTP-110
+,XL-413,BMS-863233,Exelixis,775771,1169558-38-6,CDC7,Cdk9,Investigational,DTP-110
+,LY-3177833,,Eli Lilly,793585,1627696-51-8,CDC7,,Investigational,DTP-110
+alvocidib,flavopiridol,HL-275; HMR-1275; L86-8275; MDL-107826A,Sanofi,649890,131740-09-5,Cdk,Cdk7; Cdk8; Cdk9; PTEFb; cyclin T,Investigational,DTP-110
+seliciclib,CYC-202,,CNRS,701554,186692-46-6,Cdk,Cdk2; Cdk7; Cdk9,Investigational,DTP-110
+palbociclib,PD-0332991,,Pfizer,758247,571190-30-2,Cdk,Cdk4; Cdk6,Approved,DTP-103
+,SB-1317,TG-2,S*BIO,762673,1204918-72-8,Cdk,ERK; Flt-3; JAK,Investigational,DTP-110
+dinaciclib,MK-7965,SCH-727965,Merck,764036,779353-01-4,Cdk,Cdk1; Cdk2; Cdk5; Cdk9,Investigational,DTP-110
+, BMS-387032,SNS-032,BMS,767048,345627-80-7,Cdk,Cdk2; Cdk7; Cdk9,Investigational,DTP-110
+abemaciclib,LY-2835219,,Eli Lilly,768073,1231929-97-7,Cdk,Cdk4; Cdk6,Investigational,DTP-110
+,R-547,,Roche,773094,741713-40-6,Cdk,Cdk1; Cdk2; Cdk4,Investigational,DTP-110
+,AT-7519,,Astex,773394,844442-38-2,Cdk,Cdk4; Cdk6; RNA polymerase,Investigational,DTP-110
+roniciclib,BAY-1000394,,Bayer,774911,1223498-26-7,Cdk,,Investigational,DTP-110
+,AM-5992,,Amgen,777879,1169694-98-7,Cdk,Flt-3,Investigational,DTP-110
+ribocclib,LEE-011,,Novartis,778909,1211441-98-3,Cdk,Cdk4; Cdk6,Investigational,DTP-110
+,AMG-925,FLX-925,Amgen,781514,1401033-86-0,Cdk,Cdk4; Cdk6; Flt-3,Investigational,DTP-110
+voruciclib,P-1446A,,Piramal Life,784284,1000023-04-0,Cdk,Cdk7; Cdk9,Investigational,DTP-110
+,BAY-1143572,,Bayer,786098,1414943-88-6,Cdk,Cdk9; PTEFb,Investigational,DTP-110
+,A-911,,Abbvie,788794,1628301-84-7,Cdk,Cdk9,Investigational,DTP-110
+,CCT-251921,,Cancer Research Tech,793727,1607837-31-9,CDK,CDK19,Investigational,DTP-110
+,GSK-923295,,GlaxoSmithKline,789041,1088965-37-0,CENP,,Investigational,DTP-110
+,PF-2771,,Pfizer,791648,,CENP,,Investigational,DTP-110
+amifostine,,,AstraZeneca,296961,20537-88-6,Chemoprotective,,Approved,DTP-103
+,RG-7602,GDC-0425,Roche,791163,1200129-48-1,Chk-1,,Investigational,DTP-110
+,AZD-7762 ,,AstraZeneca,757148,860352-01-8,Chk1,Chk2,Investigational,DTP-110
+,LY-2606368,,Eli Lilly,758257,1234015-54-3,Chk1,,Investigational,DTP-110
+rabusertib,LY-2603618,IC-83,Eli Lilly,761188,911222-45-2,Chk1,,Investigational,DTP-110
+,PF-477736,,Pfizer,763444,952021-60-2,Chk1,,Investigational,DTP-110
+,SCH-900776 ,MK-8776,Merck,764659,891494-63-6,Chk1,,Investigational,DTP-110
+,CCT-245737,,Cancer Research Tech,793726,1489389-18-5,Chk1,,Investigational,DTP-110
+,BML-277,,JNJ,741899,516480-79-8,Chk2,,Investigational,DTP-110
+,CCT-241533,,Cancer Research Tech,776821,1262849-73-9,Chk2,,Investigational,DTP-110
+silmitasertib,CX-4945,,Cylene,761193,1009820-21-6,CK2,,Investigational,DTP-110
+celecoxib,CEP-33222,SC-58635; YM-177,Pfizer,719627,169590-42-5,COX-2,,Approved,DTP-103
+,KPT-185,,Karyopharm,772595,1333151-73-7,CRM1,,Investigational,DTP-110
+,KPT-251,,Karyopharm,773260,1388841-50-6,CRM1,,Investigational,DTP-110
+selinexor,KPT-330,,Karyopharm,780203,1393477-72-9,CRM1,,Investigational,DTP-110
+,JNJ-28312141,,JNJ,754345,1149939-55-8,CSF-1R,,Investigational,DTP-110
+,BLZ-945,,Novartis,758006,953769-46-5,CSF-1R,,Investigational,DTP-110
+pexidartinib,PLX-3397,,Plexxikon,789300,1029044-16-3,CSF-1R,c-Kit; Flt-3,Investigational,DTP-110
+plerixafor,AMD-3100,SID-791; JLK-169,Johnson Matthey,761388,110078-46-1,CXCR4,,Approved,DTP-103
+,AMD-070,,Genzyme,775637,558447-26-0,CXCR4,,Investigational,DTP-110
+,CFG-920,,Novartis,787827,1260006-20-9,Cyp17,,Investigational,DTP-110
+tretinoin,Retenoic Acid,ATRA,Janssen,122758,302-79-4,Differentiator,,Approved,DTP-103
+methotrexate,CL-14377 ,,Pfizer,740,59-05-2,Dihydrofolate reductase,,Approved,DTP-103
+pralatrexate,,,Allos Therapeutics,754230,146464-95-1,Dihydrofolate reductase,,Approved,DTP-103
+busulfan,KRN-246,,GlaxoSmithKline,750,55-98-1,DNA Alkylator,,Approved,DTP-103
+nitrogen mustard,mechlorethamine,,Merck,762,55-86-7,DNA Alkylator,,Approved,DTP-103
+chlorambucil,,,GlaxoSmithKline,3088,305-03-3,DNA Alkylator,,Approved,DTP-103
+thiotepa,"N,N',N'-triethylenethiophosphoramide",,Amgen,6396,52-24-4,DNA Alkylator,,Approved,DTP-103
+melphalan hydrochloride,CB-3025,,GlaxoSmithKline,8806,3223-07-2,DNA Alkylator,,Approved,DTP-103
+triethylenemelamine,,,,9706,51-18-3,DNA Alkylator,,Approved,DTP-103
+pipobroman,A-8103,,Abbott,25154,54-91-1,DNA Alkylator,,Approved,DTP-103
+cyclophosphamide,,,BMS,26271,6055-19-2,DNA Alkylator,,Approved,DTP-103
+mitomycin C,,,BMS,26980,50-07-7,DNA Alkylator,,Approved,DTP-103
+uracil mustard,,,,34462,66-75-1,DNA Alkylator,,Approved,DTP-103
+dacarbazine,,,Bayer,45388,4342-03-4,DNA Alkylator,,Approved,DTP-103
+methoxsalen,8-MOP,,JNJ,45923,298-81-7,DNA Alkylator,,Approved,DTP-103
+procarbazine,Ro-04-6467/1 ,,Chugai,77213,366-70-1,DNA Alkylator,,Approved,DTP-103
+streptozocin,U-9889,,Pfizer,85998,18883-66-4,DNA Alkylator,,Approved,DTP-103
+ifosfamide,MJF-9325, Z-4942,Baxter,109724,3778-73-2,DNA Alkylator,,Approved,DTP-103
+bendamustine,SDX-105,,Cephalon,138783,3543-75-7,DNA Alkylator,,Approved,DTP-103
+temozolomide,CCRG-81045,Sch-52365,EORTC,362856,85622-93-1,DNA Alkylator,,Approved,DTP-103
+carmustine,SK-27702,NPC-08,Eisai,409962,154-93-8,DNA Alkylator,,Approved,DTP-103
+irofulven,E-7850,MGI-114,Eisai,683863,158440-71-2,DNA Alkylator,RNA alkylator,Investigational,DTP-110
+O-6-benzylguanine,O6-BG,,NCI,637037,19916-73-5,DNA alkyltransferase,,Investigational,DTP-110
+plicamycin,mithramycin,PA-144; A-2371,Pfizer,24559,18378-89-7,DNA binder,,Approved,DTP-103
+dactinomycin,actinomycin D,,Merck,3053,50-76-0,DNA binding transcriptor,,Approved,DTP-103
+nelarabine,GW-506U78,,GlaxoSmithKline,755985,121032-29-9,DNA chain terminator,,Approved,DTP-103
+gemcitabine elaidate,CO-101,CP-4126,Clavis Pharma,765775,210829-30-4,DNA chain terminator,,Investigational,DTP-110
+cisplatin,,,BMS,119875,15663-27-1,DNA crosslinker,,Approved,DTP-103
+carboplatin,JM-8,,BMS,241240,41575-94-4,DNA crosslinker,,Approved,DTP-103
+oxaliplatin,RP-54780,,Sanofi,266046,61825-94-3,DNA crosslinker,,Approved,DTP-103
+picoplatin,AMD-473,ZD-0473,Poniard,758490,181630-15-9,DNA crosslinker,,Investigational,DTP-110
+,aminoflavone,,NCI,686288,165179-35-1,DNA damaging,,Investigational,DTP-110
+,AFP-464,,Tigris,710464,468719-53-1,DNA damaging,,Investigational,DTP-110
+quinacrine hydrochloride,mepacrine,,NCI,14229,69-05-6,DNA intercalator,,Investigational,DTP-110
+daunorubicin,NDC-0082-4155,,Sanofi,82151,23541-50-6,DNA intercalator,TOP-II,Approved,DTP-103
+doxorubicin,,,Pfizer,123127,25316-40-9,DNA intercalator,TOP-II,Approved,DTP-103
+valrubicin,AD-32,,Anthra,246131,56124-62-0,DNA intercalator,TOP-II,Approved,DTP-103
+,FAU,,Nascent Pharma.,678515,69123-94-0,DNA intercalator,,Investigational,DTP-110
+azacitidine,U-18496,,Celgene,102816,320-67-2,DNA methyltransferase,,Approved,DTP-103
+decitabine,E-7373,,Eisai,127716,2353-33-5,DNA methyltransferase,,Approved,DTP-103
+,SGI-1027,,Astex,783333,1020149-73-8,DNA methyltransferase,,Investigational,DTP-110
+,RG-108,,Institute Biochmistry Biophysics,783334,48208-26-0,DNA methyltransferase,,Investigational,DTP-110
+,IM-25,,"Institute Molecular Biology, National Chung Cheng Univ",783360,91908-88-2,DNA methyltransferase,,Investigational,DTP-110
+,RX-3117,,Rexahn,785657,865838-26-2,DNA methyltransferase,,Investigational,DTP-110
+cytarabine hydrochloride,U-19920A,,Pfizer,63878,69-74-9,DNA polymerase,,Approved,DTP-103
+clofarabine,,,Genzyme,606869,123318-82-1,DNA polymerase,,Approved,DTP-103
+sapacitabine,CS-682,CYC-682,Daiichi Sankyo,791785,151823-14-2,DNA polymerase,,Investigational,DTP-110
+,TAS-109,DFP-10917; CNDAC,Daiichi Sankyo,793679,135598-68-4,DNA polymerase,,Investigational,DTP-110
+bleomycin,,,BMS,125066,9041-93-4,DNA strand breaker,,Approved,DTP-103
+gemcitabine,LY-188011,,Eli Lilly,613327,122111-03-9,DNA synthesis,,Approved,DTP-103
+,tirapazamine,,NCI,130181,27314-97-2,DNA-damaging,,Investigational,DTP-110
+,VX-984,,Vertex,792969,1476074-39-1,DNA-PK,,Investigational,DTP-110
+,EPZ-5676,,Epizyme,778365,1380288-87-8,DOT1L,,Investigational,DTP-110
+,EPZ-004777,,Epizyme,780043,1338466-77-5,DOT1L,,Investigational,DTP-110
+gefitinib,ZD-1839,,AstraZeneca,715055,184475-35-2,EGFR,,Approved,DTP-103
+erlotinib,OSI-774,CP-358774,OSI,718781,183319-69-9,EGFR,,Approved,DTP-103
+lapatinib,GW-572016,,GlaxoSmithKline,745750,231277-92-2,EGFR,erbB2,Approved,DTP-103
+afatinib,BIBW-2992,,Boehringer Ingelheim,750691,439081-18-2,EGFR,,Approved,DTP-103
+,WZ-4002,,Dana Farber,755927,1213269-23-8,EGFR,EGFR T790M,Investigational,DTP-110
+neratinib,PF-0528767,WAY-179272 ,Pfizer,757439,698387-09-6,EGFR,erbB2,Investigational,DTP-110
+sapitinib,AZD-8931,,AstraZeneca,758005,848942-61-0,EGFR,erbB2,Investigational,DTP-110
+,BMS-690514,,BMS,760765,859853-30-8,EGFR,erbB2,Investigational,DTP-110
+,BMS-599626,AC-480,BMS,764135,714971-09-2,EGFR,erbB2,Investigational,DTP-110
+varlitinib,ARRY-543,,Array,764823,845272-21-1,EGFR,erbB2,Investigational,DTP-110
+dacomitinib,PF-299804,,Pfizer,765888,1110813-31-4,EGFR,erbB2,Investigational,DTP-110
+,AEE-788 ,,Novartis,765949,497839-62-0,EGFR,erbB2; VEGFR,Investigational,DTP-110
+tesevatinib,XL-647,,Exelixis,776762,781613-23-8,EGFR,erbB2; Src; VEGFR,Investigational,DTP-110
+osimertinib,AZD-9291,,AstraZeneca,779217,1421373-65-0,EGFR,EGFR T790M,Approved,DTP-103
+rociletinib,CO-1686,,Celgene,779405,1374640-70-6,EGFR,EGFR T790M,Investigational,DTP-110
+canertinib,PD-183805,CI-1033,Pfizer,780019,289499-45-2,EGFR,erbB2,Investigational,DTP-110
+,EGF-816,,Novartis,787027,1508250-71-2,EGFR,EGFR T790M,Investigational,DTP-110
+,AZD-3759,,AstraZeneca,788121,1626387-80-1,EGFR,,Investigational,DTP-110
+,PF-06747775,,Pfizer,788365,1776112-90-3,EGFR,EGFR T790M,Investigational,DTP-110
+olmutinib,BI-1482694,,Boehringer Ingelheim,792848,,EGFR,,investigational,DTP-110
+,ARRY-380,,Array,764581,937263-43-9,erbB2,,Investigational,DTP-110
+,CP-724714,,Pfizer,780042,383432-38-0,erbB2,,Investigational,DTP-110
+,YK-4-279,,Georgetown Univ,765436,1037184-44-3,ERG,ETV1,Investigational,DTP-110
+,SCH-772984,,Merck,775636,942183-80-4,ERK,ERK1; ERK2,Investigational,DTP-110
+,GDC-0994,RG-7842,Genetech,781343,1453848-26-4,ERK,ERK1; ERK2,Investigational,DTP-110
+tazemetostat,E-7438,EPZ-6438,Epizyme,777109,1403254-99-8,EZH2,,Investigational,DTP-110
+,GSK-126,,GlaxoSmithKline,780041,1346574-57-9,EZH2,,Investigational,DTP-110
+,CPI-169,,Constellation,782310,1450655-76-1,EZH2,,Investigational,DTP-110
+,EPZ-5687,,Epizyme,783332,1396772-26-1,EZH2,,Investigational,DTP-110
+,CPI-1205,,Constellation,793430,1621862-70-1,EZH2,,Investigational,DTP-110
+,PCI-27483,,Celera,782579,871266-63-6,Factor VIIa,,Investigational,DTP-110
+,PF-562271,,Pfizer,754356,717907-75-0,FAK,,Investigational,DTP-110
+defactinib hydrochloride,PF-04554878,VS-6063,Pfizer,778364,1073160-26-5,FAK,,Investigational,DTP-110
+defactinib,PF-04554878,VS-6063,Pfizer,782549,1073154-85-4,FAK,,Investigational,DTP-110
+,VS-4718,,Verastem,783102,1061353-68-1,FAK,,Investigational,DTP-110
+,TAE-226,,Novartis,787252,761437-28-9,FAK,IGF-1R,Investigational,DTP-110
+tipifarnib,R-115777,,JNJ,760444,192185-72-1,Farnesyltransferase,,Investigational,DTP-110
+cerulenin,,,Daiichi Sankyo,764755,17397-89-6,FASN,HMG-CoA synthetase,Investigational,DTP-110
+,C-75,,John Hopkins,764756,218137-86-1,FASN,,Investigational,DTP-110
+,JNJ-54302833,,JNJ,782125,1579514-16-1,FASN,,Investigational,DTP-110
+,GSK-2194069,,GSK,792955,1332331-21-1,FASN,,Investigational,DTP-110
+,Astex FGF inhibitor,,Astex,754361,1036991-21-5,FGFR,,Investigational,DTP-110
+orantinib,SU-6668,TSU-68,Pfizer,763929,252916-29-3,FGFR,PDGFR; VEGFR,Investigational,DTP-110
+,AZD-4547,,AstraZeneca,764239,1035270-39-3,FGFR,FGFR1; FGFR2; FGFR3,Investigational,DTP-110
+infrigatinib,BGJ-398,NVP-BGJ398,Novartis,764487,872511-34-7,FGFR,FGFR1; FGFR2; FGFR3; FGFR4,Investigational,DTP-110
+,PD-173074,,Pfizer,766908,219580-11-7,FGFR,FGFR1; FGFR3; VEGFR2; PDGFT; Src,Investigational,DTP-110
+,LY-2874455,,Eli Lilly,771750,1254473-64-7,FGFR,FGFR1; FGFR2; FGFR3; FGFR4; VEGFR,Investigational,DTP-110
+,JNJ-42756493,,JNJ,781556,1346242-81-6,FGFR,FGFR1; FGFR2; FGFR3; FGFR4,Investigational,DTP-110
+,CH-5183284,Debio-1347,Chugai,782363,1265229-25-1,FGFR,FGFR1; FGFR2; FGFR3; VEGFR; PDGFR,Investigational,DTP-110
+,BLU-9931,,Blueprint Medicines,785300,1538604-68-0,FGFR,FGFR1; FGFR2; FGFR3,Investigational,DTP-110
+alofanib,RPT-835,,RPT,790182,1612888-66-0,FGFR,,Investigational,DTP-110
+,ASP-5878,,Astellas,793677,1453208-66-6,FGFR,,Investigational,DTP-110
+quizartinib,AC-220,ASP-2689,Ambit,756647,950769-58-1,Flt-3,PDGFR; c-Kit,Investigational,DTP-110
+dovitinib,CHIR-258,TKI-258,Novartis,759661,405169-16-6,Flt-3,c-Kit; FGFR; VEGFR; EGFR; c-Met,Investigational,DTP-110
+tandutinib,MLN-518,CT-53518,Millennium,760841,387867-13-2,Flt-3,"PDGFR, c-Kit",Investigational,DTP-110
+,ITRI-260,,Industrial Institute,761879,1253836-17-7,Flt-3,,Investigational,DTP-110
+,BPR1J-097,,National Health Res Inst,767897,1327167-19-0,Flt-3,,Investigational,DTP-110
+,VX-322,,Vertex,771651,885610-66-2,Flt-3, c-Kit,Investigational,DTP-110
+lestaurtinib,CEP-701,SP-924; SPM-924,Kyowa Hakko Kirin,772196,111358-88-4,Flt-3,JAK2;Trk,Investigational,DTP-110
+gilteritinib,ASP-2215,,Astellas,787846,1254053-43-4,Flt-3,Axl,Investigational,DTP-110
+tempol,OT-674,,Mitos Pharmaceuticals,142784,2226-96-2,free-radical scavenger,,Investigational,DTP-110
+uridine triacetate,RG-2133,TAU,Wellstat,788948,4105-38-8,FU Antidote,,Approved,DTP-103
+,PF-03084014 diastereomer 1,,Pfizer,754348,865773-15-5,Gamma Secretase,,Investigational,DTP-110
+,PF-03084014 diastereomer 2,,Pfizer,755926,865773-15-5,Gamma Secretase,,Investigational,DTP-110
+semagacestat,LY-450139,,Eli Lilly,755982,425386-60-3,Gamma Secretase,,Investigational,DTP-110
+,RG-4733,RO-4929097,Roche,756650,847925-91-1,Gamma Secretase,,Investigational,DTP-110
+avagacestat,BMS-708163,,BMS,761217,1146699-66-2,Gamma Secretase,,Investigational,DTP-110
+,BMS-299897,,BMS,762672,290315-45-6,Gamma Secretase,,Investigational,DTP-110
+,MK-0752,L-000891675,Merck,762829,471905-41-6,Gamma Secretase,,Investigational,DTP-110
+,BMS-906024,,BMS,780812,1401066-79-2,Gamma Secretase,,Investigational,DTP-110
+,BMS-983970,,BMS,785222,1584713-87-0,Gamma Secretase,,Investigational,DTP-110
+pelitrexol,AG-2037,,Pfizer,767745,446022-33-9,GARTF,,Investigational,DTP-110
+,Pelitrexol isomer A,,Pfizer,772290,,GARTF,,Investigational,DTP-110
+,Pelitrexol isomer B,,Pfizer,772291,,GARTF,,Investigational,DTP-110
+,BAY-876,,Bayer,793149,1799753-84-6,GLUT1,,Investigational,DTP-110
+,CB-839,,Calithera Bioscience,783415,1439399-58-2,Glutaminase,,Investigational,DTP-110
+,CP-91149,,Pfizer,761690,186392-40-5 ,Glycogen phosphorylase,,Investigational,DTP-110
+6-bromoindirubin-3'-acetoxime,BIA,,CNRS,764238,667463-85-6,GSK-3,,Investigational,DTP-110
+,LY-2090314,,Eli Lilly,772198,603288-22-8,GSK-3,,Investigational,DTP-110
+,AZD-2858,,AstraZeneca,774901,486424-20-8,GSK-3,,Investigational,DTP-110
+ezatiostat,TLK-199,,Telik,758484,286942-97-0 ,GSTP1,,Investigational,DTP-110
+vorinostat,SAHA,,Merck,701852,149647-78-9,HDAC,,Approved,DTP-103
+depsipeptide,FK-228,,Gloucester,754143,128517-07-7,HDAC,,Approved,DTP-103
+entinostat,MS-275,SNDX-275,Syndax,756642,209783-80-2,HDAC,,Investigational,DTP-110
+pracinostat,SB-939,,S*BIO,758249,929016-96-6,HDAC,,Investigational,DTP-110
+belinostat,PXD-101,,TopoTarget,758774,414864-00-9,HDAC,,Approved,DTP-103
+quisinostat,JNJ-26481585,,JNJ,759657,875320-29-9,HDAC,,Investigational,DTP-110
+,4SC-202 ,,4SC,759905,1186222-89-8,HDAC,,Investigational,DTP-110
+mocetinostat,MG-0103,,MethylGene,760143,726169-73-9,HDAC,,Investigational,DTP-110
+panobinostat,LBH-589,,Novartis,761190,404950-80-7,HDAC,,Approved,DTP-103
+,ST-3595,,Sigma-Tau,762153,918332-89-5,HDAC,,Investigational,DTP-110
+abexinostat,PCI-24781,CG-781; CRA-024781; S-78454,Celera,764136,783355-60-2,HDAC,,Investigational,DTP-110
+rocilinostat,ACY-1215,,Dana Farber,767952,1316214-52-4,HDAC,,Investigational,DTP-110
+,CUDC-907,,Curis,771751,1339928-25-4,HDAC,pI3K,Investigational,DTP-110
+,JNJ-16241199,R-306465,Janssen,773264,604769-01-9,HDAC,,Investigational,DTP-110
+,3-bromopyruvic acid,,John Hopkins,62343,1113-59-3,Hexokinase II,,Investigational,DTP-110
+lificiguat,YC-1,,Abbott,756879,170632-47-0,HIF-1 alpha,HIF-2,Investigational,DTP-110
+,BAY-87-2243,,Bayer,781016,1227158-85-1,HIF-1 alpha,,Investigational,DTP-110
+,PT-2385,,Peloton Therapeutics,787312,1672665-49-4,HIF-2 alpha,,Investigational,DTP-110
+,UNC-0638,,UNC,764517,1255580-76-7,Histone-lysine methyl transferase,,Investigational,DTP-110
+,BIX-01294,,Boehringer Ingelheim,777571,935693-62-2,Histone-lysine methyl transferase,,Investigational,DTP-110
+,BRD-4770,,Harvard,777671,1374601-40-7,Histone-lysine methyl transferase,,Investigational,DTP-110
+tanespimycin,17-AAG,,BMS,330507,75747-14-7,Hsp90,,Investigational,DTP-110
+alvespimycin,17-DMAG,,BMS,707545,467214-21-7,Hsp90,,Investigational,DTP-110
+luminespib,AUY-922,VER-52296,Novartis,755762,747412-49-3,Hsp90,,Investigational,DTP-110
+,CUDC-305,Debio-0932,Curis,761194,1061318-81-7,Hsp90,,Investigational,DTP-110
+onalespib,AT-13387 ,,Astex,763579,912999-49-6,Hsp90,,Investigational,DTP-110
+,MPC-3100,,Myrexis,765395,958025-66-6,Hsp90,,Investigational,DTP-110
+ganetespib,STA-9090,,Synta,765435,888216-25-9,Hsp90,,Investigational,DTP-110
+,PF-04929113,SNX-5422,Pfizer,768509,908115-27-5,Hsp90,,Investigational,DTP-110
+,XL-888,,Exelixis,772351,1149705-71-4,Hsp90,,Investigational,DTP-110
+,PF-4942847,,Pfizer,772885,1207961-33-8,Hsp90,,Investigational,DTP-110
+,CNF-2024,BIIB-021,Conforma,773265,848695-25-0,Hsp90,,Investigational,DTP-110
+,TAS-116,,Taiho,780204,1260533-36-5,Hsp90,,Investigational,DTP-110
+,AEG-40730 ,,Aegera,754359,934963-58-3,IAP,XIAP,Investigational,DTP-110
+,AT-406,SM-406,Ascenta,764757,1071992-99-8,IAP,,Investigational,DTP-110
+,GDC-0152,,Roche,765898,873652-48-3,IAP,,Investigational,DTP-110
+birinapant,TL-32711,,TetraLogic,767128,1260251-31-7,IAP,,Investigational,DTP-110
+,LCL-161,,Novartis,772868,1005342-46-0,IAP,,Investigational,DTP-110
+,CUDC-427,GDC-0917; RG-7459,Genetech,781468,1446182-94-0,IAP,,Investigational,DTP-110
+,AZD-5582,,AstraZeneca,787048,1258392-53-8,IAP,,Investigational,DTP-110
+,Agios Cmp 301,,Agios,768539,1355324-87-6,IDH1,,Investigational,DTP-110
+,IDH-C227,,Agios,772564,1355324-14-9,IDH1,,Investigational,DTP-110
+,IDH-C35,,Agios,773096,1355326-35-0,IDH1,,Investigational,DTP-110
+ivosidenib,AG-120,,Agios,789102,1448347-49-6,IDH1,,Investigational,DTP-110
+,AGI-6780,,Agios,781409,1432660-47-3,IDH2,,Investigational,DTP-110
+enasidenib,AG-221,,Agios,788120,1446502-11-9,IDH2,,Investigational,DTP-110
+,1-Methyl-[D]-tryptophan,,NewLinkGenetics,721782,110117-83-4,IDO1,,Investigational,DTP-110
+epacadostat,INCB-24360,,Incyte,785497,1204669-58-8,IDO1,,Investigational,DTP-110
+linsitinib,ASP-7487,OSI-906,OSI,756652,867160-71-2,IGF-1R,,Investigational,DTP-110
+,BMS-754807,,BMS,758243,1001350-96-4,IGF-1R,,Investigational,DTP-110
+,BMS-536924,,BMS,761760,468740-43-4,IGF-1R,,Investigational,DTP-110
+,KHK Indazole,,Kyowa Hakko Kirin,761931,904897-64-9,IGF-1R,,Investigational,DTP-110
+,GSK-1838705A,,GlaxoSmithKline,766255,1116235-97-2,IGF-1R,Alk,Investigational,DTP-110
+,AEW-541,,Novartis,767006,475489-16-8,IGF-1R,,Investigational,DTP-110
+,ADW-742,GSK-552602-A,Novartis,767746,475488-23-4,IGF-1R,c-Kit,Investigational,DTP-110
+,GSK-1904529A,,GlaxoSmithKline,767951,1089283-49-7,IGF-1R,,Investigational,DTP-110
+,XL-228,,Exelixis,778366,898280-07-4,IGF-1R,Aurora; Src; FGFR,Investigational,DTP-110
+thalidomide,K-17,,Celgene,66847,50-35-1,immunomodulatory,,Approved,DTP-103
+lenalidomide,CC-5013,,Celgene,747972,191732-72-6,immunomodulatory,,Approved,DTP-103
+pomalidomide,CC-4047,CDC-394; IMID-4047,Celgene,775351,19171-19-8,immunomodulatory,,Approved,DTP-103
+,ONX-0914,PR-957,Onyx,762152,960374-59-8,Immunoproteasome,,Investigational,DTP-110
+thioguanine,,,GlaxoSmithKline,752,50-44-2,IMP dehydrogenase,,Approved,DTP-103
+,AVN-944,VX-944,Vertex,767601,297730-17-7,IMPDH -1,IMPDH-2,Investigational,DTP-110
+cilengitide,EMD-121974,,Merck Serono,774651,188968-51-6,Integrin,,Investigational,DTP-110
+,MK-0429,,Merck,776790,227963-15-7,Integrin,,Investigational,DTP-110
+,E-7820,,Eisai,777573,289483-69-8,Integrin,,Investigational,DTP-110
+,WP-1034,,MD Anderson,755981,857064-42-7,JAK,,Investigational,DTP-110
+pacritinib,SB-1518,ONX-0803,S*BIO,759674,1138325-13-9,JAK,,Investigational,DTP-110
+ruxolitinib,INCB-018424,,Incyte,763371,941678-49-5,JAK,JAK1; JAK2,Investigational,DTP-110
+gandotinib,LY-2784544,,Eli Lilly,764820,1229236-86-5,JAK,JAK2; JAK3,Investigational,DTP-110
+,BMS-911543,,BMS,766821,1271022-90-2,JAK,JAK1; JAK2; JAK3,Investigational,DTP-110
+momelotinib,CYT-387,,YM Biosciences,767598,1056634-68-4,JAK,JAK1; JAK2; JAK3,Investigational,DTP-110
+,XL-019,,Exelixis,772887,945750-13-0,JAK,JAK2,Investigational,DTP-110
+,SB-1578,ONX-0805,S*BIO,772920,937273-04-6,JAK,JAK2,Investigational,DTP-110
+pacritinib,SB-1518,ONX-0803,S*BIO,781626,937272-79-2,JAK,JAK2,Investigational,DTP-110
+tofacitinib,CP-690550,,Pfizer,782351,477600-75-2,JAK,JAK1; JAK3,Investigational,DTP-110
+itacitinib,INCB-39110,,Incyte,792849,1334298-90-6,Jak1,,Investigational,DTP-110
+,AZD-1480,,AstraZeneca,756648,935666-88-9,JAK2,,Investigational,DTP-110
+fedratinib,SAR-302503,TG-101348,Sanofi,767600,936091-26-8,JAK2,Flt3; Ret,Investigational,DTP-110
+,SP-600125,,Celgene,755773,129-56-6,JNK,p38 MAPK,Investigational,DTP-110
+ispinesib,CK-0238273,SB-715992,Cytokinetics,755386,336113-53-2,KSP,KSP5,Investigational,DTP-110
+,EMD-534085,,Merck Serono,763564,858668-07-2,KSP,KSP5,Investigational,DTP-110
+,ARQ-621,,Arqule,771644,1095253-39-6,KSP,Eg5,Investigational,DTP-110
+,ARRY-520 (isomer A),,Array,772254,885060-09-3,KSP,,Investigational,DTP-110
+,ARRY-520 (isomer B),,Array,772255,885060-09-3,KSP,,Investigational,DTP-110
+,SB-743921,GSK-921,GlaxoSmithKline,773261,940929-33-9,KSP,Eg5,Investigational,DTP-110
+,MK-0731,,Merck,780965,845256-65-7,KSP,Eg5,Investigational,DTP-110
+litronesib,LY-2523355,KF-89617,Eli Lilly,789722,910634-41-2,KSP,,Investigational,DTP-110
+,LDHA Cmp 33,,AstraZeneca,773174,1370290-34-8,LDHA,,Investigational,DTP-110
+,LDHA Cmp 35,,AstraZeneca,775018,1370290-53-1,LDHA,,Investigational,DTP-110
+,CT-32228,,Cell Therapeutics,762419,521064-34-6,LPAAT-beta,VEGFR,Investigational,DTP-110
+,GSK-2879552,,GlaxoSmithKline,783917,1401966-69-5,LSD1,,Investigational,DTP-110
+,SR-9243,,Scripps,787081,1613028-81-1,LXR,,Investigational,DTP-110
+bafetinib, CNS-9,INNO-406,CytRx,788186,859212-16-1,Lyn,Bcr-Abl; Fyn,Investigational,DTP-110
+,JZL-184,,VCU,763094,1101854-58-3,MAGL,,Investigational,DTP-110
+,JZL-195,,VCU,763527,1210004-12-8,MAGL,,Investigational,DTP-110
+maritoclax,marinopyrrole A,,Scripps,781008,1227962-62-0,Mcl-1,,Investigational,DTP-110
+pyridoclax,MR-29072,,CNRS,783916,1651890-44-6,Mcl-1,,Investigational,DTP-110
+,A-1210477,,AbbVie,784817,,Mcl-1,,Investigational,DTP-110
+sabutoclax,BI-97C1,,Sanford Burnham,787780,1228108-65-3,Mcl-1,,Investigational,DTP-110
+,UMI-77,,Univ Michigan,787960,518303-20-3,Mcl-1,,Investigational,DTP-110
+,AZD-3965,,AstraZeneca,787047,1448671-31-5,MCT,MCT1; MCT2,Investigational,DTP-110
+,JNJ-27291199,TDP-665759,3-Dimensional,754358,787632-66-0,MDM2,,Investigational,DTP-110
+,MI-219,,Univ Michigan,754360,1201143-87-4,MDM2,,Investigational,DTP-110
+(+/-)-nutlin-3,,,Roche,756875,548472-68-0,MDM2,,Investigational,DTP-110
+(-)-nutlin-3,,,Roche,756876,675576-98-4,MDM2,,Investigational,DTP-110
+(+)-Nutlin-3,,,Roche,763443,675576-97-3,MDM2,,Investigational,DTP-110
+,RG-7112,RO-504337,Roche,771531,,MDM2,,Investigational,DTP-110
+idasanutlin,RG-7388,,Roche,779404,1229705-06-9,MDM2,,Investigational,DTP-110
+,MI-773,SAR-405838,Univ Michigan,781009,1303607-07-9,MDM2,,Investigational,DTP-110
+,AMG-232,,Amgen,781515,1352066-68-2,MDM2,,Investigational,DTP-110
+,CGM-097,,Novartis,783015,1313363-54-0,MDM2,,Investigational,DTP-110
+,PD-98059,,Pfizer,679828,167869-21-8,MEK,MEK1; MEK2,Investigational,DTP-110
+selumetinib,AZD-6244,,AstraZeneca,741078,606143-52-6,MEK,MEK1; MEK2,Investigational,DTP-110
+pimasertib,AS-703026,MSC-1936369,Santhera,755763,1236699-92-5 ,MEK,MEK1; MEK2,Investigational,DTP-110
+,PD-0325901,,Pfizer,755770,391210-10-9,MEK,,Investigational,DTP-110
+trametinib,GSK-1120212,,GlaxoSmithKline,758246,871700-17-3,MEK,MEK1; MEK2,Approved,DTP-103
+,RO-5126766,RG-7304,Roche,758248,946128-88-7,MEK,MEK1; MEK2; Raf,Investigational,DTP-110
+,TAK-733,,Takeda,761215,1035555-63-5,MEK,MEK1; MEK2,Investigational,DTP-110
+,RG-7167,CH-4987655; RO-4987655,Roche,762521,874101-00-5,MEK,,Investigational,DTP-110
+,ARRY-162,MEK-162,Array,764042,1201685-05-3,MEK,MEK1; MEK2,Investigational,DTP-110
+,PD-184352,CI-1040,Pfizer,765695,212631-79-3,MEK,,Investigational,DTP-110
+refametinib,BAY-86-9766,AR-119; RDEA-119,Bayer,765866,923032-37-5,MEK,MEK1; MEK2,Investigational,DTP-110
+cobimetinib,XL-518,GDC-0973; RG-7421,Exelixis,768068,934660-93-2,MEK,MEK1,Investigational,DTP-103
+cobimetinib enantiomer,XL-518 enantiomer,,Exelixis,768069,934660-93-2,MEK,MEK1,Investigational,DTP-110
+,AZD-8330,ARRY-704,AstraZeneca,772563,869357-68-6,MEK,MEK1; MEK2,Investigational,DTP-110
+,GDC-0623,RG-7420,Roche,778590,1168091-68-6,MEK,MEK1,Investigational,DTP-110
+,JNJ-47117096,,Janssen,783272,1610586-62-3,MELK,,Investigational,DTP-110
+lomeguatrib,AZD-5896,,AstraZeneca,787251,192441-08-0,MGMT,,Investigational,DTP-110
+,RX-5902,,Rexahn,793148,,microtubule,,Investigational,DTP-110
+estramustine,Ro-21-8837,,Roche,702294,52205-73-9,Microtubule depolymerase,,Approved,DTP-103
+,MI-503,,Univ Michigan,787039,1857417-13-0,MLL,,Investigational,DTP-110
+,eFT-508,,eFFECTOR,791783,1849590-02-8,MNK,,Investigational,DTP-110
+,BAY-1161909,,Bayer,787025,1443763-60-7,MPS1,,Investigational,DTP-110
+,BAY-1217389,,Bayer,787026,1554458-53-5,MPS1,,Investigational,DTP-110
+,CCT-271850,,Cancer Research Tech,789044,1578244-34-4,MPS1,,Investigational,DTP-110
+,APTO-253,LOR-253,Aptose,789042,916151-99-0,MTF-1,KLF4,Investigational,DTP-110
+rapamycin,,,Pfizer,226080,53123-88-9,mTor,,Approved,DTP-103
+temsirolimus,CCI-779,,Pfizer,683864,162635-04-3,mTor,,Approved,DTP-103
+everolimus ,RAD-101,,Novartis,733504,159351-69-6,mTor,,Approved,DTP-103
+dactolisib,BEZ-235,,Novartis,751249,915019-65-7,mTor,pI3K,Investigational,DTP-110
+salirasib,KD-032,ONO-7056,Concordia,755771,162520-00-5,mTor,,Investigational,DTP-110
+deforolimus,MK-8669 ,AP-23573,Merck,757440,572924-54-0,mTor,,Investigational,DTP-110
+gedatolisib,PF-05212384,PKI-587,Pfizer,758256,1197160-78-3,mTor,pI3K,Investigational,DTP-110
+,AZD-8055,,AstraZeneca,758871,1009298-09-2,mTor,,Investigational,DTP-110
+,OSI-027,,OSI,759660,1187559-66-5,mTor,,Investigational,DTP-110
+apitolisib,GDC-0980,R-7422; RG-7422,Roche,764091,1032754-93-0,mTor,pI3K,Investigational,DTP-110
+,PP-242,,UCSF,764515,1092351-67-1,mTor,,Investigational,DTP-110
+,INK-128,MLN-0128,Intellikine,764658,1224844-38-5,mTor,,Investigational,DTP-110
+,AZD-2014,,AstraZeneca,767189,1009298-59-2,mTor,,Investigational,DTP-110
+,RG-7603,GDC-0349,Roche,771532,1207360-89-1,mTor,,Investigational,DTP-110
+,torin2,,Dana Farber,775727,1223001-51-1,mTor,,Investigational,DTP-110
+,AZD-3147,,AstraZeneca,784815,1101810-02-9,mTor,,Investigational,DTP-110
+,CC-223,,Celgene,792971,1228013-30-6,mTor,,Investigational,DTP-110
+,CC-115,,Celgene,793151,1229013-15-7,mTor,,Investigational,DTP-110
+sorafenib,BAY 43-9006,BAY 54-9085,Bayer,747971,284461-73-0,multikinase,PDGFR; B-Raf; VEGFR,Approved,DTP-103
+sunitinib,SU-011248,PNU-290940AD; SU-010398,Pfizer,750690,557795-19-4,multikinase,PDGFR; VEGFR; c-Kit,Approved,DTP-103
+amuvatinib,MP-470,HPK-56,SuperGen,754349,850879-09-3,multikinase,c-Kit; PDGFR; Flt3; RAD51,Investigational,DTP-110
+staurosporine,AM-2282,,Ajinomoto,755774,62996-74-1,multikinase,,Investigational,DTP-110
+foretinib,XL-880,GSK-1363089,Exelixis,755775,849217-64-7,multikinase,c-Met; RON; Axl; VEGFR,Investigational,DTP-110
+regorafenib,BAY-73-4506 ,,Bayer,763932,755037-03-7,multikinase,RET; VEGFR; c-Kit; PDGFR; FGFR,Approved,DTP-103
+,OSI-930 ,,OSI,766887, 728033-96-3,multikinase,c-Kit; PDGFR; VEGFR,Investigational,DTP-110
+,R-1530,,Roche,767953,882531-87-5,multikinase,FGFR; KDR; CDK; PDGFR; VEGFR,Investigational,DTP-110
+merestinib,LY-2801653,,Eli Lilly,772197,1206799-15-6,multikinase,c-Met; MST-1R; Flt3; Axl; Mer,Investigational,DTP-110
+milciclib,PHA-848125,,Pfizer,774830,802539-81-7,multikinase,Cdk,Investigational,DTP-110
+,JNJ-26483327,,JNJ,783249,807640-87-5,multikinase,EGFR; erbB2; Src; VEGFR; RET,Investigational,DTP-110
+poziotinib,HM-781-36B,,Hanmi,783296,1092364-38-9,multikinase,EGFR; erbB2; EGFR T790M,Investigational,DTP-110
+,CBL-0137,,Cleveland Biolabs,789040,1197397-89-9,multitargeted,,Investigational,DTP-110
+,AZ-505,,AstraZeneca,780404,1035227-43-0,N-Lysine Methyltransferase,SMYD2,Investigational,DTP-110
+pevonedistat,MLN-4924,,Millennium,761192,905579-51-3,NAE,,Investigational,DTP-110
+daporinad hydrochloride,AP0-866,FK-866 HCl,Astellas,760442,,NAMPRTase,,Investigational,DTP-110
+teglarinad,EB-1627,GMX-1777,Gemin X,761189,432037-57-5,NAMPRTase,,Investigational,DTP-110
+daporinad,AP0-866,FK-866,Astellas,777194,658084-64-1,NAMPRTase,,Investigational,DTP-110
+,GNE-617,,Forma,779407,1362154-70-8,NAMPRTase,,Investigational,DTP-110
+,LY-3154567,,Eli Lilly,789099,1698878-14-6,NAMPRTase,,Investigational,DTP-110
+,LY-3039478,,Eli Lilly,787253,1421438-81-4,Notch,,Investigational,DTP-110
+,SB-203580,,GlaxoSmithKline,755772,152121-47-6,p38 MAPK,,Investigational,DTP-110
+,SB-239063,,GlaxoSmithKline,756653,193551-21-2,p38 MAPK,,Investigational,DTP-110
+,LY-2228820,,Eli Lilly,766820,862505-00-8,p38 MAPK,,Investigational,DTP-110
+,VX-702,,Vertex,775665,745833-23-2,p38 MAPK,,Investigational,DTP-110
+talmapimod,SCIP-469,,Scios,777446,309913-83-5,p38 MAPK,,Investigational,DTP-110
+pexmetinib,ARRY-614,,Array,778367,945614-12-0,p38 MAPK,,Investigational,DTP-110
+,SB-202190,FHPI,GlaxoSmithKline,789969,152121-30-7,p38 MAPK,,Investigational,DTP-110
+,CB-5083,,Cleave,786100,1542705-92-9,p97,,Investigational,DTP-110
+,PF-03758309,,Pfizer,781470,1279034-84-2,PAK4,,Investigational,DTP-110
+,KPT-9274,,Karyopharm,792970,,PAK4,,Investigational,DTP-110
+,BIM-46187 ,,Ipsen,760842,892546-37-1,pan G-protein,,Investigational,DTP-110
+iniparib,BSI-201,IND-71677; SAR-240550,Sanofi,752493,160003-66-7,Parp-1,,Investigational,DTP-110
+veliparib,ABT-888,,Abbott,752840,912444-00-9,Parp-1,,Investigational,DTP-110
+olaparib,AZD-2281,,AstraZeneca,753686,763113-22-0,Parp-1,,Approved,DTP-103
+niraparib,MK-4827,,Merck,754355,1038915-60-4,Parp-1,,Investigational,DTP-110
+rucaparib,PF-01367338,AG-014699,Pfizer,756644,459868-92-9,Parp-1,,Investigational,DTP-110
+,BMN-673 (racemate),LT-00673,BioMarin,765396,1207454-56-5,Parp-1,,Investigational,DTP-110
+talazoparib,BMN-673,,BioMarin,767125,1207456-01-6,Parp-1,,Investigational,DTP-110
+,BMN-673 (inactive enantiomer),,BioMarin,767533,1207456-00-5,Parp-1,,Investigational,DTP-110
+,CEP-9722,,Cephalon,768593,916574-83-9,Parp-1,,Investigational,DTP-110
+,AZD-2461,,AstraZeneca,773230,1174043-16-3,Parp-1,,Investigational,DTP-110
+,E-7449,,Eisai,783107,1140964-99-3,Parp-1,Parp-2,Investigational,DTP-110
+,deltarasin,,Max-Planck,779408,1440898-82-7,PDE-delta,,Investigational,DTP-110
+nintedanib,BIBF-1120,Vargatef,Boehringer Ingelheim,756659,656247-18-6,PDGFR,FGFR; VEGFR; Flt3,Investigational,DTP-110
+ crenolanib,CP-868596,,Pfizer,763526,670220-88-9,PDGFR,Flt3; c-Kit; VEGFR; Tie2,Investigational,DTP-110
+linifanib,ABT-869,RG-3635,Abbott,764237,796967-16-3,PDGFR, VEGFR; KDR; CSF-1R; Flt3; PDGFR,Investigational,DTP-110
+,AC-710,,Ambit,787038,1351522-04-7,PDGFR,Flt-3; CSF-1R,Investigational,DTP-110
+,OSU-03012 ,AR-12,Ohio State,756657,742112-33-0,PDK-1,,Investigational,DTP-110
+,OSU-03013,,Ohio State,756658,742112-34-1,PDK-1,,Investigational,DTP-110
+,BX-912,,Berlex,758485,702674-56-4,PDK-1,,Investigational,DTP-110
+,GSK-2334470,,GlaxoSmithKline,759658,1227911-45-6,PDK-1,,Investigational,DTP-110
+, GSK-2606414 ,,GlaxoSmithKline,781627,1337531-36-8,PERK,,Investigational,DTP-110
+aminolevulinic acid,,,,18509,5451-09-2,Photosensitizer,,Approved,DTP-103
+,wortmannin,KY-12420,Sigma Aldrich,221019,19545-26-7,pI3K,,Investigational,DTP-110
+sonolisib,PX-866,DJM-166,Oncothyreon,722134,502844-51-1,pI3K,,Investigational,DTP-110
+buparlisib,BKM-120,,Novartis,754353,944396-07-0,pI3K,,Investigational,DTP-110
+pictilisib,GDC-0941,RG-7321 ,Roche,755385,957054-30-7,pI3K,,Investigational,DTP-110
+,LY-294002,SF-1101,Eli Lilly,755769,154447-36-6,pI3K,,Investigational,DTP-110
+idelalisib,CAL-101,,Icos,759224,870281-82-6,pI3K,,Approved,DTP-103
+,PI-103,,Astellas,759676,371935-74-9,pI3K,mTor,Investigational,DTP-110
+copanlisib,BAY-80-6946 ,,Bayer,760443,1032568-63-0,pI3K,,Investigational,DTP-110
+,PF-04691502,,Pfizer,760536,1013101-36-4,pI3K,,Investigational,DTP-110
+,CH-5132799 ,PA-799,Chugai,762382,1007207-67-1,pI3K,,Investigational,DTP-110
+,GSK-2126458,GSK-458,GlaxoSmithKline,764092,1086062-66-9,pI3K,,Investigational,DTP-110
+,ZSTK-474,,Zenyaku Kogyo,764516,475110-96-4,pI3K,,Investigational,DTP-110
+,BYL-719,,Novartis,765974,1217486-61-7,pI3K,,Investigational,DTP-110
+,GSK-2636771,,GlaxoSmithKline,768508,1372540-25-4,pI3K,mTor,Investigational,DTP-110
+,INK-1197,IPI-145,Infinity,772469,1201438-56-3,pI3K,,Investigational,DTP-110
+,BGT-226,,Novartis,773095,1245537-68-1,pI3K,,Investigational,DTP-110
+,SG-00529,P-529,Paloma,775306,914913-88-5,pI3K,mTor; Akt,Investigational,DTP-110
+,PI-103,,Astellas,776996,371935-79-4,pI3K,mTor,Investigational,DTP-110
+,VS-5584,,Verastem,778810,1246560-33-7,pI3K,mTor,Investigational,DTP-110
+,AMG-511,,Amgen,782122,1253573-53-3,pI3K,,Investigational,DTP-110
+,PWT-33597,,Pathway,782362,1246203-32-6,pI3K,mTor,Investigational,DTP-110
+,PQR-309,,Piqur,785117,1225037-39-7,pI3K,mTor,Investigational,DTP-110
+,AZD-8835,,AstraZeneca,786099,1620576-64-8,pI3K,,Investigational,DTP-110
+,AMG-319,,Amgen,787137,1608125-21-8,pI3K,,Investigational,DTP-110
+,LY-3023414,,Eli Lilly,789968,1386874-06-1,pI3K,mTor,Investigational,DTP-110
+voxtalisib,XL-765,SAR-245409,Exelixis,791226,934493-76-2,pI3K,,Investigational,DTP-110
+pilaralisib,XL-147,SAR-245408,Exelixis,791227,934526-89-3,pI3K,,Investigational,DTP-110
+,GDC-0084,,Genetech,792987,1382979-44-3,PI3K,mTor,Investigational,DTP-110
+taselisib,GDC-0032,RG-7604,Roche,777425,1282512-48-4,pI3K alpha,,Investigational,DTP-110
+,PF-4989216,,Pfizer,777877,1276553-09-3,pI3K alpha,,Investigational,DTP-110
+,AZD-8186,,AstraZeneca,777572,1627494-13-6,pI3K beta,,Investigational,DTP-110
+,SAR-260301 (enantiomer 1),,Sanofi,780290,1260612-13-2,pI3K beta,,Investigational,DTP-110
+,SAR-260301 (enantiomer 2),,Sanofi,780291,,pI3K beta,,Investigational,DTP-110
+,SGI-1776,SG-0407,Astex,757333,1173928-26-1,PIM-1,,Investigational,DTP-110
+,AZD-1208,,AstraZeneca,776066,1204144-28-4,PIM-1,PIM-2; PIM-3,Investigational,DTP-110
+,GDC-0339,,Genetech,791495,1428569-85-0,PIM-1,PIM-2; PIM-3,Investigational,DTP-110
+,H-89 dihydrochloride,,UPenn,755766,130964-39-5,PKA,,Investigational,DTP-110
+,H-89,,UPenn,782017,127243-85-0,PKA,,Investigational,DTP-110
+chelerythrine ,MP-0922,,Marinus,36405,3895-92-9,PKC,,Investigational,DTP-110
+sotrastaurin,AEB-071,,Novartis,766819,425637-18-9,PKC,,Investigational,DTP-110
+enzastaurin,LY-317615,,Eli Lilly,767124,170364-57-5,PKC,,Investigational,DTP-110
+,PKM2 Activator 9,,Agios,772991,1260074-86-9,PKM2,,Investigational,DTP-110
+,GSK-461364,,GlaxoSmithKline,754354,929095-18-1,PLK-1,,Investigational,DTP-110
+,BI-2536,,Boehringer Ingelheim,755983,755038-02-9,PLK-1,,Investigational,DTP-110
+volasertib,BI-6727,,Boehringer Ingelheim,757149,755038-65-4,PLK-1,,Investigational,DTP-110
+,TAK-960 analog,,Takeda,761759,1157847-46-5,PLK-1,,Investigational,DTP-110
+,Des-fluoro-TAK-960,,Takeda,762154,1201692-18-3,PLK-1,,Investigational,DTP-110
+,TAK Plk inhibitor,,Takeda,762418,1214266-16-6,PLK-1,,Investigational,DTP-110
+,MLN-0905,,Millenium,767470,1228960-69-7,PLK-1,,Investigational,DTP-110
+,TAK-960,,Takeda,768072,1137868-52-0,PLK-1,,Investigational,DTP-110
+,NMS-1286937 ,NMS-P937,Nerviano,781344,1034616-18-6,PLK-1,,Investigational,DTP-110
+,CFI-400945,,University Health Network,791966,1338800-06-8,Plk-1,,Investigational,DTP-110
+,CX-5461,,Cylene,782164,1138549-36-6,Pol1-transcription of rRNA,,Investigational,DTP-110
+,LGK-974,,Novartis,777639,1243244-14-5,Porcupine,Wnt,Investigational,DTP-110
+efatutazone,CS-7017,RS-5444,Daiichi Sankyo,764579,223132-37-4,PPAR-gamma,,Investigational,DTP-110
+,FH-535,,Fred Hutchinson,778746,108409-83-2,PPAR-gamma,,Investigational,DTP-110
+,EPZ-015666,,Epizyme,785299,1616391-65-1,PRMT5,,Investigational,DTP-110
+,EPZ-020411,,Epizyme,790865,1700663-41-7,PRMT6,,Investigational,DTP-110
+megestrol acetate,PAR-100.2,,BMS,71423,595-33-5,Progesterone Receptor,,Approved,DTP-103
+bortezomib,PS-341,MLN-341,Millennium,756655,179324-69-7,Proteosome,,Approved,DTP-103
+carfilzomib,ONO-7057,,Onyx,758252,868540-17-4,Proteosome,,Approved,DTP-103
+ixazomib citrate,MLN-9708,,Millenium,758254,1201902-80-8,Proteosome,,Approved,DTP-103
+delanzomib,CEP-18770,NP-47098,Cephalon,764334,847499-27-8,Proteosome,,Investigational,DTP-110
+oprozomib,ONX-0912  ,PR-047,Onyx,766254,935888-69-0,Proteosome,,Investigational,DTP-110
+ixazomib,MLN-2238,,Millenium,766907,1072833-77-2,Proteosome,,Investigational,DTP-110
+,MG-132,,Millenium,782153,133407-82-6,Proteosome,,Investigational,DTP-110
+6-mercaptopurine,6MP,,GlaxoSmithKline,755,6112-76-1,PRPP amidotransferase,,Approved,DTP-103
+,PTC-691,,PTC Therapeutics,782006,420126-30-3,PTC,,Investigational,DTP-110
+,MLN-2480,BIIB-024,Millenium,766906,1096708-71-2,Raf,,Investigational,DTP-110
+rigosertib,ON-01910Na,,Onconova,754344,592542-60-4,Ras,PLK-1,Investigational,DTP-110
+pluripotin,SC-1,,Scripps,763525,839707-37-8,RasGAP,Erk1,Investigational,DTP-110
+sitravatinib,MG-516,,Mirati,788203,1123837-84-2,RET,Axl; PDGFR; Trk,Investigational,DTP-110
+,Y-27632,,Mitsubishi,751297,146986-50-7,Rho,,Investigational,DTP-110
+dimethylfasudil,H-1152,,Nippon Shinyaku,780205,451462-58-1,Rho,,Investigational,DTP-110
+hydroxyurea,,,BMS,32065,127-07-1,Ribonucleotide reductase,,Approved,DTP-103
+fludarabine,SHT-586,,Bayer,312887,75607-67-9,Ribonucleotide reductase,,Approved,DTP-103
+triapine,3-AP,PAN-811,Vion,759096,143621-35-6 ,Ribonucleotide reductase,,Investigational,DTP-110
+motexafin,PCI-0120,,Pharmacyclics,761266,156436-89-4,Ribonucleotide reductase,,Investigational,DTP-110
+,SL-0101,,Univ VA,703081,77307-50-7,RSK,,Investigational,DTP-110
+,XL-541,,Exelixis,768011,1221878-06-3,S1P1,,Investigational,DTP-110
+,AZD-9496,,AstraZeneca,786959,1639042-08-2,SERD,,Investigational,DTP-110
+,GDC-0810,,Roche,787326,1365888-06-7,SERD,,Investigational,DTP-110
+tamoxifen,ICI-46474,,AstraZeneca,180973,54965-24-1,SERM,,Approved,DTP-103
+fulvestrant,ZD-9238,,AstraZeneca,719276,129453-61-8,SERM,,Approved,DTP-103
+raloxifene,LY-156758,,Eli Lilly,747974,84449-90-1,SERM,,Approved,DTP-103
+,CB-64D,,NIH,754350,157752-20-0,Sigma agonist,,Investigational,DTP-110
+vismodegib,GDC-0449,RG-3616,Roche,755986,879085-55-9,SMO,,Approved,DTP-103
+,HPI-1,,UCSF,758486,599150-20-6,SMO,,Investigational,DTP-110
+sonidegib,LDE-225,,Novartis,761385,956697-53-3,SMO,,Approved,DTP-103
+,SEN-450,,Siena Biotech,763758,1160830-00-1,SMO,,Investigational,DTP-110
+saridegib,IPI-926,,Infinity,767123,1037210-93-7,SMO,,Investigational,DTP-110
+,LEQ-506,,Novartis,767126,1057677-92-5,SMO,,Investigational,DTP-110
+,LY-2940680,,Eli Lilly,767896,1258861-20-9,SMO,,Investigational,DTP-110
+,TAK-441,,Takeda,771858,1186231-83-3,SMO,,Investigational,DTP-110
+,PF-04449913,,Pfizer,775772,1095173-27-5,SMO,,Investigational,DTP-110
+,BMS-833923,XL-139,BMS,781469,1059734-66-5,SMO,,Investigational,DTP-110
+,KX2-391,KX-01,Kinex,756643,897016-82-9,Src,,Investigational,DTP-110
+saracatinib,AZD-0530,,AstraZeneca,758872,379231-04-6,Src,c-Yes; Fyn; Lyn; Blk; FGFR; Lck,Investigational,DTP-110
+bosutinib,SKI-506,,Pfizer,765694,380843-75-4,Src,Bcr-abl; Lyn; Hck,Approved,DTP-103
+golotimod,SCV-07,,UC Berkeley,755401,229305-39-9,Stat-3,,Investigational,DTP-110
+,Cpd-401,,Otsuka,757334,1150339-93-7,Stat-3,,Investigational,DTP-110
+,BP-1-102,,University of Toronto,764037,1334493-07-0,Stat-3,IL6,Investigational,DTP-110
+napabucasin,BBI-608,,Sumitomo,788900,83280-65-3,Stat-3,beta-catenin,Investigational,DTP-110
+sepantronium bromide,YM-155,,Astellas,755387,781661-94-7,Survivan,,Investigational,DTP-110
+,SR-13654,,SRI,756662,666752-22-3,Survivan,,Investigational,DTP-110
+,BAY 61-3606,,Bayer,766992,732983-37-8,Syk,,Investigational,DTP-110
+,R-406,,Rigel,772498,841290-80-0,Syk,,Investigational,DTP-110
+fostamatinib,R-788,R-935788,Rigel,772992,914295-16-2,Syk,,Investigational,DTP-110
+,P505-15,,Biogen,776786,1370261-97-4,Syk,,Investigational,DTP-110
+entosplenitib,GS-9973,,Gilead,781516,1229208-44-9,Syk,,Investigational,DTP-110
+,TAK-659 (isomer 1),,Takeda,791967,,Syk,,Investigational,DTP-110
+,TAK-659 (isomer 2),,Takeda,791968,,Syk,,Investigational,DTP-110
+,hydrastinine,,,755892,4884-68-8,Syptic,,Investigational,DTP-110
+,SB-431542 ,,GlaxoSmithKline,756649,301836-41-9,TGF-beta,,Investigational,DTP-110
+galunisertib,LY-2157299,,Eli Lilly,761216,700874-72-2,TGF-beta,,Investigational,DTP-110
+,LY-2109761,,Eli Lilly,765632,700874-71-1,TGF-beta,,Investigational,DTP-110
+,ONX-0801,BGC-945,Onyx,764764,501332-69-0,Thymidine Synthase,,Investigational,DTP-110
+5-fluorouracil,5-FU,Ro-29757,Roche,19893,51-21-8,thymidylate synthase,,Approved,DTP-103
+floxuridine,5-fluorodeoxyuridine,5-FdU,Roche,27640,50-91-9,thymidylate synthase,,Approved,DTP-103
+trifluridine,CF3dUrd,,GlaxoSmithKline,75520,70-00-8,thymidylate synthase,,Approved,DTP-103
+raltitrexed,ZD-1694,,AstraZeneca,639186,112887-68-0,thymidylate synthase,,Investigational,DTP-110
+capecitabine,Ro-09-1978,RG-340; R-340,Chugai,712807,154361-50-9,thymidylate synthase,,Approved,DTP-103
+imiquimod,DZ-2636,R-837; S-26308; TMX-101,3M,369100,99011-02-6,TLR7,,Approved,DTP-103
+motolimod,VTX-2337,,Celgene,777447,926927-61-9,TLR8,,Investigational,DTP-110
+,XAV-939 ,S1180,Novartis,755761,284028-89-3,TNKS,Wnt,Investigational,DTP-110
+,SW-044248,,UT Southwestern,789797,522650-83-5,Top1,,Investigational,DTP-110
+,OTS-964,,OncoTherapy,787880,1338545-07-5,TOPK,,Investigational,DTP-110
+topotecan,S-104864-A,,GlaxoSmithKline,609699,119413-54-6,Topo I,,Approved,DTP-103
+irinotecan,CPT-11,,Pfizer,616348,100286-90-6,Topo I,,Approved,DTP-103
+,7-Ethyl-10-hydroxycamptothecin,SN-38; EHC; HCPT,Yakult Honsha,673596,86639-52-3,Topo I,,Investigational,DTP-110
+,MLN-576,XR-11576,Xenova,754365,346689-77-8,Topo I, Topo II,Investigational,DTP-110
+,XR-5944,MLN-944,Xenova,754366,343247-32-5,Topo I, Topo II,Investigational,DTP-110
+,XR-5000,SN-22995,Xenova,754367,89459-25-6,Topo I, Topo II,Investigational,DTP-110
+,GENZ-644282,SAR-402674,Sanofi,768112,529488-28-6,Topo I,,Investigational,DTP-110
+teniposide,VM-26,,BMS,122819,29767-20-2,Topo II,,Approved,DTP-103
+etoposide,VP-16,,Novartis,141540,33419-42-0,Topo II,,Approved,DTP-103
+idarubicin hydrochloride,IMI-30,,Pfizer,256439,57852-57-0,Topo II,,Approved,DTP-103
+epirubicin hydrochloride,IMI-28,,Pfizer,256942,56390-09-1,Topo II,,Approved,DTP-103
+mitoxantrone,CL-232315,,Amgen,279836,65271-80-9,Topo II,,Approved,DTP-103
+,XK-469,,BMS,698215,157542-91-1,Topo II,,Investigational,DTP-110
+amonafide,CGX-571,AS-1413,Abbott,758251,69408-81-7,Topo II,,Investigational,DTP-110
+vosaroxin ,AG-7352,SNS-595; SPC-595,Sunesis,760764,175414-77-4 ,Topo II,,Investigational,DTP-110
+aldoxorubicin,INNO-206,,BMS,784722,1361644-26-9,Topo II,,Investigational,DTP-110
+,LOXO-101,,Loxo Oncology,785570,1223403-58-4,Trk,,Investigational,DTP-110
+vinblastine,,,Eli Lilly,49842,143-67-9,Tubulin fragmenter,,Approved,DTP-103
+vincristine,,,,67574,2068-78-2,Tubulin fragmenter,,Approved,DTP-103
+vinorelbine,ANX-530,KW-2307; SDP-012,Novartis,608210,125317-39-7,Tubulin fragmenter,,Approved,DTP-103
+lexibulin,CYT-997,,YM Biosciences,758488,917111-44-5,Tubulin fragmenter,,Investigational,DTP-110
+indibulin, ZIO-301,D-24851,ZioPharm,758489,204205-90-3 ,Tubulin fragmenter,,Investigational,DTP-110
+verubulin,EP-90745,MPC-6827,Myrexis,758773,827031-83-4,Tubulin fragmenter,,Investigational,DTP-110
+,BAL-27862,,Basilea,762598,798577-91-0,Tubulin fragmenter,,Investigational,DTP-110
+,BAL-101553,,Basilea,764608,1263384-43-5,Tubulin fragmenter,,Investigational,DTP-110
+ombrabulin hydrochloride,AC-7700,AVE-8062,Sanofi,778448,253426-24-3,Tubulin fragmenter,,Investigational,DTP-110
+paclitaxel,BMS-181339,ANX-513; SDP-013,BMS,125973,33069-62-4,Tubulin stabilizer,,Approved,DTP-103
+docetaxel,ANX-514,RP-56976; SYP-0704A ,Sanofi,628503,114977-28-5,Tubulin stabilizer,,Approved,DTP-103
+ixabepilone,BMS-247550,,BMS,747973,219989-84-1,Tubulin stabilizer,,Approved,DTP-103
+cabazitaxel,TAX-258,RPR-116258A; TXD-258; XRP-6258,Sanofi,761432,183133-96-2,Tubulin stabilizer,,Approved,DTP-103
+,MLN-7243,,Millennium,785004,1450833-55-2,Ubiquitin-activating enzyme,,Investigational,DTP-110
+ pazopanib,GW-786034,,GlaxoSmithKline,737754,635702-64-6,VEGFR,c-Kit; FGFR; PDGFR,Approved,DTP-103
+cediranib,AZD-2171,Recentin,AstraZeneca,755606,288383-20-0,VEGFR,,Investigational,DTP-110
+lenvatinib,E-7080,,Eisai,755980,417716-92-8,VEGFR,FGFR; PDGFR; RET,Approved,DTP-103
+axitinib,AG-013736 ,,Pfizer,757441,319460-85-0,VEGFR,PDGFR,Approved,DTP-103
+  tivozanib,ASP-4130,Tivopath; AV-951; KRN-951 ,Astellas,758007,475108-18-0,VEGFR,PDGFR; c-Kit; FGFR; Flt3; c-Met,Investigational,DTP-110
+vandetanib,ZD-6474,,AstraZeneca,760766,443913-73-3,VEGFR,"PDGFR, EGFR; RET",Approved,DTP-103
+motesanib,AMG-706,,Amgen,760843,453562-69-1,VEGFR,c-Kit; PDGFR; RET,Investigational,DTP-110
+,JI-101,CGI-1842,Gilead,762381,900573-88-8,VEGFR,EphA4; PDGFR,Investigational,DTP-110
+brivanib,BMS-582664 ,,BMS,764481,649735-63-7,VEGFR, FGFR,Investigational,DTP-110
+vatalanib,CGP-79787D,"ZK-222584, PTK-787",Novartis,772499,212142-18-2,VEGFR,c-Kit; PDGFR,Investigational,DTP-110
+apatinib mesylate,YN-968D1,,Jiangsu Hengrui ,772886,1218779-75-9,VEGFR,,Investigational,DTP-110
+telatinib,BAY-57-9352,,Bayer,776017,332012-40-5,VEGFR,c-Kit; PDGFR,Investigational,DTP-110
+lucitinib,E-3810,,Advenchen,782762,1058137-23-7,VEGFR,FGFR; PDGFR,Investigational,DTP-110
+glesatinib,MGCD-265,,Mirati,791059,936694-12-1,VEGFR,,Investigational,DTP-110
+,OICR-9429,,Ontario Institute,788992,1801787-56-3,WDR5,,Investigational,DTP-110
+,MK-1775 ,,Merck,754352,955365-80-7,Wee-1,,Investigational,DTP-110
+,ICG-001,,Institute for Chemical Genomics,756641,780757-88-2,Wnt,beta-catenin,Investigational,DTP-110
+,IWR-1,,UT Southwestern,756646,1127442-82-3,Wnt,beta-catenin,Investigational,DTP-110
+,CCT-251545,,Cancer Research Tech,784591,1661839-45-7,Wnt,,Investigational,DTP-110
+allopurinol,BW-56-158,,GlaxoSmithKline,1390,315-30-0,Xanthine Oxidase,,Approved,DTP-103

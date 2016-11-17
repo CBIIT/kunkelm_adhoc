@@ -52,11 +52,18 @@ orig varchar
 );
 
 insert into target_fixes values('Bcr-Abl', 'Bcr-abl');
+
+insert into target_fixes values('Braf', 'B-Raf');
+
 insert into target_fixes values('Cdk', 'CDK');
 insert into target_fixes values('Chk1', 'Chk-1');
 insert into target_fixes values('Erk1', 'ERK1');
 insert into target_fixes values('Flt3', 'Flt-3');
 insert into target_fixes values('IGF1R', 'IGF-1R');
+
+insert into target_fixes values('PI3K', 'pI3K');
+insert into target_fixes values('Plk-1', 'PLK-1');
+
 insert into target_fixes values('Ret', 'RET');
 insert into target_fixes values('Stat3', 'Stat-3');
  insert into target_fixes values('Stat3', 'Stat 3');
