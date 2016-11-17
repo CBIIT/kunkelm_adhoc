@@ -17,95 +17,108 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 # execute
 
 my $sql = qq[
-drop table if exists wrangle_categories
+drop table if exists wrangling_with_categories
 ];
 
 my $sth = $dbh->prepare($sql);
 print "$sql\n\n";
-#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
-my $sql = qq[
-create table wrangle_categories
+$sql = qq[
+create table wrangling_with_categories
 as
 select 'category'::varchar as category, *
 from wrangling_with_nsc
 limit 0
 ];
 
-my $sth = $dbh->prepare($sql);
+$sth = $dbh->prepare($sql);
 print "$sql\n\n";
-#$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
-
-#foreach my $sql (@sqlList){
-#	my $sth = $dbh->prepare($sql);
-#	print "$sql\n\n";
-#	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
-#}
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my @catWhereList = ();
 
-push @catWhereList, "one_lbl_only" ;
-push @catWhereList, "where count_lbl = 1 and count_strc = 0";
-push @catWhereList, "multi_lbl_only";
-push @catWhereList, "where count_lbl > 1 and count_strc = 0";
-push @catWhereList, "one_strc";
-push @catWhereList, "where count_strc = 1 and salt = 0";
-push @catWhereList, "two_strc_one_salt";
-push @catWhereList, "where count_strc = 2 and salt = 1";
-
-push @catWhereList, ["test_cat","test_where_clause"];
+push @catWhereList, ["900K" , "where nsc between 900000 and 999999"];
+push @catWhereList, ["one_lbl_only" , "where count_frags = 1 and count_lbl = 1 and count_strc = 0 and nsc not between 900000 and 999999"];
+push @catWhereList, ["multi_lbl_only" , "where count_frags > 1 and count_lbl > 1 and count_strc = 0 and nsc not between 900000 and 999999"];
+push @catWhereList, ["one_strc", "where count_frags = 1 and count_strc = 1 and count_lbl = 0 and nsc not between 900000 and 999999"];
+push @catWhereList, ["two_strc_one_salt", "where count_frags = 2 and count_strc = 2 and salt = 1 and count_lbl = 0 and nsc not between 900000 and 999999"];
 
 foreach my $i (0 .. $#catWhereList) {
-	#print "$i - $catWhereList[$i]\n";
-	
-	print "$i: " . join(',', $catWhereList[$i]) . "\n";
+	$sql = "insert into wrangling_with_categories select '$catWhereList[$i][0]', * from wrangling_with_nsc $catWhereList[$i][1]";
+	$sth = $dbh->prepare($sql);
+	print "$sql\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
 }	
 
-#insert into wrangle_categories
-#select 'one_lbl_only', *
-#from wrangling_with_nsc
-#where count_lbl = 1
-#and count_strc = 0;
-#
-#insert into wrangle_categories
-#select 'multi_lbl_only', *
-#from wrangling_with_nsc
-#where count_lbl > 1
-#and count_strc = 0;
-#
-#insert into wrangle_categories
-#select 'one_strc', * 
-#from wrangling_with_nsc
-#where count_strc = 1
-#and salt = 0;
-#
-#insert into wrangle_categories
-#select 'two_strc_one_salt', *
-#from wrangling_with_nsc
-#where count_strc = 2
-#and salt = 1;
+my $sql = qq[
+drop table if exists wrangling_good_to_go;
+];
 
-#select category, count(*)
-#from wrangle_categories
-#where (diff_mw is null or abs(diff_mw) < 1.0)
-#and (norm_errors is null or norm_errors = 'NoStructure')
-#and (formal_charge is null or formal_charge = 0)
-#group by category;
+my $sth = $dbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
-#select category, count(*)
-#from wrangle_categories
-#where 
-#(diff_mw is null or abs(diff_mw) < 2.0)
-#and (norm_errors is null or norm_errors = 'NoStructure')
-#and (formal_charge is null or formal_charge = 0)
-#group by category;
+$sql = qq[
+create table wrangling_good_to_go
+as
+select 'judgement'::varchar as judgement, *
+from wrangling_with_categories
+limit 0
+];
 
+$sth = $dbh->prepare($sql);
+print "$sql\n\n";
+$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
+my @goodToGoWhereList = ();
+
+push @goodToGoWhereList, ["900K", "where category = '900K'"];
+
+push @goodToGoWhereList, ["one_lbl structure_not_available", "where category = 'one_lbl_only' 
+and ( 
+lbls ilike '%Structure%Not%Available%'
+or lbls ilike '%Structure%Not%Known%'
+or lbls ilike '%Recombinant%Protein%'
+or lbls ilike '%NCI%Singles%'
+or lbls ilike '%Code%No%Only%'
+or lbls ilike '%Code%Number%'
+or lbls ilike '%B%No%Only%'
+)"];
+
+push @goodToGoWhereList, ["multi_lbl structure_not_available", "where category = 'multi_lbl_only'
+and (
+(
+lbls ilike '%structure%'
+and lbls ilike '%not%'
+and lbls ilike '%available%'
+)
+or lbls ilike 'code no. only'
+or lbls ilike 'b no. only'
+or lbls ilike 'unknown'
+)"];
+
+push @goodToGoWhereList, ["one_strc", "where category = 'one_strc' and (abs(diff_mw) < 1 or abs(diff_neut_mw) < 1) and (fc = 0 or fc_neut = 0)"];
+
+push @goodToGoWhereList, ["two_strc_one_salt", "where category = 'two_strc_one_salt' and (abs(diff_mw) < 1 or abs(diff_neut_mw) < 1) and (fc = 0 or fc_neut = 0)"];
+
+#push @goodToGoWhereList
+
+foreach my $i (0 .. $#goodToGoWhereList) {
+	$sql = "insert into wrangling_good_to_go select '$goodToGoWhereList[$i][0]', * from wrangling_with_categories $goodToGoWhereList[$i][1]";
+	$sth = $dbh->prepare($sql);
+	print "$sql\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;	
+}	
+
+#select category, count(*) from wrangling_with_categories group by 1;
+#select judgement, count(*) from wrangling_good_to_go group by 1;
+#select nsc, count(*) from wrangling_good_to_go group by 1 having count(*) > 1; 
 
 # clean up
 $dbh->disconnect();

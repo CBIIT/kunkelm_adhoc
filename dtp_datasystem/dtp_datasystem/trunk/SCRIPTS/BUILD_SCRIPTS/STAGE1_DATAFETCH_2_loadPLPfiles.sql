@@ -12,15 +12,13 @@
 -- #    #  #    #              #   #    #  #    #  #          #
 -- #####   #####                #   ####    ####   #          #
 
-
-
-\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_frags.csv csv header quote as '"' null as ''
-
-\copy rs3_from_plp_frags_ctab from /home/mwkunkel/rs3_from_plp_frags_ctab.tsv csv header delimiter as E'\t' quote as '"' null as ''
-
-\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_nsc.csv csv header quote as '"' null as ''
-
-\copy rs3_from_plp_problems from /home/mwkunkel/rs3_from_plp_problems.csv csv header quote as '"' null as ''
+\copy rs3_from_plp_first_round_tautomer_failures from /home/mwkunkel/rs3_from_plp_first_round_tautomer_failures.csv csv header delimiter as ',' null as ''
+\copy rs3_from_plp_frags from /home/mwkunkel/rs3_from_plp_frags.csv csv header delimiter as ',' null as ''
+\copy rs3_from_plp_nsc from /home/mwkunkel/rs3_from_plp_nsc.csv csv header delimiter as ',' null as ''
+\copy rs3_from_plp_strc_parse_fail from /home/mwkunkel/rs3_from_plp_strc_parse_fail.tsv csv header delimiter as E'\t' null as ''
+\copy rs3_from_plp_frags_ctab from /home/mwkunkel/rs3_from_plp_frags_ctab.tsv csv header delimiter as E'\t' null as ''
+\copy rs3_from_plp_problems from /home/mwkunkel/rs3_from_plp_problems.tsv csv header delimiter as E'\t' null as ''
+\copy rs3_from_plp_validate_structure from /home/mwkunkel/rs3_from_plp_validate_structure.tsv csv header delimiter as E'\t' null as ''
 
 -- ---------------------------------------------------------
 -- ---------------------------------------------------------

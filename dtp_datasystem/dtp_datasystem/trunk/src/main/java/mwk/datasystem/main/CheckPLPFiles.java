@@ -53,11 +53,20 @@ public class CheckPLPFiles {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
+//        String[] tblArr = new String[]{
+//            "/home/mwkunkel/rs3_from_plp_frags.csv", ",", "rs3_from_plp_frags",
+//            "/home/mwkunkel/rs3_from_plp_nsc.csv", ",", "rs3_from_plp_nsc",
+//            "/home/mwkunkel/rs3_from_plp_frags_ctab.tsv", "\t", "rs3_from_plp_frags_ctab",
+//            "/home/mwkunkel/rs3_from_plp_problems.csv", ",", "rs3_from_plp_problems"
+//        };
         String[] tblArr = new String[]{
+            "/home/mwkunkel/rs3_from_plp_first_round_tautomer_failures.csv", ",", "rs3_from_plp_first_round_tautomer_failures",
             "/home/mwkunkel/rs3_from_plp_frags.csv", ",", "rs3_from_plp_frags",
             "/home/mwkunkel/rs3_from_plp_nsc.csv", ",", "rs3_from_plp_nsc",
+            "/home/mwkunkel/rs3_from_plp_strc_parse_fail.tsv", "\t", "rs3_from_plp_strc_parse_fail",
             "/home/mwkunkel/rs3_from_plp_frags_ctab.tsv", "\t", "rs3_from_plp_frags_ctab",
-            "/home/mwkunkel/rs3_from_plp_problems.csv", ",", "rs3_from_plp_problems"
+            "/home/mwkunkel/rs3_from_plp_problems.tsv", "\t", "rs3_from_plp_problems",
+            "/home/mwkunkel/rs3_from_plp_validate_structure.tsv", "\t", "rs3_from_plp_validate_structure"
         };
 
         ArrayList<Tbl> tblList = new ArrayList<Tbl>();
@@ -67,6 +76,10 @@ public class CheckPLPFiles {
         }
 
         String[] colArr = new String[]{
+            "NormalizationActions", "NormalizationActions", "varchar",
+            "ErrorText", "ErrorText", "varchar",
+            "ErrorDetails", "ErrorDetails", "varchar",
+            "Attribute", "Attribute", "varchar",
             "SourceTag", "SourceTag", "varchar",
             "NSC", "NSC", "int",
             "PROD_MF", "PROD_MF", "varchar",
@@ -151,7 +164,14 @@ public class CheckPLPFiles {
             "BadValenceAtoms", "BadValenceAtoms", "varchar",
             "BadStereoAtoms", "BadStereoAtoms", "varchar",
             "NonLinearAlleneAtoms", "NonLinearAlleneAtoms", "varchar",
-            "NonLinearCentralTripleBonds", "NonLinearCentralTripleBonds", "varchar",};
+            "NonLinearCentralTripleBonds", "NonLinearCentralTripleBonds", "varchar",
+            "NonLinearTerminalTripleBonds", "NonLinearTerminalTripleBonds", "varchar",
+            "BadIsotopeAtoms", "BadIsotopeAtoms", "varchar",
+            "CanonicalTautomer", "CanonicalTautomer", "varchar",
+            "ChargeTautomer", "ChargeTautomer", "varchar",
+            "FormalChargeChanged", "FormalChargeChanged", "varchar",
+            "heavyMetal", "heavyMetal", "boolean"
+        };
 
         ArrayList<Col> colList = new ArrayList<Col>();
 
@@ -166,6 +186,14 @@ public class CheckPLPFiles {
 
         for (Tbl t : tblList) {
             doTbl(t.fileName, t.delimiter, t.tableName, colMap);
+        }
+
+        for (Tbl t : tblList) {
+            
+            StringBuilder sb = new StringBuilder();
+            
+            
+            System.out.println("\\copy " + t.tableName + " from " + t.fileName + " csv header delimiter as '" + t.delimiter + "';");
         }
 
     }
@@ -189,7 +217,9 @@ public class CheckPLPFiles {
 
             for (String fileHead : splitLine) {
                 if (!colMap.containsKey(fileHead.toLowerCase())) {
+                    System.out.println();
                     System.out.println("-----------------tbl: " + tableName + " missing col definition for fileHeader: " + fileHead);
+                    System.out.println();
                     foundColList.add(new Col(fileHead, fileHead, "UNK_UNK_UNK"));
                 } else {
                     foundColList.add(colMap.get(fileHead.toLowerCase()));
@@ -210,9 +240,9 @@ public class CheckPLPFiles {
 //            }
             StringBuilder sb = new StringBuilder();
 
-            sb.append("drop table if exists ").append(tableName).append(";").append("\n");
+            sb.append("\n").append("drop table if exists ").append(tableName).append(";").append("\n");
 
-            sb.append("create table ").append(tableName).append("(").append("\n");
+            sb.append("\n").append("create table ").append(tableName).append("(").append("\n");
             for (Col c : foundColList) {
 
                 if (foundColList.indexOf(c) == foundColList.size() - 1) {

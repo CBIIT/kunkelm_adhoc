@@ -110,6 +110,29 @@ public class FetchFromProd {
             System.out.println("Starting: fetchLegacyCmpd");
             fetchLegacyCmpd(pgConn, srcConn);
 
+            
+            
+            System.out.println();
+            System.out.println("Starting: fetchLegacyNscOnly");
+            fetchLegacyNscOnly(pgConn, srcConn);
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);
             e.printStackTrace();
@@ -703,6 +726,104 @@ public class FetchFromProd {
             pgStmt.execute(sqlString);
 
             sqlString = "create index prod_legacy_cmpd_nsc on prod_legacy_cmpd(nsc)";
+            System.out.println(sqlString);
+            pgStmt.execute(sqlString);
+
+        } catch (Exception e) {
+            handleCatch(e, oraStmt, pgStmt, pgPrepStmt, resSet);
+            throw new Exception("Caught and handled Exception.");
+        } finally {
+            handleFinally(oraStmt, pgStmt, pgPrepStmt, resSet);
+        }
+    }
+    
+    public static void fetchLegacyNscOnly(
+            Connection pgConn,
+            Connection srcConn) throws Exception {
+
+        Statement oraStmt = null;
+        Statement pgStmt = null;
+        PreparedStatement pgPrepStmt = null;
+        ResultSet resSet = null;
+        String sqlString;
+        String prepStmtString;
+
+        long startTime = 0;
+        long elapsedTime = 0;
+        int batCnt = 0;
+        int totBatCnt = 0;
+        int cumCnt = 0;
+        int totalBatchSize = 1000;
+
+        try {
+
+            pgStmt = pgConn.createStatement();
+            oraStmt = srcConn.createStatement();
+
+            sqlString = "drop table if exists prod_legacy_nsc_only";
+            System.out.println(sqlString);
+            // pgStmt.execute(sqlString);
+
+            sqlString = "create table prod_legacy_nsc_only ("
+                    + "nsc integer, "
+                    + "cas integer, "
+                    + "conf varchar(32), "
+                    + "distribution_code varchar(32), "
+                    + "molecular_formula varchar, "
+                    + "molecular_weight double precision)";
+            System.out.println(sqlString);
+            pgStmt.execute(sqlString);
+
+            sqlString = "select nsc, cas, conf, distribution_code, mf, mw "
+                    + "from ops$oradis.dis_cmpd "
+                    + "where prefix = 'S' "
+                    + "and nsc is not null ";
+            System.out.println(sqlString);
+            resSet = oraStmt.executeQuery(sqlString);
+            resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
+
+            prepStmtString = "insert into prod_legacy_nsc_only(nsc, cas, conf, distribution_code, molecular_formula, molecular_weight) values(?,?,?,?,?,?)";
+            pgPrepStmt = pgConn.prepareStatement(prepStmtString);
+
+            startTime = System.currentTimeMillis();
+
+            while (resSet.next()) {
+
+                batCnt++;
+
+                pgPrepStmt.setInt(1, resSet.getInt("nsc"));
+                pgPrepStmt.setInt(2, resSet.getInt("cas"));
+                pgPrepStmt.setString(3, resSet.getString("conf"));
+                pgPrepStmt.setString(4, resSet.getString("distribution_code"));
+                pgPrepStmt.setString(5, resSet.getString("mf"));
+                pgPrepStmt.setDouble(6, resSet.getDouble("mw"));
+
+                pgPrepStmt.addBatch();
+
+                if (batCnt > BATCH_FETCH_SIZE) {
+                    totBatCnt += batCnt;
+                    cumCnt += batCnt;
+                    if (totBatCnt > totalBatchSize) {
+                        totBatCnt = 0;
+                        elapsedTime = System.currentTimeMillis() - startTime;
+
+                        startTime = System.currentTimeMillis();
+                        System.out.println("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
+                        lgr.info("batchSize: " + BATCH_FETCH_SIZE + " cumCnt: " + cumCnt + " batchSize: " + totalBatchSize + " in " + elapsedTime + " msec");
+                    }
+                    pgPrepStmt.executeBatch();
+                    pgConn.commit();
+                    batCnt = 0;
+                }
+            }
+            pgPrepStmt.executeBatch();
+            pgConn.commit();
+
+            sqlString = "drop index if exists prod_legacy_nsc_only_nsc";
+            System.out.println(sqlString);
+            pgStmt.execute(sqlString);
+
+            sqlString = "create index prod_legacy_nsc_only_nsc on prod_legacy_nsc_only(nsc)";
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 

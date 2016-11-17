@@ -46,7 +46,8 @@ cmpd_fragment
 cmpd_fragment_p_chem         
 cmpd_fragment_structure      
 cmpd_fragment_type           
-cmpd_inventory               
+cmpd_inventory       
+cmpd_legacy_cmpd        
 cmpd_list                    
 cmpd_list_member             
 cmpd_named_set               

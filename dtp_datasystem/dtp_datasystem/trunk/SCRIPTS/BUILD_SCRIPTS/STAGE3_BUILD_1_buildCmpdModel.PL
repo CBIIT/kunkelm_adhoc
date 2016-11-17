@@ -40,7 +40,7 @@ foreach my $cmpdType(@cmpdTypes){
 	
 	print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
-	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
@@ -50,7 +50,7 @@ drop index if exists nsc_cmpd_type_cmpd_type
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
@@ -58,7 +58,7 @@ create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # set up for cmpd_fragment_type;
 
@@ -68,7 +68,7 @@ values (1, 'not yet categorized', 'placeholder, eventually parent, salt, largest
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
@@ -96,30 +96,6 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
-            Table "public.prod_legacy_cmpd"
-      Column       |         Type          | Modifiers 
--------------------+-----------------------+-----------
- nsc               | integer               | 
- cas               | integer               | 
- conf              | character varying(32) | 
- distribution_code | character varying(32) | 
- molecular_formula | character varying     | 
- molecular_weight  | double precision      | 
- ctab              | text                  | 
-
-datasystemdb=# \d cmpd_legacy_cmpd
-               Table "public.cmpd_legacy_cmpd"
-         Column         |          Type           | Modifiers 
-------------------------+-------------------------+-----------
- id                     | bigint                  | not null
- prod_ctab              | text                    | 
- prod_formula_weight    | double precision        | 
- prod_molecular_formula | character varying(1024) | 
- gif512                 | bytea                   | 
- nsc                    | integer                 | 
-Indexes:
-    "cmpd_legacy_cmpd_pkey" PRIMARY KEY, btree (id)
-
 
 my $tempSql = qq[
 insert into cmpd_legacy_cmpd(id,nsc,prod_molecular_formula,prod_formula_weight,prod_ctab)
@@ -129,7 +105,7 @@ from prod_legacy_cmpd
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 #my $tempSql = qq[
 #update cmpd_legacy_cmpd leg
@@ -140,8 +116,7 @@ $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;
 
 #my $sth = $dbh->prepare($tempSql);
 #print "$tempSql\n\n";
-#$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
-
+###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -188,8 +163,8 @@ the_a_log_p
 )
 select
 fragmentindex,
-molecular_weight,          
-molecular_formula, 
+mw,          
+mf, 
 logd,                     
 num_h_acceptors,  
 num_h_donors,     
@@ -213,7 +188,7 @@ num_stereobonds,
 num_ringassemblies,     
 num_aromaticbonds,     
 num_aromaticrings,      
-formalcharge,             
+fc,             
 alogp 
 from rs3_from_plp_frags
 where labelarray is null
@@ -259,7 +234,7 @@ inchi_auxinfo,
 ctab.ctab,
 can_smi,
 can_taut,
-can_taut_strip_stereo 
+null -- can_taut_strip_stereo 
 from rs3_from_plp_frags frags 
 	left outer join rs3_from_plp_frags_ctab ctab on frags.fragmentindex = ctab.fragmentindex
 where labelarray is null
@@ -489,17 +464,16 @@ create table temp_nsc_agg
 as
 select
 nsc,
-count(molecular_weight) as count_fragments,
-sum(molecular_weight) as formula_weight,
-array_to_string(array_agg(molecular_formula), '.') as formula_molecular_formula,
-sum(formalcharge) as formal_charge
+num_fragments as count_fragments,
+molecular_weight as formula_weight,
+molecular_formula_fragments as formula_molecular_formula,
+formalcharge as formal_charge
 from 
-rs3_from_plp_frags
-where labelarray is null
-and nsc in (
+rs3_from_plp_nsc
+where nsc in (
 select nsc from nsc_to_load    
 )
-group by nsc];
+];
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
@@ -579,8 +553,8 @@ tid.descriptor_string,
 tna.formula_molecular_formula,
 tna.formula_weight,
 
-temp_par_frag.molecular_formula,
-temp_par_frag.molecular_weight,
+temp_par_frag.mf,
+temp_par_frag.mw,
 
 leg.molecular_formula, --prod_molecular_formula
 leg.molecular_weight, --prod_formula_weight

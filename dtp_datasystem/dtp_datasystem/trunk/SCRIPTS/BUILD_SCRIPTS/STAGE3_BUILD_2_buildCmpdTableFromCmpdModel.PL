@@ -414,7 +414,7 @@ my $sth = $dbh->prepare($tempSql);
 ############################################################
 ############################################################
 # temp disable while figuring out why there are tablescans on loj
-############################################################$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

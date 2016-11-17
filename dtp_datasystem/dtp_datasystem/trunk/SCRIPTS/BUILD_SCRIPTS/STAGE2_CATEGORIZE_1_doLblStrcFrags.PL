@@ -168,6 +168,7 @@ foreach my $sqlStmt(@sqlList){
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
 
+
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -203,8 +204,7 @@ push @sqlList,qq[
 create table problem_nsc
 as
 select
-f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw, f.fc, f.mf_neut, f.fw_neut, f.fc_neut,
-f.count_frags as count_frags,
+f.nsc, f.prod_mf, f.prod_mw, f.mf, f.fw, f.fc, f.mf_neut, f.fw_neut, f.fc_neut, f.count_frags as count_frags,
 lbl.count_frags as count_lbl,
 lbl.lbls, 
 strc.count_frags as count_strc,
@@ -234,11 +234,13 @@ CASE when f.count_frags is null THEN 0 ELSE f.count_frags END as count_frags,
 CASE when lbl.count_frags is null THEN 0 ELSE lbl.count_frags END as count_lbl,
 lbl.lbls,
 CASE when strc.count_frags is null THEN 0 ELSE strc.count_frags END as count_strc,
+CASE when rgrp.count_frags is null THEN 0 ELSE rgrp.count_frags END as count_rgrp_frags,
 CASE when salt.count_frags is null THEN 0 ELSE salt.count_frags END as salt
 from
 count_frags f
 left outer join count_lbl_frags lbl on f.nsc = lbl.nsc
 left outer join count_strc_frags strc on f.nsc = strc.nsc
+left outer join count_rgrp_frags rgrp on f.nsc = rgrp.nsc
 left outer join count_salt_frags salt on f.nsc = salt.nsc
 ];
 
@@ -269,6 +271,17 @@ foreach my $sqlStmt (@sqlList){
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
 
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+##------------------------------------------------------------------------------
+
+@sqlList = ();
+
 push @sqlList,qq[
 drop table if exists norm_errors
 ];
@@ -277,27 +290,22 @@ push @sqlList,qq[
 drop table if exists temp_norm
 ];
 
-
 push @sqlList,qq[
 create table temp_norm
 as
 select nsc, 
-array_to_string(array_agg(distinct('errTxt:'||errortext)), ',') as et,
-array_to_string(array_agg(distinct('errDet:'||errordetails)), ',') as ed,
-array_to_string(array_agg(distinct('regErr:'||registercheckerrors)), ',') as ne
+array_to_string(array_agg(distinct('badVal:'||badvalenceatoms)), ',') as bv,
+array_to_string(array_agg(distinct('nrmErr:'||normalizationerrors)), ',') as ne,
+array_to_string(array_agg(distinct('regErr:'||registercheckerrors)), ',') as re
 from rs3_from_plp_frags
-where errortext is not null
-or errordetails is not null
+where badvalenceatoms is not null
+or normalizationerrors is not null
 or registercheckerrors is not null
 group by nsc;
 ];
 
 push @sqlList,qq[
-update temp_norm set et = null where length(et) = 0
-];
-
-push @sqlList,qq[
-update temp_norm set ed = null where length(ed) = 0
+update temp_norm set bv = null where length(bv) = 0
 ];
 
 push @sqlList,qq[
@@ -305,10 +313,14 @@ update temp_norm set ne = null where length(ne) = 0
 ];
 
 push @sqlList,qq[
+update temp_norm set re = null where length(re) = 0
+];
+
+push @sqlList,qq[
 create table norm_errors
 as
 select nsc, 
-coalesce(et,'')||coalesce(ed||',','')||coalesce(ne,'') as norm_errors
+coalesce(bv,'')||coalesce(ne||',','')||coalesce(re,'') as norm_errors
 from temp_norm
 ];
 
@@ -319,7 +331,7 @@ drop table if exists wrangling_with_nsc
 push @sqlList,qq[
 create table wrangling_with_nsc
 as
-select fswt.*, inv.inventory, bio.prod_count_nci60, nerr.norm_errors, prod_mw - fw as diff_mw
+select fswt.*, inv.inventory, bio.prod_count_nci60, nerr.norm_errors, prod_mw - fw as diff_mw, prod_mw - fw_neut as diff_neut_mw
 from frag_stats_with_totals fswt
 left outer join prod_inventory inv on fswt.nsc = inv.nsc 
 left outer join prod_bio_counts bio on fswt.nsc = bio.nsc
@@ -329,6 +341,12 @@ left outer join norm_errors nerr on fswt.nsc = nerr.nsc
 push @sqlList,qq[
 create index wrang_nsc on wrangling_with_nsc(nsc)
 ];
+
+foreach my $sqlStmt (@sqlList){
+	my $sth = $dbh->prepare($sqlStmt);
+	print "$sqlStmt\n\n";
+	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
+}
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------
@@ -462,34 +480,8 @@ foreach my $sqlStmt (@sqlList){
 	$sth->execute() or die "Couldn't execute statement: $sqlStmt " . $sth->errstr;	
 }
 
-
-
-
-
-
 #select nsc, prod_mf, mf, count_frags, total_type_frags from missing_nsc order by 1 asc;
-
 #select nsc, fragmentindex, prod_mf, molecular_formula, can_smi, errordetails from missing_nsc_frags;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

@@ -1,6 +1,6 @@
 psql -d datasystemdb -a < THE_STEP_1_load_app_and_inv_file.sql
 
-psql -d datasystemdb -a < THE_STEP_1_load_app_and_inv_file_REIMPORT.sql
+--psql -d datasystemdb -a < THE_STEP_1_load_app_and_inv_file_REIMPORT.sql
 
 perl THE_STEP_2_stack.PL
 perl THE_STEP_3_generateQCsql.PL

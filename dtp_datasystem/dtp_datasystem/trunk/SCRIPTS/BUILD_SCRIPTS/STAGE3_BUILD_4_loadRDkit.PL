@@ -64,13 +64,12 @@ mol_from_ctab mol)
 ];
 
 push @sqlList, qq[
-insert into rdkit_mol(id, nsc, mol, mol_from_ctab)
+insert into rdkit_mol(id, nsc, mol)
 select
-ct.nsc, ct.nsc, mol_from_smiles(ct.can_taut::cstring), mol_from_ctab(ctab::cstring)
+ct.nsc, ct.nsc, mol_from_smiles(ct.can_taut::cstring)
 from cmpd_table ct, rdkit_validity v
 where ct.nsc = v.nsc
 and v.valid_can_taut = 't'
-and v.valid_ctab = 't'
 ];
 
 push @sqlList, qq[

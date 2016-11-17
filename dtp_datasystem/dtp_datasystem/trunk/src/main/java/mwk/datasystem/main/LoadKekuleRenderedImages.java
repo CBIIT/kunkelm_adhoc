@@ -7,18 +7,12 @@ package mwk.datasystem.main;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.imageio.ImageIO;
-import mwk.datasystem.domain.CmpdLegacyCmpd;
-import mwk.datasystem.domain.CmpdLegacyCmpdImpl;
 import mwk.datasystem.util.HelperCmpdLegacyCmpd;
-import mwk.datasystem.util.HibernateUtil;
-import mwk.datasystem.vo.CmpdLegacyCmpdVO;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -34,7 +28,7 @@ public class LoadKekuleRenderedImages {
 
     public static void insertLegacyCmpds() {
 
-        File path = new File("/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_GIF_FILES");
+        File path = new File("/home/mwkunkel/KEKULE_GIF_FILES");
         File[] files = new File[]{};
 
         try {
