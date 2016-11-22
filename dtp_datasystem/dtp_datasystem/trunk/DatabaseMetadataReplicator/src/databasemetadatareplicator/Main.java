@@ -26,8 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
-        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo srcInfo = connMap.get("datasystemdb_local");
+        ConnectionInfo destInfo = connMap.get("datasystemdb_local");
 
         ArrayList<TableAndWhereClause> tawcList = cj_tawc;
 
@@ -63,6 +63,7 @@ public class Main {
 //            propagateCompare(srcConn, destConn, tawcList);
 //
 //            propagateDataSystem(srcConn, destConn, tawcList);
+
             propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
 //
 //            IndexAndConstraintManagement.create_XXX_Indexes(destConn);
@@ -477,11 +478,11 @@ public class Main {
                     //
                     // NUCLEAR OPTION!
                     // DANGER! DANGER! DANGER!
-                    // "update nsc_cmpd set name = null",
+                    "update nsc_cmpd set name = null",
                     //
                     // NUCLEAR OPTION!
                     // DANGER! DANGER! DANGER!
-                    //"update cmpd_table set name = null",
+                    "update cmpd_table set name = null",
                     //
                     "update nsc_cmpd "
                     + " set name = curated_nsc_smiles_dest.name "
