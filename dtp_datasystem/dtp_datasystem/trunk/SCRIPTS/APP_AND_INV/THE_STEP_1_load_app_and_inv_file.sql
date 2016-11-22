@@ -21,7 +21,6 @@ update app_and_inv set originator = trim(both ' ' from originator);
 update app_and_inv set cas = trim(both ' ' from cas); 
 update app_and_inv set primary_target = trim(both ' ' from primary_target); 
 update app_and_inv set other_targets = trim(both ' ' from other_targets); 
-update app_and_inv set type = trim(both ' ' from type); 
 update app_and_inv set project_code = trim(both ' ' from project_code);
 update app_and_inv
 

@@ -9512,6 +9512,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]a
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/FULL_BUILD_COMMANDS -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/IOA.21NOV2016.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/IOA.21NOV2016.tsv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/PROPAGATE_NOW_IN_METADATAREPLICATOR -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_1_load_app_and_inv_file.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_1_load_app_and_inv_file_REIMPORT.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_2_stack.PL -text
@@ -9521,8 +9522,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_5_app_and_inv_t
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Jun01at05-44-EDT.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Jun01at05-52-EDT.csv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/curatedNscs[!!-~]2016Mar15at10-51-EDT.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/propagate.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/propagateToDataSystemModel.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qc.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/qcOnCasNumbers.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/DATA_SYSTEM_BUILD_PARAMETERS.pm -text
