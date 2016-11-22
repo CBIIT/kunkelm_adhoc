@@ -9510,6 +9510,8 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/loadCmax.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]05_25_2016.xlsx -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/Combined[!!-~]IOA[!!-~]and[!!-~]AOD[!!-~]List[!!-~]11_10_2016[!!-~]for[!!-~]MK.xlsx -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/FULL_BUILD_COMMANDS -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/IOA.21NOV2016.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/IOA.21NOV2016.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_1_load_app_and_inv_file.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_1_load_app_and_inv_file_REIMPORT.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/THE_STEP_2_stack.PL -text

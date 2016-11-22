@@ -1,19 +1,18 @@
 drop table if exists app_and_inv;
 
 create table app_and_inv(
+nsc int,
+cas varchar,
 generic_name varchar,
 preferred_name varchar,
 alias_names varchar,
 originator varchar,
-nsc int,
-cas varchar,
+project_code varchar,
 primary_target varchar,
-other_targets varchar,
-type varchar,
-project_code varchar
+other_targets varchar
 );
 
-\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/APP_AND_INV_10_NOV_2016.csv' csv header null as ''
+\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/IOA.21NOV2016.tsv' csv header null as '' quote as '"' delimiter as E'\t'
 
 update app_and_inv set generic_name = trim(both ' ' from generic_name); 
 update app_and_inv set preferred_name = trim(both ' ' from preferred_name); 

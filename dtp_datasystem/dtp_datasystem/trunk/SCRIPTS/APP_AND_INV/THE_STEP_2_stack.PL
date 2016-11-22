@@ -26,7 +26,7 @@ my @sqlList = ();
 my $sql;
 
 my @multiEntryFields = ("alias_names", "other_targets");
-my @singleEntryFields = ("generic_name", "preferred_name", "originator", "primary_target", "type", "project_code");
+my @singleEntryFields = ("generic_name", "preferred_name", "originator", "primary_target", "project_code");
 my $whichField;
 
 #  ####   ######   #####  #    #  #####
