@@ -12,7 +12,7 @@ primary_target varchar,
 other_targets varchar
 );
 
-\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/IOA.21NOV2016.tsv' csv header null as '' quote as '"' delimiter as E'\t'
+\copy app_and_inv from '/home/mwkunkel/PROJECTS/CURRENT/dtp_datasystem/dtp_datasystem/SCRIPTS/APP_AND_INV/IOA_AOD_06Dec2016.tsv' csv header null as '' quote as '"' delimiter as E'\t'
 
 update app_and_inv set generic_name = trim(both ' ' from generic_name); 
 update app_and_inv set preferred_name = trim(both ' ' from preferred_name); 
