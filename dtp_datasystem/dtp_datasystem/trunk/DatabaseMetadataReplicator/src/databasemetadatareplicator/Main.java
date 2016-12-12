@@ -26,8 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ConnectionInfo srcInfo = connMap.get("datasystemdb_local");
-        ConnectionInfo destInfo = connMap.get("datasystemdb_local");
+        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
 
         ArrayList<TableAndWhereClause> tawcList = cj_tawc;
 
@@ -63,7 +63,6 @@ public class Main {
 //            propagateCompare(srcConn, destConn, tawcList);
 //
 //            propagateDataSystem(srcConn, destConn, tawcList);
-
             propagateCuratedNsc(srcConn, destConn, destInfo.doCompareTables, destInfo.doDataSystemTables);
 //
 //            IndexAndConstraintManagement.create_XXX_Indexes(destConn);
@@ -394,15 +393,52 @@ public class Main {
             System.out.println();
             srcStmt.executeUpdate(srcSqlStr);
 
+            // collate targets and aliases
+            srcSqlStr = "drop table if exists collated_targets";
+            System.out.println(srcSqlStr);
+            System.out.println();
+            srcStmt.executeUpdate(srcSqlStr);
+
+            srcSqlStr = "create table collated_targets as "
+                    + " select nsc.nsc, "
+                    + " array_to_string(array_agg(sec.value), ';') as sec_targets "
+                    + " from curated_nsc nsc "
+                    + " left outer join curated_nsc_to_secondary_targe sec_join on nsc.id = sec_join.curated_nsc_to_secondary_ta_fk "
+                    + "      inner join curated_target sec on sec_join.secondary_targets_fk = sec.id "
+                    + " group by nsc.nsc";
+            System.out.println(srcSqlStr);
+            System.out.println();
+            srcStmt.executeUpdate(srcSqlStr);
+
+            srcSqlStr = "drop table if exists collated_aliases";
+            System.out.println(srcSqlStr);
+            System.out.println();
+            srcStmt.executeUpdate(srcSqlStr);
+
+            srcSqlStr = "create table collated_aliases as "
+                    + " select nsc.nsc, "
+                    + " array_to_string(array_agg(alia.value), ';') as aliases "
+                    + " from curated_nsc nsc "
+                    + " left outer join aliases2curated_nsc_to_aliases sec_join on nsc.id = sec_join.curated_nsc_to_aliases_fk "
+                    + "      inner join curated_name alia on sec_join.aliases_fk = alia.id "
+                    + " group by nsc.nsc";
+            System.out.println(srcSqlStr);
+            System.out.println();
+            srcStmt.executeUpdate(srcSqlStr);
+
             // COALESCE to pick generic_name first then preferred_name
-            srcSqlStr = "create table curated_nsc_smiles_src "
+            srcSqlStr = "create table curated _nsc_smiles_src "
                     + " as "
-                    + " select nsc.nsc, coalesce(gnam.value, pnam.value, '') as name, trg.value as primary_target, ct.can_smi as smiles "
+                    + " select nsc.nsc, "
+                    + " coalesce(gnam.value, pnam.value, '') as name, "
+                    + " trg.value as primary_target, "
+                    + " ct.can_smi as smiles "
                     + " from curated_nsc nsc "
                     + " left outer join curated_name gnam on nsc.generic_name_fk = gnam.id "
                     + " left outer join curated_name pnam on nsc.preferred_name_fk = pnam.id "
                     + " left outer join curated_target trg on nsc.primary_target_fk = trg.id "
-                    + " left outer join cmpd_table ct on nsc.nsc = ct.nsc ";
+                    + " left outer join cmpd_table ct on nsc.nsc = ct.nsc "
+                    + " group by nsc.nsc";
 
             System.out.println(srcSqlStr);
             System.out.println();
@@ -487,14 +523,14 @@ public class Main {
                     "update nsc_cmpd "
                     + " set name = curated_nsc_smiles_dest.name "
                     + " from curated_nsc_smiles_dest "
-                    + " where nsc_cmpd.nsc = curated_nsc_smiles_dest.nsc "
-                    + " and nsc_cmpd.name is null",
+                    + " where nsc_cmpd.nsc = curated_nsc_smiles_dest.nsc ",
+                    // + " and nsc_cmpd.name is null",
                     //
                     "update cmpd_table "
                     + " set name = curated_nsc_smiles_dest.name "
                     + " from curated_nsc_smiles_dest "
-                    + " where cmpd_table.nsc = curated_nsc_smiles_dest.nsc "
-                    + " and cmpd_table.name is null",
+                    + " where cmpd_table.nsc = curated_nsc_smiles_dest.nsc ",
+                    // + " and cmpd_table.name is null",
                     //
                     //  #####    ##    #####    ####   ######   #####   ####
                     //    #     #  #   #    #  #    #  #          #    #
