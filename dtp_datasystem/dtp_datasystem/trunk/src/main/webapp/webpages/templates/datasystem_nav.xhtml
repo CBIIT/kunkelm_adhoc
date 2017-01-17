@@ -69,8 +69,11 @@
                 ajax="false"
                 action="/webpages/listLogic?faces-redirect=true"/>
 
+                
+                
      <p:menuitem value="Curated NSC"
-                ajax="false"
+                ajax="false"                
+                rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"                
                 action="/webpages/curatedNscTable?faces-redirect=true"/>
     
     <f:facet name="options">
@@ -79,6 +82,12 @@
                        style="color: blue;"
                        action="#{sessionController.logout()}"
                        value="Logout #{sessionController.loggedUser}"/>
+
+                       <p:commandButton ajax="false"
+                       style="color: blue;"
+                       rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                       action="#{sessionController.goPublic()}"
+                       value="Become PUBLIC"/>
 
     </f:facet>
 

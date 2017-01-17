@@ -56,6 +56,13 @@ public class SessionController implements Serializable {
     init();
 
   }
+  
+  public String goPublic(){
+      if (this.loggedUser.startsWith("DTP_")){
+          this.loggedUser = "PUBLIC";
+      }
+      return "/webpages/availableLists.xhtml?faces-redirect=true";
+  }
 
   public String logout() {
     System.out.println("Now in logout in SessionController");
