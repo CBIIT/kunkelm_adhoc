@@ -17,7 +17,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 //import javax.faces.context.FacesContext;
 import mwk.compare.jsonshuttle.CompareConfig;
-import mwk.compare.vo.AffymetrixIdentVO;
+import mwk.compare.vo.AffyExonIdentVO;
 import mwk.compare.vo.NanoStringIdentVO;
 import mwk.compare.vo.SyntheticIdentVO;
 import mwk.datasystem.vo.CmpdListMemberVO;
@@ -78,7 +78,7 @@ public class LaunchingController implements Serializable {
       compConf.getSynthIdents().add(siVO);
     }
 
-    // AffymetrixIdentVO
+    // AffyExonIdentVO
     String[] genSymArr = new String[]{
       "OR4F16",
       "FAM87A",
@@ -88,9 +88,9 @@ public class LaunchingController implements Serializable {
     };
 
     for (String s : genSymArr) {
-      AffymetrixIdentVO aiVO = new AffymetrixIdentVO();
+      AffyExonIdentVO aiVO = new AffyExonIdentVO();
       aiVO.setGeneSymbol(s);
-      compConf.getAffyIdents().add(aiVO);
+      compConf.getAffyExonIdents().add(aiVO);
     }
 
     String[] moltIdArr = new String[]{
@@ -102,9 +102,9 @@ public class LaunchingController implements Serializable {
     };
 
     for (String s : moltIdArr) {
-      AffymetrixIdentVO aiVO = new AffymetrixIdentVO();
+      AffyExonIdentVO aiVO = new AffyExonIdentVO();
       aiVO.setMoltId(s);
-      compConf.getAffyIdents().add(aiVO);
+      compConf.getAffyExonIdents().add(aiVO);
     }
 
     // NanoStringIdentVO

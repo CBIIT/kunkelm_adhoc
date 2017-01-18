@@ -21,6 +21,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import mwk.datasystem.controllers.SearchCriteriaBean;
 import mwk.datasystem.domain.CmpdFragment;
 import mwk.datasystem.domain.CmpdImpl;
+import mwk.datasystem.domain.NscCmpd;
+import mwk.datasystem.domain.NscCmpdImpl;
 import mwk.datasystem.vo.CmpdFragmentVO;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -31,7 +33,6 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.impl.SessionImpl;
-import org.hibernate.jdbc.Work;
 
 /**
  *
@@ -1216,7 +1217,7 @@ public class HelperCmpd {
 
             if (listIsUsable(qo.getTargets())) {
                 crit.createAlias("cmpdTargets", "targets");
-                disj.add(Restrictions.in("targets.target", qo.getTargets()));
+                disj.add(Restrictions.in("targets.target", qo.getTargets()));                
             }
 
             // add the disjunction

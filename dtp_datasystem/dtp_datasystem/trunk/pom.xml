@@ -185,7 +185,7 @@
         <dependency>
             <groupId>mwk.compare</groupId>
             <artifactId>compare-common</artifactId>
-            <version>20160213</version>
+            <version>20170114</version>
         </dependency>
                 
         <dependency>
