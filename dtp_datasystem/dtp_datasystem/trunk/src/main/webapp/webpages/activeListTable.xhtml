@@ -82,6 +82,7 @@
                       resizableColumns="true" 
                       draggableColumns="true"
                       draggableRows="true"
+                      editable="true"                      
                       widgetVar="activeListTblWidgetVar"
                       var="listMember"                       
                       value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
@@ -106,9 +107,18 @@
                 <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>                    
             </f:facet>
 
+            <p:ajax event="rowEdit" listener="#{listContentController.onRowEdit}" update=":datasystemForm:messages" />
+            <p:ajax event="rowEditCancel" listener="#{listContentController.onRowCancel}" update=":datasystemForm:messages" />
+            <p:ajax event="cellEdit" listener="#{listContentController.onCellEdit}" update=":datasystemForm:messages" />
+
             <p:column selectionMode="multiple" 
                       style="width:4%" 
                       exportable="false"/>
+
+            <p:column style="width:32px"
+                      exportable="false">
+                <p:rowEditor rendered="#{listManagerController.listManagerBean.activeList.listOwner eq sessionController.loggedUser and listManagerController.listManagerBean.activeList.shareWith ne 'EVERYONE'}"/>
+            </p:column>
 
             <p:column headerText="NSC" 
                       resizable="true"
@@ -116,14 +126,30 @@
                 <h:outputText value="#{cmpd.nsc}"/>
             </p:column>   
 
+            <p:column headerText="List Member Id"
+                      resizable="true"
+                      sortBy="#{listMember.id}"
+                      filterBy="#{listMember.id}"
+                      filterMatchMode="contains">        
+                <h:outputText value="#{empty listMember.id || listMember.id lt 0 ? 'NOT SAVED' : listMember.id}"
+                              style="color: #{empty listMember.id || listMember.id lt 0 ? 'red' : 'black'}"/>        
+            </p:column> 
+
             <p:column headerText="List Member Comment"
                       resizable="true"
                       sortBy="#{listMember.listMemberComment}"
                       filterBy="#{listMember.listMemberComment}"
                       filterMatchMode="contains">        
-                <h:outputText value="#{listMember.listMemberComment}"/>        
+                
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{listMember.listMemberComment}" /></f:facet>
+                    <f:facet name="input"><p:inputText id="listMemberCommentInput" value="#{listMember.listMemberComment}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+                
             </p:column> 
 
+
+            #{listMember.id}
             <ui:fragment rendered="#{sessionController.loggedUser != 'PUBLIC'}">
 
                 <p:column headerText="DISCREET" 
@@ -193,12 +219,13 @@
                 </p:commandButton>
 
                 <p:commandButton value="WB"
+                                 rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                  ajax="false" 
                                  title="Fragments Workbench"
                                  action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
 
                 </p:commandButton>
-                
+
             </p:column>
 
             <!--

@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -19,8 +20,11 @@ import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperCmpdList;
 import mwk.datasystem.util.HelperCmpdListMember;
 import mwk.datasystem.util.MoleculeParser;
+import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import org.apache.commons.io.IOUtils;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -93,6 +97,35 @@ public class ListContentController implements Serializable {
         // placeholder action to populate selectedListMembers
         return null;
     }
+    
+      public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("List Member Edited", ((CmpdListMemberVO) event.getObject()).getId().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // HelperCmpdList.updateCmpdList((CmpdListVO) event.getObject(), sessionController.getLoggedUser());
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("List Member Edit Cancelled", ((CmpdListMemberVO) event.getObject()).getId().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+
+        String colHeader = event.getColumn().getFacet("header").toString();
+
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if (newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, colHeader + "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
+    }
+
+    
+    
+    
 
     /**
      *
@@ -481,13 +514,15 @@ public class ListContentController implements Serializable {
             System.out.println("Content of searchCriteriaBean:");
             scb.printCriteriaLists();
         }
+        
+//        // persist the list
+//        Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
+//        // fetch the list            
+//        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
 
-        Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
-
-        // now fetch the list            
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
-
-        listManagerController.getListManagerBean().availableLists.add(clVO);
+        CmpdListVO clVO = HelperCmpd.searchBySearchCriteriaBean(listName, scb, sessionController.getLoggedUser());
+        
+//        listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
 
         sessionController.configurationBean.performUpdateColumns();

@@ -45,7 +45,7 @@
       <h:inputTextarea value="#{listContentController.searchCriteriaBean.cmpdNamedSetTextArea}" id="cmpdNamedSetTextArea_id" cols="15" rows="5"/>
     </p:panel>
 
-    <p:panel style="display:inline-block;border: none;"> 
+    <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display:inline-block;border: none;"> 
       <h:outputLabel for="projectCodeTextArea_id" value="Project Code Text"/>
       <br/>
       <h:inputTextarea value="#{listContentController.searchCriteriaBean.projectCodeTextArea}" id="projectCodeTextArea_id" cols="15" rows="5"/>
@@ -63,7 +63,7 @@
       <h:inputTextarea value="#{listContentController.searchCriteriaBean.targetTextArea}" id="targetTextArea_id" cols="15" rows="5"/>
     </p:panel>
     
-    <p:panel style="display:inline-block;border: none;"> 
+    <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display:inline-block;border: none;"> 
       <h:outputLabel for="mtxtTextArea_id" value="Mtxt Text"/>
       <br/>
       <h:inputTextarea value="#{listContentController.searchCriteriaBean.mtxtTextArea}" id="mtxtTextArea_id" cols="15" rows="5"/>

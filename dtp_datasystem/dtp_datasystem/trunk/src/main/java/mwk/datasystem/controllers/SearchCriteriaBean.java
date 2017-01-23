@@ -22,6 +22,8 @@ import javax.faces.bean.SessionScoped;
 public class SearchCriteriaBean implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
+  
+  public static final Boolean DEBUG = Boolean.TRUE;
 
   private List<String> aliases;
   private List<String> cases;
@@ -155,10 +157,12 @@ public class SearchCriteriaBean implements Serializable {
 
   public void printCriteriaLists() {
 
+      if (DEBUG){
     System.out.println("------------------ BEGIN testing reflection:");
     System.out.println("------------------ BEGIN testing reflection:");
     System.out.println("------------------ BEGIN testing reflection:");
-
+      }
+      
     try {
 
       Class thisClass = this.getClass();
@@ -188,9 +192,11 @@ public class SearchCriteriaBean implements Serializable {
       accx.printStackTrace();
     }
 
+    if (DEBUG){
     System.out.println("------------------ END testing reflection:");
     System.out.println("------------------ END testing reflection:");
     System.out.println("------------------ END testing reflection:");
+    }
 
   }
 

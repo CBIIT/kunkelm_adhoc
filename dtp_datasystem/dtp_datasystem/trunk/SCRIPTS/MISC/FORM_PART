@@ -1,0 +1,267 @@
+
+  		<p:panel header="Molecular Weight" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_molecularWeight_id" value="Molecular Weight MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_molecularWeight}" id="min_molecularWeight_id"/>
+  		<br/>
+  		<h:outputLabel for="max_molecularWeight_id" value="Molecular Weight MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_molecularWeight}" id="max_molecularWeight_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Molecular Formula" style="display:inline-block;border: none;">
+  		<h:outputLabel for="molecularFormula_id" value="molecularFormula"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.molecularFormula}" id="molecularFormula_id"/>                
+  		</p:panel>
+  		
+  		<p:panel header="HBond Acceptors count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countHydBondAcceptors_id" value="HBond Acceptors count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countHydBondAcceptors}" id="min_countHydBondAcceptors_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countHydBondAcceptors_id" value="HBond Acceptors count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countHydBondAcceptors}" id="max_countHydBondAcceptors_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="HBond Donors count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countHydBondDonors_id" value="HBond Donors count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countHydBondDonors}" id="min_countHydBondDonors_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countHydBondDonors_id" value="HBond Donors count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countHydBondDonors}" id="max_countHydBondDonors_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Formal Charge" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_formalCharge_id" value="Formal Charge MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_formalCharge}" id="min_formalCharge_id"/>
+  		<br/>
+  		<h:outputLabel for="max_formalCharge_id" value="Formal Charge MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_formalCharge}" id="max_formalCharge_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="aLogP" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_theALogP_id" value="aLogP MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_theALogP}" id="min_theALogP_id"/>
+  		<br/>
+  		<h:outputLabel for="max_theALogP_id" value="aLogP MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_theALogP}" id="max_theALogP_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="logD" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_logD_id" value="logD MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_logD}" id="min_logD_id"/>
+  		<br/>
+  		<h:outputLabel for="max_logD_id" value="logD MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_logD}" id="max_logD_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Surface Area" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_surfaceArea_id" value="Surface Area MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_surfaceArea}" id="min_surfaceArea_id"/>
+  		<br/>
+  		<h:outputLabel for="max_surfaceArea_id" value="Surface Area MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_surfaceArea}" id="max_surfaceArea_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Solubility" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_solubility_id" value="Solubility MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_solubility}" id="min_solubility_id"/>
+  		<br/>
+  		<h:outputLabel for="max_solubility_id" value="Solubility MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_solubility}" id="max_solubility_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countAtoms_id" value="Atoms count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countAtoms}" id="min_countAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countAtoms_id" value="Atoms count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countAtoms}" id="max_countAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms Hydrogen count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countHydrogenAtoms_id" value="Atoms Hydrogen count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countHydrogenAtoms}" id="min_countHydrogenAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countHydrogenAtoms_id" value="Atoms Hydrogen count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countHydrogenAtoms}" id="max_countHydrogenAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms Metal count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countMetalAtoms_id" value="Atoms Metal count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countMetalAtoms}" id="min_countMetalAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countMetalAtoms_id" value="Atoms Metal count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countMetalAtoms}" id="max_countMetalAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms Heavy count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countHeavyAtoms_id" value="Atoms Heavy count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countHeavyAtoms}" id="min_countHeavyAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countHeavyAtoms_id" value="Atoms Heavy count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countHeavyAtoms}" id="max_countHeavyAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms Positive count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countPositiveAtoms_id" value="Atoms Positive count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countPositiveAtoms}" id="min_countPositiveAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countPositiveAtoms_id" value="Atoms Positive count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countPositiveAtoms}" id="max_countPositiveAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms Negative count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countNegativeAtoms_id" value="Atoms Negative count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countNegativeAtoms}" id="min_countNegativeAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countNegativeAtoms_id" value="Atoms Negative count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countNegativeAtoms}" id="max_countNegativeAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Atoms Stereo count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countStereoAtoms_id" value="Atoms Stereo count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countStereoAtoms}" id="min_countStereoAtoms_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countStereoAtoms_id" value="Atoms Stereo count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countStereoAtoms}" id="max_countStereoAtoms_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countBonds_id" value="Bonds count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countBonds}" id="min_countBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countBonds_id" value="Bonds count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countBonds}" id="max_countBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Aromatic count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countAromaticBonds_id" value="Bonds Aromatic count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countAromaticBonds}" id="min_countAromaticBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countAromaticBonds_id" value="Bonds Aromatic count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countAromaticBonds}" id="max_countAromaticBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Single count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countSingleBonds_id" value="Bonds Single count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countSingleBonds}" id="min_countSingleBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countSingleBonds_id" value="Bonds Single count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countSingleBonds}" id="max_countSingleBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Double count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countDoubleBonds_id" value="Bonds Double count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countDoubleBonds}" id="min_countDoubleBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countDoubleBonds_id" value="Bonds Double count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countDoubleBonds}" id="max_countDoubleBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Triple count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countTripleBonds_id" value="Bonds Triple count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countTripleBonds}" id="min_countTripleBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countTripleBonds_id" value="Bonds Triple count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countTripleBonds}" id="max_countTripleBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Rotatable count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countRotatableBonds_id" value="Bonds Rotatable count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countRotatableBonds}" id="min_countRotatableBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countRotatableBonds_id" value="Bonds Rotatable count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countRotatableBonds}" id="max_countRotatableBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Ring count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countRingBonds_id" value="Bonds Ring count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countRingBonds}" id="min_countRingBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countRingBonds_id" value="Bonds Ring count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countRingBonds}" id="max_countRingBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Bonds Stereo count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countStereoBonds_id" value="Bonds Stereo count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countStereoBonds}" id="min_countStereoBonds_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countStereoBonds_id" value="Bonds Stereo count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countStereoBonds}" id="max_countStereoBonds_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Rings Aromatic count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countAromaticRings_id" value="Rings Aromatic count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countAromaticRings}" id="min_countAromaticRings_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countAromaticRings_id" value="Rings Aromatic count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countAromaticRings}" id="max_countAromaticRings_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Ring Assemblies count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countRingAssemblies_id" value="Ring Assemblies count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countRingAssemblies}" id="min_countRingAssemblies_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countRingAssemblies_id" value="Ring Assemblies count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countRingAssemblies}" id="max_countRingAssemblies_id"/>
+  		</p:panel>
+  		
+  		<p:panel header="Rings count" style="display:inline-block;border: none;">
+  		<h:outputLabel for="min_countRings_id" value="Rings count MIN"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.min_countRings}" id="min_countRings_id"/>
+  		<br/>
+  		<h:outputLabel for="max_countRings_id" value="Rings count MAX"/>
+  		<br/>
+  		<h:inputText value="#{listContentController.searchCriteriaBean.max_countRings}" id="max_countRings_id"/>
+  		</p:panel>
+  		
