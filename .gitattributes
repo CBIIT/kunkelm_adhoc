@@ -9496,14 +9496,6 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/makeListsByPossibleSalts.P
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/possibleSalts.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/possible_quaternary.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/wrangling.PL -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax[!!-~]02.03.15.xls -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax[!!-~]07.24.15.xls -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax02.03.15.biologicals.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/Cmax02.03.15.smallmol.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.04july2015.biologicals.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.04july2015.smallmol.csv -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/cmax.mwk.10oct2015.xls -text
-dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/CMAX/loadCmax.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/FULL_BUILD_COMMANDS -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/IOA_AOD_06Dec2016.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/APP_AND_INV/IOA_AOD_06Dec2016.xls -text
