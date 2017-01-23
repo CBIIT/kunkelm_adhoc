@@ -9542,6 +9542,15 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/nuke.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/salts_from_dz.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/testParams.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/updateCmpdFragmentsCmpdKnownSalt.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CHEMBL_TARGETS/targets.sql -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/Cmax[!!-~]02.03.15.xls -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/Cmax[!!-~]07.24.15.xls -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/Cmax02.03.15.biologicals.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/Cmax02.03.15.smallmol.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/cmax.04july2015.biologicals.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/cmax.04july2015.smallmol.csv -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/cmax.mwk.10oct2015.xls -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/CMAX/loadCmax.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/FORM_PART -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/POST_LOAD_doLblStrcFrags.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/MISC/POST_LOAD_makeQCwithNSC.PL -text
