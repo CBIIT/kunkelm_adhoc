@@ -17,7 +17,8 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
+# my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=oncology;host=ncidb-d115-d;port=5474", "oncology", "OnC0L029302802K1t", {'RaiseError' => 1});
 
 my @sqlList = ();
 
@@ -128,7 +129,7 @@ $sth->execute() or die "Couldn't execute statement: $sql " . $sth->errstr;
 
 my $valCanSmi; my $validCanTaut; my $validCanTautStripStereo; my $valid_ctab; my $cnt;
 $sth -> bind_columns(\$valCanSmi, \$validCanTaut, \$validCanTautStripStereo, \$valid_ctab, \$cnt);
-print "valCanSmi validCanTaut validCanTautStripStereo\n";
+# print "valCanSmi validCanTaut validCanTautStripStereo\n";
 while ($sth->fetch()){
 	print "$valCanSmi $validCanTaut $validCanTautStripStereo $valid_ctab $cnt\n";	
 }
