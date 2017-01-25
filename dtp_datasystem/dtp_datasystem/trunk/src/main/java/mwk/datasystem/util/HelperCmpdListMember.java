@@ -34,7 +34,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class HelperCmpdListMember {
 
-  private static Boolean DEBUG = Boolean.TRUE;
+  private static Boolean DEBUG = Boolean.FALSE;
 
   public static void deleteCmpdListMembers(
           CmpdListVO targetList,
