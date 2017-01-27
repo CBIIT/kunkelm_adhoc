@@ -129,6 +129,15 @@
                 <br/>
                 <h:outputText value="#{list.cmpdListId}" />  
             </p:column> 
+            
+             <p:column headerText="CmpdListId"
+                      resizable="true"
+                      sortBy="#{list.id}"
+                      filterBy="#{list.id}"
+                      filterMatchMode="contains">        
+                <h:outputText value="#{empty list.id || list.id lt 0 ? 'NOT SAVED' : list.id}"
+                              style="color: #{empty list.id || list.id lt 0 ? 'red' : 'black'}"/>        
+            </p:column> 
 
             <p:column headerText="ListName"  
                       width="40%"

@@ -40,6 +40,14 @@ public class ListContentController implements Serializable {
 
     static final Boolean DEBUG = Boolean.TRUE;
 
+// reach-through to searchCriteriaBean
+    @ManagedProperty(value = "#{searchCriteriaBean}")
+    private SearchCriteriaBean searchCriteriaBean;
+
+    public void setSearchCriteriaBean(SearchCriteriaBean searchCriteriaBean) {
+        this.searchCriteriaBean = searchCriteriaBean;
+    }
+
     // reach-through to applicationScopeBean
     @ManagedProperty(value = "#{applicationScopeBean}")
     private ApplicationScopeBean applicationScopeBean;
@@ -63,7 +71,7 @@ public class ListContentController implements Serializable {
     public void setListManagerController(ListManagerController listManagerController) {
         this.listManagerController = listManagerController;
     }
-    
+
     // reach-through to tanimotoController
     @ManagedProperty(value = "#{tanimotoController}")
     private TanimotoController tanimotoController;
@@ -72,15 +80,10 @@ public class ListContentController implements Serializable {
         this.tanimotoController = tanimotoController;
     }
 
-    private SearchCriteriaBean scb;
-
-    public SearchCriteriaBean getSearchCriteriaBean() {
-        return scb;
-    }
-
     public ListContentController() {
-        if (this.scb == null) {
-            this.scb = new SearchCriteriaBean();
+        if (this.searchCriteriaBean == null) {
+            System.out.println("searchCriteriaBean is null in ListContentController.constructor");
+            this.searchCriteriaBean = new SearchCriteriaBean();
         }
     }
 
@@ -92,13 +95,13 @@ public class ListContentController implements Serializable {
         // placeholder action to populate selectedListMembers
         return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
     }
-    
-    public String fakeAction(){
+
+    public String fakeAction() {
         // placeholder action to populate selectedListMembers
         return null;
     }
-    
-      public void onRowEdit(RowEditEvent event) {
+
+    public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("List Member Edited", ((CmpdListMemberVO) event.getObject()).getId().toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
         // HelperCmpdList.updateCmpdList((CmpdListVO) event.getObject(), sessionController.getLoggedUser());
@@ -122,10 +125,6 @@ public class ListContentController implements Serializable {
         }
 
     }
-
-    
-    
-    
 
     /**
      *
@@ -423,13 +422,13 @@ public class ListContentController implements Serializable {
 //  }
 //
     public String performStartOver() {
-        scb.reset();
-        return "/webpages/createList?faces-redirect=true";
+        searchCriteriaBean.reset();
+        return "/webpages/searchCmpds?faces-redirect=true";
     }
 
     public String performCreateListBySearch() {
 
-        scb.newSearch();
+        searchCriteriaBean.newSearch();
 
         // parse text areas
         String[] splitStrings = null;
@@ -438,91 +437,163 @@ public class ListContentController implements Serializable {
 
         String delimiters = "[\\n\\r\\t,]+";
 
-        splitStrings = scb.getAliasTextArea().split(delimiters);
+//  #####  ######  #    #   #####            ##    #####   ######    ##     ####
+//    #    #        #  #      #             #  #   #    #  #        #  #   #
+//    #    #####     ##       #            #    #  #    #  #####   #    #   ####
+//    #    #         ##       #            ######  #####   #       ######       #
+//    #    #        #  #      #            #    #  #   #   #       #    #  #    #
+//    #    ######  #    #     #            #    #  #    #  ######  #    #   ####
+        splitStrings = searchCriteriaBean.getAliasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getAliases().add(fixedString);
+                searchCriteriaBean.getAliases().add(fixedString);
             }
         }
-        splitStrings = scb.getCasTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getCasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getCases().add(fixedString);
+                searchCriteriaBean.getCases().add(fixedString);
             }
         }
-        splitStrings = scb.getCmpdNamedSetTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getCmpdNamedSetTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getCmpdNamedSets().add(fixedString);
+                searchCriteriaBean.getCmpdNamedSets().add(fixedString);
             }
         }
-        splitStrings = scb.getDrugNameTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getDrugNameTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getDrugNames().add(fixedString);
+                searchCriteriaBean.getDrugNames().add(fixedString);
             }
         }
-        splitStrings = scb.getMtxtTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getMtxtTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getMtxtPieces().add(fixedString);
+                searchCriteriaBean.getMtxtPieces().add(fixedString);
             }
         }
-        splitStrings = scb.getNscTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getNscTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].replaceAll("[^0-9]", "");
             if (fixedString.length() > 0) {
-                scb.getNscs().add(fixedString);
+                searchCriteriaBean.getNscs().add(fixedString);
             }
         }
-        splitStrings = scb.getPlateTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getPlateTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getPlates().add(fixedString);
+                searchCriteriaBean.getPlates().add(fixedString);
             }
         }
-        splitStrings = scb.getProjectCodeTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getProjectCodeTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getProjectCodes().add(fixedString);
+                searchCriteriaBean.getProjectCodes().add(fixedString);
             }
         }
-        splitStrings = scb.getPseudoAtomsTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getPseudoAtomsTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getPseudoAtomsPieces().add(fixedString);
+                searchCriteriaBean.getPseudoAtomsPieces().add(fixedString);
             }
         }
-        splitStrings = scb.getTargetTextArea().split(delimiters);
+        splitStrings = searchCriteriaBean.getTargetTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
             if (fixedString.length() > 0) {
-                scb.getTargets().add(fixedString);
+                searchCriteriaBean.getTargets().add(fixedString);
+            }
+        }
+
+//    ##    #    #   #####   ####            ####    ####   #    #  #####
+//   #  #   #    #     #    #    #          #    #  #    #  ##  ##  #    #
+//  #    #  #    #     #    #    #          #       #    #  # ## #  #    #
+//  ######  #    #     #    #    #          #       #    #  #    #  #####
+//  #    #  #    #     #    #    #          #    #  #    #  #    #  #
+//  #    #   ####      #     ####            ####    ####   #    #  #
+//
+        if (searchCriteriaBean.getAliasesFromAutoComp() != null && !searchCriteriaBean.getAliasesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getAliasesFromAutoComp()) {
+                searchCriteriaBean.getAliases().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getCasesFromAutoComp() != null && !searchCriteriaBean.getCasesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getCasesFromAutoComp()) {
+                searchCriteriaBean.getCases().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getCmpdNamedSetsFromAutoComp() != null && !searchCriteriaBean.getCmpdNamedSetsFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getCmpdNamedSetsFromAutoComp()) {
+                searchCriteriaBean.getCmpdNamedSets().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getDrugNamesFromAutoComp() != null && !searchCriteriaBean.getDrugNamesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getDrugNamesFromAutoComp()) {
+                searchCriteriaBean.getDrugNames().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getMtxtPiecesFromAutoComp() != null && !searchCriteriaBean.getMtxtPiecesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getMtxtPiecesFromAutoComp()) {
+                searchCriteriaBean.getMtxtPieces().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getNscsFromAutoComp() != null && !searchCriteriaBean.getNscsFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getNscsFromAutoComp()) {
+                searchCriteriaBean.getNscs().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getPlatesFromAutoComp() != null && !searchCriteriaBean.getPlatesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getPlatesFromAutoComp()) {
+                searchCriteriaBean.getPlates().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getProjectCodesFromAutoComp() != null && !searchCriteriaBean.getProjectCodesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getProjectCodesFromAutoComp()) {
+                searchCriteriaBean.getProjectCodes().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getTargetsFromAutoComp() != null && !searchCriteriaBean.getTargetsFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getTargetsFromAutoComp()) {
+                searchCriteriaBean.getTargets().add(s);
+            }
+        }
+
+        if (searchCriteriaBean.getPseudoAtomsPiecesFromAutoComp() != null && !searchCriteriaBean.getPseudoAtomsPiecesFromAutoComp().isEmpty()) {
+            for (String s : searchCriteriaBean.getPseudoAtomsPiecesFromAutoComp()) {
+                searchCriteriaBean.getPseudoAtomsPieces().add(s);
             }
         }
 
         if (DEBUG) {
             System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
             System.out.println("Content of searchCriteriaBean:");
-            scb.printCriteriaLists();
+            searchCriteriaBean.printCriteriaLists();
         }
-        
+
 //        // persist the list
 //        Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
 //        // fetch the list            
 //        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
+        CmpdListVO clVO = HelperCmpd.searchBySearchCriteriaBean(listName, searchCriteriaBean, sessionController.getLoggedUser());
 
-        CmpdListVO clVO = HelperCmpd.searchBySearchCriteriaBean(listName, scb, sessionController.getLoggedUser());
-        
-//        listManagerController.getListManagerBean().availableLists.add(clVO);
+        listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
 
         sessionController.configurationBean.performUpdateColumns();
@@ -559,66 +630,66 @@ public class ListContentController implements Serializable {
 
     public void appendToaliasTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getAliasTextArea() == null) {
-            scb.setAliasTextArea("");
+        if (searchCriteriaBean.getAliasTextArea() == null) {
+            searchCriteriaBean.setAliasTextArea("");
         }
-        scb.setAliasTextArea(item + "\n" + scb.getAliasTextArea());
+        searchCriteriaBean.setAliasTextArea(item + "\n" + searchCriteriaBean.getAliasTextArea());
     }
 
     public void appendTotargetTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getTargetTextArea() == null) {
-            scb.setTargetTextArea("");
+        if (searchCriteriaBean.getTargetTextArea() == null) {
+            searchCriteriaBean.setTargetTextArea("");
         }
-        scb.setTargetTextArea(item + "\n" + scb.getTargetTextArea());
+        searchCriteriaBean.setTargetTextArea(item + "\n" + searchCriteriaBean.getTargetTextArea());
     }
 
     public void appendToprojectCodeTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getProjectCodeTextArea() == null) {
-            scb.setProjectCodeTextArea("");
+        if (searchCriteriaBean.getProjectCodeTextArea() == null) {
+            searchCriteriaBean.setProjectCodeTextArea("");
         }
-        scb.setProjectCodeTextArea(item + "\n" + scb.getProjectCodeTextArea());
+        searchCriteriaBean.setProjectCodeTextArea(item + "\n" + searchCriteriaBean.getProjectCodeTextArea());
     }
 
     public void appendToplateTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getPlateTextArea() == null) {
-            scb.setPlateTextArea("");
+        if (searchCriteriaBean.getPlateTextArea() == null) {
+            searchCriteriaBean.setPlateTextArea("");
         }
-        scb.setPlateTextArea(item + "\n" + scb.getPlateTextArea());
+        searchCriteriaBean.setPlateTextArea(item + "\n" + searchCriteriaBean.getPlateTextArea());
     }
 
     public void appendTocasTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getCasTextArea() == null) {
-            scb.setCasTextArea("");
+        if (searchCriteriaBean.getCasTextArea() == null) {
+            searchCriteriaBean.setCasTextArea("");
         }
-        scb.setCasTextArea(item + "\n" + scb.getCasTextArea());
+        searchCriteriaBean.setCasTextArea(item + "\n" + searchCriteriaBean.getCasTextArea());
     }
 
     public void appendTodrugNameTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getDrugNameTextArea() == null) {
-            scb.setDrugNameTextArea("");
+        if (searchCriteriaBean.getDrugNameTextArea() == null) {
+            searchCriteriaBean.setDrugNameTextArea("");
         }
-        scb.setDrugNameTextArea(item + "\n" + scb.getDrugNameTextArea());
+        searchCriteriaBean.setDrugNameTextArea(item + "\n" + searchCriteriaBean.getDrugNameTextArea());
     }
 
     public void appendTonscTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getNscTextArea() == null) {
-            scb.setNscTextArea("");
+        if (searchCriteriaBean.getNscTextArea() == null) {
+            searchCriteriaBean.setNscTextArea("");
         }
-        scb.setNscTextArea(item + "\n" + scb.getNscTextArea());
+        searchCriteriaBean.setNscTextArea(item + "\n" + searchCriteriaBean.getNscTextArea());
     }
 
     public void appendTocmpdNamedSetTextArea(SelectEvent event) {
         Object item = event.getObject();
-        if (scb.getCmpdNamedSetTextArea() == null) {
-            scb.setCmpdNamedSetTextArea("");
+        if (searchCriteriaBean.getCmpdNamedSetTextArea() == null) {
+            searchCriteriaBean.setCmpdNamedSetTextArea("");
         }
-        scb.setCmpdNamedSetTextArea(item + "\n" + scb.getCmpdNamedSetTextArea());
+        searchCriteriaBean.setCmpdNamedSetTextArea(item + "\n" + searchCriteriaBean.getCmpdNamedSetTextArea());
     }
 
 }

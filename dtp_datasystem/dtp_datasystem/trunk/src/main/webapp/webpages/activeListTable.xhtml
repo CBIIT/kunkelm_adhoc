@@ -57,6 +57,8 @@
 
         <ui:include src="/webpages/templates/active_list_menu_bar.xhtml"/>
 
+        <ui:include src="/webpages/templates/active_list_view_pick_menu_bar.xhtml"/>
+        
         <p:spacer height="20" width="100%"/>
 
         <p:panel header="List Anchor Structure"
@@ -126,6 +128,14 @@
                 <h:outputText value="#{cmpd.nsc}"/>
             </p:column>   
 
+            <p:column headerText="Name" 
+                      resizable="true"
+                      sortBy="#{cmpd.name}"
+                      filterBy="#{cmpd.name}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.name}"/>
+            </p:column>   
+            
             <p:column headerText="List Member Id"
                       resizable="true"
                       sortBy="#{listMember.id}"

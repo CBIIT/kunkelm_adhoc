@@ -9647,6 +9647,10 @@ dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem/201
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem/maven-metadata-local.xml -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem/maven-metadata-local.xml.md5 -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/mwk/datasystem/datasystem/maven-metadata-local.xml.sha1 -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/6.0.13/_maven.repositories -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/6.0.13/primefaces-6.0.13.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/6.0.13/primefaces-6.0.13.pom.lastUpdated -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/maven-metadata-local.xml -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text
@@ -9808,7 +9812,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureAppendToEx
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureCreateNewList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureDeleteFromList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/confirmDeleteList.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/createList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/curatedNscWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogCmpdDetails.xhtml -text
@@ -9817,6 +9820,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/dialogListMemberDet
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/fragmentsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/searchCmpds.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.xhtml -text
@@ -9824,6 +9828,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.j
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tempListTable.xhtml.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_menu_bar.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_view_pick_menu_bar.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/cmpd_list_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text

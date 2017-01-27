@@ -61,20 +61,20 @@ public class SessionController implements Serializable {
       if (this.loggedUser.startsWith("DTP_")){
           this.loggedUser = "PUBLIC";
       }
-      return "/webpages/availableLists.xhtml?faces-redirect=true";
+      return "/webpages/searchCmpds.xhtml?faces-redirect=true";
   }
 
   public String logout() {
     System.out.println("Now in logout in SessionController");
     FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-    return "/webpages/availableLists.xhtml?faces-redirect=true";
+    return "/webpages/searchCmpds.xhtml?faces-redirect=true";
   }
 
   public void handleLogout() {
     String rtn = this.logout();
     FacesContext ctx = FacesContext.getCurrentInstance();
     ExternalContext extCtx = ctx.getExternalContext();
-    String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/availableLists.xhtml"));
+    String url = extCtx.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/webpages/s.xhtml"));
     try {
       extCtx.redirect(url);
     } catch (IOException ioe) {

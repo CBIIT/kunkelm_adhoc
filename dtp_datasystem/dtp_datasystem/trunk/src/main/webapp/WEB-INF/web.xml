@@ -58,11 +58,11 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>webpages/availableLists.xhtml</welcome-file>
+        <welcome-file>webpages/searchCmpds.xhtml</welcome-file>
     </welcome-file-list>    
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/webpages/availableLists.xhtml</location>
+        <location>/webpages/searchCmpds.xhtml</location>
     </error-page>
     
     <security-constraint>
