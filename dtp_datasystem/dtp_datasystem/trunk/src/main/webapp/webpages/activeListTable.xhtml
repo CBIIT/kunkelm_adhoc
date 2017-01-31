@@ -20,7 +20,7 @@
             <h:outputText value="Export Data or Images"/>
         </h2>
         <p:menubar autoDisplay="false">
-            <p:menuitem ajax="false" value="Export to Excel">
+            <p:menuitem ajax="false" value="Export as Excel">
                 <p:dataExporter type="xls"  
                                 target="activeListTbl" 
                                 fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
@@ -30,6 +30,14 @@
                                 target="activeListTbl" 
                                 fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
             </p:menuitem> 
+
+            <p:menuitem ajax="false" value="Export as Excel with Structure Images">
+                <p:dataExporter type="xls" 
+                                target="activeListTbl" 
+                                postProcessor="#{listManagerController.postProcessXLS}"
+                                fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
+            </p:menuitem>
+
             <p:menuitem value="Export Structures as Image"
                         ajax="true"
                         onclick="structuresAsGridImage()"/>
@@ -57,8 +65,6 @@
 
         <ui:include src="/webpages/templates/active_list_menu_bar.xhtml"/>
 
-        <ui:include src="/webpages/templates/active_list_view_pick_menu_bar.xhtml"/>
-        
         <p:spacer height="20" width="100%"/>
 
         <p:panel header="List Anchor Structure"
@@ -78,6 +84,18 @@
         </p:panel>
 
         <p:spacer height="20" width="100%"/>
+
+
+        <p:commandButton value="Configure This Table"
+                         onclick="PF('act_list_cfg_dlg').show();"/>
+
+        <p:commandButton value="View As Grid"
+                         ajax="false"
+                         action="/webpages/activeListGrid?faces-redirect=true"/>
+
+        <p:commandButton value="View As Form"
+                         ajax="false"
+                         action="/webpages/activeListForm?faces-redirect=true"/>
 
         <p:dataTable  id="activeListTbl"
                       tableStyle="width: auto;"
@@ -105,7 +123,7 @@
             <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
             <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
 
-            <f:facet name="header">                
+            <f:facet name="header">
                 <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>                    
             </f:facet>
 
@@ -124,18 +142,28 @@
 
             <p:column headerText="NSC" 
                       resizable="true"
-                      sortBy="#{cmpd.nsc}">                                
+                      sortBy="#{cmpd.nsc}"                      
+                      filterBy="#{cmpd.nsc}"
+                      filterMatchMode="contains">   
                 <h:outputText value="#{cmpd.nsc}"/>
             </p:column>   
 
-            <p:column headerText="Name" 
+            <p:column headerText="Name"
                       resizable="true"
                       sortBy="#{cmpd.name}"
                       filterBy="#{cmpd.name}"
                       filterMatchMode="contains">                                
                 <h:outputText value="#{cmpd.name}"/>
             </p:column>   
-            
+
+            <p:column headerText="CAS" 
+                      resizable="true"
+                      sortBy="#{cmpd.cas}"
+                      filterBy="#{cmpd.cas}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.cas}"/>
+            </p:column>   
+
             <p:column headerText="List Member Id"
                       resizable="true"
                       sortBy="#{listMember.id}"
@@ -145,6 +173,7 @@
                               style="color: #{empty listMember.id || listMember.id lt 0 ? 'red' : 'black'}"/>        
             </p:column> 
 
+            <!--
             <p:column headerText="List Member Comment"
                       resizable="true"
                       sortBy="#{listMember.listMemberComment}"
@@ -157,43 +186,46 @@
                 </p:cellEditor>
                 
             </p:column> 
+            -->
 
+            <!--
+            
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="DISCREET" 
+                      resizable="true"
+                      sortBy="#{cmpd.discreet}"
+                      filterBy="#{cmpd.discreet}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.discreet}"/>
+            </p:column>   
 
-            #{listMember.id}
-            <ui:fragment rendered="#{sessionController.loggedUser != 'PUBLIC'}">
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="CONF" 
+                      resizable="true"
+                      sortBy="#{cmpd.conf}"
+                      filterBy="#{cmpd.conf}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.conf}"/>
+            </p:column>   
 
-                <p:column headerText="DISCREET" 
-                          resizable="true"
-                          sortBy="#{cmpd.discreet}"
-                          filterBy="#{cmpd.discreet}"
-                          filterMatchMode="contains">                                
-                    <h:outputText value="#{cmpd.discreet}"/>
-                </p:column>   
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="DIST" 
+                      resizable="true"
+                      sortBy="#{cmpd.distribution}"
+                      filterBy="#{cmpd.distribution}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.distribution}"/>
+            </p:column> 
 
-                <p:column headerText="CONF" 
-                          resizable="true"
-                          sortBy="#{cmpd.conf}"
-                          filterBy="#{cmpd.conf}"
-                          filterMatchMode="contains">                                
-                    <h:outputText value="#{cmpd.conf}"/>
-                </p:column>   
-
-                <p:column headerText="DIST" 
-                          resizable="true"
-                          sortBy="#{cmpd.distribution}"
-                          filterBy="#{cmpd.distribution}"
-                          filterMatchMode="contains">                                
-                    <h:outputText value="#{cmpd.distribution}"/>
-                </p:column> 
-
-                <p:column headerText="NSCCmpdType"
-                          sortBy="#{cmpd.nscCmpdType}"
-                          filterBy="#{cmpd.nscCmpdType}"
-                          filterMatchMode="contains">
-                    <h:outputText value="#{cmpd.nscCmpdType}"/>
-                </p:column>   
-
-            </ui:fragment>
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="NSCCmpdType"
+                      sortBy="#{cmpd.nscCmpdType}"
+                      filterBy="#{cmpd.nscCmpdType}"
+                      filterMatchMode="contains">
+                <h:outputText value="#{cmpd.nscCmpdType}"/>
+            </p:column>   
+            
+            -->
 
             <p:column headerText="Parent Structure" 
                       resizable="true"
@@ -204,16 +236,50 @@
                                 height="#{sessionController.configurationBean.strcDim}"
                                 styleClass="parentStructure"
                                 url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-
                 </p:graphicImage>
 
                 <br/>
 
-                <p:commandButton  value="DETAILS"
-                                  update=":datasystemForm:ListMemberDetailsDialogPanel" 
-                                  oncomplete="PF('listMemberDetailDlg').show();" 
-                                  title="List Member Details"
-                                  style="display: inline-block;">  
+                <!--
+
+                <p:commandLink  value="DET"
+                                update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                oncomplete="PF('listMemberDetailDlg').show();" 
+                                title="List Member Details"
+                                style="display: inline-block;">  
+                    <f:setPropertyActionListener value="#{listMember}"   
+                                                 target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                </p:commandLink>
+
+                &nbsp;
+                
+                <p:commandLink value="SSS"
+                               ajax="false" 
+                               title="Substructure Search"
+                               action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+
+                    <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                                 target="#{structureSearchController.nscForLoad}" />  
+
+                </p:commandLink>
+
+                &nbsp;
+                
+                <p:commandLink value="FWB"
+                               rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                               ajax="false" 
+                               title="Fragments Workbench"
+                               action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+
+                </p:commandLink>
+                
+                -->
+
+                <p:commandButton value="DET"
+                                 update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                 oncomplete="PF('listMemberDetailDlg').show();" 
+                                 title="List Member Details"
+                                 style="display: inline-block;">  
                     <f:setPropertyActionListener value="#{listMember}"   
                                                  target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
                 </p:commandButton>
@@ -222,20 +288,107 @@
                                  ajax="false" 
                                  title="Substructure Search"
                                  action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
-
                     <f:setPropertyActionListener value="#{cmpd.nsc}"   
                                                  target="#{structureSearchController.nscForLoad}" />  
 
                 </p:commandButton>
 
-                <p:commandButton value="WB"
+                <p:commandButton value="FWB"
                                  rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                  ajax="false" 
                                  title="Fragments Workbench"
                                  action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
-
                 </p:commandButton>
 
+            </p:column>
+
+            <p:column headerText="Parent Structure" 
+                      resizable="true"
+                      exportable="false">
+
+
+                <br/>
+
+                <!--
+
+                <p:commandLink  value="DET"
+                                update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                oncomplete="PF('listMemberDetailDlg').show();" 
+                                title="List Member Details"
+                                style="display: inline-block;">  
+                    <f:setPropertyActionListener value="#{listMember}"   
+                                                 target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                </p:commandLink>
+
+                &nbsp;
+                
+                <p:commandLink value="SSS"
+                               ajax="false" 
+                               title="Substructure Search"
+                               action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+
+                    <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                                 target="#{structureSearchController.nscForLoad}" />  
+
+                </p:commandLink>
+
+                &nbsp;
+                
+                <p:commandLink value="FWB"
+                               rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                               ajax="false" 
+                               title="Fragments Workbench"
+                               action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+
+                </p:commandLink>
+                
+                -->
+
+                <p:panelGrid style="width: auto;">
+                    <p:row>
+                        <p:column>
+                            <p:commandButton  value="DET"
+                                              update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                              oncomplete="PF('listMemberDetailDlg').show();" 
+                                              title="List Member Details"
+                                              style="display: inline-block;">  
+                                <f:setPropertyActionListener value="#{listMember}"   
+                                                             target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                            </p:commandButton>        
+                        </p:column>
+
+                        <p:column rowspan="3">
+                            <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                                            width="#{sessionController.configurationBean.strcDim}" 
+                                            height="#{sessionController.configurationBean.strcDim}"
+                                            styleClass="parentStructure"
+                                            url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>
+                            </p:graphicImage>
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandButton value="SSS"
+                                             ajax="false" 
+                                             title="Substructure Search"
+                                             action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+                                <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                                             target="#{structureSearchController.nscForLoad}" />  
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandButton value="FWB"
+                                             rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                                             ajax="false" 
+                                             title="Fragments Workbench"
+                                             action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+
+                            </p:commandButton>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
             </p:column>
 
             <!--
@@ -250,7 +403,6 @@
               </p:graphicImage>
             </p:column>
             -->
-
 
             <!-- exportable alternate -->
             <p:column headerText="Parent SMILES"

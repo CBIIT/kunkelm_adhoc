@@ -14,7 +14,7 @@
             <h:outputText value="Export Data"/>
         </h2>
         <p:menubar autoDisplay="false">
-            <p:menuitem ajax="false" value="Export to Excel">
+            <p:menuitem ajax="false" value="Export as Excel">
                 <p:dataExporter type="xls"  
                                 target="curatedNscs" 
                                 fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
@@ -29,33 +29,38 @@
 
     <ui:define name="content">
 
-        <p:menubar autoDisplay="false">
-            <p:menuitem value="Create New CuratedNsc" onclick="PF('create_new_curated_nsc_dlg').show();"/>
+        <p:menubar rendered="#{fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj')}"
+                   autoDisplay="false">
+            <p:menuitem value="Create New CuratedNsc" 
+                        onclick="PF('create_new_curated_nsc_dlg').show();"/>
         </p:menubar>
 
         <p:dataTable id="curatedNscs"                     
                      resizableColumns="true"
                      var="nsc"
                      value="#{curatedNscController.curatedNscs}"
-                      paginator="true"                     
+                     paginator="true"                     
                      rows="100"                        
-                      paginatorPosition="top"
-                      currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
-                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"
+                     paginatorPosition="top"
+                     currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"
                      rowsPerPageTemplate="10,25,50,100,250,500,1000">
 
             <f:facet name="header">  
                 <h:outputText value="#{fn:length(curatedNscController.curatedNscs)} Curated NSC"/>
             </f:facet>
 
-            <p:column exportable="false">
+            <p:column rendered="#{fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj')}"
+            	exportable="false">
 
-                <p:commandLink value="EDIT" 
+                <p:commandLink disabled="#{not(fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj'))}"
+                               value="EDIT" 
                                action="#{curatedNscWorkbenchController.performConfigureEdit(nsc)}"/>
 
                 <h:outputText escape="false" value="&lt;br/&gt;"/>
 
-                <p:commandLink value="DELETE" style="color: red;" 
+                <p:commandLink disabled="#{not(fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj'))}"
+                               value="DELETE" style="color: red;" 
                                action="#{curatedNscController.configureDelete(nsc)}"
                                oncomplete="PF('delete_curated_nsc_dlg').show();"/>
 

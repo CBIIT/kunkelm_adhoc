@@ -14,22 +14,21 @@
 
     <p:menubar autoDisplay="false">
 
-
         <p:menuitem value="Search"
                     ajax="false"
                     action="/webpages/searchCmpds?faces-redirect=true"/>
 
-
-        <p:menuitem value="Upload Structures"
+        <p:menuitem value="Most-recent List"
                     ajax="false"
-                    action="/webpages/uploadList?faces-redirect=true"/>
-        
+                    action="/webpages/activeListTable?faces-redirect=true"/>
+
         <p:menuitem value="Saved Lists"
                     ajax="false"                         
                     action="/webpages/availableLists?faces-redirect=true"/>
 
-        <p:menuitem value="Configure Display"
-                    onclick="PF('act_list_cfg_dlg').show();"/>
+        <p:menuitem value="Upload Structures"
+                    ajax="false"
+                    action="/webpages/uploadList?faces-redirect=true"/>
 
         <p:menuitem value="List Logic"
                     ajax="false"

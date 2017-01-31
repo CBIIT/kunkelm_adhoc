@@ -325,30 +325,30 @@ public class HelperCmpdList {
 
             Criteria crit = session.createCriteria(CmpdList.class);
 
-            // restrict searches to owned and shared
+            // restrict to owned or shared
             Disjunction accessDisj = Restrictions.disjunction();
             accessDisj.add(Restrictions.eq("listOwner", currentUser));
             accessDisj.add(Restrictions.eq("shareWith", "EVERYONE"));
 
-            Conjunction nameConj = null;
-            Conjunction idConj = null;
+            Conjunction listNameConj = null;
+            Conjunction cmpdListIdConj = null;
 
             if (!listNames.isEmpty()) {
-                nameConj = Restrictions.conjunction();
-                nameConj.add(accessDisj);
-                nameConj.add(Restrictions.in("listName", listNames));
+                listNameConj = Restrictions.conjunction();
+                listNameConj.add(accessDisj);
+                listNameConj.add(Restrictions.in("listName", listNames));
             }
 
             if (!cmpdListIds.isEmpty()) {
-                idConj = Restrictions.conjunction();
-                idConj.add(accessDisj);
-                idConj.add(Restrictions.in("cmpdListId", cmpdListIds));
+                cmpdListIdConj = Restrictions.conjunction();
+                cmpdListIdConj.add(accessDisj);
+                cmpdListIdConj.add(Restrictions.in("cmpdListId", cmpdListIds));
             }
 
-            if (nameConj != null && idConj != null) {
+            if (listNameConj != null && cmpdListIdConj != null) {
 
                 Disjunction disj = Restrictions.disjunction();
-                disj.add(nameConj).add(idConj);
+                disj.add(listNameConj).add(cmpdListIdConj);
                 if (currentUser.equals("PUBLIC")) {
                     disj.add(Restrictions.eq("shareWith", "EVERYONE"));
                 } else {
@@ -356,10 +356,10 @@ public class HelperCmpdList {
                 }
                 crit.add(disj);
 
-            } else if (nameConj != null) {
+            } else if (listNameConj != null) {
 
                 Disjunction disj = Restrictions.disjunction();
-                disj.add(nameConj);
+                disj.add(listNameConj);
                 if (currentUser.equals("PUBLIC")) {
                     disj.add(Restrictions.eq("shareWith", "EVERYONE"));
                 } else {
@@ -367,10 +367,10 @@ public class HelperCmpdList {
                 }
                 crit.add(disj);
 
-            } else if (idConj != null) {
+            } else if (cmpdListIdConj != null) {
 
                 Disjunction disj = Restrictions.disjunction();
-                disj.add(idConj);
+                disj.add(cmpdListIdConj);
                 if (currentUser.equals("PUBLIC")) {
                     disj.add(Restrictions.eq("shareWith", "EVERYONE"));
                 } else {
@@ -496,6 +496,7 @@ public class HelperCmpdList {
             tx = session.beginTransaction();
 
             Criteria clCrit = session.createCriteria(CmpdList.class);
+                        
             clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
             clCrit.add(Restrictions.eq("listOwner", currentUser));
             // can NOT delete a shared list

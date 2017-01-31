@@ -47,11 +47,15 @@ public class MoleculeWrangling {
     }
 
     public static IAtomContainer fromSmiles(String smi) {
+        IAtomContainer rtn = null;
         try {
-            return layout(smipar.parseSmiles(smi));
+            rtn = layout(smipar.parseSmiles(smi));
         } catch (InvalidSmilesException e) {
-            throw new IllegalArgumentException("Invalid smiles:" + e.getMessage());
+            System.out.println("Invalid smiles:" + e.getMessage());
+            e.printStackTrace();
+//            throw new IllegalArgumentException("Invalid smiles:" + e.getMessage());
         }
+        return rtn;
     }
 
 //    public static IAtomContainer fromInChI(String inchi) {
@@ -66,37 +70,46 @@ public class MoleculeWrangling {
 //            throw new IllegalArgumentException("Invalid InChI:" + e.getMessage());
 //        }
 //    }
-    
     public static IAtomContainer fromName(String name) {
         return fromSmiles(opsin.parseToSmiles(name));
     }
 
     public static IAtomContainer fromCtabString(String ctab) {
+
+        IAtomContainer rtn = null;
+
         MDLV2000Reader rdr = null;
+
         try {
 
             System.out.println("Trying Mode.RELAXED");
-
             rdr = new MDLV2000Reader(new ByteArrayInputStream(ctab.getBytes()), Mode.RELAXED);
-
-            return rdr.read(new AtomContainer(0, 0, 0, 0));
+            rtn = rdr.read(new AtomContainer(0, 0, 0, 0));
 
         } catch (CDKException e) {
+            System.out.println("Could not parse molfile:" + e.getMessage());
             e.printStackTrace();
-            throw new IllegalArgumentException("Could not read molfile:" + e.getMessage());
+//            throw new IllegalArgumentException("Could not parse molfile:" + e.getMessage());
         } finally {
             try {
                 if (rdr != null) {
                     rdr.close();
                 }
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
+
+        return rtn;
+
     }
 
     public static IAtomContainer fromCtabStringMWK(String ctab) {
+        
+        IAtomContainer rtn = null;
+        
         MDLReader rdr = null;
+        
         try {
 
             //rdr = new MDLReader(new ByteArrayInputStream(ctab.getBytes()), Mode.RELAXED);
@@ -108,40 +121,54 @@ public class MoleculeWrangling {
             CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance());
             adder.addImplicitHydrogens(tempIac);
 
-            return tempIac;
+            rtn = tempIac;
 
         } catch (CDKException e) {
+            System.out.println("Could not parse molfile:" + e.getMessage());
             e.printStackTrace();
-            throw new IllegalArgumentException("Could not read molfile:" + e.getMessage());
+//            throw new IllegalArgumentException("Could not parse molfile:" + e.getMessage());
         } finally {
             try {
                 if (rdr != null) {
                     rdr.close();
                 }
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
+        
+        return rtn;
+        
     }
 
     public static IAtomContainer fromMolfile(String path) {
+        
+        IAtomContainer rtn = null;
+
         MDLV2000Reader rdr = null;
+        
         try {
             rdr = new MDLV2000Reader(new FileReader(path));
-            return rdr.read(new AtomContainer(0, 0, 0, 0));
+            rtn = rdr.read(new AtomContainer(0, 0, 0, 0));
         } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("No such file:" + e.getMessage());
+            System.out.println("No such file:" + e.getMessage());
+            e.printStackTrace();
+//            throw new IllegalArgumentException("No such file:" + e.getMessage());
         } catch (CDKException e) {
-            throw new IllegalArgumentException("Could not read molfile:" + e.getMessage());
+            System.out.println("Could not read molfile:" + e.getMessage());
+            e.printStackTrace();
+//            throw new IllegalArgumentException("Could not read molfile:" + e.getMessage());
         } finally {
             try {
                 if (rdr != null) {
                     rdr.close();
                 }
             } catch (IOException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
+        
+        return rtn;
     }
 
     public static String toCtab(IAtomContainer iac) {
@@ -195,13 +222,16 @@ public class MoleculeWrangling {
     }
 
     public static IAtomContainer layout(IAtomContainer container) {
+        
         StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         sdg.setMolecule(container, false);
         sdg.setUseTemplates(false);
         try {
             sdg.generateCoordinates();
         } catch (CDKException e) {
-            throw new IllegalArgumentException("Could not layout molecule");
+            System.out.println("Could not layout molecule: " + e.getMessage());
+            e.printStackTrace();
+//            throw new IllegalArgumentException("Could not layout molecule");
         }
         return container;
     }

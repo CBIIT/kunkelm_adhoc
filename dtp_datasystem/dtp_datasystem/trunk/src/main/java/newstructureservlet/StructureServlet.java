@@ -208,7 +208,7 @@ public class StructureServlet extends HttpServlet {
       if (title != null) {
         byteArray = getTextImage(title);
       } else {
-        byteArray = getTextImage("NSC or SMILES must be specified");
+        byteArray = getTextImage("Cannot render " + title);
       }
 
       response.setContentType("image/png");

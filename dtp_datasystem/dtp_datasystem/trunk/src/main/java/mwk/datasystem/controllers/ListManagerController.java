@@ -29,6 +29,7 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.primefaces.component.column.Column;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
@@ -121,7 +122,7 @@ public class ListManagerController implements Serializable {
     }
 
     public String performUpdateAvailableLists() {
-        
+
         List<CmpdListVO> justFetchedLists = new ArrayList<CmpdListVO>();
 
         // MWK 26FEB2016 Why is this here?  A fix for ancient problems, long forgotten?
@@ -277,6 +278,32 @@ public class ListManagerController implements Serializable {
 
     }
 
+    public String performPersistList(CmpdListVO clVO) {
+
+        CmpdListVO rtn = null;
+
+        System.out.println("Entering performPersistList(CmpdListVO clVO)");
+
+        if (clVO != null) {
+            rtn = HelperCmpdList.persistCmpdList(clVO, sessionController.getLoggedUser());
+        }
+
+        CmpdListVO voList = null;
+
+        if (rtn != null) {
+            voList = HelperCmpdList.getCmpdListByCmpdListId(rtn.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
+        }
+
+        if (voList != null) {
+            clVO.setCmpdListMembers(voList.getCmpdListMembers());
+        }
+
+        sessionController.configurationBean.performUpdateColumns();
+
+        return "/webpages/activeListTable?faces-redirect=true";
+
+    }
+
     public String performLoadList(CmpdListVO clVO) {
 
         System.out.println("Entering performLoadList(CmpdListVO clVO)");
@@ -371,7 +398,7 @@ public class ListManagerController implements Serializable {
 
         try {
 
-            servletURL = new java.net.URL("http://localhost:8080/datasystem/StructureServlet");
+            servletURL = new java.net.URL("http://localhost:8080/oncologydrugs/StructureServlet");
 
             servletConn = (java.net.HttpURLConnection) servletURL.openConnection();
             servletConn.setDoInput(true);
@@ -382,7 +409,9 @@ public class ListManagerController implements Serializable {
 
             java.io.DataOutputStream outStream = new java.io.DataOutputStream(servletConn.getOutputStream());
 
-            outStream.writeBytes("smiles=" + URLEncoder.encode(smiles, "UTF-8"));
+            outStream.writeBytes("structureDim=200");
+
+            outStream.writeBytes("&smiles=" + URLEncoder.encode(smiles, "UTF-8"));
 
             if (title != null) {
                 outStream.writeBytes("&title=" + URLEncoder.encode(title, "UTF-8"));
@@ -392,25 +421,23 @@ public class ListManagerController implements Serializable {
             outStream.close();
 
             if (servletConn.getResponseCode() != servletConn.HTTP_OK) {
-                throw new Exception("Exception from StructureServlet in getStructureImage in ListManagerController: " + servletConn.getResponseMessage());
-            }
+                System.out.println("Exception from StructureServlet in getStructureImage in ListManagerController: " + servletConn.getResponseMessage());
+//                throw new Exception("Exception from StructureServlet in getStructureImage in ListManagerController: " + servletConn.getResponseMessage());
+            } else {
 
-//      String tempString = new String();
-//      java.io.BufferedReader theReader = new java.io.BufferedReader(new InputStreamReader(servletConn.getInputStream()));
-//      while ((tempString = theReader.readLine()) != null) {
-//        returnString += tempString;
-//      }
-            InputStream is = servletConn.getInputStream();
+                InputStream is = servletConn.getInputStream();
 
-            byte[] buf = new byte[1000];
-            for (int nChunk = is.read(buf); nChunk != -1; nChunk = is.read(buf)) {
-                baos.write(buf, 0, nChunk);
+                byte[] buf = new byte[1000];
+                for (int nChunk = is.read(buf); nChunk != -1; nChunk = is.read(buf)) {
+                    baos.write(buf, 0, nChunk);
+                }
+
             }
 
         } catch (Exception e) {
             System.out.println("Exception in getStructureImage in ListManagerController " + e);
             e.printStackTrace();
-            throw new Exception(e);
+//            throw new Exception(e);
         } finally {
             servletConn.disconnect();
             servletConn = null;
@@ -430,6 +457,8 @@ public class ListManagerController implements Serializable {
             HSSFWorkbook wb = (HSSFWorkbook) document;
             HSSFSheet sheet = wb.getSheetAt(0);
 
+            sheet.setColumnWidth(18, 10000);
+
             CreationHelper helper = wb.getCreationHelper();
 
             // Create the drawing patriarch.  This is the top level container for all shapes. 
@@ -437,28 +466,28 @@ public class ListManagerController implements Serializable {
 
             for (Row row : sheet) {
 
-                String title = null;
+                String nsc = null;
 
                 System.out.println("In row: " + row.getRowNum());
 
                 // get the SMILES column
-                if (row.getCell(17).getStringCellValue() != null) {
+                if (row.getRowNum() > 0 && row.getCell(4).getStringCellValue() != null) {
 
                     row.setHeightInPoints(200);
 
-                    String smiles = row.getCell(17).getStringCellValue();
+                    String smiles = row.getCell(4).getStringCellValue();
                     System.out.println("SMILES is: " + smiles);
 
-                    if (row.getCell(3).getStringCellValue() != null) {
-                        title = row.getCell(3).getStringCellValue();
-                        System.out.println("title is: " + title);
+                    if (row.getCell(0).getStringCellValue() != null) {
+                        nsc = row.getCell(1).getStringCellValue();
+                        System.out.println("NSC is: " + nsc);
                     }
 
-                    if (title == null) {
-                        title = "";
+                    if (nsc == null) {
+                        nsc = "";
                     }
 
-                    byte[] bytes = getStructureImage(smiles, title);
+                    byte[] bytes = getStructureImage(smiles, nsc);
                     int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
 
                     //add a picture shape
@@ -474,7 +503,7 @@ public class ListManagerController implements Serializable {
                     anchor.setDy1(10);
                     anchor.setDy2(10);
 
-                    anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
+                    anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
 
                     Picture pict = drawing.createPicture(anchor, pictureIdx);
 
@@ -483,6 +512,7 @@ public class ListManagerController implements Serializable {
 
                 }
 
+//                sheet.autoSizeColumn(18);
 //        for (Cell cell : row) {
 //          //cell.setCellValue(cell.getStringCellValue().toUpperCase());        
 //          cell.setCellStyle(style);

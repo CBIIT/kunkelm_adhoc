@@ -17,7 +17,7 @@
       <h:outputText value="Export Data"/>
     </h2>
 
-    <p:commandButton ajax="false" value="Export to Excel">
+    <p:commandButton ajax="false" value="Export as Excel">
       <p:dataExporter type="xls" 
                       target="cmpdListTbl" 
                       fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
@@ -33,7 +33,7 @@
 
     <p:spacer width="20"/>
 
-    <p:commandButton ajax="false" value="Export to Excel with Structure Images">
+    <p:commandButton ajax="false" value="Export as Excel with Structure Images">
       <p:dataExporter type="xls" 
                       target="cmpdListTbl" 
                       postProcessor="#{listManagerController.postProcessXLS}"
