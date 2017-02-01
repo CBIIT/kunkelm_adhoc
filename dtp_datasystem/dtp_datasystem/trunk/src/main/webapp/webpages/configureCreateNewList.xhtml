@@ -19,7 +19,7 @@
 
       <p:inputText id="listNameText" value="#{listContentController.listName}" />
 
-      <p:commandButton action="#{listContentController.performCreateNewListFromSelectedListMembers()}"
+      <p:commandButton action="#{listContentController.performCopySelected()}"
                        value="Create New List from Selected"
                        onstart="PF('appendingBUI').show();"
                        oncomplete="PF('appendingBUI').hide();"

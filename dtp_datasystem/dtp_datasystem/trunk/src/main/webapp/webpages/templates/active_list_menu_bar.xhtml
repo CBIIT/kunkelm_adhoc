@@ -16,15 +16,19 @@
                     ajax="false"
                     actionListener="#{launchingController.performConnectToLanding()}"
                     target="_blank"/>
+        
         <p:menuitem value="Tanimoto"                       
                     ajax="false"
                     action="#{tanimotoController.performRunTanimoto}"/>   
-        <p:menuitem actionListener="#{listContentController.performConfigureCreate()}"
+        
+        <p:menuitem actionListener="#{listContentController.performCopyAll()}"
                     value="COPY to NEW LIST"
                     onclick="PF('crt_dlg').show();"/>
+        
         <p:menuitem actionListener="#{listContentController.performConfigureAppend()}"
                     value="APPEND to EXISTING LIST"
                     onclick="PF('app_dlg').show();"/>
+        
         <p:menuitem actionListener="#{listContentController.performConfigureDelete()}"
                     disabled="#{sessionController.loggedUser ne listManagerController.listManagerBean.activeList.listOwner || listManagerController.listManagerBean.activeList.shareWith eq 'EVERYONE'}"
                     value="DELETE from List"
@@ -64,7 +68,7 @@
             <p:outputLabel for="listNameText" value="New List name:" />            
             <p:inputText id="listNameText" value="#{listContentController.listName}" />
             <p:spacer height="20" width="100%"/>
-            <p:commandButton action="#{listContentController.performCreateNewListFromSelectedListMembers()}"
+            <p:commandButton action="#{listContentController.performCopySelected()}"
                              value="Create New List from Selected"
                              onstart="PF('appendingBUI').show();"
                              oncomplete="PF('appendingBUI').hide();"

@@ -13,10 +13,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
+import javax.xml.datatype.XMLGregorianCalendar;
 import mwk.datasystem.domain.CmpdAlias;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
@@ -24,6 +26,10 @@ import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdTarget;
 import mwk.datasystem.domain.NscCmpd;
 import mwk.datasystem.util.HibernateUtil;
+import mwk.datasystem.util.TransformXMLGregorianCalendar;
+import mwk.datasystem.vo.CmpdListMemberVO;
+import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdVO;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -77,7 +83,7 @@ public class ApplicationScopeBean implements Serializable {
 
             String rawCompareUrl = props.getProperty("compare.application.url");
 
-      // make sure there aren't any concatenated //
+            // make sure there aren't any concatenated //
             // protect the http: header
             String str1 = rawCompareUrl.replaceAll("http:\\/\\/", "httpLeader");
             String str2 = str1.replaceAll("\\/\\/", "\\/");
@@ -126,7 +132,7 @@ public class ApplicationScopeBean implements Serializable {
     public String getDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMMdd'at'HH:mm:z");
         Date dt = new Date();
-        return sdf.format(dt);         
+        return sdf.format(dt);
     }
 
     private void createItemSelects() {
@@ -352,6 +358,43 @@ public class ApplicationScopeBean implements Serializable {
             }
         }
         return suggestions;
+    }
+
+    public static CmpdListVO cmpdListFromListOfCmpds(List<CmpdVO> listIn, String listName, String listOwner) {
+
+        java.util.Random generator = new Random();
+
+        Date now = new Date();
+        XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
+
+        CmpdListVO rtn = new CmpdListVO();
+
+        long randomId = generator.nextLong();
+        if (randomId > 0) {
+            randomId = -1 * randomId;
+        }
+
+        rtn.setCmpdListId(randomId);
+        rtn.setListName(listName);
+        rtn.setDateCreated(now);
+        rtn.setListOwner(listOwner);
+        rtn.setShareWith(listOwner);
+
+        rtn.setCmpdListMembers(new ArrayList<CmpdListMemberVO>());
+
+        for (CmpdVO cVO : listIn) {
+            CmpdListMemberVO clmVO = new CmpdListMemberVO(cVO, listName);
+            randomId = generator.nextLong();
+            if (randomId > 0) {
+                randomId = -1 * randomId;
+            }
+            clmVO.setId(randomId);
+            rtn.getCmpdListMembers().add(clmVO);
+        }
+        
+        rtn.setCountListMembers(rtn.getCmpdListMembers().size());
+
+        return rtn;
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">

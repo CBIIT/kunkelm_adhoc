@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +23,7 @@ import mwk.datasystem.util.HelperCmpdListMember;
 import mwk.datasystem.util.MoleculeParser;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
+import mwk.datasystem.vo.CmpdVO;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
@@ -91,16 +93,6 @@ public class ListContentController implements Serializable {
     UploadedFile uploadedFile;
     CmpdListVO targetList;
 
-    public String performConfigureDelete() {
-        // placeholder action to populate selectedListMembers
-        return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
-    }
-
-    public String fakeAction() {
-        // placeholder action to populate selectedListMembers
-        return null;
-    }
-
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("List Member Edited", ((CmpdListMemberVO) event.getObject()).getId().toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -125,60 +117,64 @@ public class ListContentController implements Serializable {
         }
 
     }
-
+    
+    public String performConfigureDelete() {
+        // placeholder action to populate selectedListMembers
+        return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
+    }
+    
     /**
      *
      * @return For checkboxes outside of dataTable
      */
     public String performDeleteFromActiveList() {
 
-        HelperCmpdListMember.deleteCmpdListMembers(listManagerController.getListManagerBean().activeList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
+//        HelperCmpdListMember.deleteCmpdListMembers(listManagerController.getListManagerBean().activeList, listManagerController.getListManagerBean().getSelectedActiveListMembers(), sessionController.getLoggedUser());
+//        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
+//        
+        CmpdListVO actLis = listManagerController.getListManagerBean().activeList;
 
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(listManagerController.getListManagerBean().activeList.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
-
-        listManagerController.getListManagerBean().activeList = clVO;
-
+        listManagerController.getListManagerBean().activeList.getCmpdListMembers().removeAll(listManagerController.getListManagerBean().selectedActiveListMembers);
         sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";
     }
 
-    public String performCreateNewListFromActiveList() {
-        return null;
-    }
+    public String performCopyAll() {
 
-    public String performConfigureCreate() {
-        // placeholder action to populate selectedListMembers
-        return "/webpages/configureCreateNewList.xhtml?faces-redirect=true";
-    }
+        CmpdListVO rtn = new CmpdListVO();
 
-    public String performCreateNewListFromSelectedListMembers() {
+        ArrayList<CmpdVO> listOfCmpds = new ArrayList<CmpdVO>();
 
-        // first, create an empty list
-        Long cmpdListId = HelperCmpdListMember.createEmptyList(listName, sessionController.getLoggedUser());
-
-        if (DEBUG) {
-            System.out.println("cmpdListId is: " + cmpdListId + " after createEmptyList");
+        for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().activeList.getCmpdListMembers()) {
+            listOfCmpds.add(clmVO.getCmpd());
         }
 
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
+        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, "Copy of " + listManagerController.getListManagerBean().activeList.getListName(), sessionController.getLoggedUser());
 
-        // append the selected
-        HelperCmpdListMember.appendCmpdListMembers(
-                clVO,
-                listManagerController.getListManagerBean().getSelectedActiveListMembers(),
-                sessionController.getLoggedUser());
+        listManagerController.getListManagerBean().availableLists.add(rtn);
+        listManagerController.getListManagerBean().activeList = rtn;
 
-        // have to UPDATE the list   
-        CmpdListVO updatedClVO = HelperCmpdList.getCmpdListByCmpdListId(
-                cmpdListId,
-                Boolean.TRUE,
-                sessionController.getLoggedUser());
+        sessionController.configurationBean.performUpdateColumns();
 
-        // have to add to the session
-        // and move to the new list        
-        listManagerController.getListManagerBean().availableLists.add(updatedClVO);
-        listManagerController.getListManagerBean().activeList = updatedClVO;
+        return "/webpages/activeListTable?faces-redirect=true";
+
+    }
+
+    public String performCopySelected() {
+
+        CmpdListVO rtn = new CmpdListVO();
+
+        ArrayList<CmpdVO> listOfCmpds = new ArrayList<CmpdVO>();
+
+        for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().selectedActiveListMembers) {
+            listOfCmpds.add(clmVO.getCmpd());
+        }
+
+        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, "Copy of " + listManagerController.getListManagerBean().activeList.getListName(), sessionController.getLoggedUser());
+
+        listManagerController.getListManagerBean().availableLists.add(rtn);
+        listManagerController.getListManagerBean().activeList = rtn;
 
         sessionController.configurationBean.performUpdateColumns();
 
@@ -198,7 +194,6 @@ public class ListContentController implements Serializable {
         CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(targetList.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
 
         listManagerController.getListManagerBean().activeList = clVO;
-
         listManagerController.performUpdateAvailableLists();
 
         return "/webpages/activeListTable?faces-redirect=true";
@@ -305,122 +300,6 @@ public class ListContentController implements Serializable {
 
     }
 
-//  public String performSmilesFileUpload() {
-//
-//    try {
-//
-//      Random randomGenerator = new Random();
-//
-//      String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(uploadedFile.getFileName());
-//
-//      if (DEBUG) {
-//        System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
-//      }
-//
-//      File systemFile = new File(realPath);
-//
-//      FileOutputStream fos = new FileOutputStream(systemFile, false);
-//
-//      byte[] byteArray = IOUtils.toByteArray(uploadedFile.getInputstream());
-//
-//      fos.write(byteArray);
-//
-//      fos.flush();
-//      fos.close();
-//
-//      FacesMessage msg = new FacesMessage(
-//              FacesMessage.SEVERITY_INFO,
-//              "Uploaded File",
-//              "fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize());
-//
-//      FacesContext.getCurrentInstance().addMessage(null, msg);
-//
-//      MoleculeParser mp = new MoleculeParser();
-//
-//      File smilesFile = new File(realPath);
-//
-//      ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
-//
-//      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, listName, sessionController.getLoggedUser());
-//
-//      // new fetch the list
-//      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
-//
-//      listManagerController.getListManagerBean().availableLists.add(clVO);
-//      listManagerController.getListManagerBean().activeList = clVO;
-//
-//      if (DEBUG) {
-//        System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
-//      }
-//
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//
-//    sessionController.configurationBean.performUpdateColumns();
-//
-//    return "/webpages/activeListTable?faces-redirect=true";
-//
-//  }
-//
-//  public String performFileUpload() {
-//
-//    try {
-//
-//      Random randomGenerator = new Random();
-//
-//      String realPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(uploadedFile.getFileName());
-//
-//      if (DEBUG) {
-//        System.out.println(" fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize() + " realPath: " + realPath);
-//      }
-//
-//      File systemFile = new File(realPath);
-//
-//      FileOutputStream fos = new FileOutputStream(systemFile, false);
-//
-//      byte[] byteArray = IOUtils.toByteArray(uploadedFile.getInputstream());
-//
-//      fos.write(byteArray);
-//
-//      fos.flush();
-//      fos.close();
-//
-//      FacesMessage msg = new FacesMessage(
-//              FacesMessage.SEVERITY_INFO,
-//              "Uploaded File",
-//              "fileName: " + uploadedFile.getFileName() + " fileSize: " + uploadedFile.getSize());
-//
-//      FacesContext.getCurrentInstance().addMessage(null, msg);
-//
-//      MoleculeParser mp = new MoleculeParser();
-//
-//      File sdFile = new File(realPath);
-//
-//      ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
-//
-//      CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, listName, sessionController.getLoggedUser());
-//
-//      // new fetch the list
-//      CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
-//
-//      listManagerController.getListManagerBean().availableLists.add(clVO);
-//      listManagerController.getListManagerBean().activeList = clVO;
-//
-//      if (DEBUG) {
-//        System.out.println("UploadCmpds contains: " + clVO_sparse.getCountListMembers() + " cmpds");
-//      }
-//
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//
-//    sessionController.configurationBean.performUpdateColumns();
-//
-//    return "/webpages/activeListTable?faces-redirect=true";
-//
-//  }
-//
     public String performStartOver() {
         searchCriteriaBean.reset();
         return "/webpages/searchCmpds?faces-redirect=true";
@@ -443,6 +322,7 @@ public class ListContentController implements Serializable {
 //    #    #         ##       #            ######  #####   #       ######       #
 //    #    #        #  #      #            #    #  #   #   #       #    #  #    #
 //    #    ######  #    #     #            #    #  #    #  ######  #    #   ####
+//
         splitStrings = searchCriteriaBean.getAliasTextArea().split(delimiters);
         for (i = 0; i < splitStrings.length; i++) {
             fixedString = splitStrings[i].trim();
@@ -628,61 +508,61 @@ public class ListContentController implements Serializable {
     }
     // </editor-fold>
 
-    public void appendToaliasTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getAliasTextArea() == null) {
-            searchCriteriaBean.setAliasTextArea("");
-        }
-        searchCriteriaBean.setAliasTextArea(item + "\n" + searchCriteriaBean.getAliasTextArea());
-    }
-
-    public void appendTotargetTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getTargetTextArea() == null) {
-            searchCriteriaBean.setTargetTextArea("");
-        }
-        searchCriteriaBean.setTargetTextArea(item + "\n" + searchCriteriaBean.getTargetTextArea());
-    }
-
-    public void appendToprojectCodeTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getProjectCodeTextArea() == null) {
-            searchCriteriaBean.setProjectCodeTextArea("");
-        }
-        searchCriteriaBean.setProjectCodeTextArea(item + "\n" + searchCriteriaBean.getProjectCodeTextArea());
-    }
-
-    public void appendToplateTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getPlateTextArea() == null) {
-            searchCriteriaBean.setPlateTextArea("");
-        }
-        searchCriteriaBean.setPlateTextArea(item + "\n" + searchCriteriaBean.getPlateTextArea());
-    }
-
-    public void appendTocasTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getCasTextArea() == null) {
-            searchCriteriaBean.setCasTextArea("");
-        }
-        searchCriteriaBean.setCasTextArea(item + "\n" + searchCriteriaBean.getCasTextArea());
-    }
-
-    public void appendTodrugNameTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getDrugNameTextArea() == null) {
-            searchCriteriaBean.setDrugNameTextArea("");
-        }
-        searchCriteriaBean.setDrugNameTextArea(item + "\n" + searchCriteriaBean.getDrugNameTextArea());
-    }
-
-    public void appendTonscTextArea(SelectEvent event) {
-        Object item = event.getObject();
-        if (searchCriteriaBean.getNscTextArea() == null) {
-            searchCriteriaBean.setNscTextArea("");
-        }
-        searchCriteriaBean.setNscTextArea(item + "\n" + searchCriteriaBean.getNscTextArea());
-    }
+//    public void appendToaliasTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getAliasTextArea() == null) {
+//            searchCriteriaBean.setAliasTextArea("");
+//        }
+//        searchCriteriaBean.setAliasTextArea(item + "\n" + searchCriteriaBean.getAliasTextArea());
+//    }
+//
+//    public void appendTotargetTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getTargetTextArea() == null) {
+//            searchCriteriaBean.setTargetTextArea("");
+//        }
+//        searchCriteriaBean.setTargetTextArea(item + "\n" + searchCriteriaBean.getTargetTextArea());
+//    }
+//
+//    public void appendToprojectCodeTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getProjectCodeTextArea() == null) {
+//            searchCriteriaBean.setProjectCodeTextArea("");
+//        }
+//        searchCriteriaBean.setProjectCodeTextArea(item + "\n" + searchCriteriaBean.getProjectCodeTextArea());
+//    }
+//
+//    public void appendToplateTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getPlateTextArea() == null) {
+//            searchCriteriaBean.setPlateTextArea("");
+//        }
+//        searchCriteriaBean.setPlateTextArea(item + "\n" + searchCriteriaBean.getPlateTextArea());
+//    }
+//
+//    public void appendTocasTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getCasTextArea() == null) {
+//            searchCriteriaBean.setCasTextArea("");
+//        }
+//        searchCriteriaBean.setCasTextArea(item + "\n" + searchCriteriaBean.getCasTextArea());
+//    }
+//
+//    public void appendTodrugNameTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getDrugNameTextArea() == null) {
+//            searchCriteriaBean.setDrugNameTextArea("");
+//        }
+//        searchCriteriaBean.setDrugNameTextArea(item + "\n" + searchCriteriaBean.getDrugNameTextArea());
+//    }
+//
+//    public void appendTonscTextArea(SelectEvent event) {
+//        Object item = event.getObject();
+//        if (searchCriteriaBean.getNscTextArea() == null) {
+//            searchCriteriaBean.setNscTextArea("");
+//        }
+//        searchCriteriaBean.setNscTextArea(item + "\n" + searchCriteriaBean.getNscTextArea());
+//    }
 
     public void appendTocmpdNamedSetTextArea(SelectEvent event) {
         Object item = event.getObject();

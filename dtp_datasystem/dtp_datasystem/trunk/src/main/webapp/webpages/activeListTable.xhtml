@@ -240,9 +240,7 @@
 
                 <br/>
 
-                <!--
-
-                <p:commandLink  value="DET"
+                <p:commandLink  value="DETAILS"
                                 update=":datasystemForm:ListMemberDetailsDialogPanel" 
                                 oncomplete="PF('listMemberDetailDlg').show();" 
                                 title="List Member Details"
@@ -253,7 +251,7 @@
 
                 &nbsp;
                 
-                <p:commandLink value="SSS"
+                <p:commandLink value="SubStruc"
                                ajax="false" 
                                title="Substructure Search"
                                action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
@@ -265,16 +263,16 @@
 
                 &nbsp;
                 
-                <p:commandLink value="FWB"
+                <p:commandLink value="FragWB"
                                rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                ajax="false" 
                                title="Fragments Workbench"
                                action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
 
                 </p:commandLink>
-                
-                -->
 
+                <!--
+                
                 <p:commandButton value="DET"
                                  update=":datasystemForm:ListMemberDetailsDialogPanel" 
                                  oncomplete="PF('listMemberDetailDlg').show();" 
@@ -299,6 +297,8 @@
                                  title="Fragments Workbench"
                                  action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
                 </p:commandButton>
+                
+                -->
 
             </p:column>
 

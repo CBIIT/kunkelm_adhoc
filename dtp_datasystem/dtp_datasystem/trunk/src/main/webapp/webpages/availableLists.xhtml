@@ -134,16 +134,16 @@
 
             <p:column headerText="CmpdListId"
                       resizable="true"
-                      sortBy="#{list.id}"
-                      filterBy="#{list.id}"
+                      sortBy="#{list.cmpdListId}"
+                      filterBy="#{list.cmpdListId}"
                       filterMatchMode="contains">    
                 
-                <h:outputText value="#{empty list.id || list.id lt 0 ? 'NOT SAVED' : list.id}"
-                              style="color: #{empty list.id || list.id lt 0 ? 'red' : 'black'}"/>        
+                <!--<h:outputText value="#{empty list.id || list.id lt 0 ? 'NOT SAVED' : list.id}"
+                              style="color: #{empty list.id || list.id lt 0 ? 'red' : 'black'}"/>-->        
 
-                <p:commandButton rendered="#{empty list.id || list.id lt 0}"
+                <p:commandButton rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}"
                                  action="#{listManagerController.performPersistList(list)}"
-                                 value="Persist List"
+                                 value="Save List"
                                  onstart="PF('appendingBUI').show();"
                                  oncomplete="PF('appendingBUI').hide();"
                                  style="width: 100%;" />                 
@@ -210,7 +210,7 @@
                 <p:outputLabel for="listNameText" value="New List name:" />            
                 <p:inputText id="listNameText" value="#{listContentController.listName}" />
                 <p:spacer height="20" width="100%"/>
-                <p:commandButton action="#{listManagerController.performCopyList()}"
+                <p:commandButton action="#{listManagerController.performCopyAll()}"
                                  value="Create New List from Selected"
                                  onstart="PF('appendingBUI').show();"
                                  oncomplete="PF('appendingBUI').hide();"

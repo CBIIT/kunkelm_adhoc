@@ -48,7 +48,7 @@
             <h:outputText value="#{fn:length(listLogicController.cmpdsListAorListB)} compounds"/>
 
             <p:commandButton value="VIEW"
-                             action="/webpages/cmpdListTable?faces-redirect=true"
+                             action="/webpages/activeListTable?faces-redirect=true"
                              onstart="PF('loadingBUI').show();"
                              oncomplete="PF('loadingBUI').hide();">      
                 <f:setPropertyActionListener value="#{listLogicController.cmpdsListAorListB}"   
@@ -65,7 +65,7 @@
             <h:outputText value="#{fn:length(listLogicController.cmpdsListAandListB)} compounds"/>
 
             <p:commandButton value="VIEW"
-                             action="/webpages/cmpdListTable?faces-redirect=true"
+                             action="/webpages/activeListTable?faces-redirect=true"
                              onstart="PF('loadingBUI').show();"
                              oncomplete="PF('loadingBUI').hide();">  
                 <f:setPropertyActionListener value="#{listLogicController.cmpdsListAandListB}"   
@@ -83,7 +83,7 @@
             <h:outputText value="#{fn:length(listLogicController.cmpdsListAnotListB)} compounds"/>
 
             <p:commandButton value="VIEW"
-                             action="/webpages/cmpdListTable?faces-redirect=true"
+                             action="/webpages/activeListTable?faces-redirect=true"
                              onstart="PF('loadingBUI').show();"
                              oncomplete="PF('loadingBUI').hide();">  
                 <f:setPropertyActionListener value="#{listLogicController.cmpdsListAnotListB}"   

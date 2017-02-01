@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import javax.xml.datatype.XMLGregorianCalendar;
+import mwk.datasystem.controllers.ApplicationScopeBean;
 import mwk.datasystem.domain.AdHocCmpdFragment;
 import mwk.datasystem.domain.CmpdImpl;
 import mwk.datasystem.domain.NscCmpdImpl;
@@ -42,69 +43,6 @@ public class HelperCmpdList {
 
     public static final Boolean DEBUG = Boolean.TRUE;
 
-//    public static CmpdList createCmpdListFromCmpds(List<Cmpd> listOfCmpds, String currentUser) {
-//
-//        CmpdList rtn = CmpdList.Factory.newInstance();
-//
-//        Session session = null;
-//        Transaction tx = null;
-//
-//        try {
-//
-//            session = HibernateUtil.getSessionFactory().openSession();
-//
-//            Date now = new Date();
-//            Timestamp ts = new Timestamp(now.getTime());
-//
-//            Long cmpdListId = null;
-//
-//            //do {
-//            java.util.Random generator = new Random();
-//            long randomId = generator.nextLong();
-//
-//            if (randomId < 0) {
-//                randomId = -1 * randomId;
-//            }
-//
-//            cmpdListId = new Long(randomId);
-//
-//            //} while (this.getNovumListDao().searchUniqueNovumListId(novumListId) != null);
-//            tx = session.beginTransaction();
-//
-//            // create a new list
-//            CmpdList cl = CmpdList.Factory.newInstance();
-//
-//            cl.setCmpdListId(cmpdListId);
-//            cl.setListName(currentUser + " " + now);
-//            cl.setDateCreated(ts);
-//            cl.setListOwner(currentUser);
-//            cl.setShareWith(currentUser);
-//
-//            session.persist(cl);
-//
-//            for (Cmpd c : listOfCmpds) {
-//                CmpdListMember clm = CmpdListMember.Factory.newInstance();
-//                clm.setCmpd(c);
-//                clm.setCmpdList(cl);
-//                session.persist(clm);
-//                // not needed for persistence, added for quick(er) conversion to VO
-//                cl.getCmpdListMembers().add(clm);
-//            }
-//
-//            cl.setCountListMembers(cl.getCmpdListMembers().size());
-//
-//            tx.commit();
-//
-//        } catch (Exception e) {
-//            tx.rollback();
-//            e.printStackTrace();
-//        } finally {
-//            session.close();
-//        }
-//
-//        return rtn;
-//
-//    }
     /**
      *
      * @param adHocCmpdList In order to pass this off to HelperCmpdTable have to
@@ -381,13 +319,11 @@ public class HelperCmpdList {
             } else // if no seach criteria were specified, run default
             // seach for shared lists (if PUBLIC user) 
             // or shared AND owned lists if anyone else
-            {
-                if (currentUser.equals("PUBLIC")) {
+             if (currentUser.equals("PUBLIC")) {
                     crit.add(Restrictions.eq("shareWith", "EVERYONE"));
                 } else {
                     crit.add(accessDisj);
                 }
-            }
 
             entityList = (List<CmpdList>) crit.list();
 
@@ -496,7 +432,7 @@ public class HelperCmpdList {
             tx = session.beginTransaction();
 
             Criteria clCrit = session.createCriteria(CmpdList.class);
-                        
+
             clCrit.add(Restrictions.eq("cmpdListId", cmpdListId));
             clCrit.add(Restrictions.eq("listOwner", currentUser));
             // can NOT delete a shared list
@@ -586,7 +522,7 @@ public class HelperCmpdList {
                 cVOlist.add(clmVO.getCmpd());
             }
 
-            rtn = persistListOfCmpds(cVOlist, currentUser);
+            rtn = persistListOfCmpds(cVOlist, clVO.getListName(), currentUser);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -597,7 +533,7 @@ public class HelperCmpdList {
 
     }
 
-    public static CmpdListVO persistListOfCmpds(List<CmpdVO> cVOlist, String currentUser) {
+    public static CmpdListVO persistListOfCmpds(List<CmpdVO> cVOlist, String listName, String currentUser) {
 
         CmpdListVO rtn = new CmpdListVO();
 
@@ -631,7 +567,13 @@ public class HelperCmpdList {
             CmpdList clEnt = CmpdList.Factory.newInstance();
 
             clEnt.setCmpdListId(cmpdListId);
-            clEnt.setListName(currentUser + " " + now);
+
+            if (listName == null || listName.length() == 0) {
+                clEnt.setListName(currentUser + " " + now);
+            } else {
+                clEnt.setListName(listName);
+            }
+            
             clEnt.setDateCreated(ts);
             clEnt.setListOwner(currentUser);
             clEnt.setShareWith(currentUser);
@@ -646,6 +588,7 @@ public class HelperCmpdList {
                 clm.setCmpd(entCmpd);
                 clm.setCmpdList(clEnt);
                 session.persist(clm);
+                
                 // not needed for persistence, added for quick(er) conversion to VO
                 clEnt.getCmpdListMembers().add(clm);
             }

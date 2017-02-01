@@ -16,6 +16,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import mwk.datasystem.util.HelperCmpd;
 import mwk.datasystem.util.HelperCmpdList;
+import mwk.datasystem.util.HelperCmpdTable;
 import mwk.datasystem.util.HelperStructure;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
@@ -53,76 +54,15 @@ public class StructureSearchController implements Serializable {
 
     private String ctabFromEditor;
     private String smilesFromCtabFromEditor;
-
-    private String listName;
-
+    
     private CmpdListVO listToSearch;
 
     public StructureSearchController() {
     }
 
-    public String performExactMatchSearch() {
-
-        List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(this.smilesFromCtabFromEditor);
-
-        List<CmpdVO> structureSearchResults = HelperCmpd.getCmpdsByNsc(nscIntList, sessionController.getLoggedUser());
-
-        List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
-
-        for (CmpdVO cVO : structureSearchResults) {
-            CmpdListMemberVO clmVO = new CmpdListMemberVO();
-            clmVO.setCmpd(cVO);
-            clmList.add(clmVO);
-        }
-
-        CmpdListVO clVO = new CmpdListVO();
-
-        clVO.setListName("Exact Match Search Results");
-        clVO.setListOwner(sessionController.getLoggedUser());
-
-        clVO.setCmpdListMembers(clmList);
-
-        listManagerController.getListManagerBean().tempList = clVO;
-
-        return null;
-
-    }
-
-    public String performSubstructureSearchCtab() {
-
-        System.out.println("Now in performSubstructureSearchCtab()");
-
-        // aromaticity set to true so that 
-        // SMARTSPattern.match() will work during structure display
-        this.smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
-
-        List<Integer> nscIntList = HelperStructure.findNSCsByCtabSubstructure(ctabFromEditor);
-
-        System.out.println("Size of nscIntList: " + nscIntList.size());
-
-        Date now = new Date();
-
-        if (listName == null || listName.length() == 0) {
-            listName = "structureSearchResults " + now.toString();
-        }
-
-        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, this.smilesFromCtabFromEditor, sessionController.getLoggedUser());
-
-        // have to fetch the list so that the compound details will be populated
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
-
-        listManagerController.getListManagerBean().availableLists.add(clVO);
-        listManagerController.getListManagerBean().activeList = clVO;
-
-        sessionController.configurationBean.performUpdateColumns();
-
-        return "/webpages/activeListTable.xhtml?faces-redirect=true";
-
-    }
-
     public String performSubstructureSearch() {
 
-        System.out.println("Now in performSubstructureSearch()");
+        System.out.println("Now in StructureSearchController.findCmpdsBySubstructure()");
 
         // aromaticity set to true so that 
         // SMARTSPattern.match() will work during structure display
@@ -132,17 +72,16 @@ public class StructureSearchController implements Serializable {
 
         System.out.println("Size of nscIntList: " + nscIntList.size());
 
+        List<CmpdVO> cmpdVOlist = HelperCmpdTable.fetchCmpdsByNscs(nscIntList);
+
+        System.out.println("Size of cmpdVOlist: " + cmpdVOlist.size());
+
         Date now = new Date();
 
-        if (listName == null || listName.length() == 0) {
-            listName = "structureSearchResults " + now.toString();
-        }
+        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cmpdVOlist, "Structure Search Results " + now.toString(), sessionController.getLoggedUser());
 
-        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, this.smilesFromCtabFromEditor, sessionController.getLoggedUser());
-
-        // have to fetch the list so that the compound details will be populated
-        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
-
+        clVO.setAnchorSmiles(smilesFromCtabFromEditor);
+        
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
 
@@ -152,6 +91,96 @@ public class StructureSearchController implements Serializable {
 
     }
 
+//    public String performExactMatchSearch() {
+//
+//        List<Integer> nscIntList = HelperStructure.findNSCsByExactMatch(this.smilesFromCtabFromEditor);
+//
+//        List<CmpdVO> structureSearchResults = HelperCmpd.getCmpdsByNsc(nscIntList, sessionController.getLoggedUser());
+//
+//        List<CmpdListMemberVO> clmList = new ArrayList<CmpdListMemberVO>();
+//
+//        for (CmpdVO cVO : structureSearchResults) {
+//            CmpdListMemberVO clmVO = new CmpdListMemberVO();
+//            clmVO.setCmpd(cVO);
+//            clmList.add(clmVO);
+//        }
+//
+//        CmpdListVO clVO = new CmpdListVO();
+//
+//        clVO.setListName("Exact Match Search Results");
+//        clVO.setListOwner(sessionController.getLoggedUser());
+//
+//        clVO.setCmpdListMembers(clmList);
+//
+//        listManagerController.getListManagerBean().tempList = clVO;
+//
+//        return null;
+//
+//    }
+//
+//    public String performSubstructureSearchCtab() {
+//
+//        System.out.println("Now in performSubstructureSearchCtab()");
+//
+//        // aromaticity set to true so that 
+//        // SMARTSPattern.match() will work during structure display
+//        this.smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
+//
+//        List<Integer> nscIntList = HelperStructure.findNSCsByCtabSubstructure(ctabFromEditor);
+//
+//        System.out.println("Size of nscIntList: " + nscIntList.size());
+//
+//        Date now = new Date();
+//
+//        if (listName == null || listName.length() == 0) {
+//            listName = "structureSearchResults " + now.toString();
+//        }
+//
+//        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, this.smilesFromCtabFromEditor, sessionController.getLoggedUser());
+//
+//        // have to fetch the list so that the compound details will be populated
+//        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
+//
+//        listManagerController.getListManagerBean().availableLists.add(clVO);
+//        listManagerController.getListManagerBean().activeList = clVO;
+//
+//        sessionController.configurationBean.performUpdateColumns();
+//
+//        return "/webpages/activeListTable.xhtml?faces-redirect=true";
+//
+//    }
+//
+//    public String performSubstructureSearch() {
+//
+//        System.out.println("Now in performSubstructureSearch()");
+//
+//        // aromaticity set to true so that 
+//        // SMARTSPattern.match() will work during structure display
+//        this.smilesFromCtabFromEditor = MoleculeWrangling.toSmilesFromCtab(ctabFromEditor, true);
+//
+//        List<Integer> nscIntList = HelperStructure.findNSCsBySmilesSubstructure(this.smilesFromCtabFromEditor);
+//
+//        System.out.println("Size of nscIntList: " + nscIntList.size());
+//
+//        Date now = new Date();
+//
+//        if (listName == null || listName.length() == 0) {
+//            listName = "structureSearchResults " + now.toString();
+//        }
+//
+//        Long cmpdListId = HelperCmpd.createCmpdListByNscs(listName, nscIntList, this.smilesFromCtabFromEditor, sessionController.getLoggedUser());
+//
+//        // have to fetch the list so that the compound details will be populated
+//        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
+//
+//        listManagerController.getListManagerBean().availableLists.add(clVO);
+//        listManagerController.getListManagerBean().activeList = clVO;
+//
+//        sessionController.configurationBean.performUpdateColumns();
+//
+//        return "/webpages/activeListTable.xhtml?faces-redirect=true";
+//
+//    }
     public String performLandingLoadEditor() {
 
         System.out.println("In performLandingLoadEditor in StructureSearchController.");
@@ -390,14 +419,6 @@ public class StructureSearchController implements Serializable {
 
     public void setSmilesFromCtabFromEditor(String smilesFromCtabFromEditor) {
         this.smilesFromCtabFromEditor = smilesFromCtabFromEditor;
-    }
-
-    public String getListName() {
-        return listName;
-    }
-
-    public void setListName(String listName) {
-        this.listName = listName;
     }
 
     public CmpdListVO getListToSearch() {
