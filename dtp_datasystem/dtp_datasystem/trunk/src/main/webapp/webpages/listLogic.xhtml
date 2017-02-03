@@ -11,89 +11,72 @@
 
     <ui:define name="content">
 
-                <h:outputLabel for="selectOneListA" value="List A" />          
-                <p:selectOneMenu id="selectOneListA"
-                                 converter="#{cmpdListConverter}"                                 
-                                 value="#{listLogicController.listA}">  
-                    <f:selectItem itemLabel="Select One" itemValue="" />  
-                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}"
-                                   var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
-                </p:selectOneMenu>  
-            
-            <p:spacer height="20" width="100%" />
-            
-                <h:outputLabel for="selectOneListB"
-                              value="List B" />                  
-                <p:selectOneMenu id="selectOneListB"
-                                 converter="#{cmpdListConverter}"                                 
-                                 value="#{listLogicController.listB}">  
-                    <f:selectItem itemLabel="Select One" itemValue="" />  
-                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}"                    
-                    var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
-                    
-                </p:selectOneMenu>  
-            
-        <p:spacer height="20" width="100%"/>
+        <h:outputLabel for="selectOneListA" value="List A" />          
 
-            <p:commandButton value="DO LOGIC"
-                             action="#{listLogicController.performListLogic()}"                               
-                             onstart="PF('resolvingBUI').show();"
-                             oncomplete="PF('resolvingBUI').hide();"/>      
+        <p:selectOneMenu id="selectOneListA"
+                         converter="#{cmpdListConverter}"                                  
+                         value="#{listLogicController.listA}">  
+            <f:selectItem itemLabel="Select One" itemValue="#{null}" />  
+            <f:selectItems value="#{listManagerController.listManagerBean.availableLists}"
+                           var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
+        </p:selectOneMenu>  
 
         <p:spacer height="20" width="100%" />
 
-        <p:panelGrid columns="4" style="border: none;">
+        <h:outputLabel for="selectOneListB"
+                       value="List B" />                  
+        <p:selectOneMenu id="selectOneListB"
+                         converter="#{cmpdListConverter}"                                 
+                         value="#{listLogicController.listB}">  
+            <f:selectItem itemLabel="Select One" itemValue="#{null}" />  
+            <f:selectItems value="#{listManagerController.listManagerBean.availableLists}"                    
+                           var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
+
+        </p:selectOneMenu>  
+
+        <p:spacer height="20" width="100%"/>
+
+        <p:commandButton value="DO LOGIC"
+                         action="#{listLogicController.performListLogic()}"                               
+                         onstart="PF('resolvingBUI').show();"
+                         oncomplete="PF('resolvingBUI').hide();"/>      
+
+        <p:spacer height="20" width="100%" />
+
+        <p:panelGrid columns="3" style="border: none;">
 
             <h:outputText value="List A OR List B"/>
-            <h:outputText value="#{fn:length(listLogicController.cmpdsListAorListB)} compounds"/>
+            <h:outputText value="#{fn:length(listLogicController.cmpdsListAorListB.cmpdListMembers)} compounds"/>
 
             <p:commandButton value="VIEW"
                              action="/webpages/activeListTable?faces-redirect=true"
                              onstart="PF('loadingBUI').show();"
                              oncomplete="PF('loadingBUI').hide();">      
                 <f:setPropertyActionListener value="#{listLogicController.cmpdsListAorListB}"   
-                                             target="#{listLogicController.currentListOfCompounds}"/>  
-            </p:commandButton>
-
-            <p:commandButton value="SAVE"
-                             action="#{listLogicController.performSaveListLogicCmpds()}">      
-                <f:setPropertyActionListener value="#{listLogicController.cmpdsListAorListB}"   
-                                             target="#{listLogicController.currentListOfCompounds}"/>  
+                                             target="#{listManagerController.listManagerBean.activeList}"/>  
             </p:commandButton>
 
             <h:outputText value="List A AND List B"/>
-            <h:outputText value="#{fn:length(listLogicController.cmpdsListAandListB)} compounds"/>
+            <h:outputText value="#{fn:length(listLogicController.cmpdsListAandListB.cmpdListMembers)} compounds"/>
 
             <p:commandButton value="VIEW"
                              action="/webpages/activeListTable?faces-redirect=true"
                              onstart="PF('loadingBUI').show();"
                              oncomplete="PF('loadingBUI').hide();">  
                 <f:setPropertyActionListener value="#{listLogicController.cmpdsListAandListB}"   
-                                             target="#{listLogicController.currentListOfCompounds}"/>  
+                                             target="#{listManagerController.listManagerBean.activeList}"/>  
 
-            </p:commandButton>
-
-            <p:commandButton value="SAVE"
-                             action="#{listLogicController.performSaveListLogicCmpds()}">      
-                <f:setPropertyActionListener value="#{listLogicController.cmpdsListAandListB}"   
-                                             target="#{listLogicController.currentListOfCompounds}"/>  
             </p:commandButton>
 
             <h:outputText value="List A NOT List B"/>
-            <h:outputText value="#{fn:length(listLogicController.cmpdsListAnotListB)} compounds"/>
+            <h:outputText value="#{fn:length(listLogicController.cmpdsListAnotListB.cmpdListMembers)} compounds"/>
 
             <p:commandButton value="VIEW"
                              action="/webpages/activeListTable?faces-redirect=true"
                              onstart="PF('loadingBUI').show();"
                              oncomplete="PF('loadingBUI').hide();">  
                 <f:setPropertyActionListener value="#{listLogicController.cmpdsListAnotListB}"   
-                                             target="#{listLogicController.currentListOfCompounds}"/>  
-            </p:commandButton>
-
-            <p:commandButton value="SAVE"
-                             action="#{listLogicController.performSaveListLogicCmpds()}">      
-                <f:setPropertyActionListener value="#{listLogicController.cmpdsListAnotListB}"   
-                                             target="#{listLogicController.currentListOfCompounds}"/>  
+                                             target="#{listManagerController.listManagerBean.activeList}"/>  
             </p:commandButton>
 
         </p:panelGrid>

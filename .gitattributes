@@ -9675,7 +9675,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/TanimotoForceGraph.java
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/TanimotoLink.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/d3/TanimotoScoresWithCmpdObjects.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ApplicationScopeBean.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ColorWranglingController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ConfigurationBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/CuratedNscController.java -text
@@ -9698,6 +9697,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Ses
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/StructureSearchController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/TanimotoController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/WindowPopper.java -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CmpdListConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedNameConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedOriginatorConverter.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/converters/CuratedProjectConverter.java -text

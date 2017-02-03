@@ -137,9 +137,9 @@
                       sortBy="#{list.cmpdListId}"
                       filterBy="#{list.cmpdListId}"
                       filterMatchMode="contains">    
-                
-                <!--<h:outputText value="#{empty list.id || list.id lt 0 ? 'NOT SAVED' : list.id}"
-                              style="color: #{empty list.id || list.id lt 0 ? 'red' : 'black'}"/>-->        
+
+                <h:outputText value="#{empty list.cmpdListId || list.cmpdListId lt 0 ? 'NOT SAVED' : list.cmpdListId}"
+                              style="color: #{empty list.cmpdListId || list.cmpdListId lt 0 ? 'red' : 'black'}"/>       
 
                 <p:commandButton rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}"
                                  action="#{listManagerController.performPersistList(list)}"
@@ -148,6 +148,15 @@
                                  oncomplete="PF('appendingBUI').hide();"
                                  style="width: 100%;" />                 
             </p:column> 
+
+            <p:column headerText="CmpdList.id"
+                      resizable="true"
+                      sortBy="#{list.id}"
+                      filterBy="#{list.id}"
+                      filterMatchMode="contains">    
+
+                <h:outputText value="#{list.id}"/>
+            </p:column>
 
             <p:column headerText="ListName"  
                       width="40%"

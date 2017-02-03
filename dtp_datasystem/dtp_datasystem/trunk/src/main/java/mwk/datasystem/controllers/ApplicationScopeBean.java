@@ -44,6 +44,8 @@ import org.hibernate.Transaction;
 public class ApplicationScopeBean implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
+    
+    static final Boolean DEBUG = Boolean.FALSE;
     //
     private String projectTitle;
     private String versionAndBuildTime;
@@ -118,14 +120,16 @@ public class ApplicationScopeBean implements Serializable {
 //        targetItems.add(new SelectItem("targetItemsTest", "targetItemsTest"));
         createItemSelects();
 
-        System.out.println("Size of drugNameItems:" + drugNameItems.size());
-        System.out.println("Size of aliasItems:" + aliasItems.size());
-        System.out.println("Size of casItems:" + casItems.size());
-        System.out.println("Size of cmpdNamedSetItems:" + cmpdNamedSetItems.size());
-        System.out.println("Size of nscItems:" + nscItems.size());
-        System.out.println("Size of projectCodeItems:" + projectCodeItems.size());
-        System.out.println("Size of plateItems:" + plateItems.size());
-        System.out.println("Size of targetItems:" + targetItems.size());
+        if (DEBUG) {
+            System.out.println("Size of drugNameItems:" + drugNameItems.size());
+            System.out.println("Size of aliasItems:" + aliasItems.size());
+            System.out.println("Size of casItems:" + casItems.size());
+            System.out.println("Size of cmpdNamedSetItems:" + cmpdNamedSetItems.size());
+            System.out.println("Size of nscItems:" + nscItems.size());
+            System.out.println("Size of projectCodeItems:" + projectCodeItems.size());
+            System.out.println("Size of plateItems:" + plateItems.size());
+            System.out.println("Size of targetItems:" + targetItems.size());
+        }
 
     }
 
@@ -391,7 +395,7 @@ public class ApplicationScopeBean implements Serializable {
             clmVO.setId(randomId);
             rtn.getCmpdListMembers().add(clmVO);
         }
-        
+
         rtn.setCountListMembers(rtn.getCmpdListMembers().size());
 
         return rtn;

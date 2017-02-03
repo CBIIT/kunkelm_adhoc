@@ -45,18 +45,7 @@ public class ListLogicController implements Serializable {
     private CmpdListVO cmpdsListAnotListB;
     private CmpdListVO cmpdsListAandListB;
     private CmpdListVO cmpdsListAorListB;
-    //
-//    private List<CmpdVO> currentListOfCompounds;
-//    private List<CmpdVO> selectedCmpds;
-//    private CmpdVO selectedCmpd;
 
-    // reach-through to listManagerController
-    @ManagedProperty(value = "#{listManagerController}")
-    private ListManagerController listManagerController;
-
-    public void setListManagerController(ListManagerController listManagerController) {
-        this.listManagerController = listManagerController;
-    }
     // reach-through to sessionController
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
@@ -65,10 +54,32 @@ public class ListLogicController implements Serializable {
         this.sessionController = sessionController;
     }
 
-    public String performListLogic() {
+    // reach-through to sessionController
+    @ManagedProperty(value = "#{listManagerController}")
+    private ListManagerController listManagerController;
 
-        CmpdListVO aList = listManagerController.fetchList(this.listA.getCmpdListId());
-        CmpdListVO bList = listManagerController.fetchList(this.listB.getCmpdListId());
+    public void setListManagerController(ListManagerController listManagerController) {
+        this.listManagerController = listManagerController;
+    }
+
+    public String performListLogic() {
+        return performListLogic(this.listA, this.listB);
+    }
+
+    private String performListLogic(CmpdListVO aList, CmpdListVO bList) {
+
+        // check whether listMembers have already been loaded
+        if (aList.getCmpdListMembers() == null || aList.getCmpdListMembers().isEmpty()) {
+            if (this.listA.getCmpdListId() > 0) {
+                aList = listManagerController.fetchList(this.listA.getCmpdListId());
+            }
+        }
+
+        if (bList.getCmpdListMembers() == null || bList.getCmpdListMembers().isEmpty()) {
+            if (this.listB.getCmpdListId() > 0) {
+                bList = listManagerController.fetchList(this.listB.getCmpdListId());
+            }
+        }
 
         // overlap is based on a.nsc = b.nsc OR a.originalAdHocCmpdId = b.originalAdHocCmpdId
         HashMap<Integer, CmpdVO> nscMap = new HashMap<Integer, CmpdVO>();
@@ -218,11 +229,26 @@ public class ListLogicController implements Serializable {
         }
 
         this.cmpdsListAorListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AorB, "AorB", sessionController.getLoggedUser());
-        this.cmpdsListAorListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AandB, "AandB", sessionController.getLoggedUser());
-        this.cmpdsListAorListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AnotB, "AnotB", sessionController.getLoggedUser());
+        this.cmpdsListAandListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AandB, "AandB", sessionController.getLoggedUser());
+        this.cmpdsListAnotListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AnotB, "AnotB", sessionController.getLoggedUser());
 
         return "/webpages/listLogic?faces-redirect=true";
 
+    }
+
+    public CmpdListVO listAorListB(CmpdListVO listA, CmpdListVO listB) {
+        performListLogic(listA, listB);
+        return this.getCmpdsListAorListB();
+    }
+
+    public CmpdListVO listAandListB(CmpdListVO listA, CmpdListVO listB) {
+        performListLogic(listA, listB);
+        return this.getCmpdsListAandListB();
+    }
+
+    public CmpdListVO listAnotListB(CmpdListVO listA, CmpdListVO listB) {
+        performListLogic(listA, listB);
+        return this.getCmpdsListAnotListB();
     }
 
 // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
