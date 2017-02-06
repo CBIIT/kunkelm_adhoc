@@ -78,7 +78,7 @@ public class StructureSearchController implements Serializable {
 
         Date now = new Date();
 
-        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cmpdVOlist, "Structure Search Results " + now.toString(), sessionController.getLoggedUser());
+        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cmpdVOlist, "Substructure Search Results " + now.toString(), sessionController.getLoggedUser());
 
         clVO.setAnchorSmiles(smilesFromCtabFromEditor);
         

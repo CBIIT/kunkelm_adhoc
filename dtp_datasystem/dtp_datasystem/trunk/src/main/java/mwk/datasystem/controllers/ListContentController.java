@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.faces.application.FacesMessage;
@@ -117,12 +118,12 @@ public class ListContentController implements Serializable {
         }
 
     }
-    
+
     public String performConfigureDelete() {
         // placeholder action to populate selectedListMembers
         return "/webpages/configureDeleteFromList.xhtml?faces-redirect=true";
     }
-    
+
     /**
      *
      * @return For checkboxes outside of dataTable
@@ -471,8 +472,13 @@ public class ListContentController implements Serializable {
 //        Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
 //        // fetch the list            
 //        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
-        CmpdListVO clVO = HelperCmpd.searchBySearchCriteriaBean(listName, searchCriteriaBean, sessionController.getLoggedUser());
 
+        List<CmpdVO> cList = HelperCmpd.searchBySearchCriteriaBean(searchCriteriaBean, sessionController.getLoggedUser());
+
+        Date now = new Date();
+        
+        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cList, "Search Results " + now.toString(), sessionController.getLoggedUser());
+        
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
 
@@ -563,7 +569,6 @@ public class ListContentController implements Serializable {
 //        }
 //        searchCriteriaBean.setNscTextArea(item + "\n" + searchCriteriaBean.getNscTextArea());
 //    }
-
     public void appendTocmpdNamedSetTextArea(SelectEvent event) {
         Object item = event.getObject();
         if (searchCriteriaBean.getCmpdNamedSetTextArea() == null) {

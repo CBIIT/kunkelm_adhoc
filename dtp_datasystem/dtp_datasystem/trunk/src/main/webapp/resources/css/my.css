@@ -1,3 +1,7 @@
+.panelColumns td {
+    vertical-align: top; 
+} 
+
 .ui-widget-content{
   color: black;
 }
@@ -8,17 +12,17 @@ h1, h2, h3 {
 }
 
 .ui-commandlink:focus{
-  color: red !important; 
-  font-size: large !important; 
-  text-decoration: underline !important;
-  border: dotted !important;
+    color: red !important; 
+    font-size: large !important; 
+    text-decoration: underline !important;
+    border: dotted !important;
 }
 
 .ui-button:focus{
-  color: red !important; 
-  font-size: large !important; 
-  text-decoration: underline !important;
-  border: dotted !important;
+    color: red !important; 
+    font-size: large !important; 
+    text-decoration: underline !important;
+    border: dotted !important;
 }
 
 .ui-autocomplete-input:focus{
@@ -44,12 +48,27 @@ textarea:focus {
     border-width: thick; 
     border-color: red;}
 
-.ui-widget-content{
-  color: black;
-}
-
 .borderlessPanelGrid tr, .borderlessPanelGrid td {
   border: none !important;
+}
+
+/* adding hard-coded color to overcome weird column value colors on heat maps
+
+MWK 29FEB2016, seems to no longer be needed...
+
+.ui-datatable th, .ui-datatable tfoot td {
+    margin: 0px;
+    overflow: hidden;
+    padding: 0px;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #C4C4C4 !important;
+}
+ */
+
+/* MWK unpadded table for heatMap */
+.unpaddedTable td{
+    border-spacing: 0px;
 }
 
 /*
@@ -66,14 +85,32 @@ ul.ui-menu-child {
   width: auto !important;
 }
 
-.ui-menuitem-text {
-	padding: 1em;
-	background-color: white;
-	color: blue;
-  font-size: 1em;
-  font-weight: bold;  
+.ui-menubar {
+  background-color: white;
 }
 
+.ui-menuitem-icon {
+  width: auto !important;
+  height: auto !important;
+}
+
+.ui-menuitem-text {
+	padding: 0.5em;
+	background-color: blue;
+	color: white;
+}
+
+.redMenuItem .ui-menuitem-text {
+	padding: 0.5em;
+	background-color: red;
+	color: white;
+} 
+
+.whiteMenuItem .ui-menuitem-text {
+	padding: 0.5em;
+	background-color: white;
+	color: black;
+} 
 
 /*
  #####    ####    #####    ##     #####  ######

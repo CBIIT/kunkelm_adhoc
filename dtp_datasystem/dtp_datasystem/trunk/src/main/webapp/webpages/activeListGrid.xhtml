@@ -19,6 +19,8 @@
                       be reflected in this view."/>
     </ui:define>        
 
+    <!--
+    
     <ui:define name="export">
         <h2 style="margin: 0;">
             <h:outputText value="Export Data or Images"/>
@@ -29,6 +31,8 @@
                         onclick="structuresAsGridImage()"/>
         </p:menubar>
     </ui:define>        
+
+    -->
 
     <ui:define name="alternate">    
     </ui:define>        
@@ -53,17 +57,44 @@
 
         <p:spacer height="20" width="100%"/>
 
-        <p:commandButton value="View As Table"
-                         ajax="false"
-                         action="/webpages/activeListTable?faces-redirect=true"/>
+        <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
 
-        <p:commandButton value="View As Grid"
-                         ajax="false"
-                         action="/webpages/activeListGrid?faces-redirect=true"/>
+            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
 
-        <p:commandButton value="View As Form"
-                         ajax="false"
-                         action="/webpages/activeListForm?faces-redirect=true"/>
+                <f:facet name="header">
+                    <h:outputText value="Change Compound Layout"/>
+                </f:facet>
+
+                <!--
+                
+                <p:commandLink title="Configure List Columns"
+                               onclick="PF('act_list_cfg_dlg').show();">
+                    <p:graphicImage name="/png/circle-gear-setting-configure-outline-stroke.png" width="48"/>
+                </p:commandLink>
+                
+                -->
+                
+                <p:commandLink title="Compounds in List Layout" 
+                                ajax="false"
+                               action="/webpages/activeListTable?faces-redirect=true">
+                    <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Grid Layout" disabled="true"
+                               ajax="false"
+                               action="/webpages/activeListGrid?faces-redirect=true">
+                    <p:graphicImage name="/png/editor-grid-view-block-outline-stroke.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Form Layout" 
+                               ajax="false"
+                               action="/webpages/activeListForm?faces-redirect=true">
+                    <p:graphicImage name="/png/device-projector-screen-empty-presentation-outline-stroke.png" width="48"/>
+                </p:commandLink>
+
+            </p:panelGrid>
+
+        </p:panelGrid>
 
         <p:dataGrid var="listMember"
                     value="#{listManagerController.listManagerBean.filteredActiveListMembers}" 
@@ -106,7 +137,7 @@
                             <f:setPropertyActionListener value="#{listMember}"   
                                                          target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
                         </p:commandButton>
-                        
+
                         <p:commandButton value="SSS"
                                          ajax="false" 
                                          title="Substructure Search"

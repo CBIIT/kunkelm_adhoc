@@ -44,7 +44,7 @@ import org.hibernate.Transaction;
 public class ApplicationScopeBean implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
-    
+
     static final Boolean DEBUG = Boolean.FALSE;
     //
     private String projectTitle;
@@ -369,7 +369,10 @@ public class ApplicationScopeBean implements Serializable {
         java.util.Random generator = new Random();
 
         Date now = new Date();
-        XMLGregorianCalendar xmlNow = TransformXMLGregorianCalendar.asXMLGregorianCalendar(now);
+        
+        if (listName == null || listName.length() == 0) {            
+            listName = "structureSearchResults " + now.toString();
+        }
 
         CmpdListVO rtn = new CmpdListVO();
 

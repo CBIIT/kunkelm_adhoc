@@ -90,13 +90,13 @@ public class ListManagerController implements Serializable {
     }
 
     public void onRowEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("List Edited", ((CmpdListVO) event.getObject()).getId().toString());
+        FacesMessage msg = new FacesMessage("List Edited", ((CmpdListVO) event.getObject()).getCmpdListId().toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
         HelperCmpdList.updateCmpdList((CmpdListVO) event.getObject(), sessionController.getLoggedUser());
     }
 
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", ((CmpdListVO) event.getObject()).getId().toString());
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((CmpdListVO) event.getObject()).getCmpdListId().toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -174,7 +174,7 @@ public class ListManagerController implements Serializable {
             // this hoop-protects any list-level data that may have already been
             // fetched 
             HashMap<Long, CmpdListVO> listMap = new HashMap<Long, CmpdListVO>();
-            for (CmpdListVO clVO : listManagerBean.availableLists) {
+            for (CmpdListVO clVO : listManagerBean.availableLists) {                
                 listMap.put(clVO.getId(), clVO);
             }
 
@@ -498,10 +498,10 @@ public class ListManagerController implements Serializable {
                     anchor.setCol1(18);
                     anchor.setRow1(row.getRowNum());
 
-                    anchor.setDx1(10);
-                    anchor.setDx2(10);
-                    anchor.setDy1(10);
-                    anchor.setDy2(10);
+                    anchor.setDx1(50);
+                    anchor.setDx2(50);
+                    anchor.setDy1(50);
+                    anchor.setDy2(50);
 
                     anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_AND_RESIZE);
 
