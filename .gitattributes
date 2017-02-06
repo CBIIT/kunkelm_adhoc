@@ -9756,10 +9756,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/resources/log4j.properties -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/META-INF/context.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/WEB-INF/web.xml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/idleWarning.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/csv.png -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/excel.png -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/pdf.png -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/images/xml.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/landing.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/login.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/loginFailed.xhtml -text
