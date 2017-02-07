@@ -31,13 +31,8 @@ public class ListManagerBean implements Serializable {
     protected List<CmpdListMemberVO> selectedActiveListMembers;
     protected List<CmpdListMemberVO> filteredActiveListMembers;
     //
-    protected CmpdListVO listForDelete;
-    //    
-    protected CmpdListVO agnosticList;
-    protected CmpdListMemberVO selectedTempListMember;
-    protected List<CmpdListMemberVO> selectedTempListMembers;
+    protected CmpdListVO listForDelete;   
     protected CmpdFragmentVO selectedCmpdFragment;
-    protected CmpdListVO tempList;
 
     /**
      * Creates a new instance of ListManagerBean
@@ -52,17 +47,14 @@ public class ListManagerBean implements Serializable {
         selectedActiveListMember = new CmpdListMemberVO();
         selectedAvailableList = new CmpdListVO();
         activeList = new CmpdListVO();
-        agnosticList = new CmpdListVO();
         availableLists = new ArrayList<CmpdListVO>();
         //Do NOT instantiate lists used as backend filters for PF!
         //filteredAvailableLists = filteredAvailableLists;
-        selectedTempListMember = new CmpdListMemberVO();
-        selectedTempListMembers = new ArrayList<CmpdListMemberVO>();
         selectedCmpdFragment = selectedCmpdFragment;
         selectedActiveListMembers = new ArrayList<CmpdListMemberVO>();
-        tempList = new CmpdListVO();
     }
 
+    //<editor-fold defaultstate="collapsed" desc="comment">
     public List<CmpdListVO> getSelectedAvailableLists() {
         return selectedAvailableLists;
     }
@@ -103,14 +95,6 @@ public class ListManagerBean implements Serializable {
         this.activeList = activeList;
     }
 
-    public CmpdListVO getAgnosticList() {
-        return agnosticList;
-    }
-
-    public void setAgnosticList(CmpdListVO agnosticList) {
-        this.agnosticList = agnosticList;
-    }
-
     public List<CmpdListVO> getAvailableLists() {
         return availableLists;
     }
@@ -125,22 +109,6 @@ public class ListManagerBean implements Serializable {
 
     public void setFilteredAvailableLists(List<CmpdListVO> filteredAvailableLists) {
         this.filteredAvailableLists = filteredAvailableLists;
-    }
-
-    public CmpdListMemberVO getSelectedTempListMember() {
-        return selectedTempListMember;
-    }
-
-    public void setSelectedTempListMember(CmpdListMemberVO selectedTempListMember) {
-        this.selectedTempListMember = selectedTempListMember;
-    }
-
-    public List<CmpdListMemberVO> getSelectedTempListMembers() {
-        return selectedTempListMembers;
-    }
-
-    public void setSelectedTempListMembers(List<CmpdListMemberVO> selectedTempListMembers) {
-        this.selectedTempListMembers = selectedTempListMembers;
     }
 
     public CmpdFragmentVO getSelectedCmpdFragment() {
@@ -167,12 +135,5 @@ public class ListManagerBean implements Serializable {
         this.filteredActiveListMembers = filteredActiveListMembers;
     }
 
-    public CmpdListVO getTempList() {
-        return tempList;
-    }
-
-    public void setTempList(CmpdListVO tempList) {
-        this.tempList = tempList;
-    }
-
+//</editor-fold>
 }

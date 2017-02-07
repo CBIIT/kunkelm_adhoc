@@ -17,36 +17,36 @@
     <ui:define name="instructions"/>
 
     <!--
-
+    
     <ui:define name="export"> 
-        <h2 style="margin: 0;">
-            <h:outputText value="Export Data or Images"/>
-        </h2>
-        <p:menubar autoDisplay="false">
-
-            <p:menuitem ajax="false" value="Export as Excel">
-                <p:dataExporter type="xls"  
-                                target="activeListTbl" 
-                                fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-            </p:menuitem>
-
-            <p:menuitem ajax="false" value="Export as CSV">  
-                <p:dataExporter type="csv" 
-                                target="activeListTbl" 
-                                fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-            </p:menuitem> 
-
-            <p:menuitem ajax="false" value="Export as Excel with Structure Images">
-                <p:dataExporter type="xls" 
-                                target="activeListTbl" 
-                                postProcessor="#{listManagerController.postProcessXLS}"
-                                fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
-            </p:menuitem>
-
-            <p:menuitem value="Export Structures as Image"
-                        ajax="true"
-                        onclick="structuresAsGridImage()"/>
-        </p:menubar>
+    <h2 style="margin: 0;">
+    <h:outputText value="Export Data or Images"/>
+    </h2>
+    <p:menubar autoDisplay="false">
+    
+    <p:menuitem ajax="false" value="Export as Excel">
+    <p:dataExporter type="xls"  
+    target="activeListTbl" 
+    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
+    </p:menuitem>
+    
+    <p:menuitem ajax="false" value="Export as CSV">  
+    <p:dataExporter type="csv" 
+    target="activeListTbl" 
+    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
+    </p:menuitem> 
+    
+    <p:menuitem ajax="false" value="Export as Excel with Structure Images">
+    <p:dataExporter type="xls" 
+    target="activeListTbl" 
+    postProcessor="#{listManagerController.postProcessXLS}"
+    fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
+    </p:menuitem>
+    
+    <p:menuitem value="Export Structures as Image"
+    ajax="true"
+    onclick="structuresAsGridImage()"/>
+    </p:menubar>
     </ui:define>
     
     -->
@@ -70,51 +70,47 @@
         <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
                          autoRun="true"/>
 
-        <!--        
-        <ui:include src="/webpages/templates/active_list_menu_bar.xhtml"/>
-        -->
-
         <!--
         
         <p:spacer height="20" width="100%"/>
-
+        
         <p:panel header="List Anchor Structure"
-                 rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
-
-            <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
-
-            <br/>
-
-            <p:graphicImage alt="Chemical Structure of List Anchor"
-                            width="#{sessionController.configurationBean.strcDim}" 
-                            height="#{sessionController.configurationBean.strcDim}"
-                            styleClass="anchorStructure"
-                            url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-            </p:graphicImage>
-
+        rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
+        
+        <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
+        
+        <br/>
+        
+        <p:graphicImage alt="Chemical Structure of List Anchor"
+        width="#{sessionController.configurationBean.strcDim}" 
+        height="#{sessionController.configurationBean.strcDim}"
+        styleClass="anchorStructure"
+        url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+        </p:graphicImage>
+        
         </p:panel>
-
+        
         <p:spacer height="20" width="100%"/>
         
         -->
 
         <!--
-
+        
         <p:commandButton value="Configure This Table"
-                         onclick="PF('act_list_cfg_dlg').show();"/>
-
+        onclick="PF('act_list_cfg_dlg').show();"/>
+        
         <p:commandButton value="View As Table"
-                         ajax="false"
-                         action="/webpages/activeListTable?faces-redirect=true"/>
-
+        ajax="false"
+        action="/webpages/activeListTable?faces-redirect=true"/>
+        
         <p:commandButton value="View As Grid"
-                         ajax="false"
-                         action="/webpages/activeListGrid?faces-redirect=true"/>
-
+        ajax="false"
+        action="/webpages/activeListGrid?faces-redirect=true"/>
+        
         <p:commandButton value="View As Form"
-                         ajax="false"
-                         action="/webpages/activeListForm?faces-redirect=true"/>
-
+        ajax="false"
+        action="/webpages/activeListForm?faces-redirect=true"/>
+        
         -->                  
 
         <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
@@ -133,9 +129,9 @@
                 <!--
                 
                 <p:commandLink title="Compounds in List Layout" 
-                                ajax="false"
-                               action="/webpages/activeListTable?faces-redirect=true">
-                    <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
+                ajax="false"
+                action="/webpages/activeListTable?faces-redirect=true">
+                <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
                 </p:commandLink>
                 
                 -->
@@ -151,7 +147,7 @@
                                action="/webpages/activeListForm?faces-redirect=true">
                     <p:graphicImage name="/png/device-projector-screen-empty-presentation-outline-stroke.png" width="48"/>
                 </p:commandLink>
-                
+
             </p:panelGrid>
 
             <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
@@ -179,7 +175,7 @@
                                onclick="structuresAsGridImage()">
                     <p:graphicImage name="/png/editor-images-pictures-photos-collection-outline-stroke.png" width="48"/>
                 </p:commandLink>
-                
+
             </p:panelGrid>
 
             <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
@@ -201,44 +197,39 @@
                     <p:graphicImage name="/miscpng/ChemistryEye1.png" width="48"/>
                 </p:commandLink>
 
-                <p:commandLink actionListener="#{listContentController.performCopyAll()}"
-                               title="COPY to NEW LIST"
-                               onclick="PF('crt_dlg').show();">
+                <p:commandLink title="COPY to NEW LIST"
+                               onclick="PF('copyDlg').show();">
                     <p:graphicImage name="/png/editor-copy-duplicate-outline-stroke.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink actionListener="#{listContentController.performConfigureAppend}"
-                               title="APPEND to EXISTING LIST"
-                               onclick="PF('app_dlg').show();">
+                               title="COMBINE with EXISTING LIST"
+                               onclick="PF('combineDlg').show();">
                     <p:graphicImage name="/png/editor-notebook-add-new-outline-stroke.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink actionListener="#{listContentController.performConfigureDelete}"
                                disabled="#{sessionController.loggedUser ne listManagerController.listManagerBean.activeList.listOwner || listManagerController.listManagerBean.activeList.shareWith eq 'EVERYONE'}"
                                title="DELETE from List"
-                               onclick="PF('del_dlg').show();">
+                               onclick="PF('deleteDlg').show();">
                     <p:graphicImage name="/png/circle-close-delete-remove-outline-stroke.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
-            
-            
-                
-                <p:commandLink rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}"
-                                 action="#{listManagerController.performPersistList(list)}"
-                                 value="Never Saved.  Save List"
-                                 onstart="PF('appendingBUI').show();"
-                                 oncomplete="PF('appendingBUI').hide();"
-                                 style="width: 100%;color: red;" />                 
-                
-                <p:commandLink rendered="#{not empty list.cmpdListId and list.cmpdListId gt 0}"
-                                 action="#{listManagerController.performPersistList(list)}"
-                                 value="Update List"
-                                 onstart="PF('appendingBUI').show();"
-                                 oncomplete="PF('appendingBUI').hide();"
-                                 style="width: 100%;" />                 
-                
 
+            <p:commandLink rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}"
+                           action="#{listManagerController.performPersistList(list)}"
+                           value="Never Saved.  Save List"
+                           onstart="PF('appendingBUI').show();"
+                           oncomplete="PF('appendingBUI').hide();"
+                           style="width: 100%;color: red;" />                 
+
+            <p:commandLink rendered="#{not empty list.cmpdListId and list.cmpdListId gt 0}"
+                           action="#{listManagerController.performPersistList(list)}"
+                           value="Update List"
+                           onstart="PF('appendingBUI').show();"
+                           oncomplete="PF('appendingBUI').hide();"
+                           style="width: 100%;" />                 
 
         </p:panelGrid>
 
@@ -251,7 +242,7 @@
                       widgetVar="activeListTblWidgetVar"
                       var="listMember"                       
                       value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
-                      rows="50"                        
+                      rows="1000"                        
                       paginator="true"
                       paginatorPosition="top"
                       currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
@@ -320,54 +311,54 @@
 
             <!--
             <p:column headerText="List Member Comment"
-                      resizable="true"
-                      sortBy="#{listMember.listMemberComment}"
-                      filterBy="#{listMember.listMemberComment}"
-                      filterMatchMode="contains">        
-                
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{listMember.listMemberComment}" /></f:facet>
-                    <f:facet name="input"><p:inputText id="listMemberCommentInput" value="#{listMember.listMemberComment}" style="width:100%"/></f:facet>
-                </p:cellEditor>
-                
+            resizable="true"
+            sortBy="#{listMember.listMemberComment}"
+            filterBy="#{listMember.listMemberComment}"
+            filterMatchMode="contains">        
+            
+            <p:cellEditor>
+            <f:facet name="output"><h:outputText value="#{listMember.listMemberComment}" /></f:facet>
+            <f:facet name="input"><p:inputText id="listMemberCommentInput" value="#{listMember.listMemberComment}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+            
             </p:column> 
             -->
 
             <!--
             
             <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                      headerText="DISCREET" 
-                      resizable="true"
-                      sortBy="#{cmpd.discreet}"
-                      filterBy="#{cmpd.discreet}"
-                      filterMatchMode="contains">                                
-                <h:outputText value="#{cmpd.discreet}"/>
+            headerText="DISCREET" 
+            resizable="true"
+            sortBy="#{cmpd.discreet}"
+            filterBy="#{cmpd.discreet}"
+            filterMatchMode="contains">                                
+            <h:outputText value="#{cmpd.discreet}"/>
             </p:column>   
-
+            
             <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                      headerText="CONF" 
-                      resizable="true"
-                      sortBy="#{cmpd.conf}"
-                      filterBy="#{cmpd.conf}"
-                      filterMatchMode="contains">                                
-                <h:outputText value="#{cmpd.conf}"/>
+            headerText="CONF" 
+            resizable="true"
+            sortBy="#{cmpd.conf}"
+            filterBy="#{cmpd.conf}"
+            filterMatchMode="contains">                                
+            <h:outputText value="#{cmpd.conf}"/>
             </p:column>   
-
+            
             <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                      headerText="DIST" 
-                      resizable="true"
-                      sortBy="#{cmpd.distribution}"
-                      filterBy="#{cmpd.distribution}"
-                      filterMatchMode="contains">                                
-                <h:outputText value="#{cmpd.distribution}"/>
+            headerText="DIST" 
+            resizable="true"
+            sortBy="#{cmpd.distribution}"
+            filterBy="#{cmpd.distribution}"
+            filterMatchMode="contains">                                
+            <h:outputText value="#{cmpd.distribution}"/>
             </p:column> 
-
+            
             <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                      headerText="NSCCmpdType"
-                      sortBy="#{cmpd.nscCmpdType}"
-                      filterBy="#{cmpd.nscCmpdType}"
-                      filterMatchMode="contains">
-                <h:outputText value="#{cmpd.nscCmpdType}"/>
+            headerText="NSCCmpdType"
+            sortBy="#{cmpd.nscCmpdType}"
+            filterBy="#{cmpd.nscCmpdType}"
+            filterMatchMode="contains">
+            <h:outputText value="#{cmpd.nscCmpdType}"/>
             </p:column>   
             
             -->
@@ -425,14 +416,14 @@
 
             <!--
             <p:column headerText="Parent Structure Ctab Test" 
-                      resizable="true"
-                      exportable="false">
-              <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                              width="#{sessionController.configurationBean.strcDim}" 
-                              height="#{sessionController.configurationBean.strcDim}"
-                              styleClass="parentStructure"
-                              url='#{sessionController.configurationBean.getCmpdStrcNscUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-              </p:graphicImage>
+            resizable="true"
+            exportable="false">
+            <p:graphicImage alt="Chemical Structure of Parent Fragment"
+            width="#{sessionController.configurationBean.strcDim}" 
+            height="#{sessionController.configurationBean.strcDim}"
+            styleClass="parentStructure"
+            url='#{sessionController.configurationBean.getCmpdStrcNscUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+            </p:graphicImage>
             </p:column>
             -->
 
@@ -701,6 +692,110 @@
             </p:columns>
 
         </p:dataTable>
+
+        <p:dialog header="Delete Selected From List" 
+                  widgetVar="deleteDlg" 
+                  modal="true"
+                  width="600" height="400">
+
+            <p:outputPanel autoUpdate="true">
+                <h:outputText value="Delete From #{listManagerController.listManagerBean.activeList.listName}." />
+                <p:spacer height="20" width="100%"/>
+                <h:outputText value="Delete #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} List Members." />
+                <p:spacer height="20" width="100%"/>
+                <p:outputLabel value="Delete cannot be undone." style="font-size: 200%; color: red;"/>
+                <p:spacer height="20" width="100%"/>
+
+                <p:spacer height="20" width="100%"/>
+                <p:outputLabel for="listNameText" value="New List name:" />            
+                <p:inputText id="listNameText" value="#{listContentController.listName}" />
+                <p:spacer height="20" width="100%"/>
+
+
+                <p:commandButton action="#{listContentController.performDeleteFromActiveList()}"
+                                 value="Delete Selected From List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog header="Copy to New List" 
+                  widgetVar="copyDlg" 
+                  modal="true"
+                  width="600" height="400">
+
+            <p:outputPanel autoUpdate="true">      
+
+                <p:panelGrid columns="2">
+                    <h:outputText value="Source List"/>
+                    <h:outputText value="#{listManagerController.listManagerBean.activeList.listName}" />
+                    <h:outputText value="Total Compounds"/>
+                    <h:outputText value="#{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)}"/>
+                    <h:outputText value="Selected Compounds"/>
+                    <h:outputText value="#{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)}"/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>
+                <p:outputLabel for="listNameText2" value="New List name:" />            
+                <p:inputText id="listNameText2" value="#{listContentController.listName}" />
+                <p:spacer height="20" width="100%"/>
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}"
+                                 action="#{listContentController.performCopy('all')}"
+                                 value="Copy #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Compounds to New List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+                <p:spacer height="20" width="100%"/>
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.selectedActiveListMembers}"
+                                 action="#{listContentController.performCopy('selected')}"
+                                 value="Copy #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} Selected Compounds to New List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+                <p:spacer height="20" width="100%"/>
+                <p:commandButton disabled="#{empty listManagerController.getC }" 
+                                 action="#{listContentController.performCopy('unselected')}"
+                                 value="Copy Unselected Compounds to New List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog header="Combine Selected with Existing List" 
+                  widgetVar="combineDlg" 
+                  modal="true"
+                  width="600" height="400">
+
+            <p:outputPanel autoUpdate="true">            
+                <h:outputText value="Append #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} List Members to Existing List." />
+                <p:spacer height="20" width="100%"/>
+                <p:outputLabel for="listSelect" value="Select an Existing List:"/>
+                <p:spacer height="20" width="100%"/>
+                <p:selectOneRadio id="listSelect" 
+                                  value="#{listContentController.targetList}" 
+                                  converter="#{cmpdListConverter}"
+                                  layout="pageDirection">
+                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
+                                   var="list" 
+                                   itemDisabled="#{list.listOwner ne sessionController.loggedUser or list.shareWith eq 'EVERYONE'}"
+                                   itemLabel="#{list.listName}" 
+                                   itemValue="#{list}" /> 
+                </p:selectOneRadio>
+                <p:spacer height="20" width="100%"/>
+                <p:commandButton action="#{listContentController.performAppendSelectedToExistingList()}"
+                                 value="Append Selected to Existing List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+            </p:outputPanel>    
+
+        </p:dialog>
 
     </ui:define>
 

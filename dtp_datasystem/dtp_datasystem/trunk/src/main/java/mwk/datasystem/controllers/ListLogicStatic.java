@@ -27,59 +27,31 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-/**
- *
- * @author mwkunkel
- */
-@ManagedBean
-@SessionScoped
-public class ListLogicController implements Serializable {
+public class ListLogicStatic {
 
     static final long serialVersionUID = -8653468638698142855l;
 
     private static final Boolean DEBUG = Boolean.FALSE;
+
     // 
-    private List<CmpdListVO> pickableLists;
-    //
-    private CmpdListVO listA;
-    private CmpdListVO listB;
-    //
-    private CmpdListVO cmpdsListAnotListB;
-    private CmpdListVO cmpdsListAandListB;
-    private CmpdListVO cmpdsListAorListB;
+    public void performListLogic(ListLogicContainer llc) {
 
-    // reach-through to sessionController
-    @ManagedProperty(value = "#{sessionController}")
-    private SessionController sessionController;
+        List<CmpdVO> aList = new ArrayList<CmpdVO>();
+        List<CmpdVO> bList = new ArrayList<CmpdVO>();
 
-    public void setSessionController(SessionController sessionController) {
-        this.sessionController = sessionController;
-    }
+        if (llc.getListA() == null || llc.getListA().getCmpdListMembers() == null || llc.getListA().getCmpdListMembers().isEmpty()) {
 
-    // reach-through to sessionController
-    @ManagedProperty(value = "#{listManagerController}")
-    private ListManagerController listManagerController;
-
-    public void setListManagerController(ListManagerController listManagerController) {
-        this.listManagerController = listManagerController;
-    }
-
-    public String performListLogic() {
-        return performListLogic(this.listA, this.listB);
-    }
-
-    private String performListLogic(CmpdListVO aList, CmpdListVO bList) {
-
-        // check whether listMembers have already been loaded
-        if (aList.getCmpdListMembers() == null || aList.getCmpdListMembers().isEmpty()) {
-            if (this.listA.getCmpdListId() > 0) {
-                aList = listManagerController.fetchList(this.listA.getCmpdListId());
+        } else {
+            for (CmpdListMemberVO clmVO : llc.getListA().getCmpdListMembers()) {
+                aList.add(clmVO.getCmpd());
             }
         }
 
-        if (bList.getCmpdListMembers() == null || bList.getCmpdListMembers().isEmpty()) {
-            if (this.listB.getCmpdListId() > 0) {
-                bList = listManagerController.fetchList(this.listB.getCmpdListId());
+        if (llc.getListB() == null || llc.getListB().getCmpdListMembers() == null || llc.getListB().getCmpdListMembers().isEmpty()) {
+
+        } else {
+            for (CmpdListMemberVO clmVO : llc.getListB().getCmpdListMembers()) {
+                bList.add(clmVO.getCmpd());
             }
         }
 
@@ -93,7 +65,7 @@ public class ListLogicController implements Serializable {
         HashSet<Long> ahcIdSetA = new HashSet<Long>();
         HashSet<Long> ahcIdSetB = new HashSet<Long>();
 
-        for (CmpdListMemberVO clmVO : aList.getCmpdListMembers()) {
+        for (CmpdListMemberVO clmVO : llc.getListA().getCmpdListMembers()) {
             if (clmVO.getCmpd().getNsc() != null) {
                 nscMap.put(clmVO.getCmpd().getNsc(), clmVO.getCmpd());
                 nscSetA.add(clmVO.getCmpd().getNsc());
@@ -103,7 +75,7 @@ public class ListLogicController implements Serializable {
             }
         }
 
-        for (CmpdListMemberVO clmVO : bList.getCmpdListMembers()) {
+        for (CmpdListMemberVO clmVO : llc.getListB().getCmpdListMembers()) {
             if (clmVO.getCmpd().getNsc() != null) {
                 nscMap.put(clmVO.getCmpd().getNsc(), clmVO.getCmpd());
                 nscSetB.add(clmVO.getCmpd().getNsc());
@@ -114,8 +86,8 @@ public class ListLogicController implements Serializable {
         }
 
         if (DEBUG) {
-            System.out.println("a: " + aList.getListName() + " " + aList.getCmpdListMembers().size());
-            System.out.println("b: " + bList.getListName() + " " + bList.getCmpdListMembers().size());
+            System.out.println("a: " + llc.getListA().getListName() + " " + llc.getListA().getCmpdListMembers().size());
+            System.out.println("b: " + llc.getListB().getListName() + " " + llc.getListB().getCmpdListMembers().size());
             System.out.println("----------------------------");
             System.out.println("nsc in a: " + nscSetA.size());
             System.out.println("ahc in a: " + ahcIdSetA.size());
@@ -230,69 +202,10 @@ public class ListLogicController implements Serializable {
             }
         }
 
-        this.cmpdsListAorListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AorB, "AorB", sessionController.getLoggedUser());
-        this.cmpdsListAandListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AandB, "AandB", sessionController.getLoggedUser());
-        this.cmpdsListAnotListB = ApplicationScopeBean.cmpdListFromListOfCmpds(AnotB, "AnotB", sessionController.getLoggedUser());
-
-        return "/webpages/listLogic?faces-redirect=true";
+        llc.setCmpdsListAorListB(AorB);
+        llc.setCmpdsListAandListB(AandB);
+        llc.setCmpdsListAnotListB(AnotB);
 
     }
 
-    public CmpdListVO listAorListB(CmpdListVO listA, CmpdListVO listB) {
-        performListLogic(listA, listB);
-        return this.getCmpdsListAorListB();
-    }
-
-    public CmpdListVO listAandListB(CmpdListVO listA, CmpdListVO listB) {
-        performListLogic(listA, listB);
-        return this.getCmpdsListAandListB();
-    }
-
-    public CmpdListVO listAnotListB(CmpdListVO listA, CmpdListVO listB) {
-        performListLogic(listA, listB);
-        return this.getCmpdsListAnotListB();
-    }
-
-// <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-    public CmpdListVO getListA() {
-        return listA;
-    }
-
-    public void setListA(CmpdListVO listA) {
-        this.listA = listA;
-    }
-
-    public CmpdListVO getListB() {
-        return listB;
-    }
-
-    public void setListB(CmpdListVO listB) {
-        this.listB = listB;
-    }
-
-    public CmpdListVO getCmpdsListAnotListB() {
-        return cmpdsListAnotListB;
-    }
-
-    public void setCmpdsListAnotListB(CmpdListVO cmpdsListAnotListB) {
-        this.cmpdsListAnotListB = cmpdsListAnotListB;
-    }
-
-    public CmpdListVO getCmpdsListAandListB() {
-        return cmpdsListAandListB;
-    }
-
-    public void setCmpdsListAandListB(CmpdListVO cmpdsListAandListB) {
-        this.cmpdsListAandListB = cmpdsListAandListB;
-    }
-
-    public CmpdListVO getCmpdsListAorListB() {
-        return cmpdsListAorListB;
-    }
-
-    public void setCmpdsListAorListB(CmpdListVO cmpdsListAorListB) {
-        this.cmpdsListAorListB = cmpdsListAorListB;
-    }
-
-    // </editor-fold>
 }

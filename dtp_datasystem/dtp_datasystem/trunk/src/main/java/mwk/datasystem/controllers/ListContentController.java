@@ -183,6 +183,27 @@ public class ListContentController implements Serializable {
 
     }
 
+    public String performCopy() {
+
+        CmpdListVO rtn = new CmpdListVO();
+
+        ArrayList<CmpdVO> listOfCmpds = new ArrayList<CmpdVO>();
+
+        for (CmpdListMemberVO clmVO : listManagerController.getListManagerBean().selectedActiveListMembers) {
+            listOfCmpds.add(clmVO.getCmpd());
+        }
+
+        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, "Copy of " + listManagerController.getListManagerBean().activeList.getListName(), sessionController.getLoggedUser());
+
+        listManagerController.getListManagerBean().availableLists.add(rtn);
+        listManagerController.getListManagerBean().activeList = rtn;
+
+        sessionController.configurationBean.performUpdateColumns();
+
+        return "/webpages/activeListTable?faces-redirect=true";
+
+    }
+
     public String performConfigureAppend() {
         // placeholder action to populate selectedListMembers
         return "/webpages/configureAppendToExistingList.xhtml?faces-redirect=true";
@@ -472,13 +493,12 @@ public class ListContentController implements Serializable {
 //        Long cmpdListId = HelperCmpd.createCmpdListFromSearchCriteriaBean(listName, scb, null, sessionController.getLoggedUser());
 //        // fetch the list            
 //        CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(cmpdListId, Boolean.TRUE, sessionController.getLoggedUser());
-
         List<CmpdVO> cList = HelperCmpd.searchBySearchCriteriaBean(searchCriteriaBean, sessionController.getLoggedUser());
 
         Date now = new Date();
-        
+
         CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cList, "Search Results " + now.toString(), sessionController.getLoggedUser());
-        
+
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
 

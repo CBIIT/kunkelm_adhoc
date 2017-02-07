@@ -86,7 +86,7 @@ function getMolFromEditor() {
 
     var mol = sketcher.getMolecule();
     var stringMol = ChemDoodle.writeMOL(mol);
-    document.getElementById('datasystemForm:ctabfromeditor').value = stringMol;
+    document.getElementById('datasystemForm:searchTabView:ctabfromeditor').value = stringMol;
 
 }
 
@@ -94,7 +94,7 @@ function loadEditorFromMol() {
 
     //alert('in loadEditorFromMol()');
 
-    var ctab = document.getElementById('datasystemForm:ctabforload').value;
+    var ctab = document.getElementById('datasystemForm:searchTabView:ctabforload').value;
 
     //replace car rtn with \n
     var replStr = String.fromCharCode(92, 110);

@@ -23,21 +23,21 @@
         
         <p:menuitem actionListener="#{listContentController.performCopyAll()}"
                     value="COPY to NEW LIST"
-                    onclick="PF('crt_dlg').show();"/>
+                    onclick="PF('copyDlg').show();"/>
         
         <p:menuitem actionListener="#{listContentController.performConfigureAppend()}"
                     value="APPEND to EXISTING LIST"
-                    onclick="PF('app_dlg').show();"/>
+                    onclick="PF('appendingBUI').show();"/>
         
         <p:menuitem actionListener="#{listContentController.performConfigureDelete()}"
                     disabled="#{sessionController.loggedUser ne listManagerController.listManagerBean.activeList.listOwner || listManagerController.listManagerBean.activeList.shareWith eq 'EVERYONE'}"
                     value="DELETE from List"
-                    onclick="PF('del_dlg').show();"/>
+                    onclick="PF('deleteDlg').show();"/>
         
     </p:menubar>
     
     <p:dialog header="Delete Selected From List" 
-              widgetVar="del_dlg" 
+              widgetVar="deleteDlg" 
               modal="true"
               width="600" height="400">
         
@@ -58,7 +58,7 @@
     </p:dialog>
     
     <p:dialog header="Create New List From Selected" 
-              widgetVar="crt_dlg" 
+              widgetVar="copyDlg" 
               modal="true"
               width="600" height="400">
         
@@ -78,7 +78,7 @@
     </p:dialog>
     
     <p:dialog header="Append Selected to Existing List" 
-              widgetVar="app_dlg" 
+              widgetVar="combineDlg" 
               modal="true"
               width="600" height="400">
         
