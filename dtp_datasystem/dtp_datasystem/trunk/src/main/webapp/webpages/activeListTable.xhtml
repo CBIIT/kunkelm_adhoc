@@ -16,41 +16,6 @@
 
     <ui:define name="instructions"/>
 
-    <!--
-    
-    <ui:define name="export"> 
-    <h2 style="margin: 0;">
-    <h:outputText value="Export Data or Images"/>
-    </h2>
-    <p:menubar autoDisplay="false">
-    
-    <p:menuitem ajax="false" value="Export as Excel">
-    <p:dataExporter type="xls"  
-    target="activeListTbl" 
-    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-    </p:menuitem>
-    
-    <p:menuitem ajax="false" value="Export as CSV">  
-    <p:dataExporter type="csv" 
-    target="activeListTbl" 
-    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-    </p:menuitem> 
-    
-    <p:menuitem ajax="false" value="Export as Excel with Structure Images">
-    <p:dataExporter type="xls" 
-    target="activeListTbl" 
-    postProcessor="#{listManagerController.postProcessXLS}"
-    fileName="listOfCompounds #{applicationScopeBean.dateTime}" />        
-    </p:menuitem>
-    
-    <p:menuitem value="Export Structures as Image"
-    ajax="true"
-    onclick="structuresAsGridImage()"/>
-    </p:menubar>
-    </ui:define>
-    
-    -->
-
     <ui:define name="alternate">
     </ui:define>
 
@@ -70,82 +35,49 @@
         <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
                          autoRun="true"/>
 
-        <!--
-        
-        <p:spacer height="20" width="100%"/>
-        
-        <p:panel header="List Anchor Structure"
-        rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
-        
-        <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
-        
-        <br/>
-        
-        <p:graphicImage alt="Chemical Structure of List Anchor"
-        width="#{sessionController.configurationBean.strcDim}" 
-        height="#{sessionController.configurationBean.strcDim}"
-        styleClass="anchorStructure"
-        url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-        </p:graphicImage>
-        
-        </p:panel>
-        
-        <p:spacer height="20" width="100%"/>
-        
-        -->
 
-        <!--
-        
-        <p:commandButton value="Configure This Table"
-        onclick="PF('act_list_cfg_dlg').show();"/>
-        
-        <p:commandButton value="View As Table"
-        ajax="false"
-        action="/webpages/activeListTable?faces-redirect=true"/>
-        
-        <p:commandButton value="View As Grid"
-        ajax="false"
-        action="/webpages/activeListGrid?faces-redirect=true"/>
-        
-        <p:commandButton value="View As Form"
-        ajax="false"
-        action="/webpages/activeListForm?faces-redirect=true"/>
-        
-        -->                  
 
-        <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
+        <p:panelGrid columns="7" styleClass="borderlessPanelGrid">
 
-            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="1" styleClass="borderlessPanelGrid">
 
                 <f:facet name="header">
-                    <h:outputText value="Change Compound Layout"/>
+                    <h:outputText value="Configure "/>
                 </f:facet>
 
                 <p:commandLink title="Configure List Columns"
                                onclick="PF('act_list_cfg_dlg').show();">
-                    <p:graphicImage name="/png/circle-gear-setting-configure-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/png/circle-gear-setting-configure-outline-stroke.png" width="64"/>
                 </p:commandLink>
 
-                <!--
-                
-                <p:commandLink title="Compounds in List Layout" 
-                ajax="false"
-                action="/webpages/activeListTable?faces-redirect=true">
-                <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
+                <f:facet name="footer">
+                    <h:outputText value="Columns"/>
+                </f:facet>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+
+                <f:facet name="header">
+                    <h:outputText value="Compound Layout"/>
+                </f:facet>
+
+                <p:commandLink title="Compounds in List Layout" disabled="true"
+                               ajax="false"
+                               action="/webpages/activeListTable?faces-redirect=true">
+                    <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="64"/>
                 </p:commandLink>
-                
-                -->
 
                 <p:commandLink title="Compounds in Grid Layout" 
                                ajax="false"
                                action="/webpages/activeListGrid?faces-redirect=true">
-                    <p:graphicImage name="/png/editor-grid-view-block-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/png/editor-grid-view-block-outline-stroke.png" width="64"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Form Layout" 
                                ajax="false"
                                action="/webpages/activeListForm?faces-redirect=true">
-                    <p:graphicImage name="/png/device-projector-screen-empty-presentation-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/png/device-projector-screen-empty-presentation-outline-stroke.png" width="64"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -157,14 +89,14 @@
                 </f:facet>
 
                 <p:commandLink title="Export as Excel">
-                    <p:graphicImage name="/images/excel.png" width="48"/>
+                    <p:graphicImage name="/images/excel.png" width="64"/>
                     <p:dataExporter type="xls"  
                                     target="activeListTbl" 
                                     fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
                 </p:commandLink>
 
                 <p:commandLink title="Export as CSV">
-                    <p:graphicImage name="/images/csv.png" width="48"/>
+                    <p:graphicImage name="/images/csv.png" width="64"/>
                     <p:dataExporter type="csv" 
                                     target="activeListTbl" 
                                     fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
@@ -173,46 +105,63 @@
                 <p:commandLink title="Export Structures as Image"
                                ajax="true"
                                onclick="structuresAsGridImage()">
-                    <p:graphicImage name="/png/editor-images-pictures-photos-collection-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/png/editor-images-pictures-photos-collection-outline-stroke.png" width="64"/>
                 </p:commandLink>
 
             </p:panelGrid>
 
-            <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
 
                 <f:facet name="header">
-                    <h:outputText value="Act on Selected Rows"/>
+                    <h:outputText value="List Wrangling"/>
+                </f:facet>
+
+                <p:commandLink title="COPY to NEW LIST"
+                               onclick="PF('copyDlg').show();">
+                    <p:graphicImage name="/png/editor-copy-duplicate-outline-stroke.png" width="64"/>
+                </p:commandLink>
+
+                <p:commandLink actionListener="#{listContentController.performConfigureAppend}"
+                               title="COMBINE with EXISTING LIST"
+                               onclick="PF('combineDlg').show();">
+                    <p:graphicImage name="/png/editor-notebook-add-new-outline-stroke.png" width="64"/>
+                </p:commandLink>
+
+                <f:facet name="footer">
+                    <h:outputText value="All or Selected"/>
+                </f:facet>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="1" styleClass="borderlessPanelGrid">
+                <f:facet name="header">
+                    <h:outputText value="COMPARE Application"/>
                 </f:facet>
 
                 <p:commandLink title="NCI60 DATA"                       
                                ajax="false"
                                actionListener="#{launchingController.performConnectToLanding()}"
                                target="_blank">
-                    <p:graphicImage name="/miscpng/CompareConnect1.png" width="48"/>
+                    <p:graphicImage name="/miscpng/CompareConnect1.png" width="64"/>
                 </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
+                <f:facet name="header">
+                    <h:outputText value="Chemistry Calculations"/>
+                </f:facet>            
 
                 <p:commandLink title="Tanimoto"                       
                                ajax="false"
                                action="#{tanimotoController.performRunTanimoto}">   
-                    <p:graphicImage name="/miscpng/ChemistryEye1.png" width="48"/>
+                    <p:graphicImage name="/miscpng/ChemistryEye1.png" width="64"/>
                 </p:commandLink>
 
-                <p:commandLink title="COPY to NEW LIST"
-                               onclick="PF('copyDlg').show();">
-                    <p:graphicImage name="/png/editor-copy-duplicate-outline-stroke.png" width="48"/>
-                </p:commandLink>
-
-                <p:commandLink actionListener="#{listContentController.performConfigureAppend}"
-                               title="COMBINE with EXISTING LIST"
-                               onclick="PF('combineDlg').show();">
-                    <p:graphicImage name="/png/editor-notebook-add-new-outline-stroke.png" width="48"/>
-                </p:commandLink>
-
-                <p:commandLink actionListener="#{listContentController.performConfigureDelete}"
-                               disabled="#{sessionController.loggedUser ne listManagerController.listManagerBean.activeList.listOwner || listManagerController.listManagerBean.activeList.shareWith eq 'EVERYONE'}"
-                               title="DELETE from List"
-                               onclick="PF('deleteDlg').show();">
-                    <p:graphicImage name="/png/circle-close-delete-remove-outline-stroke.png" width="48"/>
+                <p:commandLink title="PAINS"                       
+                               ajax="false"
+                               action="#{tanimotoController.performRunTanimoto}">   
+                    <p:graphicImage name="/icon8png/fire.png" width="64"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -300,6 +249,8 @@
                 <h:outputText value="#{cmpd.cas}"/>
             </p:column>   
 
+            <!--
+            
             <p:column headerText="List Member Id"
                       resizable="true"
                       sortBy="#{listMember.id}"
@@ -309,7 +260,6 @@
                               style="color: #{empty listMember.id || listMember.id lt 0 ? 'red' : 'black'}"/>        
             </p:column> 
 
-            <!--
             <p:column headerText="List Member Comment"
             resizable="true"
             sortBy="#{listMember.listMemberComment}"
@@ -366,17 +316,16 @@
             <p:column headerText="Parent Structure" 
                       resizable="true"
                       exportable="false">
-
                 <p:panelGrid style="width: auto;">
                     <p:row>
                         <p:column>
-                            <p:commandLink value="DET"
-                                           update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                            <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
                                            oncomplete="PF('listMemberDetailDlg').show();" 
                                            title="List Member Details"
-                                           style="display: inline-block;">  
+                                           style="display: inline-block;">
                                 <f:setPropertyActionListener value="#{listMember}"   
                                                              target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                                <p:graphicImage name="/icon8png/Detective-100.png" width="64"/>
                             </p:commandLink>        
                         </p:column>
 
@@ -391,23 +340,22 @@
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:commandLink value="SSS"
-                                           ajax="false" 
+                            <p:commandLink ajax="false" 
                                            title="Substructure Search"
                                            action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
                                 <f:setPropertyActionListener value="#{cmpd.nsc}"   
                                                              target="#{structureSearchController.nscForLoad}" />  
+                                <p:graphicImage name="/icon8png/Peptide-80.png" width="64"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:commandLink value="FWB"
-                                           rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                            <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                            ajax="false" 
                                            title="Fragments Workbench"
                                            action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
-
+                                <p:graphicImage name="/icon8png/Maintenance-100.png" width="64"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>
@@ -755,7 +703,7 @@
                                  oncomplete="PF('appendingBUI').hide();"
                                  style="width: 100%;" />            
                 <p:spacer height="20" width="100%"/>
-                <p:commandButton disabled="#{empty listManagerController.getC }" 
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}" 
                                  action="#{listContentController.performCopy('unselected')}"
                                  value="Copy Unselected Compounds to New List"
                                  onstart="PF('appendingBUI').show();"

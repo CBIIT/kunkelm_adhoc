@@ -9488,6 +9488,7 @@ dtp_datasystem/dtp_datasystem/trunk/PAINS/combo.csv -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l15.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_l150.txt -text
 dtp_datasystem/dtp_datasystem/trunk/PAINS/p_m150.txt -text
+dtp_datasystem/dtp_datasystem/trunk/PAINS_SMARTS.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/analyzeCDKbuild.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/dzResolve.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/ANALYTICS/labelWrangling.sql -text
@@ -9785,6 +9786,11 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/ima
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/images/ui-icons_fbc856_256x240.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/jquery-ui-1.10.3.custom.css -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/css/my.css -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/Detective-100.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/Maintenance-100.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/Peptide-80.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/Peptide-96.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/Ring[!!-~]Details-100.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/addCol.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/addColThick.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/icon8png/addRow.png -text

@@ -119,7 +119,7 @@
                             <p:outputLabel for="nscAutoComp" value="NSC Numbers"/>
                             <br/>
                             <p:autoComplete id="nscAutoComp" value="#{searchCriteriaBean.nscsFromAutoComp}"
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="3"                                    
                                             completeMethod="#{applicationScopeBean.completensc}">
@@ -131,7 +131,7 @@
                             <p:outputLabel for="drugNameAutoComp" value="Drug Names"/>
                             <br/>
                             <p:autoComplete id="drugNameAutoComp" value="#{searchCriteriaBean.drugNamesFromAutoComp}" 
-                                            dropdown="false" multiple="true" forceSelection="true" 
+                                            dropdown="true" multiple="true" forceSelection="true" 
                                             scrollHeight="150"
                                             minQueryLength="3"                                    
                                             completeMethod="#{applicationScopeBean.completedrugName}">
@@ -143,7 +143,7 @@
                             <p:outputLabel for="aliasAutoComp" value="Aliases"/>
                             <br/>
                             <p:autoComplete id="aliasAutoComp"  value="#{searchCriteriaBean.aliasesFromAutoComp}"
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="3"                                    
                                             completeMethod="#{applicationScopeBean.completealias}">
@@ -155,7 +155,7 @@
                             <p:outputLabel for="casAutoComp" value="CAS Numbers"/>
                             <br/>
                             <p:autoComplete id="casAutoComp" value="#{searchCriteriaBean.casesFromAutoComp}" 
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="3"                                    
                                             completeMethod="#{applicationScopeBean.completecas}">
@@ -167,7 +167,7 @@
                             <p:outputLabel for="cmpdNamedSetAutoComp" value="DTP Compound Set Names"/>
                             <br/>
                             <p:autoComplete id="cmpdNamedSetAutoComp" value="#{searchCriteriaBean.cmpdNamedSetsFromAutoComp}" 
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="1"                                    
                                             completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
@@ -184,7 +184,7 @@
                             <p:outputLabel for="projectCodeAutoComp" value="DTP Project Codes"/>
                             <br/>
                             <p:autoComplete id="projectCodeAutoComp" value="#{searchCriteriaBean.projectCodesFromAutoComp}" 
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="1"                                    
                                             completeMethod="#{applicationScopeBean.completeprojectCode}">
@@ -196,7 +196,7 @@
                             <p:outputLabel for="plateAutoComp" value="DTP Plate Names"/>
                             <br/>
                             <p:autoComplete id="plateAutoComp" value="#{searchCriteriaBean.platesFromAutoComp}" 
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="1"                                    
                                             completeMethod="#{applicationScopeBean.completeplate}">
@@ -208,7 +208,7 @@
                             <p:outputLabel for="targetAutoComp" value="Targets"/>
                             <br/>
                             <p:autoComplete id="targetAutoComp" value="#{searchCriteriaBean.targetsFromAutoComp}" 
-                                            dropdown="false" multiple="true" forceSelection="true"
+                                            dropdown="true" multiple="true" forceSelection="true"
                                             scrollHeight="150"
                                             minQueryLength="1"                                    
                                             completeMethod="#{applicationScopeBean.completetarget}">

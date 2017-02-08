@@ -62,20 +62,11 @@
             <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
 
                 <f:facet name="header">
-                    <h:outputText value="Change Compound Layout"/>
+                    <h:outputText value="Compound Layout"/>
                 </f:facet>
 
-                <!--
-                
-                <p:commandLink title="Configure List Columns"
-                               onclick="PF('act_list_cfg_dlg').show();">
-                    <p:graphicImage name="/png/circle-gear-setting-configure-outline-stroke.png" width="48"/>
-                </p:commandLink>
-                
-                -->
-                
                 <p:commandLink title="Compounds in List Layout" 
-                                ajax="false"
+                               ajax="false"
                                action="/webpages/activeListTable?faces-redirect=true">
                     <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
                 </p:commandLink>
@@ -114,48 +105,50 @@
 
             <p:panel>
 
-                <p:panelGrid  columns="1" style="width: 100%;">
+                <p:panelGrid style="width: auto;">
+                    <p:row>
+                        <p:column>
+                            <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                           oncomplete="PF('listMemberDetailDlg').show();" 
+                                           title="List Member Details"
+                                           style="display: inline-block;">
+                                <f:setPropertyActionListener value="#{listMember}"   
+                                                             target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                                <p:graphicImage name="/icon8png/Detective-100.png" width="64"/>
+                            </p:commandLink>        
+                        </p:column>
 
-                    <f:facet name="header"> 
-                        <h:outputText value="#{listMember.cmpd.name}"/>
-                    </f:facet> 
-
-                    <p:graphicImage alt="Chemical Structure of Parent Fragment"
-                                    width="#{sessionController.configurationBean.strcDim}" 
-                                    height="#{sessionController.configurationBean.strcDim}"
-                                    styleClass="parentStructure"
-                                    url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-
-                    </p:graphicImage>
-
-                    <f:facet name="footer">
-                        <p:commandButton  value="DETAILS"
-                                          update=":datasystemForm:ListMemberDetailsDialogPanel" 
-                                          oncomplete="PF('listMemberDetailDlg').show();" 
-                                          title="List Member Details"
-                                          style="display: inline-block;">  
-                            <f:setPropertyActionListener value="#{listMember}"   
-                                                         target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                        </p:commandButton>
-
-                        <p:commandButton value="SSS"
-                                         ajax="false" 
-                                         title="Substructure Search"
-                                         action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
-                            <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
-                                                         target="#{structureSearchController.nscForLoad}" />  
-                        </p:commandButton>
-
-                        <p:commandButton value="FragWB"
-                                         rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                                         ajax="false" 
-                                         title="Fragments Workbench"
-                                         action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
-                        </p:commandButton>
-
-                    </f:facet>        
-
-                </p:panelGrid>
+                        <p:column rowspan="3">
+                            <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                                            width="#{sessionController.configurationBean.strcDim}" 
+                                            height="#{sessionController.configurationBean.strcDim}"
+                                            styleClass="parentStructure"
+                                            url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>
+                            </p:graphicImage>
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandLink ajax="false" 
+                                           title="Substructure Search"
+                                           action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+                                <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                                             target="#{structureSearchController.nscForLoad}" />  
+                                <p:graphicImage name="/icon8png/Peptide-80.png" width="64"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                                           ajax="false" 
+                                           title="Fragments Workbench"
+                                           action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+                                <p:graphicImage name="/icon8png/Maintenance-100.png" width="64"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>                
 
             </p:panel>
 

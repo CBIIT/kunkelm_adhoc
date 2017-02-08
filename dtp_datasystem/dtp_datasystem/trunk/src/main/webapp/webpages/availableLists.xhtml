@@ -138,14 +138,7 @@
                       filterBy="#{list.cmpdListId}"
                       filterMatchMode="contains">    
 
-                      <!--
-                      
-                <h:outputText rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}" 
-                              value="#{empty list.cmpdListId || list.cmpdListId lt 0 ? 'NEVER SAVED' : list.cmpdListId}"
-                              style="color: #{empty list.cmpdListId || list.cmpdListId lt 0 ? 'red' : 'black'}"/>
-                              
-                              -->
-
+                <!--
                 <p:commandButton rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}"
                                  action="#{listManagerController.performPersistList(list)}"
                                  value="Never Saved.  Save List"
@@ -159,6 +152,7 @@
                                  onstart="PF('appendingBUI').show();"
                                  oncomplete="PF('appendingBUI').hide();"
                                  style="width: 100%;" />                 
+                -->
                 
             </p:column> 
 

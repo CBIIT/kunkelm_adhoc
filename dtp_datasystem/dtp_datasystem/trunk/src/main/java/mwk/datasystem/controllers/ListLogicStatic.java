@@ -31,28 +31,40 @@ public class ListLogicStatic {
 
     static final long serialVersionUID = -8653468638698142855l;
 
-    private static final Boolean DEBUG = Boolean.FALSE;
+    private static final Boolean DEBUG = Boolean.TRUE;
 
     // 
-    public void performListLogic(ListLogicContainer llc) {
+    public static void performListLogic(ListLogicContainer llc) throws Exception {
 
-        List<CmpdVO> aList = new ArrayList<CmpdVO>();
-        List<CmpdVO> bList = new ArrayList<CmpdVO>();
+        List<CmpdVO> cmpdListA = new ArrayList<CmpdVO>();
+        List<CmpdVO> cmpdListB = new ArrayList<CmpdVO>();
 
-        if (llc.getListA() == null || llc.getListA().getCmpdListMembers() == null || llc.getListA().getCmpdListMembers().isEmpty()) {
-
-        } else {
-            for (CmpdListMemberVO clmVO : llc.getListA().getCmpdListMembers()) {
-                aList.add(clmVO.getCmpd());
+        // lists not null
+        if (llc.getListA() == null) {
+            if (llc.getListB() == null) {
+                throw new Exception("listA and listB are null");
             }
+            throw new Exception("listA is null");
+        } else if (llc.getListB() == null) {
+            throw new Exception("listB is null");
         }
 
-        if (llc.getListB() == null || llc.getListB().getCmpdListMembers() == null || llc.getListB().getCmpdListMembers().isEmpty()) {
-
-        } else {
-            for (CmpdListMemberVO clmVO : llc.getListB().getCmpdListMembers()) {
-                bList.add(clmVO.getCmpd());
+        // lists have listMembers
+        if (llc.getListA().getCmpdListMembers() == null) {
+            if (llc.getListB().getCmpdListMembers() == null) {
+                throw new Exception("listA and listB have no listMembers.");
             }
+            throw new Exception("listA has no listMembers.");
+        } else if (llc.getListB().getCmpdListMembers() == null) {
+            throw new Exception("listB has no listMembers.");
+        }
+
+        for (CmpdListMemberVO clmVO : llc.getListA().getCmpdListMembers()) {
+            cmpdListA.add(clmVO.getCmpd());
+        }
+
+        for (CmpdListMemberVO clmVO : llc.getListB().getCmpdListMembers()) {
+            cmpdListB.add(clmVO.getCmpd());
         }
 
         // overlap is based on a.nsc = b.nsc OR a.originalAdHocCmpdId = b.originalAdHocCmpdId
@@ -65,23 +77,23 @@ public class ListLogicStatic {
         HashSet<Long> ahcIdSetA = new HashSet<Long>();
         HashSet<Long> ahcIdSetB = new HashSet<Long>();
 
-        for (CmpdListMemberVO clmVO : llc.getListA().getCmpdListMembers()) {
-            if (clmVO.getCmpd().getNsc() != null) {
-                nscMap.put(clmVO.getCmpd().getNsc(), clmVO.getCmpd());
-                nscSetA.add(clmVO.getCmpd().getNsc());
+        for (CmpdVO cVO : cmpdListA) {
+            if (cVO.getNsc() != null) {
+                nscMap.put(cVO.getNsc(), cVO);
+                nscSetA.add(cVO.getNsc());
             } else {
-                ahcIdMap.put(clmVO.getCmpd().getOriginalAdHocCmpdId(), clmVO.getCmpd());
-                ahcIdSetA.add(clmVO.getCmpd().getOriginalAdHocCmpdId());
+                ahcIdMap.put(cVO.getOriginalAdHocCmpdId(), cVO);
+                ahcIdSetA.add(cVO.getOriginalAdHocCmpdId());
             }
         }
 
-        for (CmpdListMemberVO clmVO : llc.getListB().getCmpdListMembers()) {
-            if (clmVO.getCmpd().getNsc() != null) {
-                nscMap.put(clmVO.getCmpd().getNsc(), clmVO.getCmpd());
-                nscSetB.add(clmVO.getCmpd().getNsc());
+        for (CmpdVO cVO : cmpdListB) {
+            if (cVO.getNsc() != null) {
+                nscMap.put(cVO.getNsc(), cVO);
+                nscSetB.add(cVO.getNsc());
             } else {
-                ahcIdMap.put(clmVO.getCmpd().getOriginalAdHocCmpdId(), clmVO.getCmpd());
-                ahcIdSetB.add(clmVO.getCmpd().getOriginalAdHocCmpdId());
+                ahcIdMap.put(cVO.getOriginalAdHocCmpdId(), cVO);
+                ahcIdSetB.add(cVO.getOriginalAdHocCmpdId());
             }
         }
 
@@ -183,23 +195,23 @@ public class ListLogicStatic {
             System.out.println("AandB: " + AandB.size());
             System.out.println("AnotB: " + AnotB.size());
 
-            System.out.println("----------------------------");
-            System.out.println("AorB");
-            for (CmpdVO cVO : AorB) {
-                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
-            }
-
-            System.out.println("----------------------------");
-            System.out.println("AandB");
-            for (CmpdVO cVO : AandB) {
-                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
-            }
-
-            System.out.println("----------------------------");
-            System.out.println("AnotB");
-            for (CmpdVO cVO : AnotB) {
-                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
-            }
+//            System.out.println("----------------------------");
+//            System.out.println("AorB");
+//            for (CmpdVO cVO : AorB) {
+//                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
+//            }
+//
+//            System.out.println("----------------------------");
+//            System.out.println("AandB");
+//            for (CmpdVO cVO : AandB) {
+//                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
+//            }
+//
+//            System.out.println("----------------------------");
+//            System.out.println("AnotB");
+//            for (CmpdVO cVO : AnotB) {
+//                System.out.println(cVO.getNsc() + " " + cVO.getOriginalAdHocCmpdId());
+//            }
         }
 
         llc.setCmpdsListAorListB(AorB);
