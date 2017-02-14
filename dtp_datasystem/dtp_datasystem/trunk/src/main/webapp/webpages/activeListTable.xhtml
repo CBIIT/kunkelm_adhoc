@@ -88,14 +88,14 @@
                     <h:outputText value="Export Data"/>
                 </f:facet>
 
-                <p:commandLink title="Export as Excel">
+                <p:commandLink ajax="false" title="Export as Excel">
                     <p:graphicImage name="/images/excel.png" width="64"/>
                     <p:dataExporter type="xls"  
                                     target="activeListTbl" 
                                     fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
                 </p:commandLink>
 
-                <p:commandLink title="Export as CSV">
+                <p:commandLink ajax="false" title="Export as CSV">
                     <p:graphicImage name="/images/csv.png" width="64"/>
                     <p:dataExporter type="csv" 
                                     target="activeListTbl" 
@@ -181,6 +181,76 @@
                            style="width: 100%;" />                 
 
         </p:panelGrid>
+
+        <p:commandLink id="excelExport" ajax="false" title="Export as Excel" onclick="alert('excelExport clicked')">
+            <p:dataExporter type="xls"  
+                            target="activeListTbl" 
+                            fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
+        </p:commandLink>
+
+        <p:commandLink id="csvExport" ajax="false" title="Export as CSV" onclick="alert('csvExport clicked')">
+            <p:dataExporter type="csv" 
+                            target="activeListTbl" 
+                            fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
+        </p:commandLink>
+
+        <p:menubar>
+            <p:menuitem value="Configure List Columns" title="Configure List Columns"
+                        onclick="PF('act_list_cfg_dlg').show();"/>            
+            <p:submenu label="Compound">
+                <p:menuitem value="Compounds in List Layout" title="Compounds in List Layout" disabled="true"
+                            ajax="false"
+                            action="/webpages/activeListTable?faces-redirect=true"/>
+                <p:menuitem value="Compounds in Grid Layout" title="Compounds in Grid Layout" 
+                            ajax="false"
+                            action="/webpages/activeListGrid?faces-redirect=true"/>
+                <p:menuitem value="Compounds in Form Layout" title="Compounds in Form Layout" 
+                            ajax="false"
+                            action="/webpages/activeListForm?faces-redirect=true"/>
+            </p:submenu>
+            <p:submenu label="Export">
+                <p:menuitem value="Export as Excel" title="Export as Excel"
+                            onclick="$('#datasystemForm\\:excelExport').click();"/>                    
+                <p:menuitem value="Export as CSV" title="Export as CSV"
+                            onclick="$('#datasystemForm\\:csvExport').click();"/>
+                <p:menuitem value="Export Structures as Image" title="Export Structures as Image"
+                            ajax="true"
+                            onclick="structuresAsGridImage()"/>
+            </p:submenu>
+            <p:submenu label="List Wrangling">
+                <p:menuitem value="COPY to NEW LIST" title="COPY to NEW LIST"
+                            onclick="PF('copyDlg').show();"/>
+                <p:menuitem value="COMBINE with EXISTING LIST" title="COMBINE with EXISTING LIST"
+                            actionListener="#{listContentController.performConfigureAppend}"
+                            onclick="PF('combineDlg').show();"/>
+            </p:submenu>
+            <p:submenu label="NCI60">
+                <p:menuitem value="NCI60 DATA" title="NCI60 DATA"                       
+                            ajax="false"
+                            actionListener="#{launchingController.performConnectToLanding()}"
+                            target="_blank"/>
+            </p:submenu>
+            <p:submenu label="Chemistry">
+                <p:menuitem value="Tanimoto" title="Tanimoto"                       
+                            ajax="false"
+                            action="#{tanimotoController.performRunTanimoto}"/>   
+                <p:menuitem value="PAINS" title="PAINS"                       
+                            ajax="false"
+                            action="#{tanimotoController.performRunTanimoto}"/>   
+            </p:submenu>
+            <p:menuitem value="Never Saved.  Save List" title="Never Saved.  Save List"
+                        rendered="#{empty list.cmpdListId || list.cmpdListId lt 0}"
+                        action="#{listManagerController.performPersistList(list)}"                        
+                        onstart="PF('appendingBUI').show();"
+                        oncomplete="PF('appendingBUI').hide();"
+                        style="width: 100%;color: red;" />                 
+            <p:menuitem value="Update List" title="Update List"
+                        rendered="#{not empty list.cmpdListId and list.cmpdListId gt 0}"
+                        action="#{listManagerController.performPersistList(list)}"                        
+                        onstart="PF('appendingBUI').show();"
+                        oncomplete="PF('appendingBUI').hide();"
+                        style="width: 100%;" />                 
+        </p:menubar>
 
         <p:dataTable  id="activeListTbl"
                       tableStyle="width: auto;"
@@ -690,14 +760,14 @@
                 <p:inputText id="listNameText2" value="#{listContentController.listName}" />
                 <p:spacer height="20" width="100%"/>
                 <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}"
-                                 action="#{listContentController.performCopy('all')}"
+                                 action="#{listContentController.performCopyAll}"
                                  value="Copy #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Compounds to New List"
                                  onstart="PF('appendingBUI').show();"
                                  oncomplete="PF('appendingBUI').hide();"
                                  style="width: 100%;" />            
                 <p:spacer height="20" width="100%"/>
                 <p:commandButton disabled="#{empty listManagerController.listManagerBean.selectedActiveListMembers}"
-                                 action="#{listContentController.performCopy('selected')}"
+                                 action="#{listContentController.performCopySelected}"
                                  value="Copy #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} Selected Compounds to New List"
                                  onstart="PF('appendingBUI').show();"
                                  oncomplete="PF('appendingBUI').hide();"

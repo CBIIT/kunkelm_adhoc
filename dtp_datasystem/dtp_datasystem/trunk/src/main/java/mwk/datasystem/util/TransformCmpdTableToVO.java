@@ -318,7 +318,9 @@ public class TransformCmpdTableToVO {
         }
 
         try {
-            rtn.setId(entityList.getId());
+            if (entityList.getId() != null) {
+                rtn.setId(entityList.getId());
+            }
             rtn.setCmpdListId(entityList.getCmpdListId());
             rtn.setListName(entityList.getListName());
             rtn.setDateCreated(entityList.getDateCreated());

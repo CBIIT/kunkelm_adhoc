@@ -319,11 +319,13 @@ public class HelperCmpdList {
             } else // if no seach criteria were specified, run default
             // seach for shared lists (if PUBLIC user) 
             // or shared AND owned lists if anyone else
-             if (currentUser.equals("PUBLIC")) {
+            {
+                if (currentUser.equals("PUBLIC")) {
                     crit.add(Restrictions.eq("shareWith", "EVERYONE"));
                 } else {
                     crit.add(accessDisj);
                 }
+            }
 
             entityList = (List<CmpdList>) crit.list();
 
@@ -363,20 +365,24 @@ public class HelperCmpdList {
 
             CmpdList cl = (CmpdList) crit.uniqueResult();
 
-            if (cL.getListName() != null) {
-                cl.setListName(cL.getListName());
-            }
-            if (cL.getListComment() != null) {
-                cl.setListComment(cL.getListComment());
-            }
-            if (cL.getAnchorComment() != null) {
-                cl.setAnchorComment(cL.getAnchorComment());
-            }
-            if (cL.getAnchorSmiles() != null) {
-                cl.setAnchorSmiles(cL.getAnchorSmiles());
-            }
+            if (cl != null) {
 
-            session.update(cl);
+                if (cL.getListName() != null) {
+                    cl.setListName(cL.getListName());
+                }
+                if (cL.getListComment() != null) {
+                    cl.setListComment(cL.getListComment());
+                }
+                if (cL.getAnchorComment() != null) {
+                    cl.setAnchorComment(cL.getAnchorComment());
+                }
+                if (cL.getAnchorSmiles() != null) {
+                    cl.setAnchorSmiles(cL.getAnchorSmiles());
+                }
+
+                session.update(cl);
+
+            }
 
             tx.commit();
 
@@ -573,7 +579,7 @@ public class HelperCmpdList {
             } else {
                 clEnt.setListName(listName);
             }
-            
+
             clEnt.setDateCreated(ts);
             clEnt.setListOwner(currentUser);
             clEnt.setShareWith(currentUser);
@@ -588,7 +594,7 @@ public class HelperCmpdList {
                 clm.setCmpd(entCmpd);
                 clm.setCmpdList(clEnt);
                 session.persist(clm);
-                
+
                 // not needed for persistence, added for quick(er) conversion to VO
                 clEnt.getCmpdListMembers().add(clm);
             }

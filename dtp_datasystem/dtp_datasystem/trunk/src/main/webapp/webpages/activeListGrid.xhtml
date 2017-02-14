@@ -14,10 +14,10 @@
     </ui:define>
 
     <ui:define name="instructions">
-        <h:outputText value="Soring and filtering of the list can be
-                      done in the Table View.  Changes made there will 
+        <h:outputText value="Soring and filtering can be
+                      done in the List Layout.  Changes made there will 
                       be reflected in this view."/>
-    </ui:define>        
+    </ui:define> 
 
     <!--
     
@@ -39,6 +39,8 @@
 
     <ui:define name="content">
 
+        <!--
+        
         <p:panel header="List Anchor Structure"
                  rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
 
@@ -56,6 +58,8 @@
         </p:panel>
 
         <p:spacer height="20" width="100%"/>
+        
+        -->
 
         <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
 
@@ -90,7 +94,7 @@
         <p:dataGrid var="listMember"
                     value="#{listManagerController.listManagerBean.filteredActiveListMembers}" 
                     id="compactGridViewDataGrid"
-                    layout="grid"
+                    layout="tabular"
                     columns="6"
                     rows="60" 
                     paginatorPosition="top" 
