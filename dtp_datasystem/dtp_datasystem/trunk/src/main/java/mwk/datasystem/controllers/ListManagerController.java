@@ -4,6 +4,7 @@
  */
 package mwk.datasystem.controllers;
 
+import com.hp.hpl.jena.vocabulary.TestManifest;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -174,7 +175,7 @@ public class ListManagerController implements Serializable {
             // this hoop-protects any list-level data that may have already been
             // fetched 
             HashMap<Long, CmpdListVO> listMap = new HashMap<Long, CmpdListVO>();
-            for (CmpdListVO clVO : listManagerBean.availableLists) {                
+            for (CmpdListVO clVO : listManagerBean.availableLists) {
                 listMap.put(clVO.getId(), clVO);
             }
 
@@ -278,26 +279,19 @@ public class ListManagerController implements Serializable {
 
     }
 
-    public String performPersistList(CmpdListVO clVO) {
+    public String performPersistActiveList() {
 
         CmpdListVO rtn = null;
 
-        System.out.println("Entering performPersistList(CmpdListVO clVO)");
+        System.out.println("Entering performPersistActiveList()");
 
-        if (clVO != null) {
-            rtn = HelperCmpdList.persistCmpdList(clVO, sessionController.getLoggedUser());
+        if (this.listManagerBean.activeList != null) {
+            rtn = HelperCmpdList.persistCmpdList(this.listManagerBean.activeList, sessionController.getLoggedUser());
+        } else {
+            System.out.println("this.listManagerBean.activeList is null in performPersistActiveList");
         }
 
-        CmpdListVO voList = null;
-
-        if (rtn != null) {
-            voList = HelperCmpdList.getCmpdListByCmpdListId(rtn.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
-        }
-
-        if (voList != null) {
-            clVO.setCmpdListMembers(voList.getCmpdListMembers());
-        }
-
+        this.listManagerBean.activeList = rtn;
         sessionController.configurationBean.performUpdateColumns();
 
         return "/webpages/activeListTable?faces-redirect=true";

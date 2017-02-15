@@ -319,13 +319,11 @@ public class HelperCmpdList {
             } else // if no seach criteria were specified, run default
             // seach for shared lists (if PUBLIC user) 
             // or shared AND owned lists if anyone else
-            {
-                if (currentUser.equals("PUBLIC")) {
+             if (currentUser.equals("PUBLIC")) {
                     crit.add(Restrictions.eq("shareWith", "EVERYONE"));
                 } else {
                     crit.add(accessDisj);
                 }
-            }
 
             entityList = (List<CmpdList>) crit.list();
 
@@ -516,7 +514,7 @@ public class HelperCmpdList {
 
     }
 
-    public static CmpdListVO persistCmpdList(CmpdListVO clVO, String currentUser) {
+    public static CmpdListVO persistCmpdList(CmpdListVO clVOin, String currentUser) {
 
         CmpdListVO rtn = new CmpdListVO();
 
@@ -524,11 +522,11 @@ public class HelperCmpdList {
 
             List<CmpdVO> cVOlist = new ArrayList<CmpdVO>();
 
-            for (CmpdListMemberVO clmVO : clVO.getCmpdListMembers()) {
+            for (CmpdListMemberVO clmVO : clVOin.getCmpdListMembers()) {
                 cVOlist.add(clmVO.getCmpd());
             }
 
-            rtn = persistListOfCmpds(cVOlist, clVO.getListName(), currentUser);
+            rtn = persistListOfCmpds(clVOin, cVOlist, clVOin.getListName(), currentUser);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -539,7 +537,7 @@ public class HelperCmpdList {
 
     }
 
-    public static CmpdListVO persistListOfCmpds(List<CmpdVO> cVOlist, String listName, String currentUser) {
+    public static CmpdListVO persistListOfCmpds(CmpdListVO clVOin, List<CmpdVO> cVOlist, String listName, String currentUser) {
 
         CmpdListVO rtn = new CmpdListVO();
 
@@ -574,10 +572,24 @@ public class HelperCmpdList {
 
             clEnt.setCmpdListId(cmpdListId);
 
-            if (listName == null || listName.length() == 0) {
-                clEnt.setListName(currentUser + " " + now);
+            if (listName == null || listName.length() > 0) {
+                if (clVOin.getListName() != null && clVOin.getListName().length() > 0) {
+                    clEnt.setListName(clVOin.getListName());
+                } else {
+                    clEnt.setListName(currentUser + " " + now);
+                }
             } else {
-                clEnt.setListName(listName);
+                clEnt.setListName(currentUser + " " + now);
+            }
+            
+            if (clVOin.getListComment() != null) {
+                clEnt.setListComment(clVOin.getListComment());
+            }
+            if (clVOin.getAnchorComment() != null) {
+                clEnt.setAnchorComment(clVOin.getAnchorComment());
+            }
+            if (clVOin.getAnchorSmiles() != null) {
+                clEnt.setAnchorSmiles(clVOin.getAnchorSmiles());
             }
 
             clEnt.setDateCreated(ts);
@@ -587,6 +599,7 @@ public class HelperCmpdList {
             session.persist(clEnt);
 
             for (CmpdVO cVO : cVOlist) {
+                
                 CmpdListMember clm = CmpdListMember.Factory.newInstance();
 
                 Cmpd entCmpd = (Cmpd) session.get(CmpdImpl.class, cVO.getId());

@@ -33,7 +33,7 @@
                              action="#{listContentController.performStartOver()}"/>      
         </p:panel>
 
-        <p:tabView id="searchTabView">
+        <p:tabView id="searchTabView" widgetVar="searchTabView">
 
             <!--     -->
             <!--     -->
@@ -508,7 +508,7 @@
             <!--     -->
             <!--     -->
 
-            <p:tab id="substrsrchtab" title="Substructure Search">
+            <p:tab rendered="false" id="substrsrchtab" title="Substructure Search">
 
                 <!--<h:body onload="loadEditorFromMol()"/>-->
 
@@ -533,7 +533,10 @@
                     <h:outputText value="#{structureSearchController.errorMessage}"/>
                 </p:outputPanel>
 
-                <h1><h:outputText value="Load Structure into Editor"/></h1>
+                <h1>
+                    <h:outputText value="Load Structure into Editor"/>
+                </h1>
+                
                 <h:outputLabel for="nscforload" value="Load structure for NSC:"/>    
                 <p:inputText value="#{structureSearchController.nscForLoad}" id="nscforload" maxlength="10"/>
                 <p:spacer height="20" width="100%" />
@@ -541,7 +544,9 @@
                                  onclick="remCom_runLoadByNsc();"
                                  oncomplete="loadEditorFromMol();"/>
 
-                <h1><h:outputText value="Structure Editor"/></h1>
+                <h1>
+                    <h:outputText value="Structure Editor"/>
+                </h1>
 
                 <script type="text/javascript">
 

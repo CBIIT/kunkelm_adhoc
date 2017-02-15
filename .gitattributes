@@ -10159,7 +10159,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtm
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistoScat.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistoScat.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListScrollPanel.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListInLineGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
