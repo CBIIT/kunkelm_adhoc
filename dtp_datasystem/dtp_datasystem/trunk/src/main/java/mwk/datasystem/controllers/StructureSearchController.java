@@ -54,7 +54,9 @@ public class StructureSearchController implements Serializable {
 
     private String ctabFromEditor;
     private String smilesFromCtabFromEditor;
-    
+
+    private String listName;
+
     private CmpdListVO listToSearch;
 
     public StructureSearchController() {
@@ -78,10 +80,14 @@ public class StructureSearchController implements Serializable {
 
         Date now = new Date();
 
-        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cmpdVOlist, "Substructure Search Results " + now.toString(), sessionController.getLoggedUser());
+        if (listName == null || listName.length() == 0) {
+            listName = "Substructure Search Results " + now.toString();
+        }
+
+        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cmpdVOlist, listName, sessionController.getLoggedUser());
 
         clVO.setAnchorSmiles(smilesFromCtabFromEditor);
-        
+
         listManagerController.getListManagerBean().availableLists.add(clVO);
         listManagerController.getListManagerBean().activeList = clVO;
 
@@ -361,7 +367,7 @@ public class StructureSearchController implements Serializable {
 
         }
 
-        return "/webpages/chemDoodle.xhtml?faces-redirect=true";
+        return "/webpages/substrSearch.xhtml?faces-redirect=true";
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
@@ -419,6 +425,14 @@ public class StructureSearchController implements Serializable {
 
     public void setSmilesFromCtabFromEditor(String smilesFromCtabFromEditor) {
         this.smilesFromCtabFromEditor = smilesFromCtabFromEditor;
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
     public CmpdListVO getListToSearch() {

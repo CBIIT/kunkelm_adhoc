@@ -10162,7 +10162,6 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListHistoScat
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListInLineGrid.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListTable.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/availableLists.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/chemDoodle.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureAppendToExistingList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureCreateNewList.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/configureDeleteFromList.xhtml -text
@@ -10176,12 +10175,11 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/listLogic.xhtml -te
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/saltsWorkbench.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/searchCmpds.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/shared_cmpdDetails.xhtml -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/substrSearch.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoForce.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/tanimotoHistoScat.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_menu_bar.xhtml -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/active_list_view_pick_menu_bar.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/datasystem_nav.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/templates/ui.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/uploadList.xhtml -text

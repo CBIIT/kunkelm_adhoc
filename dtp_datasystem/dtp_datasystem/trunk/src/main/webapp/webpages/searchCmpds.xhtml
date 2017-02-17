@@ -16,14 +16,15 @@
         </h2>
 
         <p:panel style="display:inline-block;border: none;"> 
-            <!--
+
             <h:outputLabel for="listnametext" value="List Name"/>      
             <p:spacer height="20" width="100%"/>      
             <h:inputText value="#{listContentController.listName}" 
                          size="50"
                          id="listnametext"/>
+
             <p:spacer height="20" width="100%"/>
-            -->
+
             <p:commandButton value="Search Compounds"
                              action="#{listContentController.performCreateListBySearch()}"
                              onstart="PF('creatingBUI').show();"
@@ -507,10 +508,10 @@
             <!-- TAB -->
             <!--     -->
             <!--     -->
+            
+            <!--
 
-            <p:tab rendered="false" id="substrsrchtab" title="Substructure Search">
-
-                <!--<h:body onload="loadEditorFromMol()"/>-->
+            <p:tab id="substrsrchtab" title="Substructure Search">
 
                 <h:head>
                     <h:outputScript library="chemdoodle" name="ChemDoodleWeb.js"/>
@@ -536,7 +537,7 @@
                 <h1>
                     <h:outputText value="Load Structure into Editor"/>
                 </h1>
-                
+
                 <h:outputLabel for="nscforload" value="Load structure for NSC:"/>    
                 <p:inputText value="#{structureSearchController.nscForLoad}" id="nscforload" maxlength="10"/>
                 <p:spacer height="20" width="100%" />
@@ -569,34 +570,30 @@
 
                 </script>      
 
-                <!--
-                
                 <h1>
                     <h:outputText value="Configure Substructure Search"/>
                 </h1>
-                
+
                 <h:outputLabel for="selectListToSearch"
                                value="Search selcted list: " />                  
                 <p:selectOneMenu id="selectListToSearch"
                                  converter="#{cmpdListConverter}"                                 
                                  value="#{structureSearchController.listToSearch}">            
-                  <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
-                                 var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
+                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
+                                   var="al" itemLabel="#{al.listName}" itemValue="#{al}"/>  
                 </p:selectOneMenu>  
-            
+
                 <p:spacer height="20" width="100%" />
-                
+
                 <p:outputLabel for="ssSearchListName" value="Save results to a new list named:" />
                 <p:inputText id="ssSearchListName" value="#{structureSearchController.listName}"/>
-                
-                -->
 
                 <p:spacer height="20" width="100%" />
 
                 <p:commandButton value="Do Substructure Search"
                                  onclick="getMolFromEditor();
-                                             PF('searchingBUI').show();
-                                             runSubstructureSearch();"
+                                         PF('searchingBUI').show();
+                                         runSubstructureSearch();"
                                  oncomplete="PF('searchingBUI').hide();"/>
 
                 <h:inputTextarea style="display: none;" id="ctabforload" value="#{structureSearchController.ctabForLoad}"/>
@@ -604,7 +601,9 @@
                 <h:inputTextarea style="display: none;" id="ctabfromeditor" value="#{structureSearchController.ctabFromEditor}"/>  
                 <h:inputTextarea style="display: none;" id="smilesfromeditor" value="#{structureSearchController.smilesFromCtabFromEditor}"/>  
 
-            </p:tab>          
+            </p:tab>        
+            
+            -->
 
         </p:tabView>
 

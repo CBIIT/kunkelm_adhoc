@@ -124,7 +124,7 @@
                                 <p:commandLink ajax="false" 
                                                title="Substructure Search"
                                                action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
-                                    <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                    <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
                                                                  target="#{structureSearchController.nscForLoad}" />  
                                     <p:graphicImage name="/icon8png/Peptide-80.png" width="48"/>
                                 </p:commandLink>
@@ -135,7 +135,7 @@
                                 <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                                ajax="false" 
                                                title="Fragments Workbench"
-                                               action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+                                               action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
                                     <p:graphicImage name="/icon8png/Maintenance-100.png" width="48"/>
                                 </p:commandLink>
                             </p:column>

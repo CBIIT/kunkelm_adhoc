@@ -305,7 +305,12 @@ public class ListManagerController implements Serializable {
         CmpdListVO voList = null;
 
         if (clVO != null) {
-            voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
+
+            if (clVO.getCmpdListId() != null && clVO.getCmpdListId() > 0) {
+                voList = HelperCmpdList.getCmpdListByCmpdListId(clVO.getCmpdListId(), Boolean.TRUE, sessionController.getLoggedUser());
+            } else {
+                voList = clVO;
+            }
         }
 
         if (voList != null) {

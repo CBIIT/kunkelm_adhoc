@@ -121,7 +121,6 @@
                                 <p:graphicImage name="/icon8png/Detective-100.png" width="64"/>
                             </p:commandLink>        
                         </p:column>
-
                         <p:column rowspan="3">
                             <p:graphicImage alt="Chemical Structure of Parent Fragment"
                                             width="#{sessionController.configurationBean.strcDim}" 
@@ -136,7 +135,7 @@
                             <p:commandLink ajax="false" 
                                            title="Substructure Search"
                                            action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
-                                <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
                                                              target="#{structureSearchController.nscForLoad}" />  
                                 <p:graphicImage name="/icon8png/Peptide-80.png" width="64"/>
                             </p:commandLink>
@@ -147,7 +146,7 @@
                             <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                            ajax="false" 
                                            title="Fragments Workbench"
-                                           action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+                                           action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
                                 <p:graphicImage name="/icon8png/Maintenance-100.png" width="64"/>
                             </p:commandLink>
                         </p:column>

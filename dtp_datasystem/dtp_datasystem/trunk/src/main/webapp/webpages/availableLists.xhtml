@@ -113,19 +113,11 @@
                                                  target="#{listManagerController.listManagerBean.activeList}"/>
                 </p:commandLink>
 
-                <h:outputText escape="false" value="&lt;br/&gt;"/>
+                <br/>
 
                 <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                                disabled="#{not(fn:startsWith(sessionController.loggedUser, 'DTP_')) or list.listOwner ne sessionController.loggedUser or list.shareWith eq 'EVERYONE'}"                
                                value="DELETE" style="color: red;"
-                               action="#{listManagerController.performInitiateDeleteList}">
-                    <f:param name="cmpdListIdForDelete" value="#{list.cmpdListId}"/>
-                </p:commandLink>
-
-
-                <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                               disabled="#{not(fn:startsWith(sessionController.loggedUser, 'DTP_')) or list.listOwner ne sessionController.loggedUser or list.shareWith eq 'EVERYONE'}"                
-                               value="NEW DELETE" style="color: red;"
                                actionListener="#{listManagerController.performInitiateDeleteList}"
                                oncomplete="PF('confDelListDlg').show();">
                     <f:param name="cmpdListIdForDelete" value="#{list.cmpdListId}"/>
@@ -209,9 +201,9 @@
                   modal="true"
                   width="900" height="600">
 
-            <h:inputText id="hidden" 
+            <h:inputText id="hidFoc1" 
                          style="background: transparent;border: none !important;font-size:0;" />
-            <p:focus for="hidden" />
+            <p:focus for="hidFoc1" />
 
             <p:outputPanel autoUpdate="true" style="display: inline-block;">
 
