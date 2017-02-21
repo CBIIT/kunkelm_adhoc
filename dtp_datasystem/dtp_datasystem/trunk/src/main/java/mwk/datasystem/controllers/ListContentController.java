@@ -90,7 +90,11 @@ public class ListContentController implements Serializable {
         }
     }
 
-    private String listName;
+    private String listNameForCopy;
+    private String listNameForCombine;
+    private String listNameForSearch;    
+    private String listNameForUpload;
+    
     UploadedFile uploadedFile;
     CmpdListVO targetList;
 
@@ -129,13 +133,13 @@ public class ListContentController implements Serializable {
             listOfCmpds.add(clmVO.getCmpd());
         }
 
-        if (listName == null || listName.length() == 0) {
-            listName = "Copy of All Compounds from " + listManagerController.getListManagerBean().activeList.getListName();
+        if (listNameForCopy == null || listNameForCopy.length() == 0) {
+            listNameForCopy = "Copy of All Compounds from " + listManagerController.getListManagerBean().activeList.getListName();
         } 
         
-        System.out.println("listName is: " + listName);
+        System.out.println("listNameForCopy is: " + listNameForCopy);
 
-        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, listName, sessionController.getLoggedUser());
+        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, listNameForCopy, sessionController.getLoggedUser());
 
         CmpdListVO clVO = HelperCmpdList.persistCmpdList(rtn, sessionController.getLoggedUser());
 
@@ -159,13 +163,13 @@ public class ListContentController implements Serializable {
             listOfCmpds.add(clmVO.getCmpd());
         }
 
-        if (listName == null || listName.length() == 0) {
-            listName = "Copy of Selected Compounds from " + listManagerController.getListManagerBean().activeList.getListName();
+        if (listNameForCopy == null || listNameForCopy.length() == 0) {
+            listNameForCopy = "Copy of Selected Compounds from " + listManagerController.getListManagerBean().activeList.getListName();
         }
 
-        System.out.println("listName is: " + listName);
+        System.out.println("listNameForCopy is: " + listNameForCopy);
         
-        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, listName, sessionController.getLoggedUser());
+        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, listNameForCopy, sessionController.getLoggedUser());
 
         CmpdListVO clVO = HelperCmpdList.persistCmpdList(rtn, sessionController.getLoggedUser());
 
@@ -193,13 +197,13 @@ public class ListContentController implements Serializable {
 
         }
 
-        if (listName == null || listName.length() == 0) {
-            listName = "Copy of Unselected Compounds from " + listManagerController.getListManagerBean().activeList.getListName();
+        if (listNameForCopy == null || listNameForCopy.length() == 0) {
+            listNameForCopy = "Copy of Unselected Compounds from " + listManagerController.getListManagerBean().activeList.getListName();
         }
         
-        System.out.println("listName is: " + listName);
+        System.out.println("listNameForCopy is: " + listNameForCopy);
 
-        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, listName, sessionController.getLoggedUser());
+        rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(listOfCmpds, listNameForCopy, sessionController.getLoggedUser());
 
         CmpdListVO clVO = HelperCmpdList.persistCmpdList(rtn, sessionController.getLoggedUser());
 
@@ -215,12 +219,12 @@ public class ListContentController implements Serializable {
 
     public void handleConfigureCopy() {
         Date now = new Date();
-        listName = "Copy to New List of Compounds " + now.toString();
+        listNameForCopy = "Copy to New List of Compounds " + now.toString();
     }
 
     public void handleConfigureAppend() {
         Date now = new Date();
-        listName = "Combine with Existing List of Compounds " + now.toString();
+        listNameForCombine = "Combine with Existing List of Compounds " + now.toString();
     }
 
     public String performAppendAllToExistingList() {
@@ -251,13 +255,13 @@ public class ListContentController implements Serializable {
             }
         }
 
-        if (listName == null || listName.length() == 0) {
-            listName = "All Compounds combined with " + targetList.getListName();
+        if (listNameForCombine == null || listNameForCombine.length() == 0) {
+            listNameForCombine = "All Compounds combined with " + targetList.getListName();
         }
 
-        System.out.println("listName is: " + listName);
+        System.out.println("listNameForCombine is: " + listNameForCombine);
         
-        CmpdListVO rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(cVOlist, listName, sessionController.getLoggedUser());
+        CmpdListVO rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(cVOlist, listNameForCombine, sessionController.getLoggedUser());
 
         CmpdListVO clVO2 = HelperCmpdList.persistCmpdList(rtn, sessionController.getLoggedUser());
 
@@ -299,13 +303,13 @@ public class ListContentController implements Serializable {
             }
         }
 
-        if (listName == null || listName.length() == 0) {
-            listName = "Selected Compounds combined with " + targetList.getListName();
+        if (listNameForCombine == null || listNameForCombine.length() == 0) {
+            listNameForCombine = "Selected Compounds combined with " + targetList.getListName();
         }
         
-        System.out.println("listName is: " + listName);
+        System.out.println("listNameForCombine is: " + listNameForCombine);
 
-        CmpdListVO rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(cVOlist, listName, sessionController.getLoggedUser());
+        CmpdListVO rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(cVOlist, listNameForCombine, sessionController.getLoggedUser());
 
         CmpdListVO clVO2 = HelperCmpdList.persistCmpdList(rtn, sessionController.getLoggedUser());
 
@@ -350,13 +354,13 @@ public class ListContentController implements Serializable {
             }
         }
 
-        if (listName == null || listName.length() == 0) {
-            listName = "Unselected Compounds combined with " + targetList.getListName();
+        if (listNameForCombine == null || listNameForCombine.length() == 0) {
+            listNameForCombine = "Unselected Compounds combined with " + targetList.getListName();
         }
         
-        System.out.println("listName is: " + listName);
+        System.out.println("listNameForCombine is: " + listNameForCombine);
 
-        CmpdListVO rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(cVOlist, listName, sessionController.getLoggedUser());
+        CmpdListVO rtn = ApplicationScopeBean.cmpdListFromListOfCmpds(cVOlist, listNameForCombine, sessionController.getLoggedUser());
 
         CmpdListVO clVO2 = HelperCmpdList.persistCmpdList(rtn, sessionController.getLoggedUser());
 
@@ -399,7 +403,7 @@ public class ListContentController implements Serializable {
 
             ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSMILESFile(smilesFile);
 
-            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listNameForUpload, this.sessionController.getLoggedUser());
 
             // new fetch the list
             CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
@@ -419,7 +423,7 @@ public class ListContentController implements Serializable {
 
     }
 
-    public String performFileUpload() {
+    public String performSdFileUpload() {
 
         try {
 
@@ -450,7 +454,7 @@ public class ListContentController implements Serializable {
 
             ArrayList<AdHocCmpd> adHocCmpdList = mp.parseSDF(sdFile);
 
-            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listName, this.sessionController.getLoggedUser());
+            CmpdListVO clVO_sparse = HelperCmpdList.deNovoCmpdListFromAdHocCmpds(adHocCmpdList, this.listNameForUpload, this.sessionController.getLoggedUser());
 
             // new fetch the list
             CmpdListVO clVO = HelperCmpdList.getCmpdListByCmpdListId(clVO_sparse.getCmpdListId(), Boolean.TRUE, this.sessionController.getLoggedUser());
@@ -475,6 +479,11 @@ public class ListContentController implements Serializable {
         return "/webpages/searchCmpds?faces-redirect=true";
     }
 
+    public void handleConfigureSearch(){
+         Date now = new Date();
+        listNameForSearch = "Search Results " + now.toString();
+    }
+    
     public String performCreateListBySearch() {
 
         searchCriteriaBean.newSearch();
@@ -641,11 +650,11 @@ public class ListContentController implements Serializable {
 
         Date now = new Date();
 
-        if (listName == null || listName.length() == 0) {
-            listName = "Search Results " + now.toString();
+        if (listNameForSearch == null || listNameForSearch.length() == 0) {
+            listNameForSearch = "Search Results " + now.toString();
         }
 
-        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cList, listName, sessionController.getLoggedUser());
+        CmpdListVO clVO = ApplicationScopeBean.cmpdListFromListOfCmpds(cList, listNameForSearch, sessionController.getLoggedUser());
 
         CmpdListVO clVO2 = HelperCmpdList.persistCmpdList(clVO, sessionController.getLoggedUser());
 
@@ -660,14 +669,38 @@ public class ListContentController implements Serializable {
     }
 
     // <editor-fold defaultstate="collapsed" desc="GETTERS and SETTERS.">
-    public String getListName() {
-        return listName;
+    public String getListNameForCopy() {
+        return listNameForCopy;
     }
 
-    public void setListName(String listName) {
-        this.listName = listName;
+    public void setListNameForCopy(String listNameForCopy) {
+        this.listNameForCopy = listNameForCopy;
     }
 
+    public String getListNameForCombine() {
+        return listNameForCombine;
+    }
+
+    public void setListNameForCombine(String listNameForCombine) {
+        this.listNameForCombine = listNameForCombine;
+    }
+
+    public String getListNameForSearch() {
+        return listNameForSearch;
+    }
+
+    public void setListNameForSearch(String listNameForSearch) {
+        this.listNameForSearch = listNameForSearch;
+    }
+
+    public String getListNameForUpload() {
+        return listNameForUpload;
+    }
+
+    public void setListNameForUpload(String listNameForUpload) {
+        this.listNameForUpload = listNameForUpload;
+    }
+    
     public UploadedFile getUploadedFile() {
         return uploadedFile;
     }

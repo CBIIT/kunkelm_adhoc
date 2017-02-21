@@ -63,28 +63,40 @@
 
         <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
 
-            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
 
                 <f:facet name="header">
                     <h:outputText value="Compound Layout"/>
                 </f:facet>
 
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="compound_layout">
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                </h:link>
+
                 <p:commandLink title="Compounds in List Layout" 
                                ajax="false"
                                action="/webpages/activeListTable?faces-redirect=true">
-                    <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/mwkimages/mwk_table_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Grid Layout" disabled="true"
                                ajax="false"
                                action="/webpages/activeListGrid?faces-redirect=true">
-                    <p:graphicImage name="/png/editor-grid-view-block-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Responsive Grid Layout" 
+                               ajax="false"
+                               action="/webpages/activeListInLineGrid?faces-redirect=true">
+                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="36"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Form Layout" 
                                ajax="false"
                                action="/webpages/activeListForm?faces-redirect=true">
-                    <p:graphicImage name="/png/device-projector-screen-empty-presentation-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/mwkimages/mwk_form_view.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -118,7 +130,7 @@
                                            style="display: inline-block;">
                                 <f:setPropertyActionListener value="#{listMember}"   
                                                              target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                                <p:graphicImage name="/icon8png/Detective-100.png" width="64"/>
+                                <p:graphicImage name="/icon8png/Detective-100.png" width="36"/>
                             </p:commandLink>        
                         </p:column>
                         <p:column rowspan="3">
@@ -137,7 +149,7 @@
                                            action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
                                 <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
                                                              target="#{structureSearchController.nscForLoad}" />  
-                                <p:graphicImage name="/icon8png/Peptide-80.png" width="64"/>
+                                <p:graphicImage name="/icon8png/Peptide-80.png" width="36"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>
@@ -147,7 +159,7 @@
                                            ajax="false" 
                                            title="Fragments Workbench"
                                            action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
-                                <p:graphicImage name="/icon8png/Maintenance-100.png" width="64"/>
+                                <p:graphicImage name="/icon8png/Maintenance-100.png" width="36"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>

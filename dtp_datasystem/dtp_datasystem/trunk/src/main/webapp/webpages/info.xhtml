@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+                <title>
+                    #{applicationScopeBean.projectTitle} <ui:insert name="content title"/>
+                </title>
+            </f:facet>
+
+            <noscript>
+                <font color="red" size="5">This website makes use of javascript.  Please enable javascript in your web browser and reload this web page.</font>
+            </noscript>
+
+            <h:outputScript library="js" name="dctdDataSystem.js"/>                
+            <h:outputScript library="js" name="canvasWrangling.js"/>
+            <h:outputScript library="js" name="verticalHeader.js"/>
+            <h:outputStylesheet library="css" name="my.css"/>
+        </h:head>
+
+        <h:body>
+
+            <p:outputPanel style="display: inline-block">
+            
+             <h:link id="navigation" value="navigation" fragment="navigation" />
+
+                <h2>NAVIGATION</h2>
+                
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                
+                    <h:outputText style="font-weight: bold;" value="Search"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="Active List"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="Available Lists"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="Upload Structures"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="List Logic"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="Curated NSC"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="Logout"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                    
+                    <h:outputText style="font-weight: bold;" value="Become PUBLIC"/>
+                    <h:outputText style="font-weight: bold;" value="IN WORDS"/>
+                    <h:outputText value="EXPLANATION"/>
+                                        
+                </p:panelGrid>
+                
+                <p:spacer height="20" width="100%"/>
+
+                <h:link id="configure_columns" value="configure_columns" fragment="configure_columns" />
+
+                <h2>CONFIGURE COLUMNS</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/mwkimages/mwk_configure.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="CONFIGURE COLUMNS"/>
+                    <h:outputText value="EXPLANATION"/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>
+
+                <h:link id="compound_layout" value="compound_layout" fragment="compound_layout" />
+
+                <h2>LIST LAYOUT</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/mwkimages/mwk_table_view.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="TABLE LAYOUT"/>
+                    <h:outputText value="One row per list member."/>
+                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="GRID LAYOUT"/>
+                    <h:outputText value="List members in a 6 column grid"/>
+                    <p:graphicImage name="/mwkimages/mwk_dynamic_grid_view.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="DYNAMIC GRID"/>
+                    <h:outputText value="List members in a grid with a dynamic layout on zoom."/>
+                    <p:graphicImage name="/mwkimages/mwk_form_view.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="FORM LAYOUT"/>
+                    <h:outputText value="All compound data in a form layout.  One page per list member."/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>
+
+                <h:link id="export_data" value="export_data" fragment="export_data" />
+
+                <h2>EXPORT DATA</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/mwkimages/mwk_excel.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="EXCEL"/>
+                    <h:outputText value="Export all list members in Excel format."/>
+                    <p:graphicImage name="/mwkimages/mwk_csv.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="CSV"/>
+                    <h:outputText value="Export all list members in CSV format."/>
+                    <p:graphicImage name="/mwkimages/mwk_structure_collage.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="STRUCTURE IMAGE COLLAGE"/>
+                    <h:outputText value="Combine all structures into a single image."/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>           
+
+                <h:link id="list_wrangling" value="list_wrangling" fragment="list_wrangling" />
+
+                <h2>LIST WRANGLING</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/mwkimages/mwk_copy.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="COPY LIST MEMBERS"/>
+                    <h:outputText value="Create a new list from all list members, selected list members or UNselected list members."/>
+                    <p:graphicImage name="/mwkimages/mwk_combine.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="COMBINE LIST MEMBERS WITH EXISTING LIST"/>
+                    <h:outputText value="Create a new list by combining all list members, selected list members or UNselected list members with an existing list."/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>
+
+                <h:link id="compare" value="compare" fragment="compare" />
+
+                <h2>COMPARE</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/mwkimages/mwk_compare_connect.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="NCI COMPARE"/>
+                    <h:outputText value="Search COMPARE for NCI60 data for selected list members."/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>
+
+                <h:link id="chemistry_calculations" value="chemistry_calculations" fragment="chemistry_calculations" />
+
+                <h2>CHEMISTRY CALCULATIONS</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/mwkimages/mwk_tanimoto.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="TANIMOTO"/>
+                    <h:outputText value="Calculate Tanimoto scores for selected list members."/>
+                    <p:graphicImage name="/mwkimages/mwk_pains.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="PAINS"/>
+                    <h:outputText value="Calculate PAINS flags for selected list members."/>
+                </p:panelGrid>
+
+                <h:link id="structure_links" value="structure_links" fragment="structure_links" />
+
+                <h2>STRUCTURE LINKS</h2>
+
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                    <p:graphicImage name="/icon8png/Detective-100.png" width="36"/>       
+                    <h:outputText style="font-weight: bold;" value="COMPOUND DETAILS"/>
+                    <h:outputText value="Form view of all compound data."/>
+                    <p:graphicImage name="/icon8png/Peptide-80.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="SUBSTRUCTURE SEARCH"/>
+                    <h:outputText value="Seed a substructure search with this structure."/>
+                    <p:graphicImage name="/icon8png/Maintenance-100.png" width="36"/>
+                    <h:outputText style="font-weight: bold;" value="FRAGMENT WORKBENCH"/>
+                    <h:outputText value="Load compounds into FragmentWorkbench."/>
+                </p:panelGrid>
+
+            </p:outputPanel>
+
+        </h:body>
+
+    </f:view>
+
+</html>

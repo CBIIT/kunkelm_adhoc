@@ -4,6 +4,7 @@
  */
 package mwk.datasystem.controllers;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -17,8 +18,8 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.xml.datatype.XMLGregorianCalendar;
 import mwk.datasystem.domain.CmpdAlias;
 import mwk.datasystem.domain.CmpdPlate;
 import mwk.datasystem.domain.CmpdProject;
@@ -26,7 +27,6 @@ import mwk.datasystem.domain.CmpdNamedSet;
 import mwk.datasystem.domain.CmpdTarget;
 import mwk.datasystem.domain.NscCmpd;
 import mwk.datasystem.util.HibernateUtil;
-import mwk.datasystem.util.TransformXMLGregorianCalendar;
 import mwk.datasystem.vo.CmpdListMemberVO;
 import mwk.datasystem.vo.CmpdListVO;
 import mwk.datasystem.vo.CmpdVO;
@@ -369,8 +369,8 @@ public class ApplicationScopeBean implements Serializable {
         java.util.Random generator = new Random();
 
         Date now = new Date();
-        
-        if (listName == null || listName.length() == 0) {            
+
+        if (listName == null || listName.length() == 0) {
             listName = "structureSearchResults " + now.toString();
         }
 

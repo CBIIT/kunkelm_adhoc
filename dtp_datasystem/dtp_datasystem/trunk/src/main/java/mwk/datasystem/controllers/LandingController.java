@@ -111,7 +111,7 @@ public class LandingController implements Serializable {
             System.out.println("In landingController sb.toString: " + sb.toString());
 
             searchCriteriaBean.setNscTextArea(sb.toString());
-            listContentController.setListName("List created by LandingController");
+            listContentController.setListNameForCopy("List created by LandingController");
 
             String rtn = listContentController.performCreateListBySearch();
 

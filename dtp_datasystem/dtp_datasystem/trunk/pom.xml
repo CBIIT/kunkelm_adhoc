@@ -288,8 +288,11 @@
                 <deploy.war.name>oncologydrugs</deploy.war.name>
                 <deploy.db.url>jdbc:postgresql://localhost:5432/oncologydrugsdb</deploy.db.url>
                 <deploy.db.user>oncology_user</deploy.db.user>
-                <deploy.db.pass>oncology_pass</deploy.db.pass>                
+                <deploy.db.pass>oncology_pass</deploy.db.pass>
+		<!--                
                 <deploy.compare.url>http://localhost:8080/oncologydrugscompare</deploy.compare.url>
+                -->
+                <deploy.compare.url>http://localhost:8080/sarcomacompare</deploy.compare.url>
             </properties>
         </profile>                  
         <profile>

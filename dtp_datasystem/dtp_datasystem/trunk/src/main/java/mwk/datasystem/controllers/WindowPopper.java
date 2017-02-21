@@ -1,8 +1,3 @@
-/*
- 
- 
- 
- */
 package mwk.datasystem.controllers;
 
 import java.io.IOException;
@@ -26,13 +21,13 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class WindowPopper {
 
-  private final String linkName = "Sarcoma Compare";
+  private final String linkName = "Tomcat Examples";
   private HtmlCommandLink popupLink;
   private final String param1 = "Hello";
   private final String param2 = "World";
 
   public String getRedirectLink() {
-    return "http://localhost:8080/sarcoma";
+    return "http://localhost:8080/examples";
   }
 
   public String JSPopup() {

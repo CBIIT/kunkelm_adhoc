@@ -63,28 +63,40 @@
 
         <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
 
-            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
 
                 <f:facet name="header">
                     <h:outputText value="Compound Layout"/>
                 </f:facet>
 
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="compound_layout">
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                </h:link>
+
                 <p:commandLink title="Compounds in List Layout" 
                                ajax="false"
                                action="/webpages/activeListTable?faces-redirect=true">
-                    <p:graphicImage name="/png/editor-list-view-hambuger-menu-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/mwkimages/mwk_table_view.png" width="48"/>
                 </p:commandLink>
 
-                <p:commandLink title="Compounds in Grid Layout" disabled="true"
+                <p:commandLink title="Compounds in Grid Layout"
                                ajax="false"
                                action="/webpages/activeListGrid?faces-redirect=true">
-                    <p:graphicImage name="/png/editor-grid-view-block-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Responsive Grid Layout" disabled="true"
+                               ajax="false"
+                               action="/webpages/activeListInLineGrid?faces-redirect=true">
+                    <p:graphicImage name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Form Layout" 
                                ajax="false"
                                action="/webpages/activeListForm?faces-redirect=true">
-                    <p:graphicImage name="/png/device-projector-screen-empty-presentation-outline-stroke.png" width="48"/>
+                    <p:graphicImage name="/mwkimages/mwk_form_view.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -92,9 +104,9 @@
         </p:panelGrid>
 
         <p:outputPanel layout="inline" deferred="true">
-        
+
             <p:repeat var="listMember" value="#{listManagerController.listManagerBean.filteredActiveListMembers}">
-            
+
                 <p:panel style="display:inline-block;border: none;">
 
                     <p:panelGrid style="width: auto;display:inline-block;border: none;">
@@ -144,7 +156,7 @@
 
                 </p:panel>
             </p:repeat>
-        
+
         </p:outputPanel>
 
     </ui:define>

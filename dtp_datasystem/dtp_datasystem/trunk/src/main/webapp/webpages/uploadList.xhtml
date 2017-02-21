@@ -16,7 +16,7 @@
     </h2>
 
     <p:outputLabel for="listName" value="Save results to list named: " />
-    <p:inputText id="listName" value="#{listContentController.listName}"/>
+    <p:inputText id="listName" value="#{listContentController.listNameForUpload}"/>
 
     <p:spacer height="20" width="100%"/>
 
@@ -35,7 +35,7 @@
 
     <p:commandButton value="Source is SDF or MOL"
                      ajax="false"
-                     action="#{listContentController.performFileUpload}"
+                     action="#{listContentController.performSdFileUpload}"
                      onstart="PF('uploadingBUI').show();"
                      oncomplete="PF('uploadingBUI').hide();"/>
 
