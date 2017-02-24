@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.openscience.cdk</groupId>
+  <artifactId>cdk-renderbasic</artifactId>
+  <versioning>
+    <release>1.5.13</release>
+    <versions>
+      <version>1.5.13</version>
+    </versions>
+    <lastUpdated>20160603155119</lastUpdated>
+  </versioning>
+</metadata>

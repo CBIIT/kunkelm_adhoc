@@ -1,0 +1,5 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Fri Jun 03 11:50:59 EDT 2016
+cdk-qsarbond-1.5.13.jar>=
+cdk-qsarbond-1.5.13.pom>=
+cdk-qsarbond-1.5.13-tests.jar>=

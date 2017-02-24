@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.openscience.cdk</groupId>
             <artifactId>cdk</artifactId>
-            <version>1.5.10</version>          
+            <version>1.5.10</version>     
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -282,7 +282,7 @@
                 <deploy.compare.url>http://localhost:8080/oncologydrugscompare</deploy.compare.url>
             </properties>
         </profile>      
-         <profile>
+        <profile>
             <id>oncologydrugs_local</id>
             <properties>
                 <deploy.war.name>oncologydrugs</deploy.war.name>

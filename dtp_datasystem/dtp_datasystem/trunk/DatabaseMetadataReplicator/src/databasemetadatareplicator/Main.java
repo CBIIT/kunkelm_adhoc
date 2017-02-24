@@ -26,8 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_local");
-        ConnectionInfo destInfo = connMap.get("oncologydrugsdb_local");
+        ConnectionInfo srcInfo = connMap.get("oncologydrugsdb_dev");
+        ConnectionInfo destInfo = connMap.get("privatecomparedb_local");
 
         ArrayList<TableAndWhereClause> tawcList = cj_tawc;
 
@@ -427,7 +427,7 @@ public class Main {
             srcStmt.executeUpdate(srcSqlStr);
 
             // COALESCE to pick generic_name first then preferred_name
-            srcSqlStr = "create table curated _nsc_smiles_src "
+            srcSqlStr = "create table curated_nsc_smiles_src "
                     + " as "
                     + " select nsc.nsc, "
                     + " coalesce(gnam.value, pnam.value, '') as name, "
@@ -437,8 +437,8 @@ public class Main {
                     + " left outer join curated_name gnam on nsc.generic_name_fk = gnam.id "
                     + " left outer join curated_name pnam on nsc.preferred_name_fk = pnam.id "
                     + " left outer join curated_target trg on nsc.primary_target_fk = trg.id "
-                    + " left outer join cmpd_table ct on nsc.nsc = ct.nsc "
-                    + " group by nsc.nsc";
+                    + " left outer join cmpd_table ct on nsc.nsc = ct.nsc ";
+//                    + " group by nsc.nsc";
 
             System.out.println(srcSqlStr);
             System.out.println();

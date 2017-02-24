@@ -1,0 +1,5 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Fri Jun 03 11:52:36 EDT 2016
+cdk-qsarsubstance-1.5.13.pom>=
+cdk-qsarsubstance-1.5.13.jar>=
+cdk-qsarsubstance-1.5.13-tests.jar>=
