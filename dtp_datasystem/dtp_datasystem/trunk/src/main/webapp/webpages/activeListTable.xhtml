@@ -46,12 +46,12 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="configure_columns">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink title="Configure List Columns"
                                onclick="PF('act_list_cfg_dlg').show();">
-                    <p:graphicImage name="/mwkimages/mwk_configure.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_configure.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -65,31 +65,31 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="compound_layout">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink title="Compounds in List Layout" disabled="true"
                                ajax="false"
                                action="/webpages/activeListTable?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_table_view.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_table_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Grid Layout" 
                                ajax="false"
                                action="/webpages/activeListGrid?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Responsive Grid Layout" 
                                ajax="false"
                                action="/webpages/activeListInLineGrid?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_dynamic_grid_view.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Form Layout" 
                                ajax="false"
                                action="/webpages/activeListForm?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_form_view.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_form_view.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -103,18 +103,18 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="export_data">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink ajax="false" title="Export as Excel">
-                    <p:graphicImage name="/mwkimages/mwk_excel.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_excel.png" width="48"/>
                     <p:dataExporter type="xls"  
                                     target="activeListTbl" 
                                     fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
                 </p:commandLink>
 
                 <p:commandLink ajax="false" title="Export as CSV">
-                    <p:graphicImage name="/mwkimages/mwk_csv.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_csv.png" width="48"/>
                     <p:dataExporter type="csv" 
                                     target="activeListTbl" 
                                     fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
@@ -123,7 +123,7 @@
                 <p:commandLink title="Export Structures as Image"
                                ajax="true"
                                onclick="structuresAsGridImage()">
-                    <p:graphicImage name="/mwkimages/mwk_structure_collage.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_structure_collage.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -137,19 +137,19 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="list_wrangling">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink action="#{listContentController.handleConfigureCopy}"
                                title="COPY to NEW LIST"
                                oncomplete="PF('copyDlg').show();">
-                    <p:graphicImage name="/mwkimages/mwk_copy.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_copy.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink action="#{listContentController.handleConfigureAppend}"
                                title="COMBINE with EXISTING LIST"
                                oncomplete="PF('combineDlg').show();">
-                    <p:graphicImage name="/mwkimages/mwk_combine.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_combine.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -162,14 +162,14 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="compare">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink title="NCI60 DATA"                       
                                ajax="false"
                                actionListener="#{launchingController.performConnectToLanding()}"
                                target="_blank">
-                    <p:graphicImage name="/mwkimages/mwk_compare_connect.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_compare_connect.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -182,19 +182,19 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="chemistry_calculations">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink title="Tanimoto"                       
                                ajax="false"
                                action="#{tanimotoController.performRunTanimoto}">   
-                    <p:graphicImage name="/mwkimages/mwk_tanimoto.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_tanimoto.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="PAINS"                       
                                ajax="false"
                                action="#{tanimotoController.performRunTanimoto}">   
-                    <p:graphicImage name="/mwkimages/mwk_pains.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_pains.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -409,7 +409,7 @@
                                            style="display: inline-block;">
                                 <f:setPropertyActionListener value="#{listMember}"   
                                                              target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                                <p:graphicImage name="/icon8png/Detective-100.png" width="36"/>
+                                <p:graphicImage name="/mwkimages/mwk_details.png" width="48"/>
                             </p:commandLink>        
                         </p:column>
 
@@ -429,7 +429,7 @@
                                            action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
                                 <f:setPropertyActionListener value="#{cmpd.nsc}"   
                                                              target="#{structureSearchController.nscForLoad}" />  
-                                <p:graphicImage name="/icon8png/Peptide-80.png" width="36"/>
+                                <p:graphicImage name="/mwkimages/mwk_sss.png" width="48"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>
@@ -439,7 +439,7 @@
                                            ajax="false" 
                                            title="Fragments Workbench"
                                            action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
-                                <p:graphicImage name="/icon8png/Maintenance-100.png" width="36"/>
+                                <p:graphicImage name="/mwkimages/mwk_frag_workbench.png" width="48"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>

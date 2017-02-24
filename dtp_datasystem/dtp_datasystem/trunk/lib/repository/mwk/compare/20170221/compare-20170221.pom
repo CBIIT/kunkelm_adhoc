@@ -1,0 +1,454 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+       
+    <groupId>mwk</groupId>
+    <artifactId>compare</artifactId>
+    <version>20170221</version>
+    <packaging>war</packaging>
+
+    <name>compare</name>
+
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>         
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>            
+    </properties>
+
+    <dependencies>
+        
+         <dependency>
+            <groupId>net.sf.trove4j</groupId>
+            <artifactId>trove4j</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.sf.trove4j</groupId>
+            <artifactId>trove4j</artifactId>
+            <version>3.0.3</version>
+            <classifier>javadoc</classifier>
+        </dependency>
+                            
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+           
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+            <version>3.2.5.ga</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.3.2.GA</version>            
+            <exclusions>
+                <exclusion>
+                    <groupId>c3p0</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>
+            </exclusions>            
+        </dependency>  
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.2.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>ejb3-persistence</artifactId>
+            <version>1.0.1.GA</version>
+        </dependency>     
+              
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.0.1B</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+            <type>jar</type>
+        </dependency>      
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+            <type>jar</type>
+        </dependency>
+                        
+        <!-- MWK added 15March2016 -->
+        
+        <!--
+        
+        <dependency>
+            <groupId>org.owasp.esapi</groupId>
+            <artifactId>esapi</artifactId>
+            <version>2.1.0.1</version>
+        </dependency>     
+        
+        -->
+        
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.2-1002-jdbc4</version>
+            <type>jar</type>
+        </dependency>                
+        <dependency>
+            <groupId>jdbc</groupId>
+            <artifactId>jdbc-stdext</artifactId>
+            <version>2.0</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>mwk.compare</groupId>
+            <artifactId>compare-common</artifactId>
+            <version>20170221</version>
+        </dependency>
+        <dependency>
+            <groupId>mwk.compare</groupId>
+            <artifactId>compare-core</artifactId>
+            <version>20170221</version>
+        </dependency>
+                
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>  
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>6.0.13</version>
+        </dependency>
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>afterwork</artifactId>  
+            <version>1.0.10</version>  
+        </dependency>  
+        
+        <dependency>
+            <groupId>org.openscience</groupId>
+            <artifactId>cdk</artifactId>
+            <version>1.5.10</version>    
+        </dependency>
+        
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>     
+                    <target>1.6</target>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>                    
+                    <warName>${deploy.war.name}</warName>                    
+                    <webResources>                        
+                        <resource>
+                            <!--<directory>${deploy.war.name}_apache</directory>-->
+                            <directory>apache</directory>
+                            <targetPath>webpages</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+                <!-- MWK executions to allow hook by maven replacer
+                <executions>
+                    <execution>
+                        <id>prepare-war</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exploded</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                -->
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${endorsed.dir}</outputDirectory>
+                            <silent>true</silent>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>javax</groupId>
+                                    <artifactId>javaee-endorsed-api</artifactId>
+                                    <version>6.0</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
+    </build>    
+    
+    <profiles>
+        
+        <profile>
+            <id>privatecompare_local</id>
+            <properties>
+                <deploy.war.name>privatecompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/privatecomparedb</deploy.db.url>
+                <deploy.db.user>compare_user</deploy.db.user>
+                <deploy.db.pass>compare_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/comparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>compare_local</id>
+            <properties>
+                <deploy.war.name>compare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/comparedb</deploy.db.url>
+                <deploy.db.user>compare_user</deploy.db.user>
+                <deploy.db.pass>compare_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/comparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>publiccompare_local</id>
+            <properties>
+                <deploy.war.name>publiccompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/publiccomparedb</deploy.db.url>
+                <deploy.db.user>compare_user</deploy.db.user>
+                <deploy.db.pass>compare_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/comparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+                        
+        <profile>
+            <id>publiccompare_dev</id>
+            <properties>
+                <deploy.war.name>publiccompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://ncidb-d115-d:5473/pubcompare</deploy.db.url>
+                <deploy.db.user>publiccompare_user</deploy.db.user>
+                <deploy.db.pass>Us3r0209402L1cG0</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/comparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>sclccompare_dev</id>
+            <properties>
+                <deploy.war.name>sclccompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://ncidb-d115-d.nci.nih.gov:5473/smallcell</deploy.db.url>
+                <deploy.db.user>sclc_user</deploy.db.user>
+                <deploy.db.pass>UsEr9020782903C3LL20</deploy.db.pass>
+                <deploy.compare.runner.url>http://ncias-d963-v.nci.nih.gov:8080/comparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>        
+        
+        <profile>
+            <id>sclccompare_local</id>
+            <properties>
+                <deploy.war.name>sclccompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/sclcdb</deploy.db.url>
+                <deploy.db.user>sclc_user</deploy.db.user>
+                <deploy.db.pass>sclc_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/sclccomparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>sarcomacompare_local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <deploy.war.name>sarcomacompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/sarcomadb</deploy.db.url>
+                <deploy.db.user>sarcoma_user</deploy.db.user>
+                <deploy.db.pass>sarcoma_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/sarcomacomparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>sarcomacompare_alone</id>
+            <properties>
+                <deploy.war.name>sarcomacompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/sarcomacomparedb</deploy.db.url>
+                <deploy.db.user>compare_user</deploy.db.user>
+                <deploy.db.pass>compare_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/sarcomacomparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+       
+        <profile>
+            <id>sarcomacompare_dev</id>
+            <properties>
+                <deploy.war.name>sarcomacompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://ncidb-d115-d.nci.nih.gov:5473/sarcoma</deploy.db.url>
+                <deploy.db.user>sarcoma_user</deploy.db.user>
+                <deploy.db.pass>sAr2009fwjfs02Us3r209</deploy.db.pass>
+                <deploy.compare.runner.url>http://ncias-d963-v.nci.nih.gov:8080/sarcomacomparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>oncologydrugscompare_local</id>
+            <properties>
+                <deploy.war.name>oncologydrugscompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/oncologydrugsdb</deploy.db.url>
+                <deploy.db.user>oncology_user</deploy.db.user>
+                <deploy.db.pass>oncology_pass</deploy.db.pass>
+                <deploy.compare.runner.url></deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>oncologydrugscompare_dev</id>
+            <properties>
+                <deploy.war.name>oncologydrugscompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://ncidb-d115-d:5474/oncology</deploy.db.url>
+                <deploy.db.user>oncology_user</deploy.db.user>
+                <deploy.db.pass>Us0923rC0gy0293dtP</deploy.db.pass>
+                <deploy.compare.runner.url></deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+        <profile>
+            <id>pptpcompare_local</id>
+            <properties>
+                <deploy.war.name>pptpcompare</deploy.war.name>
+                <deploy.db.url>jdbc:postgresql://localhost:5432/pptpdb</deploy.db.url>
+                <deploy.db.user>pptp_user</deploy.db.user>
+                <deploy.db.pass>pptp_pass</deploy.db.pass>
+                <deploy.compare.runner.url>http://localhost:8080/sarcomacomparerunner/CompareServlet</deploy.compare.runner.url>
+            </properties>
+        </profile>
+        
+    </profiles>    
+    
+    <repositories>                  
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib/repository</url>
+        </repository>  
+        <repository>  
+            <id>nci-nexus</id>  
+            <name>NCI Nexus</name>  
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <layout>default</layout>  
+        </repository>                
+        <repository>
+            <id>central</id>
+            <name>Internal Mirror of Central Repository</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>               
+                 
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Internal Mirror of Central Plugins Repository</name>
+            <url>https://ncimvn.nci.nih.gov/nexus/content/groups/public</url>  
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+                     
+</project>

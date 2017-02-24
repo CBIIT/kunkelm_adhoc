@@ -397,7 +397,7 @@ public class ListManagerController implements Serializable {
 
         try {
 
-            servletURL = new java.net.URL("http://oncologydrugs-dev.cancer.gov/oncologydrugs/StructureServlet");
+            servletURL = new java.net.URL("http://ioa-dev.cancer.gov/oncologydrugs/StructureServlet");
 
             servletConn = (java.net.HttpURLConnection) servletURL.openConnection();
             servletConn.setDoInput(true);

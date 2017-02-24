@@ -72,7 +72,7 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="compound_layout">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink title="Compounds in List Layout" 
@@ -90,7 +90,7 @@
                 <p:commandLink title="Compounds in Responsive Grid Layout" 
                                ajax="false"
                                action="/webpages/activeListInLineGrid?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="36"/>
+                    <p:graphicImage name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Form Layout" 
@@ -130,7 +130,7 @@
                                            style="display: inline-block;">
                                 <f:setPropertyActionListener value="#{listMember}"   
                                                              target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                                <p:graphicImage name="/icon8png/Detective-100.png" width="36"/>
+                                <p:graphicImage name="/mwkimages/mwk_details.png" width="48"/>
                             </p:commandLink>        
                         </p:column>
                         <p:column rowspan="3">
@@ -149,7 +149,7 @@
                                            action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
                                 <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
                                                              target="#{structureSearchController.nscForLoad}" />  
-                                <p:graphicImage name="/icon8png/Peptide-80.png" width="36"/>
+                                <p:graphicImage name="/mwkimages/mwk_sss.png" width="48"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>
@@ -159,7 +159,7 @@
                                            ajax="false" 
                                            title="Fragments Workbench"
                                            action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
-                                <p:graphicImage name="/icon8png/Maintenance-100.png" width="36"/>
+                                <p:graphicImage name="/mwkimages/mwk_frag_workbench.png" width="48"/>
                             </p:commandLink>
                         </p:column>
                     </p:row>
