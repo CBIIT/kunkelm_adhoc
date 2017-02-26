@@ -77,7 +77,7 @@ public class IdleController implements Serializable {
                 ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
                 HttpSession httpSession = (HttpSession) extCtx.getSession(false);
                 httpSession.invalidate();                
-                extCtx.redirect(extCtx.getRequestContextPath() + "/webpages/searchCmpds.xhtml?faces-redirect=true");
+                extCtx.redirect(extCtx.getRequestContextPath() + "/sessionEnded.xhtml?faces-redirect=true");
             } catch (Exception e) {
                 e.printStackTrace();
             }

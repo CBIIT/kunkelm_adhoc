@@ -10081,7 +10081,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/Lau
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListContentController.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicContainer.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java.ORIGINAL -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicController.java.CALLS_STATIC -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListLogicStatic.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerBean.java -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/java/mwk/datasystem/controllers/ListManagerController.java -text
@@ -10175,7 +10175,7 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/ima
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/images/ui-icons_999999_256x240.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/images/ui-icons_fbc856_256x240.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/chemdoodle/uis/jquery-ui-1.10.3.custom.css -text
-dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/css/my.css -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/css/datasystem.css -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvasWrangling.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/canvg.js -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/js/d3.js -text
@@ -10192,9 +10192,11 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_comb
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_compare_connect.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_configure.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_configure_columns.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_connect.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_copy.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_csv.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_details.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_documents.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_dynamic_grid_view.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_excel.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_form_view.png -text
@@ -10203,12 +10205,18 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_grid
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_heat_map.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_info.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_line_chart.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_logic.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_login.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_logout.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_mean_graphs.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_mind_map.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_pains.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_play.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_question_mark.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_reminder.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_req_use_ign.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_running_man.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_search.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_set.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_set_columns.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_set_rows.png -text
@@ -10216,6 +10224,8 @@ dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_sss.
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_structure_collage.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_table_view.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_tanimoto.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_tools.png -text
+dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/resources/mwkimages/mwk_upload.png -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/sessionEnded.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListForm.xhtml -text
 dtp_datasystem/dtp_datasystem/trunk/src/main/webapp/webpages/activeListGrid.xhtml -text

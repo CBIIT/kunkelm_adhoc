@@ -118,4 +118,144 @@
     </Realm>
     -->
     
+    <!-- 2017 24 Feb brought over from compare -->
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Raw-JSF-Pages</web-resource-name>
+            <description>
+                Prevent access to raw pages that are for JSF pages.(No roles, so no direct access)
+            </description>
+            <url-pattern>*.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Open Up Landing Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Landing Page</web-resource-name>
+            <description>Open Up Landing Page</description>
+            <url-pattern>/landing.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Open Up Idle Warning Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Idle Warning Page</web-resource-name>
+            <description>Open Up Idle Warning Page</description>
+            <url-pattern>/idleWarning.xhtml</url-pattern>
+            <url-pattern>/sessionEnded.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Open Up Documentation</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Documentation</web-resource-name>
+            <description>Open Up Documentation</description>
+            <url-pattern>/documentation.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+                                          
+    <security-constraint>
+        <display-name>Open Up Files</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Files</web-resource-name>
+            <description>Open Up Files</description>
+            <url-pattern>/files/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+                                            
+    <security-constraint>
+        <display-name>Total Secure</display-name>
+        <web-resource-collection>
+            <web-resource-name>Total Secure</web-resource-name>
+            <description>Total Secure</description>
+            <url-pattern>/faces/*</url-pattern>
+            <url-pattern>/webpages/*</url-pattern>
+        </web-resource-collection>
+        <!--
+        <auth-constraint>
+            <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+        </auth-constraint>
+        -->
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <!--
+    <security-constraint>
+        <display-name>Admin Secure</display-name>
+        <web-resource-collection>
+            <web-resource-name>Admin Secure</web-resource-name>
+            <description>Admin Secure</description>
+            <url-pattern>/faces/admin/*</url-pattern>
+            <url-pattern>/webpages/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    -->
+    
+    <security-constraint>
+        <display-name>Open Faces Resources</display-name>
+        <web-resource-collection>
+            <web-resource-name>Exclude from Security</web-resource-name>
+            <url-pattern>/javax.faces.resource/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/loginFailed.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+    <security-role>
+        <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+    </security-role>
+    
+    <Realm className="org.apache.catalina.realm.CombinedRealm">
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+        <Realm allRolesMode="authOnly" 
+               className="org.apache.catalina.realm.JNDIRealm" 
+               connectionName="ncimkldapconnect" 
+               connectionPassword="Mk02012016**velvet" 
+               connectionTimeout="30000" 
+               connectionURL="ldap://nihdcadhub.nih.gov:389" 
+               debug="10" 
+               roleBase="ou=groups,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov" 
+               roleName="cn" 
+               roleNested="true" 
+               roleSearch="(member={0})" 
+               roleSubtree="true" 
+               sizeLimit="0" 
+               userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"/>
+    </Realm>
+    
 </web-app>

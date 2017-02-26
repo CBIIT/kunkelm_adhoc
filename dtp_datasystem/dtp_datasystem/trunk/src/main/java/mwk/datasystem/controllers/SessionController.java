@@ -7,12 +7,16 @@ package mwk.datasystem.controllers;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -23,13 +27,26 @@ import javax.faces.context.FacesContext;
 public class SessionController implements Serializable {
 
   static final long serialVersionUID = -8653468638698142855l;
+
   private String loggedUser;
+
+  private static List<String> validNavigationModes;
+
+  static {
+    String[] navArr = new String[]{"ICONS", "LINKS", "MENUBARS"};
+    validNavigationModes = new ArrayList<String>(Arrays.asList(navArr));
+  }
+
+  String navigationMode;
+
   protected ConfigurationBean configurationBean;
 
   @PostConstruct
   public void init() {
 
     System.out.println("In @PostConstruct init() in SessionController");
+    
+    navigationMode = "MENUBARS";
 
     this.loggedUser = "PUBLIC";
 
@@ -56,12 +73,12 @@ public class SessionController implements Serializable {
     init();
 
   }
-  
-  public String goPublic(){
-      if (this.loggedUser.startsWith("DTP_")){
-          this.loggedUser = "PUBLIC";
-      }
-      return "/webpages/searchCmpds.xhtml?faces-redirect=true";
+
+  public String goPublic() {
+    if (this.loggedUser.startsWith("DTP_")) {
+      this.loggedUser = "PUBLIC";
+    }
+    return "/webpages/searchCmpds.xhtml?faces-redirect=true";
   }
 
   public String logout() {
@@ -82,8 +99,27 @@ public class SessionController implements Serializable {
     }
   }
 
+   public void selectNavigationMode(ValueChangeEvent event) {
+    navigationMode = (String) event.getNewValue();
+  }
+  
+  //<editor-fold defaultstate="collapsed" desc="GETTERS/SETTERS">
   public String getLoggedUser() {
     return this.loggedUser;
+  }
+
+  public String getNavigationMode() {
+    return navigationMode;
+  }
+
+  public void setNavigationMode(String navModIn) {
+
+    if (validNavigationModes.contains(navModIn)) {
+      this.navigationMode = navModIn;
+    } else {
+      this.navigationMode = "MENUBARS";
+    }
+
   }
 
   public ConfigurationBean getConfigurationBean() {
@@ -94,4 +130,5 @@ public class SessionController implements Serializable {
     this.configurationBean = configurationBean;
   }
 
+//</editor-fold>
 }

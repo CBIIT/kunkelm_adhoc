@@ -83,6 +83,7 @@ MWK 29FEB2016, seems to no longer be needed...
 ul.ui-menu-child {
   white-space: nowrap;
   width: auto !important;
+  background: white !important;
 }
 
 .ui-menubar {
@@ -96,14 +97,16 @@ ul.ui-menu-child {
 
 .ui-menuitem-text {
 	padding: 0.5em;
-	background-color: blue;
-	color: white;
+	background-color: white;
+	color: blue;
+        text-decoration: underline;
 }
 
 .redMenuItem .ui-menuitem-text {
 	padding: 0.5em;
-	background-color: red;
-	color: white;
+	background-color: white;
+	color: red;
+        text-decoration: underline;
 } 
 
 .whiteMenuItem .ui-menuitem-text {

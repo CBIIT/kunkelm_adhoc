@@ -31,8 +31,7 @@ public class ListLogicStatic {
 
     static final long serialVersionUID = -8653468638698142855l;
 
-    private static final Boolean DEBUG = Boolean.TRUE;
-
+    private static final Boolean DEBUG = Boolean.TRUE;    
     // 
     public static void performListLogic(ListLogicContainer llc) throws Exception {
 
