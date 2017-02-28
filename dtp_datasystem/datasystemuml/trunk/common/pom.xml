@@ -5,7 +5,7 @@
     <parent>
         <groupId>mwk.datasystem</groupId>
         <artifactId>datasystem</artifactId>
-        <version>20170124</version>
+        <version>20170221</version>
     </parent>
     <artifactId>datasystem-common</artifactId>
     <packaging>jar</packaging>
