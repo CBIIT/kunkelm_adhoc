@@ -66,7 +66,7 @@
         </f:facet>
         <ui:repeat value="#{the_cmpd.cmpdFragmentSmilesStrings}" 
                    var="fragSmiles">
-          <p:graphicImage alt="Chemical Structure of Compound Fragment"
+          <p:graphicImage <p:graphicImage alt="PNG structure image of Compound Fragment for SMILES: #{fragSmiles}"
                           styleClass="fragmentStructure"
                           width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
                           url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              

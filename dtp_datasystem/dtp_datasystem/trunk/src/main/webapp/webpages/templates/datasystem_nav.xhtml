@@ -12,7 +12,7 @@
     <h:link title="INFO" 
             outcome="/webpages/info.xhtml"
             fragment="navigation">
-      <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
+      <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
     </h:link>
     <h:outputText value="DataSystem Navigation"/>
   </h2>
@@ -22,52 +22,52 @@
     <p:commandLink title="Search"
                    ajax="true"
                    action="/webpages/searchCmpds?faces-redirect=true">
-    <p:graphicImage name="/mwkimages/mwk_search.png" width="48"/>
+    <p:graphicImage alt="SEARCH" name="/mwkimages/mwk_search.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink title="Active List"
                    ajax="false"
                    action="/webpages/activeListTable?faces-redirect=true">
-    <p:graphicImage name="/mwkimages/mwk_details.png" width="48"/>
+    <p:graphicImage alt="VIEW ACTIVE LIST" name="/mwkimages/mwk_details.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink title="Available Lists"
                    ajax="false"                         
                    action="/webpages/availableLists?faces-redirect=true">
-    <p:graphicImage name="/mwkimages/mwk_reminder.png" width="48"/>
+    <p:graphicImage alt="VIEW AVAILABLE LISTS" name="/mwkimages/mwk_reminder.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink title="Upload Structures"
                    ajax="false"
                    rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"            
                    action="/webpages/uploadList?faces-redirect=true">
-    <p:graphicImage name="/mwkimages/mwk_upload.png" width="48"/>
+    <p:graphicImage alt="UPLOAD STRUCTURES" name="/mwkimages/mwk_upload.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink title="List Logic"
                    ajax="false"
                    action="/webpages/listLogic?faces-redirect=true">
-    <p:graphicImage name="/mwkimages/mwk_logic.png" width="48"/>
+    <p:graphicImage alt="LIST LOGIC" name="/mwkimages/mwk_logic.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink title="Curated NSC"
                    ajax="false"                
                    rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"                
                    action="/webpages/curatedNscTable?faces-redirect=true">
-    <p:graphicImage name="/mwkimages/mwk_tools.png" width="48"/>
+    <p:graphicImage alt="CURATED NSC" name="/mwkimages/mwk_tools.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink ajax="false"
                    action="#{sessionController.logout()}"
                    title="Logout #{sessionController.loggedUser}">
-    <p:graphicImage name="/mwkimages/mwk_logout.png" width="48"/>
+    <p:graphicImage alt="LOGOUT" name="/mwkimages/mwk_logout.png" width="48"/>
     </p:commandLink>
 
     <p:commandLink ajax="false"
                    rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
                    action="#{sessionController.goPublic()}"
                    title="Become PUBLIC">
-    <p:graphicImage name="/mwkimages/mwk_login.png" width="48"/>
+    <p:graphicImage alt="BECOME PUBLIC" name="/mwkimages/mwk_login.png" width="48"/>
     </p:commandLink>
 
     <p:outputLabel value="Navigation by:" > 

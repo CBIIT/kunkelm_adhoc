@@ -48,7 +48,7 @@
 
             <br/>
 
-            <p:graphicImage alt="Chemical Structure of List Anchor"
+            <p:graphicImage alt="PNG structure image for SMILES: #{listManagerController.listManagerBean.activeList.anchorSmiles}"
                             width="#{sessionController.configurationBean.strcDim}" 
                             height="#{sessionController.configurationBean.strcDim}"
                             styleClass="anchorStructure"
@@ -72,31 +72,31 @@
                 <h:link title="INFO" 
                         outcome="/webpages/info.xhtml"
                         fragment="compound_layout">
-                    <p:graphicImage name="/mwkimages/mwk_info.png" width="48"/>
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
                 </h:link>
 
                 <p:commandLink title="Compounds in List Layout" 
                                ajax="false"
                                action="/webpages/activeListTable?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_table_view.png" width="48"/>
+                    <p:graphicImage alt="TABLE VIEW" name="/mwkimages/mwk_table_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Grid Layout"
                                ajax="false"
                                action="/webpages/activeListGrid?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_grid_view.png" width="48"/>
+                    <p:graphicImage alt="GRID VIEW" name="/mwkimages/mwk_grid_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Responsive Grid Layout" disabled="true"
                                ajax="false"
                                action="/webpages/activeListInLineGrid?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
+                    <p:graphicImage alt="DYNAMIC GRID VIEW" name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
                 </p:commandLink>
 
                 <p:commandLink title="Compounds in Form Layout" 
                                ajax="false"
                                action="/webpages/activeListForm?faces-redirect=true">
-                    <p:graphicImage name="/mwkimages/mwk_form_view.png" width="48"/>
+                    <p:graphicImage alt="FORM VIEW" name="/mwkimages/mwk_form_view.png" width="48"/>
                 </p:commandLink>
 
             </p:panelGrid>
@@ -118,12 +118,12 @@
                                                style="display: inline-block;">
                                     <f:setPropertyActionListener value="#{listMember}"   
                                                                  target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                                    <p:graphicImage name="/mwkimages/mwk_details.png" width="48"/>
+                                    <p:graphicImage alt="DETAILS" name="/mwkimages/mwk_details.png" width="48"/>
                                 </p:commandLink>        
                             </p:column>
 
                             <p:column rowspan="3">
-                                <p:graphicImage alt="Chemical Structure of Parent Fragment"
+                                <p:graphicImage <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{listMember.cmpd.smiles}"
                                                 width="#{sessionController.configurationBean.strcDim}" 
                                                 height="#{sessionController.configurationBean.strcDim}"
                                                 styleClass="parentStructure"
@@ -138,7 +138,7 @@
                                                action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
                                     <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
                                                                  target="#{structureSearchController.nscForLoad}" />  
-                                    <p:graphicImage name="/mwkimages/mwk_sss.png" width="48"/>
+                                    <p:graphicImage alt="SUBSTRUCTURE SEARCH" name="/mwkimages/mwk_sss.png" width="48"/>
                                 </p:commandLink>
                             </p:column>
                         </p:row>
@@ -148,7 +148,7 @@
                                                ajax="false" 
                                                title="Fragments Workbench"
                                                action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
-                                    <p:graphicImage name="/mwkimages/mwk_frag_workbench.png" width="48"/>
+                                    <p:graphicImage alt="FRAGMENTS WORKBENCH" name="/mwkimages/mwk_frag_workbench.png" width="48"/>
                                 </p:commandLink>
                             </p:column>
                         </p:row>

@@ -17,14 +17,14 @@
     <p:panelGrid rendered="#{sessionController.navigationMode eq 'ICONS'}" columns="2" styleClass="borderlessPanelGrid">
       <p:commandLink ajax="false" 
                      title="Export as Excel">
-        <p:graphicImage name="/mwkimages/mwk_excel.png" width="48"/>          
+        <p:graphicImage alt="Download as Excel" name="/mwkimages/mwk_excel.png" width="48"/>          
         <p:dataExporter type="xls"  
                         target="curatedNscs" 
                         fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
       </p:commandLink>
       <p:commandLink ajax="false" 
                      title="Export as CSV">  
-        <p:graphicImage name="/mwkimages/mwk_csv.png" width="48"/>          
+        <p:graphicImage alt="Download as csv" name="/mwkimages/mwk_csv.png" width="48"/>          
         <p:dataExporter type="csv" 
                         target="curatedNscs" 
                         fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
