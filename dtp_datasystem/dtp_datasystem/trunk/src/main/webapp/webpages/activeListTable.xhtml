@@ -9,1082 +9,1063 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="/webpages/templates/ui.xhtml">
 
-  <ui:define name="content title">
-    <h:outputText style="background-color: blue; color: white;" value="#{listManagerController.listManagerBean.activeList.listName}"/>        
-    <h:outputText value=" with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />
-  </ui:define>
-
-  <ui:define name="instructions"/>
-
-  <ui:define name="alternate">
-  </ui:define>
-
-  <ui:define name="content">
-
-    <script>
-      jQuery(document).ready(function () {
-        $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
-      });
-      function doRotate() {
-        $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
-      }
-    </script>
-
-    <!-- ensures that the filteredValues are reset whenever the page loads/reloads -->    
-
-    <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
-                     autoRun="true"/>
-
-    <p:panelGrid columns="7" rendered="#{sessionController.navigationMode eq 'ICONS'}" styleClass="borderlessPanelGrid">
-
-      <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
-
-        <f:facet name="header">
-          <h:outputText value="Configure Columns"/>
-        </f:facet>
-
-        <h:link title="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="configure_columns">
-          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
-        </h:link>
-
-        <p:commandLink title="Configure List Columns"
-                       onclick="PF('act_list_cfg_dlg').show();">
-          <p:graphicImage alt="CONFIGURE" name="/mwkimages/mwk_configure.png" width="48"/>
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
-
-        <f:facet name="header">
-          <h:outputText value="Compound Layout"/>
-        </f:facet>
-
-        <h:link title="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="compound_layout">
-          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
-        </h:link>
-
-        <p:commandLink title="Compounds in List Layout" disabled="true"
-                       ajax="false"
-                       action="/webpages/activeListTable?faces-redirect=true">
-          <p:graphicImage alt="TABLE VIEW" name="/mwkimages/mwk_table_view.png" width="48"/>
-        </p:commandLink>
-
-        <p:commandLink title="Compounds in Grid Layout" 
-                       ajax="false"
-                       action="/webpages/activeListGrid?faces-redirect=true">
-          <p:graphicImage alt="GRID VIEW" name="/mwkimages/mwk_grid_view.png" width="48"/>
-        </p:commandLink>
-
-        <p:commandLink title="Compounds in Responsive Grid Layout" 
-                       ajax="false"
-                       action="/webpages/activeListInLineGrid?faces-redirect=true">
-          <p:graphicImage alt="DYNAMIC GRID VIEW" name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
-        </p:commandLink>
-
-        <p:commandLink title="Compounds in Form Layout" 
-                       ajax="false"
-                       action="/webpages/activeListForm?faces-redirect=true">
-          <p:graphicImage alt="FORM VIEW" name="/mwkimages/mwk_form_view.png" width="48"/>
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
-
-        <f:facet name="header">
-          <h:outputText value="Export Data"/>
-        </f:facet>
-
-        <h:link title="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="export_data">
-          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
-        </h:link>
-
-        <p:commandLink ajax="false" title="Export as Excel">
-          <p:graphicImage alt="Download as Excel" name="/mwkimages/mwk_excel.png" width="48"/>
-          <p:dataExporter type="xls"  
-                          target="activeListTbl" 
-                          fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
-        </p:commandLink>
-
-        <p:commandLink ajax="false" title="Export as CSV">
-          <p:graphicImage alt="Download as csv" name="/mwkimages/mwk_csv.png" width="48"/>
-          <p:dataExporter type="csv" 
-                          target="activeListTbl" 
-                          fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-        </p:commandLink>
-
-        <p:commandLink title="Export Structures as Image"
-                       ajax="true"
-                       onclick="structuresAsGridImage()">
-          <p:graphicImage alt="STRUCTURES AS IMAGE" name="/mwkimages/mwk_structure_collage.png" width="48"/>
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
-
-        <f:facet name="header">
-          <h:outputText value="List Wrangling"/>
-        </f:facet>
-
-        <h:link title="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="list_wrangling">
-          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
-        </h:link>
-
-        <p:commandLink action="#{listContentController.handleConfigureCopy}"
-                       title="COPY to NEW LIST"
-                       oncomplete="PF('copyDlg').show();">
-          <p:graphicImage alt="COPY LIST" name="/mwkimages/mwk_copy.png" width="48"/>
-        </p:commandLink>
-
-        <p:commandLink action="#{listContentController.handleConfigureAppend}"
-                       title="COMBINE with EXISTING LIST"
-                       oncomplete="PF('combineDlg').show();">
-          <p:graphicImage alt="COMBINE WITH EXISTING LIST" name="/mwkimages/mwk_combine.png" width="48"/>
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
-        <f:facet name="header">
-          <h:outputText value="COMPARE Application"/>
-        </f:facet>
-
-        <h:link title="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="compare">
-          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
-        </h:link>
-
-        <p:commandLink title="NCI60 SCREEN DATA"                       
-                       ajax="false"
-                       actionListener="#{launchingController.performConnectToLanding()}"
-                       target="_blank">
-          <p:graphicImage alt="COMPARE CONNECT" name="/mwkimages/mwk_compare_connect.png" width="48"/>
-        </p:commandLink>
-
-        <p:commandLink title="SARCOMA SCREEN DATA"                       
-                       ajax="false"
-                       target="_blank">
-          <p:graphicImage alt="COMPARE CONNECT" name="/mwkimages/mwk_compare_connect.png" width="36"/>
-        </p:commandLink>
+    <ui:define name="content title">
+        <h:outputText style="background-color: blue; color: white;" value="#{listManagerController.listManagerBean.activeList.listName}"/>        
+        <h:outputText value=" with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />
+    </ui:define>
+
+    <ui:define name="instructions"/>
+
+    <ui:define name="alternate">
+    </ui:define>
+
+    <ui:define name="content">
+
+        <script>
+            jQuery(document).ready(function () {
+                $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
+            });
+            function doRotate() {
+                $("[id='datasystemForm:activeListTbl']").rotateTableCellContent();
+            }
+        </script>
+
+        <!-- ensures that the filteredValues are reset whenever the page loads/reloads -->    
+
+        <p:remoteCommand actionListener="#{listManagerController.handleSynchronizeFilters()}"
+                         autoRun="true"/>
+
+        <p:panelGrid columns="7" rendered="#{sessionController.navigationMode eq 'ICONS'}" styleClass="borderlessPanelGrid">
+
+            <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
+
+                <f:facet name="header">
+                    <h:outputText value="Configure Columns"/>
+                </f:facet>
+
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="configure_columns">
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+                </h:link>
+
+                <p:commandLink title="Configure List Columns"
+                               onclick="PF('act_list_cfg_dlg').show();">
+                    <p:graphicImage alt="CONFIGURE" name="/mwkimages/mwk_configure.png" width="48"/>
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
+
+                <f:facet name="header">
+                    <h:outputText value="Compound Layout"/>
+                </f:facet>
+
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="compound_layout">
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+                </h:link>
+
+                <p:commandLink title="Compounds in List Layout" disabled="true"
+                               ajax="false"
+                               action="/webpages/activeListTable?faces-redirect=true">
+                    <p:graphicImage alt="TABLE VIEW" name="/mwkimages/mwk_table_view.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Grid Layout" 
+                               ajax="false"
+                               action="/webpages/activeListGrid?faces-redirect=true">
+                    <p:graphicImage alt="GRID VIEW" name="/mwkimages/mwk_grid_view.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Responsive Grid Layout" 
+                               ajax="false"
+                               action="/webpages/activeListInLineGrid?faces-redirect=true">
+                    <p:graphicImage alt="DYNAMIC GRID VIEW" name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="Compounds in Form Layout" 
+                               ajax="false"
+                               action="/webpages/activeListForm?faces-redirect=true">
+                    <p:graphicImage alt="FORM VIEW" name="/mwkimages/mwk_form_view.png" width="48"/>
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
+
+                <f:facet name="header">
+                    <h:outputText value="Export Data"/>
+                </f:facet>
+
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="export_data">
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+                </h:link>
+
+                <p:commandLink ajax="false" title="Export as Excel">
+                    <p:graphicImage alt="Download as Excel" name="/mwkimages/mwk_excel.png" width="48"/>
+                    <p:dataExporter type="xls"  
+                                    target="activeListTbl" 
+                                    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
+                </p:commandLink>
+
+                <p:commandLink ajax="false" title="Export as CSV">
+                    <p:graphicImage alt="Download as csv" name="/mwkimages/mwk_csv.png" width="48"/>
+                    <p:dataExporter type="csv" 
+                                    target="activeListTbl" 
+                                    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
+                </p:commandLink>
+
+                <p:commandLink title="Export Structures as Image"
+                               ajax="true"
+                               onclick="structuresAsGridImage()">
+                    <p:graphicImage alt="STRUCTURES AS IMAGE" name="/mwkimages/mwk_structure_collage.png" width="48"/>
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+
+                <f:facet name="header">
+                    <h:outputText value="List Wrangling"/>
+                </f:facet>
+
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="list_wrangling">
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+                </h:link>
+
+                <p:commandLink action="#{listContentController.handleConfigureCopy}"
+                               title="COPY to NEW LIST"
+                               oncomplete="PF('copyDlg').show();">
+                    <p:graphicImage alt="COPY LIST" name="/mwkimages/mwk_copy.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink action="#{listContentController.handleConfigureAppend}"
+                               title="COMBINE with EXISTING LIST"
+                               oncomplete="PF('combineDlg').show();">
+                    <p:graphicImage alt="COMBINE WITH EXISTING LIST" name="/mwkimages/mwk_combine.png" width="48"/>
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
+                <f:facet name="header">
+                    <h:outputText value="COMPARE Application"/>
+                </f:facet>
+
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="compare">
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+                </h:link>
+
+                <p:commandLink title="NCI60 SCREEN DATA"                       
+                               ajax="false"
+                               actionListener="#{launchingController.performConnectToLanding()}"
+                               target="_blank">
+                    <p:graphicImage alt="CONNECT TO NCI60 COMPARE" name="/mwkimages/mwk_nci60.png" width="48"/>
+                </p:commandLink>
+
+                <p:commandLink title="SARCOMA SCREEN DATA" disabled="true"                       
+                               ajax="false"
+                               target="_blank">
+                    <p:graphicImage alt="CONNECT TO SARCOMA COMPARE" name="/mwkimages/mwk_sarcoma.png" width="48"/>
+                </p:commandLink>
 
-        <p:commandLink title="SCLC SCREEN DATA"                       
-                       ajax="false"
-                       target="_blank">
-          <p:graphicImage alt="COMPARE CONNECT" name="/mwkimages/mwk_compare_connect.png" width="36"/>
-        </p:commandLink>
+                <p:commandLink title="SCLC SCREEN DATA" disabled="true"                       
+                               ajax="false"
+                               target="_blank">
+                    <p:graphicImage alt="CONNECT TO SCLC COMPARE" name="/mwkimages/mwk_sclc.png" width="48"/>
+                </p:commandLink>
 
-      </p:panelGrid>
+            </p:panelGrid>
 
-      <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
-        <f:facet name="header">
-          <h:outputText value="Chemistry Calculations"/>
-        </f:facet>            
+            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                <f:facet name="header">
+                    <h:outputText value="Chemistry Calculations"/>
+                </f:facet>            
 
-        <h:link title="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="chemistry_calculations">
-          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
-        </h:link>
+                <h:link title="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="chemistry_calculations">
+                    <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+                </h:link>
 
-        <p:commandLink title="Tanimoto"                       
-                       ajax="false"
-                       action="#{tanimotoController.performRunTanimoto}">   
-          <p:graphicImage alt="TANIMOTO" name="/mwkimages/mwk_tanimoto.png" width="48"/>
-        </p:commandLink>
+                <p:commandLink title="Tanimoto"                       
+                               ajax="false"
+                               action="#{tanimotoController.performRunTanimoto}">   
+                    <p:graphicImage alt="TANIMOTO" name="/mwkimages/mwk_tanimoto.png" width="48"/>
+                </p:commandLink>
 
-        <p:commandLink title="PAINS"                       
-                       ajax="false"
-                       action="#{tanimotoController.performRunTanimoto}">   
-          <p:graphicImage alt="PAINS" name="/mwkimages/mwk_pains.png" width="48"/>
-        </p:commandLink>
+                <p:commandLink title="PAINS"                       
+                               ajax="false"
+                               action="#{tanimotoController.performRunTanimoto}">   
+                    <p:graphicImage alt="PAINS" name="/mwkimages/mwk_pains.png" width="48"/>
+                </p:commandLink>
 
-      </p:panelGrid>
+            </p:panelGrid>
 
-    </p:panelGrid>
+        </p:panelGrid>
 
-    <p:panelGrid columns="7" rendered="#{sessionController.navigationMode eq 'LINKS'}" styleClass="borderlessPanelGrid">
+        <p:panelGrid columns="7" rendered="#{sessionController.navigationMode eq 'LINKS'}" styleClass="borderlessPanelGrid">
 
-      <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
 
-        <f:facet name="header">
-          <h:outputText value="Configure Columns"/>
-        </f:facet>
+                <f:facet name="header">
+                    <h:outputText value="Configure Columns"/>
+                </f:facet>
 
-        <h:link title="INFO"
-                value="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="configure_columns">
+                <h:link title="INFO"
+                        value="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="configure_columns">
 
-        </h:link>
+                </h:link>
 
-        <p:commandLink title="Configure List Columns"
-                       value="Configure List Columns"
-                       onclick="PF('act_list_cfg_dlg').show();">
+                <p:commandLink title="Configure List Columns"
+                               value="Configure List Columns"
+                               onclick="PF('act_list_cfg_dlg').show();">
 
-        </p:commandLink>
+                </p:commandLink>
 
-      </p:panelGrid>
+            </p:panelGrid>
 
-      <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
 
-        <f:facet name="header">
-          <h:outputText value="Compound Layout"/>
-        </f:facet>
+                <f:facet name="header">
+                    <h:outputText value="Compound Layout"/>
+                </f:facet>
 
-        <h:link title="INFO"
-                value="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="compound_layout">
+                <h:link title="INFO"
+                        value="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="compound_layout">
 
-        </h:link>
+                </h:link>
 
-        <p:commandLink title="Compounds in List Layout"
-                       value="Compounds in List Layout" disabled="true"
-                       ajax="false"
-                       action="/webpages/activeListTable?faces-redirect=true">
+                <p:commandLink title="Compounds in List Layout"
+                               value="Compounds in List Layout" disabled="true"
+                               ajax="false"
+                               action="/webpages/activeListTable?faces-redirect=true">
 
-        </p:commandLink>
+                </p:commandLink>
 
-        <p:commandLink title="Compounds in Grid Layout"
-                       value="Compounds in Grid Layout" 
-                       ajax="false"
-                       action="/webpages/activeListGrid?faces-redirect=true">
+                <p:commandLink title="Compounds in Grid Layout"
+                               value="Compounds in Grid Layout" 
+                               ajax="false"
+                               action="/webpages/activeListGrid?faces-redirect=true">
 
-        </p:commandLink>
+                </p:commandLink>
 
-        <p:commandLink title="Compounds in Responsive Grid Layout"
-                       value="Compounds in Responsive Grid Layout" 
-                       ajax="false"
-                       action="/webpages/activeListInLineGrid?faces-redirect=true">
+                <p:commandLink title="Compounds in Responsive Grid Layout"
+                               value="Compounds in Responsive Grid Layout" 
+                               ajax="false"
+                               action="/webpages/activeListInLineGrid?faces-redirect=true">
 
-        </p:commandLink>
+                </p:commandLink>
 
-        <p:commandLink title="Compounds in Form Layout"
-                       value="Compounds in Form Layout" 
-                       ajax="false"
-                       action="/webpages/activeListForm?faces-redirect=true">
+                <p:commandLink title="Compounds in Form Layout"
+                               value="Compounds in Form Layout" 
+                               ajax="false"
+                               action="/webpages/activeListForm?faces-redirect=true">
 
-        </p:commandLink>
+                </p:commandLink>
 
-      </p:panelGrid>
+            </p:panelGrid>
 
-      <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
+            <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
 
-        <f:facet name="header">
-          <h:outputText value="Export Data"/>
-        </f:facet>
+                <f:facet name="header">
+                    <h:outputText value="Export Data"/>
+                </f:facet>
 
-        <h:link title="INFO"
-                value="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="export_data">
+                <h:link title="INFO"
+                        value="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="export_data">
 
-        </h:link>
+                </h:link>
 
-        <p:commandLink ajax="false" title="Export as Excel"
-                       value="Export as Excel">
+                <p:commandLink ajax="false" title="Export as Excel"
+                               value="Export as Excel">
 
-          <p:dataExporter type="xls"  
-                          target="activeListTbl" 
-                          fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
-        </p:commandLink>
+                    <p:dataExporter type="xls"  
+                                    target="activeListTbl" 
+                                    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
+                </p:commandLink>
 
-        <p:commandLink ajax="false" title="Export as CSV"
-                       value="Export as CSV">
+                <p:commandLink ajax="false" title="Export as CSV"
+                               value="Export as CSV">
 
-          <p:dataExporter type="csv" 
-                          target="activeListTbl" 
-                          fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-        </p:commandLink>
+                    <p:dataExporter type="csv" 
+                                    target="activeListTbl" 
+                                    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
+                </p:commandLink>
 
-        <p:commandLink title="Export Structures as Image"
-                       value="Export Structures as Image"
-                       ajax="true"
-                       onclick="structuresAsGridImage()">
+                <p:commandLink title="Export Structures as Image"
+                               value="Export Structures as Image"
+                               ajax="true"
+                               onclick="structuresAsGridImage()">
 
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
-
-        <f:facet name="header">
-          <h:outputText value="List Wrangling"/>
-        </f:facet>
-
-        <h:link title="INFO"
-                value="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="list_wrangling">
-
-        </h:link>
-
-        <p:commandLink action="#{listContentController.handleConfigureCopy}"
-                       title="COPY to NEW LIST"
-                       value="COPY to NEW LIST"
-                       oncomplete="PF('copyDlg').show();">
-
-        </p:commandLink>
-
-        <p:commandLink action="#{listContentController.handleConfigureAppend}"
-                       title="COMBINE with EXISTING LIST"
-                       value="COMBINE with EXISTING LIST"
-                       oncomplete="PF('combineDlg').show();">
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
-        <f:facet name="header">
-          <h:outputText value="COMPARE Application"/>
-        </f:facet>
-
-        <h:link title="INFO"
-                value="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="compare">
-
-        </h:link>
-
-        <p:commandLink title="NCI60 SCREEN DATA"
-                       value="NCI60 SCREEN DATA"                       
-                       ajax="false"
-                       actionListener="#{launchingController.performConnectToLanding()}"
-                       target="_blank">
-
-        </p:commandLink>
-
-        <p:commandLink title="SARCOMA SCREEN DATA"
-                       value="SARCOMA SCREEN DATA"                       
-                       ajax="false"
-                       target="_blank">
-
-        </p:commandLink>
-
-        <p:commandLink title="SCLC SCREEN DATA"
-                       value="SCLC SCREEN DATA"                       
-                       ajax="false"
-                       target="_blank">
-
-        </p:commandLink>
-
-      </p:panelGrid>
-
-      <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
-        <f:facet name="header">
-          <h:outputText value="Chemistry Calculations"/>
-        </f:facet>            
-
-        <h:link title="INFO"
-                value="INFO" 
-                outcome="/webpages/info.xhtml"
-                fragment="chemistry_calculations">
-
-        </h:link>
-
-        <p:commandLink title="Tanimoto"
-                       value="Tanimoto"                       
-                       ajax="false"
-                       action="#{tanimotoController.performRunTanimoto}">   
-
-        </p:commandLink>
-
-        <p:commandLink title="PAINS"
-                       value="PAINS"                       
-                       ajax="false"
-                       action="#{tanimotoController.performRunTanimoto}">   
-
-        </p:commandLink>
-
-      </p:panelGrid>
-
-    </p:panelGrid>
-
-    <!-- these MIGHT be needed to support dataExporter calls from menubar 
-    
-    <p:menuitem value="Export as Excel" title="Export as Excel"
-                    onclick="$('#datasystemForm\\:excelExport').click();"/>                    
-        <p:menuitem value="Export as CSV" title="Export as CSV"
-                    onclick="$('#datasystemForm\\:csvExport').click();"/>
-        
-
-    <p:commandLink id="excelExport" ajax="false" title="Export as Excel" onclick="alert('excelExport clicked')">
-      <p:dataExporter type="xls"  
-                      target="activeListTbl" 
-                      fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
-    </p:commandLink>
-
-    <p:commandLink id="csvExport" ajax="false" title="Export as CSV" onclick="alert('csvExport clicked')">
-      <p:dataExporter type="csv" 
-                      target="activeListTbl" 
-                      fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />  
-    </p:commandLink>
-
-    -->
-
-    <p:menubar rendered="#{sessionController.navigationMode eq 'MENUBARS'}" >
-      <p:menuitem value="Configure List Columns" title="Configure List Columns"
-                  onclick="PF('act_list_cfg_dlg').show();"/>            
-      <p:submenu label="Compound">
-        <p:menuitem value="Compounds in List Layout" title="Compounds in List Layout" disabled="true"
-                    ajax="false"
-                    action="/webpages/activeListTable?faces-redirect=true"/>
-        <p:menuitem value="Compounds in Grid Layout" title="Compounds in Grid Layout" 
-                    ajax="false"
-                    action="/webpages/activeListGrid?faces-redirect=true"/>
-        <p:menuitem value="Compounds in Form Layout" title="Compounds in Form Layout" 
-                    ajax="false"
-                    action="/webpages/activeListForm?faces-redirect=true"/>
-      </p:submenu>
-      <p:submenu label="Export">
-
-        <p:menuitem ajax="false"
-                    title="Export as Excel"
-                    value="Export as Excel">
-          <p:dataExporter type="xls" 
-                          target="activeListTbl" 
-                          fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />               
-        </p:menuitem>
-        <p:menuitem ajax="false"
-                    title="Export as CSV"
-                    value="Export as CSV">
-          <p:dataExporter type="csv" 
-                          target="activeListTbl" 
-                          fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
-        </p:menuitem> 
-
-        <p:menuitem value="Export Structures as Image" title="Export Structures as Image"
-                    ajax="true"
-                    onclick="structuresAsGridImage()"/>
-      </p:submenu>
-      <p:submenu label="List Wrangling">
-        <p:menuitem value="COPY to NEW LIST" title="COPY to NEW LIST"
-                    onclick="PF('copyDlg').show();"/>
-        <p:menuitem value="COMBINE with EXISTING LIST" title="COMBINE with EXISTING LIST"
-                    actionListener="#{listContentController.performConfigureAppend}"
-                    onclick="PF('combineDlg').show();"/>
-      </p:submenu>
-      <p:submenu label="NCI60">
-        <p:menuitem value="NCI60 DATA" title="NCI60 DATA"                       
-                    ajax="false"
-                    actionListener="#{launchingController.performConnectToLanding()}"
-                    target="_blank"/>
-      </p:submenu>
-      <p:submenu label="Chemistry">
-        <p:menuitem value="Tanimoto" title="Tanimoto"                       
-                    ajax="false"
-                    action="#{tanimotoController.performRunTanimoto}"/>   
-        <p:menuitem value="PAINS" title="PAINS"                       
-                    ajax="false"
-                    action="#{tanimotoController.performRunTanimoto}"/>   
-      </p:submenu>                 
-    </p:menubar>
-
-    <p:dataTable  id="activeListTbl"
-                  tableStyle="width: auto;"
-                  resizableColumns="true" 
-                  draggableColumns="true"
-                  draggableRows="true"
-                  editable="true"                      
-                  widgetVar="activeListTblWidgetVar"
-                  var="listMember"                       
-                  value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
-                  rows="50"                        
-                  paginator="true"
-                  paginatorPosition="top"
-                  currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
-                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
-                  rowsPerPageTemplate="10,25,50,100,250,500,1000,2000"
-                  selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
-                  filteredValue="#{listManagerController.listManagerBean.filteredActiveListMembers}"
-                  rowKey="#{listMember.id}"                              
-                  sortMode="multiple"
-                  rowIndexVar="rowIdx">  
-
-      <c:set var="cmpd" value="#{listMember.cmpd}" />
-      <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
-      <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
-      <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
-
-      <f:facet name="header">
-        <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>                    
-      </f:facet>
-
-      <p:ajax event="rowEdit" listener="#{listContentController.onRowEdit}" update=":datasystemForm:messages" />
-      <p:ajax event="rowEditCancel" listener="#{listContentController.onRowCancel}" update=":datasystemForm:messages" />
-      <p:ajax event="cellEdit" listener="#{listContentController.onCellEdit}" update=":datasystemForm:messages" />
-
-      <p:column selectionMode="multiple" 
-                style="width:4%" 
-                exportable="false"/>
-
-      <p:column style="width:32px"
-                exportable="false">
-        <p:rowEditor rendered="#{listManagerController.listManagerBean.activeList.listOwner eq sessionController.loggedUser and listManagerController.listManagerBean.activeList.shareWith ne 'EVERYONE'}"/>
-      </p:column>
-
-      <p:column headerText="NSC" 
-                resizable="true"
-                sortBy="#{cmpd.nsc}"                      
-                filterBy="#{cmpd.nsc}"
-                filterMatchMode="contains">   
-        <h:outputText value="#{cmpd.nsc}"/>
-      </p:column>   
-
-      <p:column headerText="Name"
-                resizable="true"
-                sortBy="#{cmpd.name}"
-                filterBy="#{cmpd.name}"
-                filterMatchMode="contains">                                
-        <h:outputText value="#{cmpd.name}"/>
-      </p:column>   
-
-      <p:column headerText="CAS" 
-                resizable="true"
-                sortBy="#{cmpd.cas}"
-                filterBy="#{cmpd.cas}"
-                filterMatchMode="contains">                                
-        <h:outputText value="#{cmpd.cas}"/>
-      </p:column>  
-
-      <!--
-
-      <p:column headerText="List Member Id"
-                resizable="true"
-                sortBy="#{listMember.id}"
-                filterBy="#{listMember.id}"
-                filterMatchMode="contains">        
-          <h:outputText value="#{empty listMember.id || listMember.id lt 0 ? 'NOT SAVED' : listMember.id}"
-                        style="color: #{empty listMember.id || listMember.id lt 0 ? 'red' : 'black'}"/>        
-      </p:column> 
-
-      <p:column headerText="List Member Comment"
-                resizable="true"
-                sortBy="#{listMember.listMemberComment}"
-                filterBy="#{listMember.listMemberComment}"
-                filterMatchMode="contains">        
-
-          <p:cellEditor>
-              <f:facet name="output"><h:outputText value="#{listMember.listMemberComment}" /></f:facet>
-              <f:facet name="input"><p:inputText id="listMemberCommentInput" value="#{listMember.listMemberComment}" style="width:100%"/></f:facet>
-          </p:cellEditor>
-
-      </p:column> 
-
-      <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                headerText="DISCREET" 
-                resizable="true"
-                sortBy="#{cmpd.discreet}"
-                filterBy="#{cmpd.discreet}"
-                filterMatchMode="contains">                                
-          <h:outputText value="#{cmpd.discreet}"/>
-      </p:column>   
-
-      <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                headerText="CONF" 
-                resizable="true"
-                sortBy="#{cmpd.conf}"
-                filterBy="#{cmpd.conf}"
-                filterMatchMode="contains">                                
-          <h:outputText value="#{cmpd.conf}"/>
-      </p:column>   
-
-      <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                headerText="DIST" 
-                resizable="true"
-                sortBy="#{cmpd.distribution}"
-                filterBy="#{cmpd.distribution}"
-                filterMatchMode="contains">                                
-          <h:outputText value="#{cmpd.distribution}"/>
-      </p:column> 
-
-      <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                headerText="NSCCmpdType"
-                sortBy="#{cmpd.nscCmpdType}"
-                filterBy="#{cmpd.nscCmpdType}"
-                filterMatchMode="contains">
-          <h:outputText value="#{cmpd.nscCmpdType}"/>
-      </p:column>   
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+
+                <f:facet name="header">
+                    <h:outputText value="List Wrangling"/>
+                </f:facet>
+
+                <h:link title="INFO"
+                        value="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="list_wrangling">
+
+                </h:link>
+
+                <p:commandLink action="#{listContentController.handleConfigureCopy}"
+                               title="COPY to NEW LIST"
+                               value="COPY to NEW LIST"
+                               oncomplete="PF('copyDlg').show();">
+
+                </p:commandLink>
+
+                <p:commandLink action="#{listContentController.handleConfigureAppend}"
+                               title="COMBINE with EXISTING LIST"
+                               value="COMBINE with EXISTING LIST"
+                               oncomplete="PF('combineDlg').show();">
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="4" styleClass="borderlessPanelGrid">
+                <f:facet name="header">
+                    <h:outputText value="COMPARE Application"/>
+                </f:facet>
+
+                <h:link title="INFO"
+                        value="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="compare">
+
+                </h:link>
+
+                <p:commandLink title="NCI60 SCREEN DATA"
+                               value="NCI60 SCREEN DATA"                       
+                               ajax="false"
+                               actionListener="#{launchingController.performConnectToLanding()}"
+                               target="_blank">
+                </p:commandLink>
+
+                <p:commandLink title="SARCOMA SCREEN DATA" disabled="true"
+                               value="SARCOMA SCREEN DATA"                       
+                               ajax="false"
+                               target="_blank">
+                </p:commandLink>
+
+                <p:commandLink title="SCLC SCREEN DATA" disabled="true"
+                               value="SCLC SCREEN DATA"                       
+                               ajax="false"
+                               target="_blank">
+                </p:commandLink>
+
+            </p:panelGrid>
+
+            <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
+                <f:facet name="header">
+                    <h:outputText value="Chemistry Calculations"/>
+                </f:facet>            
+
+                <h:link title="INFO"
+                        value="INFO" 
+                        outcome="/webpages/info.xhtml"
+                        fragment="chemistry_calculations">
+
+                </h:link>
+
+                <p:commandLink title="Tanimoto"
+                               value="Tanimoto"                       
+                               ajax="false"
+                               action="#{tanimotoController.performRunTanimoto}">   
+                </p:commandLink>
+
+                <p:commandLink title="PAINS"
+                               value="PAINS"                       
+                               ajax="false"
+                               action="#{tanimotoController.performRunTanimoto}">   
+                </p:commandLink>
+
+            </p:panelGrid>
+
+        </p:panelGrid>
+
+        <p:menubar rendered="#{sessionController.navigationMode eq 'MENUBARS'}" >
+            <p:menuitem value="Configure List Columns" title="Configure List Columns"
+                        onclick="PF('act_list_cfg_dlg').show();"/>            
+            <p:submenu label="Compound">
+                <p:menuitem value="Compounds in List Layout" title="Compounds in List Layout" disabled="true"
+                            ajax="false"
+                            action="/webpages/activeListTable?faces-redirect=true"/>
+                <p:menuitem value="Compounds in Grid Layout" title="Compounds in Grid Layout" 
+                            ajax="false"
+                            action="/webpages/activeListGrid?faces-redirect=true"/>
+                <p:menuitem value="Compounds in Form Layout" title="Compounds in Form Layout" 
+                            ajax="false"
+                            action="/webpages/activeListForm?faces-redirect=true"/>
+            </p:submenu>
+            <p:submenu label="Export">
+
+                <p:menuitem ajax="false"
+                            title="Export as Excel"
+                            value="Export as Excel">
+                    <p:dataExporter type="xls" 
+                                    target="activeListTbl" 
+                                    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />               
+                </p:menuitem>
+                <p:menuitem ajax="false"
+                            title="Export as CSV"
+                            value="Export as CSV">
+                    <p:dataExporter type="csv" 
+                                    target="activeListTbl" 
+                                    fileName="activeListTable #{listManagerController.listManagerBean.activeList.listName} #{applicationScopeBean.dateTime}" />              
+                </p:menuitem> 
+
+                <p:menuitem value="Export Structures as Image" title="Export Structures as Image"
+                            ajax="true"
+                            onclick="structuresAsGridImage()"/>
+            </p:submenu>
+            <p:submenu label="List Wrangling">
+                <p:menuitem value="COPY to NEW LIST" title="COPY to NEW LIST"
+                            onclick="PF('copyDlg').show();"/>
+                <p:menuitem value="COMBINE with EXISTING LIST" title="COMBINE with EXISTING LIST"
+                            actionListener="#{listContentController.performConfigureAppend}"
+                            onclick="PF('combineDlg').show();"/>
+            </p:submenu>
+            <p:submenu label="NCI60">
+                <p:menuitem value="NCI60 DATA" title="NCI60 DATA"                       
+                            ajax="false"
+                            actionListener="#{launchingController.performConnectToLanding()}"
+                            target="_blank"/>
+                <p:menuitem title="SARCOMA SCREEN DATA" disabled="true"
+                            value="SARCOMA SCREEN DATA"                       
+                            ajax="false"
+                            target="_blank"/>
+                <p:menuitem title="SCLC SCREEN DATA" disabled="true"
+                            value="SCLC SCREEN DATA"                       
+                            ajax="false"
+                            target="_blank"/>                
+            </p:submenu>
+            <p:submenu label="Chemistry">
+                <p:menuitem value="Tanimoto" title="Tanimoto"                       
+                            ajax="false"
+                            action="#{tanimotoController.performRunTanimoto}"/>   
+                <p:menuitem value="PAINS" title="PAINS"                       
+                            ajax="false"
+                            action="#{tanimotoController.performRunTanimoto}"/>   
+            </p:submenu>                 
+        </p:menubar>
+
+        <p:dataTable  id="activeListTbl"
+                      tableStyle="width: auto;"
+                      resizableColumns="true" 
+                      draggableColumns="true"
+                      draggableRows="true"
+                      editable="true"                      
+                      widgetVar="activeListTblWidgetVar"
+                      var="listMember"                       
+                      value="#{listManagerController.listManagerBean.activeList.cmpdListMembers}" 
+                      rows="50"                        
+                      paginator="true"
+                      paginatorPosition="top"
+                      currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"  
+                      rowsPerPageTemplate="10,25,50,100,250,500,1000,2000"
+                      selection="#{listManagerController.listManagerBean.selectedActiveListMembers}"
+                      filteredValue="#{listManagerController.listManagerBean.filteredActiveListMembers}"
+                      rowKey="#{listMember.id}"                              
+                      sortMode="multiple"
+                      rowIndexVar="rowIdx">  
+
+            <c:set var="cmpd" value="#{listMember.cmpd}" />
+            <c:set var="strc" value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure}" />
+            <c:set var="physchem" value="#{listMember.cmpd.parentFragment.cmpdFragmentPChem}" />
+            <c:set var="biodat" value="#{listMember.cmpd.cmpdBioAssay}" />
+
+            <f:facet name="header">
+                <h:outputText value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Members"/>                    
+            </f:facet>
+
+            <p:ajax event="rowEdit" listener="#{listContentController.onRowEdit}" update=":datasystemForm:messages" />
+            <p:ajax event="rowEditCancel" listener="#{listContentController.onRowCancel}" update=":datasystemForm:messages" />
+            <p:ajax event="cellEdit" listener="#{listContentController.onCellEdit}" update=":datasystemForm:messages" />
+
+            <p:column selectionMode="multiple" 
+                      style="width:4%" 
+                      exportable="false"/>
+
+            <p:column style="width:32px"
+                      exportable="false">
+                <p:rowEditor rendered="#{listManagerController.listManagerBean.activeList.listOwner eq sessionController.loggedUser and listManagerController.listManagerBean.activeList.shareWith ne 'EVERYONE'}"/>
+            </p:column>
+
+            <p:column headerText="NSC" 
+                      resizable="true"
+                      sortBy="#{cmpd.nsc}"                      
+                      filterBy="#{cmpd.nsc}"
+                      filterMatchMode="contains">   
+                <h:outputText value="#{cmpd.nsc}"/>
+            </p:column>   
+
+            <p:column headerText="Name"
+                      resizable="true"
+                      sortBy="#{cmpd.name}"
+                      filterBy="#{cmpd.name}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.name}"/>
+            </p:column>   
+
+            <p:column headerText="CAS" 
+                      resizable="true"
+                      sortBy="#{cmpd.cas}"
+                      filterBy="#{cmpd.cas}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.cas}"/>
+            </p:column>  
+
+            <!--
       
-      -->
-
-      <p:column headerText="Parent Structure" 
-                resizable="true"
-                exportable="false">
-        <p:panelGrid style="width: auto;">
-          <p:row>
-            <p:column>
-              <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
-                             oncomplete="PF('listMemberDetailDlg').show();" 
-                             title="List Member Details"
-                             style="display: inline-block;">
-                <f:setPropertyActionListener value="#{listMember}"   
-                                             target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
-                <p:graphicImage alt="DETAILS" name="/mwkimages/mwk_details.png" width="48"/>
-              </p:commandLink>        
-            </p:column>
-
-            <p:column rowspan="3">
-              <p:graphicImage <p:graphicImage <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{listMember.cmpd.smiles}"
-                              width="#{sessionController.configurationBean.strcDim}" 
-                              height="#{sessionController.configurationBean.strcDim}"
-                              styleClass="parentStructure"
-                              url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>
-              </p:graphicImage>
+            <p:column headerText="List Member Id"
+                      resizable="true"
+                      sortBy="#{listMember.id}"
+                      filterBy="#{listMember.id}"
+                      filterMatchMode="contains">        
+                <h:outputText value="#{empty listMember.id || listMember.id lt 0 ? 'NOT SAVED' : listMember.id}"
+                              style="color: #{empty listMember.id || listMember.id lt 0 ? 'red' : 'black'}"/>        
             </p:column> 
-          </p:row>
-          <p:row>
-            <p:column>
-              <p:commandLink ajax="false" 
-                             title="Substructure Search"
-                             action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
-                <f:setPropertyActionListener value="#{cmpd.nsc}"   
-                                             target="#{structureSearchController.nscForLoad}" />  
-                <p:graphicImage alt="SUBSTRUCTURE SEARCH" name="/mwkimages/mwk_sss.png" width="48"/>
-              </p:commandLink>
+      
+            <p:column headerText="List Member Comment"
+                      resizable="true"
+                      sortBy="#{listMember.listMemberComment}"
+                      filterBy="#{listMember.listMemberComment}"
+                      filterMatchMode="contains">        
+      
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{listMember.listMemberComment}" /></f:facet>
+                    <f:facet name="input"><p:inputText id="listMemberCommentInput" value="#{listMember.listMemberComment}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+      
+            </p:column> 
+      
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="DISCREET" 
+                      resizable="true"
+                      sortBy="#{cmpd.discreet}"
+                      filterBy="#{cmpd.discreet}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.discreet}"/>
+            </p:column>   
+      
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="CONF" 
+                      resizable="true"
+                      sortBy="#{cmpd.conf}"
+                      filterBy="#{cmpd.conf}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.conf}"/>
+            </p:column>   
+      
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="DIST" 
+                      resizable="true"
+                      sortBy="#{cmpd.distribution}"
+                      filterBy="#{cmpd.distribution}"
+                      filterMatchMode="contains">                                
+                <h:outputText value="#{cmpd.distribution}"/>
+            </p:column> 
+      
+            <p:column rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                      headerText="NSCCmpdType"
+                      sortBy="#{cmpd.nscCmpdType}"
+                      filterBy="#{cmpd.nscCmpdType}"
+                      filterMatchMode="contains">
+                <h:outputText value="#{cmpd.nscCmpdType}"/>
+            </p:column>   
+            
+            -->
+
+            <p:column headerText="Parent Structure" 
+                      resizable="true"
+                      exportable="false">
+                <p:panelGrid style="width: auto;">
+                    <p:row>
+                        <p:column>
+                            <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                                           oncomplete="PF('listMemberDetailDlg').show();" 
+                                           title="List Member Details"
+                                           style="display: inline-block;">
+                                <f:setPropertyActionListener value="#{listMember}"   
+                                                             target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                                <p:graphicImage alt="DETAILS" name="/mwkimages/mwk_details.png" width="48"/>
+                            </p:commandLink>        
+                        </p:column>
+
+                        <p:column rowspan="3">
+                            <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
+                                            width="#{sessionController.configurationBean.strcDim}" 
+                                            height="#{sessionController.configurationBean.strcDim}"
+                                            styleClass="parentStructure"
+                                            url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>
+                            </p:graphicImage>
+                        </p:column> 
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandLink ajax="false" 
+                                           title="Substructure Search"
+                                           action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+                                <f:setPropertyActionListener value="#{cmpd.nsc}"   
+                                                             target="#{structureSearchController.nscForLoad}" />  
+                                <p:graphicImage alt="SUBSTRUCTURE SEARCH" name="/mwkimages/mwk_sss.png" width="48"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                                           ajax="false" 
+                                           title="Fragments Workbench"
+                                           action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
+                                <p:graphicImage alt="FRAGMENTS WORKBENCH" name="/mwkimages/mwk_frag_workbench.png" width="48"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
             </p:column>
-          </p:row>
-          <p:row>
-            <p:column>
-              <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                             ajax="false" 
-                             title="Fragments Workbench"
-                             action="#{fragmentsWorkbenchController.performLoadCmpd(cmpd.nsc)}">
-                <p:graphicImage alt="FRAGMENTS WORKBENCH" name="/mwkimages/mwk_frag_workbench.png" width="48"/>
-              </p:commandLink>
+
+            <!--
+            <p:column headerText="Parent Structure Ctab Test" 
+            resizable="true"
+            exportable="false">
+            <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
+            width="#{sessionController.configurationBean.strcDim}" 
+            height="#{sessionController.configurationBean.strcDim}"
+            styleClass="parentStructure"
+            url='#{sessionController.configurationBean.getCmpdStrcNscUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+            </p:graphicImage>
             </p:column>
-          </p:row>
-        </p:panelGrid>
-      </p:column>
-
-      <!--
-      <p:column headerText="Parent Structure Ctab Test" 
-      resizable="true"
-      exportable="false">
-      <p:graphicImage <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{listMember.cmpd.smiles}"
-      width="#{sessionController.configurationBean.strcDim}" 
-      height="#{sessionController.configurationBean.strcDim}"
-      styleClass="parentStructure"
-      url='#{sessionController.configurationBean.getCmpdStrcNscUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
-      </p:graphicImage>
-      </p:column>
-      -->
-
-      <!-- exportable alternate -->
-      <p:column headerText="Parent SMILES"
-                style="display: none;">
-        <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
-      </p:column>
-
-      <p:column resizable="true"
-                exportable="false"
-                sortBy="#{cmpd.parentMolecularWeight}">
-        <f:facet name="header">                
-          <h:outputText escape="false" value="Compound and Parent&lt;br/&gt;Sort by Parent MW"/>                    
-        </f:facet>          
-
-        <p:panelGrid columns="3" style="width: auto;"> 
-          <h:outputText value="PROD"/>            
-          <h:outputText value="#{cmpd.prodMolecularFormula}"/>            
-          <h:outputText value="#{cmpd.prodFormulaWeight}">            
-            <f:convertNumber pattern="#0.00" />
-          </h:outputText>
-
-          <h:outputText value="CMPD"/>
-          <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
-          <h:outputText value="#{cmpd.formulaWeight}">            
-            <f:convertNumber pattern="#0.00" />
-          </h:outputText>
-
-          <h:outputText value="PARENT"/>            
-          <h:outputText value="#{cmpd.parentMolecularFormula}"/>            
-          <h:outputText value="#{cmpd.parentMolecularWeight}">            
-            <f:convertNumber pattern="#0.00" />
-          </h:outputText>
-        </p:panelGrid>
-
-      </p:column> 
-
-      <!-- exportable alternates -->
-
-      <p:column headerText="Prod Molecular Formula" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.prodMolecularFormula}"/>
-      </p:column> 
-
-      <p:column headerText="Prod Formula Weight" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.prodFormulaWeight}"/>
-      </p:column> 
-
-      <p:column headerText="Cmpd Molecular Formula" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
-      </p:column> 
-
-      <p:column headerText="Cmpd Formula Weight" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.formulaWeight}"/>
-      </p:column> 
-
-      <p:column headerText="Parent Molecular Formula" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.parentMolecularFormula}"/>
-      </p:column> 
-
-      <p:column headerText="Parent Molecular Weight" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.parentMolecularWeight}"/>
-      </p:column> 
-
-      <p:column resizable="true"
-                exportable="false"
-                sortBy="#{cmpd.saltFragment.saltName}">  
-
-        <f:facet name="header">                
-          <h:outputText escape="false" value="Salt&lt;br/&gt;Sort by Salt Name"/>                    
-        </f:facet>          
-        <p:panelGrid columns="2" style="width: auto;">
-          <h:outputText value="Name"/>
-          <h:outputText value="#{cmpd.saltFragment.saltName.length() gt 50 ? cmpd.saltFragment.saltName.substring(0,49) : cmpd.saltFragment.saltName}" />
-          <h:outputText value="MF"/>
-          <h:outputText value="#{cmpd.saltFragment.saltMf}"/>
-          <h:outputText value="MW"/>
-          <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
-        </p:panelGrid>
-      </p:column> 
-
-      <!-- exportable alternates -->
-
-      <p:column headerText="Salt Name" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.saltFragment.saltName}"/>
-      </p:column> 
-
-      <p:column headerText="Salt MF" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.saltFragment.saltMf}"/>
-      </p:column> 
-
-      <p:column headerText="Salt MW" 
-                style="display: none;">
-        <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
-      </p:column> 
-
-      <p:column headerText="Fragments" 
-                rendered="#{sessionController.configurationBean.showFrags}">
-
-        <p:dataGrid columns="3" layout="grid"
-                    value="#{cmpd.cmpdFragmentSmilesStrings}" 
-                    var="fragSmiles">
-          <p:graphicImage <p:graphicImage <p:graphicImage alt="PNG structure image of Compound Fragment for SMILES: #{fragSmiles}"
-                          width="#{sessionController.configurationBean.strcDim}" 
-                          height="#{sessionController.configurationBean.strcDim}"
-                          styleClass="fragmentStructure"
-                          url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
-          </p:graphicImage>
-        </p:dataGrid>
-      </p:column>    
-
-      <p:column headerText="mtxt" 
-                resizable="true"
-                rendered="#{sessionController.configurationBean.showQc}"
-                width="50"                          
-                filterBy="#{cmpd.cmpdAnnotation.mtxt}"
-                filterMatchMode="contains"
-                style="text-wrap: normal; white-space: normal;">
-
-        <h:outputText value="#{cmpd.cmpdAnnotation.mtxt}"/>
-
-      </p:column>
-
-      <p:column headerText="pseudo atoms"
-                resizable="true"
-                rendered="#{sessionController.configurationBean.showQc}"
-                width="50"
-                filterBy="#{cmpd.cmpdAnnotation.pseudoAtoms}"
-                filterMatchMode="contains"
-                style="text-wrap: normal; white-space: normal;">
-
-        <h:outputText value="#{cmpd.cmpdAnnotation.pseudoAtoms}"/>
-
-      </p:column>
-
-      <!-- cmpd-level stuff, special case, below, for aliases, projects, plates, targets -->
-
-      <p:columns resizable="true"  
-                 rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
-                 exportable="false" 
-                 width="50"
-                 value="#{sessionController.configurationBean.cmpdColumns}" 
-                 var="column" 
-                 columnIndexVar="colIndex"
-                 sortBy="#{cmpd[column.property]}"
-                 filterBy="#{cmpd[column.property]}"
-                 filterMatchMode="contains">
-
-        <f:facet name="header">                        
-          <h:outputText value="#{column.header}"
-                        class="vertical" />
-        </f:facet>
-
-        <h:outputText value="#{cmpd[column.property]}"/>
-
-      </p:columns>
-
-      <!-- separate case for aliases, projects, plates and targets -->
-      <!-- NEED CUSTOM SORT FUNCTION? -->
-
-      <p:columns rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates' or column.property eq 'targets'}"
-                 resizable="true"  
-                 exportable="false" 
-                 width="50"
-                 value="#{sessionController.configurationBean.cmpdColumns}" 
-                 var="column" 
-                 columnIndexVar="colIndex">
-
-        <f:facet name="header">                        
-          <h:outputText value="#{column.header}"
-                        class="vertical" />
-        </f:facet>
-
-        <p:dataList var="prop" 
-                    value="#{cmpd[column.property]}"
-                    rows="5" 
-                    paginator="true"
-                    paginatorPosition="top" 
-                    paginatorAlwaysVisible="false"
-                    currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords}"
-                    paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink}">
-
-          <h:outputText value="#{prop.length() gt 50 ? prop.substring(0,49).concat('...') : prop}" />
-        </p:dataList>
-
-      </p:columns>
-
-      <!-- exportable data, display: none; -->
-
-      <p:columns style="display: none;"
-                 resizable="true"  
-                 value="#{sessionController.configurationBean.cmpdColumns}" 
-                 var="column" 
-                 columnIndexVar="colIndex" 
-                 sortBy="#{cmpd[column.property]}" 
-                 >
-        <!--
-        filterBy="#{cmpd[column.property]}">
-        -->
-
-        <f:facet name="header">                        
-          <h:outputText value="#{column.header}" 
-                        class="vertical"/>
-        </f:facet>                      
-
-        <h:outputText value="#{cmpd[column.property]}"/>
-
-      </p:columns>
-
-      <p:columns resizable="true" 
-                 value="#{sessionController.configurationBean.structureColumns}" 
-                 var="column" 
-                 columnIndexVar="colIndex" 
-                 sortBy="#{strc[column.property]}"
-                 filterBy="#{strc[column.property]}">
-
-        <f:facet name="header">
-          <h:outputText value="#{column.header}" />
-        </f:facet>
-
-        <h:outputText value="#{strc[column.property]}" />
-
-      </p:columns>
-
-      <p:columns resizable="true" 
-                 value="#{sessionController.configurationBean.physChemColumns}" 
-                 var="column" 
-                 columnIndexVar="colIndex" 
-                 sortBy="#{physchem[column.property]}">
-
-        <!--                       
-        filterBy="#{physchem[column.property]}">
-        -->
-
-        <f:facet name="header">
-          <h:outputText value="#{column.header}"
-                        class="vertical"/>
-        </f:facet>
-
-        <h:outputText value="#{physchem[column.property]}" />
-
-      </p:columns>
-
-      <p:columns resizable="true" 
-                 value="#{sessionController.configurationBean.biodataColumns}" 
-                 var="column" 
-                 columnIndexVar="colIndex" 
-                 sortBy="#{biodat[column.property]}" 
-                 >
-        <!--
-        filterBy="#{biodat[column.property]}">
-        -->
-        <f:facet name="header">
-          <h:outputText value="#{column.header}"
-                        class="vertical"/>
-        </f:facet>
-        <h:outputText value="#{biodat[column.property]}" />
-      </p:columns>
-
-    </p:dataTable>
-
-    <p:dialog header="Copy to New List - Esc to Close" 
-              closeOnEscape="true"
-              widgetVar="copyDlg" 
-              modal="true"
-              width="80%" height="80%"
-              focus="lNamForCp">
-
-      <!--
-<h:inputText id="hidFoc2" 
-       style="background: transparent;border: none !important;font-size:0;" />
-<p:focus for="hidFoc2" />
-      -->
-
-
-      <p:outputPanel autoUpdate="true" style="display: inline-block;">
-
-        <p:panelGrid columns="2">
-          <h:outputText value="Source List"/>
-          <h:outputText value="#{listManagerController.listManagerBean.activeList.listName}" />
-          <h:outputText value="Total Compounds"/>
-          <h:outputText value="#{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)}"/>
-          <h:outputText value="Selected Compounds"/>
-          <h:outputText value="#{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)}"/>
-        </p:panelGrid>
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:outputLabel value="New List name:">            
-          <p:inputText id="lNamForCp"
-                       style="width: 100%;" 
-                       value="#{listContentController.listNameForCopy}" />
-        </p:outputLabel>
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}"
-                         action="#{listContentController.performCopyAll()}"
-                         value="Copy #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Compounds to New List"
-                         onstart="PF('appendingBUI').show();"
-                         oncomplete="PF('appendingBUI').hide();"
-                         style="width: 100%;" />            
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:commandButton disabled="#{empty listManagerController.listManagerBean.selectedActiveListMembers}"
-                         action="#{listContentController.performCopySelected()}"
-                         value="Copy #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} Selected Compounds to New List"
-                         onstart="PF('appendingBUI').show();"
-                         oncomplete="PF('appendingBUI').hide();"
-                         style="width: 100%;" />            
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}" 
-                         action="#{listContentController.performCopyUnselected()}"
-                         value="Copy Unselected Compounds to New List"
-                         onstart="PF('appendingBUI').show();"
-                         oncomplete="PF('appendingBUI').hide();"
-                         style="width: 100%;" />            
-
-      </p:outputPanel>
-
-    </p:dialog>
-
-    <p:dialog header="Combine with Existing List - Esc to Close" 
-              closeOnEscape="true" 
-              widgetVar="combineDlg" 
-              modal="true"
-              width="80%" height="80%" 
-              focus="lNamForCmb">
-
-      <!--
-      <h:inputText id="hidFoc3" 
-                   style="background: transparent;border: none !important;font-size:0;" />
-      <p:focus for="hidFoc3" />
-      -->
-
-      <p:outputPanel autoUpdate="true" style="display: inline-block;">
-
-        <p:panelGrid columns="2">
-          <h:outputText value="Source List"/>
-          <h:outputText value="#{listManagerController.listManagerBean.activeList.listName}" />
-          <h:outputText value="Total Compounds"/>
-          <h:outputText value="#{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)}"/>
-          <h:outputText value="Selected Compounds"/>
-          <h:outputText value="#{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)}"/>
-        </p:panelGrid>
-
-        <p:outputLabel value="New List name:">            
-          <p:inputText id="lNamForCmb" 
-                       style="width: 100%;" 
-                       value="#{listContentController.listNameForCombine}" />
-        </p:outputLabel>
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:outputLabel for="listSelect" value="Select an Existing List:"/>
-        <p:spacer height="20" width="100%"/>
-        <p:selectOneRadio id="listSelect" 
-                          value="#{listContentController.targetList}" 
-                          converter="#{cmpdListConverter}"
-                          layout="pageDirection">
-          <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
-                         var="list" 
-                         itemDisabled="#{list.listOwner ne sessionController.loggedUser or list.shareWith eq 'EVERYONE'}"
-                         itemLabel="#{list.listName}" 
-                         itemValue="#{list}" /> 
-        </p:selectOneRadio>
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:commandButton action="#{listContentController.performAppendAllToExistingList()}"
-                         value="Combine #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Compounds with an Existing List"
-                         onstart="PF('appendingBUI').show();"
-                         oncomplete="PF('appendingBUI').hide();"
-                         style="width: 100%;" />     
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:commandButton disabled="#{empty listManagerController.listManagerBean.selectedActiveListMembers}"
-                         action="#{listContentController.performAppendSelectedToExistingList()}"                                 
-                         value="Combine #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} Selected Compounds with an Existing List"                                 
-                         onstart="PF('appendingBUI').show();"
-                         oncomplete="PF('appendingBUI').hide();"
-                         style="width: 100%;" />     
-
-        <p:spacer height="20" width="100%"/>
-
-        <p:commandButton action="#{listContentController.performAppendUnselectedToExistingList()}"
-                         value="Combine Unselected Compounds with an Existing List"
-                         onstart="PF('appendingBUI').show();"
-                         oncomplete="PF('appendingBUI').hide();"
-                         style="width: 100%;" />     
-
-      </p:outputPanel>    
-
-    </p:dialog>
-
-  </ui:define>
+            -->
+
+            <!-- exportable alternate -->
+            <p:column headerText="Parent SMILES"
+                      style="display: none;">
+                <h:outputText value="#{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"/>
+            </p:column>
+
+            <p:column resizable="true"
+                      exportable="false"
+                      sortBy="#{cmpd.parentMolecularWeight}">
+                <f:facet name="header">                
+                    <h:outputText escape="false" value="Compound and Parent&lt;br/&gt;Sort by Parent MW"/>                    
+                </f:facet>          
+
+                <p:panelGrid columns="3" style="width: auto;"> 
+                    <h:outputText value="PROD"/>            
+                    <h:outputText value="#{cmpd.prodMolecularFormula}"/>            
+                    <h:outputText value="#{cmpd.prodFormulaWeight}">            
+                        <f:convertNumber pattern="#0.00" />
+                    </h:outputText>
+
+                    <h:outputText value="CMPD"/>
+                    <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
+                    <h:outputText value="#{cmpd.formulaWeight}">            
+                        <f:convertNumber pattern="#0.00" />
+                    </h:outputText>
+
+                    <h:outputText value="PARENT"/>            
+                    <h:outputText value="#{cmpd.parentMolecularFormula}"/>            
+                    <h:outputText value="#{cmpd.parentMolecularWeight}">            
+                        <f:convertNumber pattern="#0.00" />
+                    </h:outputText>
+                </p:panelGrid>
+
+            </p:column> 
+
+            <!-- exportable alternates -->
+
+            <p:column headerText="Prod Molecular Formula" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.prodMolecularFormula}"/>
+            </p:column> 
+
+            <p:column headerText="Prod Formula Weight" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.prodFormulaWeight}"/>
+            </p:column> 
+
+            <p:column headerText="Cmpd Molecular Formula" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.formulaMolecularFormula}"/>
+            </p:column> 
+
+            <p:column headerText="Cmpd Formula Weight" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.formulaWeight}"/>
+            </p:column> 
+
+            <p:column headerText="Parent Molecular Formula" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.parentMolecularFormula}"/>
+            </p:column> 
+
+            <p:column headerText="Parent Molecular Weight" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.parentMolecularWeight}"/>
+            </p:column> 
+
+            <p:column resizable="true"
+                      exportable="false"
+                      sortBy="#{cmpd.saltFragment.saltName}">  
+
+                <f:facet name="header">                
+                    <h:outputText escape="false" value="Salt&lt;br/&gt;Sort by Salt Name"/>                    
+                </f:facet>          
+                <p:panelGrid columns="2" style="width: auto;">
+                    <h:outputText value="Name"/>
+                    <h:outputText value="#{cmpd.saltFragment.saltName.length() gt 50 ? cmpd.saltFragment.saltName.substring(0,49) : cmpd.saltFragment.saltName}" />
+                    <h:outputText value="MF"/>
+                    <h:outputText value="#{cmpd.saltFragment.saltMf}"/>
+                    <h:outputText value="MW"/>
+                    <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
+                </p:panelGrid>
+            </p:column> 
+
+            <!-- exportable alternates -->
+
+            <p:column headerText="Salt Name" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.saltFragment.saltName}"/>
+            </p:column> 
+
+            <p:column headerText="Salt MF" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.saltFragment.saltMf}"/>
+            </p:column> 
+
+            <p:column headerText="Salt MW" 
+                      style="display: none;">
+                <h:outputText value="#{cmpd.saltFragment.saltMw}"/>
+            </p:column> 
+
+            <p:column headerText="Fragments" 
+                      rendered="#{sessionController.configurationBean.showFrags}">
+
+                <p:dataGrid columns="3" layout="grid"
+                            value="#{cmpd.cmpdFragmentSmilesStrings}" 
+                            var="fragSmiles">
+                    <p:graphicImage alt="PNG structure image of Compound Fragment for SMILES: #{fragSmiles}"
+                                    width="#{sessionController.configurationBean.strcDim}" 
+                                    height="#{sessionController.configurationBean.strcDim}"
+                                    styleClass="fragmentStructure"
+                                    url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
+                    </p:graphicImage>
+                </p:dataGrid>
+            </p:column>    
+
+            <p:column headerText="mtxt" 
+                      resizable="true"
+                      rendered="#{sessionController.configurationBean.showQc}"
+                      width="50"                          
+                      filterBy="#{cmpd.cmpdAnnotation.mtxt}"
+                      filterMatchMode="contains"
+                      style="text-wrap: normal; white-space: normal;">
+
+                <h:outputText value="#{cmpd.cmpdAnnotation.mtxt}"/>
+
+            </p:column>
+
+            <p:column headerText="pseudo atoms"
+                      resizable="true"
+                      rendered="#{sessionController.configurationBean.showQc}"
+                      width="50"
+                      filterBy="#{cmpd.cmpdAnnotation.pseudoAtoms}"
+                      filterMatchMode="contains"
+                      style="text-wrap: normal; white-space: normal;">
+
+                <h:outputText value="#{cmpd.cmpdAnnotation.pseudoAtoms}"/>
+
+            </p:column>
+
+            <!-- cmpd-level stuff, special case, below, for aliases, projects, plates, targets -->
+
+            <p:columns resizable="true"  
+                       rendered="#{column.property ne 'aliases' and column.property ne 'projects' and column.property ne 'plates' and column.property ne 'targets'}"
+                       exportable="false" 
+                       width="50"
+                       value="#{sessionController.configurationBean.cmpdColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex"
+                       sortBy="#{cmpd[column.property]}"
+                       filterBy="#{cmpd[column.property]}"
+                       filterMatchMode="contains">
+
+                <f:facet name="header">                        
+                    <h:outputText value="#{column.header}"
+                                  class="vertical" />
+                </f:facet>
+
+                <h:outputText value="#{cmpd[column.property]}"/>
+
+            </p:columns>
+
+            <!-- separate case for aliases, projects, plates and targets -->
+            <!-- NEED CUSTOM SORT FUNCTION? -->
+
+            <p:columns rendered="#{column.property eq 'aliases' or column.property eq 'projects' or column.property eq 'plates' or column.property eq 'targets'}"
+                       resizable="true"  
+                       exportable="false" 
+                       width="50"
+                       value="#{sessionController.configurationBean.cmpdColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex">
+
+                <f:facet name="header">                        
+                    <h:outputText value="#{column.header}"
+                                  class="vertical" />
+                </f:facet>
+
+                <p:dataList var="prop" 
+                            value="#{cmpd[column.property]}"
+                            rows="5" 
+                            paginator="true"
+                            paginatorPosition="top" 
+                            paginatorAlwaysVisible="false"
+                            currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords}"
+                            paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {NextPageLink}">
+
+                    <h:outputText value="#{prop.length() gt 50 ? prop.substring(0,49).concat('...') : prop}" />
+                </p:dataList>
+
+            </p:columns>
+
+            <!-- exportable data, display: none; -->
+
+            <p:columns style="display: none;"
+                       resizable="true"  
+                       value="#{sessionController.configurationBean.cmpdColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex" 
+                       sortBy="#{cmpd[column.property]}" 
+                       >
+                <!--
+                filterBy="#{cmpd[column.property]}">
+                -->
+
+                <f:facet name="header">                        
+                    <h:outputText value="#{column.header}" 
+                                  class="vertical"/>
+                </f:facet>                      
+
+                <h:outputText value="#{cmpd[column.property]}"/>
+
+            </p:columns>
+
+            <p:columns resizable="true" 
+                       value="#{sessionController.configurationBean.structureColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex" 
+                       sortBy="#{strc[column.property]}"
+                       filterBy="#{strc[column.property]}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}" />
+                </f:facet>
+
+                <h:outputText value="#{strc[column.property]}" />
+
+            </p:columns>
+
+            <p:columns resizable="true" 
+                       value="#{sessionController.configurationBean.physChemColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex" 
+                       sortBy="#{physchem[column.property]}">
+
+                <!--                       
+                filterBy="#{physchem[column.property]}">
+                -->
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}"
+                                  class="vertical"/>
+                </f:facet>
+
+                <h:outputText value="#{physchem[column.property]}" />
+
+            </p:columns>
+
+            <p:columns resizable="true" 
+                       value="#{sessionController.configurationBean.biodataColumns}" 
+                       var="column" 
+                       columnIndexVar="colIndex" 
+                       sortBy="#{biodat[column.property]}" 
+                       >
+                <!--
+                filterBy="#{biodat[column.property]}">
+                -->
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}"
+                                  class="vertical"/>
+                </f:facet>
+                <h:outputText value="#{biodat[column.property]}" />
+            </p:columns>
+
+        </p:dataTable>
+
+        <p:dialog header="Copy to New List - Esc to Close" 
+                  closeOnEscape="true"
+                  widgetVar="copyDlg" 
+                  modal="true"
+                  width="80%" height="80%"
+                  focus="lNamForCp">
+
+            <!--
+      <h:inputText id="hidFoc2" 
+             style="background: transparent;border: none !important;font-size:0;" />
+      <p:focus for="hidFoc2" />
+            -->
+
+
+            <p:outputPanel autoUpdate="true" style="display: inline-block;">
+
+                <p:panelGrid columns="2">
+                    <h:outputText value="Source List"/>
+                    <h:outputText value="#{listManagerController.listManagerBean.activeList.listName}" />
+                    <h:outputText value="Total Compounds"/>
+                    <h:outputText value="#{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)}"/>
+                    <h:outputText value="Selected Compounds"/>
+                    <h:outputText value="#{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)}"/>
+                </p:panelGrid>
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:outputLabel value="New List name:">            
+                    <p:inputText id="lNamForCp"
+                                 style="width: 100%;" 
+                                 value="#{listContentController.listNameForCopy}" />
+                </p:outputLabel>
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}"
+                                 action="#{listContentController.performCopyAll()}"
+                                 value="Copy #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Compounds to New List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.selectedActiveListMembers}"
+                                 action="#{listContentController.performCopySelected()}"
+                                 value="Copy #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} Selected Compounds to New List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.activeList}" 
+                                 action="#{listContentController.performCopyUnselected()}"
+                                 value="Copy Unselected Compounds to New List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />            
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog header="Combine with Existing List - Esc to Close" 
+                  closeOnEscape="true" 
+                  widgetVar="combineDlg" 
+                  modal="true"
+                  width="80%" height="80%" 
+                  focus="lNamForCmb">
+
+            <!--
+            <h:inputText id="hidFoc3" 
+                         style="background: transparent;border: none !important;font-size:0;" />
+            <p:focus for="hidFoc3" />
+            -->
+
+            <p:outputPanel autoUpdate="true" style="display: inline-block;">
+
+                <p:panelGrid columns="2">
+                    <h:outputText value="Source List"/>
+                    <h:outputText value="#{listManagerController.listManagerBean.activeList.listName}" />
+                    <h:outputText value="Total Compounds"/>
+                    <h:outputText value="#{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)}"/>
+                    <h:outputText value="Selected Compounds"/>
+                    <h:outputText value="#{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)}"/>
+                </p:panelGrid>
+
+                <p:outputLabel value="New List name:">            
+                    <p:inputText id="lNamForCmb" 
+                                 style="width: 100%;" 
+                                 value="#{listContentController.listNameForCombine}" />
+                </p:outputLabel>
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:outputLabel for="listSelect" value="Select an Existing List:"/>
+                <p:spacer height="20" width="100%"/>
+                <p:selectOneRadio id="listSelect" 
+                                  value="#{listContentController.targetList}" 
+                                  converter="#{cmpdListConverter}"
+                                  layout="pageDirection">
+                    <f:selectItems value="#{listManagerController.listManagerBean.availableLists}" 
+                                   var="list" 
+                                   itemDisabled="#{list.listOwner ne sessionController.loggedUser or list.shareWith eq 'EVERYONE'}"
+                                   itemLabel="#{list.listName}" 
+                                   itemValue="#{list}" /> 
+                </p:selectOneRadio>
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:commandButton action="#{listContentController.performAppendAllToExistingList()}"
+                                 value="Combine #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} Compounds with an Existing List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />     
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:commandButton disabled="#{empty listManagerController.listManagerBean.selectedActiveListMembers}"
+                                 action="#{listContentController.performAppendSelectedToExistingList()}"                                 
+                                 value="Combine #{fn:length(listManagerController.listManagerBean.selectedActiveListMembers)} Selected Compounds with an Existing List"                                 
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />     
+
+                <p:spacer height="20" width="100%"/>
+
+                <p:commandButton action="#{listContentController.performAppendUnselectedToExistingList()}"
+                                 value="Combine Unselected Compounds with an Existing List"
+                                 onstart="PF('appendingBUI').show();"
+                                 oncomplete="PF('appendingBUI').hide();"
+                                 style="width: 100%;" />     
+
+            </p:outputPanel>    
+
+        </p:dialog>
+
+    </ui:define>
 
 </ui:composition>

@@ -69,6 +69,8 @@
                             <br/>
                             <h:inputTextarea value="#{searchCriteriaBean.aliasTextArea}" id="aliasTextArea_id" cols="15" rows="5"/>
                         </p:panel>
+                        
+                        <!--
 
                         <p:panel style="display:inline-block;border: none;"> 
                             <h:outputLabel for="casTextArea_id" value="CAS Numbers"/>
@@ -81,7 +83,7 @@
                             <br/>
                             <h:inputTextarea value="#{searchCriteriaBean.cmpdNamedSetTextArea}" id="cmpdNamedSetTextArea_id" cols="15" rows="5"/>
                         </p:panel>
-
+                        
                         <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display:inline-block;border: none;"> 
                             <h:outputLabel for="projectCodeTextArea_id" value="Project Codes"/>
                             <br/>
@@ -94,6 +96,8 @@
                             <h:inputTextarea value="#{searchCriteriaBean.plateTextArea}" id="plateTextArea_id" cols="15" rows="5"/>
                         </p:panel>
 
+                        -->
+                        
                         <p:panel style="display:inline-block;border: none;"> 
                             <h:outputLabel for="targetTextArea_id" value="Targets"/>
                             <br/>
@@ -144,6 +148,7 @@
                         </p:panel>
 
                         <p:spacer width="20"/>
+                        
                         <p:panel style="display: inline-block;border: none;">
                             <p:outputLabel for="aliasAutoComp" value="Aliases"/>
                             <br/>
@@ -156,6 +161,9 @@
                         </p:panel>
 
                         <p:spacer width="20"/>
+                        
+                        <!--
+                        
                         <p:panel style="display: inline-block;border: none;">
                             <p:outputLabel for="casAutoComp" value="CAS Numbers"/>
                             <br/>
@@ -168,6 +176,7 @@
                         </p:panel>
 
                         <p:spacer width="20"/>
+                        
                         <p:panel style="display: inline-block;border: none;">
                             <p:outputLabel for="cmpdNamedSetAutoComp" value="DTP Compound Set Names"/>
                             <br/>
@@ -176,15 +185,11 @@
                                             scrollHeight="150"
                                             minQueryLength="1"                                    
                                             completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
-
-                                <!--p:ajax event="itemSelect" 
-                                        listener="#{searchCriteriaBean.appendTocmpdNamedSetsFromAutoComp}"/-->  
-
                             </p:autoComplete>                
                         </p:panel>
 
                         <p:spacer width="20"/>
-
+                        
                         <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display: inline-block;border: none;">
                             <p:outputLabel for="projectCodeAutoComp" value="DTP Project Codes"/>
                             <br/>
@@ -197,6 +202,7 @@
                         </p:panel>
 
                         <p:spacer width="20"/>
+                        
                         <p:panel style="display: inline-block;border: none;">
                             <p:outputLabel for="plateAutoComp" value="DTP Plate Names"/>
                             <br/>
@@ -209,6 +215,9 @@
                         </p:panel>
 
                         <p:spacer width="20"/>
+                        
+                        -->
+                        
                         <p:panel style="display: inline-block;border: none;">
                             <p:outputLabel for="targetAutoComp" value="Targets"/>
                             <br/>

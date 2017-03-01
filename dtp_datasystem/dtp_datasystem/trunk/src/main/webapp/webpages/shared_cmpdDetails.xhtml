@@ -50,7 +50,8 @@
         <f:facet name="header">
           <h:outputText value="Parent Fragment Structure" />
         </f:facet>
-        <p:graphicImage rendered="#{!empty the_cmpd}"
+        <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{the_cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
+                        rendered="#{!empty the_cmpd}"
                         alt="Chemical Structure of Parent Fragment"
                         styleClass="unassignedClass"
                         width="#{sessionController.configurationBean.strcDim}" 
@@ -66,7 +67,7 @@
         </f:facet>
         <ui:repeat value="#{the_cmpd.cmpdFragmentSmilesStrings}" 
                    var="fragSmiles">
-          <p:graphicImage <p:graphicImage alt="PNG structure image of Compound Fragment for SMILES: #{fragSmiles}"
+          <p:graphicImage alt="PNG structure image of Compound Fragment for SMILES: #{fragSmiles}"
                           styleClass="fragmentStructure"
                           width="#{sessionController.configurationBean.strcDim}" height="#{sessionController.configurationBean.strcDim}"                                        
                           url='#{sessionController.configurationBean.getSmilesStrcUrl(fragSmiles)}'>              
