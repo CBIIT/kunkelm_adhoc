@@ -46,7 +46,7 @@ public class SessionController implements Serializable {
 
     System.out.println("In @PostConstruct init() in SessionController");
     
-    navigationMode = "MENUBARS";
+    navigationMode = "ICONS";
 
     this.loggedUser = "PUBLIC";
 
@@ -117,7 +117,7 @@ public class SessionController implements Serializable {
     if (validNavigationModes.contains(navModIn)) {
       this.navigationMode = navModIn;
     } else {
-      this.navigationMode = "MENUBARS";
+      this.navigationMode = "ICONS";
     }
 
   }

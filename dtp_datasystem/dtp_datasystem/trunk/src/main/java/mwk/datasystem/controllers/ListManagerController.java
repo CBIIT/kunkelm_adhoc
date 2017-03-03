@@ -44,16 +44,22 @@ public class ListManagerController implements Serializable {
 
     static final long serialVersionUID = -8653468638698142855l;
 
+    // reach-through to applicationScopeBean
+    @ManagedProperty(value = "#{applicationScopeBean}")
+    private ApplicationScopeBean applicationScopeBean;
+
+    public void setApplicationScopeBean(ApplicationScopeBean applicationScopeBean) {
+        this.applicationScopeBean = applicationScopeBean;
+    }
+    
     // reach-through to sessionController
     @ManagedProperty(value = "#{sessionController}")
     private SessionController sessionController;
-
     public void setSessionController(SessionController sessionController) {
         this.sessionController = sessionController;
     }
 
     private ListManagerBean listManagerBean;
-
     public ListManagerBean getListManagerBean() {
         return listManagerBean;
     }

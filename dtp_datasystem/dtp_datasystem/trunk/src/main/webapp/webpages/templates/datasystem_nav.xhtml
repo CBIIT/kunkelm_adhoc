@@ -55,8 +55,7 @@
         </p:commandLink>
 
         <p:commandLink title="Curated NSC"
-                       ajax="false"                
-                       rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"                
+                       ajax="false"    
                        action="/webpages/curatedNscTable?faces-redirect=true">
             <p:graphicImage alt="CURATED NSC" name="/mwkimages/mwk_tools.png" width="48"/>
         </p:commandLink>
@@ -117,7 +116,6 @@
         <p:commandLink value="Curated NSC"
                        title="Curated NSC"
                        ajax="false"                
-                       rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"                
                        action="/webpages/curatedNscTable?faces-redirect=true"/>
 
         <p:commandLink ajax="false"
@@ -174,7 +172,6 @@
         <p:menuitem value="Curated NSC"
                     title="Curated NSC"
                     ajax="false"                
-                    rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"                
                     action="/webpages/curatedNscTable?faces-redirect=true"/>
 
         <p:menuitem ajax="false"
