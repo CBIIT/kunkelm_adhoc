@@ -109,29 +109,10 @@ public class FetchFromProd {
             System.out.println();
             System.out.println("Starting: fetchLegacyCmpd");
             fetchLegacyCmpd(pgConn, srcConn);
-
-            
             
             System.out.println();
             System.out.println("Starting: fetchLegacyNscOnly");
             fetchLegacyNscOnly(pgConn, srcConn);
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
         } catch (Exception e) {
             System.out.println("Caught Exception in main: " + e);

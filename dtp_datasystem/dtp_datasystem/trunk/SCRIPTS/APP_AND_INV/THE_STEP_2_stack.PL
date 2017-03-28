@@ -20,7 +20,7 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "--start: $startDate\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 my @sqlList = ();
 my $sql;

@@ -85,7 +85,6 @@ push @sqlList, qq[
 drop table if exists rdkit_fail
 ];
 
-
 push @sqlList, qq[
 create table rdkit_fail 
 as 

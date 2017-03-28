@@ -46,8 +46,6 @@ function dynamicLinkColor(tanimotoScore) {
     return "rgb(" + redPart + "," + greenPart + "," + bluePart + ")";
 }
 
-
-
 function exportChart(widget) {
     console.log("In exportChart.");
     console.log("widget is: " + widget);
@@ -77,12 +75,11 @@ function enumerateWidgets() {
     }
 }
 
-
 // chemDoodle functions
 
 function getMolFromEditor() {
 
-    //alert('in getMolFromEditor()');
+    alert('in getMolFromEditor()');
 
     var mol = sketcher.getMolecule();
     var stringMol = ChemDoodle.writeMOL(mol);
@@ -92,7 +89,7 @@ function getMolFromEditor() {
 
 function getMolFromEditor2() {
 
-    //alert('in getMolFromEditor()');
+    alert('in getMolFromEditor2()');
 
     var mol = sketcher.getMolecule();
     var stringMol = ChemDoodle.writeMOL(mol);
@@ -102,7 +99,7 @@ function getMolFromEditor2() {
 
 function loadEditorFromMol() {
 
-    //alert('in loadEditorFromMol()');
+    alert('in loadEditorFromMol2()');
 
     var ctab = document.getElementById('datasystemForm:searchTabView:ctabforload').value;
 
@@ -125,7 +122,7 @@ function loadEditorFromMol() {
 
 function loadEditorFromMol2() {
 
-    //alert('in loadEditorFromMol2()');
+    alert('in loadEditorFromMol2()');
 
     var ctab = document.getElementById('datasystemForm:ctabforload').value;
 
