@@ -9525,6 +9525,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_4_Fet
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE1_DATAFETCH_MANAGE_DIFFERENT_COLUMN_ORDERS.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_1_doLblStrcFrags.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_2_makeQCwithNSC.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_2a_stoichiometry.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_3_makeQC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_4_crosstabQC.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE2_CATEGORIZE_5_nscToLoad.PL -text
