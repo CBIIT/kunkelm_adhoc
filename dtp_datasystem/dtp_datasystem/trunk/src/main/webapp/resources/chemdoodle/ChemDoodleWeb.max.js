@@ -47,7 +47,7 @@ var ChemDoodle = function () {
         f[g] || (f[g] = b ? {} : {toJSON: m.noop});
         if ("object" === typeof c || "function" === typeof c)
           k ? f[g] = m.extend(f[g], c) : f[g].data = m.extend(f[g].data,
-                  c);
+              c);
         x = f[g];
         k || (x.data || (x.data = {}), x = x.data);
         a !== n && (x[m.camelCase(c)] = a);
@@ -137,7 +137,7 @@ var ChemDoodle = function () {
   }
   function A(x, c) {
     return m.nodeName(x,
-            "table") && m.nodeName(1 === c.nodeType ? c : c.firstChild, "tr") ? x.getElementsByTagName("tbody")[0] || x.appendChild(x.ownerDocument.createElement("tbody")) : x
+        "table") && m.nodeName(1 === c.nodeType ? c : c.firstChild, "tr") ? x.getElementsByTagName("tbody")[0] || x.appendChild(x.ownerDocument.createElement("tbody")) : x
   }
   function q(x) {
     x.type = (null !== m.find.attr(x, "type")) + "/" + x.type;
@@ -157,7 +157,7 @@ var ChemDoodle = function () {
       var a, k, d;
       k = m._data(x);
       var b = m._data(c, k),
-              f = k.events;
+          f = k.events;
       if (f)
         for (a in delete b.handle, b.events = {}, f) {
           k = 0;
@@ -178,7 +178,7 @@ var ChemDoodle = function () {
   }
   function y(x) {
     nb.test(x.type) && (x.defaultChecked =
-            x.checked)
+        x.checked)
   }
   function B(x, c) {
     if (c in x)
@@ -198,7 +198,7 @@ var ChemDoodle = function () {
         if (f[g] = m._data(d, "olddisplay"), k = d.style.display, a)
           !f[g] && "none" === k && (d.style.display = ""), "" === d.style.display && c(d) && (f[g] = m._data(d, "olddisplay", F(d.nodeName)));
         else if (!f[g] && (b = c(d),
-                k && "none" !== k || !b))
+            k && "none" !== k || !b))
           m._data(d, "olddisplay", b ? k : m.css(d, "display"));
     for (g = 0; g < r; g++)
       if (d = x[g], d.style && (!a || "none" === d.style.display || "" === d.style.display))
@@ -212,7 +212,7 @@ var ChemDoodle = function () {
     c = a === (k ? "border" : "content") ? 4 : "width" === c ? 1 : 0;
     for (var b = 0; 4 > c; c += 2)
       "margin" === a && (b += m.css(x, a + Aa[c], !0, d)), k ? ("content" === a && (b -= m.css(x, "padding" + Aa[c], !0, d)), "margin" !== a && (b -= m.css(x, "border" + Aa[c] + "Width",
-              !0, d))) : (b += m.css(x, "padding" + Aa[c], !0, d), "padding" !== a && (b += m.css(x, "border" + Aa[c] + "Width", !0, d)));
+          !0, d))) : (b += m.css(x, "padding" + Aa[c], !0, d), "padding" !== a && (b += m.css(x, "border" + Aa[c] + "Width", !0, d)));
     return b
   }
   function H(x, c, a) {
@@ -233,7 +233,7 @@ var ChemDoodle = function () {
     if (!a) {
       a = G(x, c);
       if ("none" ===
-              a || !a)
+          a || !a)
         Qa = (Qa || m("\x3ciframe frameborder\x3d'0' width\x3d'0' height\x3d'0'/\x3e").css("cssText", "display:block !important")).appendTo(c.documentElement), c = (Qa[0].contentWindow || Qa[0].contentDocument).document, c.write("\x3c!doctype html\x3e\x3chtml\x3e\x3cbody\x3e"), c.close(), a = G(x, c), Qa.detach();
       Qb[x] = a
     }
@@ -249,7 +249,7 @@ var ChemDoodle = function () {
     if (m.isArray(c))
       m.each(c, function (c, d) {
         a || Ec.test(x) ? k(x,
-                d) : K(x + "[" + ("object" === typeof d ? c : "") + "]", d, a, k)
+            d) : K(x + "[" + ("object" === typeof d ? c : "") + "]", d, a, k)
       });
     else if (!a && "object" === m.type(c))
       for (d in c)
@@ -274,7 +274,7 @@ var ChemDoodle = function () {
         var e = g(c, a, d);
         if ("string" === typeof e && !f && !b[e])
           return c.dataTypes.unshift(e),
-                  k(e), !1;
+              k(e), !1;
         if (f)
           return!(r = e)
       });
@@ -309,7 +309,7 @@ var ChemDoodle = function () {
   }
   function da(x, c, a) {
     var d, k, b = 0, f = Xa.length,
-            g = m.Deferred().always(function () {
+        g = m.Deferred().always(function () {
       delete r.elem
     }), r = function () {
       if (k)
@@ -323,7 +323,7 @@ var ChemDoodle = function () {
       return!1
     }, e = g.promise({elem: x, props: m.extend({}, c), opts: m.extend(!0, {specialEasing: {}}, a), originalProperties: c, originalOptions: a, startTime: Ka || P(), duration: a.duration, tweens: [], createTween: function (c, a) {
         var d = m.Tween(x, e.opts, c, a, e.opts.specialEasing[c] ||
-                e.opts.easing);
+            e.opts.easing);
         e.tweens.push(d);
         return d
       }, stop: function (c) {
@@ -364,14 +364,14 @@ var ChemDoodle = function () {
   }
   function ja(x) {
     return m.isWindow(x) ? x : 9 === x.nodeType ? x.defaultView || x.parentWindow :
-            !1
+        !1
   }
   var aa, Sa, $ = typeof n, Gc = b.location, J = b.document, ba = J.documentElement, ea = b.jQuery, fa = b.$, X = {}, ha = [], sa = ha.concat, qa = ha.push, R = ha.slice, Rb = ha.indexOf, Hc = X.toString, La = X.hasOwnProperty, pb = "1.10.2".trim, m = function (x, c) {
     return new m.fn.init(x, c, Sa)
   }, Ya = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source, pa = /\S+/g, Ic = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, Jc = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/, Sb = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, Kc = /^[\],:{}\s]*$/, Lc = /(?:^|:|,)(?:\s*\[)+/g, Mc = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
-          Nc = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g, Oc = /^-ms-/, Pc = /-([\da-z])/gi, Qc = function (x, c) {
-            return c.toUpperCase()
-          }, ta = function (x) {
+      Nc = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g, Oc = /^-ms-/, Pc = /-([\da-z])/gi, Qc = function (x, c) {
+        return c.toUpperCase()
+      }, ta = function (x) {
     if (J.addEventListener || "load" === x.type || "complete" === J.readyState)
       Tb(), m.ready()
   }, Tb = function () {
@@ -403,7 +403,7 @@ var ChemDoodle = function () {
           return this
         }
         return!c ||
-                c.jquery ? (c || a).find(x) : this.constructor(c).find(x)
+            c.jquery ? (c || a).find(x) : this.constructor(c).find(x)
       }
       if (x.nodeType)
         return this.context = this[0] = x, this.length = 1, this;
@@ -421,7 +421,7 @@ var ChemDoodle = function () {
       x.context = this.context;
       return x
     }, each: function (x,
-            c) {
+        c) {
       return m.each(this, x, c)
     }, ready: function (x) {
       m.ready.promise().done(x);
@@ -456,7 +456,7 @@ var ChemDoodle = function () {
     return b
   };
   m.extend({expando: "jQuery" + ("1.10.2" + Math.random()).replace(/\D/g,
-            ""), noConflict: function (x) {
+        ""), noConflict: function (x) {
       b.$ === m && (b.$ = fa);
       x && b.jQuery === m && (b.jQuery = ea);
       return m
@@ -475,7 +475,7 @@ var ChemDoodle = function () {
       return"array" === m.type(x)
     }, isWindow: function (x) {
       return null !=
-              x && x == x.window
+          x && x == x.window
     }, isNumeric: function (x) {
       return!isNaN(parseFloat(x)) && isFinite(x)
     }, type: function (x) {
@@ -496,7 +496,7 @@ var ChemDoodle = function () {
       for (c in x)
         ;
       return c === n || La.call(x,
-              c)
+          c)
     }, isEmptyObject: function (x) {
       for (var c in x)
         return!1;
@@ -521,7 +521,7 @@ var ChemDoodle = function () {
       if (null === c)
         return c;
       if ("string" === typeof c && (c = m.trim(c)) && Kc.test(c.replace(Mc, "@").replace(Nc,
-              "]").replace(Lc, "")))
+          "]").replace(Lc, "")))
         return(new Function("return " + c))();
       m.error("Invalid JSON: " + c)
     }, parseXML: function (c) {
@@ -539,7 +539,7 @@ var ChemDoodle = function () {
     }, globalEval: function (c) {
       c && m.trim(c) && (b.execScript || function (c) {
         b.eval.call(b,
-                c)
+            c)
       })(c)
     }, camelCase: function (c) {
       return c.replace(Oc, "ms-").replace(Pc, Qc)
@@ -568,9 +568,9 @@ var ChemDoodle = function () {
     }, trim: pb && !pb.call("\ufeff\u00a0") ? function (c) {
       return null == c ? "" : pb.call(c)
     } :
-            function (c) {
-              return null == c ? "" : (c + "").replace(Ic, "")
-            }, makeArray: function (c, a) {
+        function (c) {
+          return null == c ? "" : (c + "").replace(Ic, "")
+        }, makeArray: function (c, a) {
       var d = a || [];
       null != c && (l(Object(c)) ? m.merge(d, "string" === typeof c ? [c] : c) : qa.call(d, c));
       return d
@@ -597,7 +597,7 @@ var ChemDoodle = function () {
       return c
     }, grep: function (c, a, d) {
       var k,
-              b = [], f = 0, g = c.length;
+          b = [], f = 0, g = c.length;
       for (d = !!d; f < g; f++)
         k = !!a(c[f], f), d !== k && b.push(c[f]);
       return b
@@ -622,7 +622,7 @@ var ChemDoodle = function () {
       k.guid = c.guid = c.guid || m.guid++;
       return k
     }, access: function (c,
-            a, d, k, b, f, g) {
+        a, d, k, b, f, g) {
       var e = 0, r = c.length, h = null == d;
       if ("object" === m.type(d))
         for (e in b = !0, d)
@@ -673,9 +673,9 @@ var ChemDoodle = function () {
     return aa.promise(c)
   };
   m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),
-          function (c, a) {
-            X["[object " + a + "]"] = a.toLowerCase()
-          });
+      function (c, a) {
+        X["[object " + a + "]"] = a.toLowerCase()
+      });
   Sa = m(J);
   var qb = b, Q = function (c, a, d, k) {
     var b, f, g, e, r;
@@ -702,7 +702,7 @@ var ChemDoodle = function () {
         else {
           if (b[2])
             return ua.apply(d, a.getElementsByTagName(c)),
-                    d;
+                d;
           if ((g = b[3]) && T.getElementsByClassName && a.getElementsByClassName)
             return ua.apply(d, a.getElementsByClassName(g)), d
         }
@@ -760,7 +760,7 @@ var ChemDoodle = function () {
         }
       }
       sb(c,
-              f)(k, a, !ma, d, rb.test(c));
+          f)(k, a, !ma, d, rb.test(c));
       o = d
     }
     return o
@@ -839,7 +839,7 @@ var ChemDoodle = function () {
     return k
   }, vb = function (c, a, d) {
     var k = a.dir, b = d && "parentNode" ===
-            k, f = Xc++;
+        k, f = Xc++;
     return a.first ? function (a, d, f) {
       for (; a = a[k]; )
         if (1 === a.nodeType || b)
@@ -869,7 +869,7 @@ var ChemDoodle = function () {
     } : c[0]
   }, db = function (c, a, d, k, b) {
     for (var f,
-            g = [], e = 0, r = c.length, h = null != a; e < r; e++)
+        g = [], e = 0, r = c.length, h = null != a; e < r; e++)
       if (f = c[e])
         if (!d || d(f, k, b))
           g.push(f), h && a.push(e);
@@ -901,7 +901,7 @@ var ChemDoodle = function () {
             h = [];
             for (e = C.length; e--; )
               if (o =
-                      C[e])
+                  C[e])
                 h.push(w[e] = o);
             b(null, C = [], h, r)
           }
@@ -926,7 +926,7 @@ var ChemDoodle = function () {
         h = [vb(wb(h), d)];
       else {
         d =
-                O.filter[c[g].type].apply(null, c[g].matches);
+            O.filter[c[g].type].apply(null, c[g].matches);
         if (d[V]) {
           for (k = ++g; k < b && !O.relative[c[k].type]; k++)
             ;
@@ -939,15 +939,15 @@ var ChemDoodle = function () {
     c === a && (Na = !0);
     return 0
   }, Ub = -2147483648, Yc = {}.hasOwnProperty, xa = [], Zc = xa.pop, $c =
-          xa.push, ua = xa.push, ac = xa.slice, Fa = xa.indexOf || function (c) {
-            for (var a = 0, d = this.length; a < d; a++)
-              if (this[a] === c)
-                return a;
-            return-1
-          }, bc = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+".replace("w", "w#"), cc = "\\[[\\x20\\t\\r\\n\\f]*((?:\\\\.|[\\w-]|[^\\x00-\\xa0])+)[\\x20\\t\\r\\n\\f]*(?:([*^$|!~]?\x3d)[\\x20\\t\\r\\n\\f]*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|(" + bc + ")|)|)[\\x20\\t\\r\\n\\f]*\\]", Ab = ":((?:\\\\.|[\\w-]|[^\\x00-\\xa0])+)(?:\\(((['\"])((?:\\\\.|[^\\\\])*?)\\3|((?:\\\\.|[^\\\\()[\\]]|" + cc.replace(3, 8) + ")*)|.*)\\)|)",
-          ab = RegExp("^[\\x20\\t\\r\\n\\f]+|((?:^|[^\\\\])(?:\\\\.)*)[\\x20\\t\\r\\n\\f]+$", "g"), Vc = /^[\x20\t\r\n\f]*,[\x20\t\r\n\f]*/, Wc = /^[\x20\t\r\n\f]*([>+~]|[\x20\t\r\n\f])[\x20\t\r\n\f]*/, rb = /[\x20\t\r\n\f]*[+~]/, ad = RegExp("\x3d[\\x20\\t\\r\\n\\f]*([^\\]'\"]*)[\\x20\\t\\r\\n\\f]*\\]", "g"), bd = RegExp(Ab), cd = RegExp("^" + bc + "$"), bb = {ID: /^#((?:\\.|[\w-]|[^\x00-\xa0])+)/, CLASS: /^\.((?:\\.|[\w-]|[^\x00-\xa0])+)/, TAG: RegExp("^(" + "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+".replace("w", "w*") + ")"), ATTR: RegExp("^" + cc), PSEUDO: RegExp("^" +
-            Ab), CHILD: RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\([\\x20\\t\\r\\n\\f]*(even|odd|(([+-]|)(\\d*)n|)[\\x20\\t\\r\\n\\f]*(?:([+-]|)[\\x20\\t\\r\\n\\f]*(\\d+)|))[\\x20\\t\\r\\n\\f]*\\)|)", "i"), bool: RegExp("^(?:checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped)$", "i"), needsContext: RegExp("^[\\x20\\t\\r\\n\\f]*[\x3e+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\([\\x20\\t\\r\\n\\f]*((?:-\\d)?\\d*)[\\x20\\t\\r\\n\\f]*\\)|)(?\x3d[^-]|$)",
-            "i")}, Bb = /^[^{]+\{\s*\[native \w/, Rc = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/, dd = /^(?:input|select|textarea|button)$/i, ed = /^h\d$/i, Sc = /'|\\/g, va = RegExp("\\\\([\\da-f]{1,6}[\\x20\\t\\r\\n\\f]?|([\\x20\\t\\r\\n\\f])|.)", "ig"), wa = function (c, a, d) {
+      xa.push, ua = xa.push, ac = xa.slice, Fa = xa.indexOf || function (c) {
+        for (var a = 0, d = this.length; a < d; a++)
+          if (this[a] === c)
+            return a;
+        return-1
+      }, bc = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+".replace("w", "w#"), cc = "\\[[\\x20\\t\\r\\n\\f]*((?:\\\\.|[\\w-]|[^\\x00-\\xa0])+)[\\x20\\t\\r\\n\\f]*(?:([*^$|!~]?\x3d)[\\x20\\t\\r\\n\\f]*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|(" + bc + ")|)|)[\\x20\\t\\r\\n\\f]*\\]", Ab = ":((?:\\\\.|[\\w-]|[^\\x00-\\xa0])+)(?:\\(((['\"])((?:\\\\.|[^\\\\])*?)\\3|((?:\\\\.|[^\\\\()[\\]]|" + cc.replace(3, 8) + ")*)|.*)\\)|)",
+      ab = RegExp("^[\\x20\\t\\r\\n\\f]+|((?:^|[^\\\\])(?:\\\\.)*)[\\x20\\t\\r\\n\\f]+$", "g"), Vc = /^[\x20\t\r\n\f]*,[\x20\t\r\n\f]*/, Wc = /^[\x20\t\r\n\f]*([>+~]|[\x20\t\r\n\f])[\x20\t\r\n\f]*/, rb = /[\x20\t\r\n\f]*[+~]/, ad = RegExp("\x3d[\\x20\\t\\r\\n\\f]*([^\\]'\"]*)[\\x20\\t\\r\\n\\f]*\\]", "g"), bd = RegExp(Ab), cd = RegExp("^" + bc + "$"), bb = {ID: /^#((?:\\.|[\w-]|[^\x00-\xa0])+)/, CLASS: /^\.((?:\\.|[\w-]|[^\x00-\xa0])+)/, TAG: RegExp("^(" + "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+".replace("w", "w*") + ")"), ATTR: RegExp("^" + cc), PSEUDO: RegExp("^" +
+        Ab), CHILD: RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\([\\x20\\t\\r\\n\\f]*(even|odd|(([+-]|)(\\d*)n|)[\\x20\\t\\r\\n\\f]*(?:([+-]|)[\\x20\\t\\r\\n\\f]*(\\d+)|))[\\x20\\t\\r\\n\\f]*\\)|)", "i"), bool: RegExp("^(?:checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped)$", "i"), needsContext: RegExp("^[\\x20\\t\\r\\n\\f]*[\x3e+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\([\\x20\\t\\r\\n\\f]*((?:-\\d)?\\d*)[\\x20\\t\\r\\n\\f]*\\)|)(?\x3d[^-]|$)",
+        "i")}, Bb = /^[^{]+\{\s*\[native \w/, Rc = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/, dd = /^(?:input|select|textarea|button)$/i, ed = /^h\d$/i, Sc = /'|\\/g, va = RegExp("\\\\([\\da-f]{1,6}[\\x20\\t\\r\\n\\f]?|([\\x20\\t\\r\\n\\f])|.)", "ig"), wa = function (c, a, d) {
     c = "0x" + a - 65536;
     return c !== c || d ? a : 0 > c ? String.fromCharCode(c + 65536) : String.fromCharCode(c >> 10 | 55296, c & 1023 | 56320)
   };
@@ -957,11 +957,11 @@ var ChemDoodle = function () {
     ua = {apply: xa.length ? function (c, a) {
         $c.apply(c, ac.call(a))
       } :
-              function (c, a) {
-                for (var d = c.length, k = 0; c[d++] = a[k++]; )
-                  ;
-                c.length = d - 1
-              }}
+          function (c, a) {
+            for (var d = c.length, k = 0; c[d++] = a[k++]; )
+              ;
+            c.length = d - 1
+          }}
   }
   Yb = Q.isXML = function (c) {
     return(c = c && (c.ownerDocument || c).documentElement) ? "HTML" !== c.nodeName : !1
@@ -997,7 +997,7 @@ var ChemDoodle = function () {
     });
     T.getById ? (O.find.ID = function (c, a) {
       if ("undefined" !== typeof a.getElementById &&
-              ma) {
+          ma) {
         var x = a.getElementById(c);
         return x && x.parentNode ? [x] : []
       }
@@ -1045,11 +1045,11 @@ var ChemDoodle = function () {
         ga.push(",.*:")
       });
     (T.matchesSelector = Bb.test(gb = oa.webkitMatchesSelector || oa.mozMatchesSelector || oa.oMatchesSelector || oa.msMatchesSelector)) &&
-            la(function (c) {
-              T.disconnectedMatch = gb.call(c, "div");
-              gb.call(c, "[s!\x3d'']:x");
-              Ha.push("!\x3d", Ab)
-            });
+        la(function (c) {
+          T.disconnectedMatch = gb.call(c, "div");
+          gb.call(c, "[s!\x3d'']:x");
+          Ha.push("!\x3d", Ab)
+        });
     ga = ga.length && RegExp(ga.join("|"));
     Ha = Ha.length && RegExp(Ha.join("|"));
     Ta = Bb.test(oa.contains) || oa.compareDocumentPosition ? function (c, a) {
@@ -1063,12 +1063,12 @@ var ChemDoodle = function () {
       return!1
     };
     zb = oa.compareDocumentPosition ?
-            function (c, x) {
-              if (c === x)
-                return Na = !0, 0;
-              var d = x.compareDocumentPosition && c.compareDocumentPosition && c.compareDocumentPosition(x);
-              return d ? d & 1 || !T.sortDetached && x.compareDocumentPosition(c) === d ? c === a || Ta(ra, c) ? -1 : x === a || Ta(ra, x) ? 1 : Ga ? Fa.call(Ga, c) - Fa.call(Ga, x) : 0 : d & 4 ? -1 : 1 : c.compareDocumentPosition ? -1 : 1
-            } : function (c, x) {
+        function (c, x) {
+          if (c === x)
+            return Na = !0, 0;
+          var d = x.compareDocumentPosition && c.compareDocumentPosition && c.compareDocumentPosition(x);
+          return d ? d & 1 || !T.sortDetached && x.compareDocumentPosition(c) === d ? c === a || Ta(ra, c) ? -1 : x === a || Ta(ra, x) ? 1 : Ga ? Fa.call(Ga, c) - Fa.call(Ga, x) : 0 : d & 4 ? -1 : 1 : c.compareDocumentPosition ? -1 : 1
+        } : function (c, x) {
       var d, k = 0;
       d = c.parentNode;
       var b = x.parentNode, f = [c], g = [x];
@@ -1079,7 +1079,7 @@ var ChemDoodle = function () {
       if (d === b)
         return Vb(c, x);
       for (d =
-              c; d = d.parentNode; )
+          c; d = d.parentNode; )
         f.unshift(d);
       for (d = x; d = d.parentNode; )
         g.unshift(d);
@@ -1105,10 +1105,10 @@ var ChemDoodle = function () {
     return 0 < Q(a, Y, null, [c]).length
   };
   Q.contains =
-          function (c, a) {
-            (c.ownerDocument || c) !== Y && Da(c);
-            return Ta(c, a)
-          };
+      function (c, a) {
+        (c.ownerDocument || c) !== Y && Da(c);
+        return Ta(c, a)
+      };
   Q.attr = function (c, a) {
     (c.ownerDocument || c) !== Y && Da(c);
     var d = O.attrHandle[a.toLowerCase()], d = d && Yc.call(O.attrHandle, a.toLowerCase()) ? d(c, a, !ma) : void 0;
@@ -1177,7 +1177,7 @@ var ChemDoodle = function () {
         var a = Zb[c + " "];
         return a || (a = RegExp("(^|[\\x20\\t\\r\\n\\f])" + c + "([\\x20\\t\\r\\n\\f]|$)")) && Zb(c, function (c) {
           return a.test("string" === typeof c.className && c.className || "undefined" !== typeof c.getAttribute &&
-                  c.getAttribute("class") || "")
+              c.getAttribute("class") || "")
         })
       }, ATTR: function (c, a, d) {
         return function (k) {
@@ -1194,53 +1194,53 @@ var ChemDoodle = function () {
         return 1 === k && 0 === b ? function (c) {
           return!!c.parentNode
         } :
-                function (a, d, r) {
-                  var h, o, p, j, l;
-                  d = f !== g ? "nextSibling" : "previousSibling";
-                  var w = a.parentNode, C = e && a.nodeName.toLowerCase();
-                  r = !r && !e;
-                  if (w) {
-                    if (f) {
-                      for (; d; ) {
-                        for (o = a; o = o[d]; )
-                          if (e ? o.nodeName.toLowerCase() === C : 1 === o.nodeType)
-                            return!1;
-                        l = d = "only" === c && !l && "nextSibling"
-                      }
-                      return!0
-                    }
-                    l = [g ? w.firstChild : w.lastChild];
-                    if (g && r) {
-                      r = w[V] || (w[V] = {});
-                      h = r[c] || [];
-                      j = h[0] === na && h[1];
-                      p = h[0] === na && h[2];
-                      for (o = j && w.childNodes[j]; o = ++j && o && o[d] || (p = j = 0) || l.pop(); )
-                        if (1 === o.nodeType && ++p && o === a) {
-                          r[c] = [na, j, p];
-                          break
-                        }
-                    } else if (r && (h = (a[V] ||
-                            (a[V] = {}))[c]) && h[0] === na)
-                      p = h[1];
-                    else
-                      for (; o = ++j && o && o[d] || (p = j = 0) || l.pop(); )
-                        if ((e ? o.nodeName.toLowerCase() === C : 1 === o.nodeType) && ++p)
-                          if (r && ((o[V] || (o[V] = {}))[c] = [na, p]), o === a)
-                            break;
-                    p -= b;
-                    return p === k || 0 === p % k && 0 <= p / k
+            function (a, d, r) {
+              var h, o, p, j, l;
+              d = f !== g ? "nextSibling" : "previousSibling";
+              var w = a.parentNode, C = e && a.nodeName.toLowerCase();
+              r = !r && !e;
+              if (w) {
+                if (f) {
+                  for (; d; ) {
+                    for (o = a; o = o[d]; )
+                      if (e ? o.nodeName.toLowerCase() === C : 1 === o.nodeType)
+                        return!1;
+                    l = d = "only" === c && !l && "nextSibling"
                   }
+                  return!0
                 }
+                l = [g ? w.firstChild : w.lastChild];
+                if (g && r) {
+                  r = w[V] || (w[V] = {});
+                  h = r[c] || [];
+                  j = h[0] === na && h[1];
+                  p = h[0] === na && h[2];
+                  for (o = j && w.childNodes[j]; o = ++j && o && o[d] || (p = j = 0) || l.pop(); )
+                    if (1 === o.nodeType && ++p && o === a) {
+                      r[c] = [na, j, p];
+                      break
+                    }
+                } else if (r && (h = (a[V] ||
+                    (a[V] = {}))[c]) && h[0] === na)
+                  p = h[1];
+                else
+                  for (; o = ++j && o && o[d] || (p = j = 0) || l.pop(); )
+                    if ((e ? o.nodeName.toLowerCase() === C : 1 === o.nodeType) && ++p)
+                      if (r && ((o[V] || (o[V] = {}))[c] = [na, p]), o === a)
+                        break;
+                p -= b;
+                return p === k || 0 === p % k && 0 <= p / k
+              }
+            }
       }, PSEUDO: function (c, a) {
         var d, k = O.pseudos[c] || O.setFilters[c.toLowerCase()] || Q.error("unsupported pseudo: " + c);
         return k[V] ? k(a) : 1 < k.length ? (d = [c, c, "", a], O.setFilters.hasOwnProperty(c.toLowerCase()) ? ka(function (c, d) {
           for (var x, b = k(c, a), f = b.length; f--; )
             x = Fa.call(c, b[f]), c[x] = !(d[x] = b[f])
         }) :
-                function (c) {
-                  return k(c, 0, d)
-                }) : k
+            function (c) {
+              return k(c, 0, d)
+            }) : k
       }}, pseudos: {not: ka(function (c) {
         var a = [], d = [], k = sb(c.replace(ab, "$1"));
         return k[V] ? ka(function (c, a, d, x) {
@@ -1264,7 +1264,7 @@ var ChemDoodle = function () {
       }), lang: ka(function (c) {
         cd.test(c || "") || Q.error("unsupported lang: " + c);
         c = c.replace(va,
-                wa).toLowerCase();
+            wa).toLowerCase();
         return function (a) {
           var d;
           do
@@ -1284,7 +1284,7 @@ var ChemDoodle = function () {
         return!1 === c.disabled
       }, disabled: function (c) {
         return!0 ===
-                c.disabled
+            c.disabled
       }, checked: function (c) {
         var a = c.nodeName.toLowerCase();
         return"input" === a && !!c.checked || "option" === a && !!c.selected
@@ -1327,7 +1327,7 @@ var ChemDoodle = function () {
           c.push(a);
         return c
       }), gt: Ea(function (c,
-              a, d) {
+          a, d) {
         for (d = 0 > d?d + a:d; ++d < a; )
           c.push(d);
         return c
@@ -1348,7 +1348,7 @@ var ChemDoodle = function () {
       var g = 0, e = 0 < k.length, r = 0 < b.length;
       d = function (c, a, d, x, f) {
         var h, o, p = [], j = 0, l = "0", w = c && [], C = null != f, m = eb, mb = c ||
-                r && O.find.TAG("*", f && a.parentNode || a), n = na += null == m ? 1 : Math.random() || 0.1;
+            r && O.find.TAG("*", f && a.parentNode || a), n = na += null == m ? 1 : Math.random() || 0.1;
         C && (eb = a !== Y && a, cb = g);
         for (; null != (f = mb[l]); l++) {
           if (r && f) {
@@ -1383,7 +1383,7 @@ var ChemDoodle = function () {
     return f
   };
   T.sortStable = V.split("").sort(zb).join("") ===
-          V;
+      V;
   T.detectDuplicates = Na;
   Da();
   T.sortDetached = la(function (c) {
@@ -1401,7 +1401,7 @@ var ChemDoodle = function () {
     c.firstChild.setAttribute("value", "");
     return"" === c.firstChild.getAttribute("value")
   })) && ub("value", function (c,
-          a, d) {
+      a, d) {
     if (!d && "input" === c.nodeName.toLowerCase())
       return c.defaultValue
   });
@@ -1454,7 +1454,7 @@ var ChemDoodle = function () {
             m.each(a, function (a, d) {
               var k = m.type(d);
               "function" ===
-                      k ? (!c.unique || !j.has(d)) && h.push(d) : d && (d.length && "string" !== k) && Fc(d)
+                  k ? (!c.unique || !j.has(d)) && h.push(d) : d && (d.length && "string" !== k) && Fc(d)
             })
           })(arguments);
           k ? g = h.length : b && (r = a, p(b))
@@ -1504,7 +1504,7 @@ var ChemDoodle = function () {
           return this
         }, then: function () {
           var c =
-                  arguments;
+              arguments;
           return m.Deferred(function (d) {
             m.each(a, function (a, x) {
               var f = x[0], g = m.isFunction(c[a]) && c[a];
@@ -1550,7 +1550,7 @@ var ChemDoodle = function () {
         r = Array(k);
         for (h = Array(k); a < k; a++)
           d[a] && m.isFunction(d[a].promise) ? d[a].promise().done(g(a,
-                  h, d)).fail(f.reject).progress(g(a, r, e)) : --b
+              h, d)).fail(f.reject).progress(g(a, r, e)) : --b
       }
       b || f.resolveWith(h, d);
       return f.promise()
@@ -1577,7 +1577,7 @@ var ChemDoodle = function () {
     L.optSelected = jb.selected;
     L.enctype = !!J.createElement("form").enctype;
     L.html5Clone =
-            "\x3c:nav\x3e\x3c/:nav\x3e" !== J.createElement("nav").cloneNode(!0).outerHTML;
+        "\x3c:nav\x3e\x3c/:nav\x3e" !== J.createElement("nav").cloneNode(!0).outerHTML;
     L.inlineBlockNeedsLayout = !1;
     L.shrinkWrapBlocks = !1;
     L.pixelPosition = !1;
@@ -1613,7 +1613,7 @@ var ChemDoodle = function () {
       M.setAttribute(Db = "on" + Ua, "t"), L[Ua + "Bubbles"] = Db in b || !1 === M.attributes[Db].expando;
     M.style.backgroundClip = "content-box";
     M.cloneNode(!0).style.backgroundClip =
-            "";
+        "";
     L.clearCloneStyle = "content-box" === M.style.backgroundClip;
     for (Ua in m(L))
       break;
@@ -1621,11 +1621,11 @@ var ChemDoodle = function () {
     m(function () {
       var c, a, d = J.getElementsByTagName("body")[0];
       d && (c = J.createElement("div"), c.style.cssText = "border:0;width:0;height:0;position:absolute;top:0;left:-9999px;margin-top:1px", d.appendChild(c).appendChild(M), M.innerHTML = "\x3ctable\x3e\x3ctr\x3e\x3ctd\x3e\x3c/td\x3e\x3ctd\x3et\x3c/td\x3e\x3c/tr\x3e\x3c/table\x3e", a = M.getElementsByTagName("td"), a[0].style.cssText = "padding:0;margin:0;border:0;display:none",
-              ec = 0 === a[0].offsetHeight, a[0].style.display = "", a[1].style.display = "none", L.reliableHiddenOffsets = ec && 0 === a[0].offsetHeight, M.innerHTML = "", M.style.cssText = "box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;padding:1px;border:1px;display:block;width:4px;margin-top:1%;position:absolute;top:1%;", m.swap(d, null != d.style.zoom ? {zoom: 1} : {}, function () {
+          ec = 0 === a[0].offsetHeight, a[0].style.display = "", a[1].style.display = "none", L.reliableHiddenOffsets = ec && 0 === a[0].offsetHeight, M.innerHTML = "", M.style.cssText = "box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;padding:1px;border:1px;display:block;width:4px;margin-top:1%;position:absolute;top:1%;", m.swap(d, null != d.style.zoom ? {zoom: 1} : {}, function () {
         L.boxSizing = 4 === M.offsetWidth
       }), b.getComputedStyle && (L.pixelPosition = "1%" !== (b.getComputedStyle(M, null) || {}).top, L.boxSizingReliable =
-              "4px" === (b.getComputedStyle(M, null) || {width: "4px"}).width, a = M.appendChild(J.createElement("div")), a.style.cssText = M.style.cssText = "padding:0;margin:0;border:0;display:block;box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;", a.style.marginRight = a.style.width = "0", M.style.width = "1px", L.reliableMarginRight = !parseFloat((b.getComputedStyle(a, null) || {}).marginRight)), typeof M.style.zoom !== $ && (M.innerHTML = "", M.style.cssText = "padding:0;margin:0;border:0;display:block;box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;width:1px;padding:1px;display:inline;zoom:1",
-              L.inlineBlockNeedsLayout = 3 === M.offsetWidth, M.style.display = "block", M.innerHTML = "\x3cdiv\x3e\x3c/div\x3e", M.firstChild.style.width = "5px", L.shrinkWrapBlocks = 3 !== M.offsetWidth, L.inlineBlockNeedsLayout && (d.style.zoom = 1)), d.removeChild(c), c = M = a = a = null)
+          "4px" === (b.getComputedStyle(M, null) || {width: "4px"}).width, a = M.appendChild(J.createElement("div")), a.style.cssText = M.style.cssText = "padding:0;margin:0;border:0;display:block;box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;", a.style.marginRight = a.style.width = "0", M.style.width = "1px", L.reliableMarginRight = !parseFloat((b.getComputedStyle(a, null) || {}).marginRight)), typeof M.style.zoom !== $ && (M.innerHTML = "", M.style.cssText = "padding:0;margin:0;border:0;display:block;box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;width:1px;padding:1px;display:inline;zoom:1",
+          L.inlineBlockNeedsLayout = 3 === M.offsetWidth, M.style.display = "block", M.innerHTML = "\x3cdiv\x3e\x3c/div\x3e", M.firstChild.style.width = "5px", L.shrinkWrapBlocks = 3 !== M.offsetWidth, L.inlineBlockNeedsLayout && (d.style.zoom = 1)), d.removeChild(c), c = M = a = a = null)
     });
     Cb = hb = ib = jb = ya = Z = null
   }
@@ -1653,7 +1653,7 @@ var ChemDoodle = function () {
       if (c === n) {
         if (this.length && (b = m.data(e), 1 === e.nodeType && !m._data(e, "parsedAttrs"))) {
           for (d =
-                  e.attributes; f < d.length; f++)
+              e.attributes; f < d.length; f++)
             k = d[f].name, 0 === k.indexOf("data-") && (k = m.camelCase(k.slice(5)), g(e, k, b[k]));
           m._data(e, "parsedAttrs", !0)
         }
@@ -1673,7 +1673,7 @@ var ChemDoodle = function () {
       var k;
       if (c)
         return a = (a || "fx") + "queue", k = m._data(c, a), d && (!k || m.isArray(d) ? k = m._data(c, a, m.makeArray(d)) :
-                k.push(d)), k || []
+            k.push(d)), k || []
     }, dequeue: function (c, a) {
       a = a || "fx";
       var d = m.queue(c, a), k = d.length, b = d.shift(), f = m._queueHooks(c, a), g = function () {
@@ -1692,7 +1692,7 @@ var ChemDoodle = function () {
   m.fn.extend({queue: function (c, a) {
       var d = 2;
       "string" !==
-              typeof c && (a = c, c = "fx", d--);
+          typeof c && (a = c, c = "fx", d--);
       return arguments.length < d ? m.queue(this[0], c) : a === n ? this : this.each(function () {
         var d = m.queue(this, c, a);
         m._queueHooks(this, c);
@@ -1714,7 +1714,7 @@ var ChemDoodle = function () {
       return this.queue(c || "fx", [])
     }, promise: function (c, a) {
       var d, k =
-              1, b = m.Deferred(), f = this, g = this.length, e = function () {
+          1, b = m.Deferred(), f = this, g = this.length, e = function () {
         --k || b.resolveWith(f, [f])
       };
       "string" !== typeof c && (a = c, c = n);
@@ -1730,7 +1730,7 @@ var ChemDoodle = function () {
     }, removeAttr: function (c) {
       return this.each(function () {
         m.removeAttr(this,
-                c)
+            c)
       })
     }, prop: function (c, a) {
       return m.access(this, m.prop, c, a, 1 < arguments.length)
@@ -1753,7 +1753,7 @@ var ChemDoodle = function () {
         for (a = (c || "").match(pa) || []; g < e; g++)
           if (d = this[g], k = 1 === d.nodeType && (d.className ? (" " + d.className + " ").replace(Eb, " ") : " ")) {
             for (f =
-                    0; b = a[f++]; )
+                0; b = a[f++]; )
               0 > k.indexOf(" " + b + " ") && (k += b + " ");
             d.className = m.trim(k)
           }
@@ -1772,7 +1772,7 @@ var ChemDoodle = function () {
               for (; 0 <= k.indexOf(" " + b + " "); )
                 k = k.replace(" " + b + " ", " ");
             d.className =
-                    c ? m.trim(k) : ""
+                c ? m.trim(k) : ""
           }
       return this
     }, toggleClass: function (c, a) {
@@ -1785,7 +1785,7 @@ var ChemDoodle = function () {
             b.hasClass(a) ? b.removeClass(a) : b.addClass(a);
         else if (d === $ || "boolean" === d)
           this.className && m._data(this, "__className__", this.className), this.className = this.className || !1 ===
-                  c ? "" : m._data(this, "__className__") || ""
+              c ? "" : m._data(this, "__className__") || ""
       })
     }, hasClass: function (c) {
       c = " " + c + " ";
@@ -1800,7 +1800,7 @@ var ChemDoodle = function () {
           if (1 === this.nodeType && (a = k ? c.call(this, a, m(this).val()) : c, null == a ? a = "" : "number" === typeof a ? a += "" : m.isArray(a) && (a = m.map(a, function (c) {
             return null == c ? "" : c + ""
           })), d = m.valHooks[this.type] || m.valHooks[this.nodeName.toLowerCase()],
-                  !d || !("set"in d) || d.set(this, a, "value") === n))
+              !d || !("set"in d) || d.set(this, a, "value") === n))
             this.value = a
         });
       if (b) {
@@ -1816,7 +1816,7 @@ var ChemDoodle = function () {
         }}, select: {get: function (c) {
           for (var a, d = c.options, k = c.selectedIndex, b = (c = "select-one" === c.type || 0 > k) ? null : [], f = c ? k + 1 : d.length, g = 0 > k ? f : c ? k : 0; g < f; g++)
             if (a = d[g], (a.selected ||
-                    g === k) && (m.support.optDisabled ? !a.disabled : null === a.getAttribute("disabled")) && (!a.parentNode.disabled || !m.nodeName(a.parentNode, "optgroup"))) {
+                g === k) && (m.support.optDisabled ? !a.disabled : null === a.getAttribute("disabled")) && (!a.parentNode.disabled || !m.nodeName(a.parentNode, "optgroup"))) {
               a = m(a).val();
               if (c)
                 return a;
@@ -1836,7 +1836,7 @@ var ChemDoodle = function () {
           return m.prop(c, a, d);
         if (1 !== f || !m.isXMLDoc(c))
           a =
-                  a.toLowerCase(), k = m.attrHooks[a] || (m.expr.match.bool.test(a) ? fc : Oa);
+              a.toLowerCase(), k = m.attrHooks[a] || (m.expr.match.bool.test(a) ? fc : Oa);
         if (d !== n)
           if (null === d)
             m.removeAttr(c, a);
@@ -1858,7 +1858,7 @@ var ChemDoodle = function () {
       if (f && 1 === c.nodeType)
         for (; d = f[b++]; )
           k = m.propFix[d] || d, m.expr.match.bool.test(d) ? kb && Ia || !Fb.test(d) ? c[k] = !1 : c[m.camelCase("default-" + d)] = c[k] = !1 : m.attr(c, d, ""), c.removeAttribute(Ia ?
-                  d : k)
+              d : k)
     }, attrHooks: {type: {set: function (c, a) {
           if (!m.support.radioValue && "radio" === a && m.nodeName(c, "input")) {
             var d = c.value;
@@ -1876,7 +1876,7 @@ var ChemDoodle = function () {
       }
     }, propHooks: {tabIndex: {get: function (c) {
           var a = m.find.attr(c,
-                  "tabindex");
+              "tabindex");
           return a ? parseInt(a, 10) : hd.test(c.nodeName) || id.test(c.nodeName) && c.href ? 0 : -1
         }}}});
   fc = {set: function (c, a, d) {
@@ -1889,7 +1889,7 @@ var ChemDoodle = function () {
       var b = m.expr.attrHandle[a];
       c = k ? n : (m.expr.attrHandle[a] = n) != d(c, a, k) ? a.toLowerCase() : null;
       m.expr.attrHandle[a] =
-              b;
+          b;
       return c
     } : function (c, a, d) {
       return d ? n : c[m.camelCase("default-" + a)] ? a.toLowerCase() : null
@@ -1910,7 +1910,7 @@ var ChemDoodle = function () {
     }}, m.expr.attrHandle.id = m.expr.attrHandle.name = m.expr.attrHandle.coords = function (c, a, d) {
     var k;
     return d ? n : (k = c.getAttributeNode(a)) &&
-            "" !== k.value ? k.value : null
+        "" !== k.value ? k.value : null
   }, m.valHooks.button = {get: function (c, a) {
       var d = c.getAttributeNode(a);
       return d && d.specified ? d.value : n
@@ -1929,7 +1929,7 @@ var ChemDoodle = function () {
   });
   m.support.style || (m.attrHooks.style = {get: function (c) {
       return c.style.cssText ||
-      n
+          n
     }, set: function (c, a) {
       return c.style.cssText = a + ""
     }});
@@ -1946,7 +1946,7 @@ var ChemDoodle = function () {
     m.valHooks[this] = {set: function (c, a) {
         if (m.isArray(a))
           return c.checked =
-                  0 <= m.inArray(m(c).val(), a)
+              0 <= m.inArray(m(c).val(), a)
       }};
     m.support.checkOn || (m.valHooks[this].get = function (c) {
       return null === c.getAttribute("value") ? "on" : c.value
@@ -1963,7 +1963,7 @@ var ChemDoodle = function () {
         if (!(h = e.handle))
           h = e.handle = function (c) {
             return typeof m !==
-                    $ && (!c || m.event.triggered !== c.type) ? m.event.dispatch.apply(h.elem, arguments) : n
+                $ && (!c || m.event.triggered !== c.type) ? m.event.dispatch.apply(h.elem, arguments) : n
           }, h.elem = c;
         a = (a || "").match(pa) || [""];
         for (e = a.length; e--; )
@@ -1974,7 +1974,7 @@ var ChemDoodle = function () {
             o = m.extend({type: j, origType: o, data: k, handler: d, guid: d.guid, selector: b, needsContext: b && m.expr.match.needsContext.test(b), namespace: l.join(".")}, r);
             if (!(p = g[j]))
               if (p = g[j] = [], p.delegateCount = 0, !f.setup || !1 === f.setup.call(c,
-                      k, l, h))
+                  k, l, h))
                 c.addEventListener ? c.addEventListener(j, h, !1) : c.attachEvent && c.attachEvent("on" + j, h);
             f.add && (f.add.call(c, o), o.handler.guid || (o.handler.guid = d.guid));
             b ? p.splice(p.delegateCount++, 0, o) : p.push(o);
@@ -1990,7 +1990,7 @@ var ChemDoodle = function () {
           if (e = hc.exec(a[h]) || [], l = C = e[1], w = (e[2] || "").split(".").sort(), l) {
             p = m.event.special[l] || {};
             l = (k ? p.delegateType : p.bindType) ||
-                    l;
+                l;
             j = o[l] || [];
             e = e[2] && RegExp("(^|\\.)" + w.join("\\.(?:.*\\.|)") + "(\\.|$)");
             for (r = f = j.length; f--; )
@@ -2009,7 +2009,7 @@ var ChemDoodle = function () {
       e = f = d = d || J;
       if (!(3 === d.nodeType || 8 === d.nodeType) && !gc.test(j + m.event.triggered))
         if (0 <= j.indexOf(".") && (h = j.split("."), j = h.shift(), h.sort()), g = 0 > j.indexOf(":") && "on" + j, c = c[m.expando] ? c : new m.Event(j, "object" === typeof c && c), c.isTrigger = k ? 2 : 3, c.namespace = h.join("."), c.namespace_re = c.namespace ? RegExp("(^|\\.)" + h.join("\\.(?:.*\\.|)") + "(\\.|$)") : null, c.result = n, c.target || (c.target =
-                d), a = null == a ? [c] : m.makeArray(a, [c]), h = m.event.special[j] || {}, k || !(h.trigger && !1 === h.trigger.apply(d, a))) {
+            d), a = null == a ? [c] : m.makeArray(a, [c]), h = m.event.special[j] || {}, k || !(h.trigger && !1 === h.trigger.apply(d, a))) {
           if (!k && !h.noBubble && !m.isWindow(d)) {
             r = h.delegateType || j;
             gc.test(r + j) || (e = e.parentNode);
@@ -2020,7 +2020,7 @@ var ChemDoodle = function () {
           }
           for (o = 0; (e = p[o++]) && !c.isPropagationStopped(); )
             c.type = 1 < o ? r : h.bindType || j, (f = (m._data(e, "events") || {})[c.type] && m._data(e, "handle")) && f.apply(e, a), (f = g && e[g]) && (m.acceptData(e) && f.apply && !1 === f.apply(e, a)) &&
-                    c.preventDefault();
+                c.preventDefault();
           c.type = j;
           if (!k && !c.isDefaultPrevented() && (!h._default || !1 === h._default.apply(p.pop(), a)) && m.acceptData(d) && g && d[j] && !m.isWindow(d)) {
             (f = d[g]) && (d[g] = null);
@@ -2043,7 +2043,7 @@ var ChemDoodle = function () {
       c.delegateTarget = this;
       if (!(e.preDispatch && !1 === e.preDispatch.call(this, c))) {
         f =
-                m.event.handlers.call(this, c, a);
+            m.event.handlers.call(this, c, a);
         for (a = 0; (k = f[a++]) && !c.isPropagationStopped(); ) {
           c.currentTarget = k.elem;
           for (b = 0; (d = k.handlers[b++]) && !c.isImmediatePropagationStopped(); )
@@ -2056,7 +2056,7 @@ var ChemDoodle = function () {
       }
     }, handlers: function (c, a) {
       var d, k, b, f, g = [], e = a.delegateCount,
-              r = c.target;
+          r = c.target;
       if (e && r.nodeType && (!c.button || "click" !== c.type))
         for (; r != this; r = r.parentNode || this)
           if (1 === r.nodeType && (!0 !== r.disabled || "click" !== c.type)) {
@@ -2074,7 +2074,7 @@ var ChemDoodle = function () {
       a = c.type;
       var b = c, f = this.fixHooks[a];
       f || (this.fixHooks[a] =
-              f = kd.test(a) ? this.mouseHooks : jd.test(a) ? this.keyHooks : {});
+          f = kd.test(a) ? this.mouseHooks : jd.test(a) ? this.keyHooks : {});
       k = f.props ? this.props.concat(f.props) : this.props;
       c = new m.Event(b);
       for (a = k.length; a--; )
@@ -2090,7 +2090,7 @@ var ChemDoodle = function () {
       }}, mouseHooks: {props: "button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "), filter: function (c, a) {
         var d, k, b = a.button, f = a.fromElement;
         null == c.pageX && null != a.clientX && (d = c.target.ownerDocument || J, k = d.documentElement, d = d.body, c.pageX = a.clientX + (k && k.scrollLeft || d && d.scrollLeft || 0) - (k && k.clientLeft || d && d.clientLeft || 0), c.pageY = a.clientY + (k && k.scrollTop || d &&
-                d.scrollTop || 0) - (k && k.clientTop || d && d.clientTop || 0));
+            d.scrollTop || 0) - (k && k.clientTop || d && d.clientTop || 0));
         !c.relatedTarget && f && (c.relatedTarget = f === c.target ? a.toElement : f);
         !c.which && b !== n && (c.which = b & 1 ? 1 : b & 2 ? 3 : b & 4 ? 2 : 0);
         return c
@@ -2106,7 +2106,7 @@ var ChemDoodle = function () {
         }, delegateType: "focusout"}, click: {trigger: function () {
           if (m.nodeName(this, "input") && "checkbox" === this.type && this.click)
             return this.click(),
-                    !1
+                !1
         }, _default: function (c) {
           return m.nodeName(c.target, "a")
         }}, beforeunload: {postDispatch: function (c) {
@@ -2121,7 +2121,7 @@ var ChemDoodle = function () {
   } : function (c, a, d) {
     a = "on" + a;
     c.detachEvent && (typeof c[a] ===
-            $ && (c[a] = null), c.detachEvent(a, d))
+        $ && (c[a] = null), c.detachEvent(a, d))
   };
   m.Event = function (c, a) {
     if (!(this instanceof m.Event))
@@ -2147,7 +2147,7 @@ var ChemDoodle = function () {
     m.event.special[c] = {delegateType: a, bindType: a, handle: function (c) {
         var d, k = c.relatedTarget, b = c.handleObj;
         if (!k ||
-                k !== this && !m.contains(this, k))
+            k !== this && !m.contains(this, k))
           c.type = b.origType, d = b.handler.apply(this, arguments), c.type = a;
         return d
       }}
@@ -2164,7 +2164,7 @@ var ChemDoodle = function () {
       })
     }, postDispatch: function (c) {
       c._submit_bubble &&
-              (delete c._submit_bubble, this.parentNode && !c.isTrigger && m.event.simulate("submit", this.parentNode, c, !0))
+          (delete c._submit_bubble, this.parentNode && !c.isTrigger && m.event.simulate("submit", this.parentNode, c, !0))
     }, teardown: function () {
       if (m.nodeName(this, "form"))
         return!1;
@@ -2177,7 +2177,7 @@ var ChemDoodle = function () {
             "checked" === c.originalEvent.propertyName && (this._just_changed = !0)
           }), m.event.add(this, "click._change", function (c) {
             this._just_changed &&
-                    !c.isTrigger && (this._just_changed = !1);
+                !c.isTrigger && (this._just_changed = !1);
             m.event.simulate("change", this, c, !0)
           });
         return!1
@@ -2192,7 +2192,7 @@ var ChemDoodle = function () {
       var a = c.target;
       if (this !== a || c.isSimulated || c.isTrigger || "radio" !== a.type && "checkbox" !== a.type)
         return c.handleObj.handler.apply(this,
-                arguments)
+            arguments)
     }, teardown: function () {
       m.event.remove(this, "._change");
       return!Gb.test(this.nodeName)
@@ -2213,7 +2213,7 @@ var ChemDoodle = function () {
         "string" !== typeof a && (d = d || a, a = n);
         for (f in c)
           this.on(f,
-                  a, d, c[f], b);
+              a, d, c[f], b);
         return this
       }
       null == d && null == k ? (k = a, d = a = n) : null == k && ("string" === typeof a ? (k = d, d = n) : (k = d, d = a, a = n));
@@ -2234,7 +2234,7 @@ var ChemDoodle = function () {
       var k;
       if (c && c.preventDefault && c.handleObj)
         return k = c.handleObj, m(c.delegateTarget).off(k.namespace ? k.origType + "." + k.namespace : k.origType,
-                k.selector, k.handler), this;
+            k.selector, k.handler), this;
       if ("object" === typeof c) {
         for (k in c)
           this.off(k, a, c[k]);
@@ -2280,7 +2280,7 @@ var ChemDoodle = function () {
       return this.pushStack(o(this, c || [], !0))
     }, filter: function (c) {
       return this.pushStack(o(this,
-              c || [], !1))
+          c || [], !1))
     }, is: function (c) {
       return!!o(this, "string" === typeof c && ic.test(c) ? m(c) : c || [], !1).length
     }, closest: function (c, a) {
@@ -2293,7 +2293,7 @@ var ChemDoodle = function () {
       return this.pushStack(1 < f.length ? m.unique(f) : f)
     }, index: function (c) {
       return!c ? this[0] && this[0].parentNode ? this.first().prevAll().length : -1 : "string" === typeof c ?
-              m.inArray(this[0], m(c)) : m.inArray(c.jquery ? c[0] : c, this)
+          m.inArray(this[0], m(c)) : m.inArray(c.jquery ? c[0] : c, this)
     }, add: function (c, a) {
       var d = "string" === typeof c ? m(c, a) : m.makeArray(c && c.nodeType ? [c] : c), d = m.merge(this.get(), d);
       return this.pushStack(m.unique(d))
@@ -2308,7 +2308,7 @@ var ChemDoodle = function () {
       return m.dir(c, "parentNode", d)
     }, next: function (c) {
       return p(c,
-              "nextSibling")
+          "nextSibling")
     }, prev: function (c) {
       return p(c, "previousSibling")
     }, nextAll: function (c) {
@@ -2325,7 +2325,7 @@ var ChemDoodle = function () {
       return m.sibling(c.firstChild)
     }, contents: function (c) {
       return m.nodeName(c, "iframe") ? c.contentDocument || c.contentWindow.document :
-              m.merge([], c.childNodes)
+          m.merge([], c.childNodes)
     }}, function (c, a) {
     m.fn[c] = function (d, k) {
       var b = m.map(this, a, d);
@@ -2344,7 +2344,7 @@ var ChemDoodle = function () {
     }, dir: function (c, a, d) {
       var k = [];
       for (c = c[a]; c && 9 !== c.nodeType &&
-              (d === n || 1 !== c.nodeType || !m(c).is(d)); )
+          (d === n || 1 !== c.nodeType || !m(c).is(d)); )
         1 === c.nodeType && k.push(c), c = c[a];
       return k
     }, sibling: function (c, a) {
@@ -2353,15 +2353,15 @@ var ChemDoodle = function () {
       return d
     }});
   var Ob = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video", nd = / jQuery\d+="(?:null|\d+)"/g, jc = RegExp("\x3c(?:" + Ob + ")[\\s/\x3e]", "i"), Hb = /^\s+/, kc = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,
-          lc = /<([\w:]+)/, mc = /<tbody/i, od = /<|&#?\w+;/, pd = /<(?:script|style|link)/i, nb = /^(?:checkbox|radio)$/i, qd = /checked\s*(?:[^=]|=\s*.checked.)/i, nc = /^$|\/(?:java|ecma)script/i, Cc = /^true\/(.*)/, rd = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g, ia = {option: [1, "\x3cselect multiple\x3d'multiple'\x3e", "\x3c/select\x3e"], legend: [1, "\x3cfieldset\x3e", "\x3c/fieldset\x3e"], area: [1, "\x3cmap\x3e", "\x3c/map\x3e"], param: [1, "\x3cobject\x3e", "\x3c/object\x3e"], thead: [1, "\x3ctable\x3e", "\x3c/table\x3e"], tr: [2, "\x3ctable\x3e\x3ctbody\x3e",
-              "\x3c/tbody\x3e\x3c/table\x3e"], col: [2, "\x3ctable\x3e\x3ctbody\x3e\x3c/tbody\x3e\x3ccolgroup\x3e", "\x3c/colgroup\x3e\x3c/table\x3e"], td: [3, "\x3ctable\x3e\x3ctbody\x3e\x3ctr\x3e", "\x3c/tr\x3e\x3c/tbody\x3e\x3c/table\x3e"], _default: m.support.htmlSerialize ? [0, "", ""] : [1, "X\x3cdiv\x3e", "\x3c/div\x3e"]}, Ib = w(J).appendChild(J.createElement("div"));
+      lc = /<([\w:]+)/, mc = /<tbody/i, od = /<|&#?\w+;/, pd = /<(?:script|style|link)/i, nb = /^(?:checkbox|radio)$/i, qd = /checked\s*(?:[^=]|=\s*.checked.)/i, nc = /^$|\/(?:java|ecma)script/i, Cc = /^true\/(.*)/, rd = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g, ia = {option: [1, "\x3cselect multiple\x3d'multiple'\x3e", "\x3c/select\x3e"], legend: [1, "\x3cfieldset\x3e", "\x3c/fieldset\x3e"], area: [1, "\x3cmap\x3e", "\x3c/map\x3e"], param: [1, "\x3cobject\x3e", "\x3c/object\x3e"], thead: [1, "\x3ctable\x3e", "\x3c/table\x3e"], tr: [2, "\x3ctable\x3e\x3ctbody\x3e",
+          "\x3c/tbody\x3e\x3c/table\x3e"], col: [2, "\x3ctable\x3e\x3ctbody\x3e\x3c/tbody\x3e\x3ccolgroup\x3e", "\x3c/colgroup\x3e\x3c/table\x3e"], td: [3, "\x3ctable\x3e\x3ctbody\x3e\x3ctr\x3e", "\x3c/tr\x3e\x3c/tbody\x3e\x3c/table\x3e"], _default: m.support.htmlSerialize ? [0, "", ""] : [1, "X\x3cdiv\x3e", "\x3c/div\x3e"]}, Ib = w(J).appendChild(J.createElement("div"));
   ia.optgroup = ia.option;
   ia.tbody = ia.tfoot = ia.colgroup = ia.caption = ia.thead;
   ia.th = ia.td;
   m.fn.extend({text: function (c) {
       return m.access(this, function (c) {
         return c ===
-                n ? m.text(this) : this.empty().append((this[0] && this[0].ownerDocument || J).createTextNode(c))
+            n ? m.text(this) : this.empty().append((this[0] && this[0].ownerDocument || J).createTextNode(c))
       }, null, c, arguments.length)
     }, append: function () {
       return this.domManip(arguments, function (c) {
@@ -2377,7 +2377,7 @@ var ChemDoodle = function () {
     }, before: function () {
       return this.domManip(arguments, function (c) {
         this.parentNode &&
-                this.parentNode.insertBefore(c, this)
+            this.parentNode.insertBefore(c, this)
       })
     }, after: function () {
       return this.domManip(arguments, function (c) {
@@ -2429,7 +2429,7 @@ var ChemDoodle = function () {
       return this.remove(c, !0)
     }, domManip: function (c, a, d) {
       c = sa.apply([],
-              c);
+          c);
       var k, b, f, g, e = 0, r = this.length, h = this, o = r - 1, p = c[0], j = m.isFunction(p);
       if (j || !(1 >= r || "string" !== typeof p || m.support.checkClone || !qd.test(p)))
         return this.each(function (k) {
@@ -2472,7 +2472,7 @@ var ChemDoodle = function () {
               o = h.nodeName.toLowerCase();
               if (!m.support.noCloneEvent && h[m.expando]) {
                 j =
-                        m._data(h);
+                    m._data(h);
                 for (p in j.events)
                   m.removeEvent(h, p, j.handle);
                 h.removeAttribute(m.expando)
@@ -2487,7 +2487,7 @@ var ChemDoodle = function () {
                 h.defaultSelected = h.selected = b.defaultSelected;
               else if ("input" === o || "textarea" === o)
                 h.defaultValue =
-                        b.defaultValue
+                    b.defaultValue
             }
           }
       }
@@ -2526,7 +2526,7 @@ var ChemDoodle = function () {
             j.push(a.createTextNode(f));
       g && p.removeChild(g);
       m.support.appendChecked ||
-              m.grep(z(j, "input"), y);
+          m.grep(z(j, "input"), y);
       for (l = 0; f = j[l++]; )
         if (!(k && -1 !== m.inArray(f, k)) && (c = m.contains(f.ownerDocument, f), g = z(p.appendChild(f), "script"), c && u(g), d))
           for (b = 0; f = g[b++]; )
@@ -2540,7 +2540,7 @@ var ChemDoodle = function () {
               for (k in f.events)
                 o[k] ? m.event.remove(d, k) : m.removeEvent(d, k, f.handle);
             r[b] && (delete r[b], h ? delete d[e] : typeof d.removeAttribute !==
-                    $ ? d.removeAttribute(e) : d[e] = null, ha.push(b))
+                $ ? d.removeAttribute(e) : d[e] = null, ha.push(b))
           }
     }, _evalUrl: function (c) {
       return m.ajax({url: c, type: "GET", dataType: "script", async: !1, global: !1, "throws": !0})
@@ -2562,9 +2562,9 @@ var ChemDoodle = function () {
       return this
     }, wrapInner: function (c) {
       return m.isFunction(c) ?
-              this.each(function (a) {
-                m(this).wrapInner(c.call(this, a))
-              }) : this.each(function () {
+          this.each(function (a) {
+            m(this).wrapInner(c.call(this, a))
+          }) : this.each(function () {
         var a = m(this), d = a.contents();
         d.length ? d.wrapAll(c) : a.append(c)
       })
@@ -2579,7 +2579,7 @@ var ChemDoodle = function () {
       }).end()
     }});
   var Qa, Ba, Ca, Jb = /alpha\([^)]*\)/i, sd = /opacity\s*=\s*([^)]*)/, td = /^(top|right|bottom|left)$/, ud = /^(none|table(?!-c[ea]).+)/,
-          oc = /^margin/, Dc = RegExp("^(" + Ya + ")(.*)$", "i"), Wa = RegExp("^(" + Ya + ")(?!px)[a-z%]+$", "i"), vd = RegExp("^([+-])\x3d(" + Ya + ")", "i"), Qb = {BODY: "block"}, wd = {position: "absolute", visibility: "hidden", display: "block"}, pc = {letterSpacing: 0, fontWeight: 400}, Aa = ["Top", "Right", "Bottom", "Left"], Pb = ["Webkit", "O", "Moz", "ms"];
+      oc = /^margin/, Dc = RegExp("^(" + Ya + ")(.*)$", "i"), Wa = RegExp("^(" + Ya + ")(?!px)[a-z%]+$", "i"), vd = RegExp("^([+-])\x3d(" + Ya + ")", "i"), Qb = {BODY: "block"}, wd = {position: "absolute", visibility: "hidden", display: "block"}, pc = {letterSpacing: 0, fontWeight: 400}, Aa = ["Top", "Right", "Bottom", "Left"], Pb = ["Webkit", "O", "Moz", "ms"];
   m.fn.extend({css: function (c, a) {
       return m.access(this, function (c, a, d) {
         var k, b = {}, f = 0;
@@ -2590,7 +2590,7 @@ var ChemDoodle = function () {
           return b
         }
         return d !== n ? m.style(c, a, d) : m.css(c,
-                a)
+            a)
       }, c, a, 1 < arguments.length)
     }, show: function () {
       return k(this, !0)
@@ -2607,7 +2607,7 @@ var ChemDoodle = function () {
             return"" === d ? "1" : d
           }
         }}}, cssNumber: {columnCount: !0, fillOpacity: !0, fontWeight: !0, lineHeight: !0, opacity: !0, order: !0, orphans: !0, widows: !0, zIndex: !0, zoom: !0}, cssProps: {"float": m.support.cssFloat ? "cssFloat" :
-              "styleFloat"}, style: function (c, a, d, k) {
+          "styleFloat"}, style: function (c, a, d, k) {
       if (c && !(3 === c.nodeType || 8 === c.nodeType || !c.style)) {
         var b, f, g, e = m.camelCase(a), r = c.style;
         a = m.cssProps[e] || (m.cssProps[e] = B(r, e));
@@ -2618,7 +2618,7 @@ var ChemDoodle = function () {
             d = (b[1] + 1) * b[2] + parseFloat(m.css(c, a)), f = "number";
           if (!(null == d || "number" === f && isNaN(d)))
             if ("number" === f && !m.cssNumber[e] && (d += "px"), !m.support.clearCloneStyle && ("" === d && 0 === a.indexOf("background")) && (r[a] = "inherit"), !g || !("set"in g) || (d = g.set(c, d, k)) !==
-                    n)
+                n)
               try {
                 r[a] = d
               } catch (h) {
@@ -2639,7 +2639,7 @@ var ChemDoodle = function () {
     return b.getComputedStyle(c, null)
   }, Ca = function (c, a, d) {
     var k, b = (d = d || Ba(c)) ? d.getPropertyValue(a) || d[a] : n, f =
-            c.style;
+        c.style;
     d && ("" === b && !m.contains(c.ownerDocument, c) && (b = m.style(c, a)), Wa.test(b) && oc.test(a) && (c = f.width, a = f.minWidth, k = f.maxWidth, f.minWidth = f.maxWidth = f.width = b, b = d.width, f.width = c, f.minWidth = a, f.maxWidth = k));
     return b
   }) : J.documentElement.currentStyle && (Ba = function (c) {
@@ -2652,7 +2652,7 @@ var ChemDoodle = function () {
       if (b = (k = c.runtimeStyle) && k.left)
         k.left = c.currentStyle.left;
       g.left = "fontSize" === a ? "1em" :
-              f;
+          f;
       f = g.pixelLeft + "px";
       g.left = d;
       b && (k.left = b)
@@ -2672,7 +2672,7 @@ var ChemDoodle = function () {
   });
   m.support.opacity || (m.cssHooks.opacity = {get: function (c, a) {
       return sd.test((a && c.currentStyle ? c.currentStyle.filter : c.style.filter) ||
-              "") ? 0.01 * parseFloat(RegExp.$1) + "" : a ? "1" : ""
+          "") ? 0.01 * parseFloat(RegExp.$1) + "" : a ? "1" : ""
     }, set: function (c, a) {
       var d = c.style, k = c.currentStyle, b = m.isNumeric(a) ? "alpha(opacity\x3d" + 100 * a + ")" : "", f = k && k.filter || d.filter || "";
       d.zoom = 1;
@@ -2700,7 +2700,7 @@ var ChemDoodle = function () {
   });
   m.each({margin: "", padding: "", border: "Width"}, function (c, a) {
     m.cssHooks[c +
-    a] = {expand: function (d) {
+        a] = {expand: function (d) {
         var k = 0, b = {};
         for (d = "string" === typeof d?d.split(" "):[d]; 4 > k; k++)
           b[c + Aa[k] + a] = d[k] || d[k - 2] || d[0];
@@ -2746,7 +2746,7 @@ var ChemDoodle = function () {
     }
   });
   m.fn.extend({hover: function (c,
-            a) {
+        a) {
       return this.mouseenter(c).mouseleave(a || c)
     }, bind: function (c, a, d) {
       return this.on(c, null, a, d)
@@ -2774,7 +2774,7 @@ var ChemDoodle = function () {
       b = arguments;
       g.html(k ? m("\x3cdiv\x3e").append(m.parseHTML(c)).find(k) : c)
     }).complete(d && function (c,
-            a) {
+        a) {
       g.each(d, b || [c.responseText, a, c])
     });
     return this
@@ -2796,7 +2796,7 @@ var ChemDoodle = function () {
           e && clearTimeout(e);
           h = n;
           g = b ||
-                  "";
+              "";
           v.readyState = 0 < c ? 4 : 0;
           b = 200 <= c && 300 > c || 304 === c;
           if (k) {
@@ -2859,7 +2859,7 @@ var ChemDoodle = function () {
           }
           if (b)
             p.ifModified &&
-                    ((D = v.getResponseHeader("Last-Modified")) && (m.lastModified[f] = D), (D = v.getResponseHeader("etag")) && (m.etag[f] = D)), 204 === c || "HEAD" === p.type ? D = "nocontent" : 304 === c ? D = "notmodified" : (D = t.state, o = t.data, x = t.error, b = !x);
+                ((D = v.getResponseHeader("Last-Modified")) && (m.lastModified[f] = D), (D = v.getResponseHeader("etag")) && (m.etag[f] = D)), 204 === c || "HEAD" === p.type ? D = "nocontent" : 304 === c ? D = "notmodified" : (D = t.state, o = t.data, x = t.error, b = !x);
           else if (x = D, c || !D)
             D = "error", 0 > c && (c = 0);
           v.status = c;
@@ -2923,11 +2923,11 @@ var ChemDoodle = function () {
       p.hasContent = !Cd.test(p.type);
       f = p.url;
       p.hasContent || (p.data && (f = p.url += (Lb.test(f) ? "\x26" : "?") + p.data, delete p.data),
-              !1 === p.cache && (p.url = rc.test(f) ? f.replace(rc, "$1_\x3d" + Kb++) : f + (Lb.test(f) ? "\x26" : "?") + "_\x3d" + Kb++));
+          !1 === p.cache && (p.url = rc.test(f) ? f.replace(rc, "$1_\x3d" + Kb++) : f + (Lb.test(f) ? "\x26" : "?") + "_\x3d" + Kb++));
       p.ifModified && (m.lastModified[f] && v.setRequestHeader("If-Modified-Since", m.lastModified[f]), m.etag[f] && v.setRequestHeader("If-None-Match", m.etag[f]));
       (p.data && p.hasContent && !1 !== p.contentType || a.contentType) && v.setRequestHeader("Content-Type", p.contentType);
       v.setRequestHeader("Accept", p.dataTypes[0] && p.accepts[p.dataTypes[0]] ? p.accepts[p.dataTypes[0]] + ("*" !== p.dataTypes[0] ? ", " + vc + "; q\x3d0.01" : "") :
-              p.accepts["*"]);
+          p.accepts["*"]);
       for (b in p.headers)
         v.setRequestHeader(b, p.headers[b]);
       if (p.beforeSend && (!1 === p.beforeSend.call(j, v, p) || 2 === A))
@@ -2955,7 +2955,7 @@ var ChemDoodle = function () {
     }, getJSON: function (c, a, d) {
       return m.get(c, a, d, "json")
     }, getScript: function (c,
-            a) {
+        a) {
       return m.get(c, n, a, "script")
     }});
   m.each(["get", "post"], function (c, a) {
@@ -2971,7 +2971,7 @@ var ChemDoodle = function () {
   m.ajaxPrefilter("script", function (c) {
     c.cache === n && (c.cache = !1);
     c.crossDomain && (c.type =
-            "GET", c.global = !1)
+        "GET", c.global = !1)
   });
   m.ajaxTransport("script", function (c) {
     if (c.crossDomain) {
@@ -2989,7 +2989,7 @@ var ChemDoodle = function () {
         }, abort: function () {
           if (a)
             a.onload(n,
-                    !0)
+                !0)
         }}
     }
   });
@@ -3003,7 +3003,7 @@ var ChemDoodle = function () {
     var k, f, g, e = !1 !== c.jsonp && (Mb.test(c.url) ? "url" : "string" === typeof c.data && !(c.contentType || "").indexOf("application/x-www-form-urlencoded") && Mb.test(c.data) && "data");
     if (e || "jsonp" === c.dataTypes[0])
       return k = c.jsonpCallback = m.isFunction(c.jsonpCallback) ? c.jsonpCallback() : c.jsonpCallback, e ? c[e] = c[e].replace(Mb,
-              "$1" + k) : !1 !== c.jsonp && (c.url += (Lb.test(c.url) ? "\x26" : "?") + c.jsonp + "\x3d" + k), c.converters["script json"] = function () {
+          "$1" + k) : !1 !== c.jsonp && (c.url += (Lb.test(c.url) ? "\x26" : "?") + c.jsonp + "\x3d" + k), c.converters["script json"] = function () {
         g || m.error(k + " was not called");
         return g[0]
       }, c.dataTypes[0] = "json", f = b[k], b[k] = function () {
@@ -3025,7 +3025,7 @@ var ChemDoodle = function () {
       a:{
         try {
           c =
-                  new b.ActiveXObject("Microsoft.XMLHTTP");
+              new b.ActiveXObject("Microsoft.XMLHTTP");
           break a
         } catch (a) {
         }
@@ -3046,7 +3046,7 @@ var ChemDoodle = function () {
               e[g] = c.xhrFields[g];
           c.mimeType && e.overrideMimeType && e.overrideMimeType(c.mimeType);
           !c.crossDomain &&
-                  !d["X-Requested-With"] && (d["X-Requested-With"] = "XMLHttpRequest");
+              !d["X-Requested-With"] && (d["X-Requested-With"] = "XMLHttpRequest");
           try {
             for (g in d)
               e.setRequestHeader(g, d[g])
@@ -3073,7 +3073,7 @@ var ChemDoodle = function () {
                 }
             } catch (j) {
               b ||
-                      k(-1, j)
+                  k(-1, j)
             }
             p && k(g, h, p, r)
           };
@@ -3088,19 +3088,19 @@ var ChemDoodle = function () {
       k.queue || (e = m._queueHooks(a, "fx"), null == e.unqueued && (e.unqueued = 0, r = e.empty.fire, e.empty.fire = function () {
         e.unqueued || r()
       }),
-              e.unqueued++, h.always(function () {
-                h.always(function () {
-                  e.unqueued--;
-                  m.queue(a, "fx").length || e.empty.fire()
-                })
-              }));
+          e.unqueued++, h.always(function () {
+            h.always(function () {
+              e.unqueued--;
+              m.queue(a, "fx").length || e.empty.fire()
+            })
+          }));
       if (1 === a.nodeType && ("height"in d || "width"in d))
         k.overflow = [o.overflow, o.overflowX, o.overflowY], "inline" === m.css(a, "display") && "none" === m.css(a, "float") && (!m.support.inlineBlockNeedsLayout || "inline" === F(a.nodeName) ? o.display = "inline-block" : o.zoom = 1);
       k.overflow && (o.overflow = "hidden", m.support.shrinkWrapBlocks || h.always(function () {
         o.overflow = k.overflow[0];
         o.overflowX = k.overflow[1];
         o.overflowY =
-                k.overflow[2]
+            k.overflow[2]
       }));
       for (b in d)
         if (f = d[b], Fd.exec(f) && (delete d[b], g = g || "toggle" === f, f !== (j ? "hide" : "show")))
@@ -3117,7 +3117,7 @@ var ChemDoodle = function () {
           d = ca(j ? l[b] : 0, b, h), b in l || (l[b] = d.start, j && (d.end = d.start, d.start = "width" === b || "height" === b ? 1 : 0))
     }], Ra = {"*": [function (c, a) {
         var d = this.createTween(c,
-                a), k = d.cur(), b = xc.exec(a), f = b && b[3] || (m.cssNumber[c] ? "" : "px"), g = (m.cssNumber[c] || "px" !== f && +k) && xc.exec(m.css(d.elem, c)), e = 1, r = 20;
+            a), k = d.cur(), b = xc.exec(a), f = b && b[3] || (m.cssNumber[c] ? "" : "px"), g = (m.cssNumber[c] || "px" !== f && +k) && xc.exec(m.css(d.elem, c)), e = 1, r = 20;
         if (g && g[3] !== f) {
           f = f || g[3];
           b = b || [];
@@ -3134,7 +3134,7 @@ var ChemDoodle = function () {
       for (var d, k = 0, b = c.length; k < b; k++)
         d = c[k], Ra[d] = Ra[d] || [], Ra[d].unshift(a)
     }, prefilter: function (c,
-            a) {
+        a) {
       a ? Xa.unshift(c) : Xa.push(c)
     }});
   m.Tween = U;
@@ -3152,7 +3152,7 @@ var ChemDoodle = function () {
     }, run: function (c) {
       var a, d = U.propHooks[this.prop];
       this.pos = this.options.duration ? a = m.easing[this.easing](c, this.options.duration * c, 0, 1, this.options.duration) : a =
-              c;
+          c;
       this.now = (this.end - this.start) * a + this.start;
       this.options.step && this.options.step.call(this.elem, this.now, this);
       d && d.set ? d.set(this) : U.propHooks._default.set(this);
@@ -3169,7 +3169,7 @@ var ChemDoodle = function () {
           m.fx.step[c.prop](c);
         else
           c.elem.style && (null != c.elem.style[m.cssProps[c.prop]] ||
-                  m.cssHooks[c.prop]) ? m.style(c.elem, c.prop, c.now + c.unit) : c.elem[c.prop] = c.now
+              m.cssHooks[c.prop]) ? m.style(c.elem, c.prop, c.now + c.unit) : c.elem[c.prop] = c.now
       }}};
   U.propHooks.scrollTop = U.propHooks.scrollLeft = {set: function (c) {
       c.elem.nodeType && c.elem.parentNode && (c.elem[c.prop] = c.now)
@@ -3183,7 +3183,7 @@ var ChemDoodle = function () {
   m.fn.extend({fadeTo: function (a, d, k, b) {
       return this.filter(c).css("opacity", 0).show().end().animate({opacity: d}, a, k, b)
     }, animate: function (c,
-            a, d, k) {
+        a, d, k) {
       var b = m.isEmptyObject(c), f = m.speed(a, d, k);
       a = function () {
         var a = da(this, m.extend({}, c), f);
@@ -3206,7 +3206,7 @@ var ChemDoodle = function () {
         else
           for (b in g)
             g[b] && (g[b].stop && Gd.test(b)) &&
-                    k(g[b]);
+                k(g[b]);
         for (b = f.length; b--; )
           if (f[b].elem === this && (null == c || f[b].queue === c))
             f[b].anim.stop(d), a = !1, f.splice(b, 1);
@@ -3236,7 +3236,7 @@ var ChemDoodle = function () {
   m.speed = function (c, a, d) {
     var k = c && "object" === typeof c ? m.extend({}, c) : {complete: d || !d && a || m.isFunction(c) && c, duration: c, easing: d && a || a && !m.isFunction(a) && a};
     k.duration = m.fx.off ? 0 : "number" === typeof k.duration ? k.duration : k.duration in m.fx.speeds ? m.fx.speeds[k.duration] :
-            m.fx.speeds._default;
+        m.fx.speeds._default;
     if (null == k.queue || !0 === k.queue)
       k.queue = "fx";
     k.old = k.complete;
@@ -3298,7 +3298,7 @@ var ChemDoodle = function () {
       "static" === k && (c.style.position = "relative");
       var b = m(c), f = b.offset(), g = m.css(c, "top"), e = m.css(c, "left"), r = {}, h = {};
       ("absolute" === k || "fixed" === k) && -1 < m.inArray("auto", [g, e]) ? (h = b.position(), k = h.top, e = h.left) : (k = parseFloat(g) ||
-              0, e = parseFloat(e) || 0);
+          0, e = parseFloat(e) || 0);
       m.isFunction(a) && (a = a.call(c, d, f));
       null != a.top && (r.top = a.top - f.top + k);
       null != a.left && (r.left = a.left - f.left + e);
@@ -3309,7 +3309,7 @@ var ChemDoodle = function () {
         var c, a, d = {top: 0, left: 0}, k = this[0];
         "fixed" === m.css(k, "position") ? a = k.getBoundingClientRect() : (c = this.offsetParent(), a = this.offset(), m.nodeName(c[0], "html") || (d = c.offset()), d.top += m.css(c[0], "borderTopWidth", !0), d.left += m.css(c[0], "borderLeftWidth", !0));
         return{top: a.top - d.top - m.css(k,
-                  "marginTop", !0), left: a.left - d.left - m.css(k, "marginLeft", !0)}
+              "marginTop", !0), left: a.left - d.left - m.css(k, "marginLeft", !0)}
       }
     }, offsetParent: function () {
       return this.map(function () {
@@ -3326,7 +3326,7 @@ var ChemDoodle = function () {
         if (b === n)
           return f ? a in f ? f[a] : f.document.documentElement[k] : c[k];
         f ? f.scrollTo(!d ? b : m(f).scrollLeft(), d ?
-                b : m(f).scrollTop()) : c[k] = b
+            b : m(f).scrollTop()) : c[k] = b
       }, c, k, arguments.length, null)
     }
   });
@@ -3336,7 +3336,7 @@ var ChemDoodle = function () {
         var f = arguments.length && (d || "boolean" !== typeof k), g = d || (!0 === k || !0 === b ? "margin" : "border");
         return m.access(this, function (a, d, k) {
           return m.isWindow(a) ? a.document.documentElement["client" + c] : 9 === a.nodeType ? (d = a.documentElement, Math.max(a.body["scroll" + c], d["scroll" + c], a.body["offset" + c], d["offset" + c], d["client" +
-          c])) : k === n ? m.css(a, d, g) : m.style(a, d, k, g)
+              c])) : k === n ? m.css(a, d, g) : m.style(a, d, k, g)
         }, a, f ? k : n, f, null)
       }
     })
@@ -3378,7 +3378,7 @@ var ChemDoodle = function () {
       h.unshift(f, j, l, t);
       a && clearTimeout(a);
       a = setTimeout(n,
-              200);
+          200);
       return(b.event.dispatch || b.event.handle).apply(this, h)
     }
   }
@@ -3393,7 +3393,7 @@ var ChemDoodle = function () {
       if (this.addEventListener)
         for (var a = h.length; a; )
           this.addEventListener(h[--a],
-                  j, !1);
+              j, !1);
       else
         this.onmousewheel = j;
       b.data(this, "mousewheel-line-height", f.getLineHeight(this));
@@ -3411,7 +3411,7 @@ var ChemDoodle = function () {
     }};
   b.fn.extend({mousewheel: function (a) {
       return a ? this.bind("mousewheel",
-              a) : this.trigger("mousewheel")
+          a) : this.trigger("mousewheel")
     }, unmousewheel: function (a) {
       return this.unbind("mousewheel", a)
     }})
@@ -3439,7 +3439,7 @@ var ChemDoodle = function () {
   } else
     l.invsqrt = function (c) {
       return 1 /
-              Math.sqrt(c)
+          Math.sqrt(c)
     };
   var g = null;
   n();
@@ -3498,7 +3498,7 @@ var ChemDoodle = function () {
     }, normalize: function (c, a) {
       a || (a = c);
       var d = c[0],
-              b = c[1], f = c[2], g = Math.sqrt(d * d + b * b + f * f);
+          b = c[1], f = c[2], g = Math.sqrt(d * d + b * b + f * f);
       if (g) {
         if (1 === g)
           return a[0] = d, a[1] = b, a[2] = f, a
@@ -3530,7 +3530,7 @@ var ChemDoodle = function () {
     }, dot: function (c, a) {
       return c[0] * a[0] + c[1] * a[1] + c[2] * a[2]
     }, direction: function (c,
-            a, d) {
+        a, d) {
       d || (d = c);
       var b = c[0] - a[0], f = c[1] - a[1];
       c = c[2] - a[2];
@@ -3559,7 +3559,7 @@ var ChemDoodle = function () {
     r[0] = 2 * (c[0] - f[0]) / f[2] - 1;
     r[1] = 2 * (c[1] - f[1]) / f[3] - 1;
     r[2] =
-            2 * c[2] - 1;
+        2 * c[2] - 1;
     r[3] = 1;
     q.multiply(b, a, e);
     if (!q.inverse(e))
@@ -3582,7 +3582,7 @@ var ChemDoodle = function () {
       a.cross(f, c, w), 1E-6 > a.length(w) && a.cross(p, c, w), 1E-6 > a.length(w) && a.cross(o, c, w), a.normalize(w), t.fromAngleAxis(Math.PI, w, b);
     else {
       var g = Math.sqrt(2 * (1 + g)),
-              e = 1 / g;
+          e = 1 / g;
       a.cross(c, d, w);
       b[0] = w[0] * e;
       b[1] = w[1] * e;
@@ -3635,7 +3635,7 @@ var ChemDoodle = function () {
     }, multiply: function (c, a, d) {
       d || (d = c);
       var b = c[0], f = c[1], g = c[2],
-              e = c[3], r = c[4], h = c[5], p = c[6], o = c[7];
+          e = c[3], r = c[4], h = c[5], p = c[6], o = c[7];
       c = c[8];
       var j = a[0], l = a[1], w = a[2], n = a[3], q = a[4], t = a[5], A = a[6], u = a[7];
       a = a[8];
@@ -3685,7 +3685,7 @@ var ChemDoodle = function () {
       c[3] = 0;
       c[4] = 1;
       c[5] =
-              0;
+          0;
       c[6] = 0;
       c[7] = 0;
       c[8] = 1;
@@ -3732,7 +3732,7 @@ var ChemDoodle = function () {
       return a
     }, str: function (c) {
       return"[" + c[0] + ", " + c[1] + ", " + c[2] +
-              ", " + c[3] + ", " + c[4] + ", " + c[5] + ", " + c[6] + ", " + c[7] + ", " + c[8] + "]"
+          ", " + c[3] + ", " + c[4] + ", " + c[5] + ", " + c[6] + ", " + c[7] + ", " + c[8] + "]"
     }}, q = {create: function (c) {
       var a = new g(16);
       c && (a[0] = c[0], a[1] = c[1], a[2] = c[2], a[3] = c[3], a[4] = c[4], a[5] = c[5], a[6] = c[6], a[7] = c[7], a[8] = c[8], a[9] = c[9], a[10] = c[10], a[11] = c[11], a[12] = c[12], a[13] = c[13], a[14] = c[14], a[15] = c[15]);
@@ -3757,7 +3757,7 @@ var ChemDoodle = function () {
       A[15] = t;
       return A
     }, set: function (c,
-            a) {
+        a) {
       a[0] = c[0];
       a[1] = c[1];
       a[2] = c[2];
@@ -3777,7 +3777,7 @@ var ChemDoodle = function () {
       return a
     }, equal: function (c, a) {
       return c === a || 1E-6 > Math.abs(c[0] - a[0]) && 1E-6 > Math.abs(c[1] - a[1]) && 1E-6 > Math.abs(c[2] - a[2]) && 1E-6 > Math.abs(c[3] - a[3]) && 1E-6 > Math.abs(c[4] - a[4]) && 1E-6 > Math.abs(c[5] - a[5]) && 1E-6 > Math.abs(c[6] - a[6]) && 1E-6 > Math.abs(c[7] - a[7]) && 1E-6 > Math.abs(c[8] - a[8]) && 1E-6 > Math.abs(c[9] - a[9]) && 1E-6 > Math.abs(c[10] - a[10]) &&
-              1E-6 > Math.abs(c[11] - a[11]) && 1E-6 > Math.abs(c[12] - a[12]) && 1E-6 > Math.abs(c[13] - a[13]) && 1E-6 > Math.abs(c[14] - a[14]) && 1E-6 > Math.abs(c[15] - a[15])
+          1E-6 > Math.abs(c[11] - a[11]) && 1E-6 > Math.abs(c[12] - a[12]) && 1E-6 > Math.abs(c[13] - a[13]) && 1E-6 > Math.abs(c[14] - a[14]) && 1E-6 > Math.abs(c[15] - a[15])
     }, identity: function (c) {
       c || (c = q.create());
       c[0] = 1;
@@ -3835,7 +3835,7 @@ var ChemDoodle = function () {
       var a = c[0], d = c[1], b = c[2], f = c[3], g = c[4], e = c[5], r = c[6], h = c[7], p = c[8], o = c[9], j = c[10], l = c[11], w = c[12], n = c[13], q = c[14];
       c = c[15];
       return w * o * r * f - p * n * r * f - w * e * j * f + g * n * j * f + p * e * q * f - g * o * q * f - w * o * b * h + p * n * b * h + w * d * j * h - a * n * j * h - p * d * q * h + a * o * q * h + w * e * b * l - g * n * b * l - w * d * r * l + a * n * r * l + g * d * q * l - a * e * q * l - p * e * b * c + g * o * b *
-              c + p * d * r * c - a * o * r * c - g * d * j * c + a * e * j * c
+          c + p * d * r * c - a * o * r * c - g * d * j * c + a * e * j * c
     }, inverse: function (c, a) {
       a || (a = c);
       var d = c[0], b = c[1], f = c[2], g = c[3], e = c[4], r = c[5], h = c[6], p = c[7], o = c[8], j = c[9], l = c[10], w = c[11], n = c[12], q = c[13], t = c[14], A = c[15], u = d * r - b * e, v = d * h - f * e, y = d * p - g * e, z = b * h - f * r, B = b * p - g * r, ba = f * p - g * h, ea = o * q - j * n, fa = o * t - l * n, X = o * A - w * n, ha = j * t - l * q, sa = j * A - w * q, qa = l * A - w * t, R = u * qa - v * sa + y * ha + z * X - B * fa + ba * ea;
@@ -3848,7 +3848,7 @@ var ChemDoodle = function () {
       a[3] = (-j * ba + l * B - w * z) * R;
       a[4] = (-e * qa + h * X - p * fa) * R;
       a[5] = (d * qa - f *
-              X + g * fa) * R;
+          X + g * fa) * R;
       a[6] = (-n * ba + t * y - A * v) * R;
       a[7] = (o * ba - l * y + w * v) * R;
       a[8] = (e * sa - r * X + p * ea) * R;
@@ -3910,7 +3910,7 @@ var ChemDoodle = function () {
     }, multiply: function (c, a, d) {
       d || (d = c);
       var b = c[0], f = c[1], g = c[2], e = c[3], r = c[4], h =
-              c[5], p = c[6], o = c[7], j = c[8], l = c[9], w = c[10], n = c[11], q = c[12], t = c[13], A = c[14];
+          c[5], p = c[6], o = c[7], j = c[8], l = c[9], w = c[10], n = c[11], q = c[12], t = c[13], A = c[14];
       c = c[15];
       var u = a[0], v = a[1], y = a[2], z = a[3];
       d[0] = u * b + v * r + y * j + z * q;
@@ -3963,7 +3963,7 @@ var ChemDoodle = function () {
       var b = a[0], f = a[1];
       a = a[2];
       var g, e,
-              r, h, p, o, j, l, w, n, q, t;
+          r, h, p, o, j, l, w, n, q, t;
       if (!d || c === d)
         return c[12] = c[0] * b + c[4] * f + c[8] * a + c[12], c[13] = c[1] * b + c[5] * f + c[9] * a + c[13], c[14] = c[2] * b + c[6] * f + c[10] * a + c[14], c[15] = c[3] * b + c[7] * f + c[11] * a + c[15], c;
       g = c[0];
@@ -4082,7 +4082,7 @@ var ChemDoodle = function () {
       a = Math.cos(a);
       var f = c[0], g = c[1], e = c[2], r = c[3], h = c[8], p = c[9], o = c[10], j = c[11];
       d ? c !== d && (d[4] = c[4], d[5] = c[5], d[6] = c[6], d[7] =
-              c[7], d[12] = c[12], d[13] = c[13], d[14] = c[14], d[15] = c[15]) : d = c;
+          c[7], d[12] = c[12], d[13] = c[13], d[14] = c[14], d[15] = c[15]) : d = c;
       d[0] = f * a + h * -b;
       d[1] = g * a + p * -b;
       d[2] = e * a + o * -b;
@@ -4105,7 +4105,7 @@ var ChemDoodle = function () {
       d[5] = g * -b + p * a;
       d[6] = e * -b + o * a;
       d[7] = r *
-              -b + j * a;
+          -b + j * a;
       return d
     }, frustum: function (c, a, d, b, f, g, e) {
       e || (e = q.create());
@@ -4145,7 +4145,7 @@ var ChemDoodle = function () {
       e[8] = 0;
       e[9] = 0;
       e[10] =
-              -2 / p;
+          -2 / p;
       e[11] = 0;
       e[12] = -(c + a) / r;
       e[13] = -(b + d) / h;
@@ -4182,7 +4182,7 @@ var ChemDoodle = function () {
       b[0] = f;
       b[1] = r;
       b[2] =
-              a;
+          a;
       b[3] = 0;
       b[4] = g;
       b[5] = h;
@@ -4221,7 +4221,7 @@ var ChemDoodle = function () {
       return d
     }, str: function (c) {
       return"[" +
-              c[0] + ", " + c[1] + ", " + c[2] + ", " + c[3] + ", " + c[4] + ", " + c[5] + ", " + c[6] + ", " + c[7] + ", " + c[8] + ", " + c[9] + ", " + c[10] + ", " + c[11] + ", " + c[12] + ", " + c[13] + ", " + c[14] + ", " + c[15] + "]"
+          c[0] + ", " + c[1] + ", " + c[2] + ", " + c[3] + ", " + c[4] + ", " + c[5] + ", " + c[6] + ", " + c[7] + ", " + c[8] + ", " + c[9] + ", " + c[10] + ", " + c[11] + ", " + c[12] + ", " + c[13] + ", " + c[14] + ", " + c[15] + "]"
     }}, t = {create: function (c) {
       var a = new g(4);
       c ? (a[0] = c[0], a[1] = c[1], a[2] = c[2], a[3] = c[3]) : a[0] = a[1] = a[2] = a[3] = 0;
@@ -4241,7 +4241,7 @@ var ChemDoodle = function () {
       return a
     }, equal: function (c, a) {
       return c === a || 1E-6 > Math.abs(c[0] - a[0]) && 1E-6 > Math.abs(c[1] -
-              a[1]) && 1E-6 > Math.abs(c[2] - a[2]) && 1E-6 > Math.abs(c[3] - a[3])
+          a[1]) && 1E-6 > Math.abs(c[2] - a[2]) && 1E-6 > Math.abs(c[3] - a[3])
     }, identity: function (c) {
       c || (c = t.create());
       c[0] = 0;
@@ -4266,7 +4266,7 @@ var ChemDoodle = function () {
   t.inverse = function (c, a) {
     var d = c[0], b = c[1], f = c[2], g = c[3], d = (d = d * d + b * b + f * f + g * g) ? 1 / d : 0;
     if (!a || c ===
-            a)
+        a)
       return c[0] *= -d, c[1] *= -d, c[2] *= -d, c[3] *= d, c;
     a[0] = -c[0] * d;
     a[1] = -c[1] * d;
@@ -4298,7 +4298,7 @@ var ChemDoodle = function () {
     a[1] = b * e;
     a[2] = f * e;
     a[3] =
-            g * e;
+        g * e;
     return a
   };
   t.add = function (c, a, d) {
@@ -4329,7 +4329,7 @@ var ChemDoodle = function () {
     var e = c[1], r = c[2];
     c = c[3];
     var h = c * b + e * g - r * f, p = c * f + r * b - a * g, o = c * g +
-            a * f - e * b, b = -a * b - e * f - r * g;
+        a * f - e * b, b = -a * b - e * f - r * g;
     d[0] = h * c + b * -a + p * -r - o * -e;
     d[1] = p * c + b * -e + o * -a - h * -r;
     d[2] = o * c + b * -r + h * -e - p * -a;
@@ -4359,7 +4359,7 @@ var ChemDoodle = function () {
     return a
   };
   t.toMat4 = function (c,
-          a) {
+      a) {
     a || (a = q.create());
     var d = c[0], b = c[1], f = c[2], g = c[3], e = d + d, r = b + b, h = f + f, p = d * e, o = d * r, d = d * h, j = b * r, b = b * h, f = f * h, e = g * e, r = g * r, g = g * h;
     a[0] = 1 - (j + f);
@@ -4389,7 +4389,7 @@ var ChemDoodle = function () {
     e = Math.sqrt(1 - f * f);
     if (0.001 > Math.abs(e))
       return b[0] =
-              0.5 * c[0] + 0.5 * a[0], b[1] = 0.5 * c[1] + 0.5 * a[1], b[2] = 0.5 * c[2] + 0.5 * a[2], b[3] = 0.5 * c[3] + 0.5 * a[3], b;
+          0.5 * c[0] + 0.5 * a[0], b[1] = 0.5 * c[1] + 0.5 * a[1], b[2] = 0.5 * c[2] + 0.5 * a[2], b[3] = 0.5 * c[3] + 0.5 * a[3], b;
     f = Math.sin((1 - d) * g) / e;
     d = Math.sin(d * g) / e;
     b[0] = c[0] * f + a[0] * d;
@@ -4408,7 +4408,7 @@ var ChemDoodle = function () {
       b = 0;
       a[4] > a[0] && (b = 1);
       a[8] > a[3 * b + b] &&
-              (b = 2);
+          (b = 2);
       var g = f[b], e = f[g];
       f = Math.sqrt(a[3 * b + b] - a[3 * g + g] - a[3 * e + e] + 1);
       d[b] = 0.5 * f;
@@ -4504,7 +4504,7 @@ var ChemDoodle = function () {
       return d
     }, equal: function (a, d) {
       return a ===
-              d || 1E-6 > Math.abs(a[0] - d[0]) && 1E-6 > Math.abs(a[1] - d[1])
+          d || 1E-6 > Math.abs(a[0] - d[0]) && 1E-6 > Math.abs(a[1] - d[1])
     }, negate: function (a, d) {
       d || (d = a);
       d[0] = -a[0];
@@ -4563,7 +4563,7 @@ var ChemDoodle = function () {
       e[3] = f;
       return e
     }, set: function (a,
-            d) {
+        d) {
       d[0] = a[0];
       d[1] = a[1];
       d[2] = a[2];
@@ -4595,7 +4595,7 @@ var ChemDoodle = function () {
     }, inverse: function (a, d) {
       d || (d = a);
       var b = a[0], f = a[1], g = a[2],
-              e = a[3], r = b * e - g * f;
+          e = a[3], r = b * e - g * f;
       if (!r)
         return null;
       r = 1 / r;
@@ -4662,7 +4662,7 @@ var ChemDoodle = function () {
       b[3] = a[3] + d[3];
       return b
     }, subtract: function (a,
-            d, b) {
+        d, b) {
       b || (b = d);
       b[0] = a[0] - d[0];
       b[1] = a[1] - d[1];
@@ -4698,7 +4698,7 @@ var ChemDoodle = function () {
       return d
     }, equal: function (a, d) {
       return a === d || 1E-6 > Math.abs(a[0] - d[0]) &&
-              1E-6 > Math.abs(a[1] - d[1]) && 1E-6 > Math.abs(a[2] - d[2]) && 1E-6 > Math.abs(a[3] - d[3])
+          1E-6 > Math.abs(a[1] - d[1]) && 1E-6 > Math.abs(a[2] - d[2]) && 1E-6 > Math.abs(a[3] - d[3])
     }, negate: function (a, d) {
       d || (d = a);
       d[0] = -a[0];
@@ -4723,7 +4723,7 @@ var ChemDoodle = function () {
       return f
     }, str: function (a) {
       return"[" + a[0] + ", " +
-              a[1] + ", " + a[2] + ", " + a[3] + "]"
+          a[1] + ", " + a[2] + ", " + a[3] + "]"
     }};
   b && (b.glMatrixArrayType = g, b.MatrixArray = g, b.setMatrixArrayType = j, b.determineMatrixArrayType = n, b.glMath = l, b.vec2 = z, b.vec3 = a, b.vec4 = B, b.mat2 = y, b.mat3 = A, b.mat4 = q, b.quat4 = t);
   return{glMatrixArrayType: g, MatrixArray: g, setMatrixArrayType: j, determineMatrixArrayType: n, glMath: l, vec2: z, vec3: a, vec4: B, mat2: y, mat3: A, mat4: q, quat4: t}
@@ -4739,7 +4739,7 @@ ChemDoodle.animations = function (b) {
       g.value = b.requestAnimFrame(h)
     }
     if (!b.requestAnimationFrame && !b.webkitRequestAnimationFrame && (!b.mozRequestAnimationFrame || !b.mozCancelRequestAnimationFrame) && !b.oRequestAnimationFrame &&
-            !b.msRequestAnimationFrame)
+        !b.msRequestAnimationFrame)
       return b.setInterval(j, l);
     var e = (new Date).getTime(), g = {};
     g.value = b.requestAnimFrame(h);
@@ -4747,7 +4747,7 @@ ChemDoodle.animations = function (b) {
   };
   j.clearRequestInterval = function (j) {
     b.cancelAnimationFrame ? b.cancelAnimationFrame(j.value) : b.webkitCancelAnimationFrame ? b.webkitCancelAnimationFrame(j.value) : b.webkitCancelRequestAnimationFrame ? b.webkitCancelRequestAnimationFrame(j.value) : b.mozCancelRequestAnimationFrame ? b.mozCancelRequestAnimationFrame(j.value) : b.oCancelRequestAnimationFrame ? b.oCancelRequestAnimationFrame(j.value) :
-            b.msCancelRequestAnimationFrame ? b.msCancelRequestAnimationFrame(j.value) : clearInterval(j)
+        b.msCancelRequestAnimationFrame ? b.msCancelRequestAnimationFrame(j.value) : clearInterval(j)
   };
   j.requestTimeout = function (j, l) {
     function h() {
@@ -4761,7 +4761,7 @@ ChemDoodle.animations = function (b) {
   };
   j.clearRequestTimeout = function (j) {
     b.cancelAnimationFrame ?
-            b.cancelAnimationFrame(j.value) : b.webkitCancelAnimationFrame ? b.webkitCancelAnimationFrame(j.value) : b.webkitCancelRequestAnimationFrame ? b.webkitCancelRequestAnimationFrame(j.value) : b.mozCancelRequestAnimationFrame ? b.mozCancelRequestAnimationFrame(j.value) : b.oCancelRequestAnimationFrame ? b.oCancelRequestAnimationFrame(j.value) : b.msCancelRequestAnimationFrame ? b.msCancelRequestAnimationFrame(j.value) : clearTimeout(j)
+        b.cancelAnimationFrame(j.value) : b.webkitCancelAnimationFrame ? b.webkitCancelAnimationFrame(j.value) : b.webkitCancelRequestAnimationFrame ? b.webkitCancelRequestAnimationFrame(j.value) : b.mozCancelRequestAnimationFrame ? b.mozCancelRequestAnimationFrame(j.value) : b.oCancelRequestAnimationFrame ? b.oCancelRequestAnimationFrame(j.value) : b.msCancelRequestAnimationFrame ? b.msCancelRequestAnimationFrame(j.value) : clearTimeout(j)
   };
   return j
 }(window);
@@ -4813,7 +4813,7 @@ ChemDoodle.extensions = function (b, j, n) {
       b.bezierCurveTo(h, a - r, g - d, e, g, e);
       b.bezierCurveTo(g + d, e, f, a - r, f, a);
       b.bezierCurveTo(f,
-              a + r, g + d, p, g, p);
+          a + r, g + d, p, g, p);
       b.bezierCurveTo(g - d, p, h, a + r, h, a);
       b.closePath()
     }, getFontString: function (b, h, e, g) {
@@ -4863,7 +4863,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
     g[a.toLowerCase()] && (a = g[a.toLowerCase()]);
     if ("#" === a.charAt(0))
       return 4 === a.length && (a = "#" + a.charAt(1) + a.charAt(1) + a.charAt(2) + a.charAt(2) + a.charAt(3) + a.charAt(3)), [parseInt(a.substring(1, 3), 16) / 255 * d, parseInt(a.substring(3,
-                5), 16) / 255 * d, parseInt(a.substring(5, 7), 16) / 255 * d];
+            5), 16) / 255 * d, parseInt(a.substring(5, 7), 16) / 255 * d];
     if (j.stringStartsWith(a, "rgb")) {
       var f = a.replace(/rgb\(|\)/g, "").split(",");
       return 3 !== f.length ? b : [parseInt(f[0]) / 255 * d, parseInt(f[1]) / 255 * d, parseInt(f[2]) / 255 * d]
@@ -4884,7 +4884,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
     a = d.distance(a);
     a = new n.Point(a * h.cos(b), -a * h.sin(b));
     return e.isBetween(-a.y,
-            0, f) ? h.abs(a.x) : -1
+        0, f) ? h.abs(a.x) : -1
   };
   e.calculateDistanceInterior = function (a, d, b) {
     if (this.isBetween(d.x, b.x, b.x + b.w) && this.isBetween(d.y, b.y, b.y + b.w))
@@ -4903,7 +4903,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
       return 0;
     g = d = 0;
     for (f = b.length; g <
-            f; g++) {
+        f; g++) {
       var e = b[g], j = a.x - e.x, e = a.y - e.y;
       d = h.max(d, h.sqrt(j * j + e * e))
     }
@@ -4935,7 +4935,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
       a = f(e, g, a - 1 / 3)
     }
     return[255 *
-              b, 255 * d, 255 * a]
+          b, 255 * d, 255 * a]
   };
   e.isPointInPoly = function (a, d) {
     for (var b = !1, f = -1, g = a.length, e = g - 1; ++f < g; e = f)
@@ -4953,7 +4953,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
     f = e.getRGB(b[d], 1);
     b = e.getRGB(b[d + 1], 1);
     return"rgb(" + [255 * (f[0] + (b[0] - f[0]) * a), 255 * (f[1] + (b[1] -
-              f[1]) * a), 255 * (f[2] + (b[2] - f[2]) * a)].join() + ")"
+          f[1]) * a), 255 * (f[2] + (b[2] - f[2]) * a)].join() + ")"
   };
   e.angleBounds = function (a, d, b) {
     for (var f = 2 * h.PI; 0 > a; )
@@ -4974,7 +4974,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
   n.maxX = n.maxY = n.maxZ = -Infinity;
   n.expand = function (l, h, e, g) {
     l instanceof b.Bounds ? (this.minX = j.min(this.minX, l.minX), this.minY = j.min(this.minY, l.minY), this.maxX = j.max(this.maxX, l.maxX), this.maxY = j.max(this.maxY, l.maxY), Infinity !== l.maxZ && (this.minZ = j.min(this.minZ, l.minZ), this.maxZ = j.max(this.maxZ, l.maxZ))) : (this.minX = j.min(this.minX, l), this.maxX = j.max(this.maxX, l), this.minY = j.min(this.minY, h), this.maxY = j.max(this.maxY,
-            h), void 0 !== e && void 0 !== g && (this.minX = j.min(this.minX, e), this.maxX = j.max(this.maxX, e), this.minY = j.min(this.minY, g), this.maxY = j.max(this.maxY, g)))
+        h), void 0 !== e && void 0 !== g && (this.minX = j.min(this.minX, e), this.maxX = j.max(this.maxX, e), this.minY = j.min(this.minY, g), this.maxY = j.max(this.maxY, g)))
   };
   n.expand3D = function (b, h, e, g, a, d) {
     this.minX = j.min(this.minX, b);
@@ -4984,7 +4984,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
     this.minZ = j.min(this.minZ, e);
     this.maxZ = j.max(this.maxZ, e);
     void 0 !== g && (void 0 !== a && void 0 !== d) && (this.minX = j.min(this.minX, g), this.maxX = j.max(this.maxX, g), this.minY = j.min(this.minY, a), this.maxY = j.max(this.maxY,
-            a), this.minZ = j.min(this.minZ, d), this.maxZ = j.max(this.maxZ, d))
+        a), this.minZ = j.min(this.minZ, d), this.maxZ = j.max(this.maxZ, d))
   }
 })(ChemDoodle.math, Math);
 (function () {
@@ -5003,7 +5003,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
       n[y] = b.subtract(d[y + 1], d[y]), n[y] = b.scale(n[y], 3);
     for (y = 0; y <= e - 1; y++)
       for (var B = 0; B <=
-              e; B++)
+          e; B++)
         u[y] || (u[y] = []), u[y][B] = b.dotProduct(n[y], j[B]);
     for (y = 0; y <= r; y++)
       v[y] || (v[y] = []), v[y].y = 0, v[y].x = parseFloat(y) / r;
@@ -5025,7 +5025,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
     return{location: z, distance: u}
   }, l = function (a, d, b, g) {
     var e = [], r = [], n = [], u = [],
-            v = 0, z, y;
+        v = 0, z, y;
     y = 0 == a[0].y ? 0 : 0 < a[0].y ? 1 : -1;
     for (var B = 1; B <= d; B++)
       z = 0 == a[B].y ? 0 : 0 < a[B].y ? 1 : -1, z != y && v++, y = z;
@@ -5050,7 +5050,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
         z = Math.min(c, v);
         if (Math.max(c, v) - z < j)
           return n = a[d].x - a[0].x, u = a[d].y - a[0].y, b[0] = 0 + 1 * (n * (a[0].y - 0) - u * (a[0].x - 0)) * (1 / (0 * n -
-                  1 * u)), 1
+              1 * u)), 1
     }
     h(a, d, 0.5, e, r);
     a = l(e, d, n, g + 1);
@@ -5118,7 +5118,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
     }
     for (j = r = h = 0; j < a.length; j++)
       h +=
-              a[j].x * b[j](d), r += a[j].y * b[j](d);
+          a[j].x * b[j](d), r += a[j].y * b[j](d);
     return{x: h, y: r}
   }, a = function (a, d) {
     return Math.sqrt(Math.pow(a.x - d.x, 2) + Math.pow(a.y - d.y, 2))
@@ -5133,7 +5133,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
   ChemDoodle.math.jsBezier = {distanceFromCurve: n, gradientAtPoint: r, gradientAtPointAlongCurveFrom: function (a, b, g) {
       b = d(a, b, g);
       1 < b.location &&
-              (b.location = 1);
+          (b.location = 1);
       0 > b.location && (b.location = 0);
       return r(a, b.location)
     }, nearestPointOnCurve: function (a, d) {
@@ -5150,7 +5150,7 @@ ChemDoodle.math = function (b, j, n, l, h) {
       return[{x: b.point.x + g, y: b.point.y + a}, {x: b.point.x - g, y: b.point.y - a}]
     }, locationAlongCurveFrom: function (a, b, g) {
       return d(a,
-              b, g).location
+          b, g).location
     }, getLength: function (d) {
       for (var b = g(d, 0), e = 0, h = 0, r = null; 1 > h; )
         h += 0.005, r = g(d, h), e += a(r, b), b = r;
@@ -5174,7 +5174,7 @@ ChemDoodle.featureDetection = function (b, j, n, l) {
       return j.support.cors
     }, supports_touch: function () {
       return"ontouchstart"in
-              l && navigator.userAgent.match(/iPhone|iPad|iPod|Android|BlackBerry|BB10/i)
+          l && navigator.userAgent.match(/iPhone|iPad|iPod|Android|BlackBerry|BB10/i)
     }, supports_gesture: function () {
       return"ongesturestart"in l
     }};
@@ -5200,7 +5200,7 @@ ChemDoodle.ELEMENT = function () {
   j.Be = new b("Be", "Beryllium", 4, !1, "#C2FF00", 0.96, 0, 2, 9);
   j.B = new b("B", "Boron", 5, !0, "#FFB5B5", 0.84, 0, 3, 11);
   j.C = new b("C",
-          "Carbon", 6, !0, "#909090", 0.76, 1.7, 4, 12);
+      "Carbon", 6, !0, "#909090", 0.76, 1.7, 4, 12);
   j.N = new b("N", "Nitrogen", 7, !0, "#3050F8", 0.71, 1.55, 3, 14);
   j.O = new b("O", "Oxygen", 8, !0, "#FF0D0D", 0.66, 1.52, 2, 16);
   j.F = new b("F", "Fluorine", 9, !0, "#90E050", 0.57, 1.47, 1, 19);
@@ -5210,7 +5210,7 @@ ChemDoodle.ELEMENT = function () {
   j.Al = new b("Al", "Aluminum", 13, !1, "#BFA6A6", 1.21, 0, 0, 27);
   j.Si = new b("Si", "Silicon", 14, !0, "#F0C8A0", 1.11, 2.1, 4, 28);
   j.P = new b("P",
-          "Phosphorus", 15, !0, "#FF8000", 1.07, 1.8, 3, 31);
+      "Phosphorus", 15, !0, "#FF8000", 1.07, 1.8, 3, 31);
   j.S = new b("S", "Sulfur", 16, !0, "#FFFF30", 1.05, 1.8, 2, 32);
   j.Cl = new b("Cl", "Chlorine", 17, !0, "#1FF01F", 1.02, 1.75, 1, 35);
   j.Ar = new b("Ar", "Argon", 18, !1, "#80D1E3", 1.06, 1.88, 0, 40);
@@ -5220,7 +5220,7 @@ ChemDoodle.ELEMENT = function () {
   j.Ti = new b("Ti", "Titanium", 22, !1, "#BFC2C7", 1.6, 0, 1, 48);
   j.V = new b("V", "Vanadium", 23, !1, "#A6A6AB", 1.53, 0, 1, 51);
   j.Cr = new b("Cr",
-          "Chromium", 24, !1, "#8A99C7", 1.39, 0, 2, 52);
+      "Chromium", 24, !1, "#8A99C7", 1.39, 0, 2, 52);
   j.Mn = new b("Mn", "Manganese", 25, !1, "#9C7AC7", 1.39, 0, 3, 55);
   j.Fe = new b("Fe", "Iron", 26, !1, "#E06633", 1.32, 0, 2, 56);
   j.Co = new b("Co", "Cobalt", 27, !1, "#F090A0", 1.26, 0, 1, 59);
@@ -5230,7 +5230,7 @@ ChemDoodle.ELEMENT = function () {
   j.Ga = new b("Ga", "Gallium", 31, !1, "#C28F8F", 1.22, 1.87, 0, 69);
   j.Ge = new b("Ge", "Germanium", 32, !1, "#668F8F", 1.2, 0, 4, 74);
   j.As = new b("As",
-          "Arsenic", 33, !0, "#BD80E3", 1.19, 1.85, 3, 75);
+      "Arsenic", 33, !0, "#BD80E3", 1.19, 1.85, 3, 75);
   j.Se = new b("Se", "Selenium", 34, !0, "#FFA100", 1.2, 1.9, 2, 80);
   j.Br = new b("Br", "Bromine", 35, !0, "#A62929", 1.2, 1.85, 1, 79);
   j.Kr = new b("Kr", "Krypton", 36, !1, "#5CB8D1", 1.16, 2.02, 0, 84);
@@ -5240,7 +5240,7 @@ ChemDoodle.ELEMENT = function () {
   j.Zr = new b("Zr", "Zirconium", 40, !1, "#94E0E0", 1.75, 0, 0, 90);
   j.Nb = new b("Nb", "Niobium", 41, !1, "#73C2C9", 1.64, 0, 1, 93);
   j.Mo = new b("Mo",
-          "Molybdenum", 42, !1, "#54B5B5", 1.54, 0, 2, 98);
+      "Molybdenum", 42, !1, "#54B5B5", 1.54, 0, 2, 98);
   j.Tc = new b("Tc", "Technetium", 43, !1, "#3B9E9E", 1.47, 0, 3, 0);
   j.Ru = new b("Ru", "Ruthenium", 44, !1, "#248F8F", 1.46, 0, 2, 102);
   j.Rh = new b("Rh", "Rhodium", 45, !1, "#0A7D8C", 1.42, 0, 1, 103);
@@ -5258,7 +5258,7 @@ ChemDoodle.ELEMENT = function () {
   j.La = new b("La", "Lanthanum", 57, !1, "#70D4FF", 2.07, 0, 0, 139);
   j.Ce = new b("Ce", "Cerium", 58, !1, "#FFFFC7", 2.04, 0, 0, 140);
   j.Pr = new b("Pr", "Praseodymium", 59, !1, "#D9FFC7", 2.03,
-          0, 0, 141);
+      0, 0, 141);
   j.Nd = new b("Nd", "Neodymium", 60, !1, "#C7FFC7", 2.01, 0, 0, 142);
   j.Pm = new b("Pm", "Promethium", 61, !1, "#A3FFC7", 1.99, 0, 0, 0);
   j.Sm = new b("Sm", "Samarium", 62, !1, "#8FFFC7", 1.98, 0, 0, 152);
@@ -5268,7 +5268,7 @@ ChemDoodle.ELEMENT = function () {
   j.Dy = new b("Dy", "Dysprosium", 66, !1, "#1FFFC7", 1.92, 0, 0, 164);
   j.Ho = new b("Ho", "Holmium", 67, !1, "#00FF9C", 1.92, 0, 0, 165);
   j.Er = new b("Er", "Erbium", 68, !1, "#00E675",
-          1.89, 0, 0, 166);
+      1.89, 0, 0, 166);
   j.Tm = new b("Tm", "Thulium", 69, !1, "#00D452", 1.9, 0, 0, 169);
   j.Yb = new b("Yb", "Ytterbium", 70, !1, "#00BF38", 1.87, 0, 0, 174);
   j.Lu = new b("Lu", "Lutetium", 71, !1, "#00AB24", 1.87, 0, 0, 175);
@@ -5278,7 +5278,7 @@ ChemDoodle.ELEMENT = function () {
   j.Re = new b("Re", "Rhenium", 75, !1, "#267DAB", 1.51, 0, 3, 187);
   j.Os = new b("Os", "Osmium", 76, !1, "#266696", 1.44, 0, 2, 192);
   j.Ir = new b("Ir", "Iridium", 77, !1, "#175487",
-          1.41, 0, 3, 193);
+      1.41, 0, 3, 193);
   j.Pt = new b("Pt", "Platinum", 78, !1, "#D0D0E0", 1.36, 1.75, 0, 195);
   j.Au = new b("Au", "Gold", 79, !1, "#FFD123", 1.36, 1.66, 1, 197);
   j.Hg = new b("Hg", "Mercury", 80, !1, "#B8B8D0", 1.32, 1.55, 0, 202);
@@ -5288,7 +5288,7 @@ ChemDoodle.ELEMENT = function () {
   j.Po = new b("Po", "Polonium", 84, !1, "#AB5C00", 1.4, 0, 2, 0);
   j.At = new b("At", "Astatine", 85, !0, "#754F45", 1.5, 0, 1, 0);
   j.Rn = new b("Rn", "Radon", 86, !1, "#428296",
-          1.5, 0, 0, 0);
+      1.5, 0, 0, 0);
   j.Fr = new b("Fr", "Francium", 87, !1, "#420066", 2.6, 0, 0, 0);
   j.Ra = new b("Ra", "Radium", 88, !1, "#007D00", 2.21, 0, 0, 0);
   j.Ac = new b("Ac", "Actinium", 89, !1, "#70ABFA", 2.15, 0, 0, 0);
@@ -5298,7 +5298,7 @@ ChemDoodle.ELEMENT = function () {
   j.Np = new b("Np", "Neptunium", 93, !1, "#0080FF", 1.9, 0, 0, 0);
   j.Pu = new b("Pu", "Plutonium", 94, !1, "#006BFF", 1.87, 0, 0, 0);
   j.Am = new b("Am", "Americium", 95, !1, "#545CF2", 1.8,
-          0, 0, 0);
+      0, 0, 0);
   j.Cm = new b("Cm", "Curium", 96, !1, "#785CE3", 1.69, 0, 0, 0);
   j.Bk = new b("Bk", "Berkelium", 97, !1, "#8A4FE3", 0, 0, 0, 0);
   j.Cf = new b("Cf", "Californium", 98, !1, "#A136D4", 0, 0, 0, 0);
@@ -5309,7 +5309,7 @@ ChemDoodle.ELEMENT = function () {
   j.Lr = new b("Lr", "Lawrencium", 103, !1, "#C70066", 0, 0, 0, 0);
   j.Rf = new b("Rf", "Rutherfordium", 104, !1, "#CC0059", 0, 0, 0, 0);
   j.Db =
-          new b("Db", "Dubnium", 105, !1, "#D1004F", 0, 0, 0, 0);
+      new b("Db", "Dubnium", 105, !1, "#D1004F", 0, 0, 0, 0);
   j.Sg = new b("Sg", "Seaborgium", 106, !1, "#D90045", 0, 0, 0, 0);
   j.Bh = new b("Bh", "Bohrium", 107, !1, "#E00038", 0, 0, 0, 0);
   j.Hs = new b("Hs", "Hassium", 108, !1, "#E6002E", 0, 0, 0, 0);
@@ -5319,7 +5319,7 @@ ChemDoodle.ELEMENT = function () {
   j.Cn = new b("Cn", "Copernicium", 112, !1, "#000000", 0, 0, 0, 0);
   j.Uut = new b("Uut", "Ununtrium", 113, !1, "#000000", 0, 0, 0, 0);
   j.Uuq = new b("Uuq",
-          "Ununquadium", 114, !1, "#000000", 0, 0, 0, 0);
+      "Ununquadium", 114, !1, "#000000", 0, 0, 0, 0);
   j.Uup = new b("Uup", "Ununpentium", 115, !1, "#000000", 0, 0, 0, 0);
   j.Uuh = new b("Uuh", "Ununhexium", 116, !1, "#000000", 0, 0, 0, 0);
   j.Uus = new b("Uus", "Ununseptium", 117, !1, "#000000", 0, 0, 0, 0);
@@ -5349,7 +5349,7 @@ ChemDoodle.RESIDUE = function () {
   j.Cys = new b("Cys", "Cysteine", !0, "#E6E600", "#FFFF70", 0);
   j.Gln = new b("Gln", "Glutamine", !0, "#00DCDC", "#FF4C4C", 0);
   j.Glu = new b("Glu",
-          "Glutamic Acid", !0, "#E60A0A", "#660000", -1);
+      "Glutamic Acid", !0, "#E60A0A", "#660000", -1);
   j.Gly = new b("Gly", "Glycine", !1, "#EBEBEB", "#FFFFFF", 0);
   j.His = new b("His", "Histidine", !0, "#8282D2", "#7070FF", 1);
   j.Ile = new b("Ile", "Isoleucine", !1, "#0F820F", "#004C00", 0);
@@ -5359,7 +5359,7 @@ ChemDoodle.RESIDUE = function () {
   j.Phe = new b("Phe", "Phenylalanine", !1, "#3232AA", "#534C52", 0);
   j.Pro = new b("Pro", "Proline", !1, "#DC9682", "#525252", 0);
   j.Ser = new b("Ser",
-          "Serine", !0, "#FA9600", "#FF7042", 0);
+      "Serine", !0, "#FA9600", "#FF7042", 0);
   j.Thr = new b("Thr", "Threonine", !0, "#FA9600", "#B84C00", 0);
   j.Trp = new b("Trp", "Tryptophan", !0, "#B45AB4", "#4F4600", 0);
   j.Tyr = new b("Tyr", "Tyrosine", !0, "#3232AA", "#8C704C", 0);
@@ -5369,7 +5369,7 @@ ChemDoodle.RESIDUE = function () {
   j["*"] = new b("*", "Other", !1, "#BEA06E", "#FF00FF", 0);
   j.A = new b("A", "Adenine", !1, "#BEA06E", "#A0A0FF", 0);
   j.G =
-          new b("G", "Guanine", !1, "#BEA06E", "#FF7070", 0);
+      new b("G", "Guanine", !1, "#BEA06E", "#FF7070", 0);
   j.I = new b("I", "", !1, "#BEA06E", "#80FFFF", 0);
   j.C = new b("C", "Cytosine", !1, "#BEA06E", "#FF8C4B", 0);
   j.T = new b("T", "Thymine", !1, "#BEA06E", "#A0FFA0", 0);
@@ -5430,7 +5430,7 @@ ChemDoodle.RESIDUE = function () {
   };
   n.angle = function (b) {
     var h = b.x -
-            this.x;
+        this.x;
     b = this.y - b.y;
     for (var e = 0, e = 0 === h ? 0 === b ? 0 : 0 < b ? j.PI / 2 : 3 * j.PI / 2 : 0 === b ? 0 < h ? 0 : j.PI : 0 > h ? j.atan(b / h) + j.PI : 0 > b ? j.atan(b / h) + 2 * j.PI : j.atan(b / h); 0 > e; )
       e += 2 * j.PI;
@@ -5468,7 +5468,7 @@ ChemDoodle.RESIDUE = function () {
   l.sub3D = function (b) {
     this.x -= b.x;
     this.y -=
-            b.y;
+        b.y;
     this.z -= b.z
   };
   l.distance3D = function (b) {
@@ -5489,7 +5489,7 @@ ChemDoodle.RESIDUE = function () {
     this.textBounds = [];
     this.specs && (a = this.specs);
     var e = j.getFontString(a.atoms_font_size_2D, a.atoms_font_families_2D, a.atoms_font_bold_2D,
-            a.atoms_font_italic_2D);
+        a.atoms_font_italic_2D);
     b.font = e;
     b.fillStyle = this.getElementColor(a.atoms_useJMOLColors, a.atoms_usePYMOLColors, a.atoms_color, 2);
     "H" === this.label && a.atoms_HBlack_2D && (b.fillStyle = "black");
@@ -5498,14 +5498,14 @@ ChemDoodle.RESIDUE = function () {
       b.beginPath(), b.arc(this.x, this.y, a.atoms_circleDiameter_2D / 2, 0, 2 * h.PI, !1), b.fill(), 0 < a.atoms_circleBorderWidth_2D && (b.lineWidth = a.atoms_circleBorderWidth_2D, b.strokeStyle = "black", b.stroke());
     else if (this.isLabelVisible(a))
       if (b.textAlign =
-              "center", b.textBaseline = "middle", void 0 !== this.altLabel) {
+          "center", b.textBaseline = "middle", void 0 !== this.altLabel) {
         b.fillText(this.altLabel, this.x, this.y);
         var p = b.measureText(this.altLabel).width;
         this.textBounds.push({x: this.x - p / 2, y: this.y - a.atoms_font_size_2D / 2 + 1, w: p, h: a.atoms_font_size_2D - 2})
       } else if (this.any)
         b.font = j.getFontString(a.atoms_font_size_2D + 5, a.atoms_font_families_2D, !0), b.fillText("*", this.x + 1, this.y + 3), p = b.measureText("*").width, this.textBounds.push({x: this.x - p / 2, y: this.y - a.atoms_font_size_2D / 2 + 1, w: p, h: a.atoms_font_size_2D - 2});
       else if (-1 !==
-              this.rgroup)
+          this.rgroup)
         d = "R" + this.rgroup, b.fillText(d, this.x, this.y), p = b.measureText(d).width, this.textBounds.push({x: this.x - p / 2, y: this.y - a.atoms_font_size_2D / 2 + 1, w: p, h: a.atoms_font_size_2D - 2});
       else {
         b.fillText(this.label, this.x, this.y);
@@ -5513,7 +5513,7 @@ ChemDoodle.RESIDUE = function () {
         this.textBounds.push({x: this.x - p / 2, y: this.y - a.atoms_font_size_2D / 2 + 1, w: p, h: a.atoms_font_size_2D - 2});
         var o = 0;
         -1 !== this.mass && (d = b.font, b.font = j.getFontString(0.7 * a.atoms_font_size_2D, a.atoms_font_families_2D, a.atoms_font_bold_2D, a.atoms_font_italic_2D),
-                o = b.measureText(this.mass).width, b.fillText(this.mass, this.x - o - 0.5, this.y - a.atoms_font_size_2D / 2 + 1), this.textBounds.push({x: this.x - p / 2 - o - 0.5, y: this.y - 1.7 * a.atoms_font_size_2D / 2 + 1, w: o, h: a.atoms_font_size_2D / 2 - 1}), b.font = d);
+            o = b.measureText(this.mass).width, b.fillText(this.mass, this.x - o - 0.5, this.y - a.atoms_font_size_2D / 2 + 1), this.textBounds.push({x: this.x - p / 2 - o - 0.5, y: this.y - 1.7 * a.atoms_font_size_2D / 2 + 1, w: o, h: a.atoms_font_size_2D / 2 - 1}), b.font = d);
         var d = p / 2, l = this.getImplicitHydrogenCount();
         if (a.atoms_implicitHydrogens_2D && 0 < l) {
           f = 0;
@@ -5525,18 +5525,18 @@ ChemDoodle.RESIDUE = function () {
             1 === this.bondNumber ? this.angleOfLeastInterference > h.PI / 2 && this.angleOfLeastInterference < 3 * h.PI / 2 && (t = -p / 2 - z - A / 2 - o / 2, q = !1, f = h.PI) : this.angleOfLeastInterference <= h.PI / 4 || (this.angleOfLeastInterference < 3 * h.PI / 4 ? (t = 0, u = 0.9 * -a.atoms_font_size_2D, 0 !== this.charge && (u -= 0.3 * a.atoms_font_size_2D), q = !1, f = h.PI / 2) : this.angleOfLeastInterference <= 5 * h.PI / 4 ? (t = -p / 2 - z - A / 2 - o / 2, q = !1, f = h.PI) : this.angleOfLeastInterference < 7 * h.PI / 4 && (t = 0, u = 0.9 * a.atoms_font_size_2D, q = !1, f = 3 * h.PI / 2));
             b.font = e;
             b.fillText("H", this.x + t, this.y +
-                    u);
+                u);
             b.font = v;
             b.fillText(l, this.x + t + A / 2 + z / 2, this.y + u + 0.3 * a.atoms_font_size_2D);
             this.textBounds.push({x: this.x + t - A / 2, y: this.y + u - a.atoms_font_size_2D / 2 + 1, w: A, h: a.atoms_font_size_2D - 2});
             this.textBounds.push({x: this.x + t + A / 2, y: this.y + u + 0.3 * a.atoms_font_size_2D - a.atoms_font_size_2D / 2 + 1, w: z, h: 0.8 * a.atoms_font_size_2D - 2})
           } else
             t = p / 2 + A / 2, u = 0, 1 === this.bondNumber ? this.angleOfLeastInterference > h.PI / 2 && this.angleOfLeastInterference < 3 * h.PI / 2 && (t = -p / 2 - A / 2 - o / 2, q = !1, f = h.PI) : this.angleOfLeastInterference <= h.PI / 4 || (this.angleOfLeastInterference <
-                    3 * h.PI / 4 ? (t = 0, u = 0.9 * -a.atoms_font_size_2D, q = !1, f = h.PI / 2) : this.angleOfLeastInterference <= 5 * h.PI / 4 ? (t = -p / 2 - A / 2 - o / 2, q = !1, f = h.PI) : this.angleOfLeastInterference < 7 * h.PI / 4 && (t = 0, u = 0.9 * a.atoms_font_size_2D, q = !1, f = 3 * h.PI / 2)), b.fillText("H", this.x + t, this.y + u), this.textBounds.push({x: this.x + t - A / 2, y: this.y + u - a.atoms_font_size_2D / 2 + 1, w: A, h: a.atoms_font_size_2D - 2});
+                3 * h.PI / 4 ? (t = 0, u = 0.9 * -a.atoms_font_size_2D, q = !1, f = h.PI / 2) : this.angleOfLeastInterference <= 5 * h.PI / 4 ? (t = -p / 2 - A / 2 - o / 2, q = !1, f = h.PI) : this.angleOfLeastInterference < 7 * h.PI / 4 && (t = 0, u = 0.9 * a.atoms_font_size_2D, q = !1, f = 3 * h.PI / 2)), b.fillText("H", this.x + t, this.y + u), this.textBounds.push({x: this.x + t - A / 2, y: this.y + u - a.atoms_font_size_2D / 2 + 1, w: A, h: a.atoms_font_size_2D - 2});
           q && (d += A)
         }
         0 !== this.charge && (e = this.charge.toFixed(0), e = "1" === e ? "+" : "-1" === e ? "\u2013" : j.stringStartsWith(e, "-") ? e.substring(1) + "\u2013" : e + "+", p = b.measureText(e).width,
-                d += p / 2, b.textAlign = "center", b.textBaseline = "middle", b.font = j.getFontString(h.floor(0.8 * a.atoms_font_size_2D), a.atoms_font_families_2D, a.atoms_font_bold_2D, a.atoms_font_italic_2D), b.fillText(e, this.x + d - 1, this.y - a.atoms_font_size_2D / 2 + 1), this.textBounds.push({x: this.x + d - p / 2 - 1, y: this.y - 1.8 * a.atoms_font_size_2D / 2 + 5, w: p, h: a.atoms_font_size_2D / 2 - 1}))
+            d += p / 2, b.textAlign = "center", b.textBaseline = "middle", b.font = j.getFontString(h.floor(0.8 * a.atoms_font_size_2D), a.atoms_font_families_2D, a.atoms_font_bold_2D, a.atoms_font_italic_2D), b.fillText(e, this.x + d - 1, this.y - a.atoms_font_size_2D / 2 + 1), this.textBounds.push({x: this.x + d - p / 2 - 1, y: this.y - 1.8 * a.atoms_font_size_2D / 2 + 5, w: p, h: a.atoms_font_size_2D / 2 - 1}))
       }
     if (0 < this.numLonePair || 0 < this.numRadical) {
       b.fillStyle = "black";
@@ -5544,7 +5544,7 @@ ChemDoodle.RESIDUE = function () {
       d = this.angleOfLeastInterference;
       e = this.largestAngle;
       void 0 !== f && (l.push(f),
-              l.sort(), e = n.angleBetweenLargest(l), d = e.angle % (2 * h.PI), e = e.largest);
+          l.sort(), e = n.angleBetweenLargest(l), d = e.angle % (2 * h.PI), e = e.largest);
       p = [];
       for (o = 0; o < this.numLonePair; o++)
         p.push({t: 2});
@@ -5564,7 +5564,7 @@ ChemDoodle.RESIDUE = function () {
     f = e - f / 2 + j;
     for (var o = 0; o < d.length; o++) {
       var l =
-              d[o];
+          d[o];
       e = f + o * j;
       var n = this.x + Math.cos(e) * a.atoms_lonePairDistance_2D, q = this.y - Math.sin(e) * a.atoms_lonePairDistance_2D;
       2 === l.t ? (l = e + Math.PI / 2, e = Math.cos(l) * a.atoms_lonePairSpread_2D / 2, l = -Math.sin(l) * a.atoms_lonePairSpread_2D / 2, b.beginPath(), b.arc(n + e, q + l, a.atoms_lonePairDiameter_2D, 0, 2 * h.PI, !1), b.fill(), b.beginPath(), b.arc(n - e, q - l, a.atoms_lonePairDiameter_2D, 0, 2 * h.PI, !1), b.fill()) : 1 === l.t && (b.beginPath(), b.arc(n, q, a.atoms_lonePairDiameter_2D, 0, 2 * h.PI, !1), b.fill())
@@ -5572,7 +5572,7 @@ ChemDoodle.RESIDUE = function () {
   };
   l.drawDecorations = function (b) {
     if (this.isHover ||
-            this.isSelected)
+        this.isSelected)
       b.strokeStyle = this.isHover ? "#885110" : "#0060B2", b.lineWidth = 1.2, b.beginPath(), b.arc(this.x, this.y, this.isHover ? 7 : 15, 0, 2 * h.PI, !1), b.stroke();
     this.isOverlap && (b.strokeStyle = "#C10000", b.lineWidth = 1.2, b.beginPath(), b.arc(this.x, this.y, 7, 0, 2 * h.PI, !1), b.stroke())
   };
@@ -5580,7 +5580,7 @@ ChemDoodle.RESIDUE = function () {
     this.specs && (a = this.specs);
     var h = e.translate(g.modelViewMatrix, [this.x, this.y, this.z], []), f = a.atoms_useVDWDiameters_3D ? b[this.label].vdWRadius * a.atoms_vdwMultiplier_3D : a.atoms_sphereDiameter_3D / 2;
     0 === f &&
-            (f = 1);
+        (f = 1);
     e.scale(h, [f, f, f]);
     d || (d = a.atoms_color, a.atoms_useJMOLColors ? d = b[this.label].jmolColor : a.atoms_usePYMOLColors && (d = b[this.label].pymolColor), g.material.setDiffuseColor(d));
     g.setMatrixUniforms(h);
@@ -5590,7 +5590,7 @@ ChemDoodle.RESIDUE = function () {
     if (this.isSelected || this.isHover) {
       this.specs && (a = this.specs);
       var d = e.translate(g.modelViewMatrix, [this.x, this.y, this.z], []), h = a.atoms_useVDWDiameters_3D ?
-              b[this.label].vdWRadius * a.atoms_vdwMultiplier_3D : a.atoms_sphereDiameter_3D / 2;
+          b[this.label].vdWRadius * a.atoms_vdwMultiplier_3D : a.atoms_sphereDiameter_3D / 2;
       0 === h && (h = 1);
       h *= 1.3;
       e.scale(d, [h, h, h]);
@@ -5601,7 +5601,7 @@ ChemDoodle.RESIDUE = function () {
   };
   l.isLabelVisible = function (b) {
     return b.atoms_displayAllCarbonLabels_2D || "C" !== this.label || this.altLabel || (this.any || -1 !== this.rgroup) || (-1 !== this.mass || 0 !== this.charge) || b.atoms_showAttributedCarbons_2D &&
-            (0 !== this.numRadical || 0 !== this.numLonePair) || this.isHidden && b.atoms_showHiddenCarbons_2D || b.atoms_displayTerminalCarbonLabels_2D && 1 === this.bondNumber ? !0 : !1
+        (0 !== this.numRadical || 0 !== this.numLonePair) || this.isHidden && b.atoms_showHiddenCarbons_2D || b.atoms_displayTerminalCarbonLabels_2D && 1 === this.bondNumber ? !0 : !1
   };
   l.getImplicitHydrogenCount = function () {
     if ("H" === this.label || !b[this.label] || !b[this.label].addH)
@@ -5612,16 +5612,16 @@ ChemDoodle.RESIDUE = function () {
     return 0 > a ? 0 : h.floor(a)
   };
   l.getBounds =
-          function () {
-            var b = new n.Bounds;
-            b.expand(this.x, this.y);
-            if (this.textBounds)
-              for (var a = 0, d = this.textBounds.length; a < d; a++) {
-                var e = this.textBounds[a];
-                b.expand(e.x, e.y, e.x + e.w, e.y + e.h)
-              }
-            return b
-          };
+      function () {
+        var b = new n.Bounds;
+        b.expand(this.x, this.y);
+        if (this.textBounds)
+          for (var a = 0, d = this.textBounds.length; a < d; a++) {
+            var e = this.textBounds[a];
+            b.expand(e.x, e.y, e.x + e.w, e.y + e.h)
+          }
+        return b
+      };
   l.getBounds3D = function () {
     var b = new n.Bounds;
     b.expand3D(this.x, this.y, this.z);
@@ -5634,7 +5634,7 @@ ChemDoodle.RESIDUE = function () {
     return d
   }
 })(ChemDoodle.ELEMENT, ChemDoodle.extensions, ChemDoodle.math, ChemDoodle.structures,
-        Math, ChemDoodle.lib.mat4);
+    Math, ChemDoodle.lib.mat4);
 (function (b, j, n, l, h, e, g) {
   n.Bond = function (a, d, b) {
     this.a1 = a;
@@ -5659,9 +5659,9 @@ ChemDoodle.RESIDUE = function () {
     return this.a1.distance3D(this.a2)
   };
   b.contains =
-          function (a) {
-            return a === this.a1 || a === this.a2
-          };
+      function (a) {
+        return a === this.a1 || a === this.a2
+      };
   b.getNeighbor = function (a) {
     if (a === this.a1)
       return this.a2;
@@ -5677,7 +5677,7 @@ ChemDoodle.RESIDUE = function () {
         t.addColorStop(0, "rgba(212, 99, 0, 0)");
         t.addColorStop(0.5, "rgba(212, 99, 0, 0.8)");
         t.addColorStop(1,
-                "rgba(212, 99, 0, 0)");
+            "rgba(212, 99, 0, 0)");
         var u = 2.5, v = this.a1.angle(this.a2) + h.PI / 2, z = h.cos(v), v = h.sin(v), y = b - z * u, B = e + v * u, c = b + z * u, k = e - v * u, C = f + z * u, D = g - v * u, z = f - z * u, v = g + v * u;
         a.fillStyle = t;
         a.beginPath();
@@ -5707,14 +5707,14 @@ ChemDoodle.RESIDUE = function () {
         g -= q * z
       }
       d.bonds_clearOverlaps_2D && (z = b + 0.15 * A, v = e + 0.15 * q, u = f - 0.15 * A, w = g - 0.15 * q, a.strokeStyle = d.backgroundColor, a.lineWidth = d.bonds_width_2D + 2 * d.bonds_overlapClearWidth_2D, a.lineCap = "round", a.beginPath(), a.moveTo(z, v), a.lineTo(u,
-              w), a.closePath(), a.stroke());
+          w), a.closePath(), a.stroke());
       a.strokeStyle = d.bonds_color;
       a.fillStyle = d.bonds_color;
       a.lineWidth = d.bonds_width_2D;
       a.lineCap = d.bonds_ends_2D;
       if (d.bonds_useJMOLColors || d.bonds_usePYMOLColors)
         z = a.createLinearGradient(b, e, f, g), v = this.a1.getElementColor(d.bonds_useJMOLColors, d.bonds_usePYMOLColors, d.atoms_color, 2), u = this.a2.getElementColor(d.bonds_useJMOLColors, d.bonds_usePYMOLColors, d.atoms_color, 2), z.addColorStop(0, v), d.bonds_colorGradient || (z.addColorStop(0.5, v), z.addColorStop(0.51, u)), z.addColorStop(1,
-                u), a.strokeStyle = z, a.fillStyle = z;
+            u), a.strokeStyle = z, a.fillStyle = z;
       if (d.bonds_lewisStyle_2D && 0 === this.bondOrder % 1)
         this.drawLewisStyle(a, d, b, e, f, g);
       else
@@ -5733,7 +5733,7 @@ ChemDoodle.RESIDUE = function () {
             a.beginPath();
             for (u = 0; u < g; u++)
               a.arc(z, v, d.bonds_dotSize_2D / 2, 0, 2 * h.PI, !1), z += 2 * d.bonds_dotSize_2D * Math.cos(q), v -= 2 * d.bonds_dotSize_2D *
-                      Math.sin(q);
+                  Math.sin(q);
             a.fill();
             break;
           case 0.5:
@@ -5745,7 +5745,7 @@ ChemDoodle.RESIDUE = function () {
           case 1:
             if (this.stereo === n.Bond.STEREO_PROTRUDING || this.stereo === n.Bond.STEREO_RECESSED)
               q = d.bonds_width_2D / 2, u = this.a1.distance(this.a2) * d.bonds_wedgeThickness_2D / 2, v = this.a1.angle(this.a2) + h.PI / 2, z = h.cos(v), v = h.sin(v), y = b - z * q, B = e + v * q, c = b + z * q, k = e - v * q, C = f + z * u, D = g - v * u, z = f - z * u, v = g + v * u, a.beginPath(), a.moveTo(y, B), a.lineTo(c, k), a.lineTo(C, D), a.lineTo(z,
-                      v), a.closePath(), this.stereo === n.Bond.STEREO_PROTRUDING ? a.fill() : (a.save(), a.clip(), a.lineWidth = 2 * u, a.lineCap = "butt", a.beginPath(), a.moveTo(b, e), j.contextHashTo(a, b, e, f, g, d.bonds_hashWidth_2D, d.bonds_hashSpacing_2D), a.stroke(), a.restore());
+                  v), a.closePath(), this.stereo === n.Bond.STEREO_PROTRUDING ? a.fill() : (a.save(), a.clip(), a.lineWidth = 2 * u, a.lineCap = "butt", a.beginPath(), a.moveTo(b, e), j.contextHashTo(a, b, e, f, g, d.bonds_hashWidth_2D, d.bonds_hashSpacing_2D), a.stroke(), a.restore());
             else if (this.stereo === n.Bond.STEREO_AMBIGUOUS) {
               a.beginPath();
               a.moveTo(b, e);
@@ -5758,7 +5758,7 @@ ChemDoodle.RESIDUE = function () {
               u = 0;
               for (y = f; u < y; u++)
                 b += g, e += q, f = d.bonds_wavyLength_2D * z + b - 0.5 * g, w = d.bonds_wavyLength_2D *
-                        -v + e - 0.5 * q, A = d.bonds_wavyLength_2D * -z + b - 0.5 * g, B = d.bonds_wavyLength_2D * v + e - 0.5 * q, 0 === u % 2 ? a.quadraticCurveTo(f, w, b, e) : a.quadraticCurveTo(A, B, b, e);
+                    -v + e - 0.5 * q, A = d.bonds_wavyLength_2D * -z + b - 0.5 * g, B = d.bonds_wavyLength_2D * v + e - 0.5 * q, 0 === u % 2 ? a.quadraticCurveTo(f, w, b, e) : a.quadraticCurveTo(A, B, b, e);
               a.stroke();
               break
             } else
@@ -5767,14 +5767,14 @@ ChemDoodle.RESIDUE = function () {
           case 1.5:
           case 2:
             this.stereo === n.Bond.STEREO_AMBIGUOUS ? (u = this.a1.distance(this.a2) * d.bonds_saturationWidth_2D / 2, v = this.a1.angle(this.a2) + h.PI / 2, z = h.cos(v), v = h.sin(v), y = b - z * u, B = e + v * u, c = b + z * u, k = e - v * u, C = f + z * u, D = g - v * u, z = f - z * u, v = g + v * u, a.beginPath(), a.moveTo(y, B), a.lineTo(C, D), a.moveTo(c,
-                    k), a.lineTo(z, v), a.stroke()) : !d.bonds_symmetrical_2D && (this.ring || "C" === this.a1.label && "C" === this.a2.label) ? (a.beginPath(), a.moveTo(b, e), a.lineTo(f, g), z = 0, w = this.a1.distance(this.a2), q = this.a1.angle(this.a2), v = q + h.PI / 2, u = w * d.bonds_saturationWidth_2D, A = d.bonds_saturationAngle_2D, A < h.PI / 2 && (z = -(u / h.tan(A))), h.abs(z) < w / 2 && (A = b - h.cos(q) * z, b = f + h.cos(q) * z, f = e + h.sin(q) * z, e = g - h.sin(q) * z, z = h.cos(v), v = h.sin(v), y = A - z * u, B = f + v * u, c = A + z * u, k = f - v * u, C = b - z * u, D = e + v * u, z = b + z * u, v = e - v * u, !this.ring || this.ring.center.angle(this.a1) >
-                    this.ring.center.angle(this.a2) && !(this.ring.center.angle(this.a1) - this.ring.center.angle(this.a2) > h.PI) || this.ring.center.angle(this.a1) - this.ring.center.angle(this.a2) < -h.PI ? (a.moveTo(y, B), 2 === this.bondOrder ? a.lineTo(C, D) : j.contextHashTo(a, y, B, C, D, d.bonds_hashSpacing_2D, d.bonds_hashSpacing_2D)) : (a.moveTo(c, k), 2 === this.bondOrder ? a.lineTo(z, v) : j.contextHashTo(a, c, k, z, v, d.bonds_hashSpacing_2D, d.bonds_hashSpacing_2D)), a.stroke())) : (u = this.a1.distance(this.a2) * d.bonds_saturationWidth_2D / 2, v = this.a1.angle(this.a2) +
-                    h.PI / 2, z = h.cos(v), v = h.sin(v), y = b - z * u, B = e + v * u, c = b + z * u, k = e - v * u, C = f + z * u, D = g - v * u, z = f - z * u, v = g + v * u, a.beginPath(), a.moveTo(y, B), a.lineTo(z, v), a.moveTo(c, k), 2 === this.bondOrder ? a.lineTo(C, D) : j.contextHashTo(a, c, k, C, D, d.bonds_hashSpacing_2D, d.bonds_hashSpacing_2D), a.stroke());
+                k), a.lineTo(z, v), a.stroke()) : !d.bonds_symmetrical_2D && (this.ring || "C" === this.a1.label && "C" === this.a2.label) ? (a.beginPath(), a.moveTo(b, e), a.lineTo(f, g), z = 0, w = this.a1.distance(this.a2), q = this.a1.angle(this.a2), v = q + h.PI / 2, u = w * d.bonds_saturationWidth_2D, A = d.bonds_saturationAngle_2D, A < h.PI / 2 && (z = -(u / h.tan(A))), h.abs(z) < w / 2 && (A = b - h.cos(q) * z, b = f + h.cos(q) * z, f = e + h.sin(q) * z, e = g - h.sin(q) * z, z = h.cos(v), v = h.sin(v), y = A - z * u, B = f + v * u, c = A + z * u, k = f - v * u, C = b - z * u, D = e + v * u, z = b + z * u, v = e - v * u, !this.ring || this.ring.center.angle(this.a1) >
+                this.ring.center.angle(this.a2) && !(this.ring.center.angle(this.a1) - this.ring.center.angle(this.a2) > h.PI) || this.ring.center.angle(this.a1) - this.ring.center.angle(this.a2) < -h.PI ? (a.moveTo(y, B), 2 === this.bondOrder ? a.lineTo(C, D) : j.contextHashTo(a, y, B, C, D, d.bonds_hashSpacing_2D, d.bonds_hashSpacing_2D)) : (a.moveTo(c, k), 2 === this.bondOrder ? a.lineTo(z, v) : j.contextHashTo(a, c, k, z, v, d.bonds_hashSpacing_2D, d.bonds_hashSpacing_2D)), a.stroke())) : (u = this.a1.distance(this.a2) * d.bonds_saturationWidth_2D / 2, v = this.a1.angle(this.a2) +
+                h.PI / 2, z = h.cos(v), v = h.sin(v), y = b - z * u, B = e + v * u, c = b + z * u, k = e - v * u, C = f + z * u, D = g - v * u, z = f - z * u, v = g + v * u, a.beginPath(), a.moveTo(y, B), a.lineTo(z, v), a.moveTo(c, k), 2 === this.bondOrder ? a.lineTo(C, D) : j.contextHashTo(a, c, k, C, D, d.bonds_hashSpacing_2D, d.bonds_hashSpacing_2D), a.stroke());
             break;
           case 3:
             u = this.a1.distance(this.a2) * d.bonds_saturationWidth_2D, v = this.a1.angle(this.a2) + h.PI / 2, z = h.cos(v), v = h.sin(v), y = b - z * u, B = e + v * u, c = b + z * u, k = e - v * u, C = f + z * u, D = g - v * u, z = f - z * u, v = g + v * u, a.beginPath(), a.moveTo(y, B), a.lineTo(z, v), a.moveTo(c,
-                    k), a.lineTo(C, D), a.moveTo(b, e), a.lineTo(f, g), a.stroke()
-          }
+                k), a.lineTo(C, D), a.moveTo(b, e), a.lineTo(f, g), a.stroke()
+        }
     }
   };
   b.drawDecorations = function (a) {
@@ -5795,7 +5795,7 @@ ChemDoodle.RESIDUE = function () {
   };
   b.drawLewisStyle = function (a, d, b, f, e, g) {
     var j = this.a1.angle(this.a2), l = j +
-            h.PI / 2;
+        h.PI / 2;
     e -= b;
     g -= f;
     e = h.sqrt(e * e + g * g) / (this.bondOrder + 1);
@@ -5816,89 +5816,89 @@ ChemDoodle.RESIDUE = function () {
     }
   };
   b.render =
-          function (a, d, b) {
-            this.specs && (d = this.specs);
-            var f = this.a1.distance3D(this.a2);
-            if (0 !== f) {
-              var p = d.bonds_cylinderDiameter_3D / 2, o = d.bonds_color, l, n = e.translate(a.modelViewMatrix, [this.a1.x, this.a1.y, this.a1.z], []), q, t = [this.a2.x - this.a1.x, this.a2.y - this.a1.y, this.a2.z - this.a1.z], u = [0, 1, 0], v = 0;
-              this.a1.x === this.a2.x && this.a1.z === this.a2.z ? (u = [0, 0, 1], this.a2.y < this.a1.y && (v = h.PI)) : (v = j.vec3AngleFrom(u, t), u = g.cross(u, t, []));
-              var z = d.bonds_useJMOLColors, y = d.bonds_usePYMOLColors;
-              if (z || y)
-                o = this.a1.getElementColor(z,
-                        y, o), l = this.a2.getElementColor(z, y, d.bonds_color), o != l && (q = e.translate(a.modelViewMatrix, [this.a2.x, this.a2.y, this.a2.z], []));
-              var z = [0], B;
-              if (b) {
-                d.bonds_showBondOrders_3D && 1 < this.bondOrder && (z = [d.bonds_cylinderDiameter_3D], B = [0, 0, 1], b = e.inverse(a.rotationMatrix, []), e.multiplyVec3(b, B), B = g.cross(t, B, []), g.normalize(B));
-                var p = 1, c = d.bonds_pillSpacing_3D, t = d.bonds_pillHeight_3D;
-                0 == this.bondOrder && (d.bonds_renderAsLines_3D ? t = c : (t = d.bonds_pillDiameter_3D, t < d.bonds_cylinderDiameter_3D && (t /= 2), p = t / 2, f /= p,
-                        c /= p / 2));
-                b = t + c;
-                var y = h.floor(f / b), k = (c + d.bonds_pillDiameter_3D + (f - b * y)) / 2, C = y;
-                q && (C = h.floor(y / 2));
-                f = 0;
-                for (c = z.length; f < c; f++) {
-                  var D = e.set(n, []);
-                  0 !== z[f] && e.translate(D, g.scale(B, z[f], []));
-                  0 !== v && e.rotate(D, v, u);
-                  1 != p && e.scale(D, [p, p, p]);
-                  o && a.material.setDiffuseColor(o);
-                  e.translate(D, [0, k, 0]);
-                  for (var H = 0; H < C; H++)
-                    d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? (a.setMatrixUniforms(D), a.drawArrays(a.POINTS, 0, 1)) : (e.scale(D, [1, t, 1]), a.setMatrixUniforms(D), a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems),
-                            e.scale(D, [1, 1 / t, 1])) : (a.setMatrixUniforms(D), 0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0)), e.translate(D, [0, b, 0]);
-                  if (q) {
-                    var F, G;
-                    d.bonds_renderAsLines_3D ? (F = t, F /= 2, G = 0) : (F = 2 / 3, G = (1 - F) / 2);
-                    0 != y % 2 && (e.scale(D, [1, F, 1]), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? a.drawArrays(a.POINTS, 0, 1) : a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems) :
-                            0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0), e.translate(D, [0, b * (1 + G), 0]), e.scale(D, [1, 1 / F, 1]));
-                    e.set(q, D);
-                    0 !== z[f] && e.translate(D, g.scale(B, z[f], []));
-                    e.rotate(D, v + h.PI, u);
-                    1 != p && e.scale(D, [p, p, p]);
-                    l && a.material.setDiffuseColor(l);
-                    e.translate(D, [0, k, 0]);
-                    for (H = 0; H < C; H++)
-                      d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? (a.setMatrixUniforms(D), a.drawArrays(a.POINTS,
-                              0, 1)) : (e.scale(D, [1, t, 1]), a.setMatrixUniforms(D), a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems), e.scale(D, [1, 1 / t, 1])) : (a.setMatrixUniforms(D), 0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0)), e.translate(D, [0, b, 0]);
-                    0 != y % 2 && (e.scale(D, [1, F, 1]), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? a.drawArrays(a.POINTS, 0, 1) :
-                            a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems) : 0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0), e.translate(D, [0, b * (1 + G), 0]), e.scale(D, [1, 1 / F, 1]))
-                  }
-                }
-              } else {
-                if (d.bonds_showBondOrders_3D) {
-                  switch (this.bondOrder) {
-                    case 1.5:
-                      z = [-d.bonds_cylinderDiameter_3D];
-                      break;
-                    case 2:
-                      z = [-d.bonds_cylinderDiameter_3D, d.bonds_cylinderDiameter_3D];
-                      break;
-                    case 3:
-                      z =
-                              [-1.2 * d.bonds_cylinderDiameter_3D, 0, 1.2 * d.bonds_cylinderDiameter_3D]
-                  }
-                  1 < this.bondOrder && (B = [0, 0, 1], b = e.inverse(a.rotationMatrix, []), e.multiplyVec3(b, B), B = g.cross(t, B, []), g.normalize(B))
-                } else
-                  switch (this.bondOrder) {
-                    case 0:
-                      p *= 0.25;
-                      break;
-                    case 0.5:
-                    case 1.5:
-                      p *= 0.5
-                  }
-                q && (f /= 2);
-                p = [p, f, p];
-                f = 0;
-                for (c = z.length; f < c; f++)
-                  D = e.set(n, []), 0 !== z[f] && e.translate(D, g.scale(B, z[f], [])), 0 !== v && e.rotate(D, v, u), e.scale(D, p), o && a.material.setDiffuseColor(o), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? a.drawArrays(a.LINES,
-                          0, a.lineBuffer.vertexPositionBuffer.numItems) : a.drawArrays(a.TRIANGLE_STRIP, 0, a.cylinderBuffer.vertexPositionBuffer.numItems), q && (e.set(q, D), 0 !== z[f] && e.translate(D, g.scale(B, z[f], [])), e.rotate(D, v + h.PI, u), e.scale(D, p), l && a.material.setDiffuseColor(l), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems) : a.drawArrays(a.TRIANGLE_STRIP, 0, a.cylinderBuffer.vertexPositionBuffer.numItems))
+      function (a, d, b) {
+        this.specs && (d = this.specs);
+        var f = this.a1.distance3D(this.a2);
+        if (0 !== f) {
+          var p = d.bonds_cylinderDiameter_3D / 2, o = d.bonds_color, l, n = e.translate(a.modelViewMatrix, [this.a1.x, this.a1.y, this.a1.z], []), q, t = [this.a2.x - this.a1.x, this.a2.y - this.a1.y, this.a2.z - this.a1.z], u = [0, 1, 0], v = 0;
+          this.a1.x === this.a2.x && this.a1.z === this.a2.z ? (u = [0, 0, 1], this.a2.y < this.a1.y && (v = h.PI)) : (v = j.vec3AngleFrom(u, t), u = g.cross(u, t, []));
+          var z = d.bonds_useJMOLColors, y = d.bonds_usePYMOLColors;
+          if (z || y)
+            o = this.a1.getElementColor(z,
+                y, o), l = this.a2.getElementColor(z, y, d.bonds_color), o != l && (q = e.translate(a.modelViewMatrix, [this.a2.x, this.a2.y, this.a2.z], []));
+          var z = [0], B;
+          if (b) {
+            d.bonds_showBondOrders_3D && 1 < this.bondOrder && (z = [d.bonds_cylinderDiameter_3D], B = [0, 0, 1], b = e.inverse(a.rotationMatrix, []), e.multiplyVec3(b, B), B = g.cross(t, B, []), g.normalize(B));
+            var p = 1, c = d.bonds_pillSpacing_3D, t = d.bonds_pillHeight_3D;
+            0 == this.bondOrder && (d.bonds_renderAsLines_3D ? t = c : (t = d.bonds_pillDiameter_3D, t < d.bonds_cylinderDiameter_3D && (t /= 2), p = t / 2, f /= p,
+                c /= p / 2));
+            b = t + c;
+            var y = h.floor(f / b), k = (c + d.bonds_pillDiameter_3D + (f - b * y)) / 2, C = y;
+            q && (C = h.floor(y / 2));
+            f = 0;
+            for (c = z.length; f < c; f++) {
+              var D = e.set(n, []);
+              0 !== z[f] && e.translate(D, g.scale(B, z[f], []));
+              0 !== v && e.rotate(D, v, u);
+              1 != p && e.scale(D, [p, p, p]);
+              o && a.material.setDiffuseColor(o);
+              e.translate(D, [0, k, 0]);
+              for (var H = 0; H < C; H++)
+                d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? (a.setMatrixUniforms(D), a.drawArrays(a.POINTS, 0, 1)) : (e.scale(D, [1, t, 1]), a.setMatrixUniforms(D), a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems),
+                    e.scale(D, [1, 1 / t, 1])) : (a.setMatrixUniforms(D), 0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0)), e.translate(D, [0, b, 0]);
+              if (q) {
+                var F, G;
+                d.bonds_renderAsLines_3D ? (F = t, F /= 2, G = 0) : (F = 2 / 3, G = (1 - F) / 2);
+                0 != y % 2 && (e.scale(D, [1, F, 1]), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? a.drawArrays(a.POINTS, 0, 1) : a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems) :
+                    0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0), e.translate(D, [0, b * (1 + G), 0]), e.scale(D, [1, 1 / F, 1]));
+                e.set(q, D);
+                0 !== z[f] && e.translate(D, g.scale(B, z[f], []));
+                e.rotate(D, v + h.PI, u);
+                1 != p && e.scale(D, [p, p, p]);
+                l && a.material.setDiffuseColor(l);
+                e.translate(D, [0, k, 0]);
+                for (H = 0; H < C; H++)
+                  d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? (a.setMatrixUniforms(D), a.drawArrays(a.POINTS,
+                      0, 1)) : (e.scale(D, [1, t, 1]), a.setMatrixUniforms(D), a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems), e.scale(D, [1, 1 / t, 1])) : (a.setMatrixUniforms(D), 0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0)), e.translate(D, [0, b, 0]);
+                0 != y % 2 && (e.scale(D, [1, F, 1]), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? 0 == this.bondOrder ? a.drawArrays(a.POINTS, 0, 1) :
+                    a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems) : 0 == this.bondOrder ? a.drawElements(a.TRIANGLES, a.sphereBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0) : a.drawElements(a.TRIANGLES, a.pillBuffer.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0), e.translate(D, [0, b * (1 + G), 0]), e.scale(D, [1, 1 / F, 1]))
               }
             }
-          };
+          } else {
+            if (d.bonds_showBondOrders_3D) {
+              switch (this.bondOrder) {
+                case 1.5:
+                  z = [-d.bonds_cylinderDiameter_3D];
+                  break;
+                case 2:
+                  z = [-d.bonds_cylinderDiameter_3D, d.bonds_cylinderDiameter_3D];
+                  break;
+                case 3:
+                  z =
+                      [-1.2 * d.bonds_cylinderDiameter_3D, 0, 1.2 * d.bonds_cylinderDiameter_3D]
+              }
+              1 < this.bondOrder && (B = [0, 0, 1], b = e.inverse(a.rotationMatrix, []), e.multiplyVec3(b, B), B = g.cross(t, B, []), g.normalize(B))
+            } else
+              switch (this.bondOrder) {
+                case 0:
+                  p *= 0.25;
+                  break;
+                case 0.5:
+                case 1.5:
+                  p *= 0.5
+              }
+            q && (f /= 2);
+            p = [p, f, p];
+            f = 0;
+            for (c = z.length; f < c; f++)
+              D = e.set(n, []), 0 !== z[f] && e.translate(D, g.scale(B, z[f], [])), 0 !== v && e.rotate(D, v, u), e.scale(D, p), o && a.material.setDiffuseColor(o), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? a.drawArrays(a.LINES,
+                  0, a.lineBuffer.vertexPositionBuffer.numItems) : a.drawArrays(a.TRIANGLE_STRIP, 0, a.cylinderBuffer.vertexPositionBuffer.numItems), q && (e.set(q, D), 0 !== z[f] && e.translate(D, g.scale(B, z[f], [])), e.rotate(D, v + h.PI, u), e.scale(D, p), l && a.material.setDiffuseColor(l), a.setMatrixUniforms(D), d.bonds_renderAsLines_3D ? a.drawArrays(a.LINES, 0, a.lineBuffer.vertexPositionBuffer.numItems) : a.drawArrays(a.TRIANGLE_STRIP, 0, a.cylinderBuffer.vertexPositionBuffer.numItems))
+          }
+        }
+      };
   b.renderHighlight = function (a, d) {
     if (this.isSelected ||
-            this.isHover) {
+        this.isHover) {
       this.specs && (d = this.specs);
       this.specs && (d = this.specs);
       var b = this.a1.distance3D(this.a2);
@@ -5910,7 +5910,7 @@ ChemDoodle.RESIDUE = function () {
         e.scale(p, b);
         a.setMatrixUniforms(p);
         a.material.setDiffuseColor(this.isHover ?
-                "#885110" : "#0060B2");
+            "#885110" : "#0060B2");
         a.drawArrays(a.TRIANGLE_STRIP, 0, a.cylinderBuffer.vertexPositionBuffer.numItems)
       }
     }
@@ -5921,7 +5921,7 @@ ChemDoodle.RESIDUE = function () {
     if (0 !== b) {
       var f = d.bonds_cylinderDiameter_3D / 2, p = e.translate(a.modelViewMatrix, [this.a1.x, this.a1.y, this.a1.z], []), o = [this.a2.x - this.a1.x, this.a2.y - this.a1.y, this.a2.z - this.a1.z], l = [0, 1, 0], n = 0;
       this.a1.x === this.a2.x && this.a1.z === this.a2.z ? (l = [0, 0, 1], this.a2.y < this.a1.y && (n = h.PI)) : (n = j.vec3AngleFrom(l, o), l = g.cross(l,
-              o, []));
+          o, []));
       var q = [0], t;
       if (d.bonds_showBondOrders_3D)
         if (d.bonds_renderAsLines_3D) {
@@ -6014,7 +6014,7 @@ ChemDoodle.RESIDUE = function () {
       if (a.macro_displayBonds) {
         0 < this.bonds.length && (a.bonds_renderAsLines_3D && !this.residueSpecs || this.residueSpecs && this.residueSpecs.bonds_renderAsLines_3D ? (b.lineWidth(this.residueSpecs ? this.residueSpecs.bonds_width_2D : a.bonds_width_2D), b.lineBuffer.bindBuffers(b)) : b.cylinderBuffer.bindBuffers(b), b.material.setTempColors(a.bonds_materialAmbientColor_3D, void 0, a.bonds_materialSpecularColor_3D, a.bonds_materialShininess_3D));
         for (var e = 0, f =
-                this.bonds.length; e < f; e++) {
+            this.bonds.length; e < f; e++) {
           var h = this.bonds[e];
           if (!h.a1.hetatm && (-1 === a.macro_atomToLigandDistance || void 0 !== h.a1.closestDistance && a.macro_atomToLigandDistance >= h.a1.closestDistance && a.macro_atomToLigandDistance >= h.a2.closestDistance))
             h.render(b, this.residueSpecs ? this.residueSpecs : a)
@@ -6024,7 +6024,7 @@ ChemDoodle.RESIDUE = function () {
         0 < this.atoms.length && (b.sphereBuffer.bindBuffers(b), b.material.setTempColors(a.atoms_materialAmbientColor_3D, void 0, a.atoms_materialSpecularColor_3D, a.atoms_materialShininess_3D));
         e = 0;
         for (f =
-                this.atoms.length; e < f; e++)
+            this.atoms.length; e < f; e++)
           if (h = this.atoms[e], !h.hetatm && (-1 === a.macro_atomToLigandDistance || void 0 !== h.closestDistance && a.macro_atomToLigandDistance >= h.closestDistance))
             h.render(b, this.residueSpecs ? this.residueSpecs : a)
       }
@@ -6053,7 +6053,7 @@ ChemDoodle.RESIDUE = function () {
       e = 0;
       for (f = this.atoms.length; e < f; e++)
         h = this.atoms[e],
-                h.bondNumber = 0, h.renderAsStar = !1;
+            h.bondNumber = 0, h.renderAsStar = !1;
       e = 0;
       for (f = this.bonds.length; e < f; e++)
         h = this.bonds[e], h.a1.bondNumber++, h.a2.bondNumber++;
@@ -6064,7 +6064,7 @@ ChemDoodle.RESIDUE = function () {
         if (h = this.atoms[e], !d || h.hetatm && (a.macro_showWater || !h.isWater))
           a.atoms_nonBondedAsStars_3D && 0 === h.bondNumber ? (h.renderAsStar = !0, o.push(h)) : h.render(b, a);
       if (0 <
-              o.length) {
+          o.length) {
         b.starBuffer.bindBuffers(b);
         e = 0;
         for (f = o.length; e < f; e++)
@@ -6095,7 +6095,7 @@ ChemDoodle.RESIDUE = function () {
             h.back.bindBuffers(b);
             e = 0;
             for (f = h.back.cartoonSegments.length; e <
-                    f; e++)
+                f; e++)
               h.back.cartoonSegments[e].render(b, a)
           } else
             h.front.render(b, a), h.back.render(b, a)
@@ -6109,7 +6109,7 @@ ChemDoodle.RESIDUE = function () {
               e = 1;
               for (f = w.length - 2; e < f; e++)
                 h = w[e].cp1, h.chainColor = w.chainColor, this.alphaCarbonTrace.nodes.push(h), h = new n.Bond(w[e].cp1, w[e + 1].cp1), h.residueName = w[e].name, h.chainColor = w.chainColor,
-                        this.alphaCarbonTrace.edges.push(h), e === w.length - 3 && (h = w[e + 1].cp1, h.chainColor = w.chainColor, this.alphaCarbonTrace.nodes.push(h))
+                    this.alphaCarbonTrace.edges.push(h), e === w.length - 3 && (h = w[e + 1].cp1, h.chainColor = w.chainColor, this.alphaCarbonTrace.nodes.push(h))
             }
         }
         if (0 < this.alphaCarbonTrace.nodes.length) {
@@ -6123,7 +6123,7 @@ ChemDoodle.RESIDUE = function () {
           d.bonds_color = a.proteins_backboneColor;
           d.atoms_useVDWDiameters_3D = !1;
           b.material.setTempColors(a.proteins_materialAmbientColor_3D,
-                  void 0, a.proteins_materialSpecularColor_3D, a.proteins_materialShininess_3D);
+              void 0, a.proteins_materialSpecularColor_3D, a.proteins_materialShininess_3D);
           b.material.setDiffuseColor(a.proteins_backboneColor);
           e = 0;
           for (f = this.alphaCarbonTrace.nodes.length; e < f; e++)
@@ -6132,7 +6132,7 @@ ChemDoodle.RESIDUE = function () {
           for (f = this.alphaCarbonTrace.edges.length; e < f; e++) {
             var h = this.alphaCarbonTrace.edges[e], A, o = l[h.residueName] ? l[h.residueName] : l["*"];
             a.macro_colorByChain ? A = h.chainColor : "shapely" === a.proteins_residueColor ?
-                    A = o.shapelyColor : "amino" === a.proteins_residueColor ? A = o.aminoColor : "polarity" === a.proteins_residueColor ? A = o.polar ? "#C10000" : "#FFFFFF" : "acidity" === a.proteins_residueColor ? A = 1 === o.acidity ? "#0000FF" : -1 === o.acidity ? "#FF0000" : o.polar ? "#FFFFFF" : "#773300" : "rainbow" === a.proteins_residueColor && (A = j.rainbowAt(e, f, a.macro_rainbowColors));
+                A = o.shapelyColor : "amino" === a.proteins_residueColor ? A = o.aminoColor : "polarity" === a.proteins_residueColor ? A = o.polar ? "#C10000" : "#FFFFFF" : "acidity" === a.proteins_residueColor ? A = 1 === o.acidity ? "#0000FF" : -1 === o.acidity ? "#FF0000" : o.polar ? "#FFFFFF" : "#773300" : "rainbow" === a.proteins_residueColor && (A = j.rainbowAt(e, f, a.macro_rainbowColors));
             A && (d.bonds_color = A);
             b.cylinderBuffer.bindBuffers(b);
             h.render(b, d)
@@ -6141,7 +6141,7 @@ ChemDoodle.RESIDUE = function () {
       }
       if (a.nucleics_display) {
         b.material.setTempColors(a.nucleics_materialAmbientColor_3D, void 0, a.nucleics_materialSpecularColor_3D,
-                a.nucleics_materialShininess_3D);
+            a.nucleics_materialShininess_3D);
         d = 0;
         for (o = this.tubes.length; d < o; d++)
           b.setMatrixUniforms(b.modelViewMatrix), h = this.tubes[d], h.render(b, a)
@@ -6153,7 +6153,7 @@ ChemDoodle.RESIDUE = function () {
       e = 0;
       for (f = this.atoms.length; e < f; e++)
         if (h = this.atoms[e],
-                h.isHover || h.isSelected) {
+            h.isHover || h.isSelected) {
           A = !0;
           break
         }
@@ -6186,7 +6186,7 @@ ChemDoodle.RESIDUE = function () {
       }
     }
     this.surface && a.surfaces_display && (b.setMatrixUniforms(b.modelViewMatrix), this.surface.bindBuffers(b), b.material.setTempColors(a.surfaces_materialAmbientColor_3D, a.surfaces_color, a.surfaces_materialSpecularColor_3D, a.surfaces_materialShininess_3D), "Dot" === a.surfaces_style ? b.drawArrays(b.POINTS,
-            0, this.surface.vertexPositionBuffer.numItems) : b.drawElements(b.TRIANGLES, this.surface.vertexIndexBuffer.numItems, b.UNSIGNED_SHORT, 0))
+        0, this.surface.vertexPositionBuffer.numItems) : b.drawElements(b.TRIANGLES, this.surface.vertexIndexBuffer.numItems, b.UNSIGNED_SHORT, 0))
   };
   e.renderPickFrame = function (b, a, d, e, f) {
     this.specs && (a = this.specs);
@@ -6198,7 +6198,7 @@ ChemDoodle.RESIDUE = function () {
         var l = this.bonds[f];
         if (!h || l.a1.hetatm)
           b.material.setDiffuseColor(j.idx2color(d.length)),
-                  l.renderPicker(b, a), d.push(l)
+              l.renderPicker(b, a), d.push(l)
       }
     }
     if (e && a.atoms_display) {
@@ -6214,7 +6214,7 @@ ChemDoodle.RESIDUE = function () {
       for (o = this.atoms.length; f < o; f++)
         if (e = this.atoms[f], !h || e.hetatm && (a.macro_showWater || !e.isWater))
           a.atoms_nonBondedAsStars_3D && 0 === e.bondNumber ? (e.renderAsStar = !0, l.push(e)) : (b.material.setDiffuseColor(j.idx2color(d.length)),
-                  e.render(b, a, !0), d.push(e));
+              e.render(b, a, !0), d.push(e));
       if (0 < l.length) {
         b.starBuffer.bindBuffers(b);
         f = 0;
@@ -6231,7 +6231,7 @@ ChemDoodle.RESIDUE = function () {
       for (var o = 0, l = this.chains.length; o < l; o++)
         for (var A = this.chains[o], q = 0, t = A.length; q < t; q++)
           var u = A[q], b = h.min(u.cp1.x,
-                u.cp2.x, b), a = h.min(u.cp1.y, u.cp2.y, a), d = h.min(u.cp1.z, u.cp2.z, d), e = h.max(u.cp1.x, u.cp2.x, e), f = h.max(u.cp1.y, u.cp2.y, f), j = h.max(u.cp1.z, u.cp2.z, j);
+            u.cp2.x, b), a = h.min(u.cp1.y, u.cp2.y, a), d = h.min(u.cp1.z, u.cp2.z, d), e = h.max(u.cp1.x, u.cp2.x, e), f = h.max(u.cp1.y, u.cp2.y, f), j = h.max(u.cp1.z, u.cp2.z, j);
     o = 0;
     for (l = this.atoms.length; o < l; o++)
       b = h.min(this.atoms[o].x, b), a = h.min(this.atoms[o].y, a), d = h.min(this.atoms[o].z, d), e = h.max(this.atoms[o].x, e), f = h.max(this.atoms[o].y, f), j = h.max(this.atoms[o].z, j);
@@ -6241,7 +6241,7 @@ ChemDoodle.RESIDUE = function () {
     if (1 === this.atoms.length)
       return new n.Point(this.atoms[0].x, this.atoms[0].y);
     for (var b =
-            Infinity, a = Infinity, d = -Infinity, e = -Infinity, f = 0, j = this.atoms.length; f < j; f++)
+        Infinity, a = Infinity, d = -Infinity, e = -Infinity, f = 0, j = this.atoms.length; f < j; f++)
       b = h.min(this.atoms[f].x, b), a = h.min(this.atoms[f].y, a), d = h.max(this.atoms[f].x, d), e = h.max(this.atoms[f].y, e);
     return new n.Point((d + b) / 2, (e + a) / 2)
   };
@@ -6253,7 +6253,7 @@ ChemDoodle.RESIDUE = function () {
       for (var f = 0, j = this.chains.length; f < j; f++)
         for (var o = this.chains[f], l = 0, A = o.length; l < A; l++)
           var q = o[l], b = h.min(q.cp1.x, q.cp2.x, b), a = h.min(q.cp1.y,
-                q.cp2.y, a), d = h.max(q.cp1.x, q.cp2.x, d), e = h.max(q.cp1.y, q.cp2.y, e);
+            q.cp2.y, a), d = h.max(q.cp1.x, q.cp2.x, d), e = h.max(q.cp1.y, q.cp2.y, e);
       b -= 30;
       a -= 30;
       d += 30;
@@ -6272,7 +6272,7 @@ ChemDoodle.RESIDUE = function () {
           for (var a = 0, d = this.bonds.length; a < d; a++)
             this.bonds[a].ring = void 0;
           a =
-                  0;
+              0;
           for (d = this.rings.length; a < d; a++)
             this.rings[a].setupBonds()
         } else {
@@ -6337,7 +6337,7 @@ ChemDoodle.RESIDUE = function () {
   };
   e.setupMetaData = function () {
     for (var b = this.getCenter(), a = 0, d =
-            this.atoms.length; a < d; a++) {
+        this.atoms.length; a < d; a++) {
       var e = this.atoms[a];
       e.bonds = this.getBonds(e);
       e.angles = this.getAngles(e);
@@ -6354,14 +6354,14 @@ ChemDoodle.RESIDUE = function () {
       this.bonds[a].molCenter = b
   };
   e.scaleToAverageBondLength =
-          function (b) {
-            var a = this.getAverageBondLength();
-            if (0 !== a) {
-              b /= a;
-              for (var a = 0, d = this.atoms.length; a < d; a++)
-                this.atoms[a].x *= b, this.atoms[a].y *= b
-            }
-          };
+      function (b) {
+        var a = this.getAverageBondLength();
+        if (0 !== a) {
+          b /= a;
+          for (var a = 0, d = this.atoms.length; a < d; a++)
+            this.atoms[a].x *= b, this.atoms[a].y *= b
+        }
+      };
   e.getAverageBondLength = function () {
     if (0 === this.bonds.length)
       return 0;
@@ -6376,7 +6376,7 @@ ChemDoodle.RESIDUE = function () {
       a = 0;
       for (d = this.chains.length; a < d; a++)
         for (var e = this.chains[a],
-                f = 0, h = e.length; f < h; f++) {
+            f = 0, h = e.length; f < h; f++) {
           var o = e[f];
           b.expand(o.cp1.x, o.cp1.y);
           b.expand(o.cp2.x, o.cp2.y)
@@ -6403,7 +6403,7 @@ ChemDoodle.RESIDUE = function () {
     return b
   }
 })(ChemDoodle, ChemDoodle.math, ChemDoodle.structures,
-        ChemDoodle.RESIDUE, Math);
+    ChemDoodle.RESIDUE, Math);
 (function (b, j, n, l) {
   var h, e = -1;
   b.Residue = function (a) {
@@ -6421,14 +6421,14 @@ ChemDoodle.RESIDUE = function () {
     e = [(a.x + this.cp1.x) / 2, (a.y + this.cp1.y) / 2, (a.z + this.cp1.z) / 2];
     this.helix && (l.scale(f, 1.5), l.add(e, f));
     this.guidePointsSmall[0] =
-            new b.Atom("", e[0] - this.D[0] / 2, e[1] - this.D[1] / 2, e[2] - this.D[2] / 2);
+        new b.Atom("", e[0] - this.D[0] / 2, e[1] - this.D[1] / 2, e[2] - this.D[2] / 2);
     for (f = 1; f < d; f++)
       this.guidePointsSmall[f] = new b.Atom("", this.guidePointsSmall[0].x + this.D[0] * f / d, this.guidePointsSmall[0].y + this.D[1] * f / d, this.guidePointsSmall[0].z + this.D[2] * f / d);
     l.scale(this.D, 4);
     this.guidePointsLarge[0] = new b.Atom("", e[0] - this.D[0] / 2, e[1] - this.D[1] / 2, e[2] - this.D[2] / 2);
     for (f = 1; f < d; f++)
       this.guidePointsLarge[f] = new b.Atom("", this.guidePointsLarge[0].x + this.D[0] * f / d, this.guidePointsLarge[0].y + this.D[1] * f / d, this.guidePointsLarge[0].z +
-              this.D[2] * f / d)
+          this.D[2] * f / d)
   };
   g.getGuidePointSet = function (a) {
     if (0 === a)
@@ -6446,7 +6446,7 @@ ChemDoodle.RESIDUE = function () {
     }
     this.split = d.helix !== this.helix || d.sheet !== this.sheet;
     this.lineSegments = this.innerCompute(0, a, d, b,
-            !1, g);
+        !1, g);
     f && (this.lineSegmentsCartoon = this.innerCompute(d.helix || d.sheet ? 2 : 1, a, d, b, !0, g))
   };
   g.innerCompute = function (a, d, e, f, g, o) {
@@ -6459,7 +6459,7 @@ ChemDoodle.RESIDUE = function () {
           for (f = 0; 4 > f; f++)
             v[4 * a + f] += v[4 * (a - 1) + f];
         z[y] = new b.Atom("", v[12] /
-                v[15], v[13] / v[15], v[14] / v[15])
+            v[15], v[13] / v[15], v[14] / v[15])
       }
       w[t] = z
     }
@@ -6518,7 +6518,7 @@ ChemDoodle.RESIDUE = function () {
           "." === w.charAt(w.length - 1) && (w = w.substring(0, w.length - 1));
           var v = e.measureText(w).width;
           g.plots_flipXAxis && (v *=
-                  -1);
+              -1);
           var z = u - v / 2;
           if (g.plots_flipXAxis ? z < t : z > t)
             e.fillText(w, u, d - l + 2), t = u + v / 2;
@@ -6533,7 +6533,7 @@ ChemDoodle.RESIDUE = function () {
       e.textBaseline = "middle";
       for (o = 0; 10 >= o; o++)
         if (w = n / 10 * o, q = j + (d - l - j) * (1 - w * g.scale), g.plots_showGrid && (e.strokeStyle = g.plots_gridColor, e.lineWidth = g.plots_gridLineWidth,
-                e.beginPath(), e.moveTo(f, q), e.lineTo(a, q), e.stroke()), g.plots_showYAxis) {
+            e.beginPath(), e.moveTo(f, q), e.lineTo(a, q), e.stroke()), g.plots_showYAxis) {
           e.strokeStyle = "black";
           e.lineWidth = 1;
           e.beginPath();
@@ -6594,7 +6594,7 @@ ChemDoodle.RESIDUE = function () {
     b.beginPath();
     if (this.continuous)
       for (var w =
-              !1, n = 0, q = !1, t = 0, u = this.data.length; t < u; t++) {
+          !1, n = 0, q = !1, t = 0, u = this.data.length; t < u; t++) {
         var v = this.getTransformedX(this.data[t].x, g, a, f), z;
         t < u && !w && (z = this.getTransformedX(this.data[t + 1].x, g, a, f));
         if (v >= f && v < a || void 0 !== z && z >= f && z < a) {
@@ -6612,7 +6612,7 @@ ChemDoodle.RESIDUE = function () {
     else {
       t = 0;
       for (u =
-              this.data.length; t < u; t++)
+          this.data.length; t < u; t++)
         v = this.getTransformedX(this.data[t].x, g, a, f), v >= f && v < a && (b.moveTo(v, d - p), b.lineTo(v, this.getTransformedY(this.data[t].y, g, d, p, l)))
     }
     b.stroke();
@@ -6634,7 +6634,7 @@ ChemDoodle.RESIDUE = function () {
       t = 0;
       for (u = o.length; t < u; t++)
         v =
-                this.getTransformedX(o[t].x, g, a, f), y = this.getTransformedY(o[t].y / g.scale / w, g, d, p, l), 0 === t ? b.moveTo(v, y) : b.lineTo(v, y);
+            this.getTransformedX(o[t].x, g, a, f), y = this.getTransformedY(o[t].y / g.scale / w, g, d, p, l), 0 === t ? b.moveTo(v, y) : b.lineTo(v, y);
       b.stroke()
     }
   };
@@ -6650,10 +6650,10 @@ ChemDoodle.RESIDUE = function () {
     return b
   };
   l.getInverseTransformedX =
-          function (b) {
-            this.memory.flipXAxis && (b = this.memory.width + this.memory.offsetLeft - b);
-            return(b - this.memory.offsetLeft) * (this.maxX - this.minX) / (this.memory.width - this.memory.offsetLeft) + this.minX
-          };
+      function (b) {
+        this.memory.flipXAxis && (b = this.memory.width + this.memory.offsetLeft - b);
+        return(b - this.memory.offsetLeft) * (this.maxX - this.minX) / (this.memory.width - this.memory.offsetLeft) + this.minX
+      };
   l.setup = function () {
     for (var b = Number.MAX_VALUE, g = Number.MIN_VALUE, a = Number.MIN_VALUE, d = 0, j = this.data.length; d < j; d++)
       b = h.min(b, this.data[d].x), g = h.max(g, this.data[d].x), a = h.max(a, this.data[d].y);
@@ -6661,7 +6661,7 @@ ChemDoodle.RESIDUE = function () {
     d = 0;
     for (j = this.data.length; d < j; d++)
       this.data[d].y /=
-      a
+          a
   };
   l.zoom = function (b, g, a, d) {
     b = this.getInverseTransformedX(b);
@@ -6685,9 +6685,9 @@ ChemDoodle.RESIDUE = function () {
     alert(this.metadata.join("\n"))
   };
   l.getInternalCoordinates =
-          function (b, h) {
-            return new ChemDoodle.structures.Point(this.getInverseTransformedX(b), this.getInverseTransformedY(h))
-          };
+      function (b, h) {
+        return new ChemDoodle.structures.Point(this.getInverseTransformedX(b), this.getInverseTransformedY(h))
+      };
   l.getClosestPlotInternalCoordinates = function (b) {
     var h = this.getInverseTransformedX(b - 1);
     b = this.getInverseTransformedX(b + 1);
@@ -6706,34 +6706,34 @@ ChemDoodle.RESIDUE = function () {
       return o = this.data[a], new ChemDoodle.structures.Point(o.x, 100 * o.y)
   };
   l.getClosestPeakInternalCoordinates =
-          function (b) {
-            var g = this.getInverseTransformedX(b);
-            b = 0;
-            for (var a = Infinity, d = 0, j = this.data.length; d < j; d++) {
-              var f = h.abs(this.data[d].x - g);
-              if (f <= a)
-                a = f, b = d;
-              else
-                break
-            }
-            g = highestRight = b;
-            a = maxRight = this.data[b].y;
-            d = b + 1;
-            for (j = this.data.length; d < j; d++)
-              if (this.data[d].y + 0.05 > maxRight)
-                maxRight = this.data[d].y, highestRight = d;
-              else
-                break;
-            for (d = b - 1; 0 <= d; d--)
-              if (this.data[d].y + 0.05 > a)
-                a = this.data[d].y, g = d;
-              else
-                break;
-            b = this.data[g - b > highestRight - b ? highestRight : g];
-            return new ChemDoodle.structures.Point(b.x, 100 * b.y)
-          }
+      function (b) {
+        var g = this.getInverseTransformedX(b);
+        b = 0;
+        for (var a = Infinity, d = 0, j = this.data.length; d < j; d++) {
+          var f = h.abs(this.data[d].x - g);
+          if (f <= a)
+            a = f, b = d;
+          else
+            break
+        }
+        g = highestRight = b;
+        a = maxRight = this.data[b].y;
+        d = b + 1;
+        for (j = this.data.length; d < j; d++)
+          if (this.data[d].y + 0.05 > maxRight)
+            maxRight = this.data[d].y, highestRight = d;
+          else
+            break;
+        for (d = b - 1; 0 <= d; d--)
+          if (this.data[d].y + 0.05 > a)
+            a = this.data[d].y, g = d;
+          else
+            break;
+        b = this.data[g - b > highestRight - b ? highestRight : g];
+        return new ChemDoodle.structures.Point(b.x, 100 * b.y)
+      }
 })(ChemDoodle.extensions,
-        ChemDoodle.structures, ChemDoodle.math, ChemDoodle.lib.jQuery, Math);
+    ChemDoodle.structures, ChemDoodle.math, ChemDoodle.lib.jQuery, Math);
 (function (b, j, n) {
   j._Shape = function () {
   };
@@ -6761,7 +6761,7 @@ ChemDoodle.RESIDUE = function () {
     b.moveTo(-4, -4);
     b.lineTo(4, -4);
     b.lineTo(4,
-            4);
+        4);
     b.lineTo(-4, 4);
     b.closePath();
     b.fillStyle = g ? "#885110" : "white";
@@ -6810,17 +6810,17 @@ ChemDoodle.RESIDUE = function () {
     e.lineTo(d, j);
     e.lineTo(d - o, j);
     this.isLassoed && (o = e.createLinearGradient(this.p1.x, this.p1.y,
-            this.p2.x, this.p2.y), o.addColorStop(0, "rgba(212, 99, 0, 0)"), o.addColorStop(0.5, "rgba(212, 99, 0, 0.8)"), o.addColorStop(1, "rgba(212, 99, 0, 0)"), e.lineWidth = g.shapes_lineWidth_2D + 5, e.strokeStyle = o, e.lineJoin = "miter", e.lineCap = "square", e.stroke());
+        this.p2.x, this.p2.y), o.addColorStop(0, "rgba(212, 99, 0, 0)"), o.addColorStop(0.5, "rgba(212, 99, 0, 0.8)"), o.addColorStop(1, "rgba(212, 99, 0, 0)"), e.lineWidth = g.shapes_lineWidth_2D + 5, e.strokeStyle = o, e.lineJoin = "miter", e.lineCap = "square", e.stroke());
     e.strokeStyle = g.shapes_color;
     e.lineWidth = g.shapes_lineWidth_2D;
     e.lineJoin = "miter";
     e.lineCap = "butt";
     e.stroke();
     0 !== this.charge && (e.fillStyle = g.text_color, e.textAlign = "left", e.textBaseline = "alphabetic", e.font = b.getFontString(g.text_font_size, g.text_font_families),
-            o = this.charge.toFixed(0), o = "1" === o ? "+" : "-1" === o ? "\u2013" : b.stringStartsWith(o, "-") ? o.substring(1) + "\u2013" : o + "+", e.fillText(o, d + 5, j + 5));
+        o = this.charge.toFixed(0), o = "1" === o ? "+" : "-1" === o ? "\u2013" : b.stringStartsWith(o, "-") ? o.substring(1) + "\u2013" : o + "+", e.fillText(o, d + 5, j + 5));
     0 !== this.mult && (e.fillStyle = g.text_color, e.textAlign = "right", e.textBaseline = "middle", e.font = b.getFontString(g.text_font_size, g.text_font_families), e.fillText(this.mult.toFixed(0), a - 5, j + l / 2));
     0 !== this.repeat && (e.fillStyle = g.text_color, e.textAlign = "left", e.textBaseline = "top", e.font = b.getFontString(g.text_font_size, g.text_font_families), o = this.repeat.toFixed(0), e.fillText(o,
-            d + 5, f - 5))
+        d + 5, f - 5))
   };
   l.getPoints = function () {
     return[this.p1, this.p2]
@@ -6847,7 +6847,7 @@ ChemDoodle.RESIDUE = function () {
       var a = b.createLinearGradient(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
       a.addColorStop(0, "rgba(212, 99, 0, 0)");
       a.addColorStop(0.5,
-              "rgba(212, 99, 0, 0.8)");
+          "rgba(212, 99, 0, 0.8)");
       a.addColorStop(1, "rgba(212, 99, 0, 0)");
       var d = 2.5, j = this.p1.angle(this.p2) + l.PI / 2, f = l.cos(j), j = l.sin(j), p = this.p1.x - f * d, o = this.p1.y + j * d, w = this.p1.x + f * d, A = this.p1.y - j * d, q = this.p2.x + f * d, t = this.p2.y - j * d, u = this.p2.x - f * d, v = this.p2.y + j * d;
       b.fillStyle = a;
@@ -6865,12 +6865,12 @@ ChemDoodle.RESIDUE = function () {
     b.lineJoin = "miter";
     b.lineCap = "butt";
     if (this.p1.x !==
-            this.p2.x || this.p1.y !== this.p2.y) {
+        this.p2.x || this.p1.y !== this.p2.y) {
       if (this.arrowType === n.Line.ARROW_RETROSYNTHETIC) {
         var a = 2 * l.sqrt(2), d = h.shapes_arrowLength_2D / a, f = this.p1.angle(this.p2), j = f + l.PI / 2, a = h.shapes_arrowLength_2D / a, z = l.cos(f), y = l.sin(f), f = l.cos(j), j = l.sin(j), p = this.p1.x - f * d, o = this.p1.y + j * d, w = this.p1.x + f * d, A = this.p1.y - j * d, q = this.p2.x + f * d - z * a, t = this.p2.y - j * d + y * a, u = this.p2.x - f * d - z * a, v = this.p2.y + j * d + y * a, B = this.p2.x + 2 * f * d - 2 * z * a, c = this.p2.y - 2 * j * d + 2 * y * a, k = this.p2.x - 2 * f * d - 2 * z * a, d = this.p2.y + 2 * j * d + 2 * y * a;
         b.beginPath();
         b.moveTo(w,
-                A);
+            A);
         b.lineTo(q, t);
         b.moveTo(B, c);
         b.lineTo(this.p2.x, this.p2.y);
@@ -6879,13 +6879,13 @@ ChemDoodle.RESIDUE = function () {
         b.lineTo(p, o)
       } else
         this.arrowType === n.Line.ARROW_EQUILIBRIUM ? (a = 2 * l.sqrt(2), d = h.shapes_arrowLength_2D / a / 2, f = this.p1.angle(this.p2), j = f + l.PI / 2, a = 2 * h.shapes_arrowLength_2D / l.sqrt(3), z = l.cos(f), y = l.sin(f), f = l.cos(j), j = l.sin(j), p = this.p1.x - f * d, o = this.p1.y + j * d, w = this.p1.x + f * d, A = this.p1.y - j * d, q = this.p2.x + f * d, t = this.p2.y - j * d, u = this.p2.x - f * d, v = this.p2.y + j * d, b.beginPath(), b.moveTo(w, A), b.lineTo(q, t), b.moveTo(u, v), b.lineTo(p,
-                o), b.stroke(), w = q - 0.8 * z * a, A = t + 0.8 * y * a, B = q + f * h.shapes_arrowLength_2D / 3 - z * a, c = t - j * h.shapes_arrowLength_2D / 3 + y * a, b.beginPath(), b.moveTo(q, t), b.lineTo(B, c), b.lineTo(w, A), b.closePath(), b.fill(), b.stroke(), w = p + 0.8 * z * a, A = o - 0.8 * y * a, B = p - f * h.shapes_arrowLength_2D / 3 + z * a, c = o + j * h.shapes_arrowLength_2D / 3 - y * a, b.beginPath(), b.moveTo(p, o), b.lineTo(B, c), b.lineTo(w, A), b.closePath(), b.fill()) : this.arrowType === n.Line.ARROW_SYNTHETIC ? (f = this.p1.angle(this.p2), j = f + l.PI / 2, a = 2 * h.shapes_arrowLength_2D / l.sqrt(3), z = l.cos(f),
-                y = l.sin(f), f = l.cos(j), j = l.sin(j), b.beginPath(), b.moveTo(this.p1.x, this.p1.y), b.lineTo(this.p2.x - z * a / 2, this.p2.y + y * a / 2), b.stroke(), w = this.p2.x - 0.8 * z * a, A = this.p2.y + 0.8 * y * a, B = this.p2.x + f * h.shapes_arrowLength_2D / 3 - z * a, c = this.p2.y - j * h.shapes_arrowLength_2D / 3 + y * a, k = this.p2.x - f * h.shapes_arrowLength_2D / 3 - z * a, d = this.p2.y + j * h.shapes_arrowLength_2D / 3 + y * a, b.beginPath(), b.moveTo(this.p2.x, this.p2.y), b.lineTo(k, d), b.lineTo(w, A), b.lineTo(B, c), b.closePath(), b.fill()) : this.arrowType === n.Line.ARROW_RESONANCE ? (f = this.p1.angle(this.p2),
-                j = f + l.PI / 2, a = 2 * h.shapes_arrowLength_2D / l.sqrt(3), z = l.cos(f), y = l.sin(f), f = l.cos(j), j = l.sin(j), b.beginPath(), b.moveTo(this.p1.x + z * a / 2, this.p1.y - y * a / 2), b.lineTo(this.p2.x - z * a / 2, this.p2.y + y * a / 2), b.stroke(), w = this.p2.x - 0.8 * z * a, A = this.p2.y + 0.8 * y * a, B = this.p2.x + f * h.shapes_arrowLength_2D / 3 - z * a, c = this.p2.y - j * h.shapes_arrowLength_2D / 3 + y * a, k = this.p2.x - f * h.shapes_arrowLength_2D / 3 - z * a, d = this.p2.y + j * h.shapes_arrowLength_2D / 3 + y * a, b.beginPath(), b.moveTo(this.p2.x, this.p2.y), b.lineTo(k, d), b.lineTo(w, A), b.lineTo(B,
-                c), b.closePath(), b.fill(), b.stroke(), w = this.p1.x + 0.8 * z * a, A = this.p1.y - 0.8 * y * a, B = this.p1.x - f * h.shapes_arrowLength_2D / 3 + z * a, c = this.p1.y + j * h.shapes_arrowLength_2D / 3 - y * a, k = this.p1.x + f * h.shapes_arrowLength_2D / 3 + z * a, d = this.p1.y - j * h.shapes_arrowLength_2D / 3 - y * a, b.beginPath(), b.moveTo(this.p1.x, this.p1.y), b.lineTo(k, d), b.lineTo(w, A), b.lineTo(B, c), b.closePath(), b.fill()) : (b.beginPath(), b.moveTo(this.p1.x, this.p1.y), b.lineTo(this.p2.x, this.p2.y));
+            o), b.stroke(), w = q - 0.8 * z * a, A = t + 0.8 * y * a, B = q + f * h.shapes_arrowLength_2D / 3 - z * a, c = t - j * h.shapes_arrowLength_2D / 3 + y * a, b.beginPath(), b.moveTo(q, t), b.lineTo(B, c), b.lineTo(w, A), b.closePath(), b.fill(), b.stroke(), w = p + 0.8 * z * a, A = o - 0.8 * y * a, B = p - f * h.shapes_arrowLength_2D / 3 + z * a, c = o + j * h.shapes_arrowLength_2D / 3 - y * a, b.beginPath(), b.moveTo(p, o), b.lineTo(B, c), b.lineTo(w, A), b.closePath(), b.fill()) : this.arrowType === n.Line.ARROW_SYNTHETIC ? (f = this.p1.angle(this.p2), j = f + l.PI / 2, a = 2 * h.shapes_arrowLength_2D / l.sqrt(3), z = l.cos(f),
+            y = l.sin(f), f = l.cos(j), j = l.sin(j), b.beginPath(), b.moveTo(this.p1.x, this.p1.y), b.lineTo(this.p2.x - z * a / 2, this.p2.y + y * a / 2), b.stroke(), w = this.p2.x - 0.8 * z * a, A = this.p2.y + 0.8 * y * a, B = this.p2.x + f * h.shapes_arrowLength_2D / 3 - z * a, c = this.p2.y - j * h.shapes_arrowLength_2D / 3 + y * a, k = this.p2.x - f * h.shapes_arrowLength_2D / 3 - z * a, d = this.p2.y + j * h.shapes_arrowLength_2D / 3 + y * a, b.beginPath(), b.moveTo(this.p2.x, this.p2.y), b.lineTo(k, d), b.lineTo(w, A), b.lineTo(B, c), b.closePath(), b.fill()) : this.arrowType === n.Line.ARROW_RESONANCE ? (f = this.p1.angle(this.p2),
+            j = f + l.PI / 2, a = 2 * h.shapes_arrowLength_2D / l.sqrt(3), z = l.cos(f), y = l.sin(f), f = l.cos(j), j = l.sin(j), b.beginPath(), b.moveTo(this.p1.x + z * a / 2, this.p1.y - y * a / 2), b.lineTo(this.p2.x - z * a / 2, this.p2.y + y * a / 2), b.stroke(), w = this.p2.x - 0.8 * z * a, A = this.p2.y + 0.8 * y * a, B = this.p2.x + f * h.shapes_arrowLength_2D / 3 - z * a, c = this.p2.y - j * h.shapes_arrowLength_2D / 3 + y * a, k = this.p2.x - f * h.shapes_arrowLength_2D / 3 - z * a, d = this.p2.y + j * h.shapes_arrowLength_2D / 3 + y * a, b.beginPath(), b.moveTo(this.p2.x, this.p2.y), b.lineTo(k, d), b.lineTo(w, A), b.lineTo(B,
+            c), b.closePath(), b.fill(), b.stroke(), w = this.p1.x + 0.8 * z * a, A = this.p1.y - 0.8 * y * a, B = this.p1.x - f * h.shapes_arrowLength_2D / 3 + z * a, c = this.p1.y + j * h.shapes_arrowLength_2D / 3 - y * a, k = this.p1.x + f * h.shapes_arrowLength_2D / 3 + z * a, d = this.p1.y - j * h.shapes_arrowLength_2D / 3 - y * a, b.beginPath(), b.moveTo(this.p1.x, this.p1.y), b.lineTo(k, d), b.lineTo(w, A), b.lineTo(B, c), b.closePath(), b.fill()) : (b.beginPath(), b.moveTo(this.p1.x, this.p1.y), b.lineTo(this.p2.x, this.p2.y));
       b.stroke();
       this.topText && (b.textAlign = "center", b.textBaseline =
-              "bottom", b.fillText(this.topText, (this.p1.x + this.p2.x) / 2, this.p1.y - 5));
+          "bottom", b.fillText(this.topText, (this.p1.x + this.p2.x) / 2, this.p1.y - 5));
       this.bottomText && (b.textAlign = "center", b.textBaseline = "top", b.fillText(this.bottomText, (this.p1.x + this.p2.x) / 2, this.p1.y + 5))
     }
   };
@@ -6920,7 +6920,7 @@ ChemDoodle.RESIDUE = function () {
               var g = a.bonds[f];
               if (2 === g.bondOrder && (g = g.getNeighbor(a), "O" === g.label)) {
                 b =
-                        [g.angle(a)];
+                    [g.angle(a)];
                 break
               }
             }
@@ -6951,7 +6951,7 @@ ChemDoodle.RESIDUE = function () {
     o.y += v * B;
     B = z + h.PI / 2;
     e = 2 * b.shapes_arrowLength_2D /
-            h.sqrt(3);
+        h.sqrt(3);
     var y = h.cos(z), v = h.sin(z), c = h.cos(B), k = h.sin(B);
     q.x -= 5 * y;
     q.y += 5 * v;
@@ -6971,7 +6971,7 @@ ChemDoodle.RESIDUE = function () {
     v && a.lineTo(b.x, b.y);
     a.lineTo(j, B);
     y && a.lineTo(C.x,
-            C.y);
+        C.y);
     a.closePath();
     a.fill();
     a.stroke();
@@ -6991,7 +6991,7 @@ ChemDoodle.RESIDUE = function () {
     if (this.isHover)
       for (var e = this.o1 instanceof n.Atom ? new n.Point(this.o1.x, this.o1.y) : this.o1.getCenter(), h = this.o2 instanceof n.Atom ? new n.Point(this.o2.x, this.o2.y) : this.o2.getCenter(), e = [e, h], h = 0, g = e.length; h < g; h++) {
         var j =
-                e[h];
+            e[h];
         this.drawAnchor(a, b, j, j === this.hoverPoint)
       }
   };
@@ -7005,12 +7005,12 @@ ChemDoodle.RESIDUE = function () {
       for (var f = this.o1 instanceof n.Atom ? new n.Point(this.o1.x, this.o1.y) : this.o1.getCenter(), j = this.o2 instanceof n.Atom ? new n.Point(this.o2.x, this.o2.y) : this.o2.getCenter(), o = e(this.o1), l = e(this.o2), A, q, t = Infinity, u = 0, v = o.length; u < v; u++)
         for (var z = 0, y = l.length; z < y; z++) {
           var B = new n.Point(f.x +
-                  35 * h.cos(o[u]), f.y - 35 * h.sin(o[u])), c = new n.Point(j.x + 35 * h.cos(l[z]), j.y - 35 * h.sin(l[z])), k = B.distance(c);
+              35 * h.cos(o[u]), f.y - 35 * h.sin(o[u])), c = new n.Point(j.x + 35 * h.cos(l[z]), j.y - 35 * h.sin(l[z])), k = B.distance(c);
           k < t && (t = k, A = B, q = c)
         }
       this.caches = [];
       -1 === this.numElectron ? (u = f.distance(j) / 2, l = f.angle(j), o = l + h.PI / 2, v = h.cos(l), z = h.sin(l), l = new n.Point(f.x + (u - 1) * v, f.y - (u - 1) * z), t = new n.Point(l.x + 35 * h.cos(o + h.PI / 6), l.y - 35 * h.sin(o + h.PI / 6)), u = new n.Point(f.x + (u + 1) * v, f.y - (u + 1) * z), o = new n.Point(u.x + 35 * h.cos(o - h.PI / 6), u.y - 35 * h.sin(o - h.PI / 6)), a(d, g, this.o1, l, f, A, t, l, 1, this.caches), a(d, g, this.o2, u, j, q, o, u, 1, this.caches)) :
-              (b.intersectLines(f.x, f.y, A.x, A.y, j.x, j.y, q.x, q.y) && (o = A, A = q, q = o), o = A.angle(f), l = q.angle(j), t = h.max(o, l) - h.min(o, l), 0.001 > h.abs(t - h.PI) && this.o1.molCenter === this.o2.molCenter && (o += h.PI / 2, l -= h.PI / 2, A.x = f.x + 35 * h.cos(o + h.PI), A.y = f.y - 35 * h.sin(o + h.PI), q.x = j.x + 35 * h.cos(l + h.PI), q.y = j.y - 35 * h.sin(l + h.PI)), a(d, g, this.o1, this.o2, f, A, q, j, this.numElectron, this.caches))
+          (b.intersectLines(f.x, f.y, A.x, A.y, j.x, j.y, q.x, q.y) && (o = A, A = q, q = o), o = A.angle(f), l = q.angle(j), t = h.max(o, l) - h.min(o, l), 0.001 > h.abs(t - h.PI) && this.o1.molCenter === this.o2.molCenter && (o += h.PI / 2, l -= h.PI / 2, A.x = f.x + 35 * h.cos(o + h.PI), A.y = f.y - 35 * h.sin(o + h.PI), q.x = j.x + 35 * h.cos(l + h.PI), q.y = j.y - 35 * h.sin(l + h.PI)), a(d, g, this.o1, this.o2, f, A, q, j, this.numElectron, this.caches))
     }
   };
   l.getPoints = function () {
@@ -7019,7 +7019,7 @@ ChemDoodle.RESIDUE = function () {
   l.isOver = function (a, b) {
     for (var e = 0, h = this.caches.length; e < h; e++)
       if (j.distanceFromCurve(a, this.caches[e]).distance <
-              b)
+          b)
         return!0;
     return!1
   }
@@ -7041,14 +7041,14 @@ ChemDoodle.RESIDUE = function () {
     this.vertexPositionBuffer.numItems = this.positionData.length / 3;
     this.vertexNormalBuffer = b.createBuffer();
     b.bindBuffer(b.ARRAY_BUFFER,
-            this.vertexNormalBuffer);
+        this.vertexNormalBuffer);
     b.bufferData(b.ARRAY_BUFFER, new Float32Array(this.normalData), b.STATIC_DRAW);
     this.vertexNormalBuffer.itemSize = 3;
     this.vertexNormalBuffer.numItems = this.normalData.length / 3;
     this.indexData && (this.vertexIndexBuffer = b.createBuffer(), b.bindBuffer(b.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer), b.bufferData(b.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indexData), b.STATIC_DRAW), this.vertexIndexBuffer.itemSize = 1, this.vertexIndexBuffer.numItems = this.indexData.length);
     if (this.partitions)
       for (var n =
-              0, l = this.partitions.length; n < l; n++) {
+          0, l = this.partitions.length; n < l; n++) {
         var h = this.partitions[n], e = this.generateBuffers(b, h.positionData, h.normalData, h.indexData);
         h.vertexPositionBuffer = e[0];
         h.vertexNormalBuffer = e[1];
@@ -7121,7 +7121,7 @@ ChemDoodle.RESIDUE = function () {
     this.vec2 = g.normalize([this.a3.x - this.a2.x, this.a3.y - this.a2.y, this.a3.z - this.a2.z]);
     this.angle = j.vec3AngleFrom(this.vec1, this.vec2);
     l = g.normalize(g.cross(this.vec1,
-            this.vec2, []));
+        this.vec2, []));
     l = g.normalize(g.cross(l, this.vec1, []));
     a = a.measurement_angleBands_3D;
     for (o = 0; o <= a; ++o) {
@@ -7135,7 +7135,7 @@ ChemDoodle.RESIDUE = function () {
   b.getText = function () {
     var a = g.scale(g.normalize(g.add(this.vec1, this.vec2, [])), this.distUse + 0.3);
     return{pos: [this.a2.x + a[0], this.a2.y + a[1], this.a2.z + a[2]], value: [l.angleBounds(this.angle,
-                !0).toFixed(2), " \u00b0"].join("")}
+            !0).toFixed(2), " \u00b0"].join("")}
   }
 })(ChemDoodle.ELEMENT, ChemDoodle.extensions, ChemDoodle.structures.d3, ChemDoodle.math, Math, ChemDoodle.lib.mat4, ChemDoodle.lib.vec3);
 (function (b, j) {
@@ -7167,7 +7167,7 @@ ChemDoodle.RESIDUE = function () {
     this.textMesh = new b.TextMesh;
     this.textMesh.init(h);
     var g = 3 / (e.compass_size_3D /
-            h.canvas.clientHeight), a = j.tan(e.projectionPerspectiveVerticalFieldOfView_3D / 360 * j.PI), d = g / a, l = j.max(d - g, 0.1), f = h.canvas.clientWidth / h.canvas.clientHeight, p, o;
+        h.canvas.clientHeight), a = j.tan(e.projectionPerspectiveVerticalFieldOfView_3D / 360 * j.PI), d = g / a, l = j.max(d - g, 0.1), f = h.canvas.clientWidth / h.canvas.clientHeight, p, o;
     e.projectionPerspective_3D ? (o = l, p = n.frustum) : (o = d, p = n.ortho);
     var w = 2 * (o / h.canvas.clientHeight) * a, a = a * o;
     o = -a;
@@ -7178,7 +7178,7 @@ ChemDoodle.RESIDUE = function () {
       a -= w
     }
     this.projectionMatrix =
-            p(A, f, o, a, l, d + g);
+        p(A, f, o, a, l, d + g);
     this.translationMatrix = n.translate(n.identity([]), [0, 0, -d]);
     g = {position: [], texCoord: [], translation: []};
     this.textImage.pushVertexData("X", [3.5, 0, 0], 0, g);
@@ -7191,7 +7191,7 @@ ChemDoodle.RESIDUE = function () {
     b.material.setDiffuseColor(g);
     b.setMatrixUniforms(a);
     1 === e ? b.drawArrays(b.LINES, 0, b.lineArrowBuffer.vertexPositionBuffer.numItems) :
-            b.drawElements(b.TRIANGLES, b.arrowBuffer.vertexIndexBuffer.numItems, b.UNSIGNED_SHORT, 0)
+        b.drawElements(b.TRIANGLES, b.arrowBuffer.vertexIndexBuffer.numItems, b.UNSIGNED_SHORT, 0)
   };
   l.render = function (b, e) {
     1 === e.compass_type_3D ? b.lineArrowBuffer.bindBuffers(b) : b.arrowBuffer.bindBuffers(b);
@@ -7200,7 +7200,7 @@ ChemDoodle.RESIDUE = function () {
     b.fogging.setMode(0);
     this.renderArrow(b, e.compass_type_3D, e.compass_axisXColor_3D, n.rotateY(g, a, []));
     this.renderArrow(b,
-            e.compass_type_3D, e.compass_axisYColor_3D, n.rotateX(g, -a, []));
+        e.compass_type_3D, e.compass_axisYColor_3D, n.rotateX(g, -a, []));
     this.renderArrow(b, e.compass_type_3D, e.compass_axisZColor_3D, g)
   };
   l.renderAxis = function (b) {
@@ -7238,7 +7238,7 @@ ChemDoodle.RESIDUE = function () {
   j.calculateData = function (h) {
     var e = [this.a1.x, this.a1.y, this.a1.z, this.a2.x, this.a2.y, this.a2.z];
     this.node && (this.move = this.offset + n.max(h.atoms_useVDWDiameters_3D ? b[this.a1.label].vdWRadius * h.atoms_vdwMultiplier_3D : h.atoms_sphereDiameter_3D / 2, h.atoms_useVDWDiameters_3D ? b[this.a2.label].vdWRadius * h.atoms_vdwMultiplier_3D : h.atoms_sphereDiameter_3D / 2), this.displacement =
-            [(this.a1.x + this.a2.x) / 2 - this.node.x, (this.a1.y + this.a2.y) / 2 - this.node.y, (this.a1.z + this.a2.z) / 2 - this.node.z], l.normalize(this.displacement), h = l.scale(this.displacement, this.move, []), e[0] += h[0], e[1] += h[1], e[2] += h[2], e[3] += h[0], e[4] += h[1], e[5] += h[2]);
+        [(this.a1.x + this.a2.x) / 2 - this.node.x, (this.a1.y + this.a2.y) / 2 - this.node.y, (this.a1.z + this.a2.z) / 2 - this.node.z], l.normalize(this.displacement), h = l.scale(this.displacement, this.move, []), e[0] += h[0], e[1] += h[1], e[2] += h[2], e[3] += h[0], e[4] += h[1], e[5] += h[2]);
     this.storeData(e, [0, 0, 0, 0, 0, 0], [0, 1])
   };
   j.getText = function () {
@@ -7247,7 +7247,7 @@ ChemDoodle.RESIDUE = function () {
       var g = l.scale(this.displacement, this.move + 0.1, []);
       e[0] += g[0];
       e[1] +=
-              g[1];
+          g[1];
       e[2] += g[2]
     }
     return{pos: e, value: [b.toFixed(2), " \u212b"].join("")}
@@ -7267,7 +7267,7 @@ ChemDoodle.RESIDUE = function () {
     if (!this.cCache || this.cCache !== j)
       this.cCache = j, j = b.getRGB(j, 1), this.gl.uniform3f(this.cUL, j[0], j[1], j[2]);
     if (!this.sCache || this.sCache !==
-            h)
+        h)
       this.sCache = h, this.gl.uniform1f(this.sUL, h);
     if (!this.eCache || this.eCache !== e)
       this.eCache = e, this.gl.uniform1f(this.eUL, e);
@@ -7292,7 +7292,7 @@ ChemDoodle.RESIDUE = function () {
     for (var g = 0, a = h.length; g < a; g++) {
       for (var d = h[g], r = d.labelMesh, f = d.atoms, p = this.textImage, o = {position: [], texCoord: [], translation: []}, w = 0 < f.length && void 0 != f[0].hetatm, n = 0, q = f.length; n < q; n++) {
         var t =
-                f[n], u = t.label, v = 0.05;
+            f[n], u = t.label, v = 0.05;
         if (e.atoms_useVDWDiameters_3D) {
           var z = b[u].vdWRadius * e.atoms_vdwMultiplier_3D;
           0 === z && (z = 1);
@@ -7314,7 +7314,7 @@ ChemDoodle.RESIDUE = function () {
           w = 0;
           for (u = f.length; w < u; w++)
             v = f[w], v.name && (t = v.cp1, p.pushVertexData(v.name,
-                    [t.x, t.y, t.z], 2, o))
+                [t.x, t.y, t.z], 2, o))
         }
       }
       r.storeData(j, o.position, o.texCoord, o.translation, o.zDepth)
@@ -7361,7 +7361,7 @@ ChemDoodle.RESIDUE = function () {
   }, g = h.prototype;
   g.getColor = function (a) {
     return a.macro_colorByChain ?
-            this.chainColor : this.name ? this.getResidueColor(b[this.name] ? this.name : "*", a) : this.helix ? this.entire.front ? a.proteins_ribbonCartoonHelixPrimaryColor : a.proteins_ribbonCartoonHelixSecondaryColor : this.sheet ? a.proteins_ribbonCartoonSheetColor : this.entire.front ? a.proteins_primaryColor : a.proteins_secondaryColor
+        this.chainColor : this.name ? this.getResidueColor(b[this.name] ? this.name : "*", a) : this.helix ? this.entire.front ? a.proteins_ribbonCartoonHelixPrimaryColor : a.proteins_ribbonCartoonHelixSecondaryColor : this.sheet ? a.proteins_ribbonCartoonSheetColor : this.entire.front ? a.proteins_primaryColor : a.proteins_secondaryColor
   };
   g.getResidueColor = function (a, d) {
     var e = b[a];
@@ -7373,7 +7373,7 @@ ChemDoodle.RESIDUE = function () {
       if (e.polar)
         return"#C10000"
     } else if ("acidity" ===
-            d.proteins_residueColor) {
+        d.proteins_residueColor) {
       if (1 === e.acidity)
         return"#0000FF";
       if (-1 === e.acidity)
@@ -7386,7 +7386,7 @@ ChemDoodle.RESIDUE = function () {
   g.render = function (a, b, h) {
     this.entire.partitions && this.pi !== this.entire.partitions.lastRender && (e(a, this.entire.partitions[this.pi]), this.entire.partitions.lastRender = this.pi);
     this.vertexIndexBuffer || (this.vertexIndexBuffer = a.createBuffer(), a.bindBuffer(a.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer), a.bufferData(a.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indexes),
-            a.STATIC_DRAW), this.vertexIndexBuffer.itemSize = 1, this.vertexIndexBuffer.numItems = this.indexes.length);
+        a.STATIC_DRAW), this.vertexIndexBuffer.itemSize = 1, this.vertexIndexBuffer.numItems = this.indexes.length);
     a.bindBuffer(a.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer);
     !h && "rainbow" !== b.proteins_residueColor && a.material.setDiffuseColor(this.getColor(b));
     a.drawElements(a.TRIANGLES, this.vertexIndexBuffer.numItems, a.UNSIGNED_SHORT, 0)
@@ -7398,7 +7398,7 @@ ChemDoodle.RESIDUE = function () {
     var j;
     this.front = 0 < b;
     for (var w = 0, A = a.length -
-            1; w < A; w++) {
+        1; w < A; w++) {
       if (!j || 65E3 < j.positionData.length)
         0 < this.partitions.length && w--, j = {count: 0, positionData: [], normalData: [], indexData: []}, this.partitions.push(j);
       var q = a[w];
@@ -7410,11 +7410,11 @@ ChemDoodle.RESIDUE = function () {
           var k = e ? a[c].lineSegmentsCartoon[t][k] : a[c].lineSegments[t][k], c = !1, C = t + 1;
           t === f - 1 && (C -= 2, c = !0);
           var C = e ? q.lineSegmentsCartoon[C][y] : q.lineSegments[C][y], k = [k.x -
-                    B.x, k.y - B.y, k.z - B.z], C = [C.x - B.x, C.y - B.y, C.z - B.z], D = l.cross(k, C, []);
+                B.x, k.y - B.y, k.z - B.z], C = [C.x - B.x, C.y - B.y, C.z - B.z], D = l.cross(k, C, []);
           0 === y && (l.normalize(k), l.scale(k, -1), j.normalData.push(k[0], k[1], k[2]), j.positionData.push(B.x, B.y, B.z));
           v || z ? (l.normalize(C), l.scale(C, -1), j.normalData.push(C[0], C[1], C[2]), j.positionData.push(B.x, B.y, B.z), v && y === g - 1 && (v = !1, y = -1)) : (l.normalize(D), (c && !this.front || !c && this.front) && l.scale(D, -1), j.normalData.push(D[0], D[1], D[2]), l.scale(D, n.abs(b)), j.positionData.push(B.x + D[0], B.y + D[1], B.z + D[2]), t === f - 1 && y === g - 1 && (z = !0, y = -1));
           if (-1 ===
-                  y || y === g - 1)
+              y || y === g - 1)
             l.normalize(k), j.normalData.push(k[0], k[1], k[2]), j.positionData.push(B.x, B.y, B.z)
         }
     }
@@ -7441,13 +7441,13 @@ ChemDoodle.RESIDUE = function () {
           c = v + t * g;
           for (y = 0; y < g; y++)
             k =
-                    1, w === j.count - 1 ? k = 0 : y === g - 1 && (k = f * g - y), k = [c + y, c + g + y, c + g + y + k, c + y, c + y + k, c + g + y + k], y !== g - 1 && (this.front ? z.push(k[0], k[1], k[2], k[3], k[5], k[4]) : z.push(k[0], k[2], k[1], k[3], k[4], k[5])), y === g - 2 && w < j.count - 1 && (C = f * g - y, k[2] += C, k[4] += C, k[5] += C), this.front ? j.indexData.push(k[0], k[1], k[2], k[3], k[5], k[4]) : j.indexData.push(k[0], k[2], k[1], k[3], k[4], k[5]), e && (this.front ? H.push(k[0], k[1], k[2], k[3], k[5], k[4]) : H.push(k[0], k[2], k[1], k[3], k[4], k[5]))
+                1, w === j.count - 1 ? k = 0 : y === g - 1 && (k = f * g - y), k = [c + y, c + g + y, c + g + y + k, c + y, c + y + k, c + g + y + k], y !== g - 1 && (this.front ? z.push(k[0], k[1], k[2], k[3], k[5], k[4]) : z.push(k[0], k[2], k[1], k[3], k[4], k[5])), y === g - 2 && w < j.count - 1 && (C = f * g - y, k[2] += C, k[4] += C, k[5] += C), this.front ? j.indexData.push(k[0], k[1], k[2], k[3], k[5], k[4]) : j.indexData.push(k[0], k[2], k[1], k[3], k[4], k[5]), e && (this.front ? H.push(k[0], k[1], k[2], k[3], k[5], k[4]) : H.push(k[0], k[2], k[1], k[3], k[4], k[5]))
         }
         this.segments.push(new h(this, a[u + 1].name, z, b))
       }
       if (e) {
         y = new h(this, void 0,
-                H, b);
+            H, b);
         u = j.count - 1;
         for (t = 0; t < b; t++)
           u += this.partitions[t].count - 1;
@@ -7487,7 +7487,7 @@ ChemDoodle.RESIDUE = function () {
     n.normalize(h);
     n.negate(h);
     b.uniform3f(b.getUniformLocation(b.program,
-            "u_light_direction"), h[0], h[1], h[2]);
+        "u_light_direction"), h[0], h[1], h[2]);
     var e = [0, 0, 0], h = [e[0] + h[0], e[1] + h[1], e[2] + h[2]], e = n.length(h);
     0 === e ? h = [0, 0, 1] : n.scale(1 / e);
     b.uniform3f(b.getUniformLocation(b.program, "u_light_half_vector"), h[0], h[1], h[2])
@@ -7512,7 +7512,7 @@ ChemDoodle.RESIDUE = function () {
   n.setTempColors = function (j, h, e, g) {
     if (!this.aCache || this.aCache !== j)
       this.aCache = j, j = b.getRGB(j,
-              1), this.gl.uniform3f(this.aUL, j[0], j[1], j[2]);
+          1), this.gl.uniform3f(this.aUL, j[0], j[1], j[2]);
     if (h && (!this.dCache || this.dCache !== h))
       this.dCache = h, j = b.getRGB(h, 1), this.gl.uniform3f(this.dUL, j[0], j[1], j[2]);
     if (!this.sCache || this.sCache !== e)
@@ -7525,7 +7525,7 @@ ChemDoodle.RESIDUE = function () {
   n.setDiffuseColor = function (j) {
     if (!this.dCache || this.dCache !== j)
       this.dCache = j, j = b.getRGB(j, 1), this.gl.uniform3f(this.dUL,
-              j[0], j[1], j[2])
+          j[0], j[1], j[2])
   };
   n.setAlpha = function (b) {
     if (!this.alCache || this.alCache !== b)
@@ -7556,7 +7556,7 @@ ChemDoodle.RESIDUE = function () {
     A = 0;
     for (q = h.atoms.length; A < q; A++) {
       for (var u = [], z = h.atoms[A],
-              y = n[z.label][d] + a, B = [], v = 0, c = h.atoms.length; v < c; v++)
+          y = n[z.label][d] + a, B = [], v = 0, c = h.atoms.length; v < c; v++)
         if (v !== A) {
           var k = h.atoms[v];
           k.index = v;
@@ -7603,7 +7603,7 @@ ChemDoodle.RESIDUE = function () {
           D !== A && B.push(t[D]);
         if ((!d.contained || !a.contained || !C.contained) && (d.contained || a.contained || C.contained))
           if (e =
-                  j(d, B, -1, -1), g = j(a, B, e, -1), B = j(C, B, e, g), -1 !== e && -1 !== g && -1 !== B) {
+              j(d, B, -1, -1), g = j(a, B, e, -1), B = j(C, B, e, g), -1 !== e && -1 !== g && -1 !== B) {
             a = !1;
             D = 0;
             for (H = w.length; D < H; D += 3)
@@ -7634,7 +7634,7 @@ ChemDoodle.RESIDUE = function () {
     b.texParameteri(b.TEXTURE_2D, b.TEXTURE_WRAP_T, b.CLAMP_TO_EDGE);
     b.bindRenderbuffer(b.RENDERBUFFER, l);
     b.bindFramebuffer(b.FRAMEBUFFER,
-            this.framebuffer);
+        this.framebuffer);
     b.framebufferTexture2D(b.FRAMEBUFFER, b.COLOR_ATTACHMENT0, b.TEXTURE_2D, n, 0);
     b.framebufferRenderbuffer(b.FRAMEBUFFER, b.DEPTH_ATTACHMENT, b.RENDERBUFFER, l);
     b.bindTexture(b.TEXTURE_2D, null);
@@ -7645,7 +7645,7 @@ ChemDoodle.RESIDUE = function () {
     b.bindFramebuffer(b.FRAMEBUFFER, this.framebuffer);
     var h = b.getFramebufferAttachmentParameter(b.FRAMEBUFFER, b.DEPTH_ATTACHMENT, b.FRAMEBUFFER_ATTACHMENT_OBJECT_NAME);
     b.isRenderbuffer(h) && (b.bindRenderbuffer(b.RENDERBUFFER,
-            h), b.renderbufferStorage(b.RENDERBUFFER, b.DEPTH_COMPONENT16, n, l), b.bindRenderbuffer(b.RENDERBUFFER, null));
+        h), b.renderbufferStorage(b.RENDERBUFFER, b.DEPTH_COMPONENT16, n, l), b.bindRenderbuffer(b.RENDERBUFFER, null));
     h = b.getFramebufferAttachmentParameter(b.FRAMEBUFFER, b.COLOR_ATTACHMENT0, b.FRAMEBUFFER_ATTACHMENT_OBJECT_NAME);
     b.isTexture(h) && (b.bindTexture(b.TEXTURE_2D, h), b.texImage2D(b.TEXTURE_2D, 0, b.RGBA, n, l, 0, b.RGBA, b.UNSIGNED_BYTE, null), b.bindTexture(b.TEXTURE_2D, null));
     b.bindFramebuffer(b.FRAMEBUFFER, null)
@@ -7653,7 +7653,7 @@ ChemDoodle.RESIDUE = function () {
   b.pick = function (b, n, l, h, e, g, a) {
     var d = void 0, r = b.getParameter(b.COLOR_CLEAR_VALUE);
     b.bindFramebuffer(b.FRAMEBUFFER,
-            this.framebuffer);
+        this.framebuffer);
     b.clearColor(1, 1, 1, 0);
     b.clear(b.COLOR_BUFFER_BIT | b.DEPTH_BUFFER_BIT);
     b.fogging.setMode(0);
@@ -7669,7 +7669,7 @@ ChemDoodle.RESIDUE = function () {
     b.enableVertexAttribArray(b.shader.vertexNormalAttribute);
     b.fogging.setMode(l.fog_mode_3D);
     b.bindFramebuffer(b.FRAMEBUFFER,
-            null);
+        null);
     b.clearColor(r[0], r[1], r[2], r[3]);
     return d
   }
@@ -7709,7 +7709,7 @@ ChemDoodle.RESIDUE = function () {
     b.bindAttribLocation(b.program, this.vertexPositionAttribute, "a_vertex_position");
     b.linkProgram(b.program);
     b.getProgramParameter(b.program, b.LINK_STATUS) || alert("Could not initialize shaders: " +
-            b.getProgramInfoLog(b.program));
+        b.getProgramInfoLog(b.program));
     b.useProgram(b.program);
     b.enableVertexAttribArray(this.vertexPositionAttribute);
     this.vertexTexCoordAttribute = b.getAttribLocation(b.program, "a_vertex_texcoord");
@@ -7722,7 +7722,7 @@ ChemDoodle.RESIDUE = function () {
     if (e) {
       for (var g = [], a = e.firstChild; a; )
         3 === a.nodeType && g.push(a.textContent),
-                a = a.nextSibling;
+            a = a.nextSibling;
       if ("x-shader/x-fragment" === e.type)
         a = b.createShader(b.FRAGMENT_SHADER);
       else if ("x-shader/x-vertex" === e.type)
@@ -7779,7 +7779,7 @@ ChemDoodle.RESIDUE = function () {
     r = 0;
     for (f = e; r < f; r++)
       e =
-              8 * r, d.push(e), d.push(e + 3), d.push(e + 1), d.push(e), d.push(e + 2), d.push(e + 3), d.push(e + 4), d.push(o), d.push(e + 6), d.push(e + 5), d.push(e + 7), d.push(o + 1);
+          8 * r, d.push(e), d.push(e + 3), d.push(e + 1), d.push(e), d.push(e + 2), d.push(e + 3), d.push(e + 4), d.push(o), d.push(e + 6), d.push(e + 5), d.push(e + 7), d.push(o + 1);
     this.storeData(g, a, d)
   };
   j.Shape.prototype = new j._Mesh
@@ -7793,7 +7793,7 @@ ChemDoodle.RESIDUE = function () {
       n.normalize(w);
       e.push(f[0], f[1], f[2], p[0], p[1], p[2], o[0], o[1], o[2]);
       g.push(w[0], w[1], w[2], w[0], w[1],
-              w[2], w[0], w[1], w[2]);
+          w[2], w[0], w[1], w[2]);
       a.push(d, d + 1, d + 2)
     }
     this.storeData(e, g, a)
@@ -7816,7 +7816,7 @@ ChemDoodle.RESIDUE = function () {
     b.texParameteri(b.TEXTURE_2D, b.TEXTURE_WRAP_T, b.CLAMP_TO_EDGE);
     b.texParameteri(b.TEXTURE_2D, b.TEXTURE_MIN_FILTER, b.NEAREST);
     b.texParameteri(b.TEXTURE_2D,
-            b.TEXTURE_MAG_FILTER, b.NEAREST);
+        b.TEXTURE_MAG_FILTER, b.NEAREST);
     b.bindTexture(b.TEXTURE_2D, null);
     this.updateFont(b, 12, ["Sans-serif"], !1, !1, !1)
   };
@@ -7840,7 +7840,7 @@ ChemDoodle.RESIDUE = function () {
     var t = ["\u00b0", "\u212b", "\u00ae"];
     e = 0;
     for (g = t.length; e <
-            g; e++)
+        g; e++)
       n = t[e], q = r.measureText(n).width, p.push({text: n, width: q, height: h}), w += 2 * q;
     e = Math.sqrt(w * h);
     e = Math.ceil(e / h);
@@ -7872,7 +7872,7 @@ ChemDoodle.RESIDUE = function () {
     this.data = p;
     this.charHeight = h;
     b.bindTexture(b.TEXTURE_2D,
-            this.textureImage);
+        this.textureImage);
     b.texImage2D(b.TEXTURE_2D, 0, b.RGBA, b.RGBA, b.UNSIGNED_BYTE, f);
     b.bindTexture(b.TEXTURE_2D, null)
   };
@@ -7882,7 +7882,7 @@ ChemDoodle.RESIDUE = function () {
     for (var f = -this.charHeight / 2, p = 0, o = a.length; p < o; p++) {
       var w = this.charData(a[p]), n = w.width, q = w.x / j, t = q + 1.8 * w.width / j, u = w.y / d, w = u + w.height / d, v = b + 1.8 * n, z = this.charHeight / 2;
       g.position.push(h[0], h[1], h[2], h[0], h[1], h[2], h[0], h[1], h[2], h[0], h[1], h[2], h[0], h[1], h[2], h[0],
-              h[1], h[2]);
+          h[1], h[2]);
       g.texCoord.push(q, u, t, w, t, u, q, u, q, w, t, w);
       g.translation.push(b, z, e, v, f, e, v, z, e, b, z, e, b, f, e, v, f, e);
       b = v + n - 1.8 * n
@@ -7907,7 +7907,7 @@ ChemDoodle.RESIDUE = function () {
     b.bindTexture(b.TEXTURE_2D, this.textureImage)
   }
 })(ChemDoodle.structures.d3, ChemDoodle.extensions,
-        document);
+    document);
 (function (b) {
   b.TextMesh = function () {
   };
@@ -7926,7 +7926,7 @@ ChemDoodle.RESIDUE = function () {
   b.storeData = function (b, n, l, h) {
     this.setVertexData(b, this.vertexPositionBuffer, n, 3);
     this.setVertexData(b, this.vertexTexCoordBuffer, l,
-            2);
+        2);
     this.setVertexData(b, this.vertexTranslationBuffer, h, 3)
   };
   b.bindBuffers = function (b) {
@@ -7936,7 +7936,7 @@ ChemDoodle.RESIDUE = function () {
     b.vertexAttribPointer(b.shader.vertexTexCoordAttribute, this.vertexTexCoordBuffer.itemSize, b.FLOAT, !1, 0, 0);
     b.bindBuffer(b.ARRAY_BUFFER, this.vertexTranslationBuffer);
     b.vertexAttribPointer(b.shader.vertexNormalAttribute,
-            this.vertexTranslationBuffer.itemSize, b.FLOAT, !1, 0, 0)
+        this.vertexTranslationBuffer.itemSize, b.FLOAT, !1, 0, 0)
   };
   b.render = function (b) {
     var n = this.vertexPositionBuffer.numItems;
@@ -7956,7 +7956,7 @@ ChemDoodle.RESIDUE = function () {
     this.distUse = h.min(j, o) / 2;
     var o = [this.a2.x - this.a1.x, this.a2.y - this.a1.y, this.a2.z - this.a1.z], j = [this.a3.x - this.a2.x, this.a3.y - this.a2.y, this.a3.z - this.a2.z], l = [this.a4.x - this.a3.x, this.a4.y - this.a3.y, this.a4.z - this.a3.z], n = g.cross(o, j, []), l = g.cross(j, l, []);
     g.scale(o,
-            g.length(j));
+        g.length(j));
     this.torsion = h.atan2(g.dot(o, l), g.dot(n, l));
     o = g.normalize(g.cross(n, j, []));
     n = g.normalize(g.cross(j, o, []));
@@ -7970,7 +7970,7 @@ ChemDoodle.RESIDUE = function () {
       a < q && f.push(a, a + 1)
     }
     this.vecText =
-            g.normalize(g.add(l, u, []));
+        g.normalize(g.add(l, u, []));
     j = g.normalize(j, []);
     g.scale(j, 0.0625);
     t = this.torsion - 2 * h.asin(0.125) * this.torsion / h.abs(this.torsion);
@@ -7986,7 +7986,7 @@ ChemDoodle.RESIDUE = function () {
   };
   b.getText = function () {
     g.add(this.pos, g.scale(this.vecText,
-            this.distUse + 0.3, []));
+        this.distUse + 0.3, []));
     return{pos: this.pos, value: [j.angleBounds(this.torsion, !0, !0).toFixed(2), " \u00b0"].join("")}
   }
 })(ChemDoodle.ELEMENT, ChemDoodle.math, ChemDoodle.extensions, ChemDoodle.structures.d3, Math, ChemDoodle.lib.mat4, ChemDoodle.lib.vec3);
@@ -8015,7 +8015,7 @@ ChemDoodle.RESIDUE = function () {
       for (var v = Infinity, z = new n.Atom("", l[q + 1].cp1.x, l[q + 1].cp1.y, l[q + 1].cp1.z), y = 0; y < o; y++) {
         var B = u.lineSegments[0][y], c;
         c = y === o - 1 ? q === l.length - 2 ? u.lineSegments[0][y - 1] : l[q +
-        1].lineSegments[0][0] : u.lineSegments[0][y + 1];
+            1].lineSegments[0][0] : u.lineSegments[0][y + 1];
         c = [c.x - B.x, c.y - B.y, c.z - B.z];
         g.normalize(c);
         q === l.length - 2 && y === o - 1 && g.scale(c, -1);
@@ -8038,7 +8038,7 @@ ChemDoodle.RESIDUE = function () {
       w = this.partitions[A];
       q = 0;
       for (t = w.count - 1; q <
-              t; q++) {
+          t; q++) {
         v = q * o * p;
         y = 0;
         for (z = o; y < z; y++) {
@@ -8055,7 +8055,7 @@ ChemDoodle.RESIDUE = function () {
     p.push(new n.Point(-2, 0), new n.Point(-2, 4), new n.Point(2, 4));
     var H = new n.d3.Shape(p, 1);
     this.render = function (c,
-            d) {
+        d) {
       this.bindBuffers(c);
       c.material.setDiffuseColor(d.macro_colorByChain ? this.chainColor : d.nucleics_tubeColor);
       c.drawElements(c.TRIANGLES, this.vertexIndexBuffer.numItems, c.UNSIGNED_SHORT, 0);
@@ -8066,7 +8066,7 @@ ChemDoodle.RESIDUE = function () {
           w.vertexAttribPointer(w.shader.vertexPositionAttribute, q.vertexPositionBuffer.itemSize, w.FLOAT, !1, 0, 0);
           w.bindBuffer(w.ARRAY_BUFFER, q.vertexNormalBuffer);
           w.vertexAttribPointer(w.shader.vertexNormalAttribute,
-                  q.vertexNormalBuffer.itemSize, w.FLOAT, !1, 0, 0);
+              q.vertexNormalBuffer.itemSize, w.FLOAT, !1, 0, 0);
           w.bindBuffer(w.ELEMENT_ARRAY_BUFFER, q.vertexIndexBuffer);
           c.drawElements(c.TRIANGLES, p.vertexIndexBuffer.numItems, c.UNSIGNED_SHORT, 0)
         }
@@ -8077,7 +8077,7 @@ ChemDoodle.RESIDUE = function () {
       o = 1;
       for (k = l.length - 1; o < k; o++) {
         var q = l[o], t =
-                q.pPoint, u = new n.Atom("", q.cp2.x, q.cp2.y, q.cp2.z), p = 1.001 * t.distance3D(u), q = [f / 4, p, f / 4], p = e.translate(c.modelViewMatrix, [t.x, t.y, t.z], []), v = [0, 1, 0], A = 0, w = [u.x - t.x, u.y - t.y, u.z - t.z];
+            q.pPoint, u = new n.Atom("", q.cp2.x, q.cp2.y, q.cp2.z), p = 1.001 * t.distance3D(u), q = [f / 4, p, f / 4], p = e.translate(c.modelViewMatrix, [t.x, t.y, t.z], []), v = [0, 1, 0], A = 0, w = [u.x - t.x, u.y - t.y, u.z - t.z];
         t.x === u.x && t.z === u.z ? (v = [0, 0, 1], t.y < t.y && (A = h.PI)) : (A = b.vec3AngleFrom(v, w), v = g.cross(v, w, []));
         0 !== A && e.rotate(p, A, v);
         e.scale(p, q);
@@ -8089,7 +8089,7 @@ ChemDoodle.RESIDUE = function () {
       o = 1;
       for (k = l.length - 1; o < k; o++)
         q = l[o], u = q.cp2, p = e.translate(c.modelViewMatrix, [u.x, u.y, u.z], []), v = [0, 1, 0], A = 0, t = q.cp3, w = [t.x - u.x, t.y - u.y, t.z - u.z], u.x === t.x && u.z === t.z ? (v = [0, 0, 1], u.y < u.y && (A = h.PI)) : (A = b.vec3AngleFrom(v, w), v = g.cross(v, w, [])), 0 !== A && e.rotate(p, A, v), u = [1, 0, 0], A = e.rotate(e.identity([]), A, v), e.multiplyVec3(A, u), A = q.cp4, t = q.cp5, A.y === t.y && A.z === t.z || (A = [t.x - A.x, t.y - A.y, t.z - A.z], t = b.vec3AngleFrom(u, A), 0 > g.dot(w, g.cross(u, A)) && (t *= -1), e.rotateY(p, t)), d.macro_colorByChain || ("shapely" === d.nucleics_residueColor ?
-                j[q.name] ? c.material.setDiffuseColor(j[q.name].shapelyColor) : c.material.setDiffuseColor(j["*"].shapelyColor) : "rainbow" === d.nucleics_residueColor && c.material.setDiffuseColor(a.rainbowAt(o, k, d.macro_rainbowColors))), c.setMatrixUniforms(p), c.drawElements(c.TRIANGLES, H.vertexIndexBuffer.numItems, c.UNSIGNED_SHORT, 0)
+            j[q.name] ? c.material.setDiffuseColor(j[q.name].shapelyColor) : c.material.setDiffuseColor(j["*"].shapelyColor) : "rainbow" === d.nucleics_residueColor && c.material.setDiffuseColor(a.rainbowAt(o, k, d.macro_rainbowColors))), c.setMatrixUniforms(p), c.drawElements(c.TRIANGLES, H.vertexIndexBuffer.numItems, c.UNSIGNED_SHORT, 0)
     }
   };
   l.Tube.prototype = new l._Mesh
@@ -8174,7 +8174,7 @@ ChemDoodle.RESIDUE = function () {
             break;
           case "widened":
             j.contextOval(b,
-                    g - 18, a - 10, 36, 10);
+                g - 18, a - 10, 36, 10);
             break;
           case "cresent":
             b.beginPath(), b.arc(g, a, 9, 0, n.PI, !0), b.closePath()
@@ -8186,7 +8186,7 @@ ChemDoodle.RESIDUE = function () {
             break;
           case "transparent":
             b.stroke()
-          }
+        }
       }
     }
   };
@@ -8210,7 +8210,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_projectionOrthoWidth_3D = 40;
   b.default_projectionWidthHeightRatio_3D = void 0;
   b.default_projectionFrontCulling_3D =
-          0.1;
+      0.1;
   b.default_projectionBackCulling_3D = 1E4;
   b.default_cullBackFace_3D = !0;
   b.default_fog_mode_3D = 0;
@@ -8227,7 +8227,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_atoms_circles_2D = !1;
   b.default_atoms_circleDiameter_2D = 10;
   b.default_atoms_circleBorderWidth_2D =
-          1;
+      1;
   b.default_atoms_lonePairDistance_2D = 8;
   b.default_atoms_lonePairSpread_2D = 4;
   b.default_atoms_lonePairDiameter_2D = 1;
@@ -8241,7 +8241,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_atoms_materialSpecularColor_3D = "#555555";
   b.default_atoms_materialShininess_3D = 32;
   b.default_atoms_implicitHydrogens_2D =
-          !0;
+      !0;
   b.default_atoms_displayTerminalCarbonLabels_2D = !1;
   b.default_atoms_showHiddenCarbons_2D = !0;
   b.default_atoms_showAttributedCarbons_2D = !0;
@@ -8256,7 +8256,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_bonds_ends_2D = "round";
   b.default_bonds_useJMOLColors = !1;
   b.default_bonds_usePYMOLColors =
-          !1;
+      !1;
   b.default_bonds_colorGradient = !1;
   b.default_bonds_saturationAngle_2D = n.PI / 3;
   b.default_bonds_symmetrical_2D = !1;
@@ -8272,7 +8272,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_bonds_resolution_3D = 60;
   b.default_bonds_renderAsLines_3D = !1;
   b.default_bonds_cylinderDiameter_3D =
-          0.3;
+      0.3;
   b.default_bonds_pillLatitudeResolution_3D = 10;
   b.default_bonds_pillLongitudeResolution_3D = 20;
   b.default_bonds_pillHeight_3D = 0.3;
@@ -8286,7 +8286,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_proteins_backboneThickness = 1.5;
   b.default_proteins_backboneColor = "#CCCCCC";
   b.default_proteins_ribbonCartoonize =
-          !1;
+      !1;
   b.default_proteins_residueColor = "none";
   b.default_proteins_primaryColor = "#FF0D0D";
   b.default_proteins_secondaryColor = "#FFFF30";
@@ -8298,7 +8298,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_proteins_horizontalResolution = 9;
   b.default_proteins_materialAmbientColor_3D = "#222222";
   b.default_proteins_materialSpecularColor_3D =
-          "#555555";
+      "#555555";
   b.default_proteins_materialShininess_3D = 32;
   b.default_nucleics_display = !0;
   b.default_nucleics_tubeColor = "#CCCCCC";
@@ -8312,7 +8312,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_nucleics_materialShininess_3D = 32;
   b.default_macro_displayAtoms = !1;
   b.default_macro_displayBonds =
-          !1;
+      !1;
   b.default_macro_atomToLigandDistance = -1;
   b.default_macro_showWater = !1;
   b.default_macro_colorByChain = !1;
@@ -8325,7 +8325,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_surfaces_materialShininess_3D = 32;
   b.default_crystals_displayUnitCell = !0;
   b.default_crystals_unitCellColor =
-          "green";
+      "green";
   b.default_crystals_unitCellLineWidth = 1;
   b.default_plots_color = "#000000";
   b.default_plots_width = 1;
@@ -8341,7 +8341,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_text_font_families = ["Helvetica", "Arial", "Dialog"];
   b.default_text_font_bold = !0;
   b.default_text_font_italic =
-          !1;
+      !1;
   b.default_text_font_stroke_3D = !0;
   b.default_text_color = "#000000";
   b.default_shapes_color = "#000000";
@@ -8357,7 +8357,7 @@ ChemDoodle.RESIDUE = function () {
   b.default_compass_type_3D = 0;
   b.default_measurement_update_3D = !1;
   b.default_measurement_angleBands_3D =
-          10;
+      10;
   b.default_measurement_displayText_3D = !0;
   j.VisualSpecifications = function () {
     this.backgroundColor = b.default_backgroundColor;
@@ -8378,7 +8378,7 @@ ChemDoodle.RESIDUE = function () {
     this.fog_mode_3D = b.default_fog_mode_3D;
     this.fog_color_3D = b.default_fog_color_3D;
     this.fog_start_3D =
-            b.default_fog_start_3D;
+        b.default_fog_start_3D;
     this.fog_end_3D = b.default_fog_end_3D;
     this.fog_density_3D = b.default_fog_density_3D;
     this.atoms_display = b.default_atoms_display;
@@ -8398,7 +8398,7 @@ ChemDoodle.RESIDUE = function () {
     this.atoms_resolution_3D = b.default_atoms_resolution_3D;
     this.atoms_sphereDiameter_3D = b.default_atoms_sphereDiameter_3D;
     this.atoms_useVDWDiameters_3D =
-            b.default_atoms_useVDWDiameters_3D;
+        b.default_atoms_useVDWDiameters_3D;
     this.atoms_vdwMultiplier_3D = b.default_atoms_vdwMultiplier_3D;
     this.atoms_materialAmbientColor_3D = b.default_atoms_materialAmbientColor_3D;
     this.atoms_materialSpecularColor_3D = b.default_atoms_materialSpecularColor_3D;
@@ -8406,7 +8406,7 @@ ChemDoodle.RESIDUE = function () {
     this.atoms_implicitHydrogens_2D = b.default_atoms_implicitHydrogens_2D;
     this.atoms_displayTerminalCarbonLabels_2D = b.default_atoms_displayTerminalCarbonLabels_2D;
     this.atoms_showHiddenCarbons_2D =
-            b.default_atoms_showHiddenCarbons_2D;
+        b.default_atoms_showHiddenCarbons_2D;
     this.atoms_showAttributedCarbons_2D = b.default_atoms_showAttributedCarbons_2D;
     this.atoms_displayAllCarbonLabels_2D = b.default_atoms_displayAllCarbonLabels_2D;
     this.atoms_nonBondedAsStars_3D = b.default_atoms_nonBondedAsStars_3D;
@@ -8416,7 +8416,7 @@ ChemDoodle.RESIDUE = function () {
     this.bonds_color = b.default_bonds_color;
     this.bonds_width_2D = b.default_bonds_width_2D;
     this.bonds_saturationWidth_2D =
-            b.default_bonds_saturationWidth_2D;
+        b.default_bonds_saturationWidth_2D;
     this.bonds_ends_2D = b.default_bonds_ends_2D;
     this.bonds_useJMOLColors = b.default_bonds_useJMOLColors;
     this.bonds_usePYMOLColors = b.default_bonds_usePYMOLColors;
@@ -8426,7 +8426,7 @@ ChemDoodle.RESIDUE = function () {
     this.bonds_clearOverlaps_2D = b.default_bonds_clearOverlaps_2D;
     this.bonds_overlapClearWidth_2D = b.default_bonds_overlapClearWidth_2D;
     this.bonds_atomLabelBuffer_2D =
-            b.default_bonds_atomLabelBuffer_2D;
+        b.default_bonds_atomLabelBuffer_2D;
     this.bonds_wedgeThickness_2D = b.default_bonds_wedgeThickness_2D;
     this.bonds_hashWidth_2D = b.default_bonds_hashWidth_2D;
     this.bonds_hashSpacing_2D = b.default_bonds_hashSpacing_2D;
@@ -8436,7 +8436,7 @@ ChemDoodle.RESIDUE = function () {
     this.bonds_resolution_3D = b.default_bonds_resolution_3D;
     this.bonds_renderAsLines_3D = b.default_bonds_renderAsLines_3D;
     this.bonds_cylinderDiameter_3D =
-            b.default_bonds_cylinderDiameter_3D;
+        b.default_bonds_cylinderDiameter_3D;
     this.bonds_pillHeight_3D = b.default_bonds_pillHeight_3D;
     this.bonds_pillLatitudeResolution_3D = b.default_bonds_pillLatitudeResolution_3D;
     this.bonds_pillLongitudeResolution_3D = b.default_bonds_pillLongitudeResolution_3D;
@@ -8459,7 +8459,7 @@ ChemDoodle.RESIDUE = function () {
     this.proteins_ribbonThickness = b.default_proteins_ribbonThickness;
     this.proteins_verticalResolution = b.default_proteins_verticalResolution;
     this.proteins_horizontalResolution =
-            b.default_proteins_horizontalResolution;
+        b.default_proteins_horizontalResolution;
     this.proteins_materialAmbientColor_3D = b.default_proteins_materialAmbientColor_3D;
     this.proteins_materialSpecularColor_3D = b.default_proteins_materialSpecularColor_3D;
     this.proteins_materialShininess_3D = b.default_proteins_materialShininess_3D;
@@ -8504,7 +8504,7 @@ ChemDoodle.RESIDUE = function () {
     this.text_font_italic = b.default_text_font_italic;
     this.text_font_stroke_3D = b.default_text_font_stroke_3D;
     this.text_color =
-            b.default_text_color;
+        b.default_text_color;
     this.shapes_color = b.default_shapes_color;
     this.shapes_lineWidth_2D = b.default_shapes_lineWidth_2D;
     this.shapes_arrowLength_2D = b.default_shapes_arrowLength_2D;
@@ -8524,13 +8524,13 @@ ChemDoodle.RESIDUE = function () {
     this.bonds_display = this.atoms_display = !0;
     this.bonds_color = "#777777";
     this.bonds_showBondOrders_3D = this.bonds_useJMOLColors = this.atoms_useJMOLColors =
-            this.atoms_useVDWDiameters_3D = !0;
+        this.atoms_useVDWDiameters_3D = !0;
     this.bonds_renderAsLines_3D = !1;
     "Ball and Stick" === j ? (this.atoms_vdwMultiplier_3D = 0.3, this.bonds_useJMOLColors = !1, this.bonds_cylinderDiameter_3D = 0.3, this.bonds_materialAmbientColor_3D = b.default_atoms_materialAmbientColor_3D, this.bonds_pillDiameter_3D = 0.15) : "van der Waals Spheres" === j ? (this.bonds_display = !1, this.atoms_vdwMultiplier_3D = 1) : "Stick" === j ? (this.bonds_showBondOrders_3D = this.atoms_useVDWDiameters_3D = !1, this.bonds_cylinderDiameter_3D = this.atoms_sphereDiameter_3D =
-            0.8, this.bonds_materialAmbientColor_3D = this.atoms_materialAmbientColor_3D) : "Wireframe" === j ? (this.atoms_useVDWDiameters_3D = !1, this.bonds_cylinderDiameter_3D = this.bonds_pillDiameter_3D = 0.05, this.atoms_sphereDiameter_3D = 0.15, this.bonds_materialAmbientColor_3D = b.default_atoms_materialAmbientColor_3D) : "Line" === j ? (this.atoms_display = !1, this.bonds_renderAsLines_3D = !0, this.bonds_width_2D = 1, this.bonds_cylinderDiameter_3D = 0.05) : alert('"' + j + '" is not recognized. Use one of the following strings:\n\n1. Ball and Stick\n2. van der Waals Spheres\n3. Stick\n4. Wireframe\n5. Line\n')
+        0.8, this.bonds_materialAmbientColor_3D = this.atoms_materialAmbientColor_3D) : "Wireframe" === j ? (this.atoms_useVDWDiameters_3D = !1, this.bonds_cylinderDiameter_3D = this.bonds_pillDiameter_3D = 0.05, this.atoms_sphereDiameter_3D = 0.15, this.bonds_materialAmbientColor_3D = b.default_atoms_materialAmbientColor_3D) : "Line" === j ? (this.atoms_display = !1, this.bonds_renderAsLines_3D = !0, this.bonds_width_2D = 1, this.bonds_cylinderDiameter_3D = 0.05) : alert('"' + j + '" is not recognized. Use one of the following strings:\n\n1. Ball and Stick\n2. van der Waals Spheres\n3. Stick\n4. Wireframe\n5. Line\n')
   }
 })(ChemDoodle,
-        ChemDoodle.structures, Math);
+    ChemDoodle.structures, Math);
 (function (b, j, n, l) {
   n.getPointsPerAngstrom = function () {
     return b.default_bondLength_2D / b.default_angstromsPerBondLength
@@ -8549,7 +8549,7 @@ ChemDoodle.RESIDUE = function () {
       }
   }
 })(ChemDoodle, ChemDoodle.ELEMENT,
-        ChemDoodle.informatics, ChemDoodle.structures);
+    ChemDoodle.informatics, ChemDoodle.structures);
 (function (b) {
   b.HydrogenDeducer = function () {
   };
@@ -8591,7 +8591,7 @@ ChemDoodle.RESIDUE = function () {
           for (var g = d.dequeue(), r = 0, f = b.bonds.length; r < f; r++) {
             var p = b.bonds[r];
             p.contains(g) && !p.visited && (p.visited = !0, a.bonds.push(p), p = p.getNeighbor(g),
-                    p.visited || (p.visited = !0, a.atoms.push(p), d.enqueue(p)))
+                p.visited || (p.visited = !0, a.atoms.push(p), d.enqueue(p)))
           }
         l.push(a)
       }
@@ -8643,7 +8643,7 @@ ChemDoodle.RESIDUE = function () {
         for (h.enqueue(this.molecule.atoms[j]); !h.isEmpty(); )
           for (var e = h.dequeue(), g = 0, a = this.molecule.bonds.length; g < a; g++) {
             var d =
-                    this.molecule.bonds[g];
+                this.molecule.bonds[g];
             d.contains(e) && (d = d.getNeighbor(e), d.visited || (d.visited = !0, h.enqueue(d)))
           }
       }
@@ -8678,7 +8678,7 @@ ChemDoodle.RESIDUE = function () {
     }
     n = 0;
     for (l = b.atoms.length; n <
-            l; n++)
+        l; n++)
       b.atoms[n].visited || this.atoms.push(b.atoms[n]);
     n = 0;
     for (l = b.bonds.length; n < l; n++)
@@ -8696,7 +8696,7 @@ ChemDoodle.RESIDUE = function () {
     for (var b = 0, n = this.rings.length; b < n; b++)
       for (var l = 0, h = this.bonds.length; l < h; l++)
         -1 !== this.rings[b].atoms.indexOf(this.bonds[l].a1) && -1 !== this.rings[b].atoms.indexOf(this.bonds[l].a2) &&
-                this.rings[b].bonds.push(this.bonds[l])
+            this.rings[b].bonds.push(this.bonds[l])
   }
 })(ChemDoodle.informatics);
 (function (b, j) {
@@ -8726,7 +8726,7 @@ ChemDoodle.RESIDUE = function () {
         return;
     var l;
     if (e.atoms[e.atoms.length -
-    1] === this.atoms[this.atoms.length - 1]) {
+        1] === this.atoms[this.atoms.length - 1]) {
       l = new j.Ring;
       l.atoms[0] = g;
       a = 0;
@@ -8768,7 +8768,7 @@ ChemDoodle.RESIDUE = function () {
           f[0] = new n(g[a]);
           f[1] = new n(g[j]);
           var l =
-          [];
+              [];
           l[0] = this.atoms[b];
           for (var o = 0, w = g.length; o < w; o++)
             o !== a && o !== j && l.push(g[o]);
@@ -8788,7 +8788,7 @@ ChemDoodle.RESIDUE = function () {
               for (w = l.length; o < w; o++) {
                 u = 0;
                 for (v = this.bonds.length; u <
-                        v; u++)
+                    v; u++)
                   this.bonds[u].contains(l[o]) && (g = this.bonds[u].getNeighbor(l[o]), -1 === l.indexOf(g) && -1 === q.indexOf(g) && q.push(g))
               }
               o = 0;
@@ -8849,7 +8849,7 @@ ChemDoodle.RESIDUE = function () {
           this.rings.push(l[h])
         }
         if (this.rings.length ===
-                n)
+            n)
           break
       }
     }
@@ -8871,7 +8871,7 @@ ChemDoodle.RESIDUE = function () {
     var b = 0, d = 0, e = 0, f = 0, c = a.indexOf("x"), g = a.indexOf("y"), h = a.indexOf("z");
     -1 !== c && (d++, 0 < c && "+" !== a.charAt(c - 1) && (d *= -1));
     -1 !== g &&
-            (e++, 0 < g && "+" !== a.charAt(g - 1) && (e *= -1));
+        (e++, 0 < g && "+" !== a.charAt(g - 1) && (e *= -1));
     -1 !== h && (f++, 0 < h && "+" !== a.charAt(h - 1) && (f *= -1));
     if (2 < a.length) {
       c = "+";
@@ -8895,7 +8895,7 @@ ChemDoodle.RESIDUE = function () {
     if (!p)
       return B;
     for (var c = p.split("\n"),
-            k = 0, C = 0, D = 0, H = p = 0, F = 0, G = "P", K, I, W, E, N = !0; 0 < c.length; )
+        k = 0, C = 0, D = 0, H = p = 0, F = 0, G = "P", K, I, W, E, N = !0; 0 < c.length; )
       if (N ? E = c.shift() : N = !0, 0 < E.length)
         if (j.stringStartsWith(E, "_cell_length_a"))
           k = parseFloat(E.split(a)[1]);
@@ -8908,7 +8908,7 @@ ChemDoodle.RESIDUE = function () {
         else if (j.stringStartsWith(E, "_cell_angle_beta"))
           H = h.PI * parseFloat(E.split(a)[1]) / 180;
         else if (j.stringStartsWith(E,
-                "_cell_angle_gamma"))
+            "_cell_angle_gamma"))
           F = h.PI * parseFloat(E.split(a)[1]) / 180;
         else if (j.stringStartsWith(E, "_symmetry_space_group_name_H-M"))
           G = E.split(d)[1];
@@ -8923,7 +8923,7 @@ ChemDoodle.RESIDUE = function () {
           if (0 !== c.length && (j.stringStartsWith(E, "loop_") || j.stringStartsWith(E, "_")))
             N = !1;
           -1 !== P.fields.indexOf("_symmetry_equiv_pos_as_xyz") ||
-                  -1 !== P.fields.indexOf("_space_group_symop_operation_xyz") ? K = P : -1 !== P.fields.indexOf("_atom_site_label") ? I = P : -1 !== P.fields.indexOf("_geom_bond_atom_site_label_1") && (W = P)
+              -1 !== P.fields.indexOf("_space_group_symop_operation_xyz") ? K = P : -1 !== P.fields.indexOf("_atom_site_label") ? I = P : -1 !== P.fields.indexOf("_geom_bond_atom_site_label_1") && (W = P)
         }
     E = k;
     p = (h.cos(p) - h.cos(F) * h.cos(H)) / h.sin(F);
@@ -8933,7 +8933,7 @@ ChemDoodle.RESIDUE = function () {
       F = 0;
       for (H = I.fields.length; F < H; F++)
         E = I.fields[F], "_atom_site_type_symbol" === E ? D = F : "_atom_site_label" === E ? c = F : "_atom_site_fract_x" === E ? k = F : "_atom_site_fract_y" === E ? N = F : "_atom_site_fract_z" ===
-                E && (P = F);
+            E && (P = F);
       F = 0;
       for (H = I.lines.length; F < H; F++)
         E = I.lines[F], C = E.split(g).filter(w), E = new l.Atom(C[-1 === D ? c : D].split(o)[0], parseFloat(C[k]), parseFloat(C[N]), parseFloat(C[P])), B.atoms.push(E), -1 !== c && (E.cifId = C[c], E.cifPart = 0)
@@ -8949,7 +8949,7 @@ ChemDoodle.RESIDUE = function () {
       for (H = K.lines.length; F < H; F++) {
         E = K.lines[F].split(r).filter(w);
         for (var P = q(E[C]), ca = q(E[C + 1]), da = q(E[C + 2]), G = 0, k = B.atoms.length; G <
-                k; G++) {
+            k; G++) {
           E = B.atoms[G];
           var U = E.x * P[1] + E.y * P[2] + E.z * P[3] + P[0], S = E.x * ca[1] + E.y * ca[2] + E.z * ca[3] + ca[0], ja = E.x * da[1] + E.y * da[2] + E.z * da[3] + da[0];
           I = new l.Atom(E.label, U, S, ja);
@@ -9011,7 +9011,7 @@ ChemDoodle.RESIDUE = function () {
             D = 0;
             for (C = B.atoms.length; D < C; D++)
               E = B.atoms[D], c = new l.Atom(E.label, E.x + F, E.y + G, E.z + I), H.push(c), void 0 !== E.cifId && (c.cifId = E.cifId, c.cifPart = E.cifPart + (K ? K.lines.length :
-                      0) + F + 10 * G + 100 * I)
+                  0) + F + 10 * G + 100 * I)
           }
     B.atoms = B.atoms.concat(H);
     F = 0;
@@ -9035,7 +9035,7 @@ ChemDoodle.RESIDUE = function () {
             if (k.cifPart !== N.cifPart)
               break;
             (k.cifId === E && N.cifId ===
-                    C || k.cifId === C && N.cifId === E) && B.bonds.push(new l.Bond(k, N))
+                C || k.cifId === C && N.cifId === E) && B.bonds.push(new l.Bond(k, N))
           }
       }
     } else
@@ -9063,7 +9063,7 @@ ChemDoodle.RESIDUE = function () {
           var v = l(q[t]), z = v.attr("elementType"), y, B, c;
           void 0 == v.attr("x2") ? (y = v.attr("x3"), B = v.attr("y3"), c = v.attr("z3")) : (y = v.attr("x2"), B = v.attr("y2"), c = 0);
           z = a[h].atoms[t] = new n.Atom(z,
-                  y, B, c);
+              y, B, c);
           A[t] = v.attr("id");
           void 0 != v.attr("formalCharge") && (z.charge = v.attr("formalCharge"))
         }
@@ -9096,7 +9096,7 @@ ChemDoodle.RESIDUE = function () {
               break;
             case "H":
               z.stereo = n.Bond.STEREO_RECESSED
-            }
+          }
         }
       }
     return a
@@ -9179,7 +9179,7 @@ ChemDoodle.RESIDUE = function () {
       d.atoms[o] = new l.Atom(w.substring(31, 34), parseFloat(w.substring(0, 10)) * a, (1 === a ? 1 : -1) * parseFloat(w.substring(10, 20)) * a, parseFloat(w.substring(20, 30)) * a);
       var n = parseInt(w.substring(34, 36));
       0 !== n && j[d.atoms[o].label] &&
-              (d.atoms[o].mass = j[d.atoms[o].label].mass + n);
+          (d.atoms[o].mass = j[d.atoms[o].label].mass + n);
       switch (parseInt(w.substring(36, 39))) {
         case 1:
           d.atoms[o].charge = 3;
@@ -9198,7 +9198,7 @@ ChemDoodle.RESIDUE = function () {
           break;
         case 7:
           d.atoms[o].charge = -3
-        }
+      }
     }
     for (o = 0; o < f; o++) {
       var w = h[4 + p + o], q = parseInt(w.substring(6, 9)), n = parseInt(w.substring(9, 12));
@@ -9211,7 +9211,7 @@ ChemDoodle.RESIDUE = function () {
             q = 1
         }
       w = new l.Bond(d.atoms[parseInt(w.substring(0, 3)) - 1], d.atoms[parseInt(w.substring(3, 6)) -
-      1], q);
+          1], q);
       switch (n) {
         case 3:
           w.stereo = l.Bond.STEREO_AMBIGUOUS;
@@ -9235,7 +9235,7 @@ ChemDoodle.RESIDUE = function () {
     for (var d = e.getCenter(), h = 0, f = e.atoms.length; h < f; h++) {
       var p = e.atoms[h], o = " 0";
       if (-1 !==
-              p.mass && j[p.label]) {
+          p.mass && j[p.label]) {
         var n = p.mass - j[p.label].mass;
         5 > n && -4 < n && (o = (-1 < n ? " " : "") + n)
       }
@@ -9291,9 +9291,9 @@ ChemDoodle.RESIDUE = function () {
   };
   var e = new n.MOLInterpreter;
   b.readMOL =
-          function (b, a) {
-            return e.read(b, a)
-          };
+      function (b, a) {
+        return e.read(b, a)
+      };
   b.writeMOL = function (b) {
     return e.write(b)
   }
@@ -9324,7 +9324,7 @@ ChemDoodle.RESIDUE = function () {
     for (var r = [], q = [], t, u = [], v = [], z = [], y = 0, B = n.length; y < B; y++) {
       var c = n[y];
       if (j.stringStartsWith(c,
-              "HELIX"))
+          "HELIX"))
         r.push({id: c.substring(19, 20), start: parseInt(c.substring(21, 25)), end: parseInt(c.substring(33, 37))});
       else if (j.stringStartsWith(c, "SHEET"))
         q.push({id: c.substring(21, 22), start: parseInt(c.substring(22, 26)), end: parseInt(c.substring(33, 37))});
@@ -9337,7 +9337,7 @@ ChemDoodle.RESIDUE = function () {
             "HD" === C ? k = "H" : 0 < C.length && (k = 1 < C.length ? C.charAt(0) + C.substring(1).toLowerCase() : C)
           }
           C = new l.Atom(k, parseFloat(c.substring(30,
-                  38)) * p, parseFloat(c.substring(38, 46)) * p, parseFloat(c.substring(46, 54)) * p);
+              38)) * p, parseFloat(c.substring(38, 46)) * p, parseFloat(c.substring(46, 54)) * p);
           C.hetatm = !1;
           v.push(C);
           var D = parseInt(c.substring(22, 26));
@@ -9349,7 +9349,7 @@ ChemDoodle.RESIDUE = function () {
               u.push(H)
             }
           D !== Number.NaN && u[u.length - 1].resSeq !== D && (k = new l.Residue(D), k.name = e(c.substring(17, 20)), 3 === k.name.length ? k.name = k.name.substring(0, 1) + k.name.substring(1).toLowerCase() : 2 === k.name.length && "D" === k.name.charAt(0) && (k.name = k.name.substring(1)), u.push(k), H = c.substring(21, 22), a(k, r, H, D, !0),
-                  a(k, q, H, D, !1));
+              a(k, q, H, D, !1));
           c = e(c.substring(12, 16));
           k = u[u.length - 1];
           if ("CA" === c || "P" === c || "O5'" === c)
@@ -9368,7 +9368,7 @@ ChemDoodle.RESIDUE = function () {
             }
           } else
             "C" === c && (t =
-                    C)
+                C)
         }
       } else if (j.stringStartsWith(c, "HETATM"))
         k = e(c.substring(76, 78)), 0 === k.length && (k = e(c.substring(12, 16))), 1 < k.length && (k = k.substring(0, 1) + k.substring(1).toLowerCase()), k = new l.Atom(k, parseFloat(c.substring(30, 38)) * p, parseFloat(c.substring(38, 46)) * p, parseFloat(c.substring(46, 54)) * p), k.hetatm = !0, "HOH" === e(c.substring(17, 20)) && (k.isWater = !0), o.atoms.push(k), z[parseInt(e(c.substring(6, 11)))] = k;
@@ -9377,7 +9377,7 @@ ChemDoodle.RESIDUE = function () {
           C = z[k];
           for (D = 0; 4 > D; D++)
             if (k =
-                    e(c.substring(11 + 5 * D, 16 + 5 * D)), 0 !== k.length && (k = parseInt(k), z[k])) {
+                e(c.substring(11 + 5 * D, 16 + 5 * D)), 0 !== k.length && (k = parseInt(k), z[k])) {
               for (var H = z[k], F = !1, k = 0, G = o.bonds.length; k < G; k++) {
                 var K = o.bonds[k];
                 if (K.a1 === C && K.a2 === H || K.a1 === H && K.a2 === C) {
@@ -9419,7 +9419,7 @@ ChemDoodle.RESIDUE = function () {
   };
   d.calculateDistances = function (a, b) {
     for (var d = [],
-            e = 0, h = a.atoms.length; e < h; e++) {
+        e = 0, h = a.atoms.length; e < h; e++) {
       var g = a.atoms[e];
       g.hetatm && (g.isWater || d.push(g))
     }
@@ -9448,7 +9448,7 @@ ChemDoodle.RESIDUE = function () {
     };
     this.getValue = function (b, c) {
       var d =
-              b.charAt(0), e = b.substring(1);
+          b.charAt(0), e = b.substring(1);
       return void 0 !== g[d] ? parseFloat(g[d] + e) : void 0 !== a[d] ? parseFloat(a[d] + e) + c : parseFloat(e)
     };
     var h = new l.Spectrum;
@@ -9461,7 +9461,7 @@ ChemDoodle.RESIDUE = function () {
       if (0 === o.length || !j.stringStartsWith(b[D], "##"))
         0 !== o.length && o.push("\n"), o.push(e(F));
       else if (G = o.join(""), k && 100 > G.length && h.metadata.push(G), o = [F], j.stringStartsWith(G,
-              "##TITLE\x3d"))
+          "##TITLE\x3d"))
         h.title = e(G.substring(8));
       else if (j.stringStartsWith(G, "##XUNITS\x3d"))
         h.xUnit = e(G.substring(9)), this.convertHZ2PPM && "HZ" === h.xUnit.toUpperCase() && (h.xUnit = "PPM", C = !0);
@@ -9486,7 +9486,7 @@ ChemDoodle.RESIDUE = function () {
           this.convertHZ2PPM && (z = parseFloat(e(G.substring(21))));
         else if (j.stringStartsWith(G, "##.SHIFT REFERENCE\x3d"))
           this.convertHZ2PPM &&
-                  (c = G.substring(19).split(","), B = parseInt(e(c[2])), c = parseFloat(e(c[3])));
+              (c = G.substring(19).split(","), B = parseInt(e(c[2])), c = parseFloat(e(c[3])));
         else if (j.stringStartsWith(G, "##XYDATA\x3d")) {
           C || (z = 1);
           var F = k = !1, G = G.split("\n"), K = (n - r) / (t - 1);
@@ -9513,7 +9513,7 @@ ChemDoodle.RESIDUE = function () {
             F = c - h.data[B - 1].x;
             D = 0;
             for (H = h.data.length; D <
-                    H; D++)
+                H; D++)
               h.data[D].x += F
           }
         } else if (j.stringStartsWith(G, "##PEAK TABLE\x3d")) {
@@ -9567,7 +9567,7 @@ ChemDoodle.RESIDUE = function () {
     }
     g = 0;
     for (j =
-            a.length; g < j; g++) {
+        a.length; g < j; g++) {
       l = a[g];
       n = 0;
       for (t = l.atoms.length; n < t; n++)
@@ -9595,7 +9595,7 @@ ChemDoodle.RESIDUE = function () {
     for (h = b.molecules.length; e < h; e++) {
       a = b.molecules[e];
       for (var g = 0, j = a.atoms.length; g <
-              j; g++)
+          j; g++)
         a.atoms[g].tmpid = void 0;
       g = 0;
       for (j = a.bonds.length; g < j; g++)
@@ -9655,8 +9655,8 @@ ChemDoodle.RESIDUE = function () {
     var b = {};
     a.tmpid && (b.i = a.tmpid);
     a instanceof l.Line ? (b.t = "Line", b.x1 = a.p1.x, b.y1 = a.p1.y, b.x2 = a.p2.x, b.y2 = a.p2.y, b.a = a.arrowType) : a instanceof l.Pusher ?
-            (b.t = "Pusher", b.o1 = a.o1.tmpid, b.o2 = a.o2.tmpid, 1 !== a.numElectron && (b.e = a.numElectron)) : a instanceof l.Bracket ? (b.t = "Bracket", b.x1 = a.p1.x, b.y1 = a.p1.y, b.x2 = a.p2.x, b.y2 = a.p2.y, 0 !== a.charge && (b.c = a.charge), 0 !== a.mult && (b.m = a.mult), 0 !== a.repeat && (b.r = a.repeat)) : a instanceof h.Distance ? (b.t = "Distance", b.a1 = a.a1.tmpid, b.a2 = a.a2.tmpid, a.node && (b.n = a.node, b.o = a.offset)) : a instanceof h.Angle ? (b.t = "Angle", b.a1 = a.a1.tmpid, b.a2 = a.a2.tmpid, b.a3 = a.a3.tmpid) : a instanceof h.Torsion && (b.t = "Torsion", b.a1 = a.a1.tmpid,
-            b.a2 = a.a2.tmpid, b.a3 = a.a3.tmpid, b.a4 = a.a4.tmpid);
+        (b.t = "Pusher", b.o1 = a.o1.tmpid, b.o2 = a.o2.tmpid, 1 !== a.numElectron && (b.e = a.numElectron)) : a instanceof l.Bracket ? (b.t = "Bracket", b.x1 = a.p1.x, b.y1 = a.p1.y, b.x2 = a.p2.x, b.y2 = a.p2.y, 0 !== a.charge && (b.c = a.charge), 0 !== a.mult && (b.m = a.mult), 0 !== a.repeat && (b.r = a.repeat)) : a instanceof h.Distance ? (b.t = "Distance", b.a1 = a.a1.tmpid, b.a2 = a.a2.tmpid, a.node && (b.n = a.node, b.o = a.offset)) : a instanceof h.Angle ? (b.t = "Angle", b.a1 = a.a1.tmpid, b.a2 = a.a2.tmpid, b.a3 = a.a3.tmpid) : a instanceof h.Torsion && (b.t = "Torsion", b.a1 = a.a1.tmpid,
+        b.a2 = a.a2.tmpid, b.a3 = a.a3.tmpid, b.a4 = a.a4.tmpid);
     return b
   };
   g.shapeFrom = function (a, b) {
@@ -9680,7 +9680,7 @@ ChemDoodle.RESIDUE = function () {
       e = new l.Pusher(g, j);
       a.e && (e.numElectron = a.e)
     } else if ("Bracket" ===
-            a.t)
+        a.t)
       e = new l.Bracket(new n.Point(a.x1, a.y1), new n.Point(a.x2, a.y2)), void 0 !== a.c && (e.charge = a.c), void 0 !== a.m && (e.mult = a.m), void 0 !== a.r && (e.repeat = a.r);
     else if ("Distance" === a.t) {
       var z;
@@ -9700,7 +9700,7 @@ ChemDoodle.RESIDUE = function () {
         q = 0;
         for (t = A.atoms.length; q < t; q++)
           u = A.atoms[q], u.tmpid === a.a1 ? v = u : u.tmpid === a.a2 ? z = u : u.tmpid === a.a3 && (y =
-                  u)
+              u)
       }
       e = new h.Angle(v, z, y)
     } else if ("Torsion" === a.t) {
@@ -9753,7 +9753,7 @@ ChemDoodle.RESIDUE = function () {
   };
   b.writeJSON = function (b, g) {
     return e.stringify(a.contentTo(b,
-            g))
+        g))
   }
 })(ChemDoodle, ChemDoodle.io, ChemDoodle.structures, ChemDoodle.structures.d2, ChemDoodle.structures.d3, JSON);
 (function (b, j, n) {
@@ -9775,7 +9775,7 @@ ChemDoodle.RESIDUE = function () {
         var q = a[w].getBounds(), q = q.maxX - q.minX, j = a[w].getCenter(), t = 0;
         for (d = a[w].atoms.length; t < d; t++) {
           var u =
-                  a[w].atoms[t];
+              a[w].atoms[t];
           u.x += l + q / 2 - j.x;
           u.y -= j.y
         }
@@ -9803,7 +9803,7 @@ ChemDoodle.RESIDUE = function () {
       h = 0;
       for (f = g.length; h < f; h++)
         if (g[h]instanceof
-                n.d2.Line) {
+            n.d2.Line) {
           d = g[h].getPoints();
           break
         }
@@ -9824,7 +9824,7 @@ ChemDoodle.RESIDUE = function () {
   };
   var h = new j.RXNInterpreter;
   b.readRXN = function (b,
-          g) {
+      g) {
     return h.read(b, g)
   };
   b.writeRXN = function (b, g) {
@@ -9850,9 +9850,9 @@ ChemDoodle.RESIDUE = function () {
   };
   var g = new l.XYZInterpreter;
   b.readXYZ =
-          function (a) {
-            return g.read(a)
-          }
+      function (a) {
+        return g.read(a)
+      }
 })(ChemDoodle, ChemDoodle.ELEMENT, ChemDoodle.SYMBOLS, ChemDoodle.io, ChemDoodle.structures, ChemDoodle.lib.jQuery.trim);
 ChemDoodle.monitor = function (b, j, n) {
   var l = {CANVAS_DRAGGING: void 0, CANVAS_OVER: void 0, ALT: !1, SHIFT: !1, META: !1};
@@ -9866,7 +9866,7 @@ ChemDoodle.monitor = function (b, j, n) {
     });
     j(n).keydown(function (b) {
       l.SHIFT =
-              b.shiftKey;
+          b.shiftKey;
       l.ALT = b.altKey;
       l.META = b.metaKey || b.ctrlKey;
       var e = l.CANVAS_OVER;
@@ -9904,7 +9904,7 @@ ChemDoodle.monitor = function (b, j, n) {
         var d = b.getContext("2d");
         1 !== this.pixelRatio && b.width === this.width && (b.width = this.width * this.pixelRatio, b.height = this.height * this.pixelRatio, d.scale(this.pixelRatio, this.pixelRatio));
         this.image ? d.drawImage(this.image, 0, 0) : (this.specs.backgroundColor && this.bgCache !==
-                b.style.backgroundColor && (b.style.backgroundColor = this.specs.backgroundColor, this.bgCache = b.style.backgroundColor), d.fillStyle = this.specs.backgroundColor, d.fillRect(0, 0, this.width, this.height));
+            b.style.backgroundColor && (b.style.backgroundColor = this.specs.backgroundColor, this.bgCache = b.style.backgroundColor), d.fillStyle = this.specs.backgroundColor, d.fillRect(0, 0, this.width, this.height));
         if (this.innerRepaint)
           this.innerRepaint(d);
         else if (0 !== this.molecules.length || 0 !== this.shapes.length) {
@@ -9915,7 +9915,7 @@ ChemDoodle.monitor = function (b, j, n) {
           d.translate(-this.width / 2, -this.height / 2);
           for (var b = 0, e = this.molecules.length; b < e; b++)
             this.molecules[b].check(!0),
-                    this.molecules[b].draw(d, this.specs);
+                this.molecules[b].draw(d, this.specs);
           b = 0;
           for (e = this.shapes.length; b < e; b++)
             this.shapes[b].draw(d, this.specs);
@@ -9933,7 +9933,7 @@ ChemDoodle.monitor = function (b, j, n) {
     f.css("height", d);
     this.width = a;
     this.height =
-            d;
+        d;
     if (b._Canvas3D && this instanceof b._Canvas3D)
       this.gl.viewport(0, 0, a, d), this.setupScene();
     else if (0 < this.molecules.length) {
@@ -10007,7 +10007,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   f.center = function () {
     for (var a = this.getContentBounds(), b = new h.Point((this.width - a.minX -
-            a.maxX) / 2, (this.height - a.minY - a.maxY) / 2), d = 0, e = this.molecules.length; d < e; d++)
+        a.maxX) / 2, (this.height - a.minY - a.maxY) / 2), d = 0, e = this.molecules.length; d < e; d++)
       for (var f = this.molecules[d], j = 0, l = f.atoms.length; j < l; j++)
         f.atoms[j].add(b);
     d = 0;
@@ -10026,7 +10026,7 @@ ChemDoodle.monitor = function (b, j, n) {
   f.bondExists = function (a, b) {
     for (var d = 0, e = this.molecules.length; d < e; d++)
       for (var f = this.molecules[d], g = 0, h =
-              f.bonds.length; g < h; g++) {
+          f.bonds.length; g < h; g++) {
         var j = f.bonds[g];
         if (j.contains(a) && j.contains(b))
           return!0
@@ -10075,7 +10075,7 @@ ChemDoodle.monitor = function (b, j, n) {
     this.height = n;
     this.molecules = [];
     this.shapes =
-    [];
+        [];
     if (a.getElementById(f)) {
       var A = e("#" + f);
       o ? A.attr("width", o) : this.width = A.attr("width");
@@ -10098,15 +10098,15 @@ ChemDoodle.monitor = function (b, j, n) {
       var b = (new Date).getTime();
       if (!j.supports_gesture() && 2 === a.originalEvent.touches.length) {
         var d =
-                a.originalEvent.touches, e = new h.Point(d[0].pageX, d[0].pageY), d = new h.Point(d[1].pageX, d[1].pageY);
+            a.originalEvent.touches, e = new h.Point(d[0].pageX, d[0].pageY), d = new h.Point(d[1].pageX, d[1].pageY);
         q.implementedGestureDist = e.distance(d);
         q.implementedGestureAngle = e.angle(d);
         q.gesturestart && (q.prehandleEvent(a), q.gesturestart(a))
       }
       q.lastTouch && 1 === a.originalEvent.touches.length && 500 > b - q.lastTouch ? q.dbltap ? (q.prehandleEvent(a), q.dbltap(a)) : q.dblclick ? (q.prehandleEvent(a), q.dblclick(a)) : q.touchstart ? (q.prehandleEvent(a), q.touchstart(a)) : q.mousedown && (q.prehandleEvent(a), q.mousedown(a)) : q.touchstart ?
-              (q.prehandleEvent(a), q.touchstart(a), this.hold && clearTimeout(this.hold), this.touchhold && (this.hold = setTimeout(function () {
-                q.touchhold(a)
-              }, 1E3))) : q.mousedown && (q.prehandleEvent(a), q.mousedown(a));
+          (q.prehandleEvent(a), q.touchstart(a), this.hold && clearTimeout(this.hold), this.touchhold && (this.hold = setTimeout(function () {
+            q.touchhold(a)
+          }, 1E3))) : q.mousedown && (q.prehandleEvent(a), q.mousedown(a));
       q.lastTouch = b
     }), f.bind("touchmove", function (a) {
       this.hold && (clearTimeout(this.hold), this.hold = void 0);
@@ -10129,16 +10129,16 @@ ChemDoodle.monitor = function (b, j, n) {
         q.multitouchmove(a, d)
       } else
         q.touchmove ? (q.prehandleEvent(a), q.touchmove(a)) :
-                q.drag && (q.prehandleEvent(a), q.drag(a))
+            q.drag && (q.prehandleEvent(a), q.drag(a))
     }), f.bind("touchend", function (a) {
       this.hold && (clearTimeout(this.hold), this.hold = void 0);
       !j.supports_gesture() && q.implementedGestureDist && (q.implementedGestureDist = void 0, q.implementedGestureAngle = void 0, q.gestureend && (q.prehandleEvent(a), q.gestureend(a)));
       q.touchend ? (q.prehandleEvent(a), q.touchend(a)) : q.mouseup && (q.prehandleEvent(a), q.mouseup(a));
       250 > (new Date).getTime() - q.lastTouch && (q.tap ? (q.prehandleEvent(a), q.tap(a)) : q.click && (q.prehandleEvent(a), q.click(a)))
     }),
-            f.bind("gesturestart", function (a) {
-              q.gesturestart && (q.prehandleEvent(a), q.gesturestart(a))
-            }), f.bind("gesturechange", function (a) {
+        f.bind("gesturestart", function (a) {
+          q.gesturestart && (q.prehandleEvent(a), q.gesturestart(a))
+        }), f.bind("gesturechange", function (a) {
       q.gesturechange && (q.prehandleEvent(a), q.gesturechange(a))
     }), f.bind("gestureend", function (a) {
       q.gestureend && (q.prehandleEvent(a), q.gestureend(a))
@@ -10152,10 +10152,10 @@ ChemDoodle.monitor = function (b, j, n) {
           break;
         case 3:
           q.rightclick && (q.prehandleEvent(a), q.rightclick(a))
-        }
+      }
     }), f.dblclick(function (a) {
       q.dblclick &&
-              (q.prehandleEvent(a), q.dblclick(a))
+          (q.prehandleEvent(a), q.dblclick(a))
     }), f.mousedown(function (a) {
       switch (a.which) {
         case 1:
@@ -10167,7 +10167,7 @@ ChemDoodle.monitor = function (b, j, n) {
           break;
         case 3:
           q.rightmousedown && (q.prehandleEvent(a), q.rightmousedown(a))
-        }
+      }
     }), f.mousemove(function (a) {
       !l.CANVAS_DRAGGING && q.mousemove && (q.prehandleEvent(a), q.mousemove(a))
     }), f.mouseout(function (a) {
@@ -10175,7 +10175,7 @@ ChemDoodle.monitor = function (b, j, n) {
       q.mouseout && (q.prehandleEvent(a), q.mouseout(a))
     }), f.mouseover(function (a) {
       l.CANVAS_OVER =
-              q;
+          q;
       q.mouseover && (q.prehandleEvent(a), q.mouseover(a))
     }), f.mouseup(function (a) {
       switch (a.which) {
@@ -10187,7 +10187,7 @@ ChemDoodle.monitor = function (b, j, n) {
           break;
         case 3:
           q.rightmouseup && (q.prehandleEvent(a), q.rightmouseup(a))
-        }
+      }
     }), f.mousewheel(function (a, b) {
       q.mousewheel && (q.prehandleEvent(a), q.mousewheel(a, b))
     }));
@@ -10195,7 +10195,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   f.prehandleEvent = function (a) {
     a.originalEvent.changedTouches && (a.pageX = a.originalEvent.changedTouches[0].pageX,
-            a.pageY = a.originalEvent.changedTouches[0].pageY);
+        a.pageY = a.originalEvent.changedTouches[0].pageY);
     a.preventDefault();
     a.offset = e("#" + this.id).offset();
     a.p = new h.Point(a.pageX - a.offset.left, a.pageY - a.offset.top)
@@ -10223,7 +10223,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   n.isRunning = function () {
     return void 0 !==
-            this.handle
+        this.handle
   }
 })(ChemDoodle, ChemDoodle.animations);
 (function (b, j) {
@@ -10254,7 +10254,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   b.click = function () {
     this.e =
-            void 0;
+        void 0;
     this.repaint();
     this.urlOrFunction instanceof Function ? this.urlOrFunction() : this.openInNewWindow ? window.open(this.urlOrFunction) : location.href = this.urlOrFunction
   };
@@ -10333,7 +10333,7 @@ ChemDoodle.monitor = function (b, j, n) {
       n.rotate(l, this.zIncrement * a, g);
       a = 0;
       for (var b = this.molecules.length; a <
-              b; a++) {
+          b; a++) {
         for (var j = this.molecules[a], f = 0, p = j.atoms.length; f < p; f++) {
           var o = j.atoms[f], w = [o.x - this.width / 2, o.y - this.height / 2, o.z];
           n.multiplyVec3(l, w);
@@ -10352,7 +10352,7 @@ ChemDoodle.monitor = function (b, j, n) {
         j = this.shapes[a].getPoints();
         f = 0;
         for (p = j.length; f <
-                p; f++)
+            p; f++)
           o = j[f], w = [o.x - this.width / 2, o.y - this.height / 2, 0], n.multiplyVec3(l, w), o.x = w[0] + this.width / 2, o.y = w[1] + this.height / 2
       }
     } else
@@ -10385,12 +10385,12 @@ ChemDoodle.monitor = function (b, j, n) {
       this.phase = 0;
       var b = this, h = 1;
       this.innerHandle =
-              setInterval(function () {
-                b.alpha = h / 15;
-                b.repaint();
-                15 === h && b.breakInnerHandle();
-                h++
-              }, 33)
+          setInterval(function () {
+            b.alpha = h / 15;
+            b.repaint();
+            15 === h && b.breakInnerHandle();
+            h++
+          }, 33)
     }
   };
   b.breakInnerHandle = function () {
@@ -10411,7 +10411,7 @@ ChemDoodle.monitor = function (b, j, n) {
       }, 33)
     } else
       1 ===
-              this.phase && (this.alpha = 0, this.repaint())
+          this.phase && (this.alpha = 0, this.repaint())
   };
   b.addFrame = function (b, h) {
     0 === this.frames.length && this.loadContent(b, h);
@@ -10442,7 +10442,7 @@ ChemDoodle.monitor = function (b, j, n) {
         g.sub(this.lastPoint);
         for (var a = 0, d = this.molecules.length; a < d; a++) {
           for (var r = this.molecules[a], f =
-                  0, p = r.atoms.length; f < p; f++)
+              0, p = r.atoms.length; f < p; f++)
             r.atoms[f].add(g);
           r.check()
         }
@@ -10468,7 +10468,7 @@ ChemDoodle.monitor = function (b, j, n) {
           f = 0;
           for (p = r.atoms.length; f < p; f++)
             a =
-                    r.atoms[f], d = [a.x - this.width / 2, a.y - this.height / 2, a.z], h.multiplyVec3(g, d), a.x = d[0] + this.width / 2, a.y = d[1] + this.height / 2, a.z = d[2];
+                r.atoms[f], d = [a.x - this.width / 2, a.y - this.height / 2, a.z], h.multiplyVec3(g, d), a.x = d[0] + this.width / 2, a.y = d[1] + this.height / 2, a.z = d[2];
           a = 0;
           for (d = r.rings.length; a < d; a++)
             r.rings[a].center = r.rings[a].getCenter();
@@ -10478,7 +10478,7 @@ ChemDoodle.monitor = function (b, j, n) {
         }
       } else
         p = new n.Point(this.width / 2, this.height / 2), f = p.angle(this.lastPoint), p = p.angle(b.p), this.specs.rotateAngle -= p - f, this.lastPoint =
-                b.p;
+            b.p;
       this.repaint()
     }
   };
@@ -10505,7 +10505,7 @@ ChemDoodle.monitor = function (b, j, n) {
             f[j].add(a)
         }
         this.lastPoint =
-                b.p;
+            b.p;
         this.lastPoint.multi = !0;
         this.repaint()
       } else
@@ -10515,7 +10515,7 @@ ChemDoodle.monitor = function (b, j, n) {
     0 !== b.originalEvent.scale - this.lastPinchScale && (this.specs.scale *= b.originalEvent.scale / this.lastPinchScale, 0.01 > this.specs.scale && (this.specs.scale = 0.01), this.lastPinchScale = b.originalEvent.scale);
     if (0 !== this.lastGestureRotate - b.originalEvent.rotation) {
       for (var g = (this.lastGestureRotate - b.originalEvent.rotation) / 180 * f.PI, a = new n.Point(this.width / 2, this.height / 2), d = 0, h = this.molecules.length; d <
-              h; d++) {
+          h; d++) {
         for (var f = this.molecules[d], j = 0, l = f.atoms.length; j < l; j++) {
           var w = f.atoms[j], A = a.distance(w), q = a.angle(w) + g;
           w.x = a.x + A * f.cos(q);
@@ -10549,7 +10549,7 @@ ChemDoodle.monitor = function (b, j, n) {
   b.getMolecule = void 0;
   b.innerRepaint = function (b) {
     this.spectrum && 0 < this.spectrum.data.length ? this.spectrum.draw(b, this.specs, this.width, this.height) : this.emptyMessage && (b.fillStyle = "#737683", b.textAlign = "center", b.textBaseline = "middle", b.font = "18px Helvetica, Verdana, Arial, Sans-serif", b.fillText(this.emptyMessage,
-            this.width / 2, this.height / 2))
+        this.width / 2, this.height / 2))
   };
   b.loadSpectrum = function (b) {
     this.spectrum = b;
@@ -10581,7 +10581,7 @@ ChemDoodle.monitor = function (b, j, n) {
       for (var n = 0, l = this.overlaySpectra.length; n < l; n++) {
         var h = this.overlaySpectra[n];
         h && 0 < h.data.length && (h.minX = this.spectrum.minX, h.maxX = this.spectrum.maxX, h.drawPlot(b, this.specs, this.width, this.height, this.spectrum.memory.offsetTop, this.spectrum.memory.offsetLeft,
-                this.spectrum.memory.offsetBottom))
+            this.spectrum.memory.offsetBottom))
       }
   };
   b.addSpectrum = function (b) {
@@ -10601,7 +10601,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   l.mouseup = function (b) {
     this.dragRange && this.dragRange.x !== this.dragRange.y && (this.dragRange.multi || (b = this.spectrum.zoom(this.dragRange.x, b.p.x, this.width, this.rescaleYAxisOnZoom), this.rescaleYAxisOnZoom && (this.specs.scale = b)), this.dragRange =
-            void 0, this.repaint())
+        void 0, this.repaint())
   };
   l.drag = function (b) {
     this.dragRange && (this.dragRange.multi ? this.dragRange = void 0 : (j.SHIFT && (this.spectrum.translate(b.p.x - this.dragRange.x, this.width), this.dragRange.x = b.p.x), this.dragRange.y = b.p.x), this.repaint())
@@ -10614,7 +10614,7 @@ ChemDoodle.monitor = function (b, j, n) {
       b.beginPath();
       for (b.moveTo(e, this.height / 2); e <= g; e++)
         5 > e % 10 ? b.lineTo(e, n.round(this.height /
-                2)) : b.moveTo(e, n.round(this.height / 2));
+            2)) : b.moveTo(e, n.round(this.height / 2));
       b.stroke()
     }
   };
@@ -10630,7 +10630,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   l.multitouchmove = function (h, e) {
     2 === e && (!this.dragRange || !this.dragRange.multi ? (this.dragRange = new b.structures.Point(h.p.x, h.p.x), this.dragRange.multi = !0) : (this.spectrum.translate(h.p.x - this.dragRange.x, this.width), this.dragRange.x = h.p.x, this.dragRange.y = h.p.x,
-            this.repaint()))
+        this.repaint()))
   };
   l.gesturechange = function (b) {
     this.specs.scale *= b.originalEvent.scale / this.lastPinchScale;
@@ -10657,7 +10657,7 @@ ChemDoodle.monitor = function (b, j, n) {
         e = this.p, g = this.spectrum.getInternalCoordinates(e.x, e.y);
       else if (this.seekType === b.SeekerCanvas.SEEK_PLOT || this.seekType === b.SeekerCanvas.SEEK_PEAK) {
         g = this.seekType === b.SeekerCanvas.SEEK_PLOT ?
-                this.spectrum.getClosestPlotInternalCoordinates(this.p.x) : this.spectrum.getClosestPeakInternalCoordinates(this.p.x);
+            this.spectrum.getClosestPlotInternalCoordinates(this.p.x) : this.spectrum.getClosestPeakInternalCoordinates(this.p.x);
         if (!g)
           return;
         e = {x: this.spectrum.getTransformedX(g.x, this.specs, this.width, this.spectrum.memory.offsetLeft), y: this.spectrum.getTransformedY(g.y / 100, this.specs, this.height, this.spectrum.memory.offsetBottom, this.spectrum.memory.offsetTop)}
@@ -10688,7 +10688,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   l.mousemove = function (b) {
     this.p = {x: b.p.x -
-      2, y: b.p.y - 3};
+          2, y: b.p.y - 3};
     this.repaint()
   };
   l.touchstart = function (b) {
@@ -10719,7 +10719,7 @@ ChemDoodle.monitor = function (b, j, n) {
     for (var a = new n.Bounds, b = 0, e = this.molecules.length; b < e; b++)
       a.expand(this.molecules[b].getBounds3D());
     var h = f.dist([a.maxX, a.maxY, a.maxZ], [a.minX, a.minY, a.minZ]) / 2 + 1.5, b = 45, e = Math.tan(b / 360 * Math.PI) /
-            0.8;
+        0.8;
     this.depth = h / e;
     var e = g.max(this.depth - h, 0.1), h = this.depth + h, j = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
     1 > j && (b /= j);
@@ -10741,7 +10741,7 @@ ChemDoodle.monitor = function (b, j, n) {
     if (this.gl) {
       this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
       this.gl.modelViewMatrix = d.multiply(this.translationMatrix,
-              this.rotationMatrix, []);
+          this.rotationMatrix, []);
       this.gl.rotationMatrix = this.rotationMatrix;
       var a = this.gl.getUniformLocation(this.gl.program, "u_projection_matrix");
       this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix);
@@ -10752,13 +10752,13 @@ ChemDoodle.monitor = function (b, j, n) {
       for (e = this.shapes.length; b < e; b++)
         this.shapes[b].render(this.gl, this.specs);
       this.specs.compass_display && (this.gl.uniformMatrix4fv(a, !1, this.compass.projectionMatrix),
-              this.compass.render(this.gl, this.specs), this.gl.setMatrixUniforms(this.gl.modelViewMatrix), this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix));
+          this.compass.render(this.gl, this.specs), this.gl.setMatrixUniforms(this.gl.modelViewMatrix), this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix));
       this.gl.enable(this.gl.BLEND);
       this.gl.depthMask(!1);
       this.gl.enableVertexAttribArray(this.gl.shader.vertexTexCoordAttribute);
       this.specs.atoms_displayLabels_3D && this.label3D.render(this.gl, this.specs, this.getMolecules());
       this.specs.compass_display && this.specs.compass_displayText_3D && (this.gl.uniformMatrix4fv(a, !1, this.compass.projectionMatrix), this.compass.renderAxis(this.gl),
-              this.gl.setMatrixUniforms(this.gl.modelViewMatrix), this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix));
+          this.gl.setMatrixUniforms(this.gl.modelViewMatrix), this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix));
       this.gl.disableVertexAttribArray(this.gl.shader.vertexTexCoordAttribute);
       this.gl.disable(this.gl.BLEND);
       this.gl.depthMask(!0);
@@ -10772,7 +10772,7 @@ ChemDoodle.monitor = function (b, j, n) {
     if (this.gl) {
       d.multiply(this.translationMatrix, this.rotationMatrix, this.gl.modelViewMatrix);
       this.gl.rotationMatrix =
-              this.rotationMatrix;
+          this.rotationMatrix;
       var g = this.gl.getUniformLocation(this.gl.program, "u_projection_matrix");
       this.gl.uniformMatrix4fv(g, !1, this.gl.projectionMatrix);
       return this.picker.pick(this.gl, this.molecules, this.specs, a, this.height - b, e, f)
@@ -10788,7 +10788,7 @@ ChemDoodle.monitor = function (b, j, n) {
     b = 0;
     for (d = this.molecules.length; b < d; b++) {
       for (var e = this.molecules[b], f = 0, g = e.atoms.length; f <
-              g; f++)
+          g; f++)
         e.atoms[f].sub3D(a);
       if (e.chains && e.fromJSON) {
         f = 0;
@@ -10810,12 +10810,12 @@ ChemDoodle.monitor = function (b, j, n) {
     } catch (e) {
     }
     this.gl ? (this.rotationMatrix = d.identity([]), this.translationMatrix = d.identity([]), this.gl.viewport(0, 0, this.width, this.height),
-            this.gl.program = this.gl.createProgram(), this.gl.shader = new h.Shader, this.gl.shader.init(this.gl), this.gl.programLabel = this.gl.createProgram(), this.setupScene()) : this.displayMessage()
+        this.gl.program = this.gl.createProgram(), this.gl.shader = new h.Shader, this.gl.shader.init(this.gl), this.gl.programLabel = this.gl.createProgram(), this.setupScene()) : this.displayMessage()
   };
   b._Canvas.prototype.displayMessage = function () {
     var b = a.getElementById(this.id);
     b.getContext && (b = b.getContext("2d"), this.specs.backgroundColor && (b.fillStyle = this.specs.backgroundColor, b.fillRect(0, 0, this.width, this.height)), this.emptyMessage && (b.fillStyle = "#737683", b.textAlign = "center", b.textBaseline = "middle", b.font = "18px Helvetica, Verdana, Arial, Sans-serif",
-            b.fillText(this.emptyMessage, this.width / 2, this.height / 2)))
+        b.fillText(this.emptyMessage, this.width / 2, this.height / 2)))
   };
   o.renderText = function (a, b) {
     if (this.gl) {
@@ -10858,7 +10858,7 @@ ChemDoodle.monitor = function (b, j, n) {
       this.label3D.init(this.gl, this.specs);
       for (var o = 0, q = this.molecules.length; o < q; o++)
         if (a = this.molecules[o], a.labelMesh instanceof h.TextMesh || (a.labelMesh = new h.TextMesh,
-                a.labelMesh.init(this.gl)), a.unitCellVectors && (a.unitCell = new h.UnitCell(a.unitCellVectors)), a.chains) {
+            a.labelMesh.init(this.gl)), a.unitCellVectors && (a.unitCell = new h.UnitCell(a.unitCellVectors)), a.chains) {
           a.ribbons = [];
           a.cartoons = [];
           a.tubes = [];
@@ -10871,7 +10871,7 @@ ChemDoodle.monitor = function (b, j, n) {
                 y = 1;
                 for (B = v.length - 1; y < B; y++)
                   j.vec3AngleFrom(v[y - 1].D, v[y].D) > g.PI / 2 && (v[y].guidePointsSmall.reverse(),
-                          v[y].guidePointsLarge.reverse(), f.scale(v[y].D, -1))
+                      v[y].guidePointsLarge.reverse(), f.scale(v[y].D, -1))
               }
               y = 1;
               for (B = v.length - 3; y < B; y++)
@@ -10887,7 +10887,7 @@ ChemDoodle.monitor = function (b, j, n) {
               y = new h.Tube(v, this.specs.nucleics_tubeThickness, this.specs.nucleics_tubeResolution_3D), y.chainColor = c, a.tubes.push(y);
             else {
               z = {front: new h.Ribbon(v, this.specs.proteins_ribbonThickness,
-                        !1), back: new h.Ribbon(v, -this.specs.proteins_ribbonThickness, !1)};
+                    !1), back: new h.Ribbon(v, -this.specs.proteins_ribbonThickness, !1)};
               z.front.chainColor = c;
               z.back.chainColor = c;
               y = 0;
@@ -10903,7 +10903,7 @@ ChemDoodle.monitor = function (b, j, n) {
               y = 0;
               for (B = v.front.segments.length; y < B; y++)
                 v.front.segments[y].chainColor =
-                        c;
+                    c;
               y = 0;
               for (B = v.back.segments.length; y < B; y++)
                 v.back.segments[y].chainColor = c;
@@ -10925,7 +10925,7 @@ ChemDoodle.monitor = function (b, j, n) {
           t = 0;
           for (u = o.mols.length; t < u; t++)
             a = o.mols[t], a.labelMesh instanceof
-                    l.d3.TextMesh || (a.labelMesh = new l.d3.TextMesh, a.labelMesh.init(this.gl));
+                l.d3.TextMesh || (a.labelMesh = new l.d3.TextMesh, a.labelMesh.init(this.gl));
           this.label3D.updateVerticesBuffer(this.gl, o.mols, this.specs)
         }
       }
@@ -10934,12 +10934,12 @@ ChemDoodle.monitor = function (b, j, n) {
       this.gl.material = new h.Material(this.gl);
       this.gl.fogging = new h.Fog(this.gl);
       this.gl.fogging.setTempParameter(this.specs.fog_color_3D || this.specs.backgroundColor, this.specs.fog_start_3D, this.specs.fog_end_3D,
-              this.specs.fog_density_3D);
+          this.specs.fog_density_3D);
       this.compass = new h.Compass(this.gl, this.specs);
       a = this.width / this.height;
       this.specs.projectionWidthHeightRatio_3D && (a = this.specs.projectionWidthHeightRatio_3D);
       this.gl.projectionMatrix = this.specs.projectionPerspective_3D ? d.perspective(this.specs.projectionPerspectiveVerticalFieldOfView_3D, a, this.specs.projectionFrontCulling_3D, this.specs.projectionBackCulling_3D) : d.ortho(-this.specs.projectionOrthoWidth_3D / 2, this.specs.projectionOrthoWidth_3D / 2, -this.specs.projectionOrthoWidth_3D /
-              2 / a, this.specs.projectionOrthoWidth_3D / 2 / a, this.specs.projectionFrontCulling_3D, this.specs.projectionBackCulling_3D);
+          2 / a, this.specs.projectionOrthoWidth_3D / 2 / a, this.specs.projectionFrontCulling_3D, this.specs.projectionBackCulling_3D);
       a = this.gl.getUniformLocation(this.gl.program, "u_projection_matrix");
       this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix);
       var k = this.gl.getUniformLocation(this.gl.program, "u_model_view_matrix"), C = this.gl.getUniformLocation(this.gl.program, "u_normal_matrix");
@@ -10947,7 +10947,7 @@ ChemDoodle.monitor = function (b, j, n) {
         this.uniformMatrix4fv(k, !1, a);
         a = r.transpose(d.toInverseMat3(a, []));
         this.uniformMatrix3fv(C,
-                !1, a)
+            !1, a)
       };
       t = this.gl.getUniformLocation(this.gl.program, "u_dimension");
       this.gl.uniformMatrix4fv(a, !1, this.gl.projectionMatrix);
@@ -10960,10 +10960,10 @@ ChemDoodle.monitor = function (b, j, n) {
   o.updateScene = function () {
     this.gl.fogging.setTempParameter(this.specs.fog_color_3D || this.specs.backgroundColor, this.specs.fog_start_3D, this.specs.fog_end_3D, this.specs.fog_density_3D);
     var a = this.width /
-            this.height;
+        this.height;
     this.specs.projectionWidthHeightRatio_3D && (a = this.specs.projectionWidthHeightRatio_3D);
     this.gl.projectionMatrix = this.specs.projectionPerspective_3D ? d.perspective(this.specs.projectionPerspectiveVerticalFieldOfView_3D, a, this.specs.projectionFrontCulling_3D, this.specs.projectionBackCulling_3D) : d.ortho(-this.specs.projectionOrthoWidth_3D / 2, this.specs.projectionOrthoWidth_3D / 2, -this.specs.projectionOrthoWidth_3D / 2 / a, this.specs.projectionOrthoWidth_3D / 2 / a, this.specs.projectionFrontCulling_3D,
-            this.specs.projectionBackCulling_3D);
+        this.specs.projectionBackCulling_3D);
     this.repaint()
   };
   o.mousedown = function (a) {
@@ -10984,7 +10984,7 @@ ChemDoodle.monitor = function (b, j, n) {
         d.translate(this.translationMatrix, [e.x * f, -e.y * f, 0])
       } else
         f = a.p.x - this.lastPoint.x, e = a.p.y - this.lastPoint.y,
-                f = d.rotate(d.identity([]), f * g.PI / 180, [0, 1, 0]), d.rotate(f, e * g.PI / 180, [1, 0, 0]), this.rotationMatrix = d.multiply(f, this.rotationMatrix);
+            f = d.rotate(d.identity([]), f * g.PI / 180, [0, 1, 0]), d.rotate(f, e * g.PI / 180, [1, 0, 0]), this.rotationMatrix = d.multiply(f, this.rotationMatrix);
       this.lastPoint = a.p;
       this.repaint()
     }
@@ -11010,7 +11010,7 @@ ChemDoodle.monitor = function (b, j, n) {
   o.gesturechange = function (a) {
     if (0 !== a.originalEvent.scale - this.lastPinchScale) {
       var b = this.specs.projectionPerspectiveVerticalFieldOfView_3D +
-              30 * -(a.originalEvent.scale / this.lastPinchScale - 1);
+          30 * -(a.originalEvent.scale / this.lastPinchScale - 1);
       this.specs.projectionPerspectiveVerticalFieldOfView_3D = 0.1 > b ? 0.1 : 179.9 < b ? 179.9 : b;
       this.specs.projectionOrthoWidth_3D = 2 * (Math.tan(this.specs.projectionPerspectiveVerticalFieldOfView_3D / 360 * Math.PI) * this.depth) * this.specs.projectionWidthHeightRatio_3D;
       this.updateScene();
@@ -11023,7 +11023,7 @@ ChemDoodle.monitor = function (b, j, n) {
     this.lastGestureRotate = 0
   }
 })(ChemDoodle, ChemDoodle.extensions, ChemDoodle.math, ChemDoodle.structures,
-        ChemDoodle.structures.d3, ChemDoodle.RESIDUE, Math, document, ChemDoodle.lib.mat4, ChemDoodle.lib.mat3, ChemDoodle.lib.vec3, ChemDoodle.lib.jQuery, window);
+    ChemDoodle.structures.d3, ChemDoodle.RESIDUE, Math, document, ChemDoodle.lib.mat4, ChemDoodle.lib.mat3, ChemDoodle.lib.vec3, ChemDoodle.lib.jQuery, window);
 (function (b, j, n, l) {
   b.MolGrabberCanvas3D = function (b, e, g) {
     b && this.create(b, e, g);
@@ -11081,7 +11081,7 @@ ChemDoodle.monitor = function (b, j, n) {
   n.dblclick = b.RotatorCanvas.prototype.dblclick;
   n.nextFrame = function () {
     var b =
-            this.frames[this.frameNumber];
+        this.frames[this.frameNumber];
     this.molecules = b.mols;
     this.shapes = b.shapes;
     2 === this.playMode && this.reverse ? (this.frameNumber--, 0 > this.frameNumber && (this.frameNumber = 1, this.reverse = !1)) : (this.frameNumber++, this.frameNumber >= this.frames.length && (2 === this.playMode ? (this.frameNumber -= 2, this.reverse = !0) : (this.frameNumber = 0, 0 === this.playMode && this.stopAnimation())))
@@ -11091,7 +11091,7 @@ ChemDoodle.monitor = function (b, j, n) {
       b.add3D(h.mols[e].getCenter3D());
     b.x /= h.mols.length;
     b.y /=
-            h.mols.length;
+        h.mols.length;
     h = new j.Atom;
     h.sub3D(b);
     for (var b = 0, a = this.frames.length; b < a; b++)
@@ -11166,7 +11166,7 @@ ChemDoodle.monitor = function (b, j, n) {
   h.innerRepaint = function (b) {
     for (var g = 0, a = this.cells.length; g < a; g++)
       this.drawCell(b,
-              this.specs, this.cells[g]);
+          this.specs, this.cells[g]);
     this.hovered && this.drawCell(b, this.specs, this.hovered);
     this.selected && this.drawCell(b, this.specs, this.selected)
   };
@@ -11180,7 +11180,7 @@ ChemDoodle.monitor = function (b, j, n) {
       else if (5 === f.atomicNumber || 13 === f.atomicNumber)
         e += 10 * this.cellDimension, a += 10;
       if ((58 > f.atomicNumber || 71 < f.atomicNumber &&
-              90 > f.atomicNumber || 103 < f.atomicNumber) && 113 > f.atomicNumber)
+          90 > f.atomicNumber || 103 < f.atomicNumber) && 113 > f.atomicNumber)
         this.cells.push(new l(f, e, g, this.cellDimension)), e += this.cellDimension, a++
     }
     g += 2 * this.cellDimension;
@@ -11191,7 +11191,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   h.drawCell = function (b, g, a) {
     var d =
-            b.createRadialGradient(a.x + a.dimension / 3, a.y + a.dimension / 3, 1.5 * a.dimension, a.x + a.dimension / 3, a.y + a.dimension / 3, a.dimension / 10);
+        b.createRadialGradient(a.x + a.dimension / 3, a.y + a.dimension / 3, 1.5 * a.dimension, a.x + a.dimension / 3, a.y + a.dimension / 3, a.dimension / 10);
     d.addColorStop(0, "#000000");
     d.addColorStop(0.7, a.element.jmolColor);
     d.addColorStop(1, "#FFFFFF");
@@ -11227,7 +11227,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   h.mouseout = function () {
     this.hovered =
-            void 0;
+        void 0;
     this.repaint()
   }
 })(ChemDoodle, ChemDoodle.extensions, ChemDoodle.math, document);
@@ -11244,7 +11244,7 @@ ChemDoodle.monitor = function (b, j, n) {
   }
 })(ChemDoodle.io, ChemDoodle.lib.jQuery);
 (function (b, j, n, l, h, e) {
-  j.SERVER_URL = "http://ichemlabs.cloud.chemdoodle.com/icl_cdc_v060001/WebHQ";
+  j.SERVER_URL = "https://mwk.ichemlabs.cloud.chemdoodle.com/icl_cdc_v060001/WebHQ";
   j.inRelay = !1;
   j.asynchronous = !0;
   j.INFO = {userAgent: navigator.userAgent, v_cwc: b.getVersion(), v_jQuery: h.version, v_jQuery_ui: h.ui ? h.ui.version : "N/A"};
@@ -11267,7 +11267,7 @@ ChemDoodle.monitor = function (b, j, n) {
         l && l();
         if (!a.isEmpty()) {
           var e =
-                  a.dequeue();
+              a.dequeue();
           j.contactServer(e.call, e.content, e.options, e.callback, e.errorback)
         }
       }, xhrFields: {withCredentials: !0}, async: j.asynchronous}))
@@ -11288,7 +11288,7 @@ ChemDoodle.monitor = function (b, j, n) {
     }, h)
   };
   j.generateImage = function (a,
-          b, e, h) {
+      b, e, h) {
     this._contactServer("generateImage", {mol: g.molTo(a)}, b, function (a) {
       e(a.link)
     }, h)
@@ -11312,7 +11312,7 @@ ChemDoodle.monitor = function (b, j, n) {
         }
       if (b) {
         d =
-                0;
+            0;
         for (h = a.mol.a.length; d < h; d++)
           a.mol.a[d].x /= 20, a.mol.a[d].y /= 20, a.mol.a[d].z /= 20
       }
@@ -11350,7 +11350,7 @@ ChemDoodle.monitor = function (b, j, n) {
     this._contactServer("isSubgraphIsomorphism", {arrow: g.molTo(a), target: g.molTo(b)}, e, function (a) {
       h(a.value)
     },
-            j)
+        j)
   };
   j.kekulize = function (a, b, e, h) {
     this._contactServer("kekulize", {mol: g.molTo(a)}, b, function (a) {
@@ -11374,7 +11374,7 @@ ChemDoodle.monitor = function (b, j, n) {
   };
   j.readIUPACName = function (a, b, e, h) {
     this._contactServer("readIUPACName",
-            {iupac: a}, b, function (a) {
+        {iupac: a}, b, function (a) {
       e(g.molFrom(a.mol))
     }, h)
   };
@@ -11399,7 +11399,7 @@ ChemDoodle.monitor = function (b, j, n) {
     e.nucleus = "H";
     e.isotope = 1;
     this._contactServer("simulateNMR",
-            {mol: g.molTo(a)}, e, function (a) {
+        {mol: g.molTo(a)}, e, function (a) {
       f(b.readJCAMP(a.jcamp))
     }, h)
   };
@@ -11421,7 +11421,7 @@ ChemDoodle.monitor = function (b, j, n) {
   j.checkForUpdates = function (a) {
     this._contactServer("checkForUpdates", {value: e.href}, a, function () {
     },
-            function () {
-            })
+        function () {
+        })
   }
 })(ChemDoodle, ChemDoodle.iChemLabs, ChemDoodle.io, ChemDoodle.structures, ChemDoodle.lib.jQuery, location);

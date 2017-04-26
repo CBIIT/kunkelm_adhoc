@@ -77,63 +77,6 @@
             <h:selectOneRadio layout="lineDirection" value="#{sessionController.navigationMode}" 
                               valueChangeListener="#{sessionController.selectNavigationMode}">
                 <f:selectItem itemLabel="ICONS" itemValue="ICONS" />
-                <f:selectItem itemLabel="LINKS" itemValue="LINKS" />
-                <f:selectItem itemLabel="MENUBARS" itemValue="MENUBARS" />
-                <p:ajax event="change" process="@this" update="@form" />
-            </h:selectOneRadio>
-        </p:outputLabel>
-
-    </p:panelGrid>
-
-    <p:panelGrid rendered="#{sessionController.navigationMode eq 'LINKS'}" columns="8" styleClass="borderlessPanelGrid">
-
-        <p:commandLink value="Search"
-                       title="Search"
-                       ajax="true"
-                       action="/webpages/searchCmpds?faces-redirect=true"/>
-
-        <p:commandLink value="Active List"
-                       title="Active List"
-                       ajax="false"
-                       action="/webpages/activeListTable?faces-redirect=true"/>
-
-        <p:commandLink value="Available Lists"
-                       title="Available Lists"
-                       ajax="false"                         
-                       action="/webpages/availableLists?faces-redirect=true"/>
-
-        <p:commandLink value="Upload Structures"
-                       title="Upload Structures"
-                       ajax="false"
-                       rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"            
-                       action="/webpages/uploadList?faces-redirect=true"/>
-
-        <p:commandLink value="List Logic"
-                       title="List Logic"
-                       ajax="false"
-                       action="/webpages/listLogic?faces-redirect=true"/>
-
-        <p:commandLink value="Curated NSC"
-                       title="Curated NSC"
-                       ajax="false"                
-                       action="/webpages/curatedNscTable?faces-redirect=true"/>
-
-        <p:commandLink ajax="false"
-                       action="#{sessionController.logout()}"
-                       value="Logout #{sessionController.loggedUser}"
-                       title="Logout #{sessionController.loggedUser}"/>
-
-        <p:commandLink ajax="false"
-                       rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
-                       action="#{sessionController.goPublic()}"
-                       value="Become PUBLIC"
-                       title="Become PUBLIC"/>
-
-        <p:outputLabel value="Navigation by:" > 
-            <h:selectOneRadio layout="lineDirection" value="#{sessionController.navigationMode}" 
-                              valueChangeListener="#{sessionController.selectNavigationMode}">
-                <f:selectItem itemLabel="ICONS" itemValue="ICONS" />
-                <f:selectItem itemLabel="LINKS" itemValue="LINKS" />
                 <f:selectItem itemLabel="MENUBARS" itemValue="MENUBARS" />
                 <p:ajax event="change" process="@this" update="@form" />
             </h:selectOneRadio>
@@ -193,7 +136,6 @@
                 <h:selectOneRadio layout="lineDirection" value="#{sessionController.navigationMode}" 
                                   valueChangeListener="#{sessionController.selectNavigationMode}">
                     <f:selectItem itemLabel="ICONS" itemValue="ICONS" />
-                    <f:selectItem itemLabel="LINKS" itemValue="LINKS" />
                     <f:selectItem itemLabel="MENUBARS" itemValue="MENUBARS" />
                     <p:ajax event="change" process="@this" update="@form" />
                 </h:selectOneRadio>

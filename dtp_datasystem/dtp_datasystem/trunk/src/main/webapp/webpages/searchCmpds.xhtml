@@ -10,7 +10,7 @@
                 template="/webpages/templates/ui.xhtml">
 
     <ui:define name="content">
-        
+
         <p:remoteCommand action="#{listContentController.handleConfigureSearch()}" 
                          autoRun="true"
                          update="datasystemForm:listnametext"/>
@@ -40,207 +40,222 @@
 
         <p:tabView id="searchTabView" widgetVar="searchTabView">
 
-            <!--     -->
-            <!--     -->
-            <!-- TAB -->
-            <!--     -->
-            <!--     -->
+            <!--
+              #####    ##    #####
+                #     #  #   #    #
+                #    #    #  #####
+                #    ######  #    #
+                #    #    #  #    #
+                #    #    #  #####
+            -->
 
             <p:tab title="Basic Search Parameters">
 
-                <p:tabView>
+                <p:panelGrid columns="3" styleClass="borderlessPanelGrid">
 
-                    <p:tab title="Free-form type or copy/paste of search terms">
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="nscTextArea_id" value="NSC Numbers"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.nscTextArea}" id="nscTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="nscTextArea_id" value="NSC Numbers"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.nscTextArea}" id="nscTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="nscAutoComp" value="NSC Numbers"/>
+                        <br/>
+                        <p:autoComplete id="nscAutoComp" 
+                                        value="#{searchCriteriaBean.nscsFromAutoComp}"
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="3"                                    
+                                        completeMethod="#{applicationScopeBean.completensc}">
+                        </p:autoComplete>                
+                    </p:panel>
 
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="drugNameTextArea_id" value="Drug Names"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.drugNameTextArea}" id="drugNameTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="aliasTextArea_id" value="Aliases"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.aliasTextArea}" id="aliasTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
-                        
-                        <!-- commented out 01March2017
-                        
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="casTextArea_id" value="CAS Numbers"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.casTextArea}" id="casTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="drugNameTextArea_id" value="Drug Names"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.drugNameTextArea}" id="drugNameTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="cmpdNamedSetTextArea_id" value="DTP Compound Set Names"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.cmpdNamedSetTextArea}" id="cmpdNamedSetTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
-                        
-                        <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="projectCodeTextArea_id" value="Project Codes"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.projectCodeTextArea}" id="projectCodeTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="drugNameAutoComp" value="Drug Names"/>
+                        <br/>
+                        <p:autoComplete id="drugNameAutoComp" 
+                                        value="#{searchCriteriaBean.drugNamesFromAutoComp}" 
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true" 
+                                        scrollHeight="150"
+                                        minQueryLength="3"                                    
+                                        completeMethod="#{applicationScopeBean.completedrugName}">
+                        </p:autoComplete>                
+                    </p:panel>
 
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="plateTextArea_id" value="DTP Plate Names"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.plateTextArea}" id="plateTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                        -->
-                        
-                        <p:panel style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="targetTextArea_id" value="Targets"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.targetTextArea}" id="targetTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="aliasTextArea_id" value="Aliases"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.aliasTextArea}" id="aliasTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                        <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="mtxtTextArea_id" value="Mtxt Fragments"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.mtxtTextArea}" id="mtxtTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="aliasAutoComp" value="Aliases"/>
+                        <br/>
+                        <p:autoComplete id="aliasAutoComp"  
+                                        value="#{searchCriteriaBean.aliasesFromAutoComp}"
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="3"                                    
+                                        completeMethod="#{applicationScopeBean.completealias}">
+                        </p:autoComplete>                
+                    </p:panel>
 
-                        <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display:inline-block;border: none;"> 
-                            <h:outputLabel for="pseudoAtomsTextArea_id" value="PseudoAtom Fragments"/>
-                            <br/>
-                            <h:inputTextarea value="#{searchCriteriaBean.pseudoAtomsTextArea}" id="pseudoAtomsTextArea_id" cols="15" rows="5"/>
-                        </p:panel>
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                    </p:tab>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="casTextArea_id" value="CAS Numbers"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.casTextArea}" id="casTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                    <p:tab title="Type-Ahead Search">                  
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="casAutoComp" value="CAS Numbers"/>
+                        <br/>
+                        <p:autoComplete id="casAutoComp" 
+                                        value="#{searchCriteriaBean.casesFromAutoComp}" 
+                                        dropdown="true"
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="3"                                    
+                                        completeMethod="#{applicationScopeBean.completecas}">
+                        </p:autoComplete>                
+                    </p:panel>
 
-                        <h2 style="margin: 0;">
-                            <h:outputText value="Interactive suggestions for search terms. Possible matches for 3 or more characters will be listed. Selections from the list will be added to free-form text areas above."/>
-                        </h2> 
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="nscAutoComp" value="NSC Numbers"/>
-                            <br/>
-                            <p:autoComplete id="nscAutoComp" value="#{searchCriteriaBean.nscsFromAutoComp}"
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="3"                                    
-                                            completeMethod="#{applicationScopeBean.completensc}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="cmpdNamedSetTextArea_id" value="DTP Compound Set Names"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.cmpdNamedSetTextArea}" id="cmpdNamedSetTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                        <p:spacer width="20"/>
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="drugNameAutoComp" value="Drug Names"/>
-                            <br/>
-                            <p:autoComplete id="drugNameAutoComp" value="#{searchCriteriaBean.drugNamesFromAutoComp}" 
-                                            dropdown="true" multiple="true" forceSelection="true" 
-                                            scrollHeight="150"
-                                            minQueryLength="3"                                    
-                                            completeMethod="#{applicationScopeBean.completedrugName}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="cmpdNamedSetAutoComp" value="DTP Compound Set Names"/>
+                        <br/>
+                        <p:autoComplete id="cmpdNamedSetAutoComp" 
+                                        value="#{searchCriteriaBean.cmpdNamedSetsFromAutoComp}" 
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="1"                                    
+                                        completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
+                        </p:autoComplete>                
+                    </p:panel>
 
-                        <p:spacer width="20"/>
-                        
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="aliasAutoComp" value="Aliases"/>
-                            <br/>
-                            <p:autoComplete id="aliasAutoComp"  value="#{searchCriteriaBean.aliasesFromAutoComp}"
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="3"                                    
-                                            completeMethod="#{applicationScopeBean.completealias}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                        <p:spacer width="20"/>
-                        
-                        <!-- commented out 01March2017
-                        
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="casAutoComp" value="CAS Numbers"/>
-                            <br/>
-                            <p:autoComplete id="casAutoComp" value="#{searchCriteriaBean.casesFromAutoComp}" 
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="3"                                    
-                                            completeMethod="#{applicationScopeBean.completecas}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="projectCodeTextArea_id" value="Project Codes"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.projectCodeTextArea}" id="projectCodeTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                        <p:spacer width="20"/>
-                        
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="cmpdNamedSetAutoComp" value="DTP Compound Set Names"/>
-                            <br/>
-                            <p:autoComplete id="cmpdNamedSetAutoComp" value="#{searchCriteriaBean.cmpdNamedSetsFromAutoComp}" 
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="1"                                    
-                                            completeMethod="#{applicationScopeBean.completecmpdNamedSet}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="projectCodeAutoComp" value="DTP Project Codes"/>
+                        <br/>
+                        <p:autoComplete id="projectCodeAutoComp" 
+                                        value="#{searchCriteriaBean.projectCodesFromAutoComp}" 
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="1"                                    
+                                        completeMethod="#{applicationScopeBean.completeprojectCode}">
+                        </p:autoComplete>                
+                    </p:panel>
 
-                        <p:spacer width="20"/>
-                        
-                        <p:panel rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}" style="display: inline-block;border: none;">
-                            <p:outputLabel for="projectCodeAutoComp" value="DTP Project Codes"/>
-                            <br/>
-                            <p:autoComplete id="projectCodeAutoComp" value="#{searchCriteriaBean.projectCodesFromAutoComp}" 
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="1"                                    
-                                            completeMethod="#{applicationScopeBean.completeprojectCode}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                        <p:spacer width="20"/>
-                        
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="plateAutoComp" value="DTP Plate Names"/>
-                            <br/>
-                            <p:autoComplete id="plateAutoComp" value="#{searchCriteriaBean.platesFromAutoComp}" 
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="1"                                    
-                                            completeMethod="#{applicationScopeBean.completeplate}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="plateTextArea_id" value="DTP Plate Names"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.plateTextArea}" id="plateTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                        <p:spacer width="20"/>
-                        
-                        -->
-                        
-                        <p:panel style="display: inline-block;border: none;">
-                            <p:outputLabel for="targetAutoComp" value="Targets"/>
-                            <br/>
-                            <p:autoComplete id="targetAutoComp" value="#{searchCriteriaBean.targetsFromAutoComp}" 
-                                            dropdown="true" multiple="true" forceSelection="true"
-                                            scrollHeight="150"
-                                            minQueryLength="1"                                    
-                                            completeMethod="#{applicationScopeBean.completetarget}">
-                            </p:autoComplete>                
-                        </p:panel>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="plateAutoComp" value="DTP Plate Names"/>
+                        <br/>
+                        <p:autoComplete id="plateAutoComp" 
+                                        value="#{searchCriteriaBean.platesFromAutoComp}" 
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="1" 
+                                        completeMethod="#{applicationScopeBean.completeplate}">
+                        </p:autoComplete>                
+                    </p:panel>
 
+                    <h:outputText value="EXPL GOES HERE"/>
 
-                    </p:tab>
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="targetTextArea_id" value="Targets"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.targetTextArea}" id="targetTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
 
-                </p:tabView>
+                    <p:panel style="display: inline-block;border: none;">
+                        <p:outputLabel for="targetAutoComp" value="Targets"/>
+                        <br/>
+                        <p:autoComplete id="targetAutoComp" 
+                                        value="#{searchCriteriaBean.targetsFromAutoComp}" 
+                                        dropdown="true" 
+                                        multiple="true" 
+                                        forceSelection="true"
+                                        scrollHeight="150"
+                                        minQueryLength="1"                                    
+                                        completeMethod="#{applicationScopeBean.completetarget}">
+                        </p:autoComplete>                
+                    </p:panel>
+
+                    <h:outputText value="EXPL GOES HERE"/>
+
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="mtxtTextArea_id" value="Mtxt Fragments"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.mtxtTextArea}" id="mtxtTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
+
+                    <p:panel style="display:inline-block;border: none;"> 
+                        <h:outputLabel for="pseudoAtomsTextArea_id" value="PseudoAtom Fragments"/>
+                        <br/>
+                        <h:inputTextarea value="#{searchCriteriaBean.pseudoAtomsTextArea}" id="pseudoAtomsTextArea_id" cols="15" rows="3"/>
+                    </p:panel>
+
+                    <h:outputText value="EXPL GOES HERE"/>
+
+                </p:panelGrid>
 
             </p:tab>
 
-            <!--     -->
-            <!--     -->
-            <!-- TAB -->
-            <!--     -->
-            <!--     -->
+            <!--
+              #####    ##    #####
+                #     #  #   #    #
+                #    #    #  #####
+                #    ######  #    #
+                #    #    #  #    #
+                #    #    #  #####
+            -->
+
 
             <p:tab title="Advanced Search Parameters">
 
@@ -248,6 +263,11 @@
                     <h:outputText value="Constraints on pChem parameters" style="display: inline-block;"/>
                 </h2>
 
+                
+                <h3 style="margin: 0;">
+                    <h:outputText value="Molecule Constraints" style="display: inline-block;"/>
+                </h3>
+                
                 <p:panel header="Molecular Weight" style="display:inline-block;border: none;">
                     <h:outputLabel for="min_molecularWeight_id" value="Molecular Weight MIN"/>
                     <br/>
@@ -334,6 +354,10 @@
                     <h:inputText value="#{searchCriteriaBean.max_solubility}" id="max_solubility_id"/>
                 </p:panel>
 
+                <h3 style="margin: 0;">
+                    <h:outputText value="Atom Constraints" style="display: inline-block;"/>
+                </h3>
+                
                 <p:panel header="Atoms count" style="display:inline-block;border: none;">
                     <h:outputLabel for="min_countAtoms_id" value="Atoms count MIN"/>
                     <br/>
@@ -414,6 +438,10 @@
                     <h:inputText value="#{searchCriteriaBean.max_countBonds}" id="max_countBonds_id"/>
                 </p:panel>
 
+                <h3 style="margin: 0;">
+                    <h:outputText value="Bond Constraints" style="display: inline-block;"/>
+                </h3>
+                                
                 <p:panel header="Bonds Aromatic count" style="display:inline-block;border: none;">
                     <h:outputLabel for="min_countAromaticBonds_id" value="Bonds Aromatic count MIN"/>
                     <br/>
@@ -483,7 +511,11 @@
                     <br/>
                     <h:inputText value="#{searchCriteriaBean.max_countStereoBonds}" id="max_countStereoBonds_id"/>
                 </p:panel>
-
+                
+                <h3 style="margin: 0;">
+                    <h:outputText value="Ring Constraints" style="display: inline-block;"/>
+                </h3>
+                
                 <p:panel header="Rings Aromatic count" style="display:inline-block;border: none;">
                     <h:outputLabel for="min_countAromaticRings_id" value="Rings Aromatic count MIN"/>
                     <br/>
@@ -516,11 +548,171 @@
 
             </p:tab>
 
-            <!--     -->
-            <!--     -->
-            <!-- TAB -->
-            <!--     -->
-            <!--     -->
+            <!--
+              #####    ##    #####
+                #     #  #   #    #
+                #    #    #  #####
+                #    ######  #    #
+                #    #    #  #    #
+                #    #    #  #####
+            -->
+
+            <p:tab title="Advanced Search Parameters">
+
+                    <h2 style="margin: 0;">
+                        <h:outputText value="Constraints on pChem parameters" style="display: inline-block;"/>
+                    </h2>
+
+                    <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
+
+                        <h:outputText value="Molecular Weight"/>
+                        <h:outputLabel for="min_molecularWeight_id2" value="Molecular Weight MIN"/><h:inputText title="Molecular Weight MIN" value="#{searchCriteriaBean.min_molecularWeight}" id="min_molecularWeight_id2"/>
+                        <h:outputLabel for="max_molecularWeight_id2" value="Molecular Weight MAX"/><h:inputText title="Molecular Weight MAX" value="#{searchCriteriaBean.max_molecularWeight}" id="max_molecularWeight_id2"/>
+
+                        <!--
+                        
+                        <h:outputText value="Molecular Formula"/>
+                        <h:outputLabel for="molecularFormula_id2" value="molecularFormula"/><h:inputText title="molecularFormula" value="#{searchCriteriaBean.molecularFormula}" id="molecularFormula_id2"/>                
+
+                        -->
+
+                        <h:outputText value="HBond Acceptors count"/>
+                        <h:outputLabel for="min_countHydBondAcceptors_id2" value="HBond Acceptors count MIN"/><h:inputText title="HBond Acceptors count MIN" value="#{searchCriteriaBean.min_countHydBondAcceptors}" id="min_countHydBondAcceptors_id2"/>
+                        <h:outputLabel for="max_countHydBondAcceptors_id2" value="HBond Acceptors count MAX"/><h:inputText title="HBond Acceptors count MAX" value="#{searchCriteriaBean.max_countHydBondAcceptors}" id="max_countHydBondAcceptors_id2"/>
+
+
+                        <h:outputText value="HBond Donors count"/>
+                        <h:outputLabel for="min_countHydBondDonors_id2" value="HBond Donors count MIN"/><h:inputText title="HBond Donors count MIN" value="#{searchCriteriaBean.min_countHydBondDonors}" id="min_countHydBondDonors_id2"/>
+                        <h:outputLabel for="max_countHydBondDonors_id2" value="HBond Donors count MAX"/><h:inputText title="HBond Donors count MAX" value="#{searchCriteriaBean.max_countHydBondDonors}" id="max_countHydBondDonors_id2"/>
+
+
+                        <h:outputText value="Formal Charge"/>
+                        <h:outputLabel for="min_formalCharge_id2" value="Formal Charge MIN"/><h:inputText title="Formal Charge MIN" value="#{searchCriteriaBean.min_formalCharge}" id="min_formalCharge_id2"/>
+                        <h:outputLabel for="max_formalCharge_id2" value="Formal Charge MAX"/><h:inputText title="Formal Charge MAX" value="#{searchCriteriaBean.max_formalCharge}" id="max_formalCharge_id2"/>
+
+
+                        <h:outputText value="aLogP"/>
+                        <h:outputLabel for="min_theALogP_id2" value="aLogP MIN"/><h:inputText title="aLogP MIN" value="#{searchCriteriaBean.min_theALogP}" id="min_theALogP_id2"/>
+                        <h:outputLabel for="max_theALogP_id2" value="aLogP MAX"/><h:inputText title="aLogP MAX" value="#{searchCriteriaBean.max_theALogP}" id="max_theALogP_id2"/>
+
+
+                        <h:outputText value="logD"/>
+                        <h:outputLabel for="min_logD_id2" value="logD MIN"/><h:inputText title="logD MIN" value="#{searchCriteriaBean.min_logD}" id="min_logD_id2"/>
+                        <h:outputLabel for="max_logD_id2" value="logD MAX"/><h:inputText title="logD MAX" value="#{searchCriteriaBean.max_logD}" id="max_logD_id2"/>
+
+
+                        <h:outputText value="Surface Area"/>
+                        <h:outputLabel for="min_surfaceArea_id2" value="Surface Area MIN"/><h:inputText title="Surface Area MIN" value="#{searchCriteriaBean.min_surfaceArea}" id="min_surfaceArea_id2"/>
+                        <h:outputLabel for="max_surfaceArea_id2" value="Surface Area MAX"/><h:inputText title="Surface Area MAX" value="#{searchCriteriaBean.max_surfaceArea}" id="max_surfaceArea_id2"/>
+
+
+                        <h:outputText value="Solubility"/>
+                        <h:outputLabel for="min_solubility_id2" value="Solubility MIN"/><h:inputText title="Solubility MIN" value="#{searchCriteriaBean.min_solubility}" id="min_solubility_id2"/>
+                        <h:outputLabel for="max_solubility_id2" value="Solubility MAX"/><h:inputText title="Solubility MAX" value="#{searchCriteriaBean.max_solubility}" id="max_solubility_id2"/>
+
+
+                        <h:outputText value="Atoms count"/>
+                        <h:outputLabel for="min_countAtoms_id2" value="Atoms count MIN"/><h:inputText title="Atoms count MIN" value="#{searchCriteriaBean.min_countAtoms}" id="min_countAtoms_id2"/>
+                        <h:outputLabel for="max_countAtoms_id2" value="Atoms count MAX"/><h:inputText title="Atoms count MAX" value="#{searchCriteriaBean.max_countAtoms}" id="max_countAtoms_id2"/>
+
+
+                        <h:outputText value="Atoms Hydrogen count"/>
+                        <h:outputLabel for="min_countHydrogenAtoms_id2" value="Atoms Hydrogen count MIN"/><h:inputText title="Atoms Hydrogen count MIN" value="#{searchCriteriaBean.min_countHydrogenAtoms}" id="min_countHydrogenAtoms_id2"/>
+                        <h:outputLabel for="max_countHydrogenAtoms_id2" value="Atoms Hydrogen count MAX"/><h:inputText title="Atoms Hydrogen count MAX" value="#{searchCriteriaBean.max_countHydrogenAtoms}" id="max_countHydrogenAtoms_id2"/>
+
+
+                        <h:outputText value="Atoms Metal count"/>
+                        <h:outputLabel for="min_countMetalAtoms_id2" value="Atoms Metal count MIN"/><h:inputText title="Atoms Metal count MIN" value="#{searchCriteriaBean.min_countMetalAtoms}" id="min_countMetalAtoms_id2"/>
+                        <h:outputLabel for="max_countMetalAtoms_id2" value="Atoms Metal count MAX"/><h:inputText title="Atoms Metal count MAX" value="#{searchCriteriaBean.max_countMetalAtoms}" id="max_countMetalAtoms_id2"/>
+
+
+                        <h:outputText value="Atoms Heavy count"/>
+                        <h:outputLabel for="min_countHeavyAtoms_id2" value="Atoms Heavy count MIN"/><h:inputText title="Atoms Heavy count MIN" value="#{searchCriteriaBean.min_countHeavyAtoms}" id="min_countHeavyAtoms_id2"/>
+                        <h:outputLabel for="max_countHeavyAtoms_id2" value="Atoms Heavy count MAX"/><h:inputText title="Atoms Heavy count MAX" value="#{searchCriteriaBean.max_countHeavyAtoms}" id="max_countHeavyAtoms_id2"/>
+
+
+                        <h:outputText value="Atoms Positive count"/>
+                        <h:outputLabel for="min_countPositiveAtoms_id2" value="Atoms Positive count MIN"/><h:inputText title="Atoms Positive count MIN" value="#{searchCriteriaBean.min_countPositiveAtoms}" id="min_countPositiveAtoms_id2"/>
+                        <h:outputLabel for="max_countPositiveAtoms_id2" value="Atoms Positive count MAX"/><h:inputText title="Atoms Positive count MAX" value="#{searchCriteriaBean.max_countPositiveAtoms}" id="max_countPositiveAtoms_id2"/>
+
+
+                        <h:outputText value="Atoms Negative count"/>
+                        <h:outputLabel for="min_countNegativeAtoms_id2" value="Atoms Negative count MIN"/><h:inputText title="Atoms Negative count MIN" value="#{searchCriteriaBean.min_countNegativeAtoms}" id="min_countNegativeAtoms_id2"/>
+                        <h:outputLabel for="max_countNegativeAtoms_id2" value="Atoms Negative count MAX"/><h:inputText title="Atoms Negative count MAX" value="#{searchCriteriaBean.max_countNegativeAtoms}" id="max_countNegativeAtoms_id2"/>
+
+
+                        <h:outputText value="Atoms Stereo count"/>
+                        <h:outputLabel for="min_countStereoAtoms_id2" value="Atoms Stereo count MIN"/><h:inputText title="Atoms Stereo count MIN" value="#{searchCriteriaBean.min_countStereoAtoms}" id="min_countStereoAtoms_id2"/>
+                        <h:outputLabel for="max_countStereoAtoms_id2" value="Atoms Stereo count MAX"/><h:inputText title="Atoms Stereo count MAX" value="#{searchCriteriaBean.max_countStereoAtoms}" id="max_countStereoAtoms_id2"/>
+
+
+                        <h:outputText value="Bonds count"/>
+                        <h:outputLabel for="min_countBonds_id2" value="Bonds count MIN"/><h:inputText title="Bonds count MIN" value="#{searchCriteriaBean.min_countBonds}" id="min_countBonds_id2"/>
+                        <h:outputLabel for="max_countBonds_id2" value="Bonds count MAX"/><h:inputText title="Bonds count MAX" value="#{searchCriteriaBean.max_countBonds}" id="max_countBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Aromatic count"/>
+                        <h:outputLabel for="min_countAromaticBonds_id2" value="Bonds Aromatic count MIN"/><h:inputText title="Bonds Aromatic count MIN" value="#{searchCriteriaBean.min_countAromaticBonds}" id="min_countAromaticBonds_id2"/>
+                        <h:outputLabel for="max_countAromaticBonds_id2" value="Bonds Aromatic count MAX"/><h:inputText title="Bonds Aromatic count MAX" value="#{searchCriteriaBean.max_countAromaticBonds}" id="max_countAromaticBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Single count"/>
+                        <h:outputLabel for="min_countSingleBonds_id2" value="Bonds Single count MIN"/><h:inputText title="Bonds Single count MIN" value="#{searchCriteriaBean.min_countSingleBonds}" id="min_countSingleBonds_id2"/>
+                        <h:outputLabel for="max_countSingleBonds_id2" value="Bonds Single count MAX"/><h:inputText title="Bonds Single count MAX" value="#{searchCriteriaBean.max_countSingleBonds}" id="max_countSingleBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Double count"/>
+                        <h:outputLabel for="min_countDoubleBonds_id2" value="Bonds Double count MIN"/><h:inputText title="Bonds Double count MIN" value="#{searchCriteriaBean.min_countDoubleBonds}" id="min_countDoubleBonds_id2"/>
+                        <h:outputLabel for="max_countDoubleBonds_id2" value="Bonds Double count MAX"/><h:inputText title="Bonds Double count MAX" value="#{searchCriteriaBean.max_countDoubleBonds}" id="max_countDoubleBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Triple count"/>
+                        <h:outputLabel for="min_countTripleBonds_id2" value="Bonds Triple count MIN"/><h:inputText title="Bonds Triple count MIN" value="#{searchCriteriaBean.min_countTripleBonds}" id="min_countTripleBonds_id2"/>
+                        <h:outputLabel for="max_countTripleBonds_id2" value="Bonds Triple count MAX"/><h:inputText title="Bonds Triple count MAX" value="#{searchCriteriaBean.max_countTripleBonds}" id="max_countTripleBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Rotatable count"/>
+                        <h:outputLabel for="min_countRotatableBonds_id2" value="Bonds Rotatable count MIN"/><h:inputText title="Bonds Rotatable count MIN" value="#{searchCriteriaBean.min_countRotatableBonds}" id="min_countRotatableBonds_id2"/>
+                        <h:outputLabel for="max_countRotatableBonds_id2" value="Bonds Rotatable count MAX"/><h:inputText title="Bonds Rotatable count MAX" value="#{searchCriteriaBean.max_countRotatableBonds}" id="max_countRotatableBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Ring count"/>
+                        <h:outputLabel for="min_countRingBonds_id2" value="Bonds Ring count MIN"/><h:inputText title="Bonds Ring count MIN" value="#{searchCriteriaBean.min_countRingBonds}" id="min_countRingBonds_id2"/>
+                        <h:outputLabel for="max_countRingBonds_id2" value="Bonds Ring count MAX"/><h:inputText title="Bonds Ring count MAX" value="#{searchCriteriaBean.max_countRingBonds}" id="max_countRingBonds_id2"/>
+
+
+                        <h:outputText value="Bonds Stereo count"/>
+                        <h:outputLabel for="min_countStereoBonds_id2" value="Bonds Stereo count MIN"/><h:inputText title="Bonds Stereo count MIN" value="#{searchCriteriaBean.min_countStereoBonds}" id="min_countStereoBonds_id2"/>
+                        <h:outputLabel for="max_countStereoBonds_id2" value="Bonds Stereo count MAX"/><h:inputText title="Bonds Stereo count MAX" value="#{searchCriteriaBean.max_countStereoBonds}" id="max_countStereoBonds_id2"/>
+
+
+                        <h:outputText value="Rings Aromatic count"/>
+                        <h:outputLabel for="min_countAromaticRings_id2" value="Rings Aromatic count MIN"/><h:inputText title="Rings Aromatic count MIN" value="#{searchCriteriaBean.min_countAromaticRings}" id="min_countAromaticRings_id2"/>
+                        <h:outputLabel for="max_countAromaticRings_id2" value="Rings Aromatic count MAX"/><h:inputText title="Rings Aromatic count MAX" value="#{searchCriteriaBean.max_countAromaticRings}" id="max_countAromaticRings_id2"/>
+
+
+                        <h:outputText value="Ring Assemblies count"/>
+                        <h:outputLabel for="min_countRingAssemblies_id2" value="Ring Assemblies count MIN"/><h:inputText title="Ring Assemblies count MIN" value="#{searchCriteriaBean.min_countRingAssemblies}" id="min_countRingAssemblies_id2"/>
+                        <h:outputLabel for="max_countRingAssemblies_id2" value="Ring Assemblies count MAX"/><h:inputText title="Ring Assemblies count MAX" value="#{searchCriteriaBean.max_countRingAssemblies}" id="max_countRingAssemblies_id2"/>
+
+
+                        <h:outputText value="Rings count"/>
+                        <h:outputLabel for="min_countRings_id2" value="Rings count MIN"/><h:inputText title="Rings count MIN" value="#{searchCriteriaBean.min_countRings}" id="min_countRings_id2"/>
+                        <h:outputLabel for="max_countRings_id2" value="Rings count MAX"/><h:inputText title="Rings count MAX" value="#{searchCriteriaBean.max_countRings}" id="max_countRings_id2"/>
+
+                    </p:panelGrid>
+
+                </p:tab>
+
+
+            <!--
+            #####    ##    #####
+              #     #  #   #    #
+              #    #    #  #####
+              #    ######  #    #
+              #    #    #  #    #
+              #    #    #  #####
+            -->            
 
             <p:tab id="substrsrchtab" title="Substructure Search">
 
@@ -554,7 +746,7 @@
                 <p:spacer height="20" width="100%" />
                 <p:commandButton value="Load Structure"
                                  onclick="remCom_runLoadByNsc();"
-                                 oncomplete="loadEditorFromMol();"/>
+                                 oncomplete="loadEditorFromMol_TabView();"/>
 
                 <h1>
                     <h:outputText value="Structure Editor"/>
@@ -585,6 +777,8 @@
                     <h:outputText value="Configure Substructure Search"/>
                 </h1>
 
+                <!--
+
                 <h:outputLabel for="selectListToSearch"
                                value="Search selcted list: " />                  
                 <p:selectOneMenu id="selectListToSearch"
@@ -596,15 +790,17 @@
 
                 <p:spacer height="20" width="100%" />
 
+                -->
+
                 <p:outputLabel for="ssSearchListName" value="Save results to a new list named:" />
                 <p:inputText id="ssSearchListName" value="#{structureSearchController.listName}"/>
 
                 <p:spacer height="20" width="100%" />
 
                 <p:commandButton value="Do Substructure Search"
-                                 onclick="getMolFromEditor();
-                                         PF('searchingBUI').show();
-                                         runSubstructureSearch();"
+                                 onclick="getMolFromEditor_TabView();
+                                       PF('searchingBUI').show();
+                                       runSubstructureSearch();"
                                  oncomplete="PF('searchingBUI').hide();"/>
 
                 <h:inputTextarea style="display: none;" id="ctabforload" value="#{structureSearchController.ctabForLoad}"/>
@@ -613,7 +809,7 @@
                 <h:inputTextarea style="display: none;" id="smilesfromeditor" value="#{structureSearchController.smilesFromCtabFromEditor}"/>  
 
             </p:tab>        
-            
+
         </p:tabView>
 
     </ui:define>

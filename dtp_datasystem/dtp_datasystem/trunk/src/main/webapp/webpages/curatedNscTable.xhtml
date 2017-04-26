@@ -31,23 +31,6 @@
       </p:commandLink>      
     </p:panelGrid>
     
-    <p:panelGrid rendered="#{sessionController.navigationMode eq 'LINKS'}" columns="2" styleClass="borderlessPanelGrid">
-      <p:commandLink ajax="false" 
-                     value="Export as Excel"
-                     title="Export as Excel">
-        <p:dataExporter type="xls"  
-                        target="curatedNscs" 
-                        fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
-      </p:commandLink>
-      <p:commandLink ajax="false" 
-                     value="Export as CSV"
-                     title="Export as CSV">  
-        <p:dataExporter type="csv" 
-                        target="curatedNscs" 
-                        fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
-      </p:commandLink>      
-    </p:panelGrid>
-
     <p:menubar rendered="#{sessionController.navigationMode eq 'MENUBARS'}" autoDisplay="false">
       <p:menuitem ajax="false" 
                   value="Export as Excel"

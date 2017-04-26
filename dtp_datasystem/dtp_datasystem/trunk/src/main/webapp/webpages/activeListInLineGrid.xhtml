@@ -105,7 +105,12 @@
 
         <p:outputPanel layout="inline" deferred="true">
 
-            <p:repeat var="listMember" value="#{listManagerController.listManagerBean.filteredActiveListMembers}">
+            <p:repeat var="listMember" 
+                      varStatus="varIdx"
+                      offset="0"
+                      step="1"
+                      size="#{fn:length(listManagerController.listManagerBean.filteredActiveListMembers)}"
+                      value="#{listManagerController.listManagerBean.filteredActiveListMembers}">
 
                 <p:panel style="display:inline-block;border: none;">
 

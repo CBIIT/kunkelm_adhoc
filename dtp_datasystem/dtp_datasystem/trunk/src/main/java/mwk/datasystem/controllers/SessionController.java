@@ -33,7 +33,7 @@ public class SessionController implements Serializable {
   private static List<String> validNavigationModes;
 
   static {
-    String[] navArr = new String[]{"ICONS", "LINKS", "MENUBARS"};
+    String[] navArr = new String[]{"ICONS", "MENUBARS"};
     validNavigationModes = new ArrayList<String>(Arrays.asList(navArr));
   }
 

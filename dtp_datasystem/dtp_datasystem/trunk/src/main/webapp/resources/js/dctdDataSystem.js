@@ -77,9 +77,9 @@ function enumerateWidgets() {
 
 // chemDoodle functions
 
-function getMolFromEditor() {
+function getMolFromEditor_TabView() {
 
-    alert('in getMolFromEditor()');
+    // alert('in getMolFromEditor_TabView()');
 
     var mol = sketcher.getMolecule();
     var stringMol = ChemDoodle.writeMOL(mol);
@@ -87,19 +87,9 @@ function getMolFromEditor() {
 
 }
 
-function getMolFromEditor2() {
+function loadEditorFromMol_TabView() {
 
-    alert('in getMolFromEditor2()');
-
-    var mol = sketcher.getMolecule();
-    var stringMol = ChemDoodle.writeMOL(mol);
-    document.getElementById('datasystemForm:ctabfromeditor').value = stringMol;
-
-}
-
-function loadEditorFromMol() {
-
-    alert('in loadEditorFromMol2()');
+    // alert('in loadEditorFromMol_TabView()');
 
     var ctab = document.getElementById('datasystemForm:searchTabView:ctabforload').value;
 
@@ -115,14 +105,25 @@ function loadEditorFromMol() {
     if (mol) {
         sketcher.loadMolecule(mol);
     } else {
-        alert('NSC not found or no parent fragment defined.');
+        // alert('NSC not found or no parent fragment defined.');
     }
 
 }
 
-function loadEditorFromMol2() {
+function getMolFromEditor_StandAlone() {
 
-    alert('in loadEditorFromMol2()');
+    // alert('in getMolFromEditor_StandAlone()');
+
+    var mol = sketcher.getMolecule();
+    var stringMol = ChemDoodle.writeMOL(mol);
+    document.getElementById('datasystemForm:ctabfromeditor').value = stringMol;
+
+}
+
+
+function loadEditorFromMol_StandAlone() {
+
+    // alert('in loadEditorFrom_StandAlone()');
 
     var ctab = document.getElementById('datasystemForm:ctabforload').value;
 
@@ -138,7 +139,7 @@ function loadEditorFromMol2() {
     if (mol) {
         sketcher.loadMolecule(mol);
     } else {
-        alert('NSC not found or no parent fragment defined.');
+        // alert('NSC not found or no parent fragment defined.');
     }
 
 }
