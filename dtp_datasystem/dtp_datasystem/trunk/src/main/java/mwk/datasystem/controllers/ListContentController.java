@@ -643,7 +643,7 @@ public class ListContentController implements Serializable {
         if (DEBUG) {
             System.out.println("After populating SearchCriteriaBean in performCreateListBySearch in ListContentController.");
             System.out.println("Content of searchCriteriaBean:");
-//            searchCriteriaBean.printCriteriaLists();
+            searchCriteriaBean.printCriteriaLists();
         }
 
         List<CmpdVO> cList = HelperCmpd.searchBySearchCriteriaBean(searchCriteriaBean, sessionController.getLoggedUser());

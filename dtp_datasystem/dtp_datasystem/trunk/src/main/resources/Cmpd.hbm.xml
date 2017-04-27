@@ -7,7 +7,7 @@
 <!-- MWK set both joined-subclasses to lazy="true" for search performance -->
   
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-cascade="none">
     <class name="mwk.datasystem.domain.CmpdImpl"
