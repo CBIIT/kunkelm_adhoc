@@ -9230,6 +9230,7 @@ dtp_datasystem/datasystemuml/trunk/mda/log4j.xml -text
 dtp_datasystem/datasystemuml/trunk/mda/pom.xml -text
 dtp_datasystem/datasystemuml/trunk/mda/readme.txt -text
 dtp_datasystem/datasystemuml/trunk/mda/src/main/config/andromda.xml -text
+dtp_datasystem/datasystemuml/trunk/mda/src/main/config/cartridge/custom/templates/hibernate3/hibernate.hbm.xml.vsl -text
 dtp_datasystem/datasystemuml/trunk/mda/src/main/config/mappings/JavaMappings.xml -text
 dtp_datasystem/datasystemuml/trunk/mda/src/main/config/mappings/SpringMergeMappings.xml -text
 dtp_datasystem/datasystemuml/trunk/mda/src/main/uml/ARCHIVE/datasystem.08Feb2015.xml -text
