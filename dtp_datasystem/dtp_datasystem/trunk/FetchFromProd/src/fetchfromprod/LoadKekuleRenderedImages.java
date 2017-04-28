@@ -126,7 +126,7 @@ public class LoadKekuleRenderedImages {
 
             startTime = System.currentTimeMillis();
 
-            File path = new File("/home/mwkunkel/KEKULE_GIF_FILES");
+            File path = new File("/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_GIF_FILES");
             File[] files = new File[]{};
 
             try {
@@ -151,11 +151,12 @@ public class LoadKekuleRenderedImages {
 
                         nscString = thisFile.getName().replace(".GIF", "");
 
-                        path512 = "/home/mwkunkel/KEKULE_GIF_FILES/" + nscString + ".GIF";
+                        path512 = "/home/mwkunkel/DATA_DEPOT_IMPORTANT/KEKULE_GIF_FILES/" + nscString + ".GIF";
 
                         file512 = new File(path512);
 
-                        System.out.println("processing NSC: " + nscString);
+                        System.out.println(cumCnt + " processing NSC: " + nscString);
+                        cumCnt++;
 
                         BufferedImage img512 = ImageIO.read(file512);
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();

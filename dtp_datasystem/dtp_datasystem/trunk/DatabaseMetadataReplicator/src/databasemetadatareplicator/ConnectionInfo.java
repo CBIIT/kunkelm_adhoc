@@ -37,4 +37,12 @@ public class ConnectionInfo {
         System.out.println(connectionName + "_dbUser=" + dbUser);
         System.out.println(connectionName + "_dbPass=" + dbPass);
     }
+    
+    public String asString() {
+        StringBuilder sb = new StringBuilder();        
+        sb.append(connectionName + "_dbUrl=" + dbUrl);
+        sb.append(connectionName + "_dbUser=" + dbUser);
+        sb.append(connectionName + "_dbPass=" + dbPass);
+        return sb.toString();
+    }
 }

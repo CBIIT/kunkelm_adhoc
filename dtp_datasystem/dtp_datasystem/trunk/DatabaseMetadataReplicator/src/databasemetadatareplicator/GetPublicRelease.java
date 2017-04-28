@@ -31,8 +31,10 @@ public class GetPublicRelease {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             DriverManager.registerDriver(new org.postgresql.Driver());
 
+            // datasystemdb
+            
             sourceConn = DriverManager.getConnection("jdbc:oracle:thin:@//dtpiv1.ncifcrf.gov:1523/prod.ncifcrf.gov", "ops$kunkel", "donkie");
-            destConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/privatecomparedb", "mwkunkel", "donkie11");
+            destConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/datasystemdb", "mwkunkel", "donkie11");
 
             destConn.setAutoCommit(true);
             destStmt = destConn.createStatement();
@@ -42,6 +44,18 @@ public class GetPublicRelease {
 
             Replicator.useMetadata(sourceConn, destConn, "publicrelease", "");
 
+            // privatecomparedb
+            
+            destConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/privatecomparedb", "mwkunkel", "donkie11");
+
+            destConn.setAutoCommit(true);
+            destStmt = destConn.createStatement();
+
+            result = destStmt.executeUpdate("drop table if exists publicrelease");
+            result = destStmt.executeUpdate("create table publicrelease(nsc int)");
+
+            Replicator.useMetadata(sourceConn, destConn, "publicrelease", "");
+            
             System.out.println("Done! in Main");
 
             sourceConn.close();
