@@ -61,7 +61,7 @@
     
     -->
 
-    <p:panelGrid columns="2" styleClass="borderlessPanelGrid">
+    <p:panelGrid columns="2"  rendered="#{sessionController.navigationMode eq 'ICONS'}" styleClass="borderlessPanelGrid">
 
       <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
 
@@ -103,14 +103,36 @@
 
     </p:panelGrid>
 
+    <p:menubar rendered="#{sessionController.navigationMode eq 'MENUBARS'}" >
+      <p:submenu label="Compound Layout">
+        <p:menuitem value="Compounds in List Layout" 
+                    title="Compounds in List Layout" 
+                    ajax="false"
+                    action="/webpages/activeListTable?faces-redirect=true"/>
+        <p:menuitem value="Compounds in Grid Layout" 
+                    title="Compounds in Grid Layout" 
+                    ajax="false"
+                    action="/webpages/activeListGrid?faces-redirect=true"/>
+        <p:menuitem value="Compounds in Responsive Grid Layout" 
+                    title="Compounds in Responsive Grid Layout" 
+                    disabled="true"
+                    ajax="false"
+                    action="/webpages/activeListInLineGrid?faces-redirect=true"/>
+        <p:menuitem value="Compounds in Form Layout" 
+                    title="Compounds in Form Layout" 
+                    ajax="false"
+                    action="/webpages/activeListForm?faces-redirect=true"/>
+      </p:submenu>
+    </p:menubar>
+
     <p:outputPanel layout="inline" deferred="true">
 
-            <p:repeat var="listMember" 
-                      varStatus="varIdx"
-                      offset="0"
-                      step="1"
-                      size="#{fn:length(listManagerController.listManagerBean.filteredActiveListMembers)}"
-                      value="#{listManagerController.listManagerBean.filteredActiveListMembers}">
+      <p:repeat var="listMember" 
+                varStatus="varIdx"
+                offset="0"
+                step="1"
+                size="#{fn:length(listManagerController.listManagerBean.filteredActiveListMembers)}"
+                value="#{listManagerController.listManagerBean.filteredActiveListMembers}">
 
         <p:panel style="display:inline-block;border: none;">
 

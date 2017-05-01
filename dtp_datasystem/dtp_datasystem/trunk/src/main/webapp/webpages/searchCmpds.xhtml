@@ -31,8 +31,8 @@
 
             <p:commandButton value="Search Compounds"
                              action="#{listContentController.performCreateListBySearch()}"
-                             onstart="PF('creatingBUI').show();"
-                             oncomplete="PF('creatingBUI').hide();"/>      
+                             onstart="PF('searchingBUI').show();"
+                             oncomplete="PF('searchingBUI').hide();"/>      
             <p:spacer width="20"/>      
             <p:commandButton value="Start Over"
                              action="#{listContentController.performStartOver()}"/>      
