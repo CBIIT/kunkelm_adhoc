@@ -1175,33 +1175,44 @@ public class MainWithNewDdlMethods {
     StringBuilder sb = new StringBuilder();
 
     try {
+      
       fr = new FileReader(f);
       br = new BufferedReader(fr);
+      
+      String formattedStr;
+      String modifiedStr;
+      
       while ((line = br.readLine()) != null) {
+        
         fixedLine = line.replaceAll("\t", " ");
         sb.append(" ").append(fixedLine).append(" ");
+        
         if (fixedLine.contains(";")) {
 
-          String fmtStr = sb.toString().replaceAll("\n", " ").replaceAll(" +", " ");
+          formattedStr = sb.toString().replaceAll("\n", " ").replaceAll(" +", " ");
 
-          if (fmtStr.contains("create table")) {
-            ddlb.createTableStatements.add(fmtStr);
-          } else if (fmtStr.contains("drop table")) {
-            ddlb.dropTableStatements.add(fmtStr);
-          } else if (fmtStr.contains("create index")) {
-            ddlb.createIndexStatements.add(fmtStr);
-          } else if (fmtStr.contains("drop index")) {
-            ddlb.dropIndexStatements.add(fmtStr);
-          } else if (fmtStr.contains("add constraint")) {
-            ddlb.createConstraintStatements.add(fmtStr);
-          } else if (fmtStr.contains("drop constraint")) {
-            ddlb.dropConstraintStatements.add(fmtStr);
-          } else if (fmtStr.contains("create sequence")) {
-            ddlb.createSequenceStatements.add(fmtStr);
-          } else if (fmtStr.contains("drop sequence")) {
-            ddlb.dropSequenceStatements.add(fmtStr);
+          if (formattedStr.contains("create table")) {
+            ddlb.createTableStatements.add(formattedStr);
+          } else if (formattedStr.contains("drop table")) {            
+            modifiedStr = formattedStr.replaceAll("drop table", "drop table if exists");            
+            ddlb.dropTableStatements.add(modifiedStr);
+          } else if (formattedStr.contains("create index")) {
+            ddlb.createIndexStatements.add(formattedStr);
+          } else if (formattedStr.contains("drop index")) {            
+            modifiedStr = formattedStr.replaceAll("drop index", "drop index if exists");            
+            ddlb.dropIndexStatements.add(modifiedStr);
+          } else if (formattedStr.contains("add constraint")) {
+            ddlb.createConstraintStatements.add(formattedStr);
+          } else if (formattedStr.contains("drop constraint")) {            
+            modifiedStr = formattedStr.replaceAll("drop consraint", "drop constraint if exists");            
+            ddlb.dropConstraintStatements.add(modifiedStr);
+          } else if (formattedStr.contains("create sequence")) {
+            ddlb.createSequenceStatements.add(formattedStr);
+          } else if (formattedStr.contains("drop sequence")) {            
+            modifiedStr = formattedStr.replaceAll("drop sequence", "drop sequence if exists");            
+            ddlb.dropSequenceStatements.add(modifiedStr);
           } else {
-            ddlb.remnantStatements.add(fmtStr);
+            ddlb.remnantStatements.add(formattedStr);
           }
 
           sb = new StringBuilder();
