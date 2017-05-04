@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class IndexAndConstraintManagement {
 
-    public static void save_XXX_Indexes(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
+    public static void saveIndexes(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
             throws Exception {
 
         Statement destStmt = null;
@@ -116,7 +116,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void drop_XXX_Indexes(Connection destConn)
+    public static void dropIndexes(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -173,7 +173,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void create_XXX_Indexes(Connection destConn)
+    public static void createIndexes(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -230,7 +230,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void save_XXX_Constraints(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
+    public static void saveConstraints(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
             throws Exception {
 
         StringBuilder sb = new StringBuilder();
@@ -259,22 +259,6 @@ public class IndexAndConstraintManagement {
             DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
             Date date = Calendar.getInstance().getTime();
             String dateStr = dateFormat.format(date);
-
-            try {
-                String sqlStr = "create table create_constraint_statements_" + dateStr + " as select * from create_constraint_statements";
-                System.out.println(sqlStr);
-                int result = destStmt.executeUpdate(sqlStr);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                String sqlStr = "create table drop_constraint_statements_" + dateStr + " as select * from drop_constraint_statements";
-                System.out.println(sqlStr);
-                int result = destStmt.executeUpdate(sqlStr);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
             int result = destStmt.executeUpdate("drop table if exists create_constraint_statements");
             result = destStmt.executeUpdate("drop table if exists drop_constraint_statements");
@@ -341,7 +325,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void drop_XXX_Constraints(Connection destConn)
+    public static void dropConstraints(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -398,7 +382,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void create_XXX_Constraints(Connection destConn)
+    public static void createConstraints(Connection destConn)
             throws Exception {
 
         ArrayList<String> sqlList = new ArrayList<String>();
@@ -455,7 +439,7 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void oracle_XXX_SaveConstraints(Connection destConn, String[] tableNamesAndWhereClauses)
+    public static void oracleSaveConstraints(Connection destConn, String[] tableNamesAndWhereClauses)
             throws Exception {
 
         StringBuilder sb = new StringBuilder();

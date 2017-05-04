@@ -184,7 +184,7 @@ public class Replicator {
             destStmt = destConn.createStatement();
 
             System.out.println("-----Deleting from table: " + tblName);
-            int result = destStmt.executeUpdate("delete from " + tblName);
+            int result = destStmt.executeUpdate("delete from " + tblName + " cascade");
             
             destStmt.close();
             destStmt = null;
