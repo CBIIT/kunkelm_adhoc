@@ -1431,7 +1431,6 @@ public class MainWithNewDdlMethods {
     public static void compareGrants() {
         GrantBean cGrants = new GrantBean();
 
-        // readOnlyTables
         cGrants.selectTable = Arrays.asList(new String[]{
             "affy_dna_ident",
             "affy_exon_ident",
@@ -1461,13 +1460,11 @@ public class MainWithNewDdlMethods {
             "synthetic_ident",
             "test_result_type"});
 
-// updatableTables
         cGrants.selectInsertUpdateTable = Arrays.asList(new String[]{
             "job",
             "grid_compare_job",
             "standard_compare_job"});
 
-// insertableTables
         cGrants.selectInsertTable = Arrays.asList(new String[]{
             "cell_line_data_set",
             "cell_line_data_set_ident",
@@ -1481,7 +1478,6 @@ public class MainWithNewDdlMethods {
             "uploaded_ident",
             "uploaded_test_result"});
 
-// forbiddenSequences
         cGrants.forbiddenSequence = Arrays.asList(new String[]{
             "compare_cell_line_seq",
             "conc_resp_assay_seq",
@@ -1491,7 +1487,6 @@ public class MainWithNewDdlMethods {
             "nsc_compound_seq",
             "test_result_type_seq"});
 
-// usableSequences
         cGrants.selectUseSequence = Arrays.asList(new String[]{
             "cell_line_data_set_seq",
             "cell_line_data_set_ident_seq",
@@ -1499,7 +1494,6 @@ public class MainWithNewDdlMethods {
             "job_seq",
             "test_result_seq"});
 
-// sequencesToBeUpdated
         cGrants.selectUseUpdateSequence = Arrays.asList(new String[]{
             "cell_line_data_set_ident",
             "cell_line_data_set",
