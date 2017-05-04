@@ -40,7 +40,7 @@ foreach my $cmpdType(@cmpdTypes){
 	
 	print "$tempSql\n\n";
 	my $sth = $dbh->prepare($tempSql);
-	###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+	$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 	
 }
 
@@ -50,7 +50,7 @@ drop index if exists nsc_cmpd_type_cmpd_type
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 my $tempSql = qq[
 create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
@@ -58,7 +58,7 @@ create index nsc_cmpd_type_cmpd_type on nsc_cmpd_type(nsc_cmpd_type)
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # set up for cmpd_fragment_type;
 
@@ -68,7 +68,7 @@ values (1, 'not yet categorized', 'placeholder, eventually parent, salt, largest
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
 # MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY MANAGE EXTERNALLY 
@@ -105,18 +105,18 @@ from prod_legacy_cmpd
 
 my $sth = $dbh->prepare($tempSql);
 print "$tempSql\n\n";
-###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
-#my $tempSql = qq[
-#update cmpd_legacy_cmpd leg
-#set gif512 = kek.gif
-#from kekule_images kek
-#where leg.nsc = kek.nsc
-#];
+####################################################my $tempSql = qq[
+####################################################update cmpd_legacy_cmpd leg
+####################################################set gif512 = kek.gif
+####################################################from kekule_images kek
+####################################################where leg.nsc = kek.nsc
+####################################################];
 
-#my $sth = $dbh->prepare($tempSql);
-#print "$tempSql\n\n";
-###################################### $sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
+####################################################my $sth = $dbh->prepare($tempSql);
+####################################################print "$tempSql\n\n";
+####################################################$sth->execute() or die "Couldn't execute statement: $tempSql " . $sth->errstr;	
 
 ## ---------------------------------------------------------
 ## ---------------------------------------------------------

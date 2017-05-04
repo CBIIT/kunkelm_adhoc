@@ -111,8 +111,7 @@ grant select on cmpd_inventory to datasystem_user;
 grant select on cmpd_inventory to oncology_user;
  
 grant select on cmpd_known_salt to datasystem_user;
-grant select on cmpd_known_salt to oncology_user;
- 
+grant select on cmpd_known_salt to oncology_user; 
  
 grant select on cmpd_named_set to datasystem_user;
 grant select on cmpd_named_set to oncology_user;
@@ -158,7 +157,6 @@ grant select on nsc_cmpd_type to oncology_user;
  
 grant select on rdkit_mol to datasystem_user;
 grant select on rdkit_mol to oncology_user;
-
 
 -- SEQUENCES
 

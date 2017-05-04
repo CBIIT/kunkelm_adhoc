@@ -53,20 +53,13 @@ public class CheckPLPFiles {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-//        String[] tblArr = new String[]{
-//            "/home/mwkunkel/rs3_from_plp_frags.csv", ",", "rs3_from_plp_frags",
-//            "/home/mwkunkel/rs3_from_plp_nsc.csv", ",", "rs3_from_plp_nsc",
-//            "/home/mwkunkel/rs3_from_plp_frags_ctab.tsv", "\t", "rs3_from_plp_frags_ctab",
-//            "/home/mwkunkel/rs3_from_plp_problems.csv", ",", "rs3_from_plp_problems"
-//        };
         String[] tblArr = new String[]{
             "/home/mwkunkel/rs3_from_plp_first_round_tautomer_failures.csv", ",", "rs3_from_plp_first_round_tautomer_failures",
             "/home/mwkunkel/rs3_from_plp_frags.csv", ",", "rs3_from_plp_frags",
             "/home/mwkunkel/rs3_from_plp_nsc.csv", ",", "rs3_from_plp_nsc",
             "/home/mwkunkel/rs3_from_plp_strc_parse_fail.tsv", "\t", "rs3_from_plp_strc_parse_fail",
             "/home/mwkunkel/rs3_from_plp_frags_ctab.tsv", "\t", "rs3_from_plp_frags_ctab",
-            "/home/mwkunkel/rs3_from_plp_problems.tsv", "\t", "rs3_from_plp_problems",
-            "/home/mwkunkel/rs3_from_plp_validate_structure.tsv", "\t", "rs3_from_plp_validate_structure"
+                        "/home/mwkunkel/rs3_from_plp_validate_structure.tsv", "\t", "rs3_from_plp_validate_structure"
         };
 
         ArrayList<Tbl> tblList = new ArrayList<Tbl>();

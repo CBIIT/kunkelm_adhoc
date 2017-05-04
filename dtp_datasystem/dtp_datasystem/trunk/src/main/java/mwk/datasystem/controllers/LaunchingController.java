@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-//import javax.faces.context.FacesContext;
 import mwk.compare.jsonshuttle.CompareConfig;
 import mwk.compare.vo.AffyExonIdentVO;
 import mwk.compare.vo.NanoStringIdentVO;

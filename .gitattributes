@@ -9544,6 +9544,7 @@ dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/STAGE5_CLEANUP_1_DANGE
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/cmpdTableBuildAnalysis.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/manuallyUpdatingSaltAssignments.sql -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/nuke.PL -text
+dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/salts_and_solvents.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/salts_from_dz.tsv -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/stoichiometry.PL -text
 dtp_datasystem/dtp_datasystem/trunk/SCRIPTS/BUILD_SCRIPTS/testParams.PL -text
@@ -10046,7 +10047,8 @@ dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/cdk/1.5.1
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/cdk/1.5.13/cdk-1.5.13-tests.jar -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/cdk/1.5.13/cdk-1.5.13.pom -text
 dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/openscience/cdk/cdk/maven-metadata-local.xml -text
-dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/maven-metadata-local.xml -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/6.0.19/primefaces-6.0.19-sources.jar -text
+dtp_datasystem/dtp_datasystem/trunk/lib/repository/org/primefaces/primefaces/6.0.19/primefaces-6.0.19.jar -text
 dtp_datasystem/dtp_datasystem/trunk/makeRandomList.PL -text
 dtp_datasystem/dtp_datasystem/trunk/nb-configuration.xml -text
 dtp_datasystem/dtp_datasystem/trunk/pom.xml -text

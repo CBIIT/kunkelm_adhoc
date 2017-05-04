@@ -56,8 +56,7 @@ public class Main {
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-            loadFragPChemToOracle(srcConn, targetConn);
-            // fetchFromProd(srcConn, targetConn);
+//            loadFragPChemToOracle(srcConn, targetConn);
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
@@ -239,128 +238,6 @@ public class Main {
 //        }
 //
 //        theList.add(new StringPair("reverse_pchem", sb.toString()));
-        System.out.println("--------Cycling through the queries.");
-        System.out.println();
-
-        for (StringPair sp : theList) {
-            testMeta(srcConn, targetConn, sp.string1, sp.string2);
-        }
-
-    }
-
-    public static void fetchFromProd(
-            Connection srcConn,
-            Connection targetConn) throws Exception {
-
-        System.out.println("--------Loading table names and select statements.");
-
-        ArrayList<StringPair> theList = new ArrayList<StringPair>();
-
-        StringBuilder sb = new StringBuilder();
-
-        sb = new StringBuilder();
-        sb.append(" select ed.nsc, count(*) as the_count ");
-        sb.append(" from invivo.exp_decode ed, ops$oradis.dis_cmpd c ");
-        sb.append(" where ed.assay_type = 9 ");
-        sb.append(" and c.prefix = 'S' ");
-        sb.append(" and ed.prefix = c.prefix ");
-        sb.append(" and ed.nsc = c.nsc ");
-        if (TESTING) {
-            sb.append(" and ed.nsc < 100 ");
-        }
-        sb.append(" group by ed.nsc ");
-        theList.add(new StringPair("prod_count_hf", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select ctl.nsc, count(distinct ctl.expid) as the_count ");
-        sb.append(" from c_tline ctl, ops$oradis.dis_cmpd c ");
-        sb.append(" where c.prefix = 'S' ");
-        sb.append(" and ctl.prefix = c.prefix ");
-        sb.append(" and ctl.nsc = c.nsc ");
-        if (TESTING) {
-            sb.append(" and ctl.nsc < 100 ");
-        }
-        sb.append(" group by ctl.nsc ");
-        theList.add(new StringPair("prod_count_nci60", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select ed.nsc, count(*) as the_count ");
-        sb.append(" from invivo.exp_decode ed, ops$oradis.dis_cmpd c ");
-        sb.append(" where ed.assay_type in (3, 5) ");
-        sb.append(" and c.prefix = 'S' ");
-        sb.append(" and ed.prefix = c.prefix ");
-        sb.append(" and ed.nsc = c.nsc ");
-        if (TESTING) {
-            sb.append(" and ed.nsc < 100 ");
-        }
-        sb.append(" group by ed.nsc ");
-        theList.add(new StringPair("prod_count_xeno", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select cmpd.nsc, cn.name as chem_name, cn.name_type as chem_name_type ");
-        sb.append(" from ops$oradis.dis_cmpd cmpd, ops$oradis.cmpd_chem_name cn ");
-        sb.append(" where cmpd.prefix = 'S' ");
-        if (TESTING) {
-            sb.append(" and cmpd.nsc < 100 ");
-        }
-        sb.append(" and cmpd.cmpd_id = cn.cmpd_id ");
-        theList.add(new StringPair("prod_chem_name", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select nsc, cas, conf, distribution_code, mf, mw ");
-        sb.append(" from ops$oradis.dis_cmpd ");
-        sb.append(" where prefix = 'S' ");
-        sb.append(" and nsc is not null ");
-        sb.append(" and nsc != 0 ");
-        if (TESTING) {
-            sb.append(" and nsc < 100 ");
-        }
-        theList.add(new StringPair("prod_cmpd", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select cp.nsc, cp.projectcode as project_code, lu.description ");
-        sb.append(" from ops$oradis.chem_project cp, ops$oradis.lookup_project lu ");
-        sb.append(" where cp.projectcode = lu.projectcode ");
-        if (TESTING) {
-            sb.append(" and cp.nsc < 100 ");
-        }
-        theList.add(new StringPair("prod_projects", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select distinct nsc, plateset as plate_set ");
-        sb.append(" from ops$oradis.oradis_dis_well ");
-        if (TESTING) {
-            sb.append(" where nsc < 100 ");
-        }
-        theList.add(new StringPair("prod_plated_sets", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select cmpd.nsc, ct.text as mtxt ");
-        sb.append(" from ops$oradis.dis_cmpd cmpd, ops$oradis.cmpd_topic ct ");
-        sb.append(" where cmpd.prefix = 'S' ");
-        if (TESTING) {
-            sb.append(" and cmpd.nsc < 100 ");
-        }
-        sb.append(" and cmpd.cmpd_id = ct.cmpd_id ");
-        sb.append(" and ct.topic = 'MTXT' ");
-        theList.add(new StringPair("prod_mtxt", sb.toString()));
-
-        sb = new StringBuilder();
-        sb.append(" select nsc, mg as inventory ");
-        sb.append(" from ops$oradis.dis_nscs ");
-        sb.append(" where prefix = 'S' ");
-        if (TESTING) {
-            sb.append(" and nsc < 100 ");
-        }
-        theList.add(new StringPair("prod_inventory", sb.toString()));
-
-//        sb = new StringBuilder();
-//        sb.append(" select * from c_tline ");
-//        sb.append(" where prefix = 'S' ");
-//        if (TESTING) {
-//            sb.append(" and nsc < 100 ");
-//        }
-//        theList.add(new StringPair("c_tline", sb.toString()));
         System.out.println("--------Cycling through the queries.");
         System.out.println();
 
