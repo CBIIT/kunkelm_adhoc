@@ -9402,7 +9402,7 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetad
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/IndexAndConstraintManagement.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/MainWithNewDdlMethods.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Replicator.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/TableAndWhereClause.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/TblInfo.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/AnotherExample.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/ExampleFromNet.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/parkinglot/Main.java -text

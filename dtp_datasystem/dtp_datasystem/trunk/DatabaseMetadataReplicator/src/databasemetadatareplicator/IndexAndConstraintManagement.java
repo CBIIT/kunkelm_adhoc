@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class IndexAndConstraintManagement {
 
-    public static void saveIndexes(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
+    public static void saveIndexes(Connection destConn, ArrayList<TblInfo> tawcList)
             throws Exception {
 
         Statement destStmt = null;
@@ -66,7 +66,7 @@ public class IndexAndConstraintManagement {
 
             DatabaseMetaData dbMetaData = destConn.getMetaData();
 
-            for (TableAndWhereClause tawc : tawcList) {
+            for (TblInfo tawc : tawcList) {
 
                 ResultSet rs = dbMetaData.getIndexInfo(null, null, tawc.tableName, true, false);
 
@@ -230,13 +230,13 @@ public class IndexAndConstraintManagement {
 
     }
 
-    public static void saveConstraints(Connection destConn, ArrayList<TableAndWhereClause> tawcList)
+    public static void saveConstraints(Connection destConn, ArrayList<TblInfo> tawcList)
             throws Exception {
 
         StringBuilder sb = new StringBuilder();
         boolean first = true;
 
-        for (TableAndWhereClause tawc : tawcList) {
+        for (TblInfo tawc : tawcList) {
 
             if (first) {
                 first = false;
