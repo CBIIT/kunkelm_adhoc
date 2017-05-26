@@ -9396,9 +9396,10 @@ dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonres
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/DatabaseException.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.class -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/com/heatonresearch/datamover/db/MySQL.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Configuration.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/ConnectionInfo.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/DdlBean.java -text
-dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/GrantBean.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/DdlInfo.java -text
+dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/GrantInfo.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/IndexAndConstraintManagement.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/MainWithNewDdlMethods.java -text
 dtp_datasystem/dtp_datasystem/trunk/DatabaseMetadataReplicator/src/databasemetadatareplicator/Replicator.java -text

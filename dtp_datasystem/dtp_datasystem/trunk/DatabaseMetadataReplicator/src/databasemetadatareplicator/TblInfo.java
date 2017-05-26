@@ -11,12 +11,12 @@ package databasemetadatareplicator;
  */
 public class TblInfo {
 
-  String tableName;
-  String whereClause;
+    String tableName;
+    String whereClause;
 
-  public TblInfo(String tableName, String whereClause) {
-    this.tableName = tableName;
-    this.whereClause = whereClause;
-  }
+    public TblInfo(String tableName, String whereClause) {
+        this.tableName = tableName;
+        this.whereClause = whereClause;
+    }
 
 }
