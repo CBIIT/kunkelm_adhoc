@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
  */
 public class HelperStructure {
 
-    public final static String limitClause = " limit 2000";
+    public final static String limitClause = " limit 5000";
 
     public static List<Integer> findNSCsByExactMatch(String smiles) {
 

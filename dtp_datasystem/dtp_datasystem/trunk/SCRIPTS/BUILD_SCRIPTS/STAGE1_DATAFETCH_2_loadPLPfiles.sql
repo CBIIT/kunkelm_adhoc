@@ -93,8 +93,6 @@ from cmpd_known_salt
 --where rs3_from_plp_frags.saltsmiles = cmpd_known_salt.can_smi;
 where rs3_from_plp_frags.can_taut = cmpd_known_salt.can_taut;
 
---and rs3_from_plp_frags.formalcharge = cmpd_known_salt.salt_charge;
-
 -- #    #  #####   #####     ##     #####  ######
 -- #    #  #    #  #    #   #  #      #    #
 -- #    #  #    #  #    #  #    #     #    #####
@@ -152,35 +150,3 @@ where cks.id = swc.id;
 update cmpd_known_salt
 set count_occurences = 0
 where count_occurences is null;
-
---salts
-
-drop table if exists temp;
-
-create table temp
-as
-select salt_smiles, array_to_string(array_agg(distinct salts), ',') as salts, count(*)
-from rs3_from_plp_frags
-where saltsmiles is not null 
-and salt_smiles is not null
-group by 1
-order by 3 desc;
-
-drop table if exists temp;
-
-create table temp
-as
-select salt_smiles, count(*) 
-from rs3_from_plp_frags
-group by 1
-order by 2 desc;
-
-
-
-
-
-
-
-
-
-

@@ -17,7 +17,7 @@ $startDate .= sprintf ".%03d", ($t-int($t))*1000; # without rounding
 print "start: $startDate\n";
 
 # connect
-my $dbh = DBI->connect("DBI:Pg:dbname=oncologydrugsdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
+my $dbh = DBI->connect("DBI:Pg:dbname=datasystemdb;host=127.0.0.1", "mwkunkel", "donkie11", {'RaiseError' => 1});
 
 my @allCategories = getCategoryList();
 my @paramsList = getQualityControlCriteriaList();
@@ -144,6 +144,11 @@ prod_mf ~ '\\.\\d+'
 
 my $adHocSql = qq[
 
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
 select nsc, prod_mf
 from good_mf
 where prod_mf is null
@@ -167,6 +172,11 @@ limit 50;
 select '-->'||mf||'<--', count(*) 
 from frags_stoich  
 group by 1 order by 2 desc;
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
 
 ];
 

@@ -87,14 +87,14 @@ ChemRegSalts_DTPv15.sdf	Boric acid	OB(O)O	OB(O)O	OB(O)O	BH3O3	61.83302	4	0
 ChemRegSalts_DTPv15.sdf	Carbonic acid	OC(=O)O	OC(=O)O	OC(=O)O	CH2O3	62.02478	4	0	Yes	3	
 ChemRegSalts_DTPv15.sdf	Cyclopropanamine	NC1CC1	NC1CC1	NC1CC1	C3H7N	57.09438	4	0			
 ChemRegSalts_DTPv15.sdf	dimethyl sulfoxide	CS(=O)C	CS(=O)C	CS(=O)C	C2H6OS	78.13344	4	0			
-ChemRegSalts_DTPv15.sdf	"Ethane-1,2-diamine"	NCCN	NCCN	NCCN	C2H8N2	60.09832	4	0			
+ChemRegSalts_DTPv15.sdf	Ethane-1,2-diamine	NCCN	NCCN	NCCN	C2H8N2	60.09832	4	0			
 ChemRegSalts_DTPv15.sdf	Ethanolamine	NCCO	NCCO	NCCO	C2H7NO	61.08308	4	0			
 ChemRegSalts_DTPv15.sdf	Nitric Acid	O[N+](=O)[O-]	O[N+](=O)[O-]	O[N+](=O)[O-]	HNO3	63.01284	4	0	Yes	2	
 ChemRegSalts_DTPv15.sdf	Phosphonic acid	OP(=O)O	OP(=O)O	OP(=O)O	H3O3P	81.99578	4	0			
 ChemRegSalts_DTPv15.sdf	Phosphorous acid	OP(O)O	OP(O)O	OP(O)O	H3O3P	81.99578	4	0			
 ChemRegSalts_DTPv15.sdf	Sulfurous acid	OS(=O)O	OS(=O)O	OS(=O)O	H2O3S	82.07908	4	0			
 ChemRegSalts_DTPv15.sdf	Trimethylamine	CN(C)C	CN(C)C	CN(C)C	C3H9N	59.11026	4	0			
-ChemRegSolvents_DTPv5.sdf	"1,2-Dichloroethane"	ClCCCl	ClCCCl	ClCCCl	C2H4Cl2	98.95916	4	0			
+ChemRegSolvents_DTPv5.sdf	1,2-Dichloroethane	ClCCCl	ClCCCl	ClCCCl	C2H4Cl2	98.95916	4	0			
 ChemRegSolvents_DTPv5.sdf	Acetone	CC(=O)C	CC(=O)C	CC(=O)C	C3H6O	58.07914	4	0	Yes	3	
 ChemRegSolvents_DTPv5.sdf	Chloroform	ClC(Cl)Cl	ClC(Cl)Cl	ClC(Cl)Cl	CHCl3	119.37764	4	0			
 ChemRegSolvents_DTPv5.sdf	Dimethyl sulfoxide (DMSO)	CS(=O)C	CS(=O)C	CS(=O)C	C2H6OS	78.13344	4	0			DMSO
@@ -104,7 +104,7 @@ ChemRegSolvents_DTPv5.sdf	Nitromethane	C[N+](=O)[O-]	C[N+](=O)[O-]	C[N+](=O)[O-]
 ChemRegSolvents_DTPv5.sdf	n-Propanol	CCCO	CCCO	CCCO	C3H8O	60.09502	4	0			
 ChemRegSalts_DTPv15.sdf	2-hydroxyethanaminium	[NH3+]CCO	[NH3+]CCO	[NH3+]CCO	C2H8NO	62.09102	4	1			
 ChemRegSalts_DTPv15.sdf	protonated Cyclopropanamine	[NH3+]C1CC1	[NH3+]C1CC1	[NH3+]C1CC1	C3H8N	58.10232	4	1			
-ChemRegSalts_DTPv15.sdf	"protonated Ethane-1,2-diamine"	NCC[NH3+]	NCC[NH3+]	NCC[NH3+]	C2H9N2	61.10626	4	1			
+ChemRegSalts_DTPv15.sdf	protonated Ethane-1,2-diamine	NCC[NH3+]	NCC[NH3+]	NCC[NH3+]	C2H9N2	61.10626	4	1			
 ChemRegSalts_DTPv15.sdf	prontonated Trimethylamine	C[NH+](C)C	C[NH+](C)C	C[NH+](C)C	C3H10N	60.1182	4	1			
 ChemRegSalts_DTPv15.sdf	Phosphate	[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	[O-]P(=O)([O-])[O-]	O4P	94.97136	5	-3			
 ChemRegSalts_DTPv15.sdf	Manganate	[O-][Mn](=O)(=O)[O-]	[O-][Mn](=O)(=O)[O-]	[O-][Mn](=O)(=O)[O-]	MnO4	118.93564	5	-2			
@@ -127,7 +127,7 @@ ChemRegSalts_DTPv15.sdf	Diethylamine	CCNCC	CCNCC	CCNCC	C4H11N	73.13684	5	0
 ChemRegSalts_DTPv15.sdf	Methanesulfonic Acid	CS(=O)(=O)O	CS(=O)(=O)O	CS(=O)(=O)O	CH4O3S	96.10566	5	0			
 ChemRegSalts_DTPv15.sdf	Perchloric acid	OCl(=O)(=O)=O	OCl(=O)(=O)=O	OCl(=O)(=O)=O	ClHO4	100.45853	5	0			
 ChemRegSalts_DTPv15.sdf	Phosphoric Acid	OP(=O)(O)O	OP(=O)(O)O	OP(=O)(O)O	H3O4P	97.99518	5	0			
-ChemRegSalts_DTPv15.sdf	"propane-1,3-diamine"	NCCCN	NCCCN	NCCCN	C3H10N2	74.1249	5	0			
+ChemRegSalts_DTPv15.sdf	propane-1,3-diamine	NCCCN	NCCCN	NCCCN	C3H10N2	74.1249	5	0			
 ChemRegSalts_DTPv15.sdf	Propionic acid	CCC(=O)O	CCC(=O)O	CCC(=O)O	C3H6O2	74.07854	5	0			
 ChemRegSalts_DTPv15.sdf	Sulfamic acid	NS(=O)(=O)O	NS(=O)(=O)O	NS(=O)(=O)O	H3NO3S	97.09371	5	0			
 ChemRegSalts_DTPv15.sdf	Sulfuric Acid	OS(=O)(=O)O	OS(=O)(=O)O	OS(=O)(=O)O	H2O4S	98.07847	5	0			
@@ -152,7 +152,7 @@ ChemRegSolvents_DTPv5.sdf	Tetrahydrofuran	C1CCOC1	C1CCOC1	C1CCOC1	C4H8O	72.10572
 ChemRegSalts_DTPv15.sdf	Diethylammonium	CC[NH2+]CC	CC[NH2+]CC	CC[NH2+]CC	C4H12N	74.14478	5	1			
 ChemRegSalts_DTPv15.sdf	Tetramethylammonium	C[N+](C)(C)C	C[N+](C)(C)C	C[N+](C)(C)C	C4H12N	74.14478	5	1			
 ChemRegSalts_DTPv15.sdf	protonated 2-methylpropan-2-amine	CC(C)(C)[NH3+]	CC(C)(C)[NH3+]	CC(C)(C)[NH3+]	C4H12N	74.14478	5	1			
-ChemRegSalts_DTPv15.sdf	"prontonated propane-1,3-diamine"	[NH3+]CCC[NH3+]	[NH3+]CCC[NH3+]	[NH3+]CCC[NH3+]	C3H12N2	76.14078	5	2			
+ChemRegSalts_DTPv15.sdf	prontonated propane-1,3-diamine	[NH3+]CCC[NH3+]	[NH3+]CCC[NH3+]	[NH3+]CCC[NH3+]	C3H12N2	76.14078	5	2			
 ChemRegSalts_DTPv15.sdf	Oxalate	[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	[O-]C(=O)C(=O)[O-]	C2O4	88.019	6	-2			
 ChemRegSalts_DTPv15.sdf	Butyrate	CCCC(=O)[O-]	CCCC(=O)[O-]	CCCC(=O)[O-]	C4H7O2	87.09718	6	-1			
 ChemRegSalts_DTPv15.sdf	Carboxyformate	OC(=O)C(=O)[O-]	OC(=O)C(=O)[O-]	OC(=O)C(=O)[O-]	C2HO4	89.02694	6	-1			
@@ -175,8 +175,8 @@ ChemRegSalts_DTPv15.sdf	Piperazine	C1CNCCN1	C1CNCCN1	C1CNCCN1	C4H10N2	86.1356	6	
 ChemRegSalts_DTPv15.sdf	Piperidine	C1CCNCC1	C1CCNCC1	C1CCNCC1	C5H11N	85.14754	6	0			
 ChemRegSalts_DTPv15.sdf	Pyruvic acid	CC(=O)C(=O)O	CC(=O)C(=O)O	CC(=O)C(=O)O	C3H4O3	88.06206	6	0	Yes	2	
 ChemRegSalts_DTPv15.sdf	Pyridine	c1ccncc1	c1ccncc1	c1ccncc1	C5H5N	79.0999	6	0			
-ChemRegSolvents_DTPv5.sdf	"1,4-Dioxane"	C1COCCO1	C1COCCO1	C1COCCO1	C4H8O2	88.10512	6	0			
-ChemRegSolvents_DTPv5.sdf	"2,2,2-Trifluoroethanol"	OCC(F)(F)F	OCC(F)(F)F	OCC(F)(F)F	C2H3F3O	100.03982	6	0			
+ChemRegSolvents_DTPv5.sdf	1,4-Dioxane	C1COCCO1	C1COCCO1	C1COCCO1	C4H8O2	88.10512	6	0			
+ChemRegSolvents_DTPv5.sdf	2,2,2-Trifluoroethanol	OCC(F)(F)F	OCC(F)(F)F	OCC(F)(F)F	C2H3F3O	100.03982	6	0			
 ChemRegSolvents_DTPv5.sdf	Benzene	c1ccccc1	c1ccccc1	c1ccccc1	C6H6	78.11184	6	0			
 ChemRegSolvents_DTPv5.sdf	Cyclohexane	C1CCCCC1	C1CCCCC1	C1CCCCC1	C6H12	84.15947	6	0			
 ChemRegSolvents_DTPv5.sdf	Ethyl acetate	CCOC(=O)C	CCOC(=O)C	CCOC(=O)C	C4H8O2	88.10512	6	0	Yes	2	
@@ -222,7 +222,7 @@ ChemRegSalts_DTPv15.sdf	Maleate	[O-]C(=O)\C=C/C(=O)[O-]	[O-]C(=O)\C=C/C(=O)[O-]	
 ChemRegSalts_DTPv15.sdf	Succinate	[O-]C(=O)CCC(=O)[O-]	[O-]C(=O)CCC(=O)[O-]	[O-]C(=O)CCC(=O)[O-]	C4H4O4	116.07215	8	-2			
 ChemRegSalts_DTPv15.sdf	hydrogen fumarate	OC(=O)C=CC(=O)[O-]	OC(=O)C=CC(=O)[O-]	OC(=O)C=CC(=O)[O-]	C4H3O4	115.06422	8	-1			
 ChemRegSalts_DTPv15.sdf	Trifluoromethanesulfonate	[O-]S(=O)(=O)C(F)(F)F	[O-]S(=O)(=O)C(F)(F)F	[O-]S(=O)(=O)C(F)(F)F	CF3O3S	149.0691	8	-1			
-ChemRegSalts_DTPv15.sdf	"1,4-dimethylpiperazine"	CN1CCN(C)CC1	CN1CCN(C)CC1	CN1CCN(C)CC1	C6H14N2	114.18876	8	0			
+ChemRegSalts_DTPv15.sdf	1,4-dimethylpiperazine	CN1CCN(C)CC1	CN1CCN(C)CC1	CN1CCN(C)CC1	C6H14N2	114.18876	8	0			
 ChemRegSalts_DTPv15.sdf	1-ethylpiperidine	CCN1CCCCC1	CCN1CCCCC1	CCN1CCCCC1	C7H15N	113.20069	8	0			
 ChemRegSalts_DTPv15.sdf	3-dimethylaminopropanoic acid	CN(C)CCC(=O)O	CN(C)CCC(=O)O	CN(C)CCC(=O)O	C5H11NO2	117.14634	8	0			
 ChemRegSalts_DTPv15.sdf	Fumaric Acid	OC(=O)\C=C\C(=O)O	OC(=O)\C=C\C(=O)O	OC(=O)C=CC(=O)O	C4H4O4	116.07216	8	0			
@@ -230,14 +230,14 @@ ChemRegSalts_DTPv15.sdf	Maleic Acid	OC(=O)\C=C/C(=O)O	OC(=O)\C=C/C(=O)O	OC(=O)C=
 ChemRegSalts_DTPv15.sdf	Succinic acid	OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	OC(=O)CCC(=O)O	C4H6O4	118.08804	8	0			
 ChemRegSalts_DTPv15.sdf	Trifluoromethanesulfonic acid	OS(=O)(=O)C(F)(F)F	OS(=O)(=O)C(F)(F)F	OS(=O)(=O)C(F)(F)F	CHF3O3S	150.07704	8	0			
 ChemRegSalts_DTPv15.sdf	Tromethamine	NC(CO)(CO)CO	NC(CO)(CO)CO	NC(CO)(CO)CO	C4H11NO3	121.13503	8	0			
-ChemRegSolvents_DTPv5.sdf	"1,1,2-Trichlorotrifluoroethane"	FC(F)(Cl)C(F)(Cl)Cl	FC(F)(Cl)C(F)(Cl)Cl	FC(F)(Cl)C(F)(Cl)Cl	C2Cl3F3	187.3756	8	0			
-ChemRegSolvents_DTPv5.sdf	"1,2-Dichlorobenzene"	Clc1ccccc1Cl	Clc1ccccc1Cl	Clc1ccccc1Cl	C6H4Cl2	147.00196	8	0			
+ChemRegSolvents_DTPv5.sdf	1,1,2-Trichlorotrifluoroethane	FC(F)(Cl)C(F)(Cl)Cl	FC(F)(Cl)C(F)(Cl)Cl	FC(F)(Cl)C(F)(Cl)Cl	C2Cl3F3	187.3756	8	0			
+ChemRegSolvents_DTPv5.sdf	1,2-Dichlorobenzene	Clc1ccccc1Cl	Clc1ccccc1Cl	Clc1ccccc1Cl	C6H4Cl2	147.00196	8	0			
 ChemRegSolvents_DTPv5.sdf	2-Methoxyethyl acetate	COCCOC(=O)C	COCCOC(=O)C	COCCOC(=O)C	C5H10O3	118.13109	8	0	Yes	2	
 ChemRegSolvents_DTPv5.sdf	Benzonitrile	N#Cc1ccccc1	N#Cc1ccccc1	N#Cc1ccccc1	C7H5N	103.1213	8	0			
 ChemRegSolvents_DTPv5.sdf	2-(pyrrolidin-1-yl)ethanol	OCCN1CCCC1	OCCN1CCCC1	OCCN1CCCC1	C6H13NO	115.17351	8	0			
 ChemRegSolvents_DTPv5.sdf	tertbutylacetate	CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	CC(=O)OC(C)(C)C	C6H12O2	116.15828	8	0	Yes	2	
 ChemRegSalts_DTPv15.sdf	protonated Tromethamine	[NH3+]C(CO)(CO)CO	[NH3+]C(CO)(CO)CO	[NH3+]C(CO)(CO)CO	C4H12NO3	122.14297	8	1			
-ChemRegSalts_DTPv15.sdf	"protonated 1,4-dimethylpiperazine"	CN1CC[NH+](C)CC1	CN1CC[NH+](C)CC1	CN1CC[NH+](C)CC1	C6H15N2	115.1967	8	1			
+ChemRegSalts_DTPv15.sdf	protonated 1,4-dimethylpiperazine	CN1CC[NH+](C)CC1	CN1CC[NH+](C)CC1	CN1CC[NH+](C)CC1	C6H15N2	115.1967	8	1			
 ChemRegSalts_DTPv15.sdf	protonated 1-ethylpiperidine	CC[NH+]1CCCCC1	CC[NH+]1CCCCC1	CC[NH+]1CCCCC1	C7H16N	114.20863	8	1			
 ChemRegSalts_DTPv15.sdf	2-hydroxyfumarate	[O-]C(=O)\C=C(/[O-])\C(=O)[O-]	[O-]C(=O)\C=C(/[O-])\C(=O)[O-]	[O-]C(=O)C=C([O-])C(=O)[O-]	C4HO5	129.04773	9	-3			
 ChemRegSalts_DTPv15.sdf	Aspartate	NC(CC(=O)[O-])C(=O)[O-]	NC(CC(=O)[O-])C(=O)[O-]	NC(CC(=O)[O-])C(=O)[O-]	C4H5NO4	131.08679	9	-2			
@@ -276,8 +276,8 @@ ChemRegSalts_DTPv15.sdf	L-Tartrate	O[C@H]([C@@H](O)C(=O)[O-])C(=O)[O-]	O[C@H]([C
 ChemRegSalts_DTPv15.sdf	meso-Tartrate	O[C@H]([C@H](O)C(=O)[O-])C(=O)[O-]	O[C@H]([C@H](O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095	10	-2			
 ChemRegSalts_DTPv15.sdf	Tartrate	OC(C(O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	OC(C(O)C(=O)[O-])C(=O)[O-]	C4H4O6	148.07095	10	-2			
 ChemRegSalts_DTPv15.sdf	2-oxopentanedioate	[O-]C(=O)CCC(=O)C(=O)[O-]	[O-]C(=O)CCC(=O)C(=O)[O-]	[O-]C(=O)CCC(=O)C(=O)[O-]	C5H4O5	144.08226	10	-2	Yes	2	
-ChemRegSalts_DTPv15.sdf	"ethane-1,2-disulfate"	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956	10	-2			
-ChemRegSalts_DTPv15.sdf	"2,4,5-trichlorophenolate"	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	C6H2Cl3O	196.43848	10	-1			
+ChemRegSalts_DTPv15.sdf	ethane-1,2-disulfate	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	[O-]S(=O)(=O)CCS(=O)(=O)[O-]	C2H4O6S2	188.17956	10	-2			
+ChemRegSalts_DTPv15.sdf	2,4,5-trichlorophenolate	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	[O-]c1cc(Cl)c(Cl)cc1Cl	C6H2Cl3O	196.43848	10	-1			
 ChemRegSalts_DTPv15.sdf	Benzenesulfonate	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	[O-]S(=O)(=O)c1ccccc1	C6H5O3S	157.16709	10	-1			
 ChemRegSalts_DTPv15.sdf	D-Glutamate	N[C@H](CCC(=O)O)C(=O)[O-]	N[C@H](CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	C5H8NO4	146.12132	10	-1			
 ChemRegSalts_DTPv15.sdf	Glutamate	NC(CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	NC(CCC(=O)O)C(=O)[O-]	C5H8NO4	146.12132	10	-1			
@@ -295,7 +295,7 @@ ChemRegSalts_DTPv15.sdf	Benzenesulfonic acid	OS(=O)(=O)c1ccccc1	OS(=O)(=O)c1cccc
 ChemRegSalts_DTPv15.sdf	D-Glutamic acid	N[C@H](CCC(=O)O)C(=O)O	N[C@H](CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12925	10	0			
 ChemRegSalts_DTPv15.sdf	D-Tartaric acid	O[C@@H]([C@H](O)C(=O)O)C(=O)O	O[C@@H]([C@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	10	0			
 ChemRegSalts_DTPv15.sdf	DL-Lysine	NCCCCC(N)C(=O)O	NCCCCC(N)C(=O)O	NCCCCC(N)C(=O)O	C6H14N2O2	146.18755	10	0			
-ChemRegSalts_DTPv15.sdf	"ethane-1,2-disulfonic acid"	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	C2H6O6S2	190.19544	10	0			
+ChemRegSalts_DTPv15.sdf	ethane-1,2-disulfonic acid	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	OS(=O)(=O)CCS(=O)(=O)O	C2H6O6S2	190.19544	10	0			
 ChemRegSalts_DTPv15.sdf	Glutamic acid	NC(CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12925	10	0			
 ChemRegSalts_DTPv15.sdf	L-Glutamic acid	N[C@@H](CCC(=O)O)C(=O)O	N[C@@H](CCC(=O)O)C(=O)O	NC(CCC(=O)O)C(=O)O	C5H9NO4	147.12925	10	0			
 ChemRegSalts_DTPv15.sdf	L-Tartaric acid	O[C@H]([C@@H](O)C(=O)O)C(=O)O	O[C@H]([C@@H](O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	10	0			
@@ -304,7 +304,7 @@ ChemRegSalts_DTPv15.sdf	Octanoic acid	CCCCCCCC(=O)O	CCCCCCCC(=O)O	CCCCCCCC(=O)O	
 ChemRegSalts_DTPv15.sdf	Salicylic acid	OC(=O)c1ccccc1O	OC(=O)c1ccccc1O	OC(=O)c1ccccc1O	C7H6O3	138.12073	10	0			
 ChemRegSalts_DTPv15.sdf	Tartaric acid	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	OC(C(O)C(=O)O)C(=O)O	C4H6O6	150.08684	10	0			
 ChemRegSalts_DTPv15.sdf	triethanolamine	OCCN(CCO)CCO	OCCN(CCO)CCO	OCCN(CCO)CCO	C6H15NO3	149.1882	10	0			
-ChemRegSalts_DTPv15.sdf	"2,6-diaminohexanoate"	[NH3+]CCCCC([NH3+])C(=O)[O-]	[NH3+]CCCCC([NH3+])C(=O)[O-]	[NH3+]CCCCC([NH3+])C(=O)[O-]	C6H15N2O2	147.1955	10	1			
+ChemRegSalts_DTPv15.sdf	2,6-diaminohexanoate	[NH3+]CCCCC([NH3+])C(=O)[O-]	[NH3+]CCCCC([NH3+])C(=O)[O-]	[NH3+]CCCCC([NH3+])C(=O)[O-]	C6H15N2O2	147.1955	10	1			
 ChemRegSalts_DTPv15.sdf	prontonated triethanolamine	OCC[NH+](CCO)CCO	OCC[NH+](CCO)CCO	OCC[NH+](CCO)CCO	C6H16NO3	150.19613	10	1			
 ChemRegSalts_DTPv15.sdf	Heptanedioate	[O-]C(=O)CCCCCC(=O)[O-]	[O-]C(=O)CCCCCC(=O)[O-]	[O-]C(=O)CCCCCC(=O)[O-]	C7H10O4	158.15189	11	-2			
 ChemRegSalts_DTPv15.sdf	4-chlorobenzenesulfonate	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	[O-]S(=O)(=O)c1ccc(Cl)cc1	C6H4ClO3S	191.61216	11	-1			
@@ -346,14 +346,14 @@ ChemRegSalts_DTPv15.sdf	Decanoic acid	CCCCCCCCCC(=O)O	CCCCCCCCCC(=O)O	CCCCCCCCCC
 ChemRegSalts_DTPv15.sdf	L-arginine	N[C@@H](CCCN=C(N)N)C(=O)O	N[C@@H](CCCN=C(N)N)C(=O)O	NC(CCCN=C(N)N)C(=O)O	C6H14N4O2	174.20095	12	0	Yes	3	
 ChemRegSalts_DTPv15.sdf	Octanedioic acid	OC(=O)CCCCCCC(=O)O	OC(=O)CCCCCCC(=O)O	OC(=O)CCCCCCC(=O)O	C8H14O4	174.19436	12	0			
 ChemRegSalts_DTPv15.sdf	Phthalic acid	OC(=O)c1ccccc1C(=O)O	OC(=O)c1ccccc1C(=O)O	OC(=O)c1ccccc1C(=O)O	C8H6O4	166.13084	12	0			
-ChemRegSolvents_DTPv5.sdf	"1,2,3-trimethoxybenzene"	COc1cccc(OC)c1OC	COc1cccc(OC)c1OC	COc1cccc(OC)c1OC	C9H12O3	168.18978	12	0			
+ChemRegSolvents_DTPv5.sdf	1,2,3-trimethoxybenzene	COc1cccc(OC)c1OC	COc1cccc(OC)c1OC	COc1cccc(OC)c1OC	C9H12O3	168.18978	12	0			
 ChemRegSolvents_DTPv5.sdf	glucoside	OCC1OC(O)C(O)C(O)C1O	OCC1OC(O)C(O)C(O)C1O	OCC1OC(O)C(O)C(O)C1O	C6H12O6	180.15588	12	0			
 ChemRegSalts_DTPv15.sdf	Citrate	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	OC(CC(=O)[O-])(CC(=O)[O-])C(=O)[O-]	C6H5O7	189.0997	13	-3			
 ChemRegSalts_DTPv15.sdf	Isocitrate	OC(C(CC(=O)[O-])C(=O)[O-])C(=O)[O-]	OC(C(CC(=O)[O-])C(=O)[O-])C(=O)[O-]	OC(C(CC(=O)[O-])C(=O)[O-])C(=O)[O-]	C6H5O7	189.0997	13	-3			
 ChemRegSalts_DTPv15.sdf	nonanedioate	[O-]C(=O)CCCCCCCC(=O)[O-]	[O-]C(=O)CCCCCCCC(=O)[O-]	[O-]C(=O)CCCCCCCC(=O)[O-]	C9H14O4	186.20506	13	-2			
-ChemRegSalts_DTPv15.sdf	"2,4,6-trimethylbenzenesulfate"	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	C9H11O3S	199.24684	13	-1			
+ChemRegSalts_DTPv15.sdf	2,4,6-trimethylbenzenesulfate	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	Cc1cc(C)c(c(C)c1)S(=O)(=O)[O-]	C9H11O3S	199.24684	13	-1			
 ChemRegSalts_DTPv15.sdf	2-acetoxybenzoate	CC(=O)Oc1ccccc1C(=O)[O-]	CC(=O)Oc1ccccc1C(=O)[O-]	CC(=O)Oc1ccccc1C(=O)[O-]	C9H7O4	179.14948	13	-1	Yes	2	
-ChemRegSalts_DTPv15.sdf	"2,4,6-trimethylbenzenesulfonic acid"	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	C9H12O3S	200.25478	13	0			
+ChemRegSalts_DTPv15.sdf	2,4,6-trimethylbenzenesulfonic acid	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	Cc1cc(C)c(c(C)c1)S(=O)(=O)O	C9H12O3S	200.25478	13	0			
 ChemRegSalts_DTPv15.sdf	2-acetoxybenzoic acid	CC(=O)Oc1ccccc1C(=O)O	CC(=O)Oc1ccccc1C(=O)O	CC(=O)Oc1ccccc1C(=O)O	C9H8O4	180.15742	13	0	Yes	2	
 ChemRegSalts_DTPv15.sdf	4-phenylcyclohexylamine	NC1CCC(CC1)c2ccccc2	NC1CCC(CC1)c2ccccc2	NC1CCC(CC1)c2ccccc2	C12H17N	175.27008	13	0			
 ChemRegSalts_DTPv15.sdf	adamantane-1-carboxylic acid	OC(=O)C12CC3CC(CC(C3)C1)C2	OC(=O)C12CC3CC(CC(C3)C1)C2	OC(=O)C12CC3CC(CC(C3)C1)C2	C11H16O2	180.24354	13	0			
@@ -367,19 +367,19 @@ ChemRegSalts_DTPv15.sdf	protonated Meglumine	C[NH2+]CC(O)C(O)C(O)C(O)CO	C[NH2+]C
 ChemRegSalts_DTPv15.sdf	protonated Dicyclohexylamine	C1CCC(CC1)[NH2+]C2CCCCC2	C1CCC(CC1)[NH2+]C2CCCCC2	C1CCC(CC1)[NH2+]C2CCCCC2	C12H24N	182.32566	13	1			
 ChemRegSalts_DTPv15.sdf	Dodecanoate	CCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCC(=O)[O-]	CCCCCCCCCCCC(=O)[O-]	C12H23O2	199.30982	14	-1			
 ChemRegSalts_DTPv15.sdf	Dodecanoic acid	CCCCCCCCCCCC(=O)O	CCCCCCCCCCCC(=O)O	CCCCCCCCCCCC(=O)O	C12H24O2	200.31776	14	0			
-ChemRegSalts_DTPv15.sdf	"2,3,4,5,6,7-hexahydroxyheptanoate"	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	C7H13O8	225.17332	15	-1			
+ChemRegSalts_DTPv15.sdf	2,3,4,5,6,7-hexahydroxyheptanoate	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	OCC(O)C(O)C(O)C(O)C(O)C(=O)[O-]	C7H13O8	225.17332	15	-1			
 ChemRegSalts_DTPv15.sdf	Camphorsulfonate	CC1(C)[C@@H]2CC[C@@]1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)[C@@H]2CC[C@@]1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887	15	-1	Yes	2	
 ChemRegSalts_DTPv15.sdf	camphorsulfonate (alternate drawing)	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	CC1(C)C2CCC1(CS(=O)(=O)[O-])C(=O)C2	C10H15O4S	231.2887	15	-1	Yes	2	
-ChemRegSalts_DTPv15.sdf	"2,4,6-trinitrophenolate"	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H2N3O7	228.09598	16	-1			
+ChemRegSalts_DTPv15.sdf	2,4,6-trinitrophenolate	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H2N3O7	228.09598	16	-1			
 ChemRegSalts_DTPv15.sdf	Picrate	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	[O-]c1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H2N3O7	228.09598	16	-1			
 ChemRegSalts_DTPv15.sdf	2-phenoxybenzoate	[O-]C(=O)c1ccccc1Oc2ccccc2	[O-]C(=O)c1ccccc1Oc2ccccc2	[O-]C(=O)c1ccccc1Oc2ccccc2	C13H9O3	213.20876	16	-1			
 ChemRegSalts_DTPv15.sdf	2-phenoxybenzoic acid	OC(=O)c1ccccc1Oc2ccccc2	OC(=O)c1ccccc1Oc2ccccc2	OC(=O)c1ccccc1Oc2ccccc2	C13H10O3	214.21669	16	0			
 ChemRegSalts_DTPv15.sdf	Picric acid	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	Oc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]	C6H3N3O7	229.10392	16	0			
 ChemRegSalts_DTPv15.sdf	dodecylhydrogensulfate	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	CCCCCCCCCCCCOS(=O)(=O)O	C12H26O4S	266.39744	17	0			
 ChemRegSalts_DTPv15.sdf	Tetrabutylammonium	CCCC[N+](CCCC)(CCCC)CCCC	CCCC[N+](CCCC)(CCCC)CCCC	CCCC[N+](CCCC)(CCCC)CCCC	C16H36N	242.46374	17	1			
-ChemRegSalts_DTPv15.sdf	"naphthalene-1,5-disulfonate"	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	C10H6O6S2	286.28103	18	-2			
+ChemRegSalts_DTPv15.sdf	naphthalene-1,5-disulfonate	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	[O-]S(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)[O-]	C10H6O6S2	286.28103	18	-2			
 ChemRegSalts_DTPv15.sdf	Benzathine	C(CNCc1ccccc1)NCc2ccccc2	C(CNCc1ccccc1)NCc2ccccc2	C(CNCc1ccccc1)NCc2ccccc2	C16H20N2	240.3434	18	0			
-ChemRegSalts_DTPv15.sdf	"naphthalene-1,5-disulfonic acid"	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	C10H8O6S2	288.29692	18	0			
+ChemRegSalts_DTPv15.sdf	naphthalene-1,5-disulfonic acid	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	OS(=O)(=O)c1cccc2c(cccc12)S(=O)(=O)O	C10H8O6S2	288.29692	18	0			
 ChemRegSalts_DTPv15.sdf	protonated Benzathine	C(C[NH2+]Cc1ccccc1)[NH2+]Cc2ccccc2	C(C[NH2+]Cc1ccccc1)[NH2+]Cc2ccccc2	C(C[NH2+]Cc1ccccc1)[NH2+]Cc2ccccc2	C16H22N2	242.35928	18	2			
 ChemRegSalts_DTPv15.sdf	Ethylenediaminetetraacetate (EDTA)	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	[O-]C(=O)CN(CCN(CC(=O)[O-])CC(=O)[O-])CC(=O)[O-]	C10H12N2O8	288.21087	20	-4			
 ChemRegSalts_DTPv15.sdf	(9Z)-Octadecenoate	CCCCCCCCC=CCCCCCCCC(=O)[O-]	CCCCCCCCC=CCCCCCCCC(=O)[O-]	CCCCCCCCC=CCCCCCCCC(=O)[O-]	C18H33O2	281.45342	20	-1			
@@ -389,17 +389,16 @@ ChemRegSalts_DTPv15.sdf	Ethylenediaminetetraacetic acid (H4EDTA)	OC(=O)CN(CCN(CC
 ChemRegSalts_DTPv15.sdf	Octadecyldihydrogenphosphate	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	CCCCCCCCCCCCCCCCCCOP(=O)(O)O	C18H39O4P	350.47362	23	0			
 ChemRegSalts_DTPv15.sdf	Pamoate	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	Oc1c(Cc2c(O)c(cc3ccccc23)C(=O)[O-])c4ccccc4cc1C(=O)[O-]	C23H14O6	386.35365	29	-2			
 ChemRegSalts_DTPv15.sdf	Pamoic Acid	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	OC(=O)c1cc2ccccc2c(Cc3c(O)c(cc4ccccc34)C(=O)O)c1O	C23H16O6	388.36953	29	0			
-MWKneutralizedSingleAtoms	Bromide	Br	Br	Br	Br	79.904	1	0			
-MWKneutralizedSingleAtoms	Chloride	Cl	Cl	Cl	Cl	35.453	1	0			
-MWKneutralizedSingleAtoms	Fluoride	F	F	F	F	18.9984	1	0			
-MWKneutralizedSingleAtoms	Hydroxide	OH	OH	OH	HO	17.00734	1	0			
-MWKneutralizedSingleAtoms	Iodide	I	I	I	I	126.90447	1	0			
-MWKneutralizedSingleAtoms	Cesium	Cs	Cs	Cs	Cs	132.90545	1	0			
-MWKneutralizedSingleAtoms	Gold	Au	Au	Au	Au	196.96655	1	0			
-MWKneutralizedSingleAtoms	Lithium	Li	Li	Li	Li	6.941	1	0			
-MWKneutralizedSingleAtoms	Mercury	Hg	Hg	Hg	Hg	200.59	1	0			
-MWKneutralizedSingleAtoms	Potassium	K	K	K	K	39.0983	1	0			
-MWKneutralizedSingleAtoms	Rubidium	Rb	Rb	Rb	Rb	85.4678	1	0			
-MWKneutralizedSingleAtoms	Silver	Ag	Ag	Ag	Ag	107.8682	1	0			
-MWKneutralizedSingleAtoms	Sodium	Na	Na	Na	Na	22.98977	1	0			
-MWKneutralizedSingleAtoms	Thallium	Tl	Tl	Tl	Tl	204.3833	1	0			
+MWKneutralizedSingleAtoms	Bromide	[Br]	[Br]	[Br]	Br	79.904	1	0			
+MWKneutralizedSingleAtoms	Chloride	[Cl]	[Cl]	[Cl]	Cl	35.453	1	0			
+MWKneutralizedSingleAtoms	Fluoride	[F]	[F]	[F]	F	18.9984	1	0			
+MWKneutralizedSingleAtoms	Iodide	[I]	[I]	[I]	I	126.90447	1	0			
+MWKneutralizedSingleAtoms	Cesium	[Cs]	[Cs]	[Cs]	Cs	132.90545	1	0			
+MWKneutralizedSingleAtoms	Gold	[Au]	[Au]	[Au]	Au	196.96655	1	0			
+MWKneutralizedSingleAtoms	Lithium	[Li]	[Li]	[Li]	Li	6.941	1	0			
+MWKneutralizedSingleAtoms	Mercury	[Hg]	[Hg]	[Hg]	Hg	200.59	1	0			
+MWKneutralizedSingleAtoms	Potassium	[K]	[K]	[K]	K	39.0983	1	0			
+MWKneutralizedSingleAtoms	Rubidium	[Rb]	[Rb]	[Rb]	Rb	85.4678	1	0			
+MWKneutralizedSingleAtoms	Silver	[Ag]	[Ag]	[Ag]	Ag	107.8682	1	0			
+MWKneutralizedSingleAtoms	Sodium	[Na]	[Na]	[Na]	Na	22.98977	1	0			
+MWKneutralizedSingleAtoms	Thallium	[Tl]	[Tl]	[Tl]	Tl	204.3833	1	0			

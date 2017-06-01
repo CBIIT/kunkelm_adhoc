@@ -620,7 +620,7 @@ public class FetchFromProd {
 
             sqlString = "drop table if exists prod_legacy_cmpd";
             System.out.println(sqlString);
-            // pgStmt.execute(sqlString);
+            pgStmt.execute(sqlString);
 
             sqlString = "create table prod_legacy_cmpd ("
                     + "nsc integer, "
@@ -633,12 +633,12 @@ public class FetchFromProd {
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "select nsc, cas, conf, distribution_code, mf, mw, object_contents as ctab "
+            sqlString = "select nsc, cas, conf, distribution_code, mf, mw, r.object_contents as ctab "
                     + "from ops$oradis.dis_cmpd, rs3_structure_object r "
                     + "where prefix = 'S' "
                     + "and nsc is not null "
                     + "and cmpd_id = structure_id "
-                    + "and r.object_type = 'M'";
+                    + "and r.object_type = 'M' ";
             System.out.println(sqlString);
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
@@ -726,7 +726,7 @@ public class FetchFromProd {
 
             sqlString = "drop table if exists prod_legacy_nsc_only";
             System.out.println(sqlString);
-            // pgStmt.execute(sqlString);
+            pgStmt.execute(sqlString);
 
             sqlString = "create table prod_legacy_nsc_only ("
                     + "nsc integer, "
@@ -831,7 +831,7 @@ public class FetchFromProd {
 
             sqlString = "select cp.nsc, cp.projectcode, lu.description "
                     + "from ops$oradis.chem_project cp, ops$oradis.lookup_project lu "
-                    + "where cp.projectcode = lu.projectcode";
+                    + "where cp.projectcode = lu.projectcode and cp.nsc = -1";
             System.out.println(sqlString);
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);
@@ -928,7 +928,7 @@ public class FetchFromProd {
             System.out.println(sqlString);
             pgStmt.execute(sqlString);
 
-            sqlString = "select distinct nsc, plateset from ops$oradis.oradis_dis_well";
+            sqlString = "select distinct nsc, plateset from ops$oradis.oradis_dis_well where nsc = -1";
             System.out.println(sqlString);
             resSet = oraStmt.executeQuery(sqlString);
             resSet.setFetchDirection(ResultSet.FETCH_FORWARD);

@@ -6,8 +6,8 @@ perl THE_STEP_2_stack.PL
 perl THE_STEP_3_generateQCsql.PL
 psql -d datasystemdb -a < qc.sql
 
-psql -d datasystemdb -a < THE_STEP_4_fix.sql
-psql -d datasystemdb -a < qc.sql
+-- psql -d datasystemdb -a < THE_STEP_4_fix.sql
+-- psql -d datasystemdb -a < qc.sql
 
 psql -d datasystemdb -a < THE_STEP_5_app_and_inv_to_curated_nsc.sql
 

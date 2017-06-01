@@ -55,7 +55,7 @@ public class HelperCmpd {
 
       tx = session.beginTransaction();
       Criteria crit = session.createCriteria(CmpdFragment.class);
-      crit.setMaxResults(2000);
+      crit.setMaxResults(5000);
       crit.add(Restrictions.eq("id", cfVO.getId()));
 
       CmpdFragment cfEntity = (CmpdFragment) crit.uniqueResult();
@@ -101,7 +101,7 @@ public class HelperCmpd {
       tx = session.beginTransaction();
 
       Criteria crit = session.createCriteria(Cmpd.class);
-      crit.setMaxResults(2000);
+      crit.setMaxResults(5000);
 
       crit.add(Restrictions.eq("nsc", id));
 
@@ -158,7 +158,7 @@ public class HelperCmpd {
       tx = session.beginTransaction();
 
       Criteria crit = session.createCriteria(Cmpd.class);
-      crit.setMaxResults(2000);
+      crit.setMaxResults(5000);
       crit.add(Restrictions.in("nsc", nscIntList));
       List<Cmpd> cmpdList = (List<Cmpd>) crit.list();
 
@@ -271,7 +271,7 @@ public class HelperCmpd {
       // just fetch the projection of the cmpd.id that meets criteria
       Criteria crit = session.createCriteria(Cmpd.class)
               .setProjection(Projections.property("id"))
-              .setMaxResults(2000);
+              .setMaxResults(5000);
 
       Disjunction disj = Restrictions.disjunction();
 
@@ -1116,7 +1116,7 @@ public class HelperCmpd {
 
       Criteria crit = session.createCriteria(Cmpd.class)
               .setProjection(Projections.property("id"))
-              .setMaxResults(2000);
+              .setMaxResults(5000);
 
       Disjunction disj = Restrictions.disjunction();
 
@@ -1869,7 +1869,7 @@ public class HelperCmpd {
       if (cmpdIdList != null && !cmpdIdList.isEmpty()) {
 
         Criteria cvCrit = session.createCriteria(CmpdTable.class)
-                .setMaxResults(2000);
+                .setMaxResults(5000);
         cvCrit.add(Restrictions.in("id", cmpdIdList));
         entCTlist = (List<CmpdTable>) cvCrit.list();
 
@@ -1943,7 +1943,7 @@ public class HelperCmpd {
 
       Criteria crit = session.createCriteria(Cmpd.class)
               .setProjection(Projections.property("id"))
-              .setMaxResults(2000);
+              .setMaxResults(5000);
 
       Disjunction disj = Restrictions.disjunction();
 
@@ -2677,7 +2677,7 @@ public class HelperCmpd {
       if (cmpdIdList != null && !cmpdIdList.isEmpty()) {
 
         Criteria cvCrit = session.createCriteria(CmpdTable.class)
-                .setMaxResults(2000);
+                .setMaxResults(5000);
         cvCrit.add(Restrictions.in("id", cmpdIdList));
         entCTlist = (List<CmpdTable>) cvCrit.list();
 
@@ -2740,7 +2740,7 @@ public class HelperCmpd {
 
       tx = session.beginTransaction();
       Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-      cmpdCrit.setMaxResults(2000);
+      cmpdCrit.setMaxResults(5000);
       cmpdCrit.add(Restrictions.in("nsc", nscIntList));
       List<Cmpd> cmpdList = (List<Cmpd>) cmpdCrit.list();
 
@@ -2757,7 +2757,7 @@ public class HelperCmpd {
 // fetch a list of cmpdViews
         Criteria cvCrit = session.createCriteria(CmpdTable.class);
         cvCrit.add(Restrictions.in("id", cmpdIdList));
-        cvCrit.setMaxResults(2000);
+        cvCrit.setMaxResults(5000);
         List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 
         if (!entityCVlist.isEmpty()) {
@@ -2805,14 +2805,14 @@ public class HelperCmpd {
 
       tx = session.beginTransaction();
       Criteria cmpdCrit = session.createCriteria(Cmpd.class);
-      cmpdCrit.setMaxResults(2000);
+      cmpdCrit.setMaxResults(5000);
       cmpdCrit.add(Restrictions.eq("nsc", nsc));
       Cmpd cmpd = (Cmpd) cmpdCrit.uniqueResult();
 
       Long cmpdId = (Long) session.getIdentifier(cmpd);
 
       Criteria cvCrit = session.createCriteria(CmpdTable.class);
-      cvCrit.setMaxResults(2000);
+      cvCrit.setMaxResults(5000);
       cvCrit.add(Restrictions.eq("id", cmpdId));
       CmpdTable entityCV = (CmpdTable) cvCrit.uniqueResult();
 

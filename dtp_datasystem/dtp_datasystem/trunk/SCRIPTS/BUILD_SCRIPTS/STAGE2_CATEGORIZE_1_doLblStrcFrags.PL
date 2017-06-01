@@ -325,6 +325,24 @@ from temp_norm
 ];
 
 push @sqlList,qq[
+drop table if exists prod_bio_counts
+];
+
+push @sqlList,qq[
+create table prod_bio_counts 
+as 
+select 
+rs3_from_plp_nsc.nsc, 
+prod_count_nci60.the_count as prod_count_nci60, 
+prod_count_hf.the_count as prod_count_hf, 
+prod_count_xeno.the_count as prod_count_xeno 
+from rs3_from_plp_nsc 
+left outer join prod_count_nci60 on rs3_from_plp_nsc.nsc = prod_count_nci60.nsc 
+left outer join prod_count_hf on rs3_from_plp_nsc.nsc = prod_count_hf.nsc 
+left outer join prod_count_xeno on rs3_from_plp_nsc.nsc = prod_count_xeno.nsc
+];
+
+push @sqlList,qq[
 drop table if exists wrangling_with_nsc
 ];
 

@@ -205,7 +205,7 @@ public class HelperCmpdList {
 
             // fetch a list of cmpdTable
             Criteria cvCrit = session.createCriteria(CmpdTable.class)
-                    .setMaxResults(2000);
+                    .setMaxResults(5000);
             cvCrit.add(Restrictions.in("id", cmpdIdList));
             List<CmpdTable> entityCVlist = (List<CmpdTable>) cvCrit.list();
 

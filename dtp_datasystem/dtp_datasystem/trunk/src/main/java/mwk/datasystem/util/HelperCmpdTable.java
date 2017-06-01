@@ -150,7 +150,7 @@ public class HelperCmpdTable {
             tx = session.beginTransaction();
 
             Criteria crit = session.createCriteria(CmpdTable.class);
-            crit.setMaxResults(2000);
+            crit.setMaxResults(5000);
             crit.add(Restrictions.in("nsc", nscIntList));
             List<CmpdTable> ctList = (List<CmpdTable>) crit.list();
 
