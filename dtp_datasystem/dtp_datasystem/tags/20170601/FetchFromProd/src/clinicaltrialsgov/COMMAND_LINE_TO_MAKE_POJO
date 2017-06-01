@@ -1,0 +1,1 @@
+/opt/jdk1.7.0_55/bin/xjc -b bindings.xsd -p mwk.clinicaltrials clinicalTrials.xsd

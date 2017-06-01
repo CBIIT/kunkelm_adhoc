@@ -1,0 +1,5 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Fri Jun 03 11:52:34 EDT 2016
+cdk-test-atomtype-1.5.13.pom>=
+cdk-test-atomtype-1.5.13-tests.jar>=
+cdk-test-atomtype-1.5.13.jar>=

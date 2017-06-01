@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+  <ui:define name="export"> 
+    <h2 style="margin: 0;">
+      <h:outputText value="Export Data"/>
+    </h2>
+
+    <p:panelGrid rendered="#{sessionController.navigationMode eq 'ICONS'}" columns="2" styleClass="borderlessPanelGrid">
+      <p:commandLink ajax="false" 
+                     title="Export as Excel">
+        <p:graphicImage alt="Download as Excel" name="/mwkimages/mwk_excel.png" width="48"/>          
+        <p:dataExporter type="xls"  
+                        target="curatedNscs" 
+                        fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
+      </p:commandLink>
+      <p:commandLink ajax="false" 
+                     title="Export as CSV">  
+        <p:graphicImage alt="Download as csv" name="/mwkimages/mwk_csv.png" width="48"/>          
+        <p:dataExporter type="csv" 
+                        target="curatedNscs" 
+                        fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
+      </p:commandLink>      
+    </p:panelGrid>
+    
+    <p:menubar rendered="#{sessionController.navigationMode eq 'MENUBARS'}" autoDisplay="false">
+      <p:menuitem ajax="false" 
+                  value="Export as Excel"
+                  title="Export as Excel">
+        <p:dataExporter type="xls"  
+                        target="curatedNscs" 
+                        fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
+      </p:menuitem>
+      <p:menuitem ajax="false" 
+                  value="Export as CSV"
+                  title="Export as CSV">  
+        <p:dataExporter type="csv" 
+                        target="curatedNscs" 
+                        fileName="curatedNscs #{applicationScopeBean.dateTime}" />  
+      </p:menuitem>       
+    </p:menubar>
+  </ui:define>    
+
+  <ui:define name="content">
+
+    <p:menubar rendered="#{fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj')}"
+               autoDisplay="false">
+      <p:menuitem value="Create New CuratedNsc" 
+                  onclick="PF('create_new_curated_nsc_dlg').show();"/>
+    </p:menubar>
+
+    <p:dataTable id="curatedNscs"                     
+                 resizableColumns="true"
+                 var="nsc"
+                 value="#{curatedNscController.curatedNscs}"
+                 paginator="true"                     
+                 rows="100"                        
+                 paginatorPosition="top"
+                 currentPageReportTemplate="Page: {currentPage}/{totalPages} Records: {startRecord}-{endRecord} out of {totalRecords} filtered records"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} rows per page"
+                 rowsPerPageTemplate="10,25,50,100,250,500,1000">
+
+      <f:facet name="header">  
+        <h:outputText value="#{fn:length(curatedNscController.curatedNscs)} Curated NSC"/>
+      </f:facet>
+
+      <p:column rendered="#{fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj')}"
+                exportable="false">
+
+        <p:commandLink disabled="#{not(fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj'))}"
+                       value="EDIT" 
+                       action="#{curatedNscWorkbenchController.performConfigureEdit(nsc)}"/>
+
+        <h:outputText escape="false" value="&lt;br/&gt;"/>
+
+        <p:commandLink disabled="#{not(fn:contains(sessionController.loggedUser, 'kunkelm') or fn:contains(sessionController.loggedUser, 'morrisj'))}"
+                       value="DELETE" style="color: red;" 
+                       action="#{curatedNscController.configureDelete(nsc)}"
+                       oncomplete="PF('delete_curated_nsc_dlg').show();"/>
+
+      </p:column>
+
+      <!-- free-form -->
+
+      <p:column resizable="true" 
+                headerText="NSC" 
+                sortBy="#{nsc.nsc}"  
+                filterMatchMode="contains" 
+                filterBy="#{nsc.nsc}">                                            
+        <h:outputText value="#{nsc.nsc}" />                              
+      </p:column>
+
+      <p:column resizable="true" 
+                headerText="CAS" 
+                sortBy="#{nsc.cas}" 
+                filterMatchMode="contains" 
+                filterBy="#{nsc.cas}">              
+        <h:outputText value="#{nsc.cas}" />                              
+      </p:column>
+
+      <p:column resizable="true" 
+                headerText="Generic Name"  
+                sortBy="#{nsc.genericName.value}" 
+                filterMatchMode="contains" 
+                filterBy="#{nsc.genericName.value}">              
+        <h:outputText value="#{nsc.genericName.value}" />                              
+      </p:column>
+
+      <p:column resizable="true" 
+                headerText="Preferred Name" 
+                sortBy="#{nsc.preferredName.value}" 
+                filterMatchMode="contains" 
+                filterBy="#{nsc.preferredName.value}">                            
+        <h:outputText value="#{nsc.preferredName.value}" />
+      </p:column>
+
+      <p:column  exportable="false" resizable="true" 
+                 headerText="Aliases">      
+        <p:dataList var="prop" 
+                    value="#{nsc.aliases}">                                
+          <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+        </p:dataList>                
+      </p:column>
+
+      <p:column style="display: none;" resizable="true" 
+                headerText="Aliases">      
+        <h:outputText value="#{curatedNscController.getDelimitedNames(nsc.aliases)}"/>
+      </p:column>
+
+      <p:column resizable="true" 
+                headerText="Originator" 
+                sortBy="#{nsc.originator.value}" 
+                filterMatchMode="contains" 
+                filterBy="#{nsc.originator.value}">              
+        <h:outputText value="#{nsc.originator.value}" />                
+      </p:column>
+
+      <p:column exportable="false" resizable="true" 
+                headerText="Projects">      
+        <p:dataList var="prop" 
+                    value="#{nsc.projects}">                                
+          <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+        </p:dataList>                
+      </p:column>
+
+      <p:column style="display: none;" resizable="true" 
+                headerText="Projects">      
+        <h:outputText value="#{curatedNscController.getDelimitedProjects(nsc.projects)}"/>
+      </p:column>
+
+      <p:column resizable="true" 
+                headerText="Primary Target"  
+                sortBy="#{nsc.primaryTarget.value}" 
+                filterMatchMode="contains" 
+                filterBy="#{nsc.primaryTarget.value}">                            
+        <h:outputText value="#{nsc.primaryTarget.value}" />
+      </p:column>
+
+      <p:column exportable="false" resizable="true" 
+                headerText="Secondary Targets">                              
+        <p:dataList var="prop" 
+                    value="#{nsc.secondaryTargets}">                                
+          <h:outputText style="white-space: pre-line" value="#{prop.value}" />
+        </p:dataList>
+      </p:column>
+
+      <p:column style="display: none;" resizable="true" 
+                headerText="Secondary Targets">      
+        <h:outputText value="#{curatedNscController.getDelimitedTargets(nsc.secondaryTargets)}"/>
+      </p:column>
+
+    </p:dataTable>
+
+    <p:dialog header="Create New CuratedNsc - Esc to Close" 
+              closeOnEscape="true" 
+              widgetVar="create_new_curated_nsc_dlg" 
+              modal="true"
+              width="80%" height="80%">
+
+      <p:outputPanel autoUpdate="true">
+
+        <p:panelGrid columns="2">
+
+          <h:outputLabel for="curated_nsc_nsc" value="NSC"/>
+          <h:inputText id="curated_nsc_nsc" value="#{curatedNscController.newCuratedNsc.nsc}"/>
+
+          <h:outputLabel for="curated_nsc_cas" value="CAS"/>
+          <h:inputText id="curated_nsc_cas" value="#{curatedNscController.newCuratedNsc.cas}"/>
+
+        </p:panelGrid>
+
+        <p:commandButton action="#{curatedNscController.createNewCuratedNsc}"
+                         value="Create New CuratedNsc"
+                         onstart="PF('creatingBUI').show();"
+                         oncomplete="PF('creatingBUI').hide();"
+                         style="width: 100%;" />
+
+      </p:outputPanel>
+
+    </p:dialog>
+
+    <p:dialog header="Delete CuratedNsc - Esc to Close" 
+              closeOnEscape="true" 
+              widgetVar="delete_curated_nsc_dlg" 
+              modal="true"
+              width="80%" height="80%">
+
+      <p:outputPanel autoUpdate="true">
+
+        <p:outputLabel value="This will remove NSC #{curatedNscController.curatedNscForDelete.nsc} from curation!" 
+                       style="font-size: 200%; color: red;"/>
+
+        <p:commandButton action="#{curatedNscController.deleteCuratedNsc}"
+                         value="Delete CuratedNsc"
+                         onstart="PF('deletingBUI').show();"
+                         oncomplete="PF('deletingBUI').hide();"
+                         style="width: 100%;" />
+
+      </p:outputPanel>
+
+    </p:dialog>
+
+  </ui:define>
+
+</ui:composition>

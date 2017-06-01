@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+  <ui:define name="content title">
+    <h:outputText value="Active List Grid View #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers" />  
+  </ui:define>
+
+  <ui:define name="instructions">
+    <h:outputText value="Soring and filtering can be
+                  done in the List Layout.  Changes made there will 
+                  be reflected in this view."/>
+  </ui:define> 
+
+  <!--
+  
+  <ui:define name="export">
+      <h2 style="margin: 0;">
+          <h:outputText value="Export Data or Images"/>
+      </h2>    
+      <p:menubar autoDisplay="false">
+          <p:menuitem value="Export Structures as Image"
+                      ajax="true"
+                      onclick="structuresAsGridImage()"/>
+      </p:menubar>
+  </ui:define>        
+
+  -->
+
+  <ui:define name="alternate">    
+  </ui:define>        
+
+  <ui:define name="content">
+
+    <!--
+    
+    <p:panel header="List Anchor Structure"
+             rendered="#{sessionController.configurationBean.showAnchor and !empty listManagerController.listManagerBean.activeList.anchorSmiles}">
+
+        <h:outputText value="anchorSmiles: ${listManagerController.listManagerBean.activeList.anchorSmiles}"/>
+
+        <br/>
+
+        <p:graphicImage alt="PNG structure image for SMILES: #{listManagerController.listManagerBean.activeList.anchorSmiles}"
+                        width="#{sessionController.configurationBean.strcDim}" 
+                        height="#{sessionController.configurationBean.strcDim}"
+                        styleClass="anchorStructure"
+                        url='#{sessionController.configurationBean.getSmilesStrcUrl(listManagerController.listManagerBean.activeList.anchorSmiles)}'>              
+        </p:graphicImage>
+
+    </p:panel>
+
+    <p:spacer height="20" width="100%"/>
+    
+    -->
+
+    <p:panelGrid columns="2"  rendered="#{sessionController.navigationMode eq 'ICONS'}" styleClass="borderlessPanelGrid">
+
+      <p:panelGrid columns="5" styleClass="borderlessPanelGrid">
+
+        <f:facet name="header">
+          <h:outputText value="Compound Layout"/>
+        </f:facet>
+
+        <h:link title="INFO" 
+                outcome="/webpages/info.xhtml"
+                fragment="compound_layout">
+          <p:graphicImage alt="INFO" name="/mwkimages/mwk_info.png" width="48"/>
+        </h:link>
+
+        <p:commandLink title="Compounds in List Layout" 
+                       ajax="false"
+                       action="/webpages/activeListTable?faces-redirect=true">
+          <p:graphicImage alt="TABLE VIEW" name="/mwkimages/mwk_table_view.png" width="48"/>
+        </p:commandLink>
+
+        <p:commandLink title="Compounds in Grid Layout"
+                       ajax="false"
+                       action="/webpages/activeListGrid?faces-redirect=true">
+          <p:graphicImage alt="GRID VIEW" name="/mwkimages/mwk_grid_view.png" width="48"/>
+        </p:commandLink>
+
+        <p:commandLink title="Compounds in Responsive Grid Layout" disabled="true"
+                       ajax="false"
+                       action="/webpages/activeListInLineGrid?faces-redirect=true">
+          <p:graphicImage alt="DYNAMIC GRID VIEW" name="/mwkimages/mwk_dynamic_grid_view.png" width="48"/>
+        </p:commandLink>
+
+        <p:commandLink title="Compounds in Form Layout" 
+                       ajax="false"
+                       action="/webpages/activeListForm?faces-redirect=true">
+          <p:graphicImage alt="FORM VIEW" name="/mwkimages/mwk_form_view.png" width="48"/>
+        </p:commandLink>
+
+      </p:panelGrid>
+
+    </p:panelGrid>
+
+    <p:menubar rendered="#{sessionController.navigationMode eq 'MENUBARS'}" >
+      <p:submenu label="Compound Layout">
+        <p:menuitem value="Compounds in List Layout" 
+                    title="Compounds in List Layout" 
+                    ajax="false"
+                    action="/webpages/activeListTable?faces-redirect=true"/>
+        <p:menuitem value="Compounds in Grid Layout" 
+                    title="Compounds in Grid Layout" 
+                    ajax="false"
+                    action="/webpages/activeListGrid?faces-redirect=true"/>
+        <p:menuitem value="Compounds in Responsive Grid Layout" 
+                    title="Compounds in Responsive Grid Layout" 
+                    disabled="true"
+                    ajax="false"
+                    action="/webpages/activeListInLineGrid?faces-redirect=true"/>
+        <p:menuitem value="Compounds in Form Layout" 
+                    title="Compounds in Form Layout" 
+                    ajax="false"
+                    action="/webpages/activeListForm?faces-redirect=true"/>
+      </p:submenu>
+    </p:menubar>
+
+    <p:outputPanel layout="inline" deferred="true">
+
+      <p:repeat var="listMember" 
+                varStatus="varIdx"
+                offset="0"
+                step="1"
+                size="#{fn:length(listManagerController.listManagerBean.filteredActiveListMembers)}"
+                value="#{listManagerController.listManagerBean.filteredActiveListMembers}">
+
+        <p:panel style="display:inline-block;border: none;">
+
+          <p:panelGrid style="width: auto;display:inline-block;border: none;">
+            <p:row>
+              <p:column>
+                <p:commandLink update=":datasystemForm:ListMemberDetailsDialogPanel" 
+                               oncomplete="PF('listMemberDetailDlg').show();" 
+                               title="List Member Details"
+                               style="display: inline-block;">
+                  <f:setPropertyActionListener value="#{listMember}"   
+                                               target="#{listManagerController.listManagerBean.selectedActiveListMember}" />  
+                  <p:graphicImage alt="DETAILS" name="/mwkimages/mwk_details.png" width="48"/>
+                </p:commandLink>        
+              </p:column>
+
+              <p:column rowspan="3">
+                <p:graphicImage alt="PNG structure image of Parent Fragment for SMILES: #{listMember.cmpd.parentFragment.cmpdFragmentStructure.canSmi}"
+                                width="#{sessionController.configurationBean.strcDim}" 
+                                height="#{sessionController.configurationBean.strcDim}"
+                                styleClass="parentStructure"
+                                url='#{sessionController.configurationBean.getCmpdStrcUrl(listMember.cmpd, listManagerController.listManagerBean.activeList.anchorSmiles)}'>
+                </p:graphicImage>
+              </p:column> 
+            </p:row>
+            <p:row>
+              <p:column>
+                <p:commandLink ajax="false" 
+                               title="Substructure Search"
+                               action="#{structureSearchController.landingPerformLoadEditorByNsc()}">
+                  <f:setPropertyActionListener value="#{listMember.cmpd.nsc}"   
+                                               target="#{structureSearchController.nscForLoad}" />  
+                  <p:graphicImage alt="SUBSTRUCTURE SEARCH" name="/mwkimages/mwk_sss.png" width="48"/>
+                </p:commandLink>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <p:commandLink rendered="#{fn:startsWith(sessionController.loggedUser, 'DTP_')}"
+                               ajax="false" 
+                               title="Fragments Workbench"
+                               action="#{fragmentsWorkbenchController.performLoadCmpd(listMember.cmpd.nsc)}">
+                  <p:graphicImage alt="FRAGMENTS WORKBENCH" name="/mwkimages/mwk_frag_workbench.png" width="48"/>
+                </p:commandLink>
+              </p:column>
+            </p:row>
+          </p:panelGrid>                
+
+        </p:panel>
+      </p:repeat>
+
+    </p:outputPanel>
+
+  </ui:define>
+
+</ui:composition>

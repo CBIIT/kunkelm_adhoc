@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"                                
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+        <h:outputScript library="js" name="d3.js"/>            
+        <h:outputScript library="js" name="rgbcolor.js"/> 
+        <h:outputScript library="js" name="canvg.js"/>
+        <script type="text/javascript" src="./activeListHistoScat.js"></script>
+
+        <script>
+            var hidddden = #{histogramController.json};
+            jQuery(document).ready(function () {
+                loadData();
+            });
+        </script>
+
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+
+        <h:outputText style="font-size: 200%;" 
+                      value="ActiveList is: #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(listManagerController.listManagerBean.activeList.cmpdListMembers)} ListMembers"/>    
+
+        <p:outputPanel id="configDiv">
+
+            <h:outputText style="font-size: 200%;" value="List #{listManagerController.listManagerBean.activeList.listName} with #{fn:length(histogramController.cmpdListMembers)} Members"/>
+
+            <br/>
+
+            <p:outputLabel for="intCbxGrd" value="Integer Properties"/>
+
+            <p:selectManyCheckbox id="intCbxGrd"
+                                  value="#{histogramController.intParams}"  
+                                  layout="grid"
+                                  columns="5">                                  
+                <f:selectItems value="#{histogramController.intProps}"
+                               var="itm"
+                               itemLabel="#{itm}"
+                               itemValue="#{itm}"/>
+            </p:selectManyCheckbox>
+
+            <p:outputLabel for="dblCbxGrd" value="Double Properties"/>
+
+            <p:selectManyCheckbox id="dblCbxGrd"
+                                  value="#{histogramController.dblParams}" 
+                                  layout="grid"
+                                  columns="5">                                  
+                <f:selectItems value="#{histogramController.dblProps}"
+                               var="itm"
+                               itemLabel="#{itm}"
+                               itemValue="#{itm}"/>
+            </p:selectManyCheckbox>
+
+        </p:outputPanel>
+
+        <!--h:selectOneRadio id="histoSize">
+            <f:selectItem itemLabel="10" itemValue="10" />  
+            <f:selectItem itemLabel="20" itemValue="20" />  
+            <f:selectItem itemLabel="40" itemValue="40" />  
+        </h:selectOneRadio-->        
+
+        <h2>Histograms</h2>
+
+        <p:outputPanel id="histoDiv">
+        </p:outputPanel>
+
+        <!--h:selectOneRadio id="scatSize">
+            <f:selectItem itemLabel="10" itemValue="10" />  
+            <f:selectItem itemLabel="20" itemValue="20" />  
+            <f:selectItem itemLabel="40" itemValue="40" />  
+        </h:selectOneRadio-->
+
+        <h2>Scatter Plots</h2>
+
+        <p:outputPanel id="scatDiv">
+        </p:outputPanel>
+
+        <!--h:selectOneRadio id="strucSize">
+            <f:selectItem itemLabel="10" itemValue="10" />  
+            <f:selectItem itemLabel="20" itemValue="20" />  
+            <f:selectItem itemLabel="40" itemValue="40" />  
+        </h:selectOneRadio-->
+
+        <h2>Structures</h2>
+
+        <p:outputPanel id="strucDiv">
+        </p:outputPanel>
+
+        <ui:include src="/webpages/dialogExportImage.xhtml"/>
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+  <h:head>
+    <title>JSF Link Examples</title>
+  </h:head>
+  <h:body>
+    <h1>      JSF Link Examples</h1>
+    <p>
+      Example HTML Anchor (<a />) elements using JSF to redirect to an external web site.
+    </p>
+    <ul>
+      <li>
+        <h:outputLink value="#{windowPopper.redirectLink}" target="_blank">
+          #{windowPopper.linkName}
+        </h:outputLink> - Open the link in a new page.
+      </li>
+      <li>
+        <h:outputLink onclick="#{windowPopper.JSPopup()}">
+          #{windowPopper.linkName}
+        </h:outputLink> - Open link in a JS popup window.
+      </li>
+      <li>
+        <h:form id="form1">
+          <h:commandLink id="popupLink" value="#{windowPopper.linkName}"
+                         target="popUpWindow"
+                         onclick="javascript: void window.open('', 'popUpWindow', 'status=0,toolbar=0,location=0,menubar=0,resizable,width=750,height=500,scrollbars,left=0,top=0');"
+                         action="#{windowPopper.redirect()}" binding="#{windowPopper.popupLink}">
+            <f:param name="p1" value="#{windowPopper.param1}"/> 
+            <f:param name="p2" value="#{windowPopper.param2}"/>
+          </h:commandLink> - Open link in a JS popup window using a dynamic URL and parameters.
+        </h:form>
+      </li>
+    </ul>
+  </h:body>
+</html>

@@ -1,0 +1,611 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"      
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="/webpages/templates/ui.xhtml">
+
+    <ui:define name="content">
+
+        <p:menubar autoDisplay="false">
+            <p:menuitem value="Create New CuratedName" onclick="PF('create_new_curated_name_dlg').show();"/>
+            <p:menuitem value="Create New CuratedOriginator" onclick="PF('create_new_curated_originator_dlg').show();"/>
+            <p:menuitem value="Create New CuratedProject" onclick="PF('create_new_curated_project_dlg').show();"/>
+            <p:menuitem value="Create New CuratedTarget" onclick="PF('create_new_curated_target_dlg').show();"/>
+        </p:menubar>
+
+        <h2>
+            <h:outputText value="NSC: #{curatedNscWorkbenchController.work.nsc}"/>
+        </h2>
+        
+        <h2>
+            <h:outputText value="CAS: #{curatedNscWorkbenchController.work.cas}"/>
+        </h2>
+                
+        <h2>
+            <h:outputText value="Preferred Name"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="preferredNameAutoComp" value="Preferred Name" />
+                <br/>
+                <p:autoComplete id="preferredNameAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3"  
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedName}"
+                                var="preferredNameAutoCompVar" 
+                                itemLabel="#{preferredNameAutoCompVar.value}" 
+                                itemValue="#{preferredNameAutoCompVar}"  
+                                converter="#{curatedNameConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendPreferredName}" 
+                            update=":datasystemForm:preferredNameDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{preferredNameAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{preferredNameAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{preferredNameAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="preferredNameDataTable"
+                         value="#{curatedNscWorkbenchController.work.preferredName}"
+                         var="preferredNameDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removePreferredName}"
+                                     update=":datasystemForm:preferredNameDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{preferredNameDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{preferredNameDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{preferredNameDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <h2>
+            <h:outputText value="Generic Name"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="genericNameAutoComp" value="Generic Name" />
+                <br/>
+                <p:autoComplete id="genericNameAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3" 
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedName}"
+                                var="genericNameAutoCompVar" 
+                                itemLabel="#{genericNameAutoCompVar.value}" 
+                                itemValue="#{genericNameAutoCompVar}" 
+                                converter="#{curatedNameConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendGenericName}" 
+                            update=":datasystemForm:genericNameDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{genericNameAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{genericNameAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{genericNameAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="genericNameDataTable"
+                         value="#{curatedNscWorkbenchController.work.genericName}"
+                         var="genericNameDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removeGenericName}"
+                                     update=":datasystemForm:genericNameDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{genericNameDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{genericNameDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{genericNameDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <h2>
+            <h:outputText value="Aliases"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="aliasesAutoComp" value="Aliases" />
+                <br/>
+                <p:autoComplete id="aliasesAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3" 
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedName}"
+                                var="aliasesAutoCompVar" 
+                                itemLabel="#{aliasesAutoCompVar.value}" 
+                                itemValue="#{aliasesAutoCompVar}" 
+                                converter="#{curatedNameConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendAlias}" 
+                            update=":datasystemForm:aliasesDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{aliasesAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{aliasesAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{aliasesAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="aliasesDataTable"
+                         value="#{curatedNscWorkbenchController.work.aliases}"
+                         var="aliasesDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removeAlias(aliasesDataTableVar)}"
+                                     update=":datasystemForm:aliasesDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{aliasesDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{aliasesDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{aliasesDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <h2>
+            <h:outputText value="Originator"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="originatorAutoComp" value="Originator" />
+                <br/>
+                <p:autoComplete id="originatorAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3" 
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedOriginator}"
+                                var="originatorAutoCompVar" 
+                                itemLabel="#{originatorAutoCompVar.value}" 
+                                itemValue="#{originatorAutoCompVar}" 
+                                converter="#{curatedOriginatorConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendOriginator}" 
+                            update=":datasystemForm:originatorDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{originatorAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{originatorAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{originatorAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="originatorDataTable"
+                         value="#{curatedNscWorkbenchController.work.originator}"
+                         var="originatorDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removeOriginator}"
+                                     update=":datasystemForm:originatorDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{originatorDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{originatorDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{originatorDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <h2>
+            <h:outputText value="Projects"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="projectsAutoComp" value="Projects" />
+                <br/>
+                <p:autoComplete id="projectsAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3" 
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedProject}"
+                                var="projectsAutoCompVar" 
+                                itemLabel="#{projectsAutoCompVar.value}" 
+                                itemValue="#{projectsAutoCompVar}" 
+                                converter="#{curatedProjectConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendProject}" 
+                            update=":datasystemForm:projectsDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{projectsAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{projectsAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{projectsAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="projectsDataTable"
+                         value="#{curatedNscWorkbenchController.work.projects}"
+                         var="projectsDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removeProject(projectsDataTableVar)}"
+                                     update=":datasystemForm:projectsDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{projectsDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{projectsDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{projectsDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <h2>
+            <h:outputText value="Primary Target"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="primaryTargetAutoComp" value="Primary Target" />
+                <br/>
+                <p:autoComplete id="primaryTargetAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3" 
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedTarget}"
+                                var="primaryTargetAutoCompVar" 
+                                itemLabel="#{primaryTargetAutoCompVar.value}" 
+                                itemValue="#{primaryTargetAutoCompVar}" 
+                                converter="#{curatedTargetConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendPrimaryTarget}" 
+                            update=":datasystemForm:primaryTargetDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{primaryTargetAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{primaryTargetAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{primaryTargetAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="primaryTargetDataTable"
+                         value="#{curatedNscWorkbenchController.work.primaryTarget}"
+                         var="primaryTargetDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removePrimaryTarget}"
+                                     update=":datasystemForm:primaryTargetDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{primaryTargetDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{primaryTargetDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{primaryTargetDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <h2>
+            <h:outputText value="Secondary Targets"/>
+        </h2>
+
+        <p:panelGrid columns="2">
+
+            <p:panel>
+                <p:outputLabel for="secondaryTargetsAutoComp" value="Secondary Targets" />
+                <br/>
+                <p:autoComplete id="secondaryTargetsAutoComp"
+                                dropdown="true"
+                                scrollHeight="500"
+                                minQueryLength="3" 
+                                completeMethod="#{curatedNscWorkbenchController.completeCuratedTarget}"
+                                var="secondaryTargetsAutoCompVar" 
+                                itemLabel="#{secondaryTargetsAutoCompVar.value}" 
+                                itemValue="#{secondaryTargetsAutoCompVar}" 
+                                converter="#{curatedTargetConverter}" 
+                                forceSelection="true">      
+
+                    <p:ajax event="itemSelect"                             
+                            listener="#{curatedNscWorkbenchController.appendSecondaryTarget}" 
+                            update=":datasystemForm:secondaryTargetsDataTable" />  
+
+                    <p:column>
+                        <h:outputText value="#{secondaryTargetsAutoCompVar.value}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{secondaryTargetsAutoCompVar.description}" />
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{secondaryTargetsAutoCompVar.reference}" />
+                    </p:column>
+
+                </p:autoComplete>                    
+            </p:panel>
+
+            <p:dataTable id="secondaryTargetsDataTable"
+                         value="#{curatedNscWorkbenchController.work.secondaryTargets}"
+                         var="secondaryTargetsDataTableVar">
+
+                <p:column headerText="REMOVE">
+                    <p:commandButton value="REMOVE" 
+                                     actionListener="#{curatedNscWorkbenchController.removeSecondaryTarget(secondaryTargetsDataTableVar)}"
+                                     update=":datasystemForm:secondaryTargetsDataTable"/>
+                </p:column>
+                <p:column headerText="value">
+                    <h:outputText value="#{secondaryTargetsDataTableVar.value}"/>
+                </p:column>
+
+                <p:column headerText="description">
+                    <h:outputText value="#{secondaryTargetsDataTableVar.description}"/>
+                </p:column>
+
+                <p:column headerText="reference">
+                    <h:outputText value="#{secondaryTargetsDataTableVar.reference}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:panelGrid>
+
+        <!-- dialogs for creating new entries -->
+
+        <p:dialog header="Create New CuratedName - Esc to Close" 
+                  closeOnEscape="true" 
+                  widgetVar="create_new_curated_name_dlg" 
+                  modal="true"
+                  width="80%" height="80%">
+
+            <p:outputPanel autoUpdate="true">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="cur_nam_val" value="Value"/>
+                    <h:inputText id="cur_nam_val" value="#{curatedNscWorkbenchController.newCuratedName.value}"/>
+
+                    <h:outputLabel for="cur_nam_desc" value="Description"/>
+                    <h:inputText id="cur_nam_desc" value="#{curatedNscWorkbenchController.newCuratedName.description}"/>
+
+                    <h:outputLabel for="cur_nam_ref" value="Reference"/>
+                    <h:inputText id="cur_nam_ref" value="#{curatedNscWorkbenchController.newCuratedName.reference}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton action="#{curatedNscWorkbenchController.createNewCuratedName}"
+                                 value="Create New CuratedName"
+                                 onstart="PF('creatingBUI').show();"
+                                 oncomplete="PF('creatingBUI').hide();"
+                                 style="width: 100%;" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog header="Create New CuratedOriginator - Esc to Close" 
+                  closeOnEscape="true"
+                  widgetVar="create_new_curated_originator_dlg" 
+                  modal="true"
+                  width="80%" height="80%">
+
+            <p:outputPanel autoUpdate="true">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="cur_orig_val" value="Value"/>
+                    <h:inputText id="cur_orig_val" value="#{curatedNscWorkbenchController.newCuratedOriginator.value}"/>
+
+                    <h:outputLabel for="cur_orig_desc" value="Description"/>
+                    <h:inputText id="cur_orig_desc" value="#{curatedNscWorkbenchController.newCuratedOriginator.description}"/>
+
+                    <h:outputLabel for="cur_orig_ref" value="Reference"/>
+                    <h:inputText id="cur_orig_ref" value="#{curatedNscWorkbenchController.newCuratedOriginator.reference}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton action="#{curatedNscWorkbenchController.createNewCuratedOriginator}"
+                                 value="Create New CuratedOriginator"
+                                 onstart="PF('creatingBUI').show();"
+                                 oncomplete="PF('creatingBUI').hide();"
+                                 style="width: 100%;" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+        <p:dialog header="Create New CuratedProject - Esc to Close" 
+                  closeOnEscape="true"
+                  widgetVar="create_new_curated_project_dlg" 
+                  modal="true"
+                  width="80%" height="80%">
+
+            <p:outputPanel autoUpdate="true">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="cur_proj_val" value="Value"/>
+                    <h:inputText id="cur_proj_val" value="#{curatedNscWorkbenchController.newCuratedProject.value}"/>
+
+                    <h:outputLabel for="cur_proj_desc" value="Description"/>
+                    <h:inputText id="cur_proj_desc" value="#{curatedNscWorkbenchController.newCuratedProject.description}"/>
+
+                    <h:outputLabel for="cur_proj_ref" value="Reference"/>
+                    <h:inputText id="cur_proj_ref" value="#{curatedNscWorkbenchController.newCuratedProject.reference}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton action="#{curatedNscWorkbenchController.createNewCuratedProject}"
+                                 value="Create New CuratedProject"
+                                 onstart="PF('creatingBUI').show();"
+                                 oncomplete="PF('creatingBUI').hide();"
+                                 style="width: 100%;" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+
+
+        <p:dialog header="Create New CuratedTarget - Esc to Close" 
+                  closeOnEscape="true" 
+                  widgetVar="create_new_curated_target_dlg" 
+                  modal="true"
+                  width="80%" height="80%">
+
+            <p:outputPanel autoUpdate="true">
+
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel for="cur_targ_val" value="Value"/>
+                    <h:inputText id="cur_targ_val" value="#{curatedNscWorkbenchController.newCuratedTarget.value}"/>
+
+                    <h:outputLabel for="cur_targ_desc" value="Description"/>
+                    <h:inputText id="cur_targ_desc" value="#{curatedNscWorkbenchController.newCuratedTarget.description}"/>
+
+                    <h:outputLabel for="cur_targ_ref" value="Reference"/>
+                    <h:inputText id="cur_targ_ref" value="#{curatedNscWorkbenchController.newCuratedTarget.reference}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton action="#{curatedNscWorkbenchController.createNewCuratedTarget}"
+                                 value="Create New CuratedTarget"
+                                 onstart="PF('creatingBUI').show();"
+                                 oncomplete="PF('creatingBUI').hide();"
+                                 style="width: 100%;" />
+
+            </p:outputPanel>
+
+        </p:dialog>
+        
+        <p:commandButton value="UPDATE"
+                         action="#{curatedNscWorkbenchController.performUpdate}"
+                         onstart="PF('updatingBUI').show();"
+                         oncomplete="PF('updatingBUI').hide();"/>
+
+    </ui:define>
+
+</ui:composition>

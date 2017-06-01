@@ -1,0 +1,18 @@
+psql -d datasystemdb -a < THE_STEP_1_load_app_and_inv_file.sql
+
+--psql -d datasystemdb -a < THE_STEP_1_load_app_and_inv_file_REIMPORT.sql
+
+perl THE_STEP_2_stack.PL
+perl THE_STEP_3_generateQCsql.PL
+psql -d datasystemdb -a < qc.sql
+
+-- psql -d datasystemdb -a < THE_STEP_4_fix.sql
+-- psql -d datasystemdb -a < qc.sql
+
+psql -d datasystemdb -a < THE_STEP_5_app_and_inv_to_curated_nsc.sql
+
+\copy curated_name to /tmp/curated_name.csv csv header                   
+\copy curated_nsc to /tmp/curated_nsc.csv csv header                    
+\copy curated_originator to /tmp/curated_originator.csv csv header             
+\copy curated_project to /tmp/curated_project.csv csv header                
+\copy curated_target to /tmp/curated_target.csv csv header               

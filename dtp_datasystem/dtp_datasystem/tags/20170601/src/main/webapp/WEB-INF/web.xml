@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>
+            org.primefaces.webapp.filter.FileUploadFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>StructureServlet</servlet-name>
+        <servlet-class>newstructureservlet.StructureServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LegacyImageServlet</servlet-name>
+        <servlet-class>legacyimageservlet.LegacyImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StructureServlet</servlet-name>
+        <url-pattern>/StructureServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LegacyImageServlet</servlet-name>
+        <url-pattern>/LegacyImageServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>webpages/searchCmpds.xhtml</welcome-file>
+    </welcome-file-list>    
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/webpages/searchCmpds.xhtml</location>
+    </error-page>
+    
+    <!--
+    <security-constraint>
+        <display-name>Default Secure</display-name>
+        <web-resource-collection>
+            <web-resource-name>default secure</web-resource-name>
+            <description>secure everything</description>
+            <url-pattern>/faces/*</url-pattern>
+            <url-pattern>/webpages/*</url-pattern>
+            <url-pattern>*.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Open Faces Resources</display-name>
+        <web-resource-collection>
+            <web-resource-name>Exclude from Security</web-resource-name>
+            <url-pattern>/javax.faces.resource/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/loginFailed.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+    </security-role>
+    -->
+    <!--
+    <Realm className="org.apache.catalina.realm.CombinedRealm">
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+        <Realm allRolesMode="authOnly" className="org.apache.catalina.realm.JNDIRealm" 
+               connectionName="ncimkldapconnect" 
+               connectionPassword="Mk02012016**velvet" 
+               connectionTimeout="30000" 
+               connectionURL="ldap://nihdcadhub.nih.gov:389" 
+               debug="10" roleBase="ou=groups,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov" 
+               roleName="cn" 
+               roleNested="true" 
+               roleSearch="(member={0})" 
+               roleSubtree="true" 
+               sizeLimit="0" 
+               userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"/>
+    </Realm>
+    -->
+    
+    <!-- 2017 24 Feb brought over from compare -->
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Raw-JSF-Pages</web-resource-name>
+            <description>
+                Prevent access to raw pages that are for JSF pages.(No roles, so no direct access)
+            </description>
+            <url-pattern>*.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Open Up Landing Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Landing Page</web-resource-name>
+            <description>Open Up Landing Page</description>
+            <url-pattern>/landing.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Open Up Idle Warning Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Idle Warning Page</web-resource-name>
+            <description>Open Up Idle Warning Page</description>
+            <url-pattern>/idleWarning.xhtml</url-pattern>
+            <url-pattern>/sessionEnded.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Open Up Documentation</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Documentation</web-resource-name>
+            <description>Open Up Documentation</description>
+            <url-pattern>/documentation.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+                                          
+    <security-constraint>
+        <display-name>Open Up Files</display-name>
+        <web-resource-collection>
+            <web-resource-name>Open Up Files</web-resource-name>
+            <description>Open Up Files</description>
+            <url-pattern>/files/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+                                            
+    <security-constraint>
+        <display-name>Total Secure</display-name>
+        <web-resource-collection>
+            <web-resource-name>Total Secure</web-resource-name>
+            <description>Total Secure</description>
+            <url-pattern>/faces/*</url-pattern>
+            <url-pattern>/webpages/*</url-pattern>
+        </web-resource-collection>
+        <!--
+        <auth-constraint>
+            <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+        </auth-constraint>
+        -->
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <!--
+    <security-constraint>
+        <display-name>Admin Secure</display-name>
+        <web-resource-collection>
+            <web-resource-name>Admin Secure</web-resource-name>
+            <description>Admin Secure</description>
+            <url-pattern>/faces/admin/*</url-pattern>
+            <url-pattern>/webpages/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    -->
+    
+    <security-constraint>
+        <display-name>Open Faces Resources</display-name>
+        <web-resource-collection>
+            <web-resource-name>Exclude from Security</web-resource-name>
+            <url-pattern>/javax.faces.resource/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/loginFailed.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+    <security-role>
+        <role-name>NCI DCTD_PLP_DEVELOPER</role-name>
+    </security-role>
+    
+    <Realm className="org.apache.catalina.realm.CombinedRealm">
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+        <Realm allRolesMode="authOnly" 
+               className="org.apache.catalina.realm.JNDIRealm" 
+               connectionName="ncimkldapconnect" 
+               connectionPassword="Mk02012016**velvet" 
+               connectionTimeout="30000" 
+               connectionURL="ldap://nihdcadhub.nih.gov:389" 
+               debug="10" 
+               roleBase="ou=groups,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov" 
+               roleName="cn" 
+               roleNested="true" 
+               roleSearch="(member={0})" 
+               roleSubtree="true" 
+               sizeLimit="0" 
+               userPattern="(cn={0},ou=users,ou=NCI-Frederick,ou=nih,ou=ad,dc=nih,dc=gov):(cn={0},ou=users,ou=nci,ou=nih,ou=ad,dc=nih,dc=gov)"/>
+    </Realm>
+    
+</web-app>

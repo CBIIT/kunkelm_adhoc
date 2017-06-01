@@ -1,0 +1,5 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Fri Jun 03 11:48:16 EDT 2016
+cdk-pdb-1.5.13-tests.jar>=
+cdk-pdb-1.5.13.pom>=
+cdk-pdb-1.5.13.jar>=
